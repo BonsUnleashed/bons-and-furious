@@ -92,30 +92,36 @@ The published 1.0.15 JAR passed a 470-mod dedicated-server regression, ship save
 
 Of the 42 external drafts across 32 mods, these have been submitted so far (status checked 29 September 2026):
 
-| Project | Pull request | Change | Status |
-| --- | --- | --- | --- |
-| Ad Astra | [terrarium-earth/Ad-Astra #825](https://github.com/terrarium-earth/Ad-Astra/pull/825) | Avoid boxing in dimension gravity lookup | Open |
-| Alex's Caves | [AlexModGuy/AlexsCaves #1759](https://github.com/AlexModGuy/AlexsCaves/pull/1759) | Avoid redundant magnetic POI work and per-check equipment array clones | Open |
-| Alex's Caves | [AlexModGuy/AlexsCaves #1760](https://github.com/AlexModGuy/AlexsCaves/pull/1760) | Keep Teletor random draws and weapon insertion inside the generation context | Open |
-| Architectury API | [architectury/architectury-api #747](https://github.com/architectury/architectury-api/pull/747) | Avoid resolving a MethodHandle for every event listener invocation | Open |
-| Ars Nouveau | [baileyholl/Ars-Nouveau #2258](https://github.com/baileyholl/Ars-Nouveau/pull/2258) | Use a primitive mana-discount accumulator and build perk snapshots directly | Open |
-| Butterflies | [doc-bok/Butterflies #493](https://github.com/doc-bok/Butterflies/pull/493) | Use a direct block-set lookup and cached tag array for landing rules | Open |
-| Cryptic Foes | [min2222/Cryptic-Foes #7](https://github.com/min2222/Cryptic-Foes/pull/7) | Memoize Howler descendant-bone lookups per baked model | Open |
-| Curios API | [TheIllusiveC4/Curios #639](https://github.com/TheIllusiveC4/Curios/pull/639) | Avoid empty modifier accumulators and redundant entity-slot lookups | Open |
-| Embeddium | [FiniteReality/embeddium #575](https://github.com/FiniteReality/embeddium/pull/575) | Reduce allocation in upload classification, preparation and queue bookkeeping | Open |
-| Fowl Play | [aqariio/Fowl-Play #242](https://github.com/aqariio/Fowl-Play/pull/242) | Reduce flock-heading allocation by 94–99% while preserving heading and RNG results | Open |
-| Fowl Play | [aqariio/Fowl-Play #243](https://github.com/aqariio/Fowl-Play/pull/243) | Avoid loading or generating chunks while choosing random flight targets | Open |
-| Hostile Villages | [someaddons/HostileVillages #37](https://github.com/someaddons/HostileVillages/pull/37) | Keep Distant Horizons temporary villagers out of the live spawn queue | Open |
-| Ice and Fire | [AlexModGuy/Ice_and_Fire #5641](https://github.com/AlexModGuy/Ice_and_Fire/pull/5641) | Use generation-region structure and difficulty context for lakes and pixie villages | Open |
-| Ice and Fire | [AlexModGuy/Ice_and_Fire #5642](https://github.com/AlexModGuy/Ice_and_Fire/pull/5642) | Allocate chain and scepter scratch collections only when references resolve | Open |
-| ImmediatelyFast | [RaphiMC/ImmediatelyFast #586](https://github.com/RaphiMC/ImmediatelyFast/pull/586) | Check horse and villager texture prefixes without allocating substrings | Open |
-| Nether Depths Upgrade | [Scouter456/Nether_Depths_Upgrade #67](https://github.com/Scouter456/Nether_Depths_Upgrade/pull/67) | Reuse the Hell Strider enchantment map within an ordinary player callback | Closed without merge. The maintainer no longer maintains the 1.20 branch. |
-| Oculus | [Asek3/Oculus #869](https://github.com/Asek3/Oculus/pull/869) | Reduce shader-state, buffer-affinity and transparency-graph overhead | Open |
-| Presence-Footsteps-Forge | [PaintNinja/Presence-Footsteps-Forge #67](https://github.com/PaintNinja/Presence-Footsteps-Forge/pull/67) | Use a local primitive set for capped sound-target duplicate tracking | Open |
-| Ryoamic Lights | [ThinkingStudios/RyoamicLights #54](https://github.com/ThinkingStudios/RyoamicLights/pull/54) | Use primitive long iteration for tracked chunk rebuilds | Open |
-| Structurify | [Faboslav/structurify #93](https://github.com/Faboslav/structurify/pull/93) | Let completed chunks be collected from the height cache using weak identity keys | Open |
-| Timeless and Classics Zero (TaCZ) | [MCModderAnchor/TACZ #745](https://github.com/MCModderAnchor/TACZ/pull/745) | Reduce synced-data allocations and reuse the holder within adjacent tick writes | Open |
-| Trackwork | [Endalion/trackwork #70](https://github.com/Endalion/trackwork/pull/70) | Remove obsolete Create parents from five self-contained models | Open |
+| Project | Pull request | Status |
+| --- | --- | --- |
+| Ad Astra | [terrarium-earth/Ad-Astra #825](https://github.com/terrarium-earth/Ad-Astra/pull/825) | Open |
+| Alex's Caves | [AlexModGuy/AlexsCaves #1759](https://github.com/AlexModGuy/AlexsCaves/pull/1759) | Open |
+| Alex's Caves | [AlexModGuy/AlexsCaves #1760](https://github.com/AlexModGuy/AlexsCaves/pull/1760) | Open |
+| AmbientSounds | [CreativeMD/AmbientSounds #348](https://github.com/CreativeMD/AmbientSounds/pull/348) | Open |
+| Architectury API | [architectury/architectury-api #747](https://github.com/architectury/architectury-api/pull/747) | Open |
+| Ars Nouveau | [baileyholl/Ars-Nouveau #2258](https://github.com/baileyholl/Ars-Nouveau/pull/2258) | Open |
+| Butterflies | [doc-bok/Butterflies #493](https://github.com/doc-bok/Butterflies/pull/493) | Open |
+| Cryptic Foes | [min2222/Cryptic-Foes #7](https://github.com/min2222/Cryptic-Foes/pull/7) | Open |
+| Curios API | [TheIllusiveC4/Curios #639](https://github.com/TheIllusiveC4/Curios/pull/639) | Open |
+| Embeddium | [FiniteReality/embeddium #575](https://github.com/FiniteReality/embeddium/pull/575) | Open |
+| Fowl Play | [aqariio/Fowl-Play #242](https://github.com/aqariio/Fowl-Play/pull/242) | Open |
+| Fowl Play | [aqariio/Fowl-Play #243](https://github.com/aqariio/Fowl-Play/pull/243) | Open |
+| Hostile Villages | [someaddons/HostileVillages #37](https://github.com/someaddons/HostileVillages/pull/37) | Open |
+| Ice and Fire | [AlexModGuy/Ice_and_Fire #5641](https://github.com/AlexModGuy/Ice_and_Fire/pull/5641) | Open |
+| Ice and Fire | [AlexModGuy/Ice_and_Fire #5642](https://github.com/AlexModGuy/Ice_and_Fire/pull/5642) | Open |
+| ImmediatelyFast | [RaphiMC/ImmediatelyFast #586](https://github.com/RaphiMC/ImmediatelyFast/pull/586) | Open |
+| Nether Depths Upgrade | [Scouter456/Nether_Depths_Upgrade #67](https://github.com/Scouter456/Nether_Depths_Upgrade/pull/67) | Closed without merge. The maintainer no longer maintains the 1.20 branch. |
+| Oculus | [Asek3/Oculus #869](https://github.com/Asek3/Oculus/pull/869) | Open |
+| Presence-Footsteps-Forge | [PaintNinja/Presence-Footsteps-Forge #67](https://github.com/PaintNinja/Presence-Footsteps-Forge/pull/67) | Open |
+| Ryoamic Lights | [ThinkingStudios/RyoamicLights #54](https://github.com/ThinkingStudios/RyoamicLights/pull/54) | Open |
+| Structurify | [Faboslav/structurify #93](https://github.com/Faboslav/structurify/pull/93) | Open |
+| Timeless and Classics Zero (TaCZ) | [MCModderAnchor/TACZ #745](https://github.com/MCModderAnchor/TACZ/pull/745) | Open |
+| Trackwork | [Endalion/trackwork #70](https://github.com/Endalion/trackwork/pull/70) | Open |
+| Valkyrien Skies | [ValkyrienSkies/Valkyrien-Skies-2 #1981](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1981) | Open |
+| Valkyrien Skies | [ValkyrienSkies/Valkyrien-Skies-2 #1982](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1982) | Open |
+| Valkyrien Skies | [ValkyrienSkies/Valkyrien-Skies-2 #1983](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1983) | Open |
+| Valkyrien Skies | [ValkyrienSkies/Valkyrien-Skies-2 #1984](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1984) | Open |
+| Valkyrien Skies | [ValkyrienSkies/Valkyrien-Skies-2 #1985](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1985) | Open |
 
 The remaining drafts are being ported and built against the upstream source before submission.
 
