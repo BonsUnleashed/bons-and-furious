@@ -110,6 +110,7 @@ Of the 42 external drafts across 32 mods, these have been submitted so far (stat
 | Ice and Fire | [AlexModGuy/Ice_and_Fire #5642](https://github.com/AlexModGuy/Ice_and_Fire/pull/5642) | Allocate chain and scepter scratch collections only when references resolve | Open |
 | ImmediatelyFast | [RaphiMC/ImmediatelyFast #586](https://github.com/RaphiMC/ImmediatelyFast/pull/586) | Check horse and villager texture prefixes without allocating substrings | Open |
 | Nether Depths Upgrade | [Scouter456/Nether_Depths_Upgrade #67](https://github.com/Scouter456/Nether_Depths_Upgrade/pull/67) | Reuse the Hell Strider enchantment map within an ordinary player callback | Closed without merge. The maintainer no longer maintains the 1.20 branch. |
+| Oculus | [Asek3/Oculus #869](https://github.com/Asek3/Oculus/pull/869) | Reduce shader-state, buffer-affinity and transparency-graph overhead | Open |
 | Presence-Footsteps-Forge | [PaintNinja/Presence-Footsteps-Forge #67](https://github.com/PaintNinja/Presence-Footsteps-Forge/pull/67) | Use a local primitive set for capped sound-target duplicate tracking | Open |
 | Ryoamic Lights | [ThinkingStudios/RyoamicLights #54](https://github.com/ThinkingStudios/RyoamicLights/pull/54) | Use primitive long iteration for tracked chunk rebuilds | Open |
 | Structurify | [Faboslav/structurify #93](https://github.com/Faboslav/structurify/pull/93) | Let completed chunks be collected from the height cache using weak identity keys | Open |
