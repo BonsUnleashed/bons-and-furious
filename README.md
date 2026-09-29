@@ -63,7 +63,7 @@ JVM overrides, log messages and troubleshooting: [Installation and configuration
 
 ## Compatibility
 
-Keep your optimization stack: Embeddium, ImmediatelyFast, ModernFix, FerriteCore, Radium and C2ME. Bons and Furious changes paths that still did unnecessary work in the tested pack, including a few inside Embeddium, ImmediatelyFast and Oculus themselves. Every patch is bound to the tested build of its target; another build is left untouched with one `WARN` line. Because no target is required, the mod loads in any 1.20.1 Forge pack.
+Keep your optimization stack: Embeddium, ImmediatelyFast, ModernFix, FerriteCore, Radium and C2ME. Bons and Furious changes paths that still did unnecessary work in the tested pack, including a few inside Embeddium, ImmediatelyFast and Oculus themselves.
 
 ## Build from source
 
