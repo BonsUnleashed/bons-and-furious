@@ -59,7 +59,7 @@ Coverage means the tested build and the specific code paths of each mod, not eve
 2. Start once. The mod writes its config file with every switch on and logs how many controls are enabled.
 3. To turn one off, set its key to `false` and restart. Client-only patches (renderer, shaders, ambience) never load on a dedicated server.
 
-Updating from 1.0.15 or earlier? Remove the old `bons_pure_optimizations` JAR first; your switches carry over. Details, JVM overrides, log messages and troubleshooting: [Installation and configuration](https://github.com/BonsUnleashed/bons-and-furious/wiki/Installation-and-configuration).
+JVM overrides, log messages and troubleshooting: [Installation and configuration](https://github.com/BonsUnleashed/bons-and-furious/wiki/Installation-and-configuration).
 
 ## Compatibility
 
