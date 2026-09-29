@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
  * game's main class is loaded, which is before any coremod transformer runs for a mod class.
  */
 public final class PureMixinPlugin implements IMixinConfigPlugin {
-    private static final Logger LOGGER = LogManager.getLogger("Bons Pure Optimizations");
+    private static final Logger LOGGER = LogManager.getLogger("Bons and Furious");
     private static final Map<String, String> MIXIN_KEYS = Map.of(
             "agentcraft.pure.mixin.DataCommandsMixin", "vanilla_data_merge_unchanged",
             "agentcraft.terrain.mixin.NoiseChunkMixin", "terrain_density_memo",
@@ -37,7 +37,7 @@ public final class PureMixinPlugin implements IMixinConfigPlugin {
         String key = MIXIN_KEYS.get(mixinClassName);
         if (key == null) return true; // shared API accessors always apply
         boolean enabled = PureConfig.isEnabled(key);
-        if (!enabled) LOGGER.info("Bons Pure Optimizations: {} is disabled by config; {} is not applied to {}", key, mixinClassName, targetClassName);
+        if (!enabled) LOGGER.info("Bons and Furious: {} is disabled by config; {} is not applied to {}", key, mixinClassName, targetClassName);
         return enabled;
     }
 

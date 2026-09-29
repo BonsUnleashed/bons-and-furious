@@ -18,7 +18,7 @@ def main():
  work=ROOT/'build'/str(time.time_ns());work.mkdir(parents=True)
  nested=work/'nested';nested.mkdir()
  mods=sorted((a.minecraft_dir/'mods').glob('*.jar'))
- mods=[p for p in mods if not p.name.startswith(('bons_pure_optimizations','bons_valkyrien_fixes'))]
+ mods=[p for p in mods if not p.name.startswith(('bons_pure_optimizations','bons_and_furious','bons_valkyrien_fixes'))]
  vs=[p for p in mods if p.name=='valkyrienskies-120-2.4.11.jar']
  if len(vs)!=1:raise SystemExit('The unmodified Valkyrien Skies 2.4.11 dependency is required.')
  if hashlib.sha256(vs[0].read_bytes()).hexdigest()!='f99f24de62015451a047f90484cf9d25970cac350105b581c22b2d5247ebfd53':raise SystemExit('Unexpected Valkyrien Skies dependency bytes')
@@ -50,7 +50,7 @@ def main():
  run('gate','javac',['--release','17','-proc:none','-encoding','UTF-8','-cp',str(relocated)+os.pathsep+cp,'-d',relocated,*gate])
  entries={p.relative_to(relocated).as_posix():p.read_bytes() for p in relocated.rglob('*.class')}
  entries.update({p.relative_to(ROOT/'resources').as_posix():p.read_bytes() for p in (ROOT/'resources').rglob('*') if p.is_file()})
- dest=ROOT/'dist/bons_pure_optimizations-1.0.15.jar';dest.parent.mkdir(exist_ok=True)
+ dest=ROOT/'dist/bons_and_furious-1.0.19.jar';dest.parent.mkdir(exist_ok=True)
  with zipfile.ZipFile(dest,'w',zipfile.ZIP_DEFLATED) as z:
   for n,data in sorted(entries.items()):
    info=zipfile.ZipInfo(n,(2026,9,28,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED;z.writestr(info,data)

@@ -12,7 +12,7 @@ import net.minecraft.world.level.chunk.LevelChunkSection;
 
 /** Conservative section-palette bound; retains AmbientSounds' exact column scan. */
 public final class AcAmbientHeight {
-    public static volatile boolean enabled = Boolean.parseBoolean(System.getProperty("bons.pure.ambientHeight", "true"));
+    public static volatile boolean enabled = Boolean.parseBoolean(System.getProperty("bons_and_furious.ambientHeight", "true"));
     // canOcclude is necessary for vanilla solid-render. The installed A Good Place
     // hook only changes true to false. Live tags and waterlogged AIR are included.
     private static final Predicate<BlockState> MAY_MATCH = state -> state.m_60815_()

@@ -4,27 +4,31 @@
 
 **Your CPU lives its life one tick at a time.**
 
-[**Download 1.0.15**](https://github.com/dialectikproductions/bons-and-furious/releases/tag/v1.0.15) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/dialectikproductions/bons-and-furious/wiki) · [Issues](https://github.com/dialectikproductions/bons-and-furious/issues)
+[**Download 1.0.19**](https://github.com/dialectikproductions/bons-and-furious/releases/tag/v1.0.19) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/dialectikproductions/bons-and-furious/wiki) · [Issues](https://github.com/dialectikproductions/bons-and-furious/issues)
 
-Bons and Furious patches 74 specific, measured hot spots in vanilla Minecraft 1.20.1 and in 33 popular Forge mods, from Valkyrien Skies, Distant Horizons and Alex's Caves to Embeddium, Oculus and GeckoLib. Each patch is one switch in one config file. It applies only to the exact mod build it was tested against and leaves anything else untouched, with one line in the log.
+Bons and Furious patches 78 specific, measured hot spots in vanilla Minecraft 1.20.1 and in 34 popular Forge mods, from Valkyrien Skies, Distant Horizons and Alex's Caves to Embeddium, Oculus and GeckoLib. Each patch is one switch in one config file. It applies only to the exact mod build it was tested against and leaves anything else untouched, with one line in the log.
 
 **Minecraft 1.20.1 · Forge 47.3.22 or newer · no required dependencies · one JAR for client and server**
 
+**New in 1.0.19:** two vanilla world-generation optimizations that brought a 144-chunk generation run in the reference pack down to about half its wall time (not a TPS figure), a Spawn generation fix for Distant Horizons, a Better Combat equipment-read shortcut, and the mod's technical names now match its display name: `bons_and_furious`. Read *Install* before updating from 1.0.15.
+
 ## What it does
 
-- **60 optimizations** give the same results with less work: fewer allocations, no repeated lookups, no state rebuilt only to come out identical. Terrain preparation, ship chunk bookkeeping, shader graph resets, animation easing and event dispatch are the largest.
-- **10 fixes** repair reproduced server freezes, worker-thread crashes and generation exceptions, mostly where Distant Horizons or C2ME worker threads meet a content mod's world generation.
+- **63 optimizations** give the same results with less work: fewer allocations, no repeated lookups, no state rebuilt only to come out identical. Terrain preparation, ground-height estimates, ship chunk bookkeeping, shader graph resets, animation easing and event dispatch are the largest.
+- **11 fixes** repair reproduced server freezes, worker-thread crashes and generation exceptions, mostly where Distant Horizons or C2ME worker threads meet a content mod's world generation.
 - **4 deliberate changes** (frame pacing, the Occult bed scan, Fowl Play flight targets, Scorched sandcrab processing) trade a documented behaviour difference for a large saving.
 
-All 74 are listed in `config/bons_pure_optimizations.properties` with their target mod, tested build, side and measurement. Set any key to `false` and restart. Every control is explained in the [wiki](https://github.com/dialectikproductions/bons-and-furious/wiki).
+All 78 are listed in `config/bons_and_furious.properties` (1.0.15 and earlier: `config/bons_pure_optimizations.properties`) with their target mod, tested build, side and measurement. Set any key to `false` and restart. Every control is explained in the [wiki](https://github.com/dialectikproductions/bons-and-furious/wiki).
 
 ## Measured results
 
 | Where | What changed | Measured |
 | --- | --- | --- |
+| **Minecraft** chunk generation (new in 1.0.18) | Neighbouring chunk work areas share their ground-height estimates instead of re-scanning the same columns | **95% of surface scans skipped** (349,843 → 16,494 in a 144-chunk run) and **about half the wall time** for that run (mean 162 → 75 s, shared machine) |
+| **Minecraft** terrain preparation (new in 1.0.16) | The second density-graph pass reuses what the first pass built instead of rebuilding it | **91% less CPU** per NoiseChunk (10.35 → 0.89 ms) and **53% less** per structure-placement height query (17.7 → 8.3 ms) |
 | **Minecraft** terrain preparation | Shared density-graph nodes are transformed once per chunk instead of once per reference | **59.6% less memory allocated** (1.47 GB → 0.60 GB over 64 height queries) and 56% less thread CPU |
 | **Valkyrien Skies** | Ship chunk bookkeeping, after seven rounds of ship work | **94% less time** (329 → 21 µs, full-pack fixture); physics terrain conversion 65–69% less |
-| **Distant Horizons** + content mods | Six generation-context fixes | A reproduced Scuba Gear stall recovers from **6.1 to 20 TPS** |
+| **Distant Horizons** + content mods | Seven generation-context fixes | A reproduced Scuba Gear stall recovers from **6.1 to 20 TPS** |
 | **Oculus** | Empty shader render-order graphs are reused instead of rebuilt | **90% less time** per reset (166 → 16 ns), 808 → 0 bytes |
 | **Embeddium** | Chunk-mesh upload classification without stream pipelines | **59% less time** (151 → 62 ns per region with 8 outputs) |
 | **GeckoLib** | Mixed animation easing without boxed doubles | **50% less time** per evaluation (67 → 34 ns) |
@@ -45,17 +49,17 @@ Smaller allocation and lookup savings in Ars Nouveau, Curios API, Alex's Caves, 
 
 **Ships, structures and distant terrain:** Valkyrien Skies, Trackwork, Distant Horizons, Structurify, Sakes Structures.
 
-**Content and gameplay:** Alex's Caves, Ice and Fire, Ars Nouveau, Timeless and Classics Zero (TaCZ), Terramity, Ad Astra, Fowl Play, Butterflies, Goblins Tyranny, Under the Moon, Nether Depths Upgrade, Spawn, Cryptic Foes, Hostile Villages, Scuba Gear, Occult, Scorched, and our own Living Engineering addon.
+**Content and gameplay:** Alex's Caves, Ice and Fire, Ars Nouveau, Timeless and Classics Zero (TaCZ), Terramity, Ad Astra, Fowl Play, Butterflies, Goblins Tyranny, Under the Moon, Nether Depths Upgrade, Spawn, Cryptic Foes, Hostile Villages, Scuba Gear, Occult, Scorched, Better Combat, and our own Living Engineering addon.
 
 Coverage means the tested build and the specific code paths of each mod, not every feature. Tested builds per mod: [Compatibility and target versions](https://github.com/dialectikproductions/bons-and-furious/wiki/Compatibility-and-target-versions).
 
 ## Install
 
-1. Download `bons_pure_optimizations-1.0.15.jar` from the [1.0.15 release](https://github.com/dialectikproductions/bons-and-furious/releases/tag/v1.0.15) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load.
+1. Download `bons_and_furious-1.0.19.jar` from the [1.0.19 release](https://github.com/dialectikproductions/bons-and-furious/releases/tag/v1.0.19) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load.
 2. Start once. The mod writes its config file with every switch on and logs how many controls are enabled.
 3. To turn one off, set its key to `false` and restart. Client-only patches (renderer, shaders, ambience) never load on a dedicated server.
 
-**Upgrading from 1.0.14 or earlier:** replace the JAR and remove *Bons to Be Afloat* (Bons Valkyrien Fixes) and *Bons Worldgen Compatibility* if they are still installed. Their work is included in 1.0.15, and two copies would patch the same classes twice.
+**Upgrading from 1.0.15 or earlier:** the JAR, the mod id and the config file are now called `bons_and_furious`. Remove the old `bons_pure_optimizations-<version>.jar` from `mods/` on the client and the server; Forge will not start with both JARs present. Your switches carry over: the first start writes `config/bons_and_furious.properties` from the defaults with every switch your old file set to `false` still `false`, and keeps the old file as `bons_pure_optimizations.properties.migrated`. A mod that depends on this one must name `bons_and_furious` from now on. Also remove *Bons to Be Afloat* (Bons Valkyrien Fixes) and *Bons Worldgen Compatibility* if they are still installed; their work has been included since 1.0.15, and two copies would patch the same classes twice.
 
 JVM overrides, log messages and troubleshooting: [Installation and configuration](https://github.com/dialectikproductions/bons-and-furious/wiki/Installation-and-configuration).
 
@@ -86,7 +90,7 @@ supplied installations or any saves.
 
 Licensed GPL-3.0-only ([LICENSE](LICENSE)). Upstream attribution is in [NOTICE.md](NOTICE.md); the tested dependency builds are listed in [upstream-credits.json](upstream-credits.json).
 
-The published 1.0.15 JAR passed a 470-mod dedicated-server regression, ship save-data checks and reload checks for five Trackwork models, and an independent build from this source matched all 47 compiled classes. These are correctness checks, separate from the timings above.
+The published 1.0.19 JAR is the build of this source tree. It passed a 470-mod dedicated-server run of the reference pack with a fresh world (1,404 terrain assertions across 22 noise dimensions, 144 chunks generated, the 1.0.15 config carried over, no guard skips), a second full-pack run checking the Spawn flower placement and the Better Combat equipment reads (2,168 assertions), the 470-mod Valkyrien Skies sweep-5/6/7 regression with the ship save-data check, and the client initial-load and reload check for the five Trackwork models; every one of its 195 entries matches the privately qualified build (184 byte-identical, 11 recompiled classes semantically equal, and the two Spawn and Better Combat scripts shipped as fingerprint-checked deltas that produce the same classes). These are correctness checks, separate from the timings above.
 
 ### Upstream pull requests
 
@@ -101,7 +105,7 @@ Of the 42 external drafts across 32 mods, these have been submitted so far (stat
 | Architectury API | [architectury/architectury-api #747](https://github.com/architectury/architectury-api/pull/747) | Open |
 | Ars Nouveau | [baileyholl/Ars-Nouveau #2258](https://github.com/baileyholl/Ars-Nouveau/pull/2258) | Open |
 | Butterflies | [doc-bok/Butterflies #493](https://github.com/doc-bok/Butterflies/pull/493) | Open |
-| Cryptic Foes | [min2222/Cryptic-Foes #7](https://github.com/min2222/Cryptic-Foes/pull/7) | Open |
+| Cryptic Foes | [min2222/Cryptic-Foes #7](https://github.com/min2222/Cryptic-Foes/pull/7) | Closed without merge |
 | Curios API | [TheIllusiveC4/Curios #639](https://github.com/TheIllusiveC4/Curios/pull/639) | Open |
 | Embeddium | [FiniteReality/embeddium #575](https://github.com/FiniteReality/embeddium/pull/575) | Open |
 | Fowl Play | [aqariio/Fowl-Play #242](https://github.com/aqariio/Fowl-Play/pull/242) | Open |
@@ -109,12 +113,13 @@ Of the 42 external drafts across 32 mods, these have been submitted so far (stat
 | Hostile Villages | [someaddons/HostileVillages #37](https://github.com/someaddons/HostileVillages/pull/37) | Open |
 | Ice and Fire | [AlexModGuy/Ice_and_Fire #5641](https://github.com/AlexModGuy/Ice_and_Fire/pull/5641) | Open |
 | Ice and Fire | [AlexModGuy/Ice_and_Fire #5642](https://github.com/AlexModGuy/Ice_and_Fire/pull/5642) | Open |
+| Ice and Fire | [AlexModGuy/Ice_and_Fire #5643](https://github.com/AlexModGuy/Ice_and_Fire/pull/5643) | Open |
 | ImmediatelyFast | [RaphiMC/ImmediatelyFast #586](https://github.com/RaphiMC/ImmediatelyFast/pull/586) | Open |
 | Nether Depths Upgrade | [Scouter456/Nether_Depths_Upgrade #67](https://github.com/Scouter456/Nether_Depths_Upgrade/pull/67) | Closed without merge. The maintainer no longer maintains the 1.20 branch. |
 | Oculus | [Asek3/Oculus #869](https://github.com/Asek3/Oculus/pull/869) | Open |
 | Presence-Footsteps-Forge | [PaintNinja/Presence-Footsteps-Forge #67](https://github.com/PaintNinja/Presence-Footsteps-Forge/pull/67) | Open |
 | Ryoamic Lights | [ThinkingStudios/RyoamicLights #54](https://github.com/ThinkingStudios/RyoamicLights/pull/54) | Open |
-| Structurify | [Faboslav/structurify #93](https://github.com/Faboslav/structurify/pull/93) | Open |
+| Structurify | [Faboslav/structurify #93](https://github.com/Faboslav/structurify/pull/93) | Closed without merge |
 | Timeless and Classics Zero (TaCZ) | [MCModderAnchor/TACZ #745](https://github.com/MCModderAnchor/TACZ/pull/745) | Open |
 | Trackwork | [Endalion/trackwork #70](https://github.com/Endalion/trackwork/pull/70) | Open |
 | Valkyrien Skies | [ValkyrienSkies/Valkyrien-Skies-2 #1981](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1981) | Open |

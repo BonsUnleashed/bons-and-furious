@@ -12,7 +12,7 @@ upstream project names. Those documents describe their respective upstream
 works; they do not relicense other targets or their assets.
 
 The runtime adapters and helper implementations contain modifications developed
-through September 28, 2026. The modified code is supplied in src/ and the
+through September 29, 2026. The modified code is supplied in src/ and the
 editable Forge coremod scripts in resources/coremods/. GPL/LGPL-derived adapters
 are distributed with their source, build instructions and applicable notices.
 

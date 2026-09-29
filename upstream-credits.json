@@ -65,6 +65,20 @@
     ]
   },
   {
+    "id": "bettercombat",
+    "jar": "bettercombat-forge-1.8.6+1.20.1.jar",
+    "sha256": "e147e13732e0fac83aee209487fdeb10a03e52c33e1b1439dbce01a80f3e8dbb",
+    "license_label": "All Rights Reserved (repository LICENSE); the mods.toml declares GPL-3.0",
+    "authors": [
+      {
+        "name": "Better Combat",
+        "authors": "Daedelus",
+        "url": null
+      }
+    ],
+    "redistribution": "restricted: the shipped script carries only the added instructions and reads the unchanged method body from the installed class at runtime (sparse adapter, exact fingerprint)"
+  },
+  {
     "id": "biomancy_engineering",
     "jar": "biomancy_engineering-3.0.1+ac-perf.1.jar",
     "sha256": "0113f65c5655884d625443703cd347cc1066f6aa53d10e6c9ccc62d3b956320f",
@@ -229,6 +243,19 @@
     ]
   },
   {
+    "id": "mr_scorched",
+    "jar": "scorched-1.1.3e.jar",
+    "sha256": "e9f19619f72ddbe65e2efb593fd8dd39235e16d118331339d1d5879064702a7e",
+    "license_label": "LicenseRef-Custom",
+    "authors": [
+      {
+        "name": "Scorched",
+        "authors": "limesplatus",
+        "url": "https://modrinth.com/datapack/scorched"
+      }
+    ]
+  },
+  {
     "id": "netherdepthsupgrade",
     "jar": "netherdepthsupgrade-3.1.5-1.20.jar",
     "sha256": "ff15d40b448bf799615904335efca741f206d24e232ebc925c405315f179529e",
@@ -303,19 +330,6 @@
         "name": "Sake's Structures",
         "authors": "SakePlayS",
         "url": "https://mcreator.net"
-      }
-    ]
-  },
-  {
-    "id": "mr_scorched",
-    "jar": "scorched-1.1.3e.jar",
-    "sha256": "e9f19619f72ddbe65e2efb593fd8dd39235e16d118331339d1d5879064702a7e",
-    "license_label": "LicenseRef-Custom",
-    "authors": [
-      {
-        "name": "Scorched",
-        "authors": "limesplatus",
-        "url": "https://modrinth.com/datapack/scorched"
       }
     ]
   },

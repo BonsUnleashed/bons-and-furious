@@ -50,12 +50,12 @@ public final class InstalledFunctionPack extends PathPackResources {
         if (path.equals("data/scorched/functions/tick.mcfunction")) {
             old = " at @s run function scorched:mob/sandcrab/burrow_stay";
             replacement = " at @s if entity @p[distance=..192] run function scorched:mob/sandcrab/burrow_stay";
-            comment = "# Bons Pure Optimizations (scorched_sandcrab_burrow_gate): buried sandcrabs are processed within 192 blocks of a player";
+            comment = "# Bons and Furious (scorched_sandcrab_burrow_gate): buried sandcrabs are processed within 192 blocks of a player";
         } else if (path.equals("data/scorched/functions/mob/sandcrab/burrow_stay.mcfunction")) {
             old = "data merge entity @s {Invulnerable:1b}";
-            replacement = "execute unless entity @s[tag=bons_pure_sandcrab_invulnerable] run " + old
-                    + "\r\ntag @s add bons_pure_sandcrab_invulnerable";
-            comment = "# Bons Pure Optimizations (scorched_sandcrab_burrow_gate): Invulnerable is merged once instead of every tick";
+            replacement = "execute unless entity @s[tag=bons_and_furious_sandcrab_invulnerable] run " + old
+                    + "\r\ntag @s add bons_and_furious_sandcrab_invulnerable";
+            comment = "# Bons and Furious (scorched_sandcrab_burrow_gate): Invulnerable is merged once instead of every tick";
         } else throw new IllegalArgumentException("Unexpected function path");
         int at = text.indexOf(old);
         if (at < 0 || text.indexOf(old, at + old.length()) >= 0) throw new IllegalArgumentException("Function anchor mismatch");
