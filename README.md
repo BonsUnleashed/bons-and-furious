@@ -1,54 +1,43 @@
-![Bons and Furious cover — AI-generated promotional concept art](https://github.com/dialectikproductions/bons-and-furious/releases/download/v1.0.15/bons-and-furious-cover.png)
+![Bons and Furious cover, AI-generated promotional concept art](https://github.com/dialectikproductions/bons-and-furious/releases/download/v1.0.15/bons-and-furious-cover.png)
 
 # Bons and Furious
 
-**Big systems. Less wasted work.**
+**Your CPU lives its life one tick at a time.**
 
-Lighter Minecraft terrain preparation. Faster ship bookkeeping. Repaired world-generation stalls. Then deeper savings inside the renderer, shader system and animation library your pack already uses.
+[**Download 1.0.15**](https://github.com/dialectikproductions/bons-and-furious/releases/tag/v1.0.15) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/dialectikproductions/bons-and-furious/wiki) · [Issues](https://github.com/dialectikproductions/bons-and-furious/issues)
 
-**Minecraft 1.20.1 · Forge · 74 individual controls · Vanilla + 33 optional mod targets**
+Bons and Furious patches 74 specific, measured hot spots in vanilla Minecraft 1.20.1 and in 33 popular Forge mods, from Valkyrien Skies, Distant Horizons and Alex's Caves to Embeddium, Oculus and GeckoLib. Each patch is one switch in one config file. It applies only to the exact mod build it was tested against and leaves anything else untouched, with one line in the log.
 
-## The biggest breakthroughs
+**Minecraft 1.20.1 · Forge 47.3.22 or newer · no required dependencies · one JAR for client and server**
 
-| System | What changes for the better | Measured result |
+## What it does
+
+- **60 optimizations** give the same results with less work: fewer allocations, no repeated lookups, no state rebuilt only to come out identical. Terrain preparation, ship chunk bookkeeping, shader graph resets, animation easing and event dispatch are the largest.
+- **10 fixes** repair reproduced server freezes, worker-thread crashes and generation exceptions, mostly where Distant Horizons or C2ME worker threads meet a content mod's world generation.
+- **4 deliberate changes** (frame pacing, the Occult bed scan, Fowl Play flight targets, Scorched sandcrab processing) trade a documented behaviour difference for a large saving.
+
+All 74 are listed in `config/bons_pure_optimizations.properties` with their target mod, tested build, side and measurement. Set any key to `false` and restart. Every control is explained in the [wiki](https://github.com/dialectikproductions/bons-and-furious/wiki).
+
+## Measured results
+
+| Where | What changed | Measured |
 | --- | --- | --- |
-| **Minecraft itself** | Prepare terrain with far less allocation. | **59.6% less** memory allocated in terrain preparation. 1.474 GB → 0.595 GB. |
-| **Valkyrien Skies** | Seven rounds of ship improvements, united. | **94% less** chunk-bookkeeping time in the full-pack fixture. 329 µs → 21 µs. |
-| **Distant Horizons + major content mods** | Repair the paths that can stall a world. | **6 fixes** for reproduced generation-context failures. 6.057 → 20 TPS · Scuba Gear + DH. |
-| **GeckoLib** | Cut the cost of mixed animation easing. | **49.6% less** time per mixed-easing evaluation. 67.35 ns → 33.92 ns. |
-| **Embeddium** | Even the optimizer has more to give. | **59.2% less** upload-classification time. 151.23 ns → 61.63 ns. |
-| **Oculus** | Stop rebuilding empty shader graphs. | **90.2% less** time per all-empty graph reset. 166.37 ns → 16.38 ns. |
+| **Minecraft** terrain preparation | Shared density-graph nodes are transformed once per chunk instead of once per reference | **59.6% less memory allocated** (1.47 GB → 0.60 GB over 64 height queries) and 56% less thread CPU |
+| **Valkyrien Skies** | Ship chunk bookkeeping, after seven rounds of ship work | **94% less time** (329 → 21 µs, full-pack fixture); physics terrain conversion 65–69% less |
+| **Distant Horizons** + content mods | Six generation-context fixes | A reproduced Scuba Gear stall recovers from **6.1 to 20 TPS** |
+| **Oculus** | Empty shader render-order graphs are reused instead of rebuilt | **90% less time** per reset (166 → 16 ns), 808 → 0 bytes |
+| **Embeddium** | Chunk-mesh upload classification without stream pipelines | **59% less time** (151 → 62 ns per region with 8 outputs) |
+| **GeckoLib** | Mixed animation easing without boxed doubles | **50% less time** per evaluation (67 → 34 ns) |
+| **Architectury API** | Event dispatch without re-resolving method handles | **19× faster** (649 → 34 ns per listener call) |
+| **AmbientSounds** | Bounded terrain scan | **88% lower p95** (5.45 → 0.65 ms per analysis) |
+| **Frame pacing** (client) | The FPS-limiter wait moves before the display update | **84% less frame-interval variation** at p95 (7.63 → 1.25 ms) at the same 120 FPS cap |
+| **ImmediatelyFast** | Horse-layer ordering without substrings | **46% less time** (28.9 → 15.5 ns), 64 → 0 bytes |
 
+Smaller allocation and lookup savings in Ars Nouveau, Curios API, Alex's Caves, Ice and Fire, TaCZ and others are on the wiki.
 
+> **How to read these numbers.** Each figure measures the named method, phase or reproduction in a fixture, on the build it was measured on. The figures are not additive and do not add up to an FPS or TPS gain. A matched whole-modpack comparison is still pending. Method, fixture settings and the result for every control: [Measurements and caveats](https://github.com/dialectikproductions/bons-and-furious/wiki/Measurements-and-caveats).
 
-### What makes these changes significant
-
-**Minecraft + ModernFix:** density-graph transformation reuse cut allocated bytes by 59.6% and thread CPU by 56.3% across 64 Overworld height queries. The existing ModernFix wrapper cache remains intact. This is terrain preparation, not a claim about total world-generation speed.
-
-**Valkyrien Skies:** seven rounds of work are now included in 1.0.15. Alongside the 329 → 21 µs chunk-bookkeeping result, physics terrain conversion took 65–69% less time, and one grown-ship collision-check fixture fell from 1,422 → 250 ns. The work also addresses initial terrain snapshot ordering, ship-edge NaN motion and sculk compatibility. These are successive historical companion comparisons, not stock VS versus the final combined build. The latest sweep did not show a measurable whole-tick improvement.
-
-**Distant Horizons with Alex’s Caves, Ice and Fire and other content mods:** six generation-context fixes address reproduced stalls, worker-thread crashes and exceptions. The 6.057 → 20 TPS recovery belongs specifically to a Scuba Gear/DH stall reproduction; it is not the result of toggling every fix together.
-
-**GeckoLib, Embeddium and Oculus:** remove repeated work in systems that other mods depend on. GeckoLib mixed-easing time fell 49.6%, with eight million float-component comparisons matching. Embeddium’s eight-output upload classification fell 59.2%. Oculus’s all-empty graph reset fell 90.2%, with 808 → 0 allocated bytes. These are native method fixtures; simple linear easing, populated shader graphs and full GPU uploads have their own costs.
-
-## More improvements at a glance
-
-| System | Result and context |
-| --- | --- |
-| **Frame pacing** | **83.6% lower variation.** Buffer-swap interval variation at p95; 7.6261 → 1.2473 ms at the same 120 FPS cap. Achieved FPS stayed about 116.6. |
-| **Architectury API** | **19× faster dispatch.** 649 → 34 ns in the two-million-call listener-dispatch harness. Listener execution itself is outside this measurement. |
-| **AmbientSounds** | **88.1% lower phase p95.** Terrain analysis: 5.4517 → 0.6496 ms. Whole-frame p99 did not improve in that run. |
-| **ImmediatelyFast** | **46.4% less method time.** Horse-layer ordering: 28.85 → 15.46 ns, with 64 → 0 allocated bytes in the native fixture. |
-
-
-
-**Ars Nouveau:** four-piece equipment-perk snapshots took 33.6% less time (592.51 → 393.16 ns). **Curios API:** the no-cached-modifier cleanup path removed 392 allocated bytes per call. Alex’s Caves equipment enumeration and Ice and Fire reference-list initialization also receive targeted allocation improvements.
-
-> Every number above measures its named workload and historical build. Method, phase, allocation and stall-repair results are different measurements. They are not additive and do not establish a combined FPS/TPS gain. The matched whole-modpack with/without comparison remains pending.
-
-## Vanilla + 33 optional mods, covered
-
-**74 individually configurable controls**, plus the separate Trackwork model-parent repair. The target set includes one Bons addon. Install the mods you use; none of these targets is mandatory. Coverage refers to the specific tested versions and paths, not every feature of a mod.
+## Covered mods (all optional)
 
 **Rendering, shaders and ambience:** Embeddium, Oculus, ImmediatelyFast, Ryoamic Lights, Presence Footsteps, AmbientSounds.
 
@@ -56,19 +45,23 @@ Lighter Minecraft terrain preparation. Faster ship bookkeeping. Repaired world-g
 
 **Ships, structures and distant terrain:** Valkyrien Skies, Trackwork, Distant Horizons, Structurify, Sakes Structures.
 
-**Content and gameplay:** Alex’s Caves, Ice and Fire, Ars Nouveau, Timeless and Classics Zero (TaCZ), Terramity, Ad Astra, Fowl Play, Butterflies, Goblins Tyranny, Under the Moon, Nether Depths Upgrade, Spawn, Cryptic Foes, Hostile Villages, Scuba Gear, Occult, Scorched, Bons in a Lifetime / Living Engineering.
+**Content and gameplay:** Alex's Caves, Ice and Fire, Ars Nouveau, Timeless and Classics Zero (TaCZ), Terramity, Ad Astra, Fowl Play, Butterflies, Goblins Tyranny, Under the Moon, Nether Depths Upgrade, Spawn, Cryptic Foes, Hostile Villages, Scuba Gear, Occult, Scorched, and our own Living Engineering addon.
 
-## Built alongside your optimization stack
+Coverage means the tested build and the specific code paths of each mod, not every feature. Tested builds per mod: [Compatibility and target versions](https://github.com/dialectikproductions/bons-and-furious/wiki/Compatibility-and-target-versions).
 
-Keep Embeddium, ImmediatelyFast, ModernFix, FerriteCore, Radium and C2ME. Bons adds separately implemented changes to specific paths that still did unnecessary work in the tested pack, including methods inside optimization mods. Compatibility is version-specific; this is not a universal zero-overlap claim.
+## Install
 
-## Installation and control
+1. Download `bons_pure_optimizations-1.0.15.jar` from the [1.0.15 release](https://github.com/dialectikproductions/bons-and-furious/releases/tag/v1.0.15) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load.
+2. Start once. The mod writes its config file with every switch on and logs how many controls are enabled.
+3. To turn one off, set its key to `false` and restart. Client-only patches (renderer, shaders, ambience) never load on a dedicated server.
 
-Minecraft Java **1.20.1**, **Forge 47.3.22+ within 47.x**; tested with **47.4.16**. Install the same JAR on client and server where you want the applicable fixes. Every target mod is optional.
+**Upgrading from 1.0.14 or earlier:** replace the JAR and remove *Bons to Be Afloat* (Bons Valkyrien Fixes) and *Bons Worldgen Compatibility* if they are still installed. Their work is included in 1.0.15, and two copies would patch the same classes twice.
 
-**Upgrading:** replace the old Bons and Furious JAR and remove the separate Bons Valkyrien Fixes / Bons to Be Afloat JAR. Its work is included in 1.0.15; do not install both companions.
+JVM overrides, log messages and troubleshooting: [Installation and configuration](https://github.com/dialectikproductions/bons-and-furious/wiki/Installation-and-configuration).
 
-Set individual controls in `config/bons_pure_optimizations.properties` and restart. Unsupported target bytecode is skipped and logged. Generation repairs, frame timing, loading/range changes and some ship fixes have documented deliberate behavior differences. The Trackwork model-parent compatibility repair is separate from the 74 controls.
+## Compatibility
+
+Keep your optimization stack: Embeddium, ImmediatelyFast, ModernFix, FerriteCore, Radium and C2ME. Bons and Furious changes paths that still did unnecessary work in the tested pack, including a few inside Embeddium, ImmediatelyFast and Oculus themselves. Every patch is bound to the tested build of its target; another build is left untouched with one `WARN` line. Because no target is required, the mod loads in any 1.20.1 Forge pack.
 
 ## Build from source
 
@@ -89,13 +82,41 @@ the helpers, relocates our own packages, and packages the editable resources.
 It writes only `build/` and `dist/` inside this checkout. It never changes the
 supplied installations or any saves.
 
-## Tested, open source, and built to give back
+## Licence and upstream
 
-The published 1.0.15 JAR passed the 470-mod server regression, ship save-data checks and focused initial/reload checks for five Trackwork models. The independent source build matched all 47 staged classes. These are correctness and regression checks, separate from the historical timings above.
+Licensed GPL-3.0-only ([LICENSE](LICENSE)). Upstream attribution is in [NOTICE.md](NOTICE.md); the tested dependency builds are listed in [upstream-credits.json](upstream-credits.json).
 
-[Source, license and build instructions](https://github.com/dialectikproductions/bons-and-furious) · [Download 1.0.15](https://github.com/dialectikproductions/bons-and-furious/releases/tag/v1.0.15) · [Report an issue](https://github.com/dialectikproductions/bons-and-furious/issues)
+The published 1.0.15 JAR passed a 470-mod dedicated-server regression, ship save-data checks and reload checks for five Trackwork models, and an independent build from this source matched all 47 compiled classes. These are correctness checks, separate from the timings above.
 
-Licensed GPL-3.0-only, with upstream attribution and notices retained. Contributions are being prepared for the original projects: 42 external drafts across 32 mods. Source ports and upstream validation remain in progress; no completed PR submission is claimed.
+### Upstream pull requests
+
+Of the 42 external drafts across 32 mods, these have been submitted so far (status checked 29 September 2026):
+
+| Project | Pull request | Change | Status |
+| --- | --- | --- | --- |
+| Ad Astra | [terrarium-earth/Ad-Astra #825](https://github.com/terrarium-earth/Ad-Astra/pull/825) | Avoid boxing in dimension gravity lookup | Open |
+| Alex's Caves | [AlexModGuy/AlexsCaves #1759](https://github.com/AlexModGuy/AlexsCaves/pull/1759) | Avoid redundant magnetic POI work and per-check equipment array clones | Open |
+| Alex's Caves | [AlexModGuy/AlexsCaves #1760](https://github.com/AlexModGuy/AlexsCaves/pull/1760) | Keep Teletor random draws and weapon insertion inside the generation context | Open |
+| Architectury API | [architectury/architectury-api #747](https://github.com/architectury/architectury-api/pull/747) | Avoid resolving a MethodHandle for every event listener invocation | Open |
+| Ars Nouveau | [baileyholl/Ars-Nouveau #2258](https://github.com/baileyholl/Ars-Nouveau/pull/2258) | Use a primitive mana-discount accumulator and build perk snapshots directly | Open |
+| Butterflies | [doc-bok/Butterflies #493](https://github.com/doc-bok/Butterflies/pull/493) | Use a direct block-set lookup and cached tag array for landing rules | Open |
+| Cryptic Foes | [min2222/Cryptic-Foes #7](https://github.com/min2222/Cryptic-Foes/pull/7) | Memoize Howler descendant-bone lookups per baked model | Open |
+| Curios API | [TheIllusiveC4/Curios #639](https://github.com/TheIllusiveC4/Curios/pull/639) | Avoid empty modifier accumulators and redundant entity-slot lookups | Open |
+| Embeddium | [FiniteReality/embeddium #575](https://github.com/FiniteReality/embeddium/pull/575) | Reduce allocation in upload classification, preparation and queue bookkeeping | Open |
+| Fowl Play | [aqariio/Fowl-Play #242](https://github.com/aqariio/Fowl-Play/pull/242) | Reduce flock-heading allocation by 94–99% while preserving heading and RNG results | Open |
+| Fowl Play | [aqariio/Fowl-Play #243](https://github.com/aqariio/Fowl-Play/pull/243) | Avoid loading or generating chunks while choosing random flight targets | Open |
+| Hostile Villages | [someaddons/HostileVillages #37](https://github.com/someaddons/HostileVillages/pull/37) | Keep Distant Horizons temporary villagers out of the live spawn queue | Open |
+| Ice and Fire | [AlexModGuy/Ice_and_Fire #5641](https://github.com/AlexModGuy/Ice_and_Fire/pull/5641) | Use generation-region structure and difficulty context for lakes and pixie villages | Open |
+| Ice and Fire | [AlexModGuy/Ice_and_Fire #5642](https://github.com/AlexModGuy/Ice_and_Fire/pull/5642) | Allocate chain and scepter scratch collections only when references resolve | Open |
+| ImmediatelyFast | [RaphiMC/ImmediatelyFast #586](https://github.com/RaphiMC/ImmediatelyFast/pull/586) | Check horse and villager texture prefixes without allocating substrings | Open |
+| Nether Depths Upgrade | [Scouter456/Nether_Depths_Upgrade #67](https://github.com/Scouter456/Nether_Depths_Upgrade/pull/67) | Reuse the Hell Strider enchantment map within an ordinary player callback | Closed without merge. The maintainer no longer maintains the 1.20 branch. |
+| Presence-Footsteps-Forge | [PaintNinja/Presence-Footsteps-Forge #67](https://github.com/PaintNinja/Presence-Footsteps-Forge/pull/67) | Use a local primitive set for capped sound-target duplicate tracking | Open |
+| Ryoamic Lights | [ThinkingStudios/RyoamicLights #54](https://github.com/ThinkingStudios/RyoamicLights/pull/54) | Use primitive long iteration for tracked chunk rebuilds | Open |
+| Structurify | [Faboslav/structurify #93](https://github.com/Faboslav/structurify/pull/93) | Let completed chunks be collected from the height cache using weak identity keys | Open |
+| Timeless and Classics Zero (TaCZ) | [MCModderAnchor/TACZ #745](https://github.com/MCModderAnchor/TACZ/pull/745) | Reduce synced-data allocations and reuse the holder within adjacent tick writes | Open |
+| Trackwork | [Endalion/trackwork #70](https://github.com/Endalion/trackwork/pull/70) | Remove obsolete Create parents from five self-contained models | Open |
+
+The remaining drafts are being ported and built against the upstream source before submission.
 
 ## Development disclosure
 
