@@ -1,10 +1,10 @@
-![Bons and Furious cover, AI-generated promotional concept art](https://github.com/dialectikproductions/bons-and-furious/releases/download/v1.0.15/bons-and-furious-cover.png)
+![Bons and Furious cover, AI-generated promotional concept art](https://github.com/BonsUnleashed/bons-and-furious/releases/download/v1.0.15/bons-and-furious-cover.png)
 
 # Bons and Furious
 
 **Your CPU lives its life one tick at a time.**
 
-[**Download 1.0.19**](https://github.com/dialectikproductions/bons-and-furious/releases/tag/v1.0.19) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/dialectikproductions/bons-and-furious/wiki) · [Issues](https://github.com/dialectikproductions/bons-and-furious/issues)
+[**Download 1.0.19**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.19) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
 
 Bons and Furious patches 78 specific, measured hot spots in vanilla Minecraft 1.20.1 and in 34 popular Forge mods, from Valkyrien Skies, Distant Horizons and Alex's Caves to Embeddium, Oculus and GeckoLib. Each patch is one switch in one config file. It applies only to the exact mod build it was tested against and leaves anything else untouched, with one line in the log.
 
@@ -18,7 +18,7 @@ Bons and Furious patches 78 specific, measured hot spots in vanilla Minecraft 1.
 - **11 fixes** repair reproduced server freezes, worker-thread crashes and generation exceptions, mostly where Distant Horizons or C2ME worker threads meet a content mod's world generation.
 - **4 deliberate changes** (frame pacing, the Occult bed scan, Fowl Play flight targets, Scorched sandcrab processing) trade a documented behaviour difference for a large saving.
 
-All 78 are listed in `config/bons_and_furious.properties` (1.0.15 and earlier: `config/bons_pure_optimizations.properties`) with their target mod, tested build, side and measurement. Set any key to `false` and restart. Every control is explained in the [wiki](https://github.com/dialectikproductions/bons-and-furious/wiki).
+All 78 are listed in `config/bons_and_furious.properties` (1.0.15 and earlier: `config/bons_pure_optimizations.properties`) with their target mod, tested build, side and measurement. Set any key to `false` and restart. Every control is explained in the [wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki).
 
 ## Measured results
 
@@ -39,7 +39,7 @@ All 78 are listed in `config/bons_and_furious.properties` (1.0.15 and earlier: `
 
 Smaller allocation and lookup savings in Ars Nouveau, Curios API, Alex's Caves, Ice and Fire, TaCZ and others are on the wiki.
 
-> **How to read these numbers.** Each figure measures the named method, phase or reproduction in a fixture, on the build it was measured on. The figures are not additive and do not add up to an FPS or TPS gain. A matched whole-modpack comparison is still pending. Method, fixture settings and the result for every control: [Measurements and caveats](https://github.com/dialectikproductions/bons-and-furious/wiki/Measurements-and-caveats).
+> **How to read these numbers.** Each figure measures the named method, phase or reproduction in a fixture, on the build it was measured on. The figures are not additive and do not add up to an FPS or TPS gain. A matched whole-modpack comparison is still pending. Method, fixture settings and the result for every control: [Measurements and caveats](https://github.com/BonsUnleashed/bons-and-furious/wiki/Measurements-and-caveats).
 
 ## Covered mods (all optional)
 
@@ -51,17 +51,17 @@ Smaller allocation and lookup savings in Ars Nouveau, Curios API, Alex's Caves, 
 
 **Content and gameplay:** Alex's Caves, Ice and Fire, Ars Nouveau, Timeless and Classics Zero (TaCZ), Terramity, Ad Astra, Fowl Play, Butterflies, Goblins Tyranny, Under the Moon, Nether Depths Upgrade, Spawn, Cryptic Foes, Hostile Villages, Scuba Gear, Occult, Scorched, Better Combat, and our own Living Engineering addon.
 
-Coverage means the tested build and the specific code paths of each mod, not every feature. Tested builds per mod: [Compatibility and target versions](https://github.com/dialectikproductions/bons-and-furious/wiki/Compatibility-and-target-versions).
+Coverage means the tested build and the specific code paths of each mod, not every feature. Tested builds per mod: [Compatibility and target versions](https://github.com/BonsUnleashed/bons-and-furious/wiki/Compatibility-and-target-versions).
 
 ## Install
 
-1. Download `bons_and_furious-1.0.19.jar` from the [1.0.19 release](https://github.com/dialectikproductions/bons-and-furious/releases/tag/v1.0.19) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load.
+1. Download `bons_and_furious-1.0.19.jar` from the [1.0.19 release](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.19) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load.
 2. Start once. The mod writes its config file with every switch on and logs how many controls are enabled.
 3. To turn one off, set its key to `false` and restart. Client-only patches (renderer, shaders, ambience) never load on a dedicated server.
 
 **Upgrading from 1.0.15 or earlier:** the JAR, the mod id and the config file are now called `bons_and_furious`. Remove the old `bons_pure_optimizations-<version>.jar` from `mods/` on the client and the server; Forge will not start with both JARs present. Your switches carry over: the first start writes `config/bons_and_furious.properties` from the defaults with every switch your old file set to `false` still `false`, and keeps the old file as `bons_pure_optimizations.properties.migrated`. A mod that depends on this one must name `bons_and_furious` from now on. Also remove *Bons to Be Afloat* (Bons Valkyrien Fixes) and *Bons Worldgen Compatibility* if they are still installed; their work has been included since 1.0.15, and two copies would patch the same classes twice.
 
-JVM overrides, log messages and troubleshooting: [Installation and configuration](https://github.com/dialectikproductions/bons-and-furious/wiki/Installation-and-configuration).
+JVM overrides, log messages and troubleshooting: [Installation and configuration](https://github.com/BonsUnleashed/bons-and-furious/wiki/Installation-and-configuration).
 
 ## Compatibility
 
