@@ -1,0 +1,267 @@
+{
+  "group": "tacz",
+  "keys": {
+    "tacz_sync_collections": {
+      "mod": "tacz",
+      "scripts": [
+        "bons_and_furious-DataHolder.js",
+        "bons_and_furious-SyncedEntityDataEvent.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.tacz.DataHolderMixin",
+        "bons.furious.mixin.tacz.SyncedEntityDataEventMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/tacz/guns/entity/sync/core/DataHolder",
+          "method": "gatherDirty",
+          "desc": "()Ljava/util/List;",
+          "sha256": "32266b440f3ecd707c2280c61f6fbbeb2820d4a880a7845abc35ec266e81f495"
+        },
+        {
+          "class": "com/tacz/guns/entity/sync/core/DataHolder",
+          "method": "gatherAll",
+          "desc": "()Ljava/util/List;",
+          "sha256": "233c1d18ea74542413babc594c3c7370f77d50d9aa9c71edc915461e3bdc3fe4"
+        },
+        {
+          "class": "com/tacz/guns/event/SyncedEntityDataEvent",
+          "method": "onServerTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$ServerTickEvent;)V",
+          "sha256": "8fad5091a4e9627a0d8796c6659130c138d14991549a4273f392ddfaa8449aae"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "GPL-3.0 (TaCZ code): the method bodies may be carried in our GPL-3.0 source"
+    },
+    "tacz_sync_scope": {
+      "mod": "tacz",
+      "scripts": [
+        "bons_and_furious-SyncedEntityData.js",
+        "bons_and_furious-LivingEntityMixin.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.tacz.SyncedEntityDataMixin",
+        "bons.furious.mixin.tacz.TaczLivingEntityMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/tacz/guns/entity/sync/core/SyncedEntityData",
+          "method": "getDataHolder",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lcom/tacz/guns/entity/sync/core/DataHolder;",
+          "sha256": "d1209191e70dc42c5a6e94a97cbfa59875c1f2fc9aac093dbc14493da007e4ba"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_8119_",
+          "desc": "()V",
+          "sha256": "4bbc94d7f9247158c4270818650114ed04813619792a4476946a800b520fcd45"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+          "sha256": "742eca5258bb781c120d81b4b075cf729de196aca79ef90d029a9e2865089e77"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "getSynShootCoolDown",
+          "desc": "()J",
+          "sha256": "fb8ea4dcfa1445675db2debe8e34ba7b76d35bba7405eeed3ff047669776ccb0"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "getSynMeleeCoolDown",
+          "desc": "()J",
+          "sha256": "84e6d340293856ab032ec15e228963eec73d9cc345ccad4caff2916d2f813d9f"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "getSynDrawCoolDown",
+          "desc": "()J",
+          "sha256": "b47307df44113a00e2e8f9b203037d452d10637a07f405883c3b7e1fe244197d"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "getSynIsBolting",
+          "desc": "()Z",
+          "sha256": "77d7f439c2674242614a36ab051f31876a933ecf601d7f4c585113db12cfb802"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "getSynReloadState",
+          "desc": "()Lcom/tacz/guns/api/entity/ReloadState;",
+          "sha256": "db0003ad8e2285098feb1f82298435dc13b64946f7c6daacefc7a08dcd337919"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "getSynAimingProgress",
+          "desc": "()F",
+          "sha256": "af193b2e04ea5af93f46818fcc84c2979104cb49b94c037d34ce4de1ec1de83d"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "getSynSprintTime",
+          "desc": "()F",
+          "sha256": "7b2dd5ac5d270db9c7aaffbc7d32a0645d0359b9b4e6f6c6eab2036fb59320a2"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "getSynIsAiming",
+          "desc": "()Z",
+          "sha256": "04195e791d61eef54901ae23fa48a22d3378ed05d9bec2aad0dc0afdbef87058"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "initialData",
+          "desc": "()V",
+          "sha256": "1842e4cc9e5cf149663506a0507ae04ce28e3c0ba9ae25debce8969a1487a471"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "draw",
+          "desc": "(Ljava/util/function/Supplier;)V",
+          "sha256": "6fcfa35c8b8142066927d54b23b960787f24a4115355aaa13ecbfa45452131fe"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "bolt",
+          "desc": "()V",
+          "sha256": "260bd3a8984d0a7aa8da4db84737c22dc561bcbbc9d83f90d4ba350766ca0a93"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "reload",
+          "desc": "()V",
+          "sha256": "db5bebfa8e5b5245dca461412014a063a624d3c2011123fbd9c5fd4c3ffbb7ca"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "cancelReload",
+          "desc": "()V",
+          "sha256": "5ffe3dd75e6b4da26d97cd703037824f45ec98359ee01e2177618a7f351c4657"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "melee",
+          "desc": "()V",
+          "sha256": "f43ad8b6f967c325013db6e71ce71762c104a378e713ca947b4570fda79f42b2"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "shoot",
+          "desc": "(Ljava/util/function/Supplier;Ljava/util/function/Supplier;)Lcom/tacz/guns/api/entity/ShootResult;",
+          "sha256": "c71a1364bb635c9482fec2c543ba926d8d510b31f355aa99cfae0149a26a0ac5"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "shoot",
+          "desc": "(Ljava/util/function/Supplier;Ljava/util/function/Supplier;J)Lcom/tacz/guns/api/entity/ShootResult;",
+          "sha256": "64d645373770d60c35eb1b8af16e58274877e308eb0cfb5f86d90d44dc7b123a"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "needCheckAmmo",
+          "desc": "()Z",
+          "sha256": "d2de9bf63367d5deac2055f83492c77dec4b9781f63a72bf77fb5c9ed9dfa663"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "consumesAmmoOrNot",
+          "desc": "()Z",
+          "sha256": "b0d7afec2f4131cc032b4dd6e2dc7a37bd2b7639fe8121ad24faab5348f36284"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "getProcessedSprintStatus",
+          "desc": "(Z)Z",
+          "sha256": "d75b84b939acf442b8b64cc80197af44dc1589c30e6d4c0be19b3dbde44c0c81"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "aim",
+          "desc": "(Z)V",
+          "sha256": "573e1cf826f6f9a757e44d28540b9cd51e0756913d59973ea90f221e53b7931c"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "crawl",
+          "desc": "(Z)V",
+          "sha256": "6eb95389addd7d3178d19d911319025023c0fb0af7ea1217614f984b0cf442bc"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "updateCacheProperty",
+          "desc": "(Lcom/tacz/guns/resource/modifier/AttachmentCacheProperty;)V",
+          "sha256": "f201db13b5dba8f008bd9baf85a0bec5234106ea8c90d0103a759541dbc3f4e8"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "getCacheProperty",
+          "desc": "()Lcom/tacz/guns/resource/modifier/AttachmentCacheProperty;",
+          "sha256": "a875cb5422391f821b4d32b5029ef5c87ce9f1b7ccf4bae18f24ca9bf7e38b91"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "getDataHolder",
+          "desc": "()Lcom/tacz/guns/entity/shooter/ShooterDataHolder;",
+          "sha256": "5e5c9eee0a0dedadb3708ab456f4c9d59e735b82eacf6192d4a6c9e9b05fb91c"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "nextBulletIsTracer",
+          "desc": "(I)Z",
+          "sha256": "c490208476b528d41236df6f197c3a9947fde8713b4140133fc93ab0d0f3ef5f"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "fireSelect",
+          "desc": "()V",
+          "sha256": "a12cbdc5234942607892e3aac3c7284435bff8043ef807168a0e7cc666b1351e"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "zoom",
+          "desc": "()V",
+          "sha256": "c9bf2ccfc9593264fefe3d61e9f569616f6141d300dae40465700b92904dcf6b"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "onTickServerSide",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "ec5b61a37758fd04dcdc3f39a5c34080b8fc648785215c8b220a15c23eae24c9"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "resetKnockBackStrength",
+          "desc": "()V",
+          "sha256": "cbe1f8ba6440e2bbd2b0e277974beba723d1e7335c9ff7d03e9f1a62d447dd79"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "getKnockBackStrength",
+          "desc": "()D",
+          "sha256": "6d97714170b45f7e7a0d51beb26e800d37133750041168d1462666065bcdb732"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "setKnockBackStrength",
+          "desc": "(D)V",
+          "sha256": "679f584e4e6f0f79a9a240bbcb24606aff177d77d41c1f43e416351fcb42c623"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "lambda$initialData$0",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "efd4aac48124fd1df89a2109a95c25f7095a18703621dccab7ee6979b9f3cc51"
+        }
+      ],
+      "cancel": [
+        "com.tacz.guns.mixin.common.LivingEntityMixin"
+      ],
+      "conversion": "overwrite + canceller",
+      "license": "GPL-3.0 (TaCZ code): SyncedEntityData.getDataHolder and TaCZ's whole LivingEntityMixin may be carried in our GPL-3.0 source"
+    }
+  }
+}

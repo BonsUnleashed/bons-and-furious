@@ -1,0 +1,25 @@
+{
+  "group": "structure_gel",
+  "keys": {
+    "structure_gel_lake_guard_region": {
+      "mod": "structure_gel",
+      "scripts": [
+        "bons_and_furious-LakeFeatureHooks.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.structure_gel.LakeFeatureHooksMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/legacy/structure_gel/core/asm_hooks/LakeFeatureHooks",
+          "method": "checkForStructures",
+          "desc": "(Lnet/minecraft/world/level/levelgen/feature/FeaturePlaceContext;)Z",
+          "sha256": "49a7cd46147ddb8943b1cb105f8a514ed72a33045fcbd9a625a1f2e45f24b9aa"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "GPL-3.0: the method body may be carried in our GPL-3.0 source"
+    }
+  }
+}

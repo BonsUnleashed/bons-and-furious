@@ -1,0 +1,305 @@
+{
+  "group": "valkyrienskies_mod",
+  "keys": {
+    "valkyrien_backoff_nan": {
+      "mod": "valkyrienskies",
+      "scripts": [
+        "furious15-valkyrien-EntityDragger.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.valkyrienskies_mod.EntityDraggerMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/valkyrienskies/mod/common/util/EntityDragger",
+          "method": "backOff",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lorg/valkyrienskies/core/api/ships/Ship;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/phys/Vec3;",
+          "sha256": "16b50afb0f0ea29c24681eeae0548d1d2ee88d7dc976a0dd0007371c40b7030a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors",
+      "license": "Apache-2.0 (Valkyrien Skies mod classes)"
+    },
+    "valkyrien_entity_ship_collision": {
+      "mod": "valkyrienskies",
+      "scripts": [
+        "furious15-valkyrien-EntityShipCollisionUtils.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.valkyrienskies_mod.EntityShipCollisionUtilsMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/valkyrienskies/mod/common/util/EntityShipCollisionUtils",
+          "method": "isCollidingWithUnloadedShips",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "7b787857031fd7c2fe0551dd95dda1433ebd62dfce49b49d860f9b6ba7f47a5b"
+        },
+        {
+          "class": "org/valkyrienskies/mod/common/util/EntityShipCollisionUtils",
+          "method": "adjustEntityMovementForShipCollisions",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/AABB;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/phys/Vec3;",
+          "sha256": "bf034466cba75ead5d6a20142fa26378e3f70991e3a22b5151d8cc0737431a37"
+        },
+        {
+          "class": "org/valkyrienskies/mod/common/util/EntityShipCollisionUtils",
+          "method": "getShipPolygonsCollidingWithEntity",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/AABB;Lnet/minecraft/world/level/Level;)Ljava/util/List;",
+          "sha256": "cc4bebd9ab7a6115e25b59b7a98cacca27883308300d34dfd7dd04234fd5f80d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "Apache-2.0 (Valkyrien Skies mod classes): the method bodies may be carried in our GPL-3.0 source"
+    },
+    "valkyrien_entity_handlers": {
+      "mod": "valkyrienskies",
+      "scripts": [
+        "furious15-valkyrien-VSEntityManager.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.valkyrienskies_mod.VSEntityManagerMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/valkyrienskies/mod/common/entity/handling/VSEntityManager",
+          "method": "getDefaultHandler",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lorg/valkyrienskies/mod/common/entity/handling/VSEntityHandler;",
+          "sha256": "4dc083eca7a4bb7695dec3238e611d99072b75722cca8c7052d075617a86307a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "Apache-2.0 (Valkyrien Skies mod classes): the method body may be carried in our GPL-3.0 source"
+    },
+    "valkyrien_ship_lookups": {
+      "mod": "valkyrienskies",
+      "scripts": [
+        "furious15-valkyrien-VSGameUtilsKt.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.valkyrienskies_mod.VSGameUtilsKtMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/valkyrienskies/mod/common/VSGameUtilsKt",
+          "method": "getShipObjectManagingPosImpl",
+          "desc": "(Lnet/minecraft/world/level/Level;II)Lorg/valkyrienskies/core/api/ships/LoadedShip;",
+          "sha256": "5adfbefdc333af4a6f30e0fed1f0a18da2d5c0a2415e32b5fd2e135c550cf4de"
+        },
+        {
+          "class": "org/valkyrienskies/mod/common/VSGameUtilsKt",
+          "method": "transformToNearbyShipsAndWorld",
+          "desc": "(Lnet/minecraft/world/level/Level;DDDDLorg/valkyrienskies/core/api/util/functions/DoubleTernaryConsumer;)V",
+          "sha256": "91458cc8ddb6f23cfc237fb29c4ab4f3d69dea68edf1c946898bf631bfd7e3b5"
+        },
+        {
+          "class": "org/valkyrienskies/mod/common/VSGameUtilsKt",
+          "method": "isChunkInShipyard",
+          "desc": "(Lnet/minecraft/world/level/Level;II)Z",
+          "sha256": "41966a10f093a0632d1dbfdfd76fd28b88d700ee8028fc854966bf969eed2788"
+        },
+        {
+          "class": "org/valkyrienskies/mod/common/VSGameUtilsKt",
+          "method": "getShipManagingPosImpl",
+          "desc": "(Lnet/minecraft/world/level/Level;II)Lorg/valkyrienskies/core/api/ships/Ship;",
+          "sha256": "75304b8a6cd691c6b8ebcd8fba7978e407652396b80fe5836df67e4023c81758"
+        },
+        {
+          "class": "org/valkyrienskies/mod/common/VSGameUtilsKt",
+          "method": "toWorldCoordinates",
+          "desc": "(Lnet/minecraft/world/level/Level;DDDLorg/joml/Vector3d;)Lorg/joml/Vector3d;",
+          "sha256": "0aaca70db1fc69fef9c2e434bfd5d392ba5acde75318f1bb8385bb24f59eda5a"
+        },
+        {
+          "class": "org/valkyrienskies/mod/common/VSGameUtilsKt",
+          "method": "toDenseVoxelUpdate",
+          "desc": "(Lnet/minecraft/world/level/chunk/LevelChunkSection;Lorg/joml/Vector3ic;)Lorg/valkyrienskies/core/internal/world/chunks/VsiTerrainUpdate;",
+          "sha256": "c95afc16e39880c9f44ea2c45f84a5961cebfed77bbe7eba2e232f5805549368"
+        },
+        {
+          "class": "org/valkyrienskies/mod/common/VSGameUtilsKt",
+          "method": "getShipsIntersecting",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/AABB;)Ljava/lang/Iterable;",
+          "sha256": "5cbc03b83623a8e7e586f9629c586278b5d721c65a917b921aefee5b981ce4ec"
+        },
+        {
+          "class": "org/valkyrienskies/mod/common/VSGameUtilsKt",
+          "method": "getShipsIntersecting",
+          "desc": "(Lnet/minecraft/world/level/Level;Lorg/joml/primitives/AABBdc;)Ljava/lang/Iterable;",
+          "sha256": "2a844f848075194c2d021a3269e66cb848759f38d57ee94e4b41cc517daa0128"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "Apache-2.0 (Valkyrien Skies mod classes): the method bodies may be carried in our GPL-3.0 source"
+    },
+    "valkyrien_standing_probe": {
+      "mod": "valkyrienskies",
+      "scripts": [
+        "furious15-valkyrien-entity_collision_MixinEntity.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.valkyrienskies_mod.EntityStandingProbeMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/valkyrienskies/mod/mixin/feature/entity_collision/MixinEntity",
+          "method": "getPosStandingOnFromShips",
+          "desc": "(Lorg/joml/Vector3dc;)Lnet/minecraft/core/BlockPos;",
+          "sha256": "d789b6f7490e78fd2e33f85a86c78dcc9d6e541f31f2d0b3b3de8247edfd2c50"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "Apache-2.0 (Valkyrien Skies mod mixin classes): the method body may be carried in our GPL-3.0 source"
+    },
+    "valkyrien_spawn_distance": {
+      "mod": "valkyrienskies",
+      "scripts": [
+        "furious15-valkyrien-MixinChunkMap.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.valkyrienskies_mod.ChunkMapSpawnDistanceMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/valkyrienskies/mod/mixin/server/world/MixinChunkMap",
+          "method": "onHasPlayersNearby",
+          "desc": "(Lnet/minecraft/server/level/ChunkMap$DistanceManager;JLcom/llamalad7/mixinextras/injector/wrapoperation/Operation;Lnet/minecraft/world/level/ChunkPos;)Z",
+          "sha256": "b1b430f084832a70491647ebfd3e87edc32b1729c5bf8a355540687c157ab595"
+        },
+        {
+          "class": "org/valkyrienskies/mod/mixin/server/world/MixinChunkMap",
+          "method": "onEuclideanDistanceSquared",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/entity/Entity;Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;)D",
+          "sha256": "4d34da02c57f887be50dbfcf6434e30f00df479a3010af7d5c1ec4063d6ab74d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "targethandler",
+      "license": "Apache-2.0 (Valkyrien Skies mod mixin classes)"
+    },
+    "valkyrien_entity_base_tick": {
+      "mod": "valkyrienskies",
+      "scripts": [
+        "furious15-valkyrien-MixinEntity.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.valkyrienskies_mod.EntityBaseTickMixin",
+        "bons.furious.mixin.valkyrienskies_mod.EntitySealedPosAccess"
+      ],
+      "guard": [
+        {
+          "class": "org/valkyrienskies/mod/mixin/entity/MixinEntity",
+          "method": "onBaseTick",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "27d9945f04e223d6d205e9d95578a43e0f4de2052e2bd9bebc63cadf1e22eec7"
+        },
+        {
+          "class": "org/valkyrienskies/mod/mixin/entity/MixinEntity",
+          "method": "afterCheckInside",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "c95741606903fe1ee3c30fa4d285155541d24d5f09d7a420159e03c575ab9a41"
+        }
+      ],
+      "cancel": [],
+      "conversion": "targethandler",
+      "license": "Apache-2.0 (Valkyrien Skies mod mixin classes)"
+    },
+    "valkyrien_render_interpolation": {
+      "mod": "valkyrienskies",
+      "scripts": [
+        "furious15-valkyrien-MixinGameRenderer.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.valkyrienskies_mod.GameRendererInterpolationMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/valkyrienskies/mod/mixin/client/renderer/MixinGameRenderer",
+          "method": "preRender",
+          "desc": "(FJZLorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "ebddc31984cbb20b87042b9e4b1a379fca990216228a4c418bf1f797a3b66705"
+        }
+      ],
+      "cancel": [],
+      "conversion": "targethandler",
+      "license": "Apache-2.0 (Valkyrien Skies mod mixin classes)"
+    },
+    "valkyrien_entity_unloads": {
+      "mod": "valkyrienskies",
+      "scripts": [
+        "furious15-valkyrien-MixinPersistentEntitySectionManager.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.valkyrienskies_mod.EntitySectionUnloadsMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/valkyrienskies/mod/mixin/feature/shipyard_entities/MixinPersistentEntitySectionManager",
+          "method": "replaceProcessUnloads",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "88fadc9571c58c2687f9d54c299fa6eeed7c1fd7bab972f55ee1bfd5860b4d9c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "targethandler",
+      "license": "Apache-2.0 (Valkyrien Skies mod mixin classes)"
+    },
+    "valkyrien_chunk_bookkeeping": {
+      "mod": "valkyrienskies",
+      "scripts": [
+        "furious15-valkyrien-MixinServerLevel.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.valkyrienskies_mod.ServerLevelChunkBookkeepingMixin",
+        "bons.furious.mixin.valkyrienskies_mod.ServerLevelChunkBookkeepingAccess"
+      ],
+      "guard": [
+        {
+          "class": "org/valkyrienskies/mod/mixin/server/world/MixinServerLevel",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "f7311fa6ddfece667551cb3f592cd6f20d319b40012e41b2cd97adefac078c83"
+        },
+        {
+          "class": "org/valkyrienskies/mod/mixin/server/world/MixinServerLevel",
+          "method": "postTick",
+          "desc": "(Ljava/util/function/BooleanSupplier;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "c31a94f64fc7715d6081711c752efb611c1dc0d9d56aaa66533f568d5d524635"
+        }
+      ],
+      "cancel": [],
+      "conversion": "targethandler",
+      "license": "Apache-2.0 (Valkyrien Skies mod mixin classes): the 1.0.19 handler body may be carried in our GPL-3.0 source"
+    },
+    "valkyrien_weather_occlusion": {
+      "mod": "valkyrienskies",
+      "scripts": [
+        "furious15-valkyrien-world_weather_MixinServerLevel.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.valkyrienskies_mod.ServerLevelWeatherOcclusionMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/valkyrienskies/mod/mixin/feature/world_weather/MixinServerLevel",
+          "method": "occlude",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/core/BlockPos;Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;Lnet/minecraft/world/level/chunk/LevelChunk;Lcom/llamalad7/mixinextras/sugar/ref/LocalRef;)Lnet/minecraft/core/BlockPos;",
+          "sha256": "620e852b7e3403792d81a8b95a7abf0812811708dd686b93c49c1504edfd66eb"
+        },
+        {
+          "class": "org/valkyrienskies/mod/mixin/feature/world_weather/MixinServerLevel",
+          "method": "useBiomeAtWorldPos",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;Lcom/llamalad7/mixinextras/sugar/ref/LocalRef;)Lnet/minecraft/core/Holder;",
+          "sha256": "976410a5e523fbf2d22c54c3311d8c3d88817eefb5b4b43bc04661fe370b6dd5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "targethandler",
+      "license": "Apache-2.0 (Valkyrien Skies mod mixin classes)"
+    }
+  }
+}

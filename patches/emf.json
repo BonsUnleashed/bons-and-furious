@@ -1,0 +1,30 @@
+{
+  "group": "emf",
+  "keys": {
+    "emf_block_entity_type_string": {
+      "mod": "entity_model_features",
+      "scripts": [],
+      "since": "1.0.21",
+      "mixins": [
+        "bons.furious.mixin.emf.BlockEntityTypeStringMixin"
+      ],
+      "guard": [
+        {
+          "class": "traben/entity_model_features/models/animation/state/EMFEntityRenderStateViaReference",
+          "method": "typeString",
+          "desc": "()Ljava/lang/String;",
+          "sha256": "6015ae1b6a0c4a4e781f660760e8ffb68d2711eb7e1f22d4cd18b4af7cb1d244"
+        },
+        {
+          "class": "traben/entity_model_features/mixin/mixins/MixinBlockEntity",
+          "method": "emf$getTypeString",
+          "desc": "()Ljava/lang/String;",
+          "sha256": "2335c1f0e5c8f0ee862c9cd43e50335ff2353ef5abf08b07b581df64cf729d3f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Redirect)",
+      "license": "LGPL-3.0; no EMF code is carried"
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "group": "terrain",
+  "keys": {
+    "terrain_final_density_reuse": {
+      "mod": "minecraft",
+      "scripts": [
+        "furious16-terrain-Ap2.js",
+        "furious16-terrain-BlendDensity.js",
+        "furious16-terrain-MarkerOrMarked.js",
+        "furious16-terrain-NoiseChunk.js",
+        "furious16-terrain-RangeChoice.js",
+        "furious16-terrain-ShiftedNoise.js",
+        "furious16-terrain-Spline.js",
+        "furious16-terrain-WeirdScaledSampler.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.terrain.DensityRecordReuseMixin",
+        "bons.furious.mixin.terrain.MarkerOrMarkedReuseMixin",
+        "bons.furious.mixin.terrain.NoiseChunkFinalDensityMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$Ap2",
+          "method": "m_207456_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "sha256": "007368f6a64882a4c4c9ebbde8a4d208869cf69d31a991b35eb25adc57347725"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$BlendDensity",
+          "method": "m_207456_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "sha256": "2a9d5f11eac20bd7724a0f37a01368b970389cc1608af912c5757b8a6c3941f1"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$MarkerOrMarked",
+          "method": "m_207456_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "sha256": "c7fd3f35b3c3903247de20f653f64698f1b4ff3fe60fc8046127cab6c8b987f7"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "<init>",
+          "desc": "(ILnet/minecraft/world/level/levelgen/RandomState;IILnet/minecraft/world/level/levelgen/NoiseSettings;Lnet/minecraft/world/level/levelgen/DensityFunctions$BeardifierOrMarker;Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;Lnet/minecraft/world/level/levelgen/blending/Blender;)V",
+          "sha256": "4002da1eb3f5636a83ab187a1b58722401c681cc36856a9637687cf471c4f136"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$RangeChoice",
+          "method": "m_207456_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "sha256": "890895bf48215f96c361e23442add6660a680bd55f52d55c6f7d1e24df6ee9af"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$ShiftedNoise",
+          "method": "m_207456_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "sha256": "adcb3aaac650608fec7ce2c82928efb089e1ac2e64b43b264547a8388b0c93b0"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$Spline",
+          "method": "m_207456_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "sha256": "0929717ab9b4b464cfdbb1d43cef211b52c407572b296c0ceb944c928f6bd873"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$WeirdScaledSampler",
+          "method": "m_207456_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "sha256": "c8c1a4b55feb17e4971990e5acee35ca494a1b2b3082629b576bcedc11786d9f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors; overwrite for the MarkerOrMarked interface default method (Mixin cannot inject into interfaces)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic, the MarkerOrMarked body is written from its behaviour"
+    },
+    "terrain_surface_estimate_share": {
+      "mod": "minecraft",
+      "scripts": [
+        "furious18-terrain-SurfaceEstimate.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.terrain.NoiseChunkSurfaceEstimateMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_198249_",
+          "desc": "(J)I",
+          "sha256": "22198b99aeb6a59ccef6be8bec61f13219f12ebf4e6d884aa55f05bd81bea0bc"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic"
+    }
+  }
+}

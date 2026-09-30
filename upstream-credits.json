@@ -79,19 +79,6 @@
     "redistribution": "restricted: the shipped script carries only the added instructions and reads the unchanged method body from the installed class at runtime (sparse adapter, exact fingerprint)"
   },
   {
-    "id": "biomancy_engineering",
-    "jar": "biomancy_engineering-3.0.1+ac-perf.1.jar",
-    "sha256": "0113f65c5655884d625443703cd347cc1066f6aa53d10e6c9ccc62d3b956320f",
-    "license_label": "Private pack addon; referenced artwork supplied by dependencies",
-    "authors": [
-      {
-        "name": "Bons in a Lifetime",
-        "authors": null,
-        "url": null
-      }
-    ]
-  },
-  {
     "id": "butterflies",
     "jar": "butterflies-7.10.9.jar",
     "sha256": "48ae11966a414ab4029db478d92c6c0c8a80c911ab50c50a564bf3c3aa6d847f",
@@ -132,8 +119,8 @@
   },
   {
     "id": "distanthorizons",
-    "jar": "DistantHorizons-3.2.0-b-1.20.1-fabric-forge.jar",
-    "sha256": "27cc6df2189e142671e4174ad7b2d773318b1b871758ec27756538947052a302",
+    "jar": "DistantHorizons-3.3.2-1.20.1-fabric-forge.jar",
+    "sha256": "84d1477e04eacf61142dde72b5fcfa9f4e0e7ea673753d157f3f5b175155a8d8",
     "license_label": "LGPL",
     "authors": [
       {
@@ -439,5 +426,59 @@
         "url": null
       }
     ]
+  },
+  {
+    "id": "entity_texture_features",
+    "jar": "entity_texture_features_1.20.1-forge-7.1.jar",
+    "sha256": "96b70f55efc64e5149ff977f065385d1634b8cbb71be856a0c7261c62c92f18c",
+    "license_label": "LGPL-3.0",
+    "authors": [
+      {
+        "name": "Entity Texture Features",
+        "authors": "Traben",
+        "url": "https://github.com/Traben-0/Entity_Texture_Features"
+      }
+    ]
+  },
+  {
+    "id": "entity_model_features",
+    "jar": "entity_model_features-3.2.4-1.20.1-forge.jar",
+    "sha256": "0984570913a154ef65ebca54ac797fec11721c5e24aeceeb285b8ca2f562b35e",
+    "license_label": "LGPL-3.0",
+    "authors": [
+      {
+        "name": "Entity Model Features",
+        "authors": "Traben",
+        "url": "https://github.com/Traben-0/Entity_Model_Features"
+      }
+    ]
+  },
+  {
+    "id": "mixinextras",
+    "jar": "mixinextras-forge-0.5.0.jar",
+    "license_label": "MIT",
+    "bundled": true,
+    "authors": [
+      {
+        "name": "MixinExtras",
+        "authors": "LlamaLad7",
+        "url": "https://github.com/LlamaLad7/MixinExtras"
+      }
+    ],
+    "sha256": "12eed47509e3733a59135a52edd8a90807332248d292b7f1668afd42407ca01d"
+  },
+  {
+    "id": "mixinsquared",
+    "jar": "mixinsquared-forge-0.3.6-beta.1.jar",
+    "license_label": "MIT",
+    "bundled": true,
+    "authors": [
+      {
+        "name": "MixinSquared",
+        "authors": "Bawnorton",
+        "url": "https://github.com/Bawnorton/MixinSquared"
+      }
+    ],
+    "sha256": "778bb6ed23de986e295f14f9044609baf321961a54970fc9ed7f2d2d096aab3c"
   }
 ]

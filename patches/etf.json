@@ -1,0 +1,39 @@
+{
+  "group": "etf",
+  "keys": {
+    "etf_sprite_texture_id_memo": {
+      "mod": "entity_texture_features",
+      "scripts": [],
+      "since": "1.0.21",
+      "mixins": [
+        "bons.furious.mixin.etf.SpriteCoordinateExpanderAccessor",
+        "bons.furious.mixin.etf.SpriteTextureVariantMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/resources/model/Material",
+          "method": "m_119194_",
+          "desc": "(Lnet/minecraft/client/renderer/MultiBufferSource;Ljava/util/function/Function;)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "sha256": "de5262edce8ff4c2aeb5070d8946b926136467e2b0e4b6d27ddeeee15227e4d3"
+        },
+        {
+          "class": "traben/entity_texture_features/mixin/mixins/MixinSpriteIdentifier",
+          "method": "etf$modifyIfRequired",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;Lnet/minecraft/client/renderer/MultiBufferSource;Ljava/util/function/Function;)V",
+          "sha256": "41b26a1217320d27835679c390e710207b8b770232d9caff21b07e089e756340"
+        },
+        {
+          "class": "traben/entity_texture_features/utils/ETFUtils2",
+          "method": "res",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+          "sha256": "e5a61dff5c45c214e5c62f735aa80c74ef93f227fd5f4cb1bc48983773bbc281"
+        }
+      ],
+      "cancel": [
+        "traben.entity_texture_features.mixin.mixins.MixinSpriteIdentifier"
+      ],
+      "conversion": "canceller + replacement handler",
+      "license": "LGPL-3.0: ETF's handler may be carried in our GPL-3.0 source"
+    }
+  }
+}

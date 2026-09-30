@@ -1,0 +1,106 @@
+{
+  "group": "structurify",
+  "keys": {
+    "structurify_height_cache": {
+      "mod": "structurify",
+      "scripts": [
+        "bons_and_furious-ChunkGeneratorHeightCache.js",
+        "bons_and_furious-ChunkGeneratorHeightCacheKey.js",
+        "bons_and_furious-ChunkGeneratorHeightCache_1.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.structurify.ChunkGeneratorHeightCacheKeyMixin",
+        "bons.furious.mixin.structurify.ChunkGeneratorHeightCacheMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/faboslav/structurify/common/world/level/chunk/ChunkGeneratorHeightCache",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "com/faboslav/structurify/common/world/level/chunk/ChunkGeneratorHeightCache",
+          "method": "getFirstFreeHeight",
+          "desc": "(Lnet/minecraft/world/level/chunk/ChunkGenerator;IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)Ljava/lang/Integer;",
+          "sha256": "7d19373acd91bb19054c3c40815d8555b0185fd7302ccf9065e8ce45e3766006"
+        },
+        {
+          "class": "com/faboslav/structurify/common/world/level/chunk/ChunkGeneratorHeightCache",
+          "method": "putFirstFreeHeight",
+          "desc": "(Lnet/minecraft/world/level/chunk/ChunkGenerator;IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;I)V",
+          "sha256": "b7c9776e39382ed94629bd54c15a4198dc45828467123c9536f20a1490157560"
+        },
+        {
+          "class": "com/faboslav/structurify/common/world/level/chunk/ChunkGeneratorHeightCache",
+          "method": "getFirstOccupiedHeight",
+          "desc": "(Lnet/minecraft/world/level/chunk/ChunkGenerator;IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)Ljava/lang/Integer;",
+          "sha256": "7d3c77385c2de725ad229bce962699885fa5489c43ff355472d963860a3b5566"
+        },
+        {
+          "class": "com/faboslav/structurify/common/world/level/chunk/ChunkGeneratorHeightCache",
+          "method": "putFirstOccupiedHeight",
+          "desc": "(Lnet/minecraft/world/level/chunk/ChunkGenerator;IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;I)V",
+          "sha256": "9e86761e66d9fcb60e7dba8a80af790301d8c5d2a22fe00199fa2c53663880f7"
+        },
+        {
+          "class": "com/faboslav/structurify/common/world/level/chunk/ChunkGeneratorHeightCache",
+          "method": "get",
+          "desc": "(Lnet/minecraft/world/level/chunk/ChunkGenerator;IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)Ljava/lang/Integer;",
+          "sha256": "4c4829ca5b7899c753809b764a4e6e0d01646b07241b4442a512251e7964f761"
+        },
+        {
+          "class": "com/faboslav/structurify/common/world/level/chunk/ChunkGeneratorHeightCache",
+          "method": "put",
+          "desc": "(Lnet/minecraft/world/level/chunk/ChunkGenerator;IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;I)V",
+          "sha256": "3e4d9f72de2c107540df132f2a40d65c82020892f79927d67d79d08c63f56fea"
+        },
+        {
+          "class": "com/faboslav/structurify/common/world/level/chunk/ChunkGeneratorHeightCache",
+          "method": "lambda$static$0",
+          "desc": "()Ljava/util/Map;",
+          "sha256": "ae18a74c40f7e5f06b6c4abac1ed85ec8aaf83e9d3d95c4dff9291057e13a668"
+        },
+        {
+          "class": "com/faboslav/structurify/common/world/level/chunk/ChunkGeneratorHeightCache",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "9725fb328c81013242f62a6cf898f052ca766f90d6349d026d835f4e2b53084e"
+        },
+        {
+          "class": "com/faboslav/structurify/common/world/level/chunk/ChunkGeneratorHeightCacheKey",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/chunk/ChunkGenerator;IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)V",
+          "sha256": "29aea09f9edeadea4df26187f85052d29bee7654c29a91ae98913ae39406effb"
+        },
+        {
+          "class": "com/faboslav/structurify/common/world/level/chunk/ChunkGeneratorHeightCacheKey",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "sha256": "f7298983078d6a21bf4da9ca46c38d25c5e59f67f9786dd11f546cc0cc05b48f"
+        },
+        {
+          "class": "com/faboslav/structurify/common/world/level/chunk/ChunkGeneratorHeightCacheKey",
+          "method": "hashCode",
+          "desc": "()I",
+          "sha256": "988fcef32c3341184ea9c86f8f7d01104f157fbffac7b4bfb9c544a12d4c28eb"
+        },
+        {
+          "class": "com/faboslav/structurify/common/world/level/chunk/ChunkGeneratorHeightCache$1",
+          "method": "<init>",
+          "desc": "(IFZ)V",
+          "sha256": "b010e85438d88aab1cfb39131da4175f197a607d99dbafc6e8f4b35b62f05108"
+        },
+        {
+          "class": "com/faboslav/structurify/common/world/level/chunk/ChunkGeneratorHeightCache$1",
+          "method": "removeEldestEntry",
+          "desc": "(Ljava/util/Map$Entry;)Z",
+          "sha256": "167a40daf0d496dd660575b4b3aafb411883a5a69a1609a94e5eb8b23c3d5a34"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors",
+      "license": "CC BY-NC-ND 4.0 (no derivatives): no Structurify code in our source; injectors plus our own helper bons.furious.patch.structurify.WeakHeightAccessor"
+    }
+  }
+}

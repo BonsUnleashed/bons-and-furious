@@ -1,0 +1,803 @@
+{
+  "group": "valkyrienskies_core",
+  "keys": {
+    "valkyrien_terrain_snapshot_order": {
+      "mod": "valkyrienskies",
+      "scripts": [
+        "furious15-valkyrien-FN.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.valkyrienskies_core.TerrainSnapshotOrderMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "<init>",
+          "desc": "(Lorg/valkyrienskies/core/impl/shadow/DN;Lorg/valkyrienskies/core/impl/shadow/FV;Lorg/valkyrienskies/core/impl/shadow/Et;Ljavax/inject/Provider;)V",
+          "sha256": "23635df1ccdd33e99f3659775e66ce4bb72a4484cfa9e96466ef6da11050bd1e"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "()Lorg/valkyrienskies/core/impl/program/VSCoreInternal;",
+          "sha256": "6a77caa3e330ad874bedb72dbd23d188b9b06bb02ed6b286cbf78c00b53e4b0d"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "o",
+          "desc": "()Ljava/util/Map;",
+          "sha256": "f306f770df7c679dc77f4eb32c8635f701478f8ae5433fccaac7bf74e3fef777"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "b",
+          "desc": "()Ljava/util/Map;",
+          "sha256": "d3d4a36f5f0866573105df69f9f2035734dd66a7dd0436054a7c5d8d6ee7df23"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "c",
+          "desc": "()Lorg/valkyrienskies/core/impl/shadow/Iz;",
+          "sha256": "9fae82aad5821875b10310851cd1261f583d69d718f1fdf9389ce8eb627d5c90"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/impl/shadow/Iz;)V",
+          "sha256": "1d1d3dbf50d5ee2f16a0d73acc0705b40f6a4e0d1e2296829ba6eb77e7465378"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "d",
+          "desc": "()Ljava/util/HashMap;",
+          "sha256": "562a7ba8873dfff167d0c3db0060d98e28f4c14bb23eb69d93c56d04075e90a3"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "e",
+          "desc": "()Ljava/util/HashMap;",
+          "sha256": "d9a25df49cf6bb8aaaabd6bb411b6509edf20c242bdea5c1c77a4faa61d214f7"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "f",
+          "desc": "()Ljava/util/HashMap;",
+          "sha256": "71d1f9f07e584a84ac2cf243943a632d43e26d27febfec75f52591e1bd88d7e0"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "g",
+          "desc": "()Z",
+          "sha256": "a727609ccca6a11789ae08d29678d960653686a57054acbfd07f371d2f050e7f"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "p",
+          "desc": "()I",
+          "sha256": "798716862b84380d1f6d3f77015dcc5289d6d2022423d83282c97772ff8c0257"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "h",
+          "desc": "()Ljava/util/Map;",
+          "sha256": "831258c4a49412c4d444966a5713c482a73a4ee8ed80c452a2fbf7ef9e2b050a"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "i",
+          "desc": "()Z",
+          "sha256": "c88fc8791e5de08dcf4c55868042a71c2a470af34f56d0cc8bc148ee999f9081"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Z)V",
+          "sha256": "363c62865c78a5c163e4af85583b66d8c9b56e0fb61c1a01377892916f3545d8"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "q",
+          "desc": "()Z",
+          "sha256": "8942a14d7e9d1116218d87a7cf30b05e113eb928801121b334869fd1d43025ff"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "b",
+          "desc": "(Z)V",
+          "sha256": "4aced3b7bdebc0f9546d2e4e3c944d3297c610120704c56855c1d9f00aa4c800"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Ljava/lang/String;Lorg/valkyrienskies/core/api/ships/properties/ShipTransform;III)J",
+          "sha256": "567e646c83153dfacc27eee63d18856ab18eea95457f981050b998fa5f3e7124"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "r",
+          "desc": "()V",
+          "sha256": "91c6140d6be46058a97b50d79a512ff96bd51d9ae6b75d95172496ed1bbeacfd"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/api/physics/blockstates/SolidBlockShape;)Lorg/valkyrienskies/core/impl/shadow/If;",
+          "sha256": "9c46aa0179892f3cb076cd112dfdc267e104b646f6ced1145f5b3cb97c2d6953"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/api/physics/blockstates/LiquidBlockShape;)Lorg/valkyrienskies/core/impl/shadow/Ih;",
+          "sha256": "81a52be6c4dde207fabb8ec7ceb6ad92a191f102f02723226ab5bf11bca091ef"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/joml/primitives/AABBic;)Lorg/valkyrienskies/core/impl/shadow/Ih;",
+          "sha256": "52b407a0ab4a8cbd06c58857a6e891b23c3dc22473b2bebd9874ea6414687979"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/api/physics/blockstates/SolidState;I)Lorg/valkyrienskies/core/impl/shadow/Id;",
+          "sha256": "a759e2392dd46e9a3237bf24257b04fd04ff3a295b99d9fae0012ebd5eaf7562"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/api/physics/blockstates/LiquidState;I)Lorg/valkyrienskies/core/impl/shadow/Ib;",
+          "sha256": "5046687cca2c4c2b24595c84759013ff8437d44a25e5b12b1082f0257f4293e4"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Ljava/lang/String;)Lorg/valkyrienskies/core/api/world/PhysLevel;",
+          "sha256": "9e70e49fa04a60725baa04b086521ee1b9e41c9efb58c1f03057cdd384238231"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/impl/shadow/FG;)V",
+          "sha256": "4000459abaf32088d778fdff88a12a4d104553ec7e2a4148bdc684022f9ef58d"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(DZ)Lorg/valkyrienskies/core/impl/shadow/FL;",
+          "sha256": "ad2ddde0788265e363620336fe1cde2121d912e7400a957c88ffecc4f37cecf8"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(DLkotlin/coroutines/Continuation;)Ljava/lang/Object;",
+          "sha256": "33057edd79ba33fa8593bce3085de67799f919ae1270971b2f2936850c0503b9"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "j",
+          "desc": "()V",
+          "sha256": "f7fe4098216c892381932dda5b39f50fec651af2d797eb82331998fdc8e719e3"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "b",
+          "desc": "(Lorg/valkyrienskies/core/impl/shadow/FG;)V",
+          "sha256": "b96bc3ac4c851f3c79ba445574fe538a8e301f1ded13ee4e76af7e021fd09bad"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "s",
+          "desc": "()V",
+          "sha256": "a34e78bbd3efd8d07e692d12ca61eea823138d8e51f12d6eb14f7a2fbc005b90"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(ILorg/valkyrienskies/core/internal/joints/VSJoint;)Lorg/valkyrienskies/core/impl/shadow/FD;",
+          "sha256": "ff5a1f91445419e7863e4fab4f0f09811eaaf583b57b83bee2403e332c274232"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Ljava/lang/Long;)Ljava/lang/String;",
+          "sha256": "f92fefa4594a4a9aaac9624d63717f1b6e33c8dec0224bb4f95fa0c3ff1de6fe"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/internal/joints/VSJoint;)Z",
+          "sha256": "a404dad422bc8ed1a3105709d8384ecdaebdb358c11d9daaece01fa3d6b7d108"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/internal/joints/VSJointPose;)Z",
+          "sha256": "e2f4919edc065a130da7d4c289917dee0abca5bfc2c8d8f0ac8fb4f9d1dfe376"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/joml/Vector3dc;)Z",
+          "sha256": "855263cd15afd7a3d73b6bccba7ddb07b4d581b8d2d807c27c720cda40b87b67"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "b",
+          "desc": "(Ljava/lang/Long;)Z",
+          "sha256": "ea3429cc274e968b05b6655c59d93c35893353142b462b2c30ba8291bfdbabee"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "t",
+          "desc": "()Lorg/valkyrienskies/core/impl/shadow/FL;",
+          "sha256": "54124339a67d2aad4f3138480f3a2932379697e7bedd8e8654cd349a2e15226c"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/impl/config/PhysicsConfig;)Lorg/valkyrienskies/core/impl/shadow/Iz;",
+          "sha256": "4fe049d6caa46e011453d5e1277a832e546d93346904b6ca1a8d7b323d0433c8"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "b",
+          "desc": "(Lorg/valkyrienskies/core/impl/config/PhysicsConfig;)V",
+          "sha256": "b774dd4c19a4d6ccace0914993fb0b313585da456651d9f1aa8dcaa0136e28b6"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/internal/joints/VSJoint;Ljava/lang/String;)Lorg/valkyrienskies/core/impl/shadow/HN;",
+          "sha256": "ef644fa49d1e6a0b48bea3fbc1cadc5fd8c0fd0d4a7aa1ee60bc98f9a7984381"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/internal/joints/VSD6Joint$LinearLimitPair;)Lorg/valkyrienskies/core/impl/shadow/HI$l;",
+          "sha256": "c5842c72507988709c5386459559797ed51bc5545252b36816905ae1e0c0b71c"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/internal/joints/VSD6Joint$AngularLimitPair;)Lorg/valkyrienskies/core/impl/shadow/HI$a;",
+          "sha256": "7cdffff14dd052f51218bc31864f20dc3fcc38d1a9fa6881120097de8c515876"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/internal/joints/VSRevoluteJoint$VSRevoluteDriveVelocity;)Lorg/valkyrienskies/core/impl/shadow/HS$a;",
+          "sha256": "01558cbe4a5b24f831e414abb3643d57214a92202f4b30a406f820d1d89f51fb"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/internal/joints/VSD6Joint$LimitCone;)Lorg/valkyrienskies/core/impl/shadow/HI$i;",
+          "sha256": "5538d1679249f82d84ed843f5421db82f804898218c614888f36835631737de2"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/internal/joints/VSD6Joint$Hinges;)Lorg/valkyrienskies/core/impl/shadow/HI$h;",
+          "sha256": "08433bd62e9108e779d64b851f99531314dfb8051da920454ccf37b442685d83"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/internal/joints/VSRackAndPinionJoint$VSRackAndPinionJointData;)Lorg/valkyrienskies/core/impl/shadow/HR$a;",
+          "sha256": "a8b545d903b1d25060a0f79020392f957ef5e21f27e9846ddd6124012563b025"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Ljava/util/EnumMap;)Ljava/util/EnumMap;",
+          "sha256": "3a14af4c16a2c859928b7a2ed2d6009caf6e93a6bf066caac8dc4435a208293a"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/internal/joints/VSD6Joint$D6Axis;)Lorg/valkyrienskies/core/impl/shadow/HI$b;",
+          "sha256": "e334ddad0ba4f620c6a8dfdc56c17f370814af049a88aa25ab0169d819eb4670"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/internal/joints/VSD6Joint$D6Motion;)Lorg/valkyrienskies/core/impl/shadow/HI$e;",
+          "sha256": "fa99f6932e17519115302e8ddb8f12e6cbe93e9662f6473e8cc679908f41b8d9"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/internal/joints/VSD6Joint$LinearLimit;)Lorg/valkyrienskies/core/impl/shadow/HI$k;",
+          "sha256": "272e5d3f4816b1ecd19098950e65a5598da5ea8e46bb091a882e5e82e9a5f0a0"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "b",
+          "desc": "(Ljava/util/EnumMap;)Ljava/util/EnumMap;",
+          "sha256": "85d5fcf4979f789705a5e869f58b1d16460d428ac546a36b28d38073b70ff431"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/internal/joints/VSD6Joint$LimitPyramid;)Lorg/valkyrienskies/core/impl/shadow/HI$j;",
+          "sha256": "fd1916d8fdc215ba18a8c2991563edaef13a13e7a3c6c78e9a84468e9775969f"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "c",
+          "desc": "(Ljava/util/EnumMap;)Ljava/util/EnumMap;",
+          "sha256": "6f1ede5393e632464bfa60164455910136de0564b151df36a13a4364d486abd0"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/internal/joints/VSD6Joint$D6Drive;)Lorg/valkyrienskies/core/impl/shadow/HI$c;",
+          "sha256": "716b5b6a852b1559f80ae93c00549ee0179838b3df8669a02b36da0ec0e9cc4e"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/internal/joints/VSD6Joint$D6JointDrive;)Lorg/valkyrienskies/core/impl/shadow/HI$d;",
+          "sha256": "1d35c6a5fd2fefda5c6c714ccb49ad424cac98560bff424529e1bc5928112bd8"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/internal/joints/VSD6Joint$DrivePosition;)Lorg/valkyrienskies/core/impl/shadow/HI$f;",
+          "sha256": "de1b39d3ffda4c1e41f898e4013ac3ea8dc98e0ba2e3d9eb3dc66215c251584c"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/internal/joints/VSD6Joint$DriveVelocity;)Lorg/valkyrienskies/core/impl/shadow/HI$g;",
+          "sha256": "0e1f0c59ffa44c53f40969b05d5fafad272515fea632fed26a6517832d899ec7"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "b",
+          "desc": "(Lorg/valkyrienskies/core/internal/joints/VSJointPose;)Lorg/valkyrienskies/core/impl/shadow/Hf;",
+          "sha256": "157b628c5fe2281bb599299e9342f0b2a9cd4ca20790de7a3a3d911e531191b1"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(I)I",
+          "sha256": "d75dc628cd099797e34c92721b595d16387276d73fb55f0d779924ad142f9fd8"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "u",
+          "desc": "()V",
+          "sha256": "2ba066c65555514dcc1025190aa63f4814d140ff710e1391d38c356109683b1e"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/impl/shadow/Ik;)V",
+          "sha256": "76fdfbd799dcfecbe1c4e05bda146cbea04a725bfe83bb856bfcc6dc1cabc544"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(JLorg/valkyrienskies/core/impl/shadow/Hp;III)V",
+          "sha256": "b228ba934763f77ae732639f790f0c46bf5bb145c73875633f18a8d98390e58f"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Ljava/lang/Runnable;)Ljava/lang/Thread;",
+          "sha256": "fa3511705aa039f9b9e5b4245c7dd2388f8caa55a7653aba02df87dc44f4efd4"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "g",
+          "desc": "(Lorg/valkyrienskies/core/impl/shadow/FN;)Lorg/valkyrienskies/core/impl/shadow/Hm;",
+          "sha256": "381afc9ccef52867c3b4cbfbfac5464f31e1f1f008828361cb29637ce683e95b"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/impl/shadow/GW;)V",
+          "sha256": "8d7f1162c84fbcb1c1d43679bf3e0fe5097d52694eaf44a7fd07651223e103a7"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/impl/shadow/FN;Ljava/lang/String;Lorg/valkyrienskies/core/util/datastructures/BlockPos2IntOpenHashMap;II)V",
+          "sha256": "a7b656d4bef30676fb85e39f251d857a9090085646269f1b0ef11c6ccd3d4649"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(J)Lorg/valkyrienskies/core/util/datastructures/BlockPos2ObjectOpenHashMap;",
+          "sha256": "4bfc9d6919603bcf52432beb811c8264b3edb889714f3fd42cf75335bf9fc519"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/impl/shadow/Ij;Lorg/valkyrienskies/core/impl/shadow/FN;Lorg/valkyrienskies/core/impl/shadow/Ip;)Lorg/valkyrienskies/core/impl/shadow/Ik;",
+          "sha256": "9364bc9ddd2a12067a3572a961c74ad9cb5b5e0fe2f6cff4df630defb7e877b6"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/impl/shadow/Ij;Lorg/valkyrienskies/core/impl/shadow/FN;Ljava/util/Queue;)Lorg/valkyrienskies/core/impl/shadow/Ik;",
+          "sha256": "2eb0448e0e568eafb7b8085ed278c884c0e9335595d481e415736508cb07770a"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "b",
+          "desc": "(Lorg/valkyrienskies/core/impl/shadow/Ik;)V",
+          "sha256": "457a1b240e841f36c0b90051da0daa1c388ae658aa821bedddf48fbe3946c1d9"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "v",
+          "desc": "()V",
+          "sha256": "01e70b3717db6d19ad120f0f75f9ae8893ec108416fce12847733e35e9b0c4c3"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "w",
+          "desc": "()V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/impl/shadow/FN;DZLkotlin/coroutines/Continuation;)Ljava/lang/Object;",
+          "sha256": "89b3479e48d7a5c393e5679207291a4f2a534e11232b257df9a0497db410275a"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/impl/shadow/FN;Lorg/valkyrienskies/core/impl/config/PhysicsConfig;)Lorg/valkyrienskies/core/impl/shadow/Iz;",
+          "sha256": "802e84b462c2956f2da6b0a96725360f8a2cdb5e7cd1bd8f8792f6cd7d17106f"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "a",
+          "desc": "(Lorg/valkyrienskies/core/impl/shadow/FN;)Lorg/valkyrienskies/physics_api_krunch/KrunchNativePhysicsThreadPoolReference;",
+          "sha256": "01377b072019c087de93b991bfd798c50eaea17d0affec6efaf6d8e936cffa67"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "b",
+          "desc": "(Lorg/valkyrienskies/core/impl/shadow/FN;)Ljava/util/Map;",
+          "sha256": "f306f770df7c679dc77f4eb32c8635f701478f8ae5433fccaac7bf74e3fef777"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "c",
+          "desc": "(Lorg/valkyrienskies/core/impl/shadow/FN;)Ljava/util/Map;",
+          "sha256": "c52a9e3ffff564c242f0e00134f20bf10b87aa0d5c8ac5a2035b109b304a9bd7"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "d",
+          "desc": "(Lorg/valkyrienskies/core/impl/shadow/FN;)Ljava/util/concurrent/ThreadPoolExecutor;",
+          "sha256": "98ca3ad0aa0a6058d9ea54f1dc4512cd9259d671cda9ef9282422ef2fd5e4743"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "e",
+          "desc": "(Lorg/valkyrienskies/core/impl/shadow/FN;)Lorg/valkyrienskies/core/impl/shadow/FW;",
+          "sha256": "157df7e2091ac0947bc2231fa3672f5b2e169e9a4da0d6c4e32eb1ee4d798a0a"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "k",
+          "desc": "()Lorg/apache/logging/log4j/Logger;",
+          "sha256": "e73f60aa9d9d0f0ff8b340604869a6fafb50da25f265f7f94b86a682ceb6f147"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "l",
+          "desc": "()Lorg/valkyrienskies/core/impl/shadow/FV;",
+          "sha256": "bb53dedad92f420198b9a830cf5576bfed07111cb6b1dfc728cb9f7d64162d17"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "m",
+          "desc": "()Lorg/valkyrienskies/core/impl/shadow/FV;",
+          "sha256": "2e8942505c5c53b4eb9e3bf11de51a3ebf83dcbffeb844d70311f10e5385885e"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "n",
+          "desc": "()Lorg/joml/Vector3dc;",
+          "sha256": "26e54560b707ff80a010c1de6d600cd2c2750a65d3fe01d4dbb24db79be46dc4"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "f",
+          "desc": "(Lorg/valkyrienskies/core/impl/shadow/FN;)Lit/unimi/dsi/fastutil/ints/Int2LongMap;",
+          "sha256": "4b8d023ba4ab844fb466d000f1d746646b024cabe982ccfcd33bdc053d3c0115"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/FN",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "e24e38368c7f6c218ae3bcadcc4abdb56713498fb97767c7e47487ae44fb0b72"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors",
+      "license": "VS core (org.valkyrienskies.core.impl, obfuscated): no-copy; targeted injectors only, the mixins carry only our own logic and every unchanged instruction stays in the installed class"
+    },
+    "valkyrien_collision_axes": {
+      "mod": "valkyrienskies",
+      "scripts": [
+        "furious15-valkyrien-Dk.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.valkyrienskies_core.DistanceComparatorAccessor",
+        "bons.furious.mixin.valkyrienskies_core.EntityPolygonColliderMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/Dk",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/Dk",
+          "method": "createPolygonFromAABB",
+          "desc": "(Lorg/joml/primitives/AABBdc;Lorg/joml/Matrix4dc;Ljava/lang/Long;)Lorg/valkyrienskies/core/internal/collision/VsiConvexPolygonc;",
+          "sha256": "b25d7a6aa95701988b44eebd6aed7d466fa250660898a9e851f0284cbd90782c"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/Dk",
+          "method": "adjustEntityMovementForPolygonCollisions",
+          "desc": "(Lorg/joml/Vector3dc;Lorg/joml/primitives/AABBdc;DLjava/util/List;)Lkotlin/Pair;",
+          "sha256": "f251cc490a31509792d5b71f9adffed2405fa627ccda4e3bc17610f1f851700a"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/Dk",
+          "method": "a",
+          "desc": "(Lorg/joml/primitives/AABBdc;Lorg/joml/Vector3dc;DLjava/util/List;)Lkotlin/Pair;",
+          "sha256": "2878fcfb74704a3bd296597f588f6dde8d447affd1617fa4e9068c01d992d956"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/Dk",
+          "method": "a",
+          "desc": "(Lorg/joml/primitives/AABBdc;Ljava/util/List;Lorg/joml/Vector3dc;DD)Lkotlin/Pair;",
+          "sha256": "3576249e82b0f8c330451e0b92b26dd2228020c9cbd79d8fbd203252abb96e5e"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/Dk",
+          "method": "a",
+          "desc": "(Lorg/joml/primitives/AABBdc;Ljava/util/List;Lorg/joml/Vector3dc;D)Lkotlin/Pair;",
+          "sha256": "5948c34130ac05f0af01293086ba140bbcb740188521ac027630ca2e32291479"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/Dk",
+          "method": "a",
+          "desc": "(Lorg/joml/primitives/AABBdc;Ljava/util/List;Lorg/joml/Vector3dc;DLorg/joml/Vector3dc;)Lkotlin/Pair;",
+          "sha256": "95c497d0209cb87f983eaac225d2216002b724baea97dbaa31347ef4f761d459"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/Dk",
+          "method": "a$default",
+          "desc": "(Lorg/valkyrienskies/core/impl/shadow/Dk;Lorg/joml/primitives/AABBdc;Ljava/util/List;Lorg/joml/Vector3dc;DLorg/joml/Vector3dc;I)Lkotlin/Pair;",
+          "sha256": "f4ed26e8e738285e36f752c3379c0c10bb5473e35f5e200172542e5d5f9a2168"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/Dk",
+          "method": "a",
+          "desc": "(Lorg/joml/Vector3dc;Lorg/joml/Vector3dc;)Lorg/joml/Vector3dc;",
+          "sha256": "c0d33f70c87f074c353d5532322c4f5fc6970d4bbf52f1a408fdfa54b14c07cb"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/Dk",
+          "method": "a",
+          "desc": "(Lorg/joml/primitives/AABBdc;DD)Lorg/joml/primitives/AABBdc;",
+          "sha256": "355f21f16881f284ef024b26c7385e372f43f0f5a70c63cb184ec97d1c3bd643"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/Dk",
+          "method": "a",
+          "desc": "(Lorg/joml/primitives/AABBdc;Ljava/util/List;D)Z",
+          "sha256": "3e77325534e340a90ba9fb9858bf51558f5ef47844df1cd9d13356fa3dddf1b9"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/Dk",
+          "method": "a",
+          "desc": "(Lorg/joml/primitives/AABBdc;)Lorg/joml/primitives/AABBdc;",
+          "sha256": "edaaf82e320f1f8d9bc941916a76239d7d032dbf1258bb6cabfe04f94129207c"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/Dk",
+          "method": "a",
+          "desc": "(Ljava/lang/Iterable;)Ljava/util/List;",
+          "sha256": "fec00eef322359fae71e0c308f3e81b279143f0ae9cd5b7d01a7e54be438660f"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/Dk",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "3f31e1b39a7b22d1b70d7af227a6d7e5362211da2709f4bdc518b72417f06141"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/Dk$a",
+          "method": "<init>",
+          "desc": "(Lorg/joml/primitives/AABBdc;)V",
+          "sha256": "f563a7e52d1d9b6648189796ae47871265c61f78b0f2557cc963679a40439378"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/shadow/Dk$b",
+          "method": "<init>",
+          "desc": "(Lorg/joml/primitives/AABBdc;)V",
+          "sha256": "cf53267e305bb75f26b13ad044a62048d8d6f80f33a6fe45a75527dd6734c4fb"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors",
+      "license": "VS core (org.valkyrienskies.core.impl, obfuscated): no-copy; targeted injectors only, the mixins carry only our own logic and every unchanged instruction stays in the installed class"
+    },
+    "valkyrien_chunk_set_version": {
+      "mod": "valkyrienskies",
+      "scripts": [
+        "furious15-valkyrien-ShipActiveChunksSet.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.valkyrienskies_core.ShipActiveChunksSetMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/valkyrienskies/core/impl/chunk_tracking/ShipActiveChunksSet",
+          "method": "<init>",
+          "desc": "(Lit/unimi/dsi/fastutil/longs/LongOpenHashSet;)V",
+          "sha256": "858d3834ee52a985b726c7de7a83f77dcc4eb86855a5f0078e104215e72cd93b"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/chunk_tracking/ShipActiveChunksSet",
+          "method": "add",
+          "desc": "(II)Z",
+          "sha256": "81f776fd639ca2507f2c1a8d7c94fe4baa2d7de8b9322f055f4aa65fe5c151b0"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/chunk_tracking/ShipActiveChunksSet",
+          "method": "remove",
+          "desc": "(II)Z",
+          "sha256": "9bb36fa4bcc0b09d37bf297dc4de47377b276631310c5106cba37162e461080c"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/chunk_tracking/ShipActiveChunksSet",
+          "method": "contains",
+          "desc": "(II)Z",
+          "sha256": "0958bd1207b3603dbdd85199b856365b63a9ced366592378e296a3d47faf13ab"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/chunk_tracking/ShipActiveChunksSet",
+          "method": "iterateChunkPos",
+          "desc": "(Lkotlin/jvm/functions/Function2;)V",
+          "sha256": "01799f6d98ea721562cbc098f0946b86c6b4a6b850dd4ee1a89136f43c280069"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/chunk_tracking/ShipActiveChunksSet",
+          "method": "forEach",
+          "desc": "(Lorg/valkyrienskies/core/api/util/functions/IntBinaryConsumer;)V",
+          "sha256": "d03222656f90fdf68b76c0481e224dd89919c14a0a215f7eb82568c6fcad2cd7"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/chunk_tracking/ShipActiveChunksSet",
+          "method": "getSize",
+          "desc": "()I",
+          "sha256": "8fdd2080d5c5a9835d4a5da9d69903ec1a2c6079fb7a6f2250eef2ea82a1d2c7"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/chunk_tracking/ShipActiveChunksSet",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "sha256": "a8c4f96b1c80f46d4415b85daac7cfb6a48bfd27b1e7c33993010092f24b057d"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/chunk_tracking/ShipActiveChunksSet",
+          "method": "hashCode",
+          "desc": "()I",
+          "sha256": "6091fb011d51449cce8f6328b80600680ca556f125d7c295eccbb01221947f65"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/chunk_tracking/ShipActiveChunksSet",
+          "method": "clone",
+          "desc": "()Lorg/valkyrienskies/core/impl/chunk_tracking/ShipActiveChunksSet;",
+          "sha256": "4dcd38617c1310ffbf13af6e7508292c489954e37c74cf6990341566d530abd1"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/chunk_tracking/ShipActiveChunksSet",
+          "method": "component1",
+          "desc": "()Lit/unimi/dsi/fastutil/longs/LongOpenHashSet;",
+          "sha256": "322b4db7f131e830caa1625e534215df4dc610f3f62d1ad930495c54d6664a04"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/chunk_tracking/ShipActiveChunksSet",
+          "method": "copy",
+          "desc": "(Lit/unimi/dsi/fastutil/longs/LongOpenHashSet;)Lorg/valkyrienskies/core/impl/chunk_tracking/ShipActiveChunksSet;",
+          "sha256": "d94601acfe37a5cf52909edc5dc1dc8c85094dc46d72c90f2923d741d26ff014"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/chunk_tracking/ShipActiveChunksSet",
+          "method": "copy$default",
+          "desc": "(Lorg/valkyrienskies/core/impl/chunk_tracking/ShipActiveChunksSet;Lit/unimi/dsi/fastutil/longs/LongOpenHashSet;ILjava/lang/Object;)Lorg/valkyrienskies/core/impl/chunk_tracking/ShipActiveChunksSet;",
+          "sha256": "71ced31813e11934e92cd2a88486ca4f4be40b8fdaf52cd28b7aa7fb30ea6515"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/chunk_tracking/ShipActiveChunksSet",
+          "method": "toString",
+          "desc": "()Ljava/lang/String;",
+          "sha256": "58b39e5ddcf3f00994dfb67bcbd8d2254174d3da0dc8978e48124298cd2f0cef"
+        },
+        {
+          "class": "org/valkyrienskies/core/impl/chunk_tracking/ShipActiveChunksSet",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "db46a7ffa57c257061ea64623b34ef2f817be14bd758932df9bd58c4c8aec66e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors",
+      "license": "VS core (org.valkyrienskies.core.impl, obfuscated): no-copy; targeted injectors only, the mixins carry only our own logic and every unchanged instruction stays in the installed class"
+    },
+    "valkyrien_sculk_vibrations": {
+      "mod": "valkyrienskies",
+      "scripts": [
+        "furious15-valkyrien-sculk.js",
+        "furious15-valkyrien-retired.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.valkyrienskies_core.VibrationTickerMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/gameevent/vibrations/VibrationSystem$Ticker",
+          "method": "m_280404_",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/gameevent/vibrations/VibrationSystem$Data;Lnet/minecraft/world/level/gameevent/vibrations/VibrationSystem$User;)V",
+          "sha256": "93f3a70bd452273b529504b1899ad6924fe02508ead3292d4c87b873bbccbf92"
+        },
+        {
+          "class": "net/minecraft/world/level/gameevent/vibrations/VibrationSystem$Ticker",
+          "method": "m_280174_",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/gameevent/vibrations/VibrationSystem$Data;Lnet/minecraft/world/level/gameevent/vibrations/VibrationSystem$User;Lnet/minecraft/world/level/gameevent/vibrations/VibrationInfo;)Z",
+          "sha256": "286172a531e6ec64176a5149c5628cdc7886266a64e1a1417833d1cfb89fe083"
+        },
+        {
+          "class": "net/minecraft/world/level/gameevent/vibrations/VibrationSystem$Ticker",
+          "method": "m_280446_",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "1b8421f5a8bc936692ec7374b43e7567037212430351f21462b908d78d440ddd"
+        },
+        {
+          "class": "net/minecraft/world/level/gameevent/vibrations/VibrationSystem$Data",
+          "method": "m_280602_",
+          "desc": "()Lnet/minecraft/world/level/gameevent/vibrations/VibrationInfo;",
+          "sha256": "b4a114b8c287892a4e922c390ce7c2d06496590aab76ff5960c1c131cc1bca33"
+        },
+        {
+          "class": "org/valkyrienskies/mod/mixin/feature/sculk/MixinVibrationSystemTicker",
+          "method": "destWorldPos",
+          "desc": "(Lnet/minecraft/world/level/gameevent/vibrations/VibrationInfo;Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/world/phys/Vec3;",
+          "sha256": "88a5102ceb3ee3b0eaef71647495e1b048913aab9a61b05ef7d6339c18fc43ec"
+        },
+        {
+          "class": "org/valkyrienskies/mod/mixin/feature/sculk/MixinVibrationSystemTicker",
+          "method": "destSourcePos",
+          "desc": "(Lnet/minecraft/world/level/gameevent/vibrations/VibrationSystem$User;Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/world/level/gameevent/PositionSource;",
+          "sha256": "8de478e723a91e5bce47b86b03133e80d29dcd7ce9cde386b274f133158ab33b"
+        },
+        {
+          "class": "org/valkyrienskies/mod/mixin/feature/sculk/MixinVibrationSystemTicker",
+          "method": "destReloadSourcePos",
+          "desc": "(Lnet/minecraft/world/level/gameevent/vibrations/VibrationSystem$User;Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/world/level/gameevent/PositionSource;",
+          "sha256": "cde893635e63d0a383a2ca7c43b73334ef93a06f2d498ba4f82d1839474bad8a"
+        }
+      ],
+      "cancel": [
+        "org.valkyrienskies.mod.mixin.feature.sculk.MixinVibrationSystemTicker"
+      ],
+      "conversion": "overwrite + canceller",
+      "license": "Minecraft (Mojang) is no-copy. Forge's Mixin 0.8.5 accepts no injector in an interface mixin, so a full replacement of the two private static methods is the only mixin mechanism; both bodies are written from the methods' behaviour (brief rule 2 last resort). Valkyrien Skies' own interface mixin is cancelled, not copied."
+    }
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "group": "spawn",
+  "keys": {
+    "spawn_zombified_flower_floor": {
+      "mod": "spawn",
+      "scripts": [
+        "furious19-spawn-ZombifiedFlowerFeature.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.spawn.ZombifiedFlowerFloorMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ninni/spawn/server/level/feature/ZombifiedFlowerFeature",
+          "method": "<init>",
+          "desc": "(Lcom/mojang/serialization/Codec;)V",
+          "sha256": "6d7e5ffd8b80db7e7bd19bceff9e4f796abc28cdce7b1f39218c8296efcdfd0d"
+        },
+        {
+          "class": "com/ninni/spawn/server/level/feature/ZombifiedFlowerFeature",
+          "method": "m_142674_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/feature/FeaturePlaceContext;)Z",
+          "sha256": "d53c8a0cdc92c99a8fd996aa092bbfb87277d5991e3d9731bada17f51d710412"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors",
+      "license": "All Rights Reserved (no-copy): the mixin holds only the added floor check; Spawn's code stays in its jar"
+    },
+    "spawn_sealife_tick": {
+      "mod": "spawn",
+      "scripts": [
+        "furious3-SeaLifeDecoBlockEntity.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.spawn.SeaLifeDecoTickMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ninni/spawn/server/block/entity/SeaLifeDecoBlockEntity",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/block/entity/BlockEntityType;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V",
+          "sha256": "833749797d014464fbbc733eadabb281ca0596c275e4dc3f9da3397c1c1622ba"
+        },
+        {
+          "class": "com/ninni/spawn/server/block/entity/SeaLifeDecoBlockEntity",
+          "method": "tick",
+          "desc": "(Lcom/ninni/spawn/server/block/entity/SeaLifeDecoBlockEntity;)V",
+          "sha256": "d7b925636a427c28f461393b055efee52f3f139a85fd84bf89f0ed21cd6f2010"
+        },
+        {
+          "class": "com/ninni/spawn/server/block/entity/SeaLifeDecoBlockEntity",
+          "method": "rotateTowardsMovement",
+          "desc": "()Z",
+          "sha256": "a9057d062fb197564c8e845386d2280bde1a1cc2fd7f4098adc42ac45ea65ea5"
+        },
+        {
+          "class": "com/ninni/spawn/server/block/entity/SeaLifeDecoBlockEntity",
+          "method": "getSpeed",
+          "desc": "()F",
+          "sha256": "48758a134fd27f9a31974ffe21873f690fdd4fe149c7e6a447dd8bcee89d450d"
+        },
+        {
+          "class": "com/ninni/spawn/server/block/entity/SeaLifeDecoBlockEntity",
+          "method": "getRotationSpeed",
+          "desc": "()F",
+          "sha256": "160cb523e41cb5ee20363401fe831b8d26e7e793cade67110374eac247c2962f"
+        },
+        {
+          "class": "com/ninni/spawn/server/block/entity/SeaLifeDecoBlockEntity",
+          "method": "getInterval",
+          "desc": "(Ljava/util/Random;)I",
+          "sha256": "f2a46cc2387b7cfa1d986cc58b230fb7421216d50264bc089d5df5e1761d8974"
+        },
+        {
+          "class": "com/ninni/spawn/server/block/entity/SeaLifeDecoBlockEntity",
+          "method": "getYaw",
+          "desc": "()F",
+          "sha256": "159a66465b0baf16001cf3525decfb62d5cafa247af10a05c6c75ae6b64acb48"
+        },
+        {
+          "class": "com/ninni/spawn/server/block/entity/SeaLifeDecoBlockEntity",
+          "method": "setTargetYaw",
+          "desc": "(F)V",
+          "sha256": "3ff0b7eae03a03ee29cd7b6b7fcaddfaccc4388256a40cdc9fb95d785d0d68db"
+        },
+        {
+          "class": "com/ninni/spawn/server/block/entity/SeaLifeDecoBlockEntity",
+          "method": "setYaw",
+          "desc": "(F)V",
+          "sha256": "9eb43cde982017981e60c61585107ad356e3632399d24468053a746f63de475f"
+        },
+        {
+          "class": "com/ninni/spawn/server/block/entity/SeaLifeDecoBlockEntity",
+          "method": "setTargetMovePos",
+          "desc": "(Lorg/joml/Vector2f;)V",
+          "sha256": "12ef9562d5873fde8f069939cc576f0cadfa3ee4e3c028c9f28d334751050b27"
+        },
+        {
+          "class": "com/ninni/spawn/server/block/entity/SeaLifeDecoBlockEntity",
+          "method": "getMovePos",
+          "desc": "()Lorg/joml/Vector2f;",
+          "sha256": "9017b9b51614c8151bf2b07e0c695a3fdc521576653f971d4ba776536ff8f141"
+        },
+        {
+          "class": "com/ninni/spawn/server/block/entity/SeaLifeDecoBlockEntity",
+          "method": "setMovePos",
+          "desc": "(Lorg/joml/Vector2f;)V",
+          "sha256": "af9865c0b8da4083193844cade3705e1624e9fe098aadbd3133cfbe41c30d8cc"
+        },
+        {
+          "class": "com/ninni/spawn/server/block/entity/SeaBunnyBlockEntity",
+          "method": "getInterval",
+          "desc": "(Ljava/util/Random;)I",
+          "sha256": "170fef0765c5a34aad34bd6ddc9fb08d5fad660dbf60fe7b3d31aa6f52c0e6dc"
+        },
+        {
+          "class": "com/ninni/spawn/server/block/entity/SeaStarBlockEntity",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set: sea stars inherit getInterval; an override in a newer Spawn build would change this",
+          "sha256": "a0063c88a4aa7f29ff0e39b4f8e206935862f118fdd0e0ee28f0e18dad64b387"
+        },
+        {
+          "class": "com/ninni/spawn/server/block/entity/SeaUrchinBlockEntity",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set: urchins inherit getInterval; an override in a newer Spawn build would change this",
+          "sha256": "058a0bbedaef6c16fa41253c2ea32f071604ac5bb484f495848236c04d0e855c"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/BlockEntity",
+          "method": "m_58899_",
+          "desc": "()Lnet/minecraft/core/BlockPos;",
+          "sha256": "2e72734a5f218d09155424ee31f243170934fec0fa4c34871d590475f72f717d"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "m_121878_",
+          "desc": "()J",
+          "sha256": "1d4d19db6733582b88a6f463cf63cae60a0a4cd2fe11c593d431753110ed691e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors",
+      "license": "All Rights Reserved (no-copy): the mixin holds only ac$interval, ac$move and redirects; Spawn's code stays in its jar (the 1.0.19 sparse-adapter property)"
+    }
+  }
+}

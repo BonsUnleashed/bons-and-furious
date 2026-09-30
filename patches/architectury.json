@@ -1,0 +1,25 @@
+{
+  "group": "architectury",
+  "keys": {
+    "architectury_event_dispatch": {
+      "mod": "architectury",
+      "scripts": [
+        "bons_and_furious-EventFactory.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.architectury.EventFactoryMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/architectury/event/EventFactory",
+          "method": "invokeMethod",
+          "desc": "(Ljava/lang/Object;Ljava/lang/reflect/Method;[Ljava/lang/Object;)Ljava/lang/Object;",
+          "sha256": "8860aea97b40aa85203d8b3c2d2724747e131a8a94b65d6c78d69597a4241708"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    }
+  }
+}

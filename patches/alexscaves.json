@@ -1,0 +1,102 @@
+{
+  "group": "alexscaves",
+  "keys": {
+    "alexscaves_magnet_query": {
+      "mod": "alexscaves",
+      "scripts": [
+        "bons_and_furious-MagnetUtil.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.alexscaves.MagnetUtilQueryMixin",
+        "bons.furious.mixin.alexscaves.LivingEntityJumpingAccessor"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexmodguy/alexscaves/server/entity/util/MagnetUtil",
+          "method": "tickMagnetism",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "06d075218bc124f27abc22b9fd3234a40b94e1437b161a2eab834e200a223eae"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/server/entity/util/MagnetUtil",
+          "method": "lambda$tickMagnetism$2",
+          "desc": "(Lnet/minecraft/world/entity/Entity;ILnet/minecraft/core/BlockPos;)V",
+          "sha256": "8dc948c7ead3de0d20ec7b2ebee175e0fe6125388fa78873881c8a7186b56452"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/server/entity/util/MagnetUtil",
+          "method": "lambda$tickMagnetism$3",
+          "desc": "(Lnet/minecraft/world/entity/Entity;ILnet/minecraft/core/BlockPos;)V",
+          "sha256": "89118c2a3302468e717ab4502ffacd26ba587fed653e792ea6eee93cd8cba1ec"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/server/entity/util/MagnetUtil",
+          "method": "getNearbyAttractingMagnets",
+          "desc": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/server/level/ServerLevel;I)Ljava/util/stream/Stream;",
+          "sha256": "00e95f7d52730b861c57f79373a5eb0cec1ba5ad72305c94f3bff2111bff7324"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/server/entity/util/MagnetUtil",
+          "method": "getNearbyRepellingMagnets",
+          "desc": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/server/level/ServerLevel;I)Ljava/util/stream/Stream;",
+          "sha256": "34b9db703a800ed5e1cb20436144f54ccef705bb3392e30ba808e92966d54f1e"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/server/entity/util/MagnetUtil",
+          "method": "lambda$getNearbyAttractingMagnets$0",
+          "desc": "(Lnet/minecraft/core/Holder;)Z",
+          "sha256": "9baf9302ea5f3cde382e31e3431ecc4405539e127ff9b407c775530bb0aa0089"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/server/entity/util/MagnetUtil",
+          "method": "lambda$getNearbyRepellingMagnets$1",
+          "desc": "(Lnet/minecraft/core/Holder;)Z",
+          "sha256": "6f6d3c23495e6ca510d7b285620a2abd9e6ab0e8ec025d387ee1ab5462fdc04e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "alexscaves_equipment_enumeration": {
+      "mod": "alexscaves",
+      "scripts": [
+        "furious8-magnet.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.alexscaves.MagnetUtilEquipmentMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexmodguy/alexscaves/server/entity/util/MagnetUtil",
+          "method": "isDynamicallyMagnetic",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Z)Z",
+          "sha256": "fc0fcb7bed612dadd4d41b65591ba7445c41b778b4cab73b0ae18a384a2978a0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "alexscaves_teletor_generation_context": {
+      "mod": "alexscaves",
+      "scripts": [
+        "bons_and_furious-TeletorEntity.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.alexscaves.TeletorSpawnContextMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexmodguy/alexscaves/server/entity/living/TeletorEntity",
+          "method": "m_6518_",
+          "desc": "(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/entity/SpawnGroupData;",
+          "sha256": "cd6e6647fa9c75d2df16bd3598cc6c1fc92ddc4a116270c406a89ef0c37309c5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    }
+  }
+}

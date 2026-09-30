@@ -1,8 +1,8 @@
 package bons.pure.valkyrien;
 
-import agentcraft.consolidated.bons_valkyrien_fixes.org.valkyrienskies.mod.common.util.AcVsSweep6;
-import agentcraft.consolidated.bons_valkyrien_fixes.org.valkyrienskies.mod.common.util.AcVsSweep7;
 import net.minecraft.world.entity.Entity;
+import org.valkyrienskies.mod.common.util.AcVsSweep6;
+import org.valkyrienskies.mod.common.util.AcVsSweep7;
 import net.minecraft.world.level.Level;
 
 /**

@@ -1,0 +1,119 @@
+{
+  "group": "distanthorizons",
+  "keys": {
+    "distanthorizons_cloud_scalars": {
+      "mod": "distanthorizons",
+      "scripts": [
+        "furious4-CloudRenderHandler.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.distanthorizons.CloudParamsAccessor",
+        "bons.furious.mixin.distanthorizons.CloudRenderHandlerMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/core/render/renderer/CloudRenderHandler",
+          "method": "shouldCloudBeCulled",
+          "desc": "(FFFLcom/seibel/distanthorizons/core/render/renderer/CloudRenderHandler$CloudParams;)Z",
+          "sha256": "faf6cc44536c82ca2da45ec0bc91399c5c1112e6293d072b7abd72f361bfb7ce"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/render/renderer/CloudRenderHandler",
+          "method": "preRender",
+          "desc": "(Lcom/seibel/distanthorizons/api/methods/events/sharedParameterObjects/DhApiRenderParam;Lcom/seibel/distanthorizons/core/render/renderer/CloudRenderHandler$CloudParams;)V",
+          "sha256": "726513fd97be97b7132f50e0c36e88fd9263edde58a3f636c05978a136614a98"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/render/renderer/CloudRenderHandler$CloudParams",
+          "method": "<init>",
+          "desc": "(IIII)V",
+          "sha256": "21f90f848db69d3e04564662dbacf193e9fd3a140d72d80e43bdcdcbf537f8ab"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/util/math/DhVec3f",
+          "method": "normalize",
+          "desc": "()Z",
+          "sha256": "cab86f002c0e34da70b3a7e8b40c6c3c5937dd76ed0d7276b960cd02010aa728"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/util/math/DhVec3f",
+          "method": "dotProduct",
+          "desc": "(Lcom/seibel/distanthorizons/core/util/math/DhVec3f;)F",
+          "sha256": "3601e737951ee8b5deca8cc7cd8b8dd07cb8601bdc6dec0a0562cf45e05d83d9"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/util/math/DhVec3d",
+          "method": "getDistance",
+          "desc": "(Lcom/seibel/distanthorizons/api/objects/math/DhApiVec3d;Lcom/seibel/distanthorizons/api/objects/math/DhApiVec3d;)D",
+          "sha256": "774bc66a654e657bcb3fbb395374af5d125f54d7bcb216f580278dce65ecdfe1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "distanthorizons_ignored_dimension_match": {
+      "mod": "distanthorizons",
+      "scripts": [
+        "furious6-IgnoredDimensionCsvHandler.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.distanthorizons.IgnoredDimensionCsvHandlerMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/core/config/eventHandlers/IgnoredDimensionCsvHandler",
+          "method": "dimensionNameShouldBeIgnored",
+          "desc": "(Ljava/lang/String;)Z",
+          "sha256": "1e483079b2702e461c4d6e1fe171056df4743092f7bfad6619e3484a790ca1ec"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "distanthorizons_render_param_inverse_reuse": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.21",
+      "mixins": [
+        "bons.furious.mixin.distanthorizons.RenderParamInverseMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/api/methods/events/sharedParameterObjects/DhApiRenderParam",
+          "method": "update",
+          "desc": "(Lcom/seibel/distanthorizons/api/enums/rendering/EDhApiRenderPass;FFFLcom/seibel/distanthorizons/api/objects/math/DhApiMat4f;Lcom/seibel/distanthorizons/api/objects/math/DhApiMat4f;Lcom/seibel/distanthorizons/api/objects/math/DhApiMat4f;Lcom/seibel/distanthorizons/api/objects/math/DhApiMat4f;ILcom/seibel/distanthorizons/api/interfaces/world/IDhApiLevelWrapper;)V",
+          "sha256": "fa615bbce5fc75d9cba1777c0df7338ba3f08e674f21ff9b2d0d8e7f39004a67"
+        },
+        {
+          "class": "com/seibel/distanthorizons/api/objects/math/DhApiMat4f",
+          "method": "invert",
+          "desc": "()V",
+          "sha256": "d22d9ca40b4424e39e169f42f9c05b2ae9648bfc183c969357fab12690ba7705"
+        },
+        {
+          "class": "com/seibel/distanthorizons/api/objects/math/DhApiMat4f",
+          "method": "adjudicateAndDet",
+          "desc": "()F",
+          "sha256": "d61dfcc5f4843ffe755b3de8cf13e03b50de57d603b5709807c38b8f1256fda7"
+        },
+        {
+          "class": "com/seibel/distanthorizons/api/objects/math/DhApiMat4f",
+          "method": "multiply",
+          "desc": "(Lcom/seibel/distanthorizons/api/objects/math/DhApiMat4f;)V",
+          "sha256": "ac97d80a89653526a9c1c0edab6e8c3904bdf04c8f6d5886332c9776c47cdba8"
+        },
+        {
+          "class": "com/seibel/distanthorizons/api/objects/math/DhApiMat4f",
+          "method": "multiply",
+          "desc": "(F)V",
+          "sha256": "e9225c53e37002599b60e341c43d08cba2089771e3930da376de8c1d9e64071a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Redirect x3)",
+      "license": "LGPL-3.0: no Distant Horizons code is carried; the redirects call DH's own invert/multiply on a miss"
+    }
+  }
+}

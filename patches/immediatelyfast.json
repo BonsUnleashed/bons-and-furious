@@ -1,0 +1,25 @@
+{
+  "group": "immediatelyfast",
+  "keys": {
+    "immediatelyfast_offset_layer_prefixes": {
+      "mod": "immediatelyfast",
+      "scripts": [
+        "furious14-substrings.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.immediatelyfast.BatchableBufferSourceLayerOrderMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/raphimc/immediatelyfast/feature/core/BatchableBufferSource",
+          "method": "getLayerOrder",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)I",
+          "sha256": "f6f5eb10202f9dc4e550b04f11b8be94d0f83fecbebd3294849beffb6687697d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors",
+      "license": "LGPL-3.0 (copy-OK); redirects because the body needs ImmediatelyFast access-transformed vanilla members"
+    }
+  }
+}

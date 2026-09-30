@@ -55,6 +55,11 @@ public final class PureConfig {
     private static final Logger LOGGER = LogManager.getLogger("Bons and Furious");
     private static final Map<String, Boolean> STATE = new LinkedHashMap<>();
     private static final Map<String, String> LEGACY_PROPERTIES = new LinkedHashMap<>();
+    /** Switches removed from the mod, and why; an older config that still lists one gets an info line, not a warning. */
+    private static final Map<String, String> RETIRED = Map.of(
+            "engineering_industry_recipe_index", "moved into the Living Engineering addon itself in 1.0.20",
+            "engineering_culture_controls", "moved into the Living Engineering addon itself in 1.0.20",
+            "engineering_vat_growth_reuse", "moved into the Living Engineering addon itself in 1.0.20");
     private static volatile boolean loaded;
     private static Path configPath;
     private static String version = "?";
@@ -180,7 +185,10 @@ public final class PureConfig {
             }
         }
         for (String name : file.stringPropertyNames()) {
-            if (!STATE.containsKey(name)) LOGGER.warn("Bons and Furious: unknown key '{}' in {} is ignored", name, source);
+            if (STATE.containsKey(name)) continue;
+            String retired = RETIRED.get(name);
+            if (retired != null) LOGGER.info("Bons and Furious: '{}' in {} is a retired switch ({}); it is ignored", name, source, retired);
+            else LOGGER.warn("Bons and Furious: unknown key '{}' in {} is ignored", name, source);
         }
         if (append.length() > 0 && source.equals(configPath)) {
             String sep = existing.endsWith("\n") ? "" : "\n";

@@ -1,5 +1,6 @@
 package bons.pure.config;
 
+import bons.furious.guard.Guards;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -10,9 +11,13 @@ import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 
 /**
- * Loads the early configuration before any game class is transformed and applies the
- * switches to this mod's own mixins. Forge initialises Mixin config plugins before the
- * game's main class is loaded, which is before any coremod transformer runs for a mod class.
+ * The config plugin of every Bons and Furious mixin config. It loads the switches before any game class is
+ * transformed (Forge initialises Mixin config plugins first) and decides for each mixin whether it applies:
+ *
+ *  - the four mixins that predate 1.0.20 are gated by their switch only (MIXIN_KEYS);
+ *  - every other mixin belongs to a guarded switch (bons.furious.guard.Guards): the switch must be enabled and every
+ *    method its mixins depend on must match the fingerprint of the tested mod build, otherwise none of that switch's
+ *    mixins apply and the target is left exactly as shipped.
  */
 public final class PureMixinPlugin implements IMixinConfigPlugin {
     private static final Logger LOGGER = LogManager.getLogger("Bons and Furious");
@@ -25,6 +30,7 @@ public final class PureMixinPlugin implements IMixinConfigPlugin {
     @Override
     public void onLoad(String mixinPackage) {
         PureConfig.load();
+        Guards.load();
     }
 
     @Override
@@ -35,10 +41,13 @@ public final class PureMixinPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         String key = MIXIN_KEYS.get(mixinClassName);
-        if (key == null) return true; // shared API accessors always apply
-        boolean enabled = PureConfig.isEnabled(key);
-        if (!enabled) LOGGER.info("Bons and Furious: {} is disabled by config; {} is not applied to {}", key, mixinClassName, targetClassName);
-        return enabled;
+        if (key != null) {
+            boolean enabled = PureConfig.isEnabled(key);
+            if (!enabled) LOGGER.info("Bons and Furious: {} is disabled by config; {} is not applied to {}", key, mixinClassName, targetClassName);
+            return enabled;
+        }
+        if (Guards.knows(mixinClassName)) return Guards.shouldApply(mixinClassName, targetClassName);
+        return true; // mixins without a switch (TrackworkResources) always apply
     }
 
     @Override
@@ -53,5 +62,8 @@ public final class PureMixinPlugin implements IMixinConfigPlugin {
     public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {}
 
     @Override
-    public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {}
+    public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+        String key = Guards.keyOf(mixinClassName);
+        if (key != null) LOGGER.debug("Bons and Furious: {} applied to {}", key, targetClassName);
+    }
 }

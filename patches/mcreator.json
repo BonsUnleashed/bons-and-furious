@@ -1,0 +1,121 @@
+{
+  "group": "mcreator",
+  "keys": {
+    "terramity_animation_entity_guard": {
+      "mod": "terramity",
+      "scripts": [
+        "furious10-terramity.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.mcreator.TerramityAnimationGuardMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mcreator/terramity/init/EntityAnimationFactory",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/terramity/init/EntityAnimationFactory",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "d8a224d0bcfc5dcb3b5e443c3bc034fc7f0415d6bc00d5f1403b62461f7307b4"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors",
+      "license": "All Rights Reserved (no-copy): the mixin holds only our guard; Terramity's code stays in its jar"
+    },
+    "goblins_animation_entity_guard": {
+      "mod": "goblins_tyranny",
+      "scripts": [
+        "furious14-goblin_animation.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.mcreator.GoblinsAnimationGuardMixin"
+      ],
+      "guard": [
+        {
+          "class": "goblinstyranny/init/EntityAnimationFactory",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "goblinstyranny/init/EntityAnimationFactory",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "1770871c76d32c8cb7435fd6d3ad4fd45744b323075509a6811e750cd2f039cb"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors",
+      "license": "All Rights Reserved (no-copy): the mixin holds only our guard; Goblins Tyranny's code stays in its jar"
+    },
+    "moon_animation_entity_guard": {
+      "mod": "under_the_moon",
+      "scripts": [
+        "furious14-moon_animation.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.mcreator.MoonAnimationGuardMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mcreator/underthemoon/init/EntityAnimationFactory",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/underthemoon/init/EntityAnimationFactory",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "c10bdb869d36855d7e390b38fc600d0d95f72db719c719549b5a0bd539bbafc8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors",
+      "license": "Licence not specified, treated as All Rights Reserved (no-copy): the mixin holds only our guard; Under the Moon's code stays in its jar"
+    },
+    "goblins_cached_disguise_tag": {
+      "mod": "goblins_tyranny",
+      "scripts": [
+        "furious14-disguise.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.mcreator.GoblinsDisguiseTagMixin"
+      ],
+      "guard": [
+        {
+          "class": "goblinstyranny/procedures/IsDisguisedProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "goblinstyranny/procedures/IsDisguisedProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "db1e61b6152be2f2b39cadeb6be6813236660feb017f8e9bfeb3a2eb6a1367eb"
+        },
+        {
+          "class": "goblinstyranny/procedures/IsDisguisedProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "f5aaf02b222e2e1321e066874185b3e2cd7e2e228b9ad21ea462c4c03fe3ef5e"
+        },
+        {
+          "class": "goblinstyranny/procedures/IsDisguisedProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "c30a00cebdf56487bef56e1b22dd1c15b3fe52356013988dbb4f6070324c6c38"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors",
+      "license": "All Rights Reserved (no-copy): the mixin holds only our cached tag and two redirects; Goblins Tyranny's code stays in its jar"
+    }
+  }
+}

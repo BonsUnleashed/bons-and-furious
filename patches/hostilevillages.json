@@ -1,0 +1,49 @@
+{
+  "group": "hostilevillages",
+  "keys": {
+    "hostilevillages_distant_generation_queue": {
+      "mod": "hostilevillages",
+      "scripts": [
+        "bons_and_furious-EventHandler.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.hostilevillages.DistantGenerationQueueMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/hostilevillages/event/EventHandler",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "com/hostilevillages/event/EventHandler",
+          "method": "onEntityAdd",
+          "desc": "(Lnet/minecraftforge/event/entity/EntityJoinLevelEvent;)V",
+          "sha256": "e46acfe9550577f98f2ade63d32038919df0202cf31e12b3b71a4dba999b4c26"
+        },
+        {
+          "class": "com/hostilevillages/event/EventHandler",
+          "method": "replaceEntityOnSpawn",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/ServerLevelAccessor;)Z",
+          "sha256": "f07eb43945b9d85849c3ac3709749f5c4c1ee21a52278138dcfdd769f85d9757"
+        },
+        {
+          "class": "com/hostilevillages/event/EventHandler",
+          "method": "addToWorld",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$LevelTickEvent;)V",
+          "sha256": "d246f2198e86af0846c49165ba61ba0436f7b3e521df85a168ddffa9f997c09b"
+        },
+        {
+          "class": "com/hostilevillages/event/EventHandler",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "d596e1d4d27d3b277c5272a6987b16eedcbb2b1d9d2374a8ab7983d5d7b2e397"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors",
+      "license": "All Rights Reserved: no-copy, the mixin carries only our check"
+    }
+  }
+}
