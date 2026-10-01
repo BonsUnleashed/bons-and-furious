@@ -120,26 +120,29 @@ The 1.0.23 release JAR is built from this tree and was tested in a 470-mod pack,
 
 ### Upstream pull requests
 
-Pull requests sent to the projects this mod patches: 27 open, 3 closed without merge (status checked 1 October 2026).
+Pull requests sent to the projects this mod patches: 33 open, 3 closed without merge (status checked 1 October 2026).
 
 | Project | Pull requests | Status |
 | --- | --- | --- |
 | Ad Astra | [#825](https://github.com/terrarium-earth/Ad-Astra/pull/825) | Open |
 | Alex's Caves | [#1759](https://github.com/AlexModGuy/AlexsCaves/pull/1759), [#1760](https://github.com/AlexModGuy/AlexsCaves/pull/1760) | Open |
-| AmbientSounds | [#348](https://github.com/CreativeMD/AmbientSounds/pull/348) | Open |
+| AmbientSounds | [#348](https://github.com/CreativeMD/AmbientSounds/pull/348), [#349](https://github.com/CreativeMD/AmbientSounds/pull/349) | Open |
 | Architectury API | [#747](https://github.com/architectury/architectury-api/pull/747) | Open |
 | Ars Nouveau | [#2258](https://github.com/baileyholl/Ars-Nouveau/pull/2258) | Open |
 | Better Combat | [#623](https://github.com/ZsoltMolnarrr/BetterCombat/pull/623) | Open |
 | Butterflies | [#493](https://github.com/doc-bok/Butterflies/pull/493) | Open |
+| Colorwheel | [#84](https://github.com/djefrey/Colorwheel/pull/84) | Open |
 | Cryptic Foes | [#7](https://github.com/min2222/Cryptic-Foes/pull/7) | Closed without merge |
 | Curios API | [#639](https://github.com/TheIllusiveC4/Curios/pull/639) | Open |
 | Embeddium | [#575](https://github.com/FiniteReality/embeddium/pull/575) | Open |
+| Forge | [#10893](https://github.com/MinecraftForge/MinecraftForge/pull/10893), [#10894](https://github.com/MinecraftForge/MinecraftForge/pull/10894) | Open |
 | Fowl Play | [#242](https://github.com/aqariio/Fowl-Play/pull/242), [#243](https://github.com/aqariio/Fowl-Play/pull/243) | Open |
 | Hostile Villages | [#37](https://github.com/someaddons/HostileVillages/pull/37) | Open |
 | Ice and Fire | [#5641](https://github.com/AlexModGuy/Ice_and_Fire/pull/5641), [#5642](https://github.com/AlexModGuy/Ice_and_Fire/pull/5642), [#5643](https://github.com/AlexModGuy/Ice_and_Fire/pull/5643) | Open |
 | ImmediatelyFast | [#586](https://github.com/RaphiMC/ImmediatelyFast/pull/586) | Open |
 | Nether Depths Upgrade | [#67](https://github.com/Scouter456/Nether_Depths_Upgrade/pull/67) | Closed without merge. The 1.20 branch is no longer maintained. |
-| Oculus | [#869](https://github.com/Asek3/Oculus/pull/869) | Open |
+| OcclusionCulling (EntityCulling) | [#5](https://github.com/LogisticsCraft/OcclusionCulling/pull/5) | Open |
+| Oculus | [#869](https://github.com/Asek3/Oculus/pull/869), [#870](https://github.com/Asek3/Oculus/pull/870) | Open |
 | Presence Footsteps (Forge) | [#67](https://github.com/PaintNinja/Presence-Footsteps-Forge/pull/67) | Open |
 | Ryoamic Lights | [#54](https://github.com/ThinkingStudios/RyoamicLights/pull/54) | Open |
 | Structurify | [#93](https://github.com/Faboslav/structurify/pull/93) | Closed without merge |
