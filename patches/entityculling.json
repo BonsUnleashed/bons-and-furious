@@ -1,0 +1,66 @@
+{
+  "group": "entityculling",
+  "keys": {
+    "entityculling_dirty_cache_reset": {
+      "mod": "entityculling",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.entityculling.DirtyCacheResetMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/logisticscraft/occlusionculling/cache/ArrayOcclusionCache",
+          "method": "resetCache",
+          "desc": "()V",
+          "sha256": "ecac245c6f0ba5884122933a3a4fea2b8e81bd877d9c7d631dc76c0fdbad25a1"
+        },
+        {
+          "class": "com/logisticscraft/occlusionculling/cache/ArrayOcclusionCache",
+          "method": "setVisible",
+          "desc": "(III)V",
+          "sha256": "c9f2f184f92c4a6bdf02a171021d63557671ac0b69ad7be399ec8439abf462de"
+        },
+        {
+          "class": "com/logisticscraft/occlusionculling/cache/ArrayOcclusionCache",
+          "method": "setHidden",
+          "desc": "(III)V",
+          "sha256": "5cd63275477b66f7726acaea046af6118160dd4a817bed3e1884bcde34639046"
+        },
+        {
+          "class": "com/logisticscraft/occlusionculling/cache/ArrayOcclusionCache",
+          "method": "getState",
+          "desc": "(III)I",
+          "sha256": "cf8ffab7370ef01a6553779166deae701a99dec240572952676745e5e1e16425"
+        },
+        {
+          "class": "com/logisticscraft/occlusionculling/cache/ArrayOcclusionCache",
+          "method": "setLastVisible",
+          "desc": "()V",
+          "sha256": "5664b4c54048f9b395ad516cb74565d84e4116d47a35835aa52bdafb696b89ad"
+        },
+        {
+          "class": "com/logisticscraft/occlusionculling/cache/ArrayOcclusionCache",
+          "method": "setLastHidden",
+          "desc": "()V",
+          "sha256": "03f393c6a39b46d9dd066442a55bdac54674feb75ae8078c90eb51cc3f705cda"
+        },
+        {
+          "class": "com/logisticscraft/occlusionculling/cache/ArrayOcclusionCache",
+          "method": "<init>",
+          "desc": "(I)V",
+          "sha256": "27c8e23ae9f663df11ed04a00e982109151789bb4fc5874d98638ccdb55c2f86"
+        },
+        {
+          "class": "com/logisticscraft/occlusionculling/cache/ArrayOcclusionCache",
+          "method": "*",
+          "desc": "",
+          "sha256": "d13eda601ed8d495f9ece6f6f03702a3fe1f8343f2b23c0a007b71fe4853872e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "MIT (LogisticsCraft OcclusionCulling, bundled in EntityCulling): the method bodies may be carried in our GPL-3.0 source"
+    }
+  }
+}

@@ -498,6 +498,43 @@
       "cancel": [],
       "conversion": "overwrite",
       "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "oculus_dh_instance_lookup": {
+      "mod": "oculus",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.oculus.DhInstanceLookupMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/irisshaders/iris/compat/dh/LodRendererEvents",
+          "method": "getInstance",
+          "desc": "()Lnet/irisshaders/iris/compat/dh/DHCompatInternal;",
+          "sha256": "85f185baae3f585308a456438b3f9057d9d426376250f3539afcf7aa91b8998b"
+        },
+        {
+          "class": "net/irisshaders/iris/pipeline/PipelineManager",
+          "method": "getPipeline",
+          "desc": "()Ljava/util/Optional;",
+          "sha256": "e6679b210f1301b9ff7a3713d621392d4503e95fd20dc4eaf92ae2e3baef55c6"
+        },
+        {
+          "class": "net/irisshaders/iris/pipeline/PipelineManager",
+          "method": "getPipelineNullable",
+          "desc": "()Lnet/irisshaders/iris/pipeline/WorldRenderingPipeline;",
+          "sha256": "d034f8a6170e5ff636c64c5a34c221afdc12ee2741df5bbd3ee92737884127ec"
+        },
+        {
+          "class": "net/irisshaders/iris/compat/dh/DHCompat",
+          "method": "getInstance",
+          "desc": "()Ljava/lang/Object;",
+          "sha256": "0e22d2bca6587d913df1bed4940ca1174b676ee5e41cc637168e907c5f4416cd"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
     }
   }
 }

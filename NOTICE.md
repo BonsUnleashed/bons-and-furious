@@ -17,6 +17,8 @@ licences some mixins carry a modified copy of a target method (an @Overwrite),
 distributed with its source, build instructions and applicable notices. From
 1.0.21 one mixin also carries a modified copy of Entity Texture Features'
 Material.buffer handler (LGPL-3.0) in place of ETF's own, which it cancels.
+From 1.0.23 the Colorwheel (LGPL-3.0) and OcclusionCulling (MIT, bundled in
+EntityCulling) switches carry modified copies of the methods they replace.
 
 For targets with restricted or unclear redistribution permissions (All Rights
 Reserved, No-Derivatives or custom licences) and for Minecraft itself, the

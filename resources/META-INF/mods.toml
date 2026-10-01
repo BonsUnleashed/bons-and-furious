@@ -8,7 +8,7 @@ issueTrackerURL="https://github.com/BonsUnleashed/bons-and-furious/issues"
 
 [[mods]]
 modId="bons_and_furious"
-version="1.0.21"
+version="1.0.23"
 displayName="Bons and Furious"
 authors="BonsUnleashed"
 description='''Behaviour-preserving performance patches and generation compatibility fixes for specific mod versions, written as mixins, each with its own switch in config/bons_and_furious.properties. Also carries the former Bons Worldgen Compatibility fixes (Distant Horizons and C2ME generation context for Ice and Fire, Scuba Gear, Alex's Caves, Structure Gel and Hostile Villages). Targets that are missing are skipped; targets at an unsupported version are left untouched. Also carries the former Bons Valkyrien Fixes ("Bons to Be Afloat") for Valkyrien Skies 2.4.11: ship collision, lookup and chunk-conversion optimizations plus terrain, weather, back-off and sculk fixes, each with its own switch.'''
@@ -262,3 +262,9 @@ mandatory=false
 versionRange="[0,)"
 ordering="AFTER"
 side="CLIENT"
+[[dependencies.bons_and_furious]]
+modId="radium"
+mandatory=false
+versionRange="[0,)"
+ordering="AFTER"
+side="BOTH"

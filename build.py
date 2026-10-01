@@ -16,7 +16,7 @@ from pathlib import Path
 import argparse, hashlib, json, os, subprocess, time, urllib.request, zipfile
 
 ROOT = Path(__file__).resolve().parent
-VERSION = '1.0.21'
+VERSION = '1.0.23'
 FORGE = '1.20.1-47.4.16'
 DEPS = [
     dict(file='mixinextras-forge-0.5.0.jar', group='io.github.llamalad7', artifact='mixinextras-forge', version='0.5.0',
@@ -28,7 +28,7 @@ DEPS = [
 ]
 LEGACY_CONFIGS = ['bons_and_furious_valkyrien.mixins.json', 'bons_and_furious.mixins.json', 'terrain_efficiency.mixins.json',
                   'bons_and_furious_pacing.mixins.json']
-EPOCH = (2026, 9, 30, 0, 0, 0)
+EPOCH = (2026, 10, 1, 0, 0, 0)
 
 
 def sha1(b):
@@ -139,7 +139,12 @@ def main():
     run('guardtool', 'javac', ['--release', '17', '-proc:none', '-cp', str(relocated) + os.pathsep + cp, '-d', guardtool,
                                ROOT / 'tools/GuardTool.java'])
     guards = work / 'guards' / 'bons_and_furious.guards.tsv'
-    roots = [*patched[:1], *srg, *mods]
+    # nested jars too: C2ME ships its modules and Radium its config library as Jar-in-Jar (radium_c2me guards);
+    # 1.0.23: Forge's own classes (ServerStatusPing, ForgeI18n) come from the universal jar
+    universal = a.forge_libraries / f'net/minecraftforge/forge/{FORGE}/forge-{FORGE}-universal.jar'
+    if not universal.is_file():
+        universal = lib / f'net/minecraftforge/forge/{FORGE}/forge-{FORGE}-universal.jar'
+    roots = [*patched[:1], *srg, *([universal] if universal.is_file() else []), *mods, *mod_nested]
     run('guards', 'java', ['-cp', os.pathsep.join([str(guardtool), str(relocated), cp]), 'GuardTool', 'emit',
                            ROOT / 'patches', ROOT / 'resources', guards, *roots])
 

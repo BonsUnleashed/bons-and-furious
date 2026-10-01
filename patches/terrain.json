@@ -91,6 +91,112 @@
       "cancel": [],
       "conversion": "injectors",
       "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic"
+    },
+    "vanilla_noise_column_cache": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.terrain.ColumnHeightShareMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator",
+          "method": "m_214096_",
+          "desc": "(IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)I",
+          "sha256": "2e286f29b51675e1bb6336c850b7188264d92620601ea86b287334de3f58baa5"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator",
+          "method": "m_224239_",
+          "desc": "(Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;IILorg/apache/commons/lang3/mutable/MutableObject;Ljava/util/function/Predicate;)Ljava/util/OptionalInt;",
+          "sha256": "0a7b8dbb394f4661a860d4e74fcc876e87a54e686ad719d685f26d52ba7fbc2e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Inject HEAD + @ModifyReturnValue)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.terrain.ColumnHeightShare)"
+    },
+    "vanilla_climate_sample_repeat": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.terrain.ClimateSampleRepeatMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/biome/Climate$Sampler",
+          "method": "m_183445_",
+          "desc": "(III)Lnet/minecraft/world/level/biome/Climate$TargetPoint;",
+          "sha256": "ee533c4f9adea70a033a945ca5716952eb4ea7661613b711a5ec785d50f281aa"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Inject HEAD + @ModifyReturnValue)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.terrain.ClimateRepeat)"
+    },
+    "vanilla_climate_search_repeat": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.terrain.ClimateSearchRepeatMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree",
+          "method": "m_186930_",
+          "desc": "(Lnet/minecraft/world/level/biome/Climate$TargetPoint;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Ljava/lang/Object;",
+          "sha256": "0821658daf94ec1dd48339b1da7fdbc7d49d3aaa0d1d15c56f4a1b0d4c865ed7"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree$SubTree",
+          "method": "m_183370_",
+          "desc": "([JLnet/minecraft/world/level/biome/Climate$RTree$Leaf;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Lnet/minecraft/world/level/biome/Climate$RTree$Leaf;",
+          "sha256": "2ac8a1635e1ce1bf5a890a8839b9d8de2263282bdf5ba0074ee2069fb849a62f"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree$Leaf",
+          "method": "m_183370_",
+          "desc": "([JLnet/minecraft/world/level/biome/Climate$RTree$Leaf;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Lnet/minecraft/world/level/biome/Climate$RTree$Leaf;",
+          "sha256": "d6ee11652b8fc4b605d91bac434ba2b5574e707e7f1d329704c05f8c39a592e8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Inject HEAD + @ModifyReturnValue)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.terrain.ClimateRepeat)"
+    },
+    "vanilla_climate_rtree_flat_bounds": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.terrain.ClimateNodeBoundsMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree$Node",
+          "method": "m_186959_",
+          "desc": "([J)J",
+          "sha256": "e260f03cfa1d2c7251a388b7475768da59665a4eaae542b151f91638dc1d62e8"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree$Node",
+          "method": "<init>",
+          "desc": "(Ljava/util/List;)V",
+          "sha256": "b08f8bb728eb01e1341b983161d795dc2606bd26c640bde45004a95f9cacdec4"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$Parameter",
+          "method": "m_186825_",
+          "desc": "(J)J",
+          "sha256": "41233ad78a46f957a0c8e1516a59374eef7da390da1666368f38a56f9a92cc74"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite (pure integer distance, body written from the behaviour) + @Inject at the constructor return",
+      "license": "Minecraft (Mojang): no-copy; the @Overwrite body is our own flat-array computation written from the behaviour"
     }
   }
 }

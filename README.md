@@ -4,9 +4,9 @@
 
 **Your CPU lives its life one tick at a time.**
 
-[**Download 1.0.21**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.21) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
+[**Download 1.0.23**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.23) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
 
-Bons and Furious patches 84 specific, measured hot spots in vanilla Minecraft 1.20.1 and in 35 popular Forge mods, from Valkyrien Skies, Distant Horizons and Alex's Caves to Embeddium, Oculus and GeckoLib. Each patch is one switch in one config file. It applies only to the exact mod build it was tested against and leaves anything else untouched, with one line in the log.
+Bons and Furious patches 107 specific, measured hot spots in vanilla Minecraft 1.20.1, in Forge itself and in 40 popular Forge mods, from Valkyrien Skies, Distant Horizons and Alex's Caves to Embeddium, Oculus and GeckoLib. Each patch is one switch in one config file. It applies only to the exact mod build it was tested against and leaves anything else untouched, with one line in the log.
 
 **Minecraft 1.20.1 · Forge 47.3.22 or newer · no required dependencies · one JAR for client and server**
 
@@ -30,11 +30,11 @@ Every run and the method: [Whole-modpack benchmark](https://github.com/BonsUnlea
 
 ## What it does
 
-- **69 optimizations** give the same results with less work: fewer allocations, no repeated lookups, no state rebuilt only to come out identical. Terrain preparation, ground-height estimates, ship chunk bookkeeping, shader graph resets, animation easing and event dispatch are the largest.
-- **11 fixes** repair reproduced server freezes, worker-thread crashes and generation exceptions, mostly where Distant Horizons or C2ME worker threads meet a content mod's world generation.
+- **91 optimizations** give the same results with less work: fewer allocations, no repeated lookups, no state rebuilt only to come out identical. Terrain preparation, ground-height estimates, climate lookups, Distant Horizons' rough-surface generation, chunk render layers, ship chunk bookkeeping, shader graph resets, animation easing and event dispatch are the largest. Five of them give Radium, ModernFix and ImmediatelyFast optimizations back that those mods switch off themselves when C2ME or a shader resource pack is installed.
+- **12 fixes** repair reproduced server freezes, worker-thread crashes, generation exceptions and one chunk-tracking gap between Radium and SecurityCraft, mostly where Distant Horizons or C2ME worker threads meet a content mod's world generation.
 - **4 deliberate changes** (frame pacing, the Occult bed scan, Fowl Play flight targets, Scorched sandcrab processing) trade a documented behaviour difference for a large saving.
 
-All 84 are listed in `config/bons_and_furious.properties` with their target mod, tested build, side and measurement. Set any key to `false` and restart. Every control is explained in the [wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki).
+All 107 are listed in `config/bons_and_furious.properties` with their target mod, tested build, side and measurement. Set any key to `false` and restart. Every control is explained in the [wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki).
 
 ## Measured results, per patch
 
@@ -53,6 +53,9 @@ All 84 are listed in `config/bons_and_furious.properties` with their target mod,
 | **Frame pacing** (client) | The FPS-limiter wait moves before the display update | **84% less frame-interval variation** at p95 (7.63 → 1.25 ms) at the same 120 FPS cap |
 | **Entity Texture Features** (new in 1.0.21) | Each sprite's texture id is worked out once instead of on every draw of a chest, sign, bed or banner | **95% less time** per draw (134 → 7 ns) |
 | **Minecraft** keyframe animations (new in 1.0.21) | Bone lookup walks the model tree directly instead of building stream pipelines | **92% less time** per frame (120 → 10 µs for a 47-part model) |
+| **Distant Horizons** (new in 1.0.23) | The rough-surface generator keeps the parts of the terrain density that depend only on x and z instead of recomputing them at every probe height | **85% less time** per LOD column (3,351 → 494 µs) |
+| **Forge** + Oculus (new in 1.0.23) | Each block remembers its chunk render layers while the shader pack's layer map is unchanged | **59% less time** per lookup (122 → 50 ns), 12-14% of chunk meshing |
+| **Radium** with C2ME (new in 1.0.23) | Radium's fast chunk access runs again while C2ME's replacement for it is switched off | **43% less time** per loaded-chunk lookup (81 → 46 ns), `getBlockState` 133 → 73 ns |
 | **ImmediatelyFast** | Horse-layer ordering without substrings | **46% less time** (28.9 → 15.5 ns), 64 → 0 bytes |
 
 Smaller allocation and lookup savings in Ars Nouveau, Curios API, Alex's Caves, Ice and Fire, TaCZ and others are on the wiki.
@@ -61,9 +64,9 @@ Smaller allocation and lookup savings in Ars Nouveau, Curios API, Alex's Caves, 
 
 ## Covered mods (all optional)
 
-**Rendering, shaders and ambience:** Embeddium, Oculus, ImmediatelyFast, Entity Texture Features, Entity Model Features, Ryoamic Lights, Presence Footsteps, AmbientSounds.
+**Rendering, shaders and ambience:** Embeddium, Oculus, ImmediatelyFast, Entity Texture Features, Entity Model Features, EntityCulling, Colorwheel, Ryoamic Lights, Presence Footsteps, AmbientSounds.
 
-**Shared libraries:** GeckoLib, Architectury API, Curios API, Structure Gel API.
+**Shared libraries and server performance mods:** GeckoLib, Architectury API, Curios API, Structure Gel API, Radium, ModernFix, ChunkSending.
 
 **Ships, structures and distant terrain:** Valkyrien Skies, Trackwork, Distant Horizons, Structurify, Sakes Structures.
 
@@ -73,7 +76,7 @@ Coverage means the tested build and the specific code paths of each mod, not eve
 
 ## Install
 
-1. Download `bons_and_furious-1.0.21.jar` from the [1.0.21 release](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.21) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load. The two small mixin libraries it uses, MixinExtras and MixinSquared, are bundled inside it.
+1. Download `bons_and_furious-1.0.23.jar` from the [1.0.23 release](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.23) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load. The two small mixin libraries it uses, MixinExtras and MixinSquared, are bundled inside it.
 2. Start once. The mod writes its config file with every switch on and logs how many controls are enabled.
 3. To turn one off, set its key to `false` and restart. Client-only patches (renderer, shaders, ambience) never load on a dedicated server.
 
@@ -81,7 +84,7 @@ JVM overrides, log messages and troubleshooting: [Installation and configuration
 
 ## Compatibility
 
-Keep your optimization stack: Embeddium, ImmediatelyFast, ModernFix, FerriteCore, Radium and C2ME. Bons and Furious changes paths that still did unnecessary work in the tested pack, including a few inside Embeddium, ImmediatelyFast and Oculus themselves.
+Keep your optimization stack: Embeddium, ImmediatelyFast, ModernFix, FerriteCore, Radium and C2ME. Bons and Furious changes paths that still did unnecessary work in the tested pack, including a few inside Embeddium, ImmediatelyFast and Oculus themselves. With C2ME installed it also gives Radium and ModernFix three optimizations back that they switch off for every C2ME build, as long as the C2ME module that would clash with each one is off in `c2me.toml`.
 
 ## Build from source
 
@@ -113,7 +116,7 @@ switch's mixins and guarded methods are listed in `patches/<mod>.json`.
 
 Licensed GPL-3.0-only ([LICENSE](LICENSE)). Upstream attribution is in [NOTICE.md](NOTICE.md); the tested dependency builds are listed in [upstream-credits.json](upstream-credits.json).
 
-The 1.0.21 release JAR is built from this tree and was tested in a 470-mod pack, server and client, before release.
+The 1.0.23 release JAR is built from this tree and was tested in a 470-mod pack, server and client, before release.
 
 ### Upstream pull requests
 

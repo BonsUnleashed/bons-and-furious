@@ -46,6 +46,25 @@
       "cancel": [],
       "conversion": "overwrite",
       "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "ambientsounds_dimension_patterns": {
+      "mod": "ambientsounds",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.ambientsounds.DimensionPatternMixin"
+      ],
+      "guard": [
+        {
+          "class": "team/creative/ambientsounds/dimension/AmbientDimension",
+          "method": "is",
+          "desc": "(Lnet/minecraft/world/level/Level;)Z",
+          "sha256": "1c31f66b2f455c683599d6bdb9c905a99de36d70f13cd458bdf6cc879a76ecdb"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Redirect)",
+      "license": "LGPL-3.0: no AmbientSounds code is carried; helper bons.furious.patch.ambientsounds.DimensionPatterns"
     }
   }
 }

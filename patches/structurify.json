@@ -101,6 +101,25 @@
       "cancel": [],
       "conversion": "injectors",
       "license": "CC BY-NC-ND 4.0 (no derivatives): no Structurify code in our source; injectors plus our own helper bons.furious.patch.structurify.WeakHeightAccessor"
+    },
+    "structurify_set_data_single_lookup": {
+      "mod": "structurify",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.structurify.StructureSetDataLookupMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/faboslav/structurify/common/util/RandomSpreadUtil",
+          "method": "getStructureSetData",
+          "desc": "(Ljava/lang/String;)Lcom/faboslav/structurify/common/config/data/StructureSetData;",
+          "sha256": "7759cdafa300fd6b5e3b2a526cb710698f126b438d34b874d89f3f624f313211"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Redirect x2)",
+      "license": "CC BY-NC-ND 4.0 (no derivatives): no Structurify code in our source; two map-call redirects to our own helper bons.furious.patch.structurify.SetDataLookup"
     }
   }
 }

@@ -1,0 +1,42 @@
+{
+  "group": "chunksending",
+  "keys": {
+    "chunksending_expiry_queue": {
+      "mod": "chunksending",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.chunksending.ExpiryQueueMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/chunksending/event/EventHandler",
+          "method": "addToClear",
+          "desc": "(Lcom/chunksending/chunk/IChunkPacketCache;)V",
+          "sha256": "d2d98c9f869e4cfdad7801252b9edc455605184a7660fd8029609195d3aa861e"
+        },
+        {
+          "class": "com/chunksending/event/EventHandler",
+          "method": "clearExpiredPacketCaches",
+          "desc": "()V",
+          "sha256": "57b6a2a8d98f6ae5646b8fb4a52cc8985c77cbe68a3aa3d8b39221238d6e7bed"
+        },
+        {
+          "class": "com/chunksending/event/EventHandler",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "4c835c796957be74f4a52cdb5c7d7db8ff61fc715dbf50f4c6e27c8ef59c257c"
+        },
+        {
+          "class": "com/chunksending/mixin/cache/LevelChunkPacketCacheMixin",
+          "method": "clearCachedPacket",
+          "desc": "()V",
+          "sha256": "9ecb1342c6c70670c2fb414ff1fccb2542c5d8268bae054baeba1ac3ad7e29db"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Inject at the end of addToClear, cancellable @Inject at the start of the sweep)",
+      "license": "All Rights Reserved (no-copy): the mixin holds only two injectors calling our own helper bons.furious.patch.chunksending.ChunkSendingExpiry; ChunkSending's code stays in its jar"
+    }
+  }
+}

@@ -11,6 +11,13 @@
     "DensityRecordReuseMixin",
     "MarkerOrMarkedReuseMixin",
     "NoiseChunkFinalDensityMixin",
-    "NoiseChunkSurfaceEstimateMixin"
-  ]
+    "NoiseChunkSurfaceEstimateMixin",
+    "ColumnHeightShareMixin",
+    "ClimateSampleRepeatMixin",
+    "ClimateSearchRepeatMixin",
+    "ClimateNodeBoundsMixin"
+  ],
+  "overwrites": {
+    "conformVisibility": true
+  }
 }

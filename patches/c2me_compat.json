@@ -1,0 +1,254 @@
+{
+  "group": "c2me_compat",
+  "keys": {
+    "radium_c2me_chunk_access": {
+      "mod": "radium",
+      "scripts": [],
+      "since": "1.0.22",
+      "mixins": [
+        "bons.furious.mixin.c2me_compat.ChunkAccessOptionTrigger",
+        "bons.furious.mixin.c2me_compat.RadiumChunkSchedulingMixin"
+      ],
+      "guard": [
+        {
+          "class": "me/jellysquid/mods/lithium/common/config/LithiumConfig",
+          "method": "applyC2MECompat",
+          "desc": "(Lnet/caffeinemc/caffeineconfig/CaffeineConfig;)Lnet/caffeinemc/caffeineconfig/CaffeineConfig;",
+          "note": "the blanket C2ME check this switch narrows",
+          "sha256": "2900b3155979fcc9e9affb3d9a8d7b52a94ca998aa9a7903e1bcaa35900a9cb3"
+        },
+        {
+          "class": "net/caffeinemc/caffeineconfig/Option",
+          "method": "addModOverride",
+          "desc": "(ZLjava/lang/String;)V",
+          "sha256": "953b2d14797a0a8cb0efcee0ea3f8ceb857e6842ae05920f9744d6a479d6ef31"
+        },
+        {
+          "class": "net/caffeinemc/caffeineconfig/Option",
+          "method": "clearModsDefiningValue",
+          "desc": "()V",
+          "sha256": "bcd8f647a59cca4ade923c771b3b1c6d547ffc775e7377a24c87c5ad92317f7c"
+        },
+        {
+          "class": "net/caffeinemc/caffeineconfig/AbstractCaffeineConfigMixinPlugin",
+          "method": "shouldApplyMixin",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)Z",
+          "note": "Radium reads the option live while preparing its mixins",
+          "sha256": "10977100e440fe99a5ca877557ace2c77e3fe2ef1783bcdb82fb893c41e2974d"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/mixin/world/chunk_access/ServerChunkManagerMixin",
+          "method": "m_7587_",
+          "desc": "(IILnet/minecraft/world/level/chunk/ChunkStatus;Z)Lnet/minecraft/world/level/chunk/ChunkAccess;",
+          "sha256": "4475bcbdd1568c58d8aa53d0c0944d3c3fba3a67c5bb8408b0c7d278f4af3f27"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/mixin/world/chunk_access/ServerChunkManagerMixin",
+          "method": "getChunkBlocking",
+          "desc": "(IILnet/minecraft/world/level/chunk/ChunkStatus;Z)Lnet/minecraft/world/level/chunk/ChunkAccess;",
+          "note": "the three redirects of RadiumChunkSchedulingMixin",
+          "sha256": "5d2d6d6ee49bd8a1ecc9ac8983273d00c9fb1beb4589978000ce32f20a503c46"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/mixin/world/chunk_access/ServerChunkManagerMixin",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set of the re-enabled Radium mixin",
+          "sha256": "f40d563a560a38e52e4555ca068683398de448aa98cfad4f0f83479425ef857d"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/mixin/world/chunk_access/WorldMixin",
+          "method": "*",
+          "desc": "",
+          "sha256": "7698bf55f4fb18b94b87fa2c73577c70fc81eed1cbebfca340dfcae92dc63ed9"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/mixin/world/chunk_access/ChunkHolderMixin",
+          "method": "*",
+          "desc": "",
+          "sha256": "0a53521ebcd59375529c98e7bea1176a2a431bdb0e80bcbfb1e5336def28b0ea"
+        },
+        {
+          "class": "com/ishland/c2me/opts/chunk_access/ModuleEntryPoint",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "reads generalOptimizations.optimizeAsyncChunkRequest",
+          "sha256": "189c57469703bd8cc2085d35eac870c589c6a8d244d78dafc301252266001790"
+        },
+        {
+          "class": "com/ishland/c2me/base/mixin/priority/MixinServerChunkManager",
+          "method": "*",
+          "desc": "",
+          "note": "C2ME's own hooks on getChunk/getChunkBlocking",
+          "sha256": "61d521b30f4bef605437e85ccad5eb906da240049417a93b93630161e6628190"
+        },
+        {
+          "class": "com/ishland/c2me/fixes/general/threading_issues/mixin/MixinChunkHolder",
+          "method": "m_140049_",
+          "desc": "(Lnet/minecraft/world/level/chunk/ChunkStatus;Lnet/minecraft/server/level/ChunkMap;)Ljava/util/concurrent/CompletableFuture;",
+          "note": "the locked getOrScheduleFuture the slow path is sent to",
+          "sha256": "e43c335b8b935f8ee584a2a65a627db2670443b766a986fa4c1f1ce459deac10"
+        },
+        {
+          "class": "com/ishland/c2me/threading/worldgen/mixin/MixinChunkHolder",
+          "method": "redirectGetChunk",
+          "desc": "(Lnet/minecraft/server/level/ChunkMap;Lnet/minecraft/server/level/ChunkHolder;Lnet/minecraft/world/level/chunk/ChunkStatus;)Ljava/util/concurrent/CompletableFuture;",
+          "note": "parent-status chaining inside getOrScheduleFuture",
+          "sha256": "054e36cd42679a4f1340c378b53d69b5c769373ff0c8fd41d6f19eebc8205554"
+        }
+      ],
+      "cancel": [],
+      "conversion": "config plugin (Radium option) + injectors (@Redirect x3 in Radium's merged getChunkBlocking)",
+      "license": "LGPL-3.0 (Radium), MIT (C2ME): no code of either is carried; the plugin flips Radium's own option and the redirects call vanilla's ChunkHolder.getOrScheduleFuture"
+    },
+    "radium_c2me_player_chunk_tick": {
+      "mod": "radium",
+      "scripts": [],
+      "since": "1.0.22",
+      "mixins": [
+        "bons.furious.mixin.c2me_compat.PlayerChunkTickOptionTrigger"
+      ],
+      "guard": [
+        {
+          "class": "me/jellysquid/mods/lithium/common/config/LithiumConfig",
+          "method": "applyC2MECompat",
+          "desc": "(Lnet/caffeinemc/caffeineconfig/CaffeineConfig;)Lnet/caffeinemc/caffeineconfig/CaffeineConfig;",
+          "sha256": "2900b3155979fcc9e9affb3d9a8d7b52a94ca998aa9a7903e1bcaa35900a9cb3"
+        },
+        {
+          "class": "net/caffeinemc/caffeineconfig/Option",
+          "method": "addModOverride",
+          "desc": "(ZLjava/lang/String;)V",
+          "sha256": "953b2d14797a0a8cb0efcee0ea3f8ceb857e6842ae05920f9744d6a479d6ef31"
+        },
+        {
+          "class": "net/caffeinemc/caffeineconfig/Option",
+          "method": "clearModsDefiningValue",
+          "desc": "()V",
+          "sha256": "bcd8f647a59cca4ade923c771b3b1c6d547ffc775e7377a24c87c5ad92317f7c"
+        },
+        {
+          "class": "net/caffeinemc/caffeineconfig/AbstractCaffeineConfigMixinPlugin",
+          "method": "shouldApplyMixin",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)Z",
+          "sha256": "10977100e440fe99a5ca877557ace2c77e3fe2ef1783bcdb82fb893c41e2974d"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/mixin/world/player_chunk_tick/ThreadedAnvilChunkStorageMixin",
+          "method": "m_140184_",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "sha256": "dcd16c8c8c779dbfd8153fc73c12a97f48b500fbea2ad6b51bba321d4bfacfba"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/mixin/world/player_chunk_tick/ThreadedAnvilChunkStorageMixin",
+          "method": "sendChunks",
+          "desc": "(Lnet/minecraft/core/SectionPos;Lnet/minecraft/server/level/ServerPlayer;)V",
+          "sha256": "aca7ffa4d40288a58ded0503f112b2c19a075f0ca92f25e269ea6f62f3bb4696"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/mixin/world/player_chunk_tick/ThreadedAnvilChunkStorageMixin",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set of the re-enabled Radium mixin",
+          "sha256": "b23c1efe8a748d14d425cea5e5daf8350e70439b623ca7003df164bbceb2ccbb"
+        },
+        {
+          "class": "com/ishland/c2me/notickvd/ModuleEntryPoint",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "reads noTickViewDistance.enabled",
+          "sha256": "e1a65758fd7f555a05a16cce6b664dc0782004be58b65ca94f9cf0d614c2d91f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "config plugin (Radium option)",
+      "license": "LGPL-3.0 (Radium), MIT (C2ME): no code of either is carried; the plugin flips Radium's own option"
+    },
+    "radium_untrack_chunk_hooks": {
+      "mod": "radium",
+      "scripts": [],
+      "since": "1.0.22",
+      "mixins": [
+        "bons.furious.mixin.c2me_compat.RadiumUntrackHookMixin"
+      ],
+      "guard": [
+        {
+          "class": "me/jellysquid/mods/lithium/mixin/world/player_chunk_tick/ThreadedAnvilChunkStorageMixin",
+          "method": "stopWatchingChunk",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;II)V",
+          "note": "the redirected untrackChunk call",
+          "sha256": "6abf540ad4ac1e8edb4a3036bfb28479f06a48a2bb3875255a718d92310d12a5"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap",
+          "method": "m_183754_",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/level/ChunkPos;Lorg/apache/commons/lang3/mutable/MutableObject;ZZ)V",
+          "note": "vanilla updateChunkTracking, called instead",
+          "sha256": "ebe0fc31233c5063f1e3ee64dd287f8f96335dbc2b8346fb5eec227bec43e71d"
+        },
+        {
+          "class": "net/caffeinemc/caffeineconfig/CaffeineConfig",
+          "method": "getEffectiveOptionForMixin",
+          "desc": "(Ljava/lang/String;)Lnet/caffeinemc/caffeineconfig/Option;",
+          "note": "how the plugin knows Radium's mixin applies",
+          "sha256": "457ab0590f1cffdc5f019d00c7f165d2dfd14cb80ff00d536f19605b7af68013"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Redirect in Radium's merged stopWatchingChunk)",
+      "license": "LGPL-3.0 (Radium): no Radium code is carried; the redirect calls vanilla's ChunkMap.updateChunkTracking"
+    },
+    "modernfix_c2me_cache_strongholds": {
+      "mod": "modernfix",
+      "scripts": [],
+      "since": "1.0.22",
+      "mixins": [
+        "bons.furious.mixin.c2me_compat.StrongholdCacheOptionTrigger"
+      ],
+      "guard": [
+        {
+          "class": "org/embeddedt/modernfix/core/config/ModernFixEarlyConfig",
+          "method": "<init>",
+          "desc": "(Ljava/io/File;)V",
+          "note": "the blanket \"c2me present\" exclusion this switch narrows",
+          "sha256": "bd9f0fd3915ff09e133a3cdbc2626c2c055beeba965ac50bfd2e8530c82a6f4c"
+        },
+        {
+          "class": "org/embeddedt/modernfix/core/config/Option",
+          "method": "addModOverride",
+          "desc": "(Ljava/lang/Object;Ljava/lang/String;)V",
+          "sha256": "9953a3f74dfd929328510a6af4e43fcdd0b1f1d006f44dbec793b086056e3578"
+        },
+        {
+          "class": "org/embeddedt/modernfix/core/ModernFixMixinPlugin",
+          "method": "shouldApplyMixin",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)Z",
+          "note": "ModernFix reads the option live while preparing",
+          "sha256": "cec02e42e4428122050624e01b5a9e2367a1b35e553de64733bd66107cb90138"
+        },
+        {
+          "class": "org/embeddedt/modernfix/core/ModernFixMixinPlugin",
+          "method": "isOptionEnabled",
+          "desc": "(Ljava/lang/String;)Z",
+          "sha256": "a3b8dd9f93c8089c08204bb5bbee4056999b62ee2162097c36849c5ad4f21caa"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/cache_strongholds/ChunkGeneratorMixin",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set of the re-enabled ModernFix mixin",
+          "sha256": "f232f09202548ca45c71ea7df58c5a805ad62b1d5019c8fd3202c0c232a2b0c7"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/cache_strongholds/ServerLevelMixin",
+          "method": "*",
+          "desc": "",
+          "sha256": "c9b49540dc39d10a7153b6e64f547e8130277bf49c5b81d51ee6233801e7eb18"
+        }
+      ],
+      "cancel": [],
+      "conversion": "config plugin (ModernFix option); C2ME version pinned at runtime (0.2.0+alpha.12)",
+      "license": "LGPL-3.0 (ModernFix): no ModernFix code is carried; the plugin flips ModernFix's own option"
+    }
+  }
+}

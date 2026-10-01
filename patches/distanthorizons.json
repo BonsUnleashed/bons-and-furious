@@ -114,6 +114,63 @@
       "cancel": [],
       "conversion": "injectors (@Redirect x3)",
       "license": "LGPL-3.0: no Distant Horizons code is carried; the redirects call DH's own invert/multiply on a miss"
+    },
+    "distanthorizons_rough_surface_xz_cache": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.distanthorizons.RoughSurfaceDensityMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/worldGeneration/DhRoughSurfaceGenerator$GenParams_forge",
+          "method": "<init>",
+          "desc": "(Lcom/seibel/distanthorizons/common/wrappers/worldGeneration/DhChunkGenerator_forge;Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/IServerLevelWrapper;)V",
+          "sha256": "e304c04e6b94f72c057130573d1645bf13779b7194c0aba14fb90fd98d6459ad"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/worldGeneration/DhRoughSurfaceGenerator_forge",
+          "method": "isNoiseSolidAtBlockPos",
+          "desc": "(Lcom/seibel/distanthorizons/common/wrappers/worldGeneration/DhRoughSurfaceGenerator$GenParams_forge;III)Z",
+          "sha256": "50873b3d572e3d07a255c4239fb3cfd22f8cef99f05f7512d1a20753c1c27c21"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Inject at the constructor return)",
+      "license": "LGPL-3.0: no Distant Horizons code is carried; the mixin replaces the density field with our exact cached copy (helpers bons.furious.patch.distanthorizons.RoughSurfaceDensity, bons.pure.terrain.XzCache)"
+    },
+    "distanthorizons_cloud_pass_invariants": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.distanthorizons.CloudPassInvariantsMixin",
+        "bons.furious.mixin.distanthorizons.GenericRenderPassMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/core/render/renderer/CloudRenderHandler",
+          "method": "preRender",
+          "desc": "(Lcom/seibel/distanthorizons/api/methods/events/sharedParameterObjects/DhApiRenderParam;Lcom/seibel/distanthorizons/core/render/renderer/CloudRenderHandler$CloudParams;)V",
+          "sha256": "726513fd97be97b7132f50e0c36e88fd9263edde58a3f636c05978a136614a98"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/render/openGl/generic/GlGenericObjectRenderer",
+          "method": "render",
+          "desc": "(Lcom/seibel/distanthorizons/core/render/RenderParams;Lcom/seibel/distanthorizons/core/wrapperInterfaces/minecraft/IProfilerWrapper;Z)V",
+          "sha256": "3c8fd85296b1da2e1ec8ae8c91b527fdad25237919de1047f76aa447e7a2c403"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/world/ClientLevelWrapper_forge",
+          "method": "getCloudColor",
+          "desc": "(F)Ljava/awt/Color;",
+          "sha256": "32c15f1833cbb65599b16b5449511b31adeae0b39d2557c239e004f4e64fbdaf"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Redirect x2 in preRender, @Inject at the start and returns of render)",
+      "license": "LGPL-3.0: no Distant Horizons code is carried; the redirects call DH's own lookups on a miss (helper bons.furious.patch.distanthorizons.CloudPass)"
     }
   }
 }

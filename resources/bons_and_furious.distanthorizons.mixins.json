@@ -8,11 +8,14 @@
     "defaultRequire": 1
   },
   "mixins": [
-    "IgnoredDimensionCsvHandlerMixin"
+    "IgnoredDimensionCsvHandlerMixin",
+    "RoughSurfaceDensityMixin"
   ],
   "client": [
     "CloudParamsAccessor",
     "CloudRenderHandlerMixin",
-    "RenderParamInverseMixin"
+    "RenderParamInverseMixin",
+    "CloudPassInvariantsMixin",
+    "GenericRenderPassMixin"
   ]
 }

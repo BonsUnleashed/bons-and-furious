@@ -1,0 +1,24 @@
+{
+  "group": "colorwheel",
+  "keys": {
+    "colorwheel_phase_labels": {
+      "mod": "colorwheel",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.colorwheel.PhaseLabelMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/djefrey/colorwheel/engine/ClrwlDrawManager",
+          "method": "setPhase",
+          "desc": "(Ldev/djefrey/colorwheel/engine/ClrwlRenderingPhase;Z)V",
+          "sha256": "618bef1d65ca5ed70bdbf597c4e02000b08dbbe24e0ab1b3002d23b9f3d62620"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPLv3: the method body may be carried in our GPL-3.0 source (helper bons.furious.patch.colorwheel.PhaseLabels)"
+    }
+  }
+}

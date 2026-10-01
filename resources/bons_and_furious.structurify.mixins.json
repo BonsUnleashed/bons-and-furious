@@ -9,6 +9,7 @@
   },
   "mixins": [
     "ChunkGeneratorHeightCacheKeyMixin",
-    "ChunkGeneratorHeightCacheMixin"
+    "ChunkGeneratorHeightCacheMixin",
+    "StructureSetDataLookupMixin"
   ]
 }

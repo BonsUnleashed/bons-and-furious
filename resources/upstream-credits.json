@@ -454,6 +454,63 @@
     ]
   },
   {
+    "id": "chunksending",
+    "jar": "chunksending-1.20.1-3.7.jar",
+    "sha256": "abf864da4a7b4c88055e4dc842acfdb265995c8054044b68551532fc60c5d957",
+    "license_label": "ARR",
+    "authors": [
+      {
+        "name": "Chunk Sending",
+        "authors": "Someaddon",
+        "url": "https://www.curseforge.com/minecraft/mc-mods/chunk-sending-forge-fabric"
+      }
+    ]
+  },
+  {
+    "id": "colorwheel",
+    "jar": "colorwheel-forge-1.3.0+mc1.20.1.jar",
+    "sha256": "d610af27e40295ee0b47c553d4f05f21533de51ca4ddc8db11ce8713647b8992",
+    "license_label": "LGPLv3",
+    "authors": [
+      {
+        "name": "Colorwheel",
+        "authors": "djefrey",
+        "url": "https://github.com/djefrey/Colorwheel"
+      }
+    ]
+  },
+  {
+    "id": "entityculling",
+    "jar": "entityculling-forge-1.10.5-mc1.20.1.jar",
+    "sha256": "db0ee6aaf7e78d758885969e1d237e6efef07109195d4bb81fa06b304ddc12aa",
+    "license_label": "tr7zw Protective License; the bundled OcclusionCulling library (the patched classes) is MIT",
+    "authors": [
+      {
+        "name": "EntityCulling",
+        "authors": "tr7zw",
+        "url": "https://modrinth.com/mod/entityculling"
+      },
+      {
+        "name": "OcclusionCulling",
+        "authors": "LogisticsCraft",
+        "url": "https://github.com/LogisticsCraft/OcclusionCulling"
+      }
+    ]
+  },
+  {
+    "id": "forge",
+    "jar": "forge-1.20.1-47.4.16-universal.jar",
+    "sha256": "45c5c111c2bce893369e01f67efa4a042b488f29e3910f8872fe71c848e0c1ee",
+    "license_label": "LGPL-2.1",
+    "authors": [
+      {
+        "name": "Minecraft Forge",
+        "authors": "Minecraft Forge project",
+        "url": "https://github.com/MinecraftForge/MinecraftForge"
+      }
+    ]
+  },
+  {
     "id": "mixinextras",
     "jar": "mixinextras-forge-0.5.0.jar",
     "license_label": "MIT",

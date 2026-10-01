@@ -20,6 +20,39 @@
       "cancel": [],
       "conversion": "injectors",
       "license": "LGPL-3.0 (copy-OK); redirects because the body needs ImmediatelyFast access-transformed vanilla members"
+    },
+    "immediatelyfast_known_core_shaders": {
+      "mod": "immediatelyfast",
+      "scripts": [],
+      "since": "1.0.22",
+      "mixins": [
+        "bons.furious.mixin.immediatelyfast.KnownCoreShaderMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/raphimc/immediatelyfast/injection/mixins/core/compat/MixinGameRenderer",
+          "method": "checkForCoreShaderModifications",
+          "desc": "(Lnet/minecraft/server/packs/resources/ResourceProvider;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "the handler whose two resource lookups are wrapped",
+          "sha256": "11a24e84e2206b1853fc063df4540ff25f31c0ec62acadc1967d9b191538db55"
+        },
+        {
+          "class": "net/raphimc/immediatelyfast/compat/CoreShaderBlacklist",
+          "method": "isBlacklisted",
+          "desc": "(Ljava/lang/String;)Z",
+          "sha256": "b6d75bb75c2a7ca4a1f20769f65aedd26f746d6f101d892ff00ee383d79f6daf"
+        },
+        {
+          "class": "net/raphimc/immediatelyfast/compat/CoreShaderBlacklist",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "the blacklist itself",
+          "sha256": "3e4a275ef2aac8c10b613ae946ad10da2a87d5e89c4f5e972636469dda69dd12"
+        }
+      ],
+      "cancel": [],
+      "conversion": "targethandler (MixinSquared @TargetHandler + MixinExtras @WrapOperation)",
+      "license": "LGPL-3.0 (ImmediatelyFast): no ImmediatelyFast code is carried; Call of Yucutan is only recognised by a SHA-256 of its file"
     }
   }
 }
