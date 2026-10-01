@@ -120,7 +120,7 @@ The 1.0.23 release JAR is built from this tree and was tested in a 470-mod pack,
 
 ### Upstream pull requests
 
-Pull requests sent to the projects this mod patches: 33 open, 3 closed without merge (status checked 1 October 2026).
+Pull requests sent to the projects this mod patches: 35 open, 3 closed without merge (status checked 1 October 2026).
 
 | Project | Pull requests | Status |
 | --- | --- | --- |
@@ -131,6 +131,7 @@ Pull requests sent to the projects this mod patches: 33 open, 3 closed without m
 | Ars Nouveau | [#2258](https://github.com/baileyholl/Ars-Nouveau/pull/2258) | Open |
 | Better Combat | [#623](https://github.com/ZsoltMolnarrr/BetterCombat/pull/623) | Open |
 | Butterflies | [#493](https://github.com/doc-bok/Butterflies/pull/493) | Open |
+| ChunkSending | [#13](https://github.com/someaddons/chunksending/pull/13) | Open |
 | Colorwheel | [#84](https://github.com/djefrey/Colorwheel/pull/84) | Open |
 | Cryptic Foes | [#7](https://github.com/min2222/Cryptic-Foes/pull/7) | Closed without merge |
 | Curios API | [#639](https://github.com/TheIllusiveC4/Curios/pull/639) | Open |
@@ -140,6 +141,7 @@ Pull requests sent to the projects this mod patches: 33 open, 3 closed without m
 | Hostile Villages | [#37](https://github.com/someaddons/HostileVillages/pull/37) | Open |
 | Ice and Fire | [#5641](https://github.com/AlexModGuy/Ice_and_Fire/pull/5641), [#5642](https://github.com/AlexModGuy/Ice_and_Fire/pull/5642), [#5643](https://github.com/AlexModGuy/Ice_and_Fire/pull/5643) | Open |
 | ImmediatelyFast | [#586](https://github.com/RaphiMC/ImmediatelyFast/pull/586) | Open |
+| ModernFix | [#696](https://github.com/embeddedt/ModernFix/pull/696) | Open |
 | Nether Depths Upgrade | [#67](https://github.com/Scouter456/Nether_Depths_Upgrade/pull/67) | Closed without merge. The 1.20 branch is no longer maintained. |
 | OcclusionCulling (EntityCulling) | [#5](https://github.com/LogisticsCraft/OcclusionCulling/pull/5) | Open |
 | Oculus | [#869](https://github.com/Asek3/Oculus/pull/869), [#870](https://github.com/Asek3/Oculus/pull/870) | Open |
