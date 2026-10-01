@@ -120,7 +120,7 @@ The 1.0.23 release JAR is built from this tree and was tested in a 470-mod pack,
 
 ### Upstream pull requests
 
-Pull requests sent to the projects this mod patches: 35 open, 3 closed without merge (status checked 1 October 2026).
+Pull requests sent to the projects this mod patches: 37 open, 3 closed without merge (status checked 1 October 2026).
 
 | Project | Pull requests | Status |
 | --- | --- | --- |
@@ -146,6 +146,7 @@ Pull requests sent to the projects this mod patches: 35 open, 3 closed without m
 | OcclusionCulling (EntityCulling) | [#5](https://github.com/LogisticsCraft/OcclusionCulling/pull/5) | Open |
 | Oculus | [#869](https://github.com/Asek3/Oculus/pull/869), [#870](https://github.com/Asek3/Oculus/pull/870) | Open |
 | Presence Footsteps (Forge) | [#67](https://github.com/PaintNinja/Presence-Footsteps-Forge/pull/67) | Open |
+| Radium Re-Reforged | [#8](https://github.com/bigenergy/radium-reforged-patched/pull/8), [#9](https://github.com/bigenergy/radium-reforged-patched/pull/9) | Open |
 | Ryoamic Lights | [#54](https://github.com/ThinkingStudios/RyoamicLights/pull/54) | Open |
 | Structurify | [#93](https://github.com/Faboslav/structurify/pull/93) | Closed without merge |
 | Timeless and Classics Zero (TaCZ) | [#745](https://github.com/MCModderAnchor/TACZ/pull/745) | Open |
