@@ -10,7 +10,23 @@ Bons and Furious patches 84 specific, measured hot spots in vanilla Minecraft 1.
 
 **Minecraft 1.20.1 · Forge 47.3.22 or newer · no required dependencies · one JAR for client and server**
 
-**New in 1.0.21:** every patch is now a mixin instead of a generated JavaScript coremod, so the changes can be read as plain Java and lifted into upstream pull requests (thanks to metafive, [#1](https://github.com/BonsUnleashed/bons-and-furious/issues/1)), and nine more optimizations with the same results: Entity Texture Features works out each sprite's texture id once instead of on every draw (134 → 7 ns), vanilla keyframe animations find their bones without stream pipelines (120 → 10 µs per frame for a 47-part model), Distant Horizons reuses its matrix inverses across a render pass, and six smaller ones in Embeddium, Oculus, Ryoamic Lights, Entity Model Features, Curios and Cryptic Foes. One fix: villager level badges are drawn in ImmediatelyFast's own layer order again.
+## Measured in a whole modpack
+
+On 30 September 2026 the pack this mod is developed in (470 mods: Valkyrien Skies, Alex's Caves, Distant Horizons, Complementary shaders, Fresh Animations and the rest) was run with Bons and Furious 1.0.21 and with the mod removed, 4 matched runs each on the same PC and world seed.
+
+| | With Bons and Furious | Without |
+| --- | --- | --- |
+| Dedicated server, 512 new chunks generated | 2.4 min | 20 min |
+| New singleplayer world, spawn area ready | 56 s | 268 s |
+| Processor time and memory per new chunk | 0.8 s, 0.4 GB | 4.1 s, 4.1 GB |
+| Same scene, 64 animated mobs in view | 73 FPS, 1% low 40 | 66 FPS, 1% low 35 |
+| Same scene, graphics card at its limit | 172 FPS, 1% low 89 | 171 FPS, 1% low 69 |
+| Singleplayer server tick, nothing generating | 10 ms | 14 ms |
+| Start-up time, memory after start-up | no difference | |
+
+In every row with a difference, the slowest run with the mod beat the fastest run without it. The world-generation gain comes from the three vanilla terrain switches. The frame-rate rows are one saved world drawn by both versions; while new terrain generates the two are not comparable, because the mod keeps about a third more terrain loaded around you. Other packs will differ with the mods they use and the terrain they generate.
+
+Every run and the method: [Whole-modpack benchmark](https://github.com/BonsUnleashed/bons-and-furious/wiki/Whole-modpack-benchmark)
 
 ## What it does
 
@@ -20,7 +36,7 @@ Bons and Furious patches 84 specific, measured hot spots in vanilla Minecraft 1.
 
 All 84 are listed in `config/bons_and_furious.properties` with their target mod, tested build, side and measurement. Set any key to `false` and restart. Every control is explained in the [wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki).
 
-## Measured results
+## Measured results, per patch
 
 | Where | What changed | Measured |
 | --- | --- | --- |
@@ -41,7 +57,7 @@ All 84 are listed in `config/bons_and_furious.properties` with their target mod,
 
 Smaller allocation and lookup savings in Ars Nouveau, Curios API, Alex's Caves, Ice and Fire, TaCZ and others are on the wiki.
 
-> **How to read these numbers.** Each figure measures the named method, phase or reproduction in a fixture, on the build it was measured on. The figures are not additive and do not add up to an FPS or TPS gain. A matched whole-modpack comparison is still pending. Method, fixture settings and the result for every control: [Measurements and caveats](https://github.com/BonsUnleashed/bons-and-furious/wiki/Measurements-and-caveats).
+> **How to read the per-patch numbers.** Each figure measures the named method, phase or reproduction in a fixture, on the build it was measured on. The figures are not additive; the whole-modpack comparison above is the aggregate measurement. Method, fixture settings and the result for every control: [Measurements and caveats](https://github.com/BonsUnleashed/bons-and-furious/wiki/Measurements-and-caveats).
 
 ## Covered mods (all optional)
 
@@ -101,7 +117,7 @@ The 1.0.21 release JAR is built from this tree and was tested in a 470-mod pack,
 
 ### Upstream pull requests
 
-Pull requests sent to the projects this mod patches: 27 open, 3 closed without merge (status checked 30 September 2026).
+Pull requests sent to the projects this mod patches: 27 open, 3 closed without merge (status checked 1 October 2026).
 
 | Project | Pull requests | Status |
 | --- | --- | --- |
