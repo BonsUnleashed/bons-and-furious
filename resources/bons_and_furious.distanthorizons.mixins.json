@@ -9,7 +9,8 @@
   },
   "mixins": [
     "IgnoredDimensionCsvHandlerMixin",
-    "RoughSurfaceDensityMixin"
+    "RoughSurfaceDensityMixin",
+    "UpdateQueueWaitMixin"
   ],
   "client": [
     "CloudParamsAccessor",

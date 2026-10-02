@@ -43,3 +43,13 @@ included. Optional target mods must be obtained from their authors.
 
 AI tools assisted development, testing and documentation; the creator reports
 substantial implementation work outside those sessions.
+
+Targets added in 1.0.26: JEI (mezz, MIT), Farmer's Delight (vectorwing, MIT),
+Fusion (SuperMartijn642, All Rights Reserved), and Relics (SSKirillSS / Octo
+Studios, All Rights Reserved). Their repository URLs and exact tested JAR
+digests are in upstream-credits.json. No target JAR or asset is redistributed.
+Fusion's record-hash replacement is our own memoization around the JDK's
+ObjectMethods bootstrap; its source explains the independent implementation.
+Relics is changed by an early-return injection. The other Fusion methods keep
+their installed bodies and receive targeted hooks. The separate BonsFusion
+project is not bundled in this release.

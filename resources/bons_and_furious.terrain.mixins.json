@@ -15,7 +15,9 @@
     "ColumnHeightShareMixin",
     "ClimateSampleRepeatMixin",
     "ClimateSearchRepeatMixin",
-    "ClimateNodeBoundsMixin"
+    "ClimateNodeBoundsMixin",
+    "NoiseChunkWrapPresizeMixin",
+    "RandomStateWrapSizeMixin"
   ],
   "overwrites": {
     "conformVisibility": true

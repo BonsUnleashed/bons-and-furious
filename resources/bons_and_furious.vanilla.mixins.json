@@ -9,7 +9,8 @@
   },
   "mixins": [
     "TickingTrackerVersionMixin",
-    "DistanceManagerTickingMixin"
+    "DistanceManagerTickingMixin",
+    "ChunkStatusNameMixin"
   ],
   "client": [
     "AnimateTickBiomeMixin",

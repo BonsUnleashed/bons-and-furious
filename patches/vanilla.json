@@ -119,6 +119,25 @@
       "cancel": [],
       "conversion": "injectors (MixinExtras @WrapOperation with @Local, @Inject at the start and return of GameRenderer.render)",
       "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.vanilla.FogSample)"
+    },
+    "vanilla_chunk_status_name_memo": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.26",
+      "mixins": [
+        "bons.furious.mixin.vanilla.ChunkStatusNameMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/chunk/ChunkStatus",
+          "method": "toString",
+          "desc": "()Ljava/lang/String;",
+          "sha256": "694fceb976d86905dbbf60fc15c8d53e019b59e9563e345ffb1450d696f8cdb3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on ChunkStatus.toString",
+      "license": "Minecraft (Mojang): no-copy; the mixin keeps the string the original returned (helper bons.furious.patch.vanilla.ChunkStatusNames)"
     }
   }
 }

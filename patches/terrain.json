@@ -197,6 +197,32 @@
       "cancel": [],
       "conversion": "overwrite (pure integer distance, body written from the behaviour) + @Inject at the constructor return",
       "license": "Minecraft (Mojang): no-copy; the @Overwrite body is our own flat-array computation written from the behaviour"
+    },
+    "vanilla_noise_wrap_presize": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.26",
+      "mixins": [
+        "bons.furious.mixin.terrain.NoiseChunkWrapPresizeMixin",
+        "bons.furious.mixin.terrain.RandomStateWrapSizeMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "<init>",
+          "desc": "(ILnet/minecraft/world/level/levelgen/RandomState;IILnet/minecraft/world/level/levelgen/NoiseSettings;Lnet/minecraft/world/level/levelgen/DensityFunctions$BeardifierOrMarker;Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;Lnet/minecraft/world/level/levelgen/blending/Blender;)V",
+          "sha256": "4002da1eb3f5636a83ab187a1b58722401c681cc36856a9637687cf471c4f136"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_209213_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "sha256": "a2908483a3208a4c5a86d21c9104c0adfebcab1a6b8b97ff609d527b54dfdd18"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: @Inject before the router mapAll and at RETURN of NoiseChunk.<init>; an int field on RandomState",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.terrain.WrapPresize)"
     }
   }
 }

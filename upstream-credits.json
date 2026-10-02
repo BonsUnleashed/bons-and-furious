@@ -92,6 +92,45 @@
     ]
   },
   {
+    "id": "c2me",
+    "jar": "c2meF-0.2.0+alpha.12-all.jar",
+    "sha256": "b09a9fd943f49ccaf553c236dd9871901f4c00daf20674528d67c6bbbecb16f0",
+    "license_label": "MIT",
+    "authors": [
+      {
+        "name": "C2ME (Concurrent Chunk Management Engine), Forge build",
+        "authors": "ishland and the RelativityMC contributors; Forge port maintainers",
+        "url": "https://github.com/RelativityMC/C2ME-fabric"
+      }
+    ]
+  },
+  {
+    "id": "chunksending",
+    "jar": "chunksending-1.20.1-3.7.jar",
+    "sha256": "abf864da4a7b4c88055e4dc842acfdb265995c8054044b68551532fc60c5d957",
+    "license_label": "ARR",
+    "authors": [
+      {
+        "name": "Chunk Sending",
+        "authors": "Someaddon",
+        "url": "https://www.curseforge.com/minecraft/mc-mods/chunk-sending-forge-fabric"
+      }
+    ]
+  },
+  {
+    "id": "colorwheel",
+    "jar": "colorwheel-forge-1.3.0+mc1.20.1.jar",
+    "sha256": "d610af27e40295ee0b47c553d4f05f21533de51ca4ddc8db11ce8713647b8992",
+    "license_label": "LGPLv3",
+    "authors": [
+      {
+        "name": "Colorwheel",
+        "authors": "djefrey",
+        "url": "https://github.com/djefrey/Colorwheel"
+      }
+    ]
+  },
+  {
     "id": "crypticfoes",
     "jar": "crypticfoes-1.0.4.jar",
     "sha256": "ba07601b0afb5f3032533f57c0a9214aaa5ffac565db09adb51dfe80edda6557",
@@ -152,6 +191,77 @@
     ]
   },
   {
+    "id": "entity_model_features",
+    "jar": "entity_model_features-3.2.4-1.20.1-forge.jar",
+    "sha256": "0984570913a154ef65ebca54ac797fec11721c5e24aeceeb285b8ca2f562b35e",
+    "license_label": "LGPL-3.0",
+    "authors": [
+      {
+        "name": "Entity Model Features",
+        "authors": "Traben",
+        "url": "https://github.com/Traben-0/Entity_Model_Features"
+      }
+    ]
+  },
+  {
+    "id": "entity_texture_features",
+    "jar": "entity_texture_features_1.20.1-forge-7.1.jar",
+    "sha256": "96b70f55efc64e5149ff977f065385d1634b8cbb71be856a0c7261c62c92f18c",
+    "license_label": "LGPL-3.0",
+    "authors": [
+      {
+        "name": "Entity Texture Features",
+        "authors": "Traben",
+        "url": "https://github.com/Traben-0/Entity_Texture_Features"
+      }
+    ]
+  },
+  {
+    "id": "entityculling",
+    "jar": "entityculling-forge-1.10.5-mc1.20.1.jar",
+    "sha256": "db0ee6aaf7e78d758885969e1d237e6efef07109195d4bb81fa06b304ddc12aa",
+    "license_label": "tr7zw Protective License; the bundled OcclusionCulling library (the patched classes) is MIT",
+    "authors": [
+      {
+        "name": "EntityCulling",
+        "authors": "tr7zw",
+        "url": "https://modrinth.com/mod/entityculling"
+      },
+      {
+        "name": "OcclusionCulling",
+        "authors": "LogisticsCraft",
+        "url": "https://github.com/LogisticsCraft/OcclusionCulling"
+      }
+    ]
+  },
+  {
+    "id": "farmersdelight",
+    "jar": "FarmersDelight-1.20.1-1.3.4.jar",
+    "sha256": "34f03eb671ea1ca579b00c98e4541404cb96d1a292014aed9cc5eb45ad8afbce",
+    "license_label": "MIT License",
+    "authors": [
+      {
+        "name": "Farmer's Delight",
+        "authors": "vectorwing",
+        "url": "https://github.com/vectorwing/FarmersDelight"
+      }
+    ],
+    "source_url": "https://github.com/vectorwing/FarmersDelight"
+  },
+  {
+    "id": "forge",
+    "jar": "forge-1.20.1-47.4.16-universal.jar",
+    "sha256": "45c5c111c2bce893369e01f67efa4a042b488f29e3910f8872fe71c848e0c1ee",
+    "license_label": "LGPL-2.1",
+    "authors": [
+      {
+        "name": "Minecraft Forge",
+        "authors": "Minecraft Forge project",
+        "url": "https://github.com/MinecraftForge/MinecraftForge"
+      }
+    ]
+  },
+  {
     "id": "fowlplay",
     "jar": "fowlplay-1.1.2+1.20.1-forge.jar",
     "sha256": "6166fc24e370c86725f2833dca7269680436817d90b32790fdd6d6dea8b8e182",
@@ -163,6 +273,20 @@
         "url": "https://modrinth.com/mod/fowlplay"
       }
     ]
+  },
+  {
+    "id": "fusion",
+    "jar": "fusion-1.3.14a-forge-mc1.20.1.jar",
+    "sha256": "210fe6a29b77057d42dbe9f353c67a85de7f426d4a07bd11b3b046696dd6ab26",
+    "license_label": "All rights reserved",
+    "authors": [
+      {
+        "name": "Fusion",
+        "authors": "SuperMartijn642",
+        "url": "https://github.com/SuperMartijn642/Fusion"
+      }
+    ],
+    "source_url": "https://github.com/SuperMartijn642/Fusion"
   },
   {
     "id": "geckolib",
@@ -230,6 +354,61 @@
     ]
   },
   {
+    "id": "jei",
+    "jar": "jei-1.20.1-forge-15.59.0.212.jar",
+    "sha256": "0f39187f57cadd7b27a4511038628e212b53a1b184edf53121614418ed6a7442",
+    "license_label": "The MIT License (MIT)",
+    "authors": [
+      {
+        "name": "Just Enough Items",
+        "authors": "mezz",
+        "url": "https://github.com/mezz/JustEnoughItems"
+      }
+    ],
+    "source_url": "https://github.com/mezz/JustEnoughItems"
+  },
+  {
+    "id": "mixinextras",
+    "jar": "mixinextras-forge-0.5.0.jar",
+    "license_label": "MIT",
+    "bundled": true,
+    "authors": [
+      {
+        "name": "MixinExtras",
+        "authors": "LlamaLad7",
+        "url": "https://github.com/LlamaLad7/MixinExtras"
+      }
+    ],
+    "sha256": "12eed47509e3733a59135a52edd8a90807332248d292b7f1668afd42407ca01d"
+  },
+  {
+    "id": "mixinsquared",
+    "jar": "mixinsquared-forge-0.3.6-beta.1.jar",
+    "license_label": "MIT",
+    "bundled": true,
+    "authors": [
+      {
+        "name": "MixinSquared",
+        "authors": "Bawnorton",
+        "url": "https://github.com/Bawnorton/MixinSquared"
+      }
+    ],
+    "sha256": "778bb6ed23de986e295f14f9044609baf321961a54970fc9ed7f2d2d096aab3c"
+  },
+  {
+    "id": "modernfix",
+    "jar": "modernfix-forge-5.27.77+mc1.20.1.jar",
+    "sha256": "d4be9281c569eb761a5764a27c7733e6cb6a34adaff5392b711edf09bba32636",
+    "license_label": "LGPL-3.0",
+    "authors": [
+      {
+        "name": "ModernFix",
+        "authors": "embeddedt",
+        "url": "https://github.com/embeddedt/ModernFix"
+      }
+    ]
+  },
+  {
     "id": "mr_scorched",
     "jar": "scorched-1.1.3e.jar",
     "sha256": "e9f19619f72ddbe65e2efb593fd8dd39235e16d118331339d1d5879064702a7e",
@@ -293,6 +472,33 @@
         "url": "https://www.curseforge.com/minecraft/mc-mods/presence-footsteps-forge"
       }
     ]
+  },
+  {
+    "id": "radium",
+    "jar": "radium-re-reforged-mc1.20.1-0.14.3+git.e141a47.jar",
+    "sha256": "162a0d1ece705375addd1dba149248446658e006f714669ce7eebd98861e62c4",
+    "license_label": "LGPL-3.0-only",
+    "authors": [
+      {
+        "name": "Radium Re-Reforged",
+        "authors": "Asek3 (Radium Reforged); re-reforged build by bigenergy",
+        "url": "https://www.curseforge.com/minecraft/mc-mods/radium-reforged"
+      }
+    ]
+  },
+  {
+    "id": "relics",
+    "jar": "relics-1.20.1-0.8.0.13.jar",
+    "sha256": "2731d3b81533564c5d206faf94e4e8afaf928d97b47b720e5d6aaa017333096f",
+    "license_label": "All Rights Reserved",
+    "authors": [
+      {
+        "name": "Relics",
+        "authors": "SSKirillSS",
+        "url": "https://github.com/Octo-Studios/relics"
+      }
+    ],
+    "source_url": "https://github.com/Octo-Studios/relics"
   },
   {
     "id": "ryoamiclights",
@@ -426,155 +632,5 @@
         "url": null
       }
     ]
-  },
-  {
-    "id": "entity_texture_features",
-    "jar": "entity_texture_features_1.20.1-forge-7.1.jar",
-    "sha256": "96b70f55efc64e5149ff977f065385d1634b8cbb71be856a0c7261c62c92f18c",
-    "license_label": "LGPL-3.0",
-    "authors": [
-      {
-        "name": "Entity Texture Features",
-        "authors": "Traben",
-        "url": "https://github.com/Traben-0/Entity_Texture_Features"
-      }
-    ]
-  },
-  {
-    "id": "entity_model_features",
-    "jar": "entity_model_features-3.2.4-1.20.1-forge.jar",
-    "sha256": "0984570913a154ef65ebca54ac797fec11721c5e24aeceeb285b8ca2f562b35e",
-    "license_label": "LGPL-3.0",
-    "authors": [
-      {
-        "name": "Entity Model Features",
-        "authors": "Traben",
-        "url": "https://github.com/Traben-0/Entity_Model_Features"
-      }
-    ]
-  },
-  {
-    "id": "chunksending",
-    "jar": "chunksending-1.20.1-3.7.jar",
-    "sha256": "abf864da4a7b4c88055e4dc842acfdb265995c8054044b68551532fc60c5d957",
-    "license_label": "ARR",
-    "authors": [
-      {
-        "name": "Chunk Sending",
-        "authors": "Someaddon",
-        "url": "https://www.curseforge.com/minecraft/mc-mods/chunk-sending-forge-fabric"
-      }
-    ]
-  },
-  {
-    "id": "colorwheel",
-    "jar": "colorwheel-forge-1.3.0+mc1.20.1.jar",
-    "sha256": "d610af27e40295ee0b47c553d4f05f21533de51ca4ddc8db11ce8713647b8992",
-    "license_label": "LGPLv3",
-    "authors": [
-      {
-        "name": "Colorwheel",
-        "authors": "djefrey",
-        "url": "https://github.com/djefrey/Colorwheel"
-      }
-    ]
-  },
-  {
-    "id": "entityculling",
-    "jar": "entityculling-forge-1.10.5-mc1.20.1.jar",
-    "sha256": "db0ee6aaf7e78d758885969e1d237e6efef07109195d4bb81fa06b304ddc12aa",
-    "license_label": "tr7zw Protective License; the bundled OcclusionCulling library (the patched classes) is MIT",
-    "authors": [
-      {
-        "name": "EntityCulling",
-        "authors": "tr7zw",
-        "url": "https://modrinth.com/mod/entityculling"
-      },
-      {
-        "name": "OcclusionCulling",
-        "authors": "LogisticsCraft",
-        "url": "https://github.com/LogisticsCraft/OcclusionCulling"
-      }
-    ]
-  },
-  {
-    "id": "forge",
-    "jar": "forge-1.20.1-47.4.16-universal.jar",
-    "sha256": "45c5c111c2bce893369e01f67efa4a042b488f29e3910f8872fe71c848e0c1ee",
-    "license_label": "LGPL-2.1",
-    "authors": [
-      {
-        "name": "Minecraft Forge",
-        "authors": "Minecraft Forge project",
-        "url": "https://github.com/MinecraftForge/MinecraftForge"
-      }
-    ]
-  },
-  {
-    "id": "radium",
-    "jar": "radium-re-reforged-mc1.20.1-0.14.3+git.e141a47.jar",
-    "sha256": "162a0d1ece705375addd1dba149248446658e006f714669ce7eebd98861e62c4",
-    "license_label": "LGPL-3.0-only",
-    "authors": [
-      {
-        "name": "Radium Re-Reforged",
-        "authors": "Asek3 (Radium Reforged); re-reforged build by bigenergy",
-        "url": "https://www.curseforge.com/minecraft/mc-mods/radium-reforged"
-      }
-    ]
-  },
-  {
-    "id": "modernfix",
-    "jar": "modernfix-forge-5.27.77+mc1.20.1.jar",
-    "sha256": "d4be9281c569eb761a5764a27c7733e6cb6a34adaff5392b711edf09bba32636",
-    "license_label": "LGPL-3.0",
-    "authors": [
-      {
-        "name": "ModernFix",
-        "authors": "embeddedt",
-        "url": "https://github.com/embeddedt/ModernFix"
-      }
-    ]
-  },
-  {
-    "id": "c2me",
-    "jar": "c2meF-0.2.0+alpha.12-all.jar",
-    "sha256": "b09a9fd943f49ccaf553c236dd9871901f4c00daf20674528d67c6bbbecb16f0",
-    "license_label": "MIT",
-    "authors": [
-      {
-        "name": "C2ME (Concurrent Chunk Management Engine), Forge build",
-        "authors": "ishland and the RelativityMC contributors; Forge port maintainers",
-        "url": "https://github.com/RelativityMC/C2ME-fabric"
-      }
-    ]
-  },
-  {
-    "id": "mixinextras",
-    "jar": "mixinextras-forge-0.5.0.jar",
-    "license_label": "MIT",
-    "bundled": true,
-    "authors": [
-      {
-        "name": "MixinExtras",
-        "authors": "LlamaLad7",
-        "url": "https://github.com/LlamaLad7/MixinExtras"
-      }
-    ],
-    "sha256": "12eed47509e3733a59135a52edd8a90807332248d292b7f1668afd42407ca01d"
-  },
-  {
-    "id": "mixinsquared",
-    "jar": "mixinsquared-forge-0.3.6-beta.1.jar",
-    "license_label": "MIT",
-    "bundled": true,
-    "authors": [
-      {
-        "name": "MixinSquared",
-        "authors": "Bawnorton",
-        "url": "https://github.com/Bawnorton/MixinSquared"
-      }
-    ],
-    "sha256": "778bb6ed23de986e295f14f9044609baf321961a54970fc9ed7f2d2d096aab3c"
   }
 ]

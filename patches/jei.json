@@ -1,0 +1,109 @@
+{
+  "group": "jei",
+  "keys": {
+    "jei_typed_stack_cache": {
+      "mod": "jei",
+      "scripts": [],
+      "since": "1.0.26",
+      "mixins": [
+        "bons.furious.mixin.jei.TypedStackCacheMixin"
+      ],
+      "guard": [
+        {
+          "class": "mezz/jei/common/ingredients/itemStacks/TypedItemStack",
+          "method": "getIngredient",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "b92f60e8cf592a0b43743bbdf3fc73a0ab227f1b1031e85c000f8709ee37ea37"
+        },
+        {
+          "class": "mezz/jei/common/ingredients/itemStacks/TypedItemStack",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "b0d05f0d1a534adf162660431692560bb6a1f33070df87bd96bdff379404b66d"
+        },
+        {
+          "class": "mezz/jei/common/ingredients/itemStacks/TypedItemStack$1",
+          "method": "load",
+          "desc": "(Lmezz/jei/common/ingredients/itemStacks/TypedItemStack;)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "ebe613185ae6f0bcab2470f77528b7373517ecec5fea645f4cc3c365ed41ce1b"
+        },
+        {
+          "class": "mezz/jei/common/ingredients/itemStacks/TypedItemStack$1",
+          "method": "load",
+          "desc": "(Ljava/lang/Object;)Ljava/lang/Object;",
+          "sha256": "a69cc2fae1fb8aee28d88750169cb1a7035af6e361f797971246166ea1d3ffbb"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation on LoadingCache.getUnchecked in getIngredient; @Unique per-ingredient slot; Guava 31.1 LocalCache methods guarded because the contract is reproduced from them); Guava 31.1 (the version every Minecraft 1.20.1 install ships) is not fingerprinted: library classes are outside the guard roots of the build and the runtime check",
+      "license": "MIT (JEI); Guava is Apache-2.0; helper bons.furious.patch.jei.TypedStackCache; no JEI or Guava code is carried"
+    },
+    "jei_server_item_registry": {
+      "mod": "jei",
+      "scripts": [],
+      "since": "1.0.26",
+      "mixins": [
+        "bons.furious.mixin.jei.ServerItemRegistryMixin"
+      ],
+      "guard": [
+        {
+          "class": "mezz/jei/library/plugins/vanilla/ingredients/ItemStackHelper",
+          "method": "isIngredientOnServer",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "sha256": "f92d29d3ccbeacc9832a00f14e4097d666103a7d7f4d40f4fc6516218c6d827a"
+        },
+        {
+          "class": "mezz/jei/forge/platform/PlatformHelper",
+          "method": "getRegistry",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;)Lmezz/jei/common/platform/IPlatformRegistry;",
+          "sha256": "2867182749e99013bdbb125ddbdcb63d1ebcd561674d1ac3c3960281c7332895"
+        },
+        {
+          "class": "mezz/jei/forge/platform/RegistryWrapper",
+          "method": "getRegistry",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;)Lmezz/jei/common/platform/IPlatformRegistry;",
+          "sha256": "b22aec66580ea0a9b023ab85ed26b927425b86076508ed1317a54d5cee798805"
+        },
+        {
+          "class": "mezz/jei/forge/platform/RegistryWrapper",
+          "method": "<init>",
+          "desc": "(Lnet/minecraftforge/registries/ForgeRegistry;)V",
+          "sha256": "d737d9d022995d3119aa35a9b062f2e066a8d98fc52177ebec13a9e4400682b6"
+        },
+        {
+          "class": "mezz/jei/forge/platform/RegistryWrapper",
+          "method": "contains",
+          "desc": "(Ljava/lang/Object;)Z",
+          "sha256": "a686e499955dfd039b482b8acb476592945c8f3394c95f3b22fa4c5ca6999e88"
+        },
+        {
+          "class": "net/minecraftforge/registries/RegistryManager",
+          "method": "getRegistry",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraftforge/registries/ForgeRegistry;",
+          "sha256": "efeac74f9b20ebb97375e0e6d9f10ccca1cd963bad86278af21767c6ceb531bd"
+        },
+        {
+          "class": "net/minecraftforge/registries/RegistryManager",
+          "method": "getRegistry",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraftforge/registries/RegistryManager;)Lnet/minecraftforge/registries/ForgeRegistry;",
+          "sha256": "b0f07e7d9f151b477bffab02ff17baccbc56f7833608ffec16999ed43948c9f2"
+        },
+        {
+          "class": "net/minecraftforge/registries/RegistryManager",
+          "method": "createRegistry",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraftforge/registries/RegistryBuilder;)Lnet/minecraftforge/registries/ForgeRegistry;",
+          "sha256": "10b6848b3e8f7328f0cd1b6cb3c41c836006f5d4c228c6cb7fa632260b57c9d9"
+        },
+        {
+          "class": "net/minecraftforge/registries/RegistryManager",
+          "method": "clean",
+          "desc": "()V",
+          "sha256": "36a7025c25ecb4bba176d2a75cead538fa5ac53139ae645bf7c719c9b5c360bd"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation on IPlatformHelper.getRegistry in isIngredientOnServer(ItemStack))",
+      "license": "MIT (JEI); Forge LGPL-2.1; helper bons.furious.patch.jei.ServerItemRegistry; no JEI code is carried"
+    }
+  }
+}

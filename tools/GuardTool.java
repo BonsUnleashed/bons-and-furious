@@ -15,12 +15,19 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.jar.JarFile;
+import java.lang.reflect.Modifier;
 import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.FieldInsnNode;
+import org.objectweb.asm.tree.FieldNode;
+import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 
 /**
@@ -174,9 +181,63 @@ public final class GuardTool {
                 if (jar != null) try (JarFile jf = new JarFile(jar.toFile()); InputStream in = jf.getInputStream(jf.getEntry(internal + ".class"))) { b = in.readAllBytes(); }
             }
             ClassNode n = null;
-            if (b != null) { n = new ClassNode(); new ClassReader(b).accept(n, 0); }
+            if (b != null) { n = new ClassNode(); new ClassReader(b).accept(n, 0); ForgeFieldToMethod.apply(n); }
             cache.put(internal, n);
             return n;
+        }
+    }
+
+    /**
+     * Forge's own coremod coremods/field_to_method.js (forge-1.20.1-47.4.16-universal.jar) rewrites these classes in
+     * every game: inside each listed class, every GETFIELD of the field becomes a call of its getter. The runtime check
+     * reads classes through Mixin's bytecode provider, which runs the coremods first, so the build fingerprints the same
+     * rewritten code. Replays CoreMods 5.2.4 ASMAPI.redirectFieldToMethod step for step (1.0.26: the ItemStack
+     * constructor guard of farmersdelight_tool_action_items never matched in game before this).
+     */
+    static final class ForgeFieldToMethod {
+        private static final Map<String, String[][]> REDIRECTS = Map.of(
+                "net/minecraft/world/level/biome/Biome", new String[][] {{"f_47437_", "getModifiedClimateSettings"}, {"f_47443_", "getModifiedSpecialEffects"}},
+                "net/minecraft/world/level/levelgen/structure/Structure", new String[][] {{"f_226555_", "getModifiedStructureSettings"}},
+                "net/minecraft/world/effect/MobEffectInstance", new String[][] {{"f_19502_", "m_19544_"}},
+                "net/minecraft/world/level/block/LiquidBlock", new String[][] {{"f_54689_", "getFluid"}},
+                "net/minecraft/world/item/BucketItem", new String[][] {{"f_40687_", "getFluid"}},
+                "net/minecraft/world/level/block/StairBlock", new String[][] {{"f_56858_", "getModelBlock"}, {"f_56859_", "getModelState"}},
+                "net/minecraft/world/level/block/FlowerPotBlock", new String[][] {{"f_53525_", "m_53560_"}},
+                "net/minecraft/world/item/ItemStack", new String[][] {{"f_41589_", "m_41720_"}});
+
+        static void apply(ClassNode c) {
+            String[][] redirects = REDIRECTS.get(c.name);
+            if (redirects != null) for (String[] r : redirects) redirect(c, r[0], r[1]);
+        }
+
+        private static void redirect(ClassNode c, String fieldName, String methodName) {
+            FieldNode field = null;
+            for (FieldNode f : c.fields) {
+                if (!f.name.equals(fieldName)) continue;
+                if (field != null) throw new IllegalStateException(c.name + ": several fields named " + fieldName);
+                field = f;
+            }
+            if (field == null) throw new IllegalStateException(c.name + ": no field " + fieldName + " for Forge's field_to_method coremod");
+            if (!Modifier.isPrivate(field.access) || Modifier.isStatic(field.access))
+                throw new IllegalStateException(c.name + "." + fieldName + " is not a private instance field");
+            String sig = "()" + field.desc;
+            MethodNode getter = null;
+            for (MethodNode m : c.methods) {
+                if (!m.desc.equals(sig) || !m.name.equals(methodName)) continue;
+                if (getter != null) throw new IllegalStateException(c.name + ": several methods " + methodName + sig);
+                getter = m;
+            }
+            if (getter == null) throw new IllegalStateException(c.name + ": no getter " + methodName + sig + " for Forge's field_to_method coremod");
+            for (MethodNode m : c.methods) {
+                if (m == getter || m.desc.equals(sig)) continue;   // the coremod leaves every method of the getter's descriptor alone
+                for (ListIterator<AbstractInsnNode> it = m.instructions.iterator(); it.hasNext(); ) {
+                    AbstractInsnNode n = it.next();
+                    if (n.getOpcode() == Opcodes.GETFIELD && ((FieldInsnNode) n).name.equals(fieldName)) {
+                        it.remove();
+                        it.add(new MethodInsnNode(Opcodes.INVOKEVIRTUAL, c.name, getter.name, getter.desc, false));
+                    }
+                }
+            }
         }
     }
 }

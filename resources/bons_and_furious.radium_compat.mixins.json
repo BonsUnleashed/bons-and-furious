@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.radium_compat",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "bons.furious.compat.RadiumCompatPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "BlockEntityStateAccessor",
+    "BlockEntityTickStateMixin",
+    "LevelChunkBlockEntityStateMixin",
+    "PoiChunkSectionsMixin",
+    "SectionStorageAccess"
+  ]
+}

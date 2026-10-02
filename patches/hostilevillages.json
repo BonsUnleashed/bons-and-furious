@@ -44,6 +44,43 @@
       "cancel": [],
       "conversion": "injectors",
       "license": "All Rights Reserved: no-copy, the mixin carries only our check"
+    },
+    "hostilevillages_pending_chunk_queue": {
+      "mod": "hostilevillages",
+      "scripts": [],
+      "since": "1.0.24",
+      "mixins": [
+        "bons.furious.mixin.hostilevillages.PendingChunkQueueMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/hostilevillages/event/EventHandler",
+          "method": "addToWorld",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$LevelTickEvent;)V",
+          "sha256": "d246f2198e86af0846c49165ba61ba0436f7b3e521df85a168ddffa9f997c09b"
+        },
+        {
+          "class": "com/hostilevillages/event/EventHandler",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "d596e1d4d27d3b277c5272a6987b16eedcbb2b1d9d2374a8ab7983d5d7b2e397"
+        },
+        {
+          "class": "com/hostilevillages/event/EventHandler",
+          "method": "replaceEntityOnSpawn",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/ServerLevelAccessor;)Z",
+          "sha256": "f07eb43945b9d85849c3ac3709749f5c4c1ee21a52278138dcfdd769f85d9757"
+        },
+        {
+          "class": "com/hostilevillages/RandomVillageDataSet",
+          "method": "onEntitySpawn",
+          "desc": "(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;)V",
+          "sha256": "49c2d28a89fa79c093827c74ac2088f01756cb711041c7e0f9f05dbdf91cc543"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation on the draining loop condition of addToWorld, @Inject at the end of <clinit>)",
+      "license": "All Rights Reserved (no-copy): the mixin only wraps the loop condition and the end of the static initializer; helper bons.furious.patch.hostilevillages.PendingChunkQueue; no Hostile Villages code is carried"
     }
   }
 }
