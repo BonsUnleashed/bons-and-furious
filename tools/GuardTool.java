@@ -80,14 +80,19 @@ public final class GuardTool {
         System.out.println("filled " + n + " fingerprints in " + files.size() + " file(s)");
     }
 
+    /** The switches whose mixins predate the guard table (no patches/*.json key); a yield may name them too. */
+    static final Set<String> UNGUARDED = Set.of("frame_pacing", "terrain_density_memo", "vanilla_data_merge_unchanged");
+
     static void emit(List<Path> files, Path resources, Path out, Classes classes) throws Exception {
         List<String> problems = new ArrayList<>();
         Map<String, String> mixinKey = new TreeMap<>();
         Map<String, String> mod = new TreeMap<>();
         Map<String, List<String>> guard = new TreeMap<>();
         Map<String, String> cancel = new TreeMap<>();
+        List<JsonObject> yields = new ArrayList<>();
         for (Path f : files) {
             JsonObject root = JsonParser.parseString(Files.readString(f)).getAsJsonObject();
+            for (JsonElement y : arr(root, "yields")) yields.add(y.getAsJsonObject());
             for (Map.Entry<String, JsonElement> k : root.getAsJsonObject("keys").entrySet()) {
                 String key = k.getKey();
                 JsonObject o = k.getValue().getAsJsonObject();
@@ -125,6 +130,21 @@ public final class GuardTool {
                 "bons.pure.pacing.mixin.MinecraftPacingMixin", "agentcraft.consolidated.bons_valkyrien_fixes.mixin.TrackworkResources");
         for (String m : configured) if (!legacy.contains(m) && !mixinKey.containsKey(m)) problems.add(m + " is in a mixin config but in no patches/*.json key");
         for (String m : mixinKey.keySet()) if (!configured.contains(m)) problems.add(m + " is listed in patches/*.json but in no mixin config");
+        // Another mod's patch that makes the same change as one of our switches (patches/compat.json, see
+        // bons.furious.guard.ForeignPatches): one "yield" line, and its mixin is cancelled while our switch applies.
+        List<String> yieldLines = new ArrayList<>();
+        for (JsonObject y : yields) {
+            String key = str(y, "key"), mixin = str(y, "mixin");
+            if (key == null || str(y, "mod") == null || str(y, "name") == null || mixin == null) { problems.add("yield without key, mod, name or mixin: " + y); continue; }
+            if (!mod.containsKey(key) && !UNGUARDED.contains(key)) problems.add("yield for unknown switch " + key);
+            if ((str(y, "option") == null) != (str(y, "config") == null)) problems.add("yield " + key + ": option and config go together");
+            String prev = cancel.put(mixin, key);
+            if (prev != null && !prev.equals(key)) problems.add(mixin + " is cancelled for " + prev + " and " + key);
+            List<String> unless = new ArrayList<>();
+            for (JsonElement u : arr(y, "unless_mods")) unless.add(u.getAsString());
+            yieldLines.add(String.join("\t", key, str(y, "mod"), str(y, "name"), mixin, dash(str(y, "config")), dash(str(y, "master")),
+                    dash(str(y, "option")), String.valueOf(y.has("default") && y.get("default").getAsBoolean()), unless.isEmpty() ? "-" : String.join(",", unless)));
+        }
         if (!problems.isEmpty()) {
             problems.forEach(p -> System.out.println("GUARD PROBLEM " + p));
             System.exit(1);
@@ -134,14 +154,24 @@ public final class GuardTool {
         for (var e : mod.entrySet()) sb.append("mod\t").append(e.getKey()).append('\t').append(e.getValue()).append('\n');
         for (var e : guard.entrySet()) for (String l : e.getValue()) sb.append("guard\t").append(e.getKey()).append('\t').append(l).append('\n');
         for (var e : cancel.entrySet()) sb.append("cancel\t").append(e.getKey()).append('\t').append(e.getValue()).append('\n');
+        for (String l : yieldLines) sb.append("yield\t").append(l).append('\n');
         Files.createDirectories(out.getParent());
         Files.writeString(out, sb.toString(), StandardCharsets.UTF_8);
         System.out.println("guards: " + mod.size() + " switches, " + mixinKey.size() + " mixins, " + guard.values().stream().mapToInt(List::size).sum()
-                + " fingerprints, " + cancel.size() + " cancelled foreign mixins -> " + out.getFileName());
+                + " fingerprints, " + cancel.size() + " cancelled foreign mixins, " + yieldLines.size() + " foreign patches stepped aside for -> "
+                + out.getFileName());
     }
 
     private static JsonArray arr(JsonObject o, String name) {
         return o.has(name) ? o.getAsJsonArray(name) : new JsonArray();
+    }
+
+    private static String str(JsonObject o, String name) {
+        return o.has(name) && !o.get(name).isJsonNull() ? o.get(name).getAsString() : null;
+    }
+
+    private static String dash(String s) {
+        return s == null ? "-" : s;
     }
 
     static String fingerprint(Classes classes, JsonObject e) throws Exception {

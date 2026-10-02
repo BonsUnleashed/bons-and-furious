@@ -14,7 +14,8 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
  * The config plugin of every Bons and Furious mixin config. It loads the switches before any game class is
  * transformed (Forge initialises Mixin config plugins first) and decides for each mixin whether it applies:
  *
- *  - the four mixins that predate 1.0.20 are gated by their switch only (MIXIN_KEYS);
+ *  - the four mixins that predate 1.0.20 are gated by their switch only (MIXIN_KEYS), and since 1.0.27 step aside when
+ *    another mod makes the same change (Guards.stepsAside, frame_pacing);
  *  - every other mixin belongs to a guarded switch (bons.furious.guard.Guards): the switch must be enabled and every
  *    method its mixins depend on must match the fingerprint of the tested mod build, otherwise none of that switch's
  *    mixins apply and the target is left exactly as shipped.
@@ -44,7 +45,7 @@ public final class PureMixinPlugin implements IMixinConfigPlugin {
         if (key != null) {
             boolean enabled = PureConfig.isEnabled(key);
             if (!enabled) LOGGER.info("Bons and Furious: {} is disabled by config; {} is not applied to {}", key, mixinClassName, targetClassName);
-            return enabled;
+            return enabled && !Guards.stepsAside(key, targetClassName);
         }
         if (Guards.knows(mixinClassName)) return Guards.shouldApply(mixinClassName, targetClassName);
         return true; // mixins without a switch (TrackworkResources) always apply

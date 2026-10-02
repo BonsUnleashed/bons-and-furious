@@ -29,6 +29,8 @@ import org.spongepowered.asm.service.MixinService;
  *   target mod not installed    nothing (debug only)
  *   another build installed     "Bons and Furious: KEY skipped for CLASS because the installed class does not match
  *                                the supported version (...); the class is left unchanged"
+ *   another mod does the same   "Bons and Furious: KEY steps aside: MOD VERSION makes the same change (MIXIN, option ...
+ *                                on); CLASS is left unchanged by this switch"   (see ForeignPatches)
  *
  * The decision is all or nothing per switch, so a patch spread over several classes never applies halfway.
  */
@@ -39,11 +41,15 @@ public final class Guards {
     private static final Map<String, List<String[]>> GUARD = new LinkedHashMap<>();   // key -> [class, method, desc, sha256]
     private static final Map<String, String> MOD = new LinkedHashMap<>();
     private static final Map<String, String> CANCEL = new LinkedHashMap<>();           // another mod's mixin -> key
+    private static final Map<String, List<ForeignPatches.Yield>> YIELDS = new LinkedHashMap<>();   // key -> the same patch in other mods
+    private static final Map<String, ForeignPatches.Yield> YIELD_MIXIN = new LinkedHashMap<>();    // that mod's mixin -> its entry
+    /** The switches whose mixins predate the guard table (PureMixinPlugin.MIXIN_KEYS): no fingerprints, the switch alone. */
+    private static final Set<String> UNGUARDED = Set.of("frame_pacing", "terrain_density_memo", "vanilla_data_merge_unchanged");
     private static final Map<String, Decision> DECISIONS = new ConcurrentHashMap<>();
     private static final Set<String> LOGGED = ConcurrentHashMap.newKeySet();
     private static volatile boolean loaded;
 
-    public enum State { APPLY, DISABLED, ABSENT, MISMATCH }
+    public enum State { APPLY, DISABLED, ABSENT, MISMATCH, YIELD }
 
     public record Decision(State state, String detail) {}
 
@@ -67,6 +73,11 @@ public final class Guards {
                     case "mod" -> MOD.put(f[1], f[2]);
                     case "guard" -> GUARD.computeIfAbsent(f[1], k -> new ArrayList<>()).add(new String[] {f[2], f[3], f[4], f[5]});
                     case "cancel" -> CANCEL.put(f[1], f[2]);
+                    case "yield" -> {
+                        ForeignPatches.Yield y = ForeignPatches.parse(f);
+                        YIELDS.computeIfAbsent(y.key(), k -> new ArrayList<>()).add(y);
+                        YIELD_MIXIN.put(y.mixin(), y);
+                    }
                     default -> LOGGER.warn("Bons and Furious: unknown line in {}: {}", RESOURCE, line);
                 }
             }
@@ -75,6 +86,8 @@ public final class Guards {
             MIXIN_KEY.clear();
             GUARD.clear();
             CANCEL.clear();
+            YIELDS.clear();
+            YIELD_MIXIN.clear();
         }
     }
 
@@ -107,15 +120,38 @@ public final class Guards {
                     LOGGER.warn("Bons and Furious: {} skipped for {} because the installed class does not match the supported version ({}); the class is left unchanged",
                             key, target, d.detail());
             }
+            case YIELD -> logYield(key, target, d);
         }
         return false;
+    }
+
+    /**
+     * For the switches without a guard table entry (PureMixinPlugin.MIXIN_KEYS), after their switch: true when another
+     * mod makes the same change and the switch steps aside (logged once per class).
+     */
+    public static boolean stepsAside(String key, String targetClass) {
+        load();
+        Decision d = decide(key);
+        if (d.state() != State.YIELD) return false;
+        logYield(key, targetClass.replace('/', '.'), d);
+        return true;
+    }
+
+    private static void logYield(String key, String target, Decision d) {
+        if (LOGGED.add(key + "|" + target))
+            LOGGER.info("Bons and Furious: {} steps aside: {}; {} is left unchanged by this switch", key, d.detail(), target);
     }
 
     /** MixinSquared's canceller: another mod's mixin is cancelled only while the switch that replaces it applies. */
     public static boolean shouldCancel(String foreignMixin) {
         load();
         String key = CANCEL.get(foreignMixin);
-        return key != null && decide(key).state() == State.APPLY;
+        if (key == null || decide(key).state() != State.APPLY) return false;
+        ForeignPatches.Yield y = YIELD_MIXIN.get(foreignMixin);
+        if (y != null && ForeignPatches.listedHere(y) && LOGGED.add("cancel|" + foreignMixin))
+            LOGGER.info("Bons and Furious: {} applies; the same change in {} {} ({}{}) is left out, so only one copy runs",
+                    key, y.name(), ForeignPatches.modVersion(y.mod()), y.shortMixin(), y.option() == null ? "" : ", option " + y.option() + " off");
+        return true;
     }
 
     public static Decision decide(String key) {
@@ -125,7 +161,11 @@ public final class Guards {
     private static Decision compute(String key) {
         if (!PureConfig.isEnabled(key)) return new Decision(State.DISABLED, "disabled by config");
         List<String[]> guard = GUARD.getOrDefault(key, List.of());
-        if (guard.isEmpty()) return new Decision(State.MISMATCH, "no fingerprints recorded for " + key);
+        if (guard.isEmpty()) {
+            if (!UNGUARDED.contains(key)) return new Decision(State.MISMATCH, "no fingerprints recorded for " + key);
+            Decision y = ForeignPatches.yieldDecision(YIELDS.get(key));
+            return y != null ? y : new Decision(State.APPLY, "switched on");
+        }
         int absent = 0;
         List<String> problems = new ArrayList<>();
         Map<String, ClassNode> nodes = new LinkedHashMap<>();
@@ -145,6 +185,8 @@ public final class Guards {
         if (absent == guard.size()) return new Decision(State.ABSENT, "target mod " + MOD.getOrDefault(key, "?") + " is not installed");
         if (!problems.isEmpty()) return new Decision(State.MISMATCH, String.join(", ", problems.subList(0, Math.min(3, problems.size())))
                 + (problems.size() > 3 ? " and " + (problems.size() - 3) + " more" : ""));
+        Decision y = ForeignPatches.yieldDecision(YIELDS.get(key));
+        if (y != null) return y;
         return new Decision(State.APPLY, "all " + guard.size() + " fingerprints match");
     }
 

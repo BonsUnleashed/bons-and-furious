@@ -4,7 +4,7 @@
 
 **Your CPU lives its life one tick at a time.**
 
-[**Download 1.0.26**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.26) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
+[**Download 1.0.27**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.27) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
 
 Bons and Furious patches 127 specific, measured hot spots in vanilla Minecraft 1.20.1, in Forge itself and in 44 popular Forge mods, from Valkyrien Skies, Distant Horizons and Alex's Caves to Embeddium, Oculus and GeckoLib. Each patch is one switch in one config file. It applies only to the exact mod build it was tested against and leaves anything else untouched, with one line in the log.
 
@@ -95,7 +95,7 @@ Coverage means the tested build and the specific code paths of each mod, not eve
 
 ## Install
 
-1. Download `bons_and_furious-1.0.26.jar` from the [1.0.26 release](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.26) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load. The two small mixin libraries it uses, MixinExtras and MixinSquared, are bundled inside it.
+1. Download `bons_and_furious-1.0.27.jar` from the [1.0.27 release](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.27) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load. The two small mixin libraries it uses, MixinExtras and MixinSquared, are bundled inside it.
 2. Start once. The mod writes its config file with every switch on and logs how many controls are enabled.
 3. To turn one off, set its key to `false` and restart. Client-only patches (renderer, shaders, ambience) never load on a dedicated server.
 
