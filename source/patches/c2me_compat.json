@@ -1,0 +1,187 @@
+{
+  "group": "c2me_compat",
+  "keys": {
+    "modernfix_c2me_cache_strongholds": {
+      "mod": "modernfix",
+      "scripts": [],
+      "since": "1.0.22",
+      "mixins": [
+        "bons.furious.mixin.c2me_compat.StrongholdCacheOptionTrigger"
+      ],
+      "guard": [
+        {
+          "class": "org/embeddedt/modernfix/core/config/ModernFixEarlyConfig",
+          "method": "<init>",
+          "desc": "(Ljava/io/File;)V",
+          "note": "the blanket \"c2me present\" exclusion this switch narrows",
+          "sha256": "bd9f0fd3915ff09e133a3cdbc2626c2c055beeba965ac50bfd2e8530c82a6f4c"
+        },
+        {
+          "class": "org/embeddedt/modernfix/core/config/Option",
+          "method": "addModOverride",
+          "desc": "(Ljava/lang/Object;Ljava/lang/String;)V",
+          "sha256": "9953a3f74dfd929328510a6af4e43fcdd0b1f1d006f44dbec793b086056e3578"
+        },
+        {
+          "class": "org/embeddedt/modernfix/core/ModernFixMixinPlugin",
+          "method": "shouldApplyMixin",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)Z",
+          "note": "ModernFix reads the option live while preparing",
+          "sha256": "cec02e42e4428122050624e01b5a9e2367a1b35e553de64733bd66107cb90138"
+        },
+        {
+          "class": "org/embeddedt/modernfix/core/ModernFixMixinPlugin",
+          "method": "isOptionEnabled",
+          "desc": "(Ljava/lang/String;)Z",
+          "sha256": "a3b8dd9f93c8089c08204bb5bbee4056999b62ee2162097c36849c5ad4f21caa"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/cache_strongholds/ChunkGeneratorMixin",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set of the re-enabled ModernFix mixin",
+          "sha256": "f232f09202548ca45c71ea7df58c5a805ad62b1d5019c8fd3202c0c232a2b0c7"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/cache_strongholds/ServerLevelMixin",
+          "method": "*",
+          "desc": "",
+          "sha256": "c9b49540dc39d10a7153b6e64f547e8130277bf49c5b81d51ee6233801e7eb18"
+        }
+      ],
+      "cancel": [],
+      "conversion": "config plugin (ModernFix option); C2ME version pinned at runtime (0.2.0+alpha.12)",
+      "license": "LGPL-3.0 (ModernFix): no ModernFix code is carried; the plugin flips ModernFix's own option"
+    },
+    "distanthorizons_c2me_direct_reads": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.25",
+      "mixins": [
+        "bons.furious.mixin.c2me_compat.DistantHorizonsDirectReadsMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/worldGeneration/chunkFileHandling/ChunkFileReader_neoforge",
+          "method": "<init>",
+          "desc": "(Lcom/seibel/distanthorizons/common/wrappers/worldGeneration/params/GlobalWorldGenParams_neoforge;)V",
+          "sha256": "6f1367965a2a3d1d21fb60a1429df591329dd5aff50aeab3fa3b473674978ac4"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/worldGeneration/chunkFileHandling/ChunkFileReader_neoforge",
+          "method": "getChunkNbtDataAsync",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;)Ljava/util/concurrent/CompletableFuture;",
+          "sha256": "6b8d204097b304702d3116e7de5e805d5cd6d3c0db4b48bbb59ba4c0ef56c11a"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/worldGeneration/chunkFileHandling/ChunkFileReader_neoforge",
+          "method": "createEmptyOrPreExistingChunkWrapperAsync",
+          "desc": "(IIZLjava/util/Map;Ljava/util/Map;Ljava/util/Map;)Ljava/util/concurrent/CompletableFuture;",
+          "sha256": "b5007893678adaf67a5d361603f6ae4e4e3b30e520a1ffb098487a0ec5a8dc65"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/worldGeneration/mimicObject/RegionFileStorageExternalCache_neoforge",
+          "method": "read",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;)Lnet/minecraft/nbt/CompoundTag;",
+          "sha256": "40afa144629a3f72893150fe47f2df4d7027ebde8428def92fbe6894bf0e8235"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/worldGeneration/mimicObject/RegionFileStorageExternalCache_neoforge",
+          "method": "getRegionFile",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;)Lnet/minecraft/world/level/chunk/storage/RegionFile;",
+          "sha256": "e9c8afc20c53161f3f5bc59b00281cb50509467a9d0baae99184b27316d5fab5"
+        },
+        {
+          "class": "com/ishland/c2me/rewrites/chunkio/ModuleEntryPoint",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "d23b790290cad966450884537da1e4bfcfec8d7028c4051a1c959b9f9672f8dc"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Redirect of the isModLoaded(\"c2me\") check in the ChunkFileReader_neoforge constructor), decided by C2meCompatPlugin from the enabled flags of C2ME's three chunk-IO modules",
+      "license": "Distant Horizons (LGPL-3.0) and C2ME (MIT): no code carried; the mixin only answers the mod check"
+    },
+    "radium_experimental_tickets_spawning": {
+      "mod": "radium",
+      "scripts": [],
+      "since": "1.0.25",
+      "mixins": [
+        "bons.furious.mixin.c2me_compat.RadiumExperimentalOptionTrigger"
+      ],
+      "guard": [
+        {
+          "class": "net/caffeinemc/caffeineconfig/CaffeineConfig",
+          "method": "applyChildOptionsStateChecks",
+          "desc": "()V",
+          "note": "copies a user-set parent onto every child: why lithium.properties cannot do this",
+          "sha256": "6b152847fdfaf65ca27894d77d13323e7ec738d96929d302d4b8d7b77a01ef4b"
+        },
+        {
+          "class": "net/caffeinemc/caffeineconfig/CaffeineConfig",
+          "method": "getEffectiveOptionForMixin",
+          "desc": "(Ljava/lang/String;)Lnet/caffeinemc/caffeineconfig/Option;",
+          "sha256": "457ab0590f1cffdc5f019d00c7f165d2dfd14cb80ff00d536f19605b7af68013"
+        },
+        {
+          "class": "net/caffeinemc/caffeineconfig/Option",
+          "method": "addModOverride",
+          "desc": "(ZLjava/lang/String;)V",
+          "sha256": "953b2d14797a0a8cb0efcee0ea3f8ceb857e6842ae05920f9744d6a479d6ef31"
+        },
+        {
+          "class": "net/caffeinemc/caffeineconfig/AbstractCaffeineConfigMixinPlugin",
+          "method": "shouldApplyMixin",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)Z",
+          "sha256": "10977100e440fe99a5ca877557ace2c77e3fe2ef1783bcdb82fb893c41e2974d"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/mixin/minimal_nonvanilla/world/expiring_chunk_tickets/ChunkTicketManagerMixin",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set of the enabled Radium mixin",
+          "sha256": "217421f0921a845f198a7759e7642011bf2e6605d44d4e9cdf9967b613e8ceb0"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/mixin/experimental/spawning/SectionedEntityCacheMixin",
+          "method": "*",
+          "desc": "",
+          "sha256": "1f3dc3d8587772d9db18d680b8010cc9e26b93e1f31ecd20a2aab0ccba984c48"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/mixin/experimental/spawning/ServerChunkManagerMixin",
+          "method": "*",
+          "desc": "",
+          "sha256": "2f6c3839509eb47fc9f02f1d5d4027bec10fd59e8e7f17fa31784f1464c14912"
+        },
+        {
+          "class": "net/minecraft/server/level/DistanceManager",
+          "method": "purgeStaleTickets",
+          "desc": "()V",
+          "sha256": "c615cf8295abba77fb7eadcedd56fe382d9877e82112a28c401d62b9a6e60376"
+        },
+        {
+          "class": "net/minecraft/server/level/DistanceManager",
+          "method": "addTicket",
+          "desc": "(JLnet/minecraft/server/level/Ticket;)V",
+          "sha256": "7d734c1593522a257f5b77c1ee344c9e9e75c32b583f4acb9d349a12382df8a4"
+        },
+        {
+          "class": "net/minecraft/server/level/DistanceManager",
+          "method": "removeTicket",
+          "desc": "(JLnet/minecraft/server/level/Ticket;)V",
+          "sha256": "0afec94f34849c4ed60dc71c691088ee8ce7461e5bb4700b41de6aec6d6dc5c6"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerChunkCache",
+          "method": "tickChunks",
+          "desc": "()V",
+          "sha256": "9afa6fc2a9d1d7a7d6566a95f1ffea42b2231fe3be4edb5e784b965dfb6e9db8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "config plugin (Radium options set on the live CaffeineConfig after its child-state copy; trigger mixin, never applied)",
+      "license": "LGPL-3.0 (Radium): no code carried; the plugin sets Radium's own options"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "group": "models",
+  "keys": {
+    "vanilla_model_bone_lookup": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.21",
+      "mixins": [
+        "bons.furious.mixin.models.ModelPartChildrenAccessor",
+        "bons.furious.mixin.models.BoneLookupMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/model/HierarchicalModel",
+          "method": "getAnyDescendantWithName",
+          "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+          "sha256": "6e46e52d6aeafebf133c561e4f4246a1d48d428084777edf29a2f063ae70ee86"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/ModelPart",
+          "method": "getAllParts",
+          "desc": "()Ljava/util/stream/Stream;",
+          "sha256": "f16cd99637b15f2e778634bb7541d512c170ee58cafee3aefa2686fd8cffc92e"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/ModelPart",
+          "method": "hasChild",
+          "desc": "(Ljava/lang/String;)Z",
+          "sha256": "8f6f941f1316e6aa005cf3fd00bf4cf398edb9c4bbfa7810c95c2b1feefb8f56"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/ModelPart",
+          "method": "getChild",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/client/model/geom/ModelPart;",
+          "sha256": "9ae82362bc1332f5a21e6418269788eac9b6d9dccac5ed20b6fa52693a01ea1c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Redirect of the stream source)",
+      "license": "Mojang: no Minecraft code is carried; only the stream source is redirected to our own search"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "group": "immediatelyfast",
+  "keys": {
+    "immediatelyfast_offset_layer_prefixes": {
+      "mod": "immediatelyfast",
+      "scripts": [
+        "furious14-substrings.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.immediatelyfast.BatchableBufferSourceLayerOrderMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/raphimc/immediatelyfast/feature/core/BatchableBufferSource",
+          "method": "getLayerOrder",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)I",
+          "sha256": "6d1bc800d3bb2928c6a6dc040e2741cd2dc42e31dfe403a39f613158524960b3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors",
+      "license": "LGPL-3.0 (copy-OK); redirects because the body needs ImmediatelyFast access-transformed vanilla members"
+    },
+    "immediatelyfast_known_core_shaders": {
+      "mod": "immediatelyfast",
+      "scripts": [],
+      "since": "1.0.22",
+      "mixins": [
+        "bons.furious.mixin.immediatelyfast.KnownCoreShaderMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/raphimc/immediatelyfast/injection/mixins/core/compat/MixinGameRenderer",
+          "method": "checkForCoreShaderModifications",
+          "desc": "(Lnet/minecraft/server/packs/resources/ResourceProvider;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "the handler whose two resource lookups are wrapped",
+          "sha256": "2639e6d48c9713930cf6bf97e5ece86fc377d433cc27fb3546074435a40684f4"
+        },
+        {
+          "class": "net/raphimc/immediatelyfast/compat/CoreShaderBlacklist",
+          "method": "isBlacklisted",
+          "desc": "(Ljava/lang/String;)Z",
+          "sha256": "b6d75bb75c2a7ca4a1f20769f65aedd26f746d6f101d892ff00ee383d79f6daf"
+        },
+        {
+          "class": "net/raphimc/immediatelyfast/compat/CoreShaderBlacklist",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "the blacklist itself",
+          "sha256": "3e4a275ef2aac8c10b613ae946ad10da2a87d5e89c4f5e972636469dda69dd12"
+        }
+      ],
+      "cancel": [],
+      "conversion": "targethandler (MixinSquared @TargetHandler + MixinExtras @WrapOperation)",
+      "license": "LGPL-3.0 (ImmediatelyFast): no ImmediatelyFast code is carried; Call of Yucutan is only recognised by a SHA-256 of its file"
+    }
+  }
+}

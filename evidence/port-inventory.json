@@ -1,0 +1,759 @@
+{
+  "adastra_gravity_primitive": {
+    "group": "adastra",
+    "mod": "ad_astra",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "alexscaves_magnet_query": {
+    "group": "alexscaves",
+    "mod": "alexscaves",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "alexscaves_equipment_enumeration": {
+    "group": "alexscaves",
+    "mod": "alexscaves",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "alexscaves_teletor_generation_context": {
+    "group": "alexscaves",
+    "mod": "alexscaves",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "ambientsounds_biome_match_cache": {
+    "group": "ambientsounds",
+    "mod": "ambientsounds",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "ambientsounds_terrain_scan_bound": {
+    "group": "ambientsounds",
+    "mod": "ambientsounds",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "ambientsounds_dimension_patterns": {
+    "group": "ambientsounds",
+    "mod": "ambientsounds",
+    "status": "retired on 1.21.1",
+    "reason": "AmbientSounds 6.3.9 compiles included and excluded dimension patterns once in init and reuses them in is(Level); the original repeated String.matches compilation is already fixed upstream."
+  },
+  "architectury_event_dispatch": {
+    "group": "architectury",
+    "mod": "architectury",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "ars_primitive_mana_discounts": {
+    "group": "ars_nouveau",
+    "mod": "ars_nouveau",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "ars_direct_perk_snapshots": {
+    "group": "ars_nouveau",
+    "mod": "ars_nouveau",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "bettercombat_offhand_lookup": {
+    "group": "bettercombat",
+    "mod": "bettercombat",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "butterflies_landing_rule_lookup": {
+    "group": "butterflies",
+    "mod": "butterflies",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "radium_c2me_chunk_access": {
+    "group": "c2me_compat",
+    "mod": "radium",
+    "status": "retired on 1.21.1",
+    "reason": "Radium 0.13.1 has no applyC2MECompat blanket disable, and getChunkBlocking already calls holder.scheduleChunkGenerationTask; the old bypass repair and option override are unnecessary."
+  },
+  "radium_c2me_player_chunk_tick": {
+    "group": "c2me_compat",
+    "mod": "radium",
+    "status": "retired on 1.21.1",
+    "reason": "Radium 0.13.1 has neither the applyC2MECompat blanket disable nor the old world.player_chunk_tick mixin."
+  },
+  "radium_untrack_chunk_hooks": {
+    "group": "c2me_compat",
+    "mod": "radium",
+    "status": "retired on 1.21.1",
+    "reason": "Radium 0.13.1 removed world.player_chunk_tick.ThreadedAnvilChunkStorageMixin; its cancelled Forge tracking hooks no longer exist."
+  },
+  "modernfix_c2me_cache_strongholds": {
+    "group": "c2me_compat",
+    "mod": "modernfix",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "distanthorizons_c2me_direct_reads": {
+    "group": "c2me_compat",
+    "mod": "distanthorizons",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "radium_experimental_tickets_spawning": {
+    "group": "c2me_compat",
+    "mod": "radium",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "chunksending_expiry_queue": {
+    "group": "chunksending",
+    "mod": "chunksending",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "colorwheel_phase_labels": {
+    "group": "colorwheel",
+    "mod": "colorwheel",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "crypticfoes_howler_bone_cache": {
+    "group": "crypticfoes",
+    "mod": "crypticfoes",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "crypticfoes_sound_listener_invariant": {
+    "group": "crypticfoes",
+    "mod": "crypticfoes",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "curios_slot_map_lookup": {
+    "group": "curios",
+    "mod": "curios",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "curios_lazy_modifier_map": {
+    "group": "curios",
+    "mod": "curios",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "curios_foreign_capability_fast_path": {
+    "group": "curios",
+    "mod": "curios",
+    "status": "retired on 1.21.1",
+    "reason": "Curios 9.5.1 uses NeoForge registered capabilities; the old Forge LazyOptional capability provider and getCapability method no longer exist."
+  },
+  "distanthorizons_cloud_scalars": {
+    "group": "distanthorizons",
+    "mod": "distanthorizons",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "distanthorizons_ignored_dimension_match": {
+    "group": "distanthorizons",
+    "mod": "distanthorizons",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "distanthorizons_render_param_inverse_reuse": {
+    "group": "distanthorizons",
+    "mod": "distanthorizons",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "distanthorizons_rough_surface_xz_cache": {
+    "group": "distanthorizons",
+    "mod": "distanthorizons",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "distanthorizons_cloud_pass_invariants": {
+    "group": "distanthorizons",
+    "mod": "distanthorizons",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "distanthorizons_update_queue_wait": {
+    "group": "distanthorizons",
+    "mod": "distanthorizons",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "embeddium_pending_upload_sum": {
+    "group": "embeddium",
+    "mod": "embeddium",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "embeddium_direct_upload_preparation": {
+    "group": "embeddium",
+    "mod": "embeddium",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "embeddium_upload_classification": {
+    "group": "embeddium",
+    "mod": "embeddium",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "embeddium_lazy_completed_jobs": {
+    "group": "embeddium",
+    "mod": "embeddium",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "embeddium_serializer_lookup_snapshot": {
+    "group": "embeddium",
+    "mod": "embeddium",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "embeddium_section_cache_prefix_cleanup": {
+    "group": "embeddium_cache",
+    "mod": "embeddium",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "embeddium_weighted_pick_table": {
+    "group": "embeddium_meshing",
+    "mod": "embeddium",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "embeddium_visible_faces_first": {
+    "group": "embeddium_meshing",
+    "mod": "embeddium",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "emf_block_entity_type_string": {
+    "group": "emf",
+    "mod": "entity_model_features",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "emf_variable_index": {
+    "group": "emf_compile",
+    "mod": "entity_model_features",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "emf_hierarchical_id_memo": {
+    "group": "emf_compile",
+    "mod": "entity_model_features",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "entityculling_dirty_cache_reset": {
+    "group": "entityculling",
+    "mod": "entityculling",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "etf_sprite_texture_id_memo": {
+    "group": "etf",
+    "mod": "entity_texture_features",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "farmersdelight_tool_action_items": {
+    "group": "farmersdelight",
+    "mod": "farmersdelight",
+    "status": "retired on 1.21.1",
+    "reason": "Farmer's Delight 1.3.4 for 1.21.1 replaces ToolActionIngredient and its eager constructor/packet decoder with a codec and lazy ItemAbilityIngredient.getItems(). The old repeated constructor/decoder scan no longer exists; no eager scan is added by this port."
+  },
+  "forge_render_layer_memo": {
+    "group": "forge",
+    "mod": "oculus",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "forge_status_ping_channel_groups": {
+    "group": "forge",
+    "mod": "forge",
+    "status": "retired on 1.21.1",
+    "reason": "NeoForge 21.1 networking no longer has ServerStatusPing or its per-mod channel scan."
+  },
+  "forge_plain_translation_format": {
+    "group": "forge",
+    "mod": "forge",
+    "status": "retired on 1.21.1",
+    "reason": "ForgeI18n moved to FMLTranslations in the separate early loader module; NeoForge mod mixins cannot transform classes already loaded by that module."
+  },
+  "fowlplay_flock_vectors": {
+    "group": "fowlplay",
+    "mod": "fowlplay",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "fowlplay_air_targets_loaded_only": {
+    "group": "fowlplay",
+    "mod": "fowlplay",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "fusion_chunk_layer_id": {
+    "group": "fusion",
+    "mod": "fusion",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "fusion_connection_lookups": {
+    "group": "fusion",
+    "mod": "fusion",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "geckolib_primitive_easing": {
+    "group": "geckolib",
+    "mod": "geckolib",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "geckolib_animation_hashes": {
+    "group": "geckolib",
+    "mod": "geckolib",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "geckolib_keyframe_locals": {
+    "group": "geckolib",
+    "mod": "geckolib",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "hostilevillages_distant_generation_queue": {
+    "group": "hostilevillages",
+    "mod": "hostilevillages",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "hostilevillages_pending_chunk_queue": {
+    "group": "hostilevillages",
+    "mod": "hostilevillages",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "iceandfire_lake_guard_region": {
+    "group": "iceandfire",
+    "mod": "iceandfire",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "iceandfire_pixie_village_difficulty": {
+    "group": "iceandfire",
+    "mod": "iceandfire",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "iceandfire_lazy_reference_lists": {
+    "group": "iceandfire",
+    "mod": "iceandfire",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "immediatelyfast_offset_layer_prefixes": {
+    "group": "immediatelyfast",
+    "mod": "immediatelyfast",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "immediatelyfast_known_core_shaders": {
+    "group": "immediatelyfast",
+    "mod": "immediatelyfast",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "jei_typed_stack_cache": {
+    "group": "jei",
+    "mod": "jei",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "jei_server_item_registry": {
+    "group": "jei",
+    "mod": "jei",
+    "status": "retired on 1.21.1",
+    "reason": "JEI 19 uses RegistryUtil.getRegistry returning the Minecraft Registry directly; the per-ingredient IPlatformRegistry wrapper allocation removed by this patch no longer exists."
+  },
+  "terramity_animation_entity_guard": {
+    "group": "mcreator",
+    "mod": "terramity",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "goblins_animation_entity_guard": {
+    "group": "mcreator",
+    "mod": "goblins_tyranny",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "moon_animation_entity_guard": {
+    "group": "mcreator",
+    "mod": "under_the_moon",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "goblins_cached_disguise_tag": {
+    "group": "mcreator",
+    "mod": "goblins_tyranny",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "vanilla_model_bone_lookup": {
+    "group": "models",
+    "mod": "minecraft",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "netherdepths_reuse_enchantment_decode": {
+    "group": "netherdepths",
+    "mod": "netherdepthsupgrade",
+    "status": "retired on 1.21.1",
+    "reason": "Nether Depths Upgrade 3.3 uses enchantment data components and a single getHellStriderLevel call; the two NBT-to-map decodes removed by the 1.20.1 patch no longer exist."
+  },
+  "occult_bed_scan_guard": {
+    "group": "occult",
+    "mod": "occult",
+    "status": "retired on 1.21.1",
+    "reason": "The available NeoForge 1.21.1 release, Occult alpha-2-b, has no Tendrils entity or TendrilsBedProcedure. The expensive scan introduced in the 1.20.1 Alpha 5 target is absent."
+  },
+  "oculus_empty_transparency_graphs": {
+    "group": "oculus",
+    "mod": "oculus",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "oculus_reuse_empty_graphs": {
+    "group": "oculus",
+    "mod": "oculus",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "oculus_primitive_uniform_locations": {
+    "group": "oculus",
+    "mod": "oculus",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "oculus_primitive_buffer_affinities": {
+    "group": "oculus",
+    "mod": "oculus",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "oculus_entity_vertex_reuse": {
+    "group": "oculus",
+    "mod": "oculus",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "oculus_program_traversal": {
+    "group": "oculus",
+    "mod": "oculus",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "oculus_shadow_edge_vectors": {
+    "group": "oculus",
+    "mod": "oculus",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "oculus_empty_sampler_fast_return": {
+    "group": "oculus",
+    "mod": "oculus",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "oculus_phase_labels": {
+    "group": "oculus",
+    "mod": "oculus",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "oculus_dh_instance_lookup": {
+    "group": "oculus",
+    "mod": "oculus",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "presencefootsteps_duplicate_tracking": {
+    "group": "presencefootsteps",
+    "mod": "presencefootsteps",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "vanilla_block_entity_tick_state": {
+    "group": "radium_compat",
+    "mod": "minecraft",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "vanilla_poi_chunk_sections": {
+    "group": "radium_compat",
+    "mod": "minecraft",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "relics_foreign_capability_fast_path": {
+    "group": "relics",
+    "mod": "relics",
+    "status": "retired on 1.21.1",
+    "reason": "Relics 0.10.7.8 removed IRelicsCapability and the Forge LazyOptional capability provider targeted by this patch."
+  },
+  "ryoamiclights_chunk_iteration": {
+    "group": "ryoamiclights",
+    "mod": "ryoamiclights",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "ryoamiclights_block_entity_lock_skip": {
+    "group": "ryoamiclights",
+    "mod": "ryoamiclights",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "scuba_gear_generation_context": {
+    "group": "scuba_gear",
+    "mod": "scuba_gear",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "spawn_zombified_flower_floor": {
+    "group": "spawn",
+    "mod": "spawn",
+    "status": "retired on 1.21.1",
+    "reason": "Spawn 4.0.8 already checks pos.getY() > worldgenlevel.getMinBuildHeight() before its downward flower-placement loop, so the original fix is included upstream."
+  },
+  "spawn_sealife_tick": {
+    "group": "spawn",
+    "mod": "spawn",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "structure_gel_lake_guard_region": {
+    "group": "structure_gel",
+    "mod": "structure_gel",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "structurify_height_cache": {
+    "group": "structurify",
+    "mod": "structurify",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "structurify_set_data_single_lookup": {
+    "group": "structurify",
+    "mod": "structurify",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "tacz_sync_collections": {
+    "group": "tacz",
+    "mod": "tacz",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "tacz_sync_scope": {
+    "group": "tacz",
+    "mod": "tacz",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "terrain_final_density_reuse": {
+    "group": "terrain",
+    "mod": "minecraft",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "terrain_surface_estimate_share": {
+    "group": "terrain",
+    "mod": "minecraft",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "vanilla_noise_column_cache": {
+    "group": "terrain",
+    "mod": "minecraft",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "vanilla_climate_sample_repeat": {
+    "group": "terrain",
+    "mod": "minecraft",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "vanilla_climate_search_repeat": {
+    "group": "terrain",
+    "mod": "minecraft",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "vanilla_climate_rtree_flat_bounds": {
+    "group": "terrain",
+    "mod": "minecraft",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "vanilla_noise_wrap_presize": {
+    "group": "terrain",
+    "mod": "minecraft",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "valkyrien_terrain_snapshot_order": {
+    "group": "valkyrienskies_core",
+    "mod": "valkyrienskies",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "valkyrien_collision_axes": {
+    "group": "valkyrienskies_core",
+    "mod": "valkyrienskies",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "valkyrien_chunk_set_version": {
+    "group": "valkyrienskies_core",
+    "mod": "valkyrienskies",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "valkyrien_sculk_vibrations": {
+    "group": "valkyrienskies_core",
+    "mod": "valkyrienskies",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "valkyrien_backoff_nan": {
+    "group": "valkyrienskies_mod",
+    "mod": "valkyrienskies",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "valkyrien_entity_ship_collision": {
+    "group": "valkyrienskies_mod",
+    "mod": "valkyrienskies",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "valkyrien_entity_handlers": {
+    "group": "valkyrienskies_mod",
+    "mod": "valkyrienskies",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "valkyrien_ship_lookups": {
+    "group": "valkyrienskies_mod",
+    "mod": "valkyrienskies",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "valkyrien_standing_probe": {
+    "group": "valkyrienskies_mod",
+    "mod": "valkyrienskies",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "valkyrien_spawn_distance": {
+    "group": "valkyrienskies_mod",
+    "mod": "valkyrienskies",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "valkyrien_entity_base_tick": {
+    "group": "valkyrienskies_mod",
+    "mod": "valkyrienskies",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "valkyrien_render_interpolation": {
+    "group": "valkyrienskies_mod",
+    "mod": "valkyrienskies",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "valkyrien_entity_unloads": {
+    "group": "valkyrienskies_mod",
+    "mod": "valkyrienskies",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "valkyrien_chunk_bookkeeping": {
+    "group": "valkyrienskies_mod",
+    "mod": "valkyrienskies",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "valkyrien_weather_occlusion": {
+    "group": "valkyrienskies_mod",
+    "mod": "valkyrienskies",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  },
+  "vanilla_block_ticking_range_memo": {
+    "group": "vanilla",
+    "mod": "minecraft",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "vanilla_animate_tick_uniform_biome": {
+    "group": "vanilla",
+    "mod": "minecraft",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "vanilla_fog_color_sample_memo": {
+    "group": "vanilla",
+    "mod": "minecraft",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "vanilla_chunk_status_name_memo": {
+    "group": "vanilla",
+    "mod": "minecraft",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "vanilla_camera_fluid_memo": {
+    "group": "vanilla_camera",
+    "mod": "minecraft",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "frame_pacing": {
+    "group": "legacy",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "terrain_density_memo": {
+    "group": "legacy",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "vanilla_data_merge_unchanged": {
+    "group": "legacy",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "scorched_sandcrab_burrow_gate": {
+    "group": "function packs",
+    "status": "ported",
+    "validation": "See qualification.json for runtime coverage and limits."
+  },
+  "sakes_structure_check_once": {
+    "group": "function packs",
+    "status": "target unavailable",
+    "reason": "No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source."
+  }
+}

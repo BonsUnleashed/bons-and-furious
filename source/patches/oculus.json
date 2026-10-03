@@ -1,0 +1,540 @@
+{
+  "group": "oculus",
+  "keys": {
+    "oculus_empty_transparency_graphs": {
+      "mod": "iris",
+      "scripts": [
+        "furious10-graphs.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.oculus.TransparencyGraphOrderMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/ordering/GraphTranslucencyRenderOrderManager",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "9f513bba286f9fa1abdee6d7557b8f7a5b8c992b2d882258eae8e9013cc0fa0b"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/ordering/GraphTranslucencyRenderOrderManager",
+          "method": "getTransparencyType",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)Lnet/irisshaders/batchedentityrendering/impl/TransparencyType;",
+          "sha256": "8ddb11dada77b0bdfcac68f4abde169cc8bcb5e860d1113d2687afa0b20d201a"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/ordering/GraphTranslucencyRenderOrderManager",
+          "method": "begin",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)V",
+          "sha256": "38979d1bd4ceeb10c66a3c3a72789d85235877becebc7ee9f0b71e287760fcc7"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/ordering/GraphTranslucencyRenderOrderManager",
+          "method": "startGroup",
+          "desc": "()V",
+          "sha256": "92edd5ea41ccb4df166255b029f699ccacc9eb1548c2720f40aaf87cbbb99bdd"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/ordering/GraphTranslucencyRenderOrderManager",
+          "method": "maybeStartGroup",
+          "desc": "()Z",
+          "sha256": "e5edebd598d765a2ac441fea4c32b2c014696504a84c8edfe9c5170762f58e91"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/ordering/GraphTranslucencyRenderOrderManager",
+          "method": "endGroup",
+          "desc": "()V",
+          "sha256": "676e099085b2b1526bfb3af815a83cd5fc7474d7101cca511a338792db2c1e8c"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/ordering/GraphTranslucencyRenderOrderManager",
+          "method": "reset",
+          "desc": "()V",
+          "sha256": "42a4dc219d4c40e384e99f60d6484de2d0a65a5dc44bbd8ba079e084f10449a3"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/ordering/GraphTranslucencyRenderOrderManager",
+          "method": "resetType",
+          "desc": "(Lnet/irisshaders/batchedentityrendering/impl/TransparencyType;)V",
+          "sha256": "ff836d15f2308a049109124da800911316434beb8d2c119ef2488635c13eaf6d"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/ordering/GraphTranslucencyRenderOrderManager",
+          "method": "getRenderOrder",
+          "desc": "()Ljava/util/List;",
+          "sha256": "d55ecd2f384cdd9552948ca80e0c6998a68031377716b30dbad64caf1badfbae"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "oculus_reuse_empty_graphs": {
+      "mod": "iris",
+      "scripts": [],
+      "note": "Second transformer chained inside furious10-graphs.js (its own switch, originally furious14-graphs.js); the script is listed under oculus_empty_transparency_graphs.",
+      "mixins": [
+        "bons.furious.mixin.oculus.TransparencyGraphResetMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/ordering/GraphTranslucencyRenderOrderManager",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "9f513bba286f9fa1abdee6d7557b8f7a5b8c992b2d882258eae8e9013cc0fa0b"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/ordering/GraphTranslucencyRenderOrderManager",
+          "method": "getTransparencyType",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)Lnet/irisshaders/batchedentityrendering/impl/TransparencyType;",
+          "sha256": "8ddb11dada77b0bdfcac68f4abde169cc8bcb5e860d1113d2687afa0b20d201a"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/ordering/GraphTranslucencyRenderOrderManager",
+          "method": "begin",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)V",
+          "sha256": "38979d1bd4ceeb10c66a3c3a72789d85235877becebc7ee9f0b71e287760fcc7"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/ordering/GraphTranslucencyRenderOrderManager",
+          "method": "startGroup",
+          "desc": "()V",
+          "sha256": "92edd5ea41ccb4df166255b029f699ccacc9eb1548c2720f40aaf87cbbb99bdd"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/ordering/GraphTranslucencyRenderOrderManager",
+          "method": "maybeStartGroup",
+          "desc": "()Z",
+          "sha256": "e5edebd598d765a2ac441fea4c32b2c014696504a84c8edfe9c5170762f58e91"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/ordering/GraphTranslucencyRenderOrderManager",
+          "method": "endGroup",
+          "desc": "()V",
+          "sha256": "676e099085b2b1526bfb3af815a83cd5fc7474d7101cca511a338792db2c1e8c"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/ordering/GraphTranslucencyRenderOrderManager",
+          "method": "reset",
+          "desc": "()V",
+          "sha256": "42a4dc219d4c40e384e99f60d6484de2d0a65a5dc44bbd8ba079e084f10449a3"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/ordering/GraphTranslucencyRenderOrderManager",
+          "method": "resetType",
+          "desc": "(Lnet/irisshaders/batchedentityrendering/impl/TransparencyType;)V",
+          "sha256": "ff836d15f2308a049109124da800911316434beb8d2c119ef2488635c13eaf6d"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/ordering/GraphTranslucencyRenderOrderManager",
+          "method": "getRenderOrder",
+          "desc": "()Ljava/util/List;",
+          "sha256": "d55ecd2f384cdd9552948ca80e0c6998a68031377716b30dbad64caf1badfbae"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "oculus_primitive_uniform_locations": {
+      "mod": "iris",
+      "scripts": [
+        "furious10-uniforms.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.oculus.CustomUniformsPushMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/irisshaders/iris/uniforms/custom/CustomUniforms",
+          "method": "<init>",
+          "desc": "(Lnet/irisshaders/iris/uniforms/custom/CustomUniformFixedInputUniformsHolder;Ljava/util/Map;)V",
+          "sha256": "eb3ae15600c600ecf4dbcb9e0c3271e2d30c00a23a74903c007401f760e9b8c7"
+        },
+        {
+          "class": "net/irisshaders/iris/uniforms/custom/CustomUniforms",
+          "method": "addVariable",
+          "desc": "(Lkroppeb/stareval/expression/Expression;Lnet/irisshaders/iris/uniforms/custom/cached/CachedUniform;)V",
+          "sha256": "ead762588a87a290915183e7cecd8ab91899a03ab9ec1a2f2b2459c06fe8019d"
+        },
+        {
+          "class": "net/irisshaders/iris/uniforms/custom/CustomUniforms",
+          "method": "assignTo",
+          "desc": "(Lnet/irisshaders/iris/gl/uniform/LocationalUniformHolder;)V",
+          "sha256": "c3da2f3723bc2fe3a8c2ac08cf2151851ca1f4ae87ac8df1baacb7520cf7a047"
+        },
+        {
+          "class": "net/irisshaders/iris/uniforms/custom/CustomUniforms",
+          "method": "mapholderToPass",
+          "desc": "(Lnet/irisshaders/iris/gl/uniform/LocationalUniformHolder;Ljava/lang/Object;)V",
+          "sha256": "127385050783484c13f7f2f15004894e251abfc3a11afe1732d0aa1a98b71d47"
+        },
+        {
+          "class": "net/irisshaders/iris/uniforms/custom/CustomUniforms",
+          "method": "update",
+          "desc": "()V",
+          "sha256": "2841ca7a50996de212e228ea1cbf7d6c02676ec6c83c93b8ca86a661eaf411a4"
+        },
+        {
+          "class": "net/irisshaders/iris/uniforms/custom/CustomUniforms",
+          "method": "push",
+          "desc": "(Ljava/lang/Object;)V",
+          "sha256": "3de096a02592b7ef996baa0fe820ed82fb308236f87c864c5547d727e3412bfa"
+        },
+        {
+          "class": "net/irisshaders/iris/uniforms/custom/CustomUniforms",
+          "method": "optimise",
+          "desc": "()V",
+          "sha256": "f66f0e71396162bac82e5facda4b7c361dcdd64f1f829291193ccc6a87e96afe"
+        },
+        {
+          "class": "net/irisshaders/iris/uniforms/custom/CustomUniforms",
+          "method": "hasVariable",
+          "desc": "(Ljava/lang/String;)Z",
+          "sha256": "43c3c48495f678f6e0bf3c84babe7a25888e4f2be4165b64868b1bc4632dfc14"
+        },
+        {
+          "class": "net/irisshaders/iris/uniforms/custom/CustomUniforms",
+          "method": "getVariable",
+          "desc": "(Ljava/lang/String;)Lkroppeb/stareval/expression/Expression;",
+          "sha256": "b966a5d794eb24ae7c317869cfa4033b3d35e4ce1cfb7e54179a6ef042aaa2f6"
+        },
+        {
+          "class": "net/irisshaders/iris/uniforms/custom/CustomUniforms",
+          "method": "lambda$optimise$2",
+          "desc": "(Lnet/irisshaders/iris/uniforms/custom/cached/CachedUniform;Ljava/lang/Integer;)Ljava/lang/Integer;",
+          "sha256": "d5d5c4d59920217dbb39ee4621b55d02756ac5e74796480c3f8ae96d340e9771"
+        },
+        {
+          "class": "net/irisshaders/iris/uniforms/custom/CustomUniforms",
+          "method": "lambda$new$1",
+          "desc": "(Lit/unimi/dsi/fastutil/objects/Object2IntMap$Entry;)Ljava/lang/String;",
+          "sha256": "7e855995b4320d6ab8d46034c71e122f96a4d9ee070d19a1e768f94cffd6a2a4"
+        },
+        {
+          "class": "net/irisshaders/iris/uniforms/custom/CustomUniforms",
+          "method": "lambda$new$0",
+          "desc": "(Ljava/util/Map;Ljava/lang/String;)Lkroppeb/stareval/function/Type;",
+          "sha256": "f77ed2a2dfe19c28aa9a1e7942583e7f03e526672901f03724ecb31cbe935f02"
+        },
+        {
+          "class": "net/irisshaders/iris/uniforms/custom/CustomUniforms",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "2f606dcf39f64d6ccea6db849f64e66ed101befdb6817cd8bc5851bdd31e35f4"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "oculus_primitive_buffer_affinities": {
+      "mod": "iris",
+      "scripts": [
+        "furious14-affinities.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.oculus.BufferAffinitiesMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "c4ccac4caa232667805fa28d92c2f09fb3d14b27eae96431544950671e004885"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "getBuffer",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "sha256": "33c6a93e3cdd4550deb5eecb1556f64f74ca480ae5bf842620e43015a87fb0fe"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "removeReady",
+          "desc": "()V",
+          "sha256": "9da2c191292b503de2489b44b657e181eaa09268b178d3dd5ffcb45ab159e24a"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "readyUp",
+          "desc": "()V",
+          "sha256": "ad0c8a8005bfcfb3b07f82a73d334a4e9219af88cc615ebf6815f77ddb7623f6"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "endBatch",
+          "desc": "()V",
+          "sha256": "5b622ae3b3f26d905d46d7edf253de41219d6fd0d7a353da9861668c2f7f3cee"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "endBatchWithType",
+          "desc": "(Lnet/irisshaders/batchedentityrendering/impl/TransparencyType;)V",
+          "sha256": "7b619bd29e6868e3e352e3f5295f91ac51e77b20ce9a7a1db8c4f0bb225e8e3b"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "getDrawCalls",
+          "desc": "()I",
+          "sha256": "ce8a3aa4a438a3f663f7c99b30da6a20609cf1c4e175f03af9bd320b694a86a6"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "getRenderTypes",
+          "desc": "()I",
+          "sha256": "c892e80a779e0d5fee1f7e170e245c78f26871487efb23e98fa3cbff138baef5"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "resetDrawCalls",
+          "desc": "()V",
+          "sha256": "9ce75615cc5cd911476746e8406e62618e6a7a8ebc2d0d4765d6881eadc519d3"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "endBatch",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "getUnflushableWrapper",
+          "desc": "()Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;",
+          "sha256": "ba77939183a89e212b9252b039a3e55bb7f46148c97f251fc2bffbbeff85077c"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "getAllocatedSize",
+          "desc": "()J",
+          "sha256": "8c41ed4a2d649ea7677bb4a71752fa3307e80cbf46b62e9e96a0fd0dc68db282"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "getUsedSize",
+          "desc": "()J",
+          "sha256": "c457a7e8b3dd1f32ef94ccad8cd0b5b08f7dcab7a1a6093b54a843c9b36cf0ca"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "freeAndDeleteBuffer",
+          "desc": "()V",
+          "sha256": "7eb9b6791dc0228660d4c9e62dc7a07d3bbfe68c4a2a7698fadd9db3f8184094"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "startGroup",
+          "desc": "()V",
+          "sha256": "962c167d163ca0f5901acb1673c0ddec76bca9e67b40801f7b21425a06ec989e"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "maybeStartGroup",
+          "desc": "()Z",
+          "sha256": "14ec436db1ca7f3cf1b25ad3a6f89534e1c878c4cba287d40706776227c098ba"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "endGroup",
+          "desc": "()V",
+          "sha256": "e37493938663ed37cbd713768f472bbd262a4832981f8883d723f4cb25494c34"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "pushWrappingFunction",
+          "desc": "(Ljava/util/function/Function;)V",
+          "sha256": "05f8d9e948139a196e5242b8e82cd6c55f870110d87b176f2ce3bbada3833de6"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "popWrappingFunction",
+          "desc": "()V",
+          "sha256": "9c2cda3e1be742c7e7dbc3105de58260054a601d56b65212d12df41f3f638270"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "assertWrapStackEmpty",
+          "desc": "()V",
+          "sha256": "0187f9db71ac55ff95bb350a50280c9541f550f796affcbdf3a219f964092bba"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+          "method": "lambda$readyUp$0",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)Ljava/util/List;",
+          "sha256": "a35d1b2543f0428d094205f6e002e32952c48e2fa63c2a626c71c418e877a033"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "oculus_entity_vertex_reuse": {
+      "mod": "iris",
+      "scripts": [
+        "furious4-ModelToEntityVertexSerializer.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.oculus.EntityVertexSerializerMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/irisshaders/iris/vertices/sodium/ModelToEntityVertexSerializer",
+          "method": "serialize",
+          "desc": "(JJI)V",
+          "sha256": "501b6ac7698c2ff4cfe3d1b65744b9832a66cda1d3bda2ed624f3aaa66367fb7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "oculus_program_traversal": {
+      "mod": "iris",
+      "scripts": [
+        "furious4-ProgramSamplers.js",
+        "furious4-ProgramUniforms.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.oculus.ProgramSamplersTraversalMixin",
+        "bons.furious.mixin.oculus.ProgramUniformsTraversalMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/irisshaders/iris/gl/program/ProgramSamplers",
+          "method": "update",
+          "desc": "()V",
+          "sha256": "6a272179619d49f25127140983198d6828e0a9e6f2b9e65ed092b4320f0e34f0"
+        },
+        {
+          "class": "net/irisshaders/iris/gl/program/ProgramSamplers",
+          "method": "removeListeners",
+          "desc": "()V",
+          "sha256": "eb65a3aaa06f81e908e3e95e770c1672eae772f87bc57ddb532d1bc11e9a9e09"
+        },
+        {
+          "class": "net/irisshaders/iris/gl/program/ProgramUniforms",
+          "method": "updateStage",
+          "desc": "(Lcom/google/common/collect/ImmutableList;)V",
+          "sha256": "ec91c19af268074e81f151caa424786a3299dfcd062fee2838743da2ac60cbcd"
+        },
+        {
+          "class": "net/irisshaders/iris/gl/program/ProgramUniforms",
+          "method": "removeListeners",
+          "desc": "()V",
+          "sha256": "d427203f660b0c3a3b5c22c8dc4089e6fc1d969ac776e41e5bff8376f47a4ce0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "oculus_shadow_edge_vectors": {
+      "mod": "iris",
+      "scripts": [
+        "furious6-AdvancedShadowCullingFrustum.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.oculus.ShadowEdgePlaneMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/irisshaders/iris/shadows/frustum/advanced/AdvancedShadowCullingFrustum",
+          "method": "addEdgePlane",
+          "desc": "(Lorg/joml/Vector4f;Lorg/joml/Vector4f;)V",
+          "sha256": "8ff1fcf5bdc58d1dae3498271382cb54dd7bd37f253a4960edbe9dee78297c25"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "oculus_empty_sampler_fast_return": {
+      "mod": "iris",
+      "scripts": [
+        "furious8-samplers.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.oculus.SamplerCleanupMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/irisshaders/iris/gl/IrisRenderSystem",
+          "method": "initRenderer",
+          "desc": "()V",
+          "sha256": "59598d7d93cdd08c2a4c972dff40c45a137cc0ddd5a0c4346aea6249619c44d5"
+        },
+        {
+          "class": "net/irisshaders/iris/gl/IrisRenderSystem",
+          "method": "bindSamplerToUnit",
+          "desc": "(II)V",
+          "sha256": "1e5e6a33211ec68c9061dfc0f1aa5958d68934daf8a25f1a4e70b85680b34dca"
+        },
+        {
+          "class": "net/irisshaders/iris/gl/IrisRenderSystem",
+          "method": "unbindAllSamplers",
+          "desc": "()V",
+          "sha256": "83ff2d4869bc1942bf6a4b53ba7872e17c30830d5aeb04256c1be620a83246cd"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "oculus_phase_labels": {
+      "mod": "iris",
+      "scripts": [],
+      "since": "1.0.21",
+      "mixins": [
+        "bons.furious.mixin.oculus.PhaseLabelMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/irisshaders/iris/pipeline/IrisRenderingPipeline",
+          "method": "setPhase",
+          "desc": "(Lnet/irisshaders/iris/pipeline/WorldRenderingPhase;)V",
+          "sha256": "d8fa8776375d31e3d56707f6b0bde039ddaa2b04e2462dcf05eff8ebea27127f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "oculus_dh_instance_lookup": {
+      "mod": "iris",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.oculus.DhInstanceLookupMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/irisshaders/iris/compat/dh/LodRendererEvents",
+          "method": "getInstance",
+          "desc": "()Lnet/irisshaders/iris/compat/dh/DHCompatInternal;",
+          "sha256": "85f185baae3f585308a456438b3f9057d9d426376250f3539afcf7aa91b8998b"
+        },
+        {
+          "class": "net/irisshaders/iris/pipeline/PipelineManager",
+          "method": "getPipeline",
+          "desc": "()Ljava/util/Optional;",
+          "sha256": "e6679b210f1301b9ff7a3713d621392d4503e95fd20dc4eaf92ae2e3baef55c6"
+        },
+        {
+          "class": "net/irisshaders/iris/pipeline/PipelineManager",
+          "method": "getPipelineNullable",
+          "desc": "()Lnet/irisshaders/iris/pipeline/WorldRenderingPipeline;",
+          "sha256": "d034f8a6170e5ff636c64c5a34c221afdc12ee2741df5bbd3ee92737884127ec"
+        },
+        {
+          "class": "net/irisshaders/iris/compat/dh/DHCompat",
+          "method": "getInstance",
+          "desc": "()Ljava/lang/Object;",
+          "sha256": "0e22d2bca6587d913df1bed4940ca1174b676ee5e41cc637168e907c5f4416cd"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    }
+  }
+}

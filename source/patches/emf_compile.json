@@ -1,0 +1,139 @@
+{
+  "group": "emf_compile",
+  "keys": {
+    "emf_variable_index": {
+      "mod": "entity_model_features",
+      "scripts": [],
+      "since": "1.0.26",
+      "mixins": [
+        "bons.furious.mixin.emf_compile.VariableIndexMixin"
+      ],
+      "guard": [
+        {
+          "class": "traben/entity_model_features/models/animation/math/asm/ASMVariableHandler",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "a0500c9e043f23c009db3bf6ad44cbf851eabc1d2b1528855f236335197a32ec"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/asm/ASMVariableHandler",
+          "method": "getAndAssignVarIndex",
+          "desc": "(Ljava/lang/String;Z)I",
+          "sha256": "0ade8988ea01167c17a0f33a255e54b80d94f94626ee4314352af1d8fd665078"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/asm/ASMVariableHandler",
+          "method": "verifyEndOfParse",
+          "desc": "()V",
+          "sha256": "c88b60c3bb16b0072e78197b8dd4c3211074cbd16443af9d7f595f6f41a78838"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/asm/ASMVariableHandler",
+          "method": "getFloatVarList",
+          "desc": "()Ljava/util/List;",
+          "sha256": "9a371471011eb371003b685901b36c42c72d941a2e606e66da4b7b994f9a7e87"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/asm/ASMVariableHandler",
+          "method": "getBoolVarList",
+          "desc": "()Ljava/util/List;",
+          "sha256": "e6dd4e77fb612aaebbf95c5ee64dffeac20bca93106b1d65cfea82b972114aae"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/asm/ASMAnimationHandler",
+          "method": "buildFloatConsumers",
+          "desc": "()Ljava/util/List;",
+          "sha256": "f1270fa4f9b9462efa4fb73d26186a3922121a757489b1249af9bae556a3d5fe"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/asm/ASMAnimationHandler",
+          "method": "buildBoolConsumers",
+          "desc": "()Ljava/util/List;",
+          "sha256": "86463dfeceacb84981d6379d0add6eef407416bb4d8b85a4ab009660efb9575f"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/asm/ASMAnimationHandler",
+          "method": "buildVarSupplier",
+          "desc": "(Ltraben/entity_model_features/models/animation/math/asm/ASMVariableHandler;Ltraben/entity_model_features/models/animation/AnimSetupContext;)Ljava/util/function/Supplier;",
+          "sha256": "4851dba8049de9c91a3ee4aac2dfd875d594c4173d3588b599ef49806c22e082"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/asm/ASMAnimationHandler",
+          "method": "asmLog",
+          "desc": "(Ltraben/entity_model_features/models/animation/math/asm/ASMVariableHandler;Ltraben/entity_model_features/models/animation/math/asm/ASMAnimationHandler$AnimVars;Ljava/lang/String;)V",
+          "sha256": "1ef8f9bc47163d50f33885aaf80bda61815af436c53e4fd7a682ba79484dd882"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/asm/ASMParser",
+          "method": "compileOrNull",
+          "desc": "(Ljava/util/LinkedHashMap;Ltraben/entity_model_features/models/animation/math/asm/ASMVariableHandler;)Ltraben/entity_model_features/models/animation/math/asm/ASMParser$ASMExecutor;",
+          "sha256": "c6fb7287cf34839e5d21b1aec2ff701f3cda79a248dc134062cdb20890ba58cb"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation on List.contains/indexOf/add in getAndAssignVarIndex and Stream.anyMatch in verifyEndOfParse; @Unique per-handler index)",
+      "license": "LGPL-3.0; helper bons.furious.patch.emf_compile.VariableIndex; no EMF code is carried"
+    },
+    "emf_hierarchical_id_memo": {
+      "mod": "entity_model_features",
+      "scripts": [],
+      "since": "1.0.26",
+      "mixins": [
+        "bons.furious.mixin.emf_compile.HierarchicalIdMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "traben/entity_model_features/EMFManager",
+          "method": "getModelFromHierarchicalId",
+          "desc": "(Ljava/lang/String;Ljava/util/Map;)Ltraben/entity_model_features/models/parts/EMFModelPart;",
+          "sha256": "2ee734eb3656844639de76e28dab4c79e7f454fdafe1682dffccd6296d196e9a"
+        },
+        {
+          "class": "traben/entity_model_features/EMFManager",
+          "method": "lambda$getModelFromHierarchicalId$1",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)Z",
+          "sha256": "5632208ea7782615b693749ffbc4c03afd2aa7db9e6ab53ec933e41d7ad50966"
+        },
+        {
+          "class": "traben/entity_model_features/EMFManager",
+          "method": "setupAnimationsFromJemToModel",
+          "desc": "(Ltraben/entity_model_features/models/jem_objects/EMFJemData;Ltraben/entity_model_features/models/parts/EMFModelPartRoot;I)V",
+          "sha256": "022cbb92517be9138df421da826f5dc990d8ffe81b7d5e4606b8ed4e442176d5"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/AnimSetupContext",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;Ltraben/entity_model_features/models/animation/math/expression_tree/OldEMFAnimationHandler;Ljava/util/HashMap;)V",
+          "sha256": "8d8c24327ad359ffd47259600a5b220fe654f1b6915ef731b19146045f03aafd"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/AnimSetupContext",
+          "method": "close",
+          "desc": "()V",
+          "sha256": "e591d2cceca156d0ccbd1a1ec821d4f8124cef8a791a10e4816985bbd5c929ba"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/variables/factories/ModelPartVariableFactory",
+          "method": "getSupplierOrNull",
+          "desc": "(Ljava/lang/String;Ltraben/entity_model_features/models/animation/AnimSetupContext;)Ltraben/entity_model_features/models/animation/math/expression_tree/MathValue$ResultSupplier;",
+          "sha256": "d452c6ac728ee87225fb57733d2479b0ec5325566dda7d22785b6794551d2fa5"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/variables/factories/ModelPartVariableFactory",
+          "method": "getASMBoolSupplierOrNull",
+          "desc": "(Ljava/lang/String;Ltraben/entity_model_features/models/animation/AnimSetupContext;)Ljava/util/function/BooleanSupplier;",
+          "sha256": "c0fc0e0805957c2fa12e4116c31135415e39c1f3f3e0158aec142b3c2bffda37"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/variables/factories/ModelPartVariableFactory",
+          "method": "getASMFloatSupplierOrNull",
+          "desc": "(Ljava/lang/String;Ltraben/entity_model_features/models/animation/AnimSetupContext;)Ltraben/entity_model_features/models/animation/math/expression_tree/MathValue$ResultSupplier;",
+          "sha256": "1e676ed5a7d01b9178eba3d8d605f9bd2ac05d57d3c5210ff2e857b03e6a5178"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapMethod on setupAnimationsFromJemToModel (scope) and getModelFromHierarchicalId (memo))",
+      "license": "LGPL-3.0; helper bons.furious.patch.emf_compile.HierarchicalIdMemo; no EMF code is carried"
+    }
+  }
+}

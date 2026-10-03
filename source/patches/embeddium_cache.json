@@ -1,0 +1,72 @@
+{
+  "group": "embeddium_cache",
+  "keys": {
+    "embeddium_section_cache_prefix_cleanup": {
+      "mod": "embeddium",
+      "scripts": [],
+      "since": "1.0.26",
+      "mixins": [
+        "bons.furious.mixin.embeddium_cache.SectionCachePrefixCleanupMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/embeddedt/embeddium/impl/world/cloned/ClonedChunkSectionCache",
+          "method": "cleanup",
+          "desc": "()V",
+          "sha256": "1b13cc056de41d735ffa2efb0f6c6d13ce76007648d3be74b98280270a1cabb0"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/world/cloned/ClonedChunkSectionCache",
+          "method": "acquire",
+          "desc": "(III)Lorg/embeddedt/embeddium/impl/world/cloned/ClonedChunkSection;",
+          "sha256": "2ea95cf1bc5f3855ded101a1b24d5739fa925acbd4747b5de0a43b174f580726"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/world/cloned/ClonedChunkSectionCache",
+          "method": "invalidate",
+          "desc": "(III)V",
+          "sha256": "e5c73bcacea6046cb7109fcbda14b2b68a06a267aae492354811295acda05e88"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/world/cloned/ClonedChunkSectionCache",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/Level;)V",
+          "sha256": "b721a7fe0c9c08e5d4d669854cf5a01fe23604175d08fa27f3957daac1e882cf"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/world/cloned/ClonedChunkSectionCache",
+          "method": "lambda$cleanup$0",
+          "desc": "(Lorg/embeddedt/embeddium/impl/world/cloned/ClonedChunkSection;)Z",
+          "sha256": "16e09675ee4db6c23f9c36883a7611a21bd773871636a7fe196e29a996c11c83"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/world/cloned/ClonedChunkSectionCache",
+          "method": "getMonotonicTimeSource",
+          "desc": "()J",
+          "sha256": "4d62cb3fdaa7c9ae6e921a21346028294475be9af89c3f107ff4341283822638"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/world/cloned/ClonedChunkSectionCache",
+          "method": "*",
+          "desc": "",
+          "sha256": "85eb73fba3561a5c27102e2d9ac96b6e904c99e2d26dcd6cc9fdf730a4b14104"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/world/cloned/ClonedChunkSection",
+          "method": "setLastUsedTimestamp",
+          "desc": "(J)V",
+          "sha256": "bed396402262ce787e82724e5d55f778611c5d9a7a5418faded12f38b1560d23"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/world/cloned/ClonedChunkSection",
+          "method": "getLastUsedTimestamp",
+          "desc": "()J",
+          "sha256": "ca1d5f21cf2d64b149fdcad2c535013338b0ed9ab306dd681e2db0704c3626ad"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Redirect of the values().removeIf call in ClonedChunkSectionCache.cleanup)",
+      "license": "LGPL-3.0-only: no Embeddium code is carried; the redirect walks Embeddium's own map with Embeddium's own predicate (helper bons.furious.patch.embeddium_cache.SectionCacheCleanup)"
+    }
+  }
+}

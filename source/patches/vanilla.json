@@ -1,0 +1,147 @@
+{
+  "group": "vanilla",
+  "keys": {
+    "vanilla_block_ticking_range_memo": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.vanilla.TickingTrackerVersionMixin",
+        "bons.furious.mixin.vanilla.DistanceManagerTickingMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/server/level/TickingTracker",
+          "method": "setLevel",
+          "desc": "(JI)V",
+          "sha256": "985fa67db57eae1a645c9299e9cbe9f95fc316560216b63965d1843493ef9f5d"
+        },
+        {
+          "class": "net/minecraft/server/level/TickingTracker",
+          "method": "getLevel",
+          "desc": "(J)I",
+          "sha256": "68155541a7c79590208f44aaf45c3eec8df5cb606f8bc3632df175b1c865e485"
+        },
+        {
+          "class": "net/minecraft/server/level/TickingTracker",
+          "method": "*",
+          "desc": "",
+          "sha256": "0105204c8fdd8ca9aa870f5e392d733017d8ae1fa5de37e25773557720aea9b1"
+        },
+        {
+          "class": "net/minecraft/server/level/DistanceManager",
+          "method": "inBlockTickingRange",
+          "desc": "(J)Z",
+          "sha256": "ea7b8cb19b976daf2d96cea85f8dc0e75269761e8e8f8aeb92fd8c97a871a50a"
+        },
+        {
+          "class": "net/minecraft/server/level/DistanceManager",
+          "method": "inEntityTickingRange",
+          "desc": "(J)Z",
+          "sha256": "26571ec9cbf7c39a69a4c89021518d9608e27cada40331fa45ec0ac20363ee06"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Redirect of the map lookup in two methods, @Inject before and after the only map writer)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.vanilla.TickingLevels)"
+    },
+    "vanilla_animate_tick_uniform_biome": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.vanilla.AnimateTickBiomeMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel",
+          "method": "doAnimateTick",
+          "desc": "(IIIILnet/minecraft/util/RandomSource;Lnet/minecraft/world/level/block/Block;Lnet/minecraft/core/BlockPos$MutableBlockPos;)V",
+          "sha256": "0f6bb2684de6e9fbcdf79e8f250e9b5000d9ad3fd14abfb94fa99ed1d04c2ef3"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/BiomeManager",
+          "method": "getBiome",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/Holder;",
+          "sha256": "54cbcf65feb1f2bb0e5f9a2954905c19bf48c0af5a3c6e6000ccb77c9f31971d"
+        },
+        {
+          "class": "net/minecraft/world/level/LevelReader",
+          "method": "getNoiseBiome",
+          "desc": "(III)Lnet/minecraft/core/Holder;",
+          "sha256": "b5016974f28e5c961bc4472b188be91d8c6c2a2f9c77933d70157c2f8efe1f2c"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/ChunkAccess",
+          "method": "getNoiseBiome",
+          "desc": "(III)Lnet/minecraft/core/Holder;",
+          "sha256": "eb76707e5fdceee3185fd18d7d403b885275d0590483f0fd930c7ec8b8f71de3"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunkSection",
+          "method": "getNoiseBiome",
+          "desc": "(III)Lnet/minecraft/core/Holder;",
+          "sha256": "7c3bc1fe19f6a34b49cebb90fddd107f94c6dd82aaee86caa081b4ec6c55057f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Redirect)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.vanilla.AnimateTickBiome)"
+    },
+    "vanilla_fog_color_sample_memo": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.vanilla.FogColorSampleMixin",
+        "bons.furious.mixin.vanilla.GameRendererFrameMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/renderer/FogRenderer",
+          "method": "setupColor",
+          "desc": "(Lnet/minecraft/client/Camera;FLnet/minecraft/client/multiplayer/ClientLevel;IF)V",
+          "sha256": "598e42adc26b842f33f028341743f3825216ceef077361db5f5a025857889f82"
+        },
+        {
+          "class": "net/minecraft/client/renderer/GameRenderer",
+          "method": "render",
+          "desc": "(Lnet/minecraft/client/DeltaTracker;Z)V",
+          "sha256": "60fac9c75b68a44e76acb5a22efc1b3b7a8dd2499f2b030534ea7bbfe4b07afa"
+        },
+        {
+          "class": "net/minecraft/util/CubicSampler",
+          "method": "gaussianSampleVec3",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/util/CubicSampler$Vec3Fetcher;)Lnet/minecraft/world/phys/Vec3;",
+          "sha256": "6848ec40296ae26fd1abb90dd13f7768b77b6cb5a7227f5b503aa4fcba823890",
+          "sha256_variants": [
+            "6dd64527196a43d2afae002ce9870fac99a066d9038b0fb64a2951453098bba1"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode: equivalent return/temporary-local layout differs from NeoForm recompilation. See evidence/*-bytecode-diff.txt."
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation with @Local, @Inject at the start and return of GameRenderer.render)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.vanilla.FogSample)"
+    },
+    "vanilla_chunk_status_name_memo": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.26",
+      "mixins": [
+        "bons.furious.mixin.vanilla.ChunkStatusNameMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/chunk/status/ChunkStatus",
+          "method": "toString",
+          "desc": "()Ljava/lang/String;",
+          "sha256": "997275dcc5f48fc1faf62d08eda51905c978fc4e5106710247bb7d164f3c6dd0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on ChunkStatus.toString",
+      "license": "Minecraft (Mojang): no-copy; the mixin keeps the string the original returned (helper bons.furious.patch.vanilla.ChunkStatusNames)"
+    }
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "group": "fowlplay",
+  "keys": {
+    "fowlplay_flock_vectors": {
+      "mod": "fowlplay",
+      "scripts": [
+        "bons_and_furious-GuidedFlocking.js",
+        "bons_and_furious-LeaderlessFlocking.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.fowlplay.GuidedFlockingMixin",
+        "bons.furious.mixin.fowlplay.LeaderlessFlockingMixin"
+      ],
+      "guard": [
+        {
+          "class": "aqario/fowlplay/common/entity/ai/brain/behaviour/GuidedFlocking",
+          "method": "getHeading",
+          "desc": "(Laqario/fowlplay/common/entity/bird/FlyingBirdEntity;)Lnet/minecraft/world/phys/Vec3;",
+          "sha256": "fd309d32979a4c3d2158f8bbd3ba4ade3a113682d895b50628e0a462c35b7dab"
+        },
+        {
+          "class": "aqario/fowlplay/common/entity/ai/brain/behaviour/LeaderlessFlocking",
+          "method": "getHeading",
+          "desc": "(Laqario/fowlplay/common/entity/bird/FlyingBirdEntity;)Lnet/minecraft/world/phys/Vec3;",
+          "sha256": "137ac53bdd164eeff9927584e4a6e1551b3e9ba59c32428117248bf5fdb40ba8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "MIT: the method body may be carried in our GPL-3.0 source"
+    },
+    "fowlplay_air_targets_loaded_only": {
+      "mod": "fowlplay",
+      "scripts": [
+        "furious13-fowlplay.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.fowlplay.TargetingUtilMixin"
+      ],
+      "guard": [
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "tryFindAir",
+          "desc": "(Laqario/fowlplay/common/entity/bird/FlyingBirdEntity;Laqario/fowlplay/common/util/CylindricalRadius;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/BlockPos;",
+          "sha256": "b03df110b05ef3058642a09bcaf05fadeca7c27e5a703e845ae30bb4d4db3b8d"
+        },
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "tryFindWater",
+          "desc": "(Lnet/minecraft/world/entity/PathfinderMob;Laqario/fowlplay/common/util/CylindricalRadius;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/BlockPos;",
+          "sha256": "8b5e7c8922d08be357f23331b724bce1ce7894dad6ef6ab7ee42ce50cebc5e76"
+        },
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "tryFindNonAir",
+          "desc": "(Lnet/minecraft/world/entity/PathfinderMob;Laqario/fowlplay/common/util/CylindricalRadius;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/BlockPos;",
+          "sha256": "2cd2f769c722e1f39901f805630aa5206b03a884a8eaed9428ac9bcffe1a4b26"
+        },
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "tryFindGround",
+          "desc": "(Lnet/minecraft/world/entity/PathfinderMob;Laqario/fowlplay/common/util/CylindricalRadius;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/BlockPos;",
+          "sha256": "8a79eb295de7f089f1f7713d565af7ce3042f91fa11918b6f57a08d7ac163ac2"
+        },
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "tryFindPerch",
+          "desc": "(Lnet/minecraft/world/entity/PathfinderMob;Laqario/fowlplay/common/util/CylindricalRadius;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/BlockPos;",
+          "sha256": "8052a9e8dc251e69a60f100352af5af46fa6ae664d461368dcf9a1e1a9fe793c"
+        },
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "findSurfacePosition",
+          "desc": "(Lnet/minecraft/world/entity/PathfinderMob;Lnet/minecraft/core/BlockPos;Laqario/fowlplay/common/util/CylindricalRadius;Lnet/minecraft/world/level/levelgen/Heightmap$Types;ILjava/util/function/Predicate;)Lnet/minecraft/core/BlockPos;",
+          "sha256": "131f322f6644b45c3777bb8014f25347eab1e30cd181c287d79c413eb920ae8c"
+        },
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "validateBlockPos",
+          "desc": "(Lnet/minecraft/world/entity/PathfinderMob;Lnet/minecraft/core/BlockPos;Laqario/fowlplay/common/util/CylindricalRadius;)Lnet/minecraft/core/BlockPos;",
+          "sha256": "c7c4f917323bea00ea3021b0963be8ae4c4f2d0cf8087bbb9043d6441a0f883e"
+        },
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "validatePos",
+          "desc": "(Lnet/minecraft/world/entity/PathfinderMob;Lnet/minecraft/core/BlockPos;Laqario/fowlplay/common/util/CylindricalRadius;)Lnet/minecraft/world/phys/Vec3;",
+          "sha256": "2cfea74ce067e9834df2499f1d7a9d953fe3c572d9d26361f57a8539fb71ff64"
+        },
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "shiftPosTowardsFlyHeightRange",
+          "desc": "(Laqario/fowlplay/common/entity/bird/FlyingBirdEntity;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/BlockPos;",
+          "sha256": "15aa21a280e5a063aca0f468cd576958b79f323fb41b0552c6e191392e4467ea"
+        },
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "isPerch",
+          "desc": "(Lnet/minecraft/world/entity/PathfinderMob;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "25cd874afd65042ebf3daf991e2ed97799ed2a52c3c534d95df8e0301418d6ae"
+        },
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "isPositionNonAir",
+          "desc": "(Lnet/minecraft/world/entity/PathfinderMob;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "ecf21ad7878689035d14ead472c4e5fdfa43b9d1048e7e3cba4157ee05e94676"
+        },
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "isPositionGrounded",
+          "desc": "(Lnet/minecraft/world/entity/PathfinderMob;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "3f322af4ff7c210a8f0fd2fcd6f534a552754e03111a1adb960fcdaf4eca083c"
+        },
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "isFullBlockAt",
+          "desc": "(Lnet/minecraft/world/entity/PathfinderMob;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "b3c10a99ffc42944522cbd6d591a273ea894f90944fcecd5d925b0af58cf3dd5"
+        },
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "isWithinAngle",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;D)Z",
+          "sha256": "94ebe2ecdc9f24ea40eee84e252b7afd289f1a67c856f63c861fe188503ac86a"
+        },
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "isPosWithinViewAngle",
+          "desc": "(Lnet/minecraft/world/entity/PathfinderMob;Lnet/minecraft/core/BlockPos;D)Z",
+          "sha256": "f2e3818a10a8249be5ff3e4727f6326a0a0d833fcc71166f2adc35c31f490d32"
+        },
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "lambda$tryFindPerch$4",
+          "desc": "(Lnet/minecraft/world/entity/PathfinderMob;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "dd54c474acd808b544643d4377d34146be37a932a78865d96881072ea39703a0"
+        },
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "lambda$tryFindGround$3",
+          "desc": "(Lnet/minecraft/world/entity/PathfinderMob;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "4d4e0829d22716de2225690198023ad3c8438fb770b6aea2de6b1bfc7524bda2"
+        },
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "lambda$tryFindNonAir$2",
+          "desc": "(Lnet/minecraft/world/entity/PathfinderMob;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "912fa99f812290300147d5d2c334bfcb6e5055b5877f32cf7e92ae550b3c3645"
+        },
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "lambda$tryFindWater$1",
+          "desc": "(Lnet/minecraft/world/entity/PathfinderMob;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "912fa99f812290300147d5d2c334bfcb6e5055b5877f32cf7e92ae550b3c3645"
+        },
+        {
+          "class": "aqario/fowlplay/common/util/TargetingUtils",
+          "method": "lambda$tryFindAir$0",
+          "desc": "(Laqario/fowlplay/common/entity/bird/FlyingBirdEntity;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "912fa99f812290300147d5d2c334bfcb6e5055b5877f32cf7e92ae550b3c3645"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "MIT: the method body may be carried in our GPL-3.0 source"
+    }
+  }
+}

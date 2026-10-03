@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.distanthorizons",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "bons.pure.config.PureMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "IgnoredDimensionCsvHandlerMixin",
+    "RoughSurfaceDensityMixin",
+    "UpdateQueueWaitMixin"
+  ],
+  "client": [
+    "CloudParamsAccessor",
+    "CloudRenderHandlerMixin",
+    "RenderParamInverseMixin",
+    "CloudPassInvariantsMixin",
+    "GenericRenderPassMixin"
+  ]
+}

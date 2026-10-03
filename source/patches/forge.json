@@ -1,0 +1,49 @@
+{
+  "group": "forge",
+  "keys": {
+    "forge_render_layer_memo": {
+      "mod": "iris",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.forge.RenderLayerMemoMixin",
+        "bons.furious.mixin.forge.BlockRenderLayerMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/renderer/ItemBlockRenderTypes",
+          "method": "getRenderLayers",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;)Lnet/neoforged/neoforge/client/ChunkRenderTypeSet;",
+          "sha256": "fa29e9a862a3cc3bad40eca41985845a4a744475c86c142f6299d4300ec2c516"
+        },
+        {
+          "class": "net/minecraft/client/renderer/ItemBlockRenderTypes",
+          "method": "setRenderLayer",
+          "desc": "(Lnet/minecraft/world/level/block/Block;Lnet/neoforged/neoforge/client/ChunkRenderTypeSet;)V",
+          "sha256": "cc843983bda753ad4726236a018f3f0d7e44d3f87781a328654a374e74ad7c7b"
+        },
+        {
+          "class": "net/irisshaders/iris/mixin/MixinItemBlockRenderTypes",
+          "method": "iris$setCustomRenderType",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "sha256": "8ea74d0e40e16433c08a5eeadad359aa4700eefccdd32d42715697b17ea15c28"
+        },
+        {
+          "class": "net/irisshaders/iris/shaderpack/materialmap/WorldRenderingSettings",
+          "method": "getBlockTypeIds",
+          "desc": "()Ljava/util/Map;",
+          "sha256": "b96e6fc06cb27788cc7d61bbdc2b817059ee7cd758869226f690792b3875098c"
+        },
+        {
+          "class": "net/irisshaders/iris/shaderpack/materialmap/WorldRenderingSettings",
+          "method": "setBlockTypeIds",
+          "desc": "(Ljava/util/Map;)V",
+          "sha256": "6901d55cdf790c02a7be081fa9b378c90886f3965aa5ed0154319f74772111c5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapMethod around getRenderLayers, @Inject at the start and return of setRenderLayer)",
+      "license": "Forge (LGPL-2.1) and Oculus (LGPL-3.0): no Forge or Oculus code is carried; the wrapper calls the original method (helper bons.furious.patch.forge.RenderLayerMemo)"
+    }
+  }
+}

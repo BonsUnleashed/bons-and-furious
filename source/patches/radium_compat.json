@@ -1,0 +1,98 @@
+{
+  "group": "radium_compat",
+  "keys": {
+    "vanilla_block_entity_tick_state": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.25",
+      "mixins": [
+        "bons.furious.mixin.radium_compat.BlockEntityTickStateMixin",
+        "bons.furious.mixin.radium_compat.BlockEntityStateAccessor",
+        "bons.furious.mixin.radium_compat.LevelChunkBlockEntityStateMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunk$BoundTickingBlockEntity",
+          "method": "tick",
+          "desc": "()V",
+          "sha256": "3e4721f413e11ddd506ad5a0d02f91afb3efe42e671c4b66fa0739a430d1052a"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunk",
+          "method": "setBlockState",
+          "desc": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Z)Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "ebb612309c5d20d79b234b23d5f3145c76798257bfaa2f147ca53df944137297"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunk",
+          "method": "updateBlockEntityTicker",
+          "desc": "(Lnet/minecraft/world/level/block/entity/BlockEntity;)V",
+          "sha256": "66a51eab847e5c6fa45c292da15331171356088fbe178dc72816416e154cd451"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/BlockEntity",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/block/entity/BlockEntityType;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V",
+          "sha256": "770697fcc43a6723414c0f3e1b3ef3025aed4088cb1bb85756c62ec544640fa7"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/BlockEntity",
+          "method": "setBlockState",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;)V",
+          "sha256": "8e4ae314fd5d89103aa2ff3ea7eff9694f9c662fac6a3e3f88e0cbb9ec1bd360"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/BlockEntity",
+          "method": "getBlockState",
+          "desc": "()Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "177a4d40ad3c99c92a478986c20ee54d63784fed1749719983a0c3915e8d08aa"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/BlockEntityType",
+          "method": "isValid",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;)Z",
+          "sha256": "b58c3f3bffc5987d51206d151a86fda51c34564eb9c2068b4327479be2771562"
+        }
+      ],
+      "cancel": [
+        "me.jellysquid.mods.lithium.mixin.world.block_entity_ticking.support_cache.BlockEntityMixin",
+        "me.jellysquid.mods.lithium.mixin.world.block_entity_ticking.support_cache.DirectBlockEntityTickInvokerMixin",
+        "me.jellysquid.mods.lithium.mixin.world.block_entity_ticking.support_cache.WorldChunkMixin"
+      ],
+      "conversion": "injectors (MixinExtras @WrapOperation in BoundTickingBlockEntity.tick and LevelChunk.setBlockState, @Local, an @Accessor) + canceller for Radium's support_cache mixins",
+      "license": "Minecraft (Mojang): no-copy; our own logic. Design follows Radium/Lithium's support_cache (LGPL-3.0); no Radium code is carried"
+    },
+    "vanilla_poi_chunk_sections": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.25",
+      "mixins": [
+        "bons.furious.mixin.radium_compat.PoiChunkSectionsMixin",
+        "bons.furious.mixin.radium_compat.SectionStorageAccess"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/ai/village/poi/PoiManager",
+          "method": "getInChunk",
+          "desc": "(Ljava/util/function/Predicate;Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/entity/ai/village/poi/PoiManager$Occupancy;)Ljava/util/stream/Stream;",
+          "sha256": "6e1fc15109b8c6269af001a95485bdefb3c29d13aad4974d2bdeb98f571f4c14"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/storage/SectionStorage",
+          "method": "getOrLoad",
+          "desc": "(J)Ljava/util/Optional;",
+          "sha256": "7f2349d15956fa1604eaf048296cccddfce4603cfb13fc26e479d8c4c9266ad9"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/village/poi/PoiSection",
+          "method": "getRecords",
+          "desc": "(Ljava/util/function/Predicate;Lnet/minecraft/world/entity/ai/village/poi/PoiManager$Occupancy;)Ljava/util/stream/Stream;",
+          "sha256": "00d34b90e16bad51ee0472bfcb84612122506eb85eedd9cfa97b4abaf9a3c145"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Overwrite of PoiManager.getInChunk (applied only while Radium's own ai.poi overwrite is not, RadiumCompatPlugin) + an @Invoker/@Accessor",
+      "license": "Minecraft (Mojang): no-copy; our own logic (helper bons.furious.patch.radium_compat.PoiSectionsSpliterator)"
+    }
+  }
+}

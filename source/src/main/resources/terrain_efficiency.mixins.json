@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "agentcraft.terrain.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "NoiseChunkMixin",
+    "HolderHolderMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "plugin": "bons.pure.config.PureMixinPlugin"
+}

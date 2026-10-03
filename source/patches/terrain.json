@@ -1,0 +1,232 @@
+{
+  "group": "terrain",
+  "keys": {
+    "terrain_final_density_reuse": {
+      "mod": "minecraft",
+      "scripts": [
+        "furious16-terrain-Ap2.js",
+        "furious16-terrain-BlendDensity.js",
+        "furious16-terrain-MarkerOrMarked.js",
+        "furious16-terrain-NoiseChunk.js",
+        "furious16-terrain-RangeChoice.js",
+        "furious16-terrain-ShiftedNoise.js",
+        "furious16-terrain-Spline.js",
+        "furious16-terrain-WeirdScaledSampler.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.terrain.DensityRecordReuseMixin",
+        "bons.furious.mixin.terrain.MarkerOrMarkedReuseMixin",
+        "bons.furious.mixin.terrain.NoiseChunkFinalDensityMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$Ap2",
+          "method": "mapAll",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "sha256": "1ac148125ecf87f6608f5a50a34fb2fc66d5e9c90e5a197d769cb3a846bb37cd"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$BlendDensity",
+          "method": "mapAll",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "sha256": "ab121cf128b433ee8e08c7846605ad1a5fcab71ebc6dd8469d4b460c00244ce6"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$MarkerOrMarked",
+          "method": "mapAll",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "sha256": "5ecb7b8b193e11c277f3a628b448099395065f1d50b88d71a044f5bf4b640267"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "<init>",
+          "desc": "(ILnet/minecraft/world/level/levelgen/RandomState;IILnet/minecraft/world/level/levelgen/NoiseSettings;Lnet/minecraft/world/level/levelgen/DensityFunctions$BeardifierOrMarker;Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;Lnet/minecraft/world/level/levelgen/blending/Blender;)V",
+          "sha256": "7c893acb24204775a4ea648eda27bf73e2a8c4834cb13b16deb5cd20f30c490b"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$RangeChoice",
+          "method": "mapAll",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "sha256": "785be5875b0c2156b80f70f469092e31aa33da0ac33c30345670a968a4ad79b1"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$ShiftedNoise",
+          "method": "mapAll",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "sha256": "4c72ddbb34f99c651a90d75d016e5e64d284e7097decd179738c9382c571d9b4"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$Spline",
+          "method": "mapAll",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "sha256": "b57bc9df4af3e65bf726690bc6df40f261338cdaeffd4a345f5f3e97df6f8819"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$WeirdScaledSampler",
+          "method": "mapAll",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "sha256": "478dbdd7908e962c01975f34ce98e6929a42a0ef22833a226f60590c4ab33841"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors; overwrite for the MarkerOrMarked interface default method (Mixin cannot inject into interfaces)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic, the MarkerOrMarked body is written from its behaviour"
+    },
+    "terrain_surface_estimate_share": {
+      "mod": "minecraft",
+      "scripts": [
+        "furious18-terrain-SurfaceEstimate.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.terrain.NoiseChunkSurfaceEstimateMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "computePreliminarySurfaceLevel",
+          "desc": "(J)I",
+          "sha256": "981542a6c180a64f966eceee77b0ead4f37c61d9ac87c76cc0802633331ac2a1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic"
+    },
+    "vanilla_noise_column_cache": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.terrain.ColumnHeightShareMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator",
+          "method": "getBaseHeight",
+          "desc": "(IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)I",
+          "sha256": "29e7dc5a9bc9df638730d828545fdae0335f846307ed63456d5804ce116a63de"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator",
+          "method": "iterateNoiseColumn",
+          "desc": "(Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;IILorg/apache/commons/lang3/mutable/MutableObject;Ljava/util/function/Predicate;)Ljava/util/OptionalInt;",
+          "sha256": "a69a28279d47b93006b67b02bf69d6c1c89dffd32b7815f22ac63a6372a41814"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Inject HEAD + @ModifyReturnValue)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.terrain.ColumnHeightShare)"
+    },
+    "vanilla_climate_sample_repeat": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.terrain.ClimateSampleRepeatMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/biome/Climate$Sampler",
+          "method": "sample",
+          "desc": "(III)Lnet/minecraft/world/level/biome/Climate$TargetPoint;",
+          "sha256": "69f37f936fb8871280298ac474bcec5199023f8faf67edd8e1d60081b6f3b34a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Inject HEAD + @ModifyReturnValue)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.terrain.ClimateRepeat)"
+    },
+    "vanilla_climate_search_repeat": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.terrain.ClimateSearchRepeatMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree",
+          "method": "search",
+          "desc": "(Lnet/minecraft/world/level/biome/Climate$TargetPoint;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Ljava/lang/Object;",
+          "sha256": "2be3eed9844c1770613db2cc85e9d0ace6fc087b882133d2321da873dd76f60d"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree$SubTree",
+          "method": "search",
+          "desc": "([JLnet/minecraft/world/level/biome/Climate$RTree$Leaf;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Lnet/minecraft/world/level/biome/Climate$RTree$Leaf;",
+          "sha256": "4f811b9c474e7056a98215e3c44b1b075b1b693a679ca4a2044f7b6dcc570ca8"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree$Leaf",
+          "method": "search",
+          "desc": "([JLnet/minecraft/world/level/biome/Climate$RTree$Leaf;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Lnet/minecraft/world/level/biome/Climate$RTree$Leaf;",
+          "sha256": "d6ee11652b8fc4b605d91bac434ba2b5574e707e7f1d329704c05f8c39a592e8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Inject HEAD + @ModifyReturnValue)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.terrain.ClimateRepeat)"
+    },
+    "vanilla_climate_rtree_flat_bounds": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.23",
+      "mixins": [
+        "bons.furious.mixin.terrain.ClimateNodeBoundsMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree$Node",
+          "method": "distance",
+          "desc": "([J)J",
+          "sha256": "d507c182100b0aa6e138deacec24bd20c3a6dbcb5c23742bef5ed47512315061"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree$Node",
+          "method": "<init>",
+          "desc": "(Ljava/util/List;)V",
+          "sha256": "f5036376c36fe34cc3f9884d2f09fce1152f392d180305c99d65f7009fc067e0"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$Parameter",
+          "method": "distance",
+          "desc": "(J)J",
+          "sha256": "2c6e80f586c16f478f6cc89ca9ceb28f688f161b61e99ac81b4813d1fa1cab85",
+          "sha256_variants": [
+            "cdd88c15ef9e7fe8e6b2679c04f61f331af05454aca0727389ace1d489813a55"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode: equivalent return/temporary-local layout differs from NeoForm recompilation. See evidence/*-bytecode-diff.txt."
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite (pure integer distance, body written from the behaviour) + @Inject at the constructor return",
+      "license": "Minecraft (Mojang): no-copy; the @Overwrite body is our own flat-array computation written from the behaviour"
+    },
+    "vanilla_noise_wrap_presize": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.26",
+      "mixins": [
+        "bons.furious.mixin.terrain.NoiseChunkWrapPresizeMixin",
+        "bons.furious.mixin.terrain.RandomStateWrapSizeMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "<init>",
+          "desc": "(ILnet/minecraft/world/level/levelgen/RandomState;IILnet/minecraft/world/level/levelgen/NoiseSettings;Lnet/minecraft/world/level/levelgen/DensityFunctions$BeardifierOrMarker;Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;Lnet/minecraft/world/level/levelgen/blending/Blender;)V",
+          "sha256": "7c893acb24204775a4ea648eda27bf73e2a8c4834cb13b16deb5cd20f30c490b"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "wrap",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "sha256": "8ab2c370f19585d4b4cfcfb40adbae0a5c5bd955d10eafad54695ad6c876176f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: @Inject before the router mapAll and at RETURN of NoiseChunk.<init>; an int field on RandomState",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.terrain.WrapPresize)"
+    }
+  }
+}

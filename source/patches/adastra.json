@@ -1,0 +1,79 @@
+{
+  "group": "adastra",
+  "keys": {
+    "adastra_gravity_primitive": {
+      "mod": "ad_astra",
+      "scripts": [
+        "furious4-GravityApiImpl.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.adastra.GravityApiImplMixin"
+      ],
+      "guard": [
+        {
+          "class": "earth/terrarium/adastra/common/systems/GravityApiImpl",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "earth/terrarium/adastra/common/systems/GravityApiImpl",
+          "method": "getGravity",
+          "desc": "(Lnet/minecraft/world/level/Level;)F",
+          "sha256": "0744013565e606d7ccd3504c167d466bfe4c13f875e83900e3903030d85cdbeb"
+        },
+        {
+          "class": "earth/terrarium/adastra/common/systems/GravityApiImpl",
+          "method": "getGravity",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;)F",
+          "sha256": "11532a72a51a6fe5d6027c42fa3a871e1b4c2d7463684be2a119d0ab2ceae3f7"
+        },
+        {
+          "class": "earth/terrarium/adastra/common/systems/GravityApiImpl",
+          "method": "getGravity",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)F",
+          "sha256": "21e8c2e022951925c0481f75738c89974d6eab49f6097f89786a7f79ae164e02"
+        },
+        {
+          "class": "earth/terrarium/adastra/common/systems/GravityApiImpl",
+          "method": "getGravity",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)F",
+          "sha256": "2f940208a5c814c89ccf13ce3dbdccfd259933dd167d3da02b1ee992d3536b46"
+        },
+        {
+          "class": "earth/terrarium/adastra/common/systems/GravityApiImpl",
+          "method": "setGravity",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;F)V",
+          "sha256": "a49a5352a7bf00a8193fb51b19716f6553004ed3eb2511989a7ce950f9123c02"
+        },
+        {
+          "class": "earth/terrarium/adastra/common/systems/GravityApiImpl",
+          "method": "setGravity",
+          "desc": "(Lnet/minecraft/world/level/Level;Ljava/util/Collection;F)V",
+          "sha256": "dd0be0bfd646e7f809a27e47dd70010dd374c9bedfb6e37c6a3272ca5a04001b"
+        },
+        {
+          "class": "earth/terrarium/adastra/common/systems/GravityApiImpl",
+          "method": "removeGravity",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V",
+          "sha256": "551e970cdb8bfe1b562773acca581caee9168ab601c5ba3b00bd466744e9ad01"
+        },
+        {
+          "class": "earth/terrarium/adastra/common/systems/GravityApiImpl",
+          "method": "removeGravity",
+          "desc": "(Lnet/minecraft/world/level/Level;Ljava/util/Collection;)V",
+          "sha256": "2393d6221e6a0cbdb4b8afff3b4df773d42b69446008fa06a726053b864396fe"
+        },
+        {
+          "class": "earth/terrarium/adastra/common/systems/GravityApiImpl",
+          "method": "entityTick",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/core/BlockPos;)V",
+          "sha256": "1d3f61e7317280e70f274e7edd5af9382a3d221b77f180e766a2df15a97bd321"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "Terrarium License (no-copy): the @Overwrite body is our own two-line expression written from the behaviour (planet gravity or 9.807, divided by 9.807); no Ad Astra code is carried"
+    }
+  }
+}

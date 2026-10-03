@@ -1,0 +1,893 @@
+{
+  "group": "embeddium",
+  "keys": {
+    "embeddium_pending_upload_sum": {
+      "mod": "embeddium",
+      "scripts": [
+        "furious10-arena.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.embeddium.GlBufferArenaPendingSumMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "<init>",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;IILorg/embeddedt/embeddium/impl/gl/arena/staging/StagingBuffer;)V",
+          "sha256": "7fb53ab84bdf7601c0ea7779d83011f98be7e79a36d7a6e228823ae851959320"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "resize",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;I)V",
+          "sha256": "d62d17f044c96e74852e3531af12f189aa0836a89040682a3a7a05494aa6d817"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "buildTransferList",
+          "desc": "(Ljava/util/List;I)Ljava/util/List;",
+          "sha256": "d89b70cbdd7fa7903210721b2b33824e7330af6e71a4fe5f54b137ccfbf32260"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "transferSegments",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;Ljava/util/Collection;I)V",
+          "sha256": "5f41383c00d2bc13292f1c87d6dedeaae07fbf404f15d96a389e0682581510a8"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "getUsedSegments",
+          "desc": "()Ljava/util/ArrayList;",
+          "sha256": "f0d5aa777b67284ddcf00b0e308aa8b483d6f6ce2154357923d5a8f9b525544e"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "getDeviceUsedMemoryL",
+          "desc": "()J",
+          "sha256": "4d21276949967394ccd8705e14f01c946f50eb4b0dd03548d458bad21a1ca34b"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "getDeviceAllocatedMemoryL",
+          "desc": "()J",
+          "sha256": "baf47a90772e9051c6139f8d40f3192e93058e1ed26c328efba158e8784aaf6d"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "getDeviceUsedMemoryL",
+          "desc": "()J",
+          "sha256": "4d21276949967394ccd8705e14f01c946f50eb4b0dd03548d458bad21a1ca34b"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "getDeviceAllocatedMemoryL",
+          "desc": "()J",
+          "sha256": "baf47a90772e9051c6139f8d40f3192e93058e1ed26c328efba158e8784aaf6d"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "alloc",
+          "desc": "(I)Lorg/embeddedt/embeddium/impl/gl/arena/GlBufferSegment;",
+          "sha256": "31cbd1efedd2f8b3a29b0d5e5853375c8304ed0cd7899d2d4ecea14b5442a281"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "findFree",
+          "desc": "(I)Lorg/embeddedt/embeddium/impl/gl/arena/GlBufferSegment;",
+          "sha256": "4f53f398555d55fcba07742c2356d0dbb6723c6e2efc1536f0970bc0db8eb296"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "free",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/arena/GlBufferSegment;)V",
+          "sha256": "6c1d02384981e7fe29dbd1f22286ed50ce9858a3784cf72dda4a6ca2de762167"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "delete",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;)V",
+          "sha256": "58d01d432e247b6c5cd08fb141c00998d50bf4aa8363ddb77005758e6c96f458"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "isEmpty",
+          "desc": "()Z",
+          "sha256": "834f062d40fa42ebd9fda85fa19d8fffd788792b53c68f91dc24ce98b32feac4"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "getBufferObject",
+          "desc": "()Lorg/embeddedt/embeddium/impl/gl/buffer/GlBuffer;",
+          "sha256": "2694e87f9be4ef9a0264aef9c1be968d70d3a638121814bfaa8cc0fed8c986a5"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "upload",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;Ljava/util/stream/Stream;)Z",
+          "sha256": "35ecb1935ae5993cdfb83c2205b27ad6a221ba27d4d1a7871d1ead92156b36b2"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "tryUploads",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;Ljava/util/List;)V",
+          "sha256": "a2177b5a87f3826e8e44201485f5725f81cb11072836f63ab5960e51a4072461"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "tryUpload",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;Lorg/embeddedt/embeddium/impl/gl/arena/PendingUpload;)Z",
+          "sha256": "e25e6808e21ae3f4e3b5f6136a6e0d9385ca98e3dc82b0019e9663d12969576c"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "ensureCapacity",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;I)V",
+          "sha256": "3c3aad7fe03de9ffe928abc2729abce67a7fd676b5aadbec9d31a43264e52c25"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "checkAssertions",
+          "desc": "()V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "checkAssertions0",
+          "desc": "()V",
+          "sha256": "c519c6499e46ced2d9cb147465fd2cfb27ca849c827daa908576e2b253d4c798"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "lambda$tryUploads$1",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;Lorg/embeddedt/embeddium/impl/gl/arena/PendingUpload;)Z",
+          "sha256": "a4041bced259b57b20452ee6e6026fa091cac5372e6594f7409b8bb52d49e6e3"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "lambda$upload$0",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/arena/PendingUpload;)J",
+          "sha256": "1ce736b929a9f6cc25f000abe06dbfcd46bc9cfe1133aa33ac7e5b96731fd520"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "f5641ca0358990b51480610328b42e1eaed4af2ae308b7add5e0fec440282e53"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "embeddium_direct_upload_preparation": {
+      "mod": "embeddium",
+      "scripts": [
+        "furious14-arena.js",
+        "furious10-classification.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.embeddium.GlBufferArenaMappedUploadsMixin",
+        "bons.furious.mixin.embeddium.RenderRegionManagerDirectUploadMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "<init>",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;IILorg/embeddedt/embeddium/impl/gl/arena/staging/StagingBuffer;)V",
+          "sha256": "7fb53ab84bdf7601c0ea7779d83011f98be7e79a36d7a6e228823ae851959320"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "resize",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;I)V",
+          "sha256": "d62d17f044c96e74852e3531af12f189aa0836a89040682a3a7a05494aa6d817"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "buildTransferList",
+          "desc": "(Ljava/util/List;I)Ljava/util/List;",
+          "sha256": "d89b70cbdd7fa7903210721b2b33824e7330af6e71a4fe5f54b137ccfbf32260"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "transferSegments",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;Ljava/util/Collection;I)V",
+          "sha256": "5f41383c00d2bc13292f1c87d6dedeaae07fbf404f15d96a389e0682581510a8"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "getUsedSegments",
+          "desc": "()Ljava/util/ArrayList;",
+          "sha256": "f0d5aa777b67284ddcf00b0e308aa8b483d6f6ce2154357923d5a8f9b525544e"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "getDeviceUsedMemoryL",
+          "desc": "()J",
+          "sha256": "4d21276949967394ccd8705e14f01c946f50eb4b0dd03548d458bad21a1ca34b"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "getDeviceAllocatedMemoryL",
+          "desc": "()J",
+          "sha256": "baf47a90772e9051c6139f8d40f3192e93058e1ed26c328efba158e8784aaf6d"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "getDeviceUsedMemoryL",
+          "desc": "()J",
+          "sha256": "4d21276949967394ccd8705e14f01c946f50eb4b0dd03548d458bad21a1ca34b"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "getDeviceAllocatedMemoryL",
+          "desc": "()J",
+          "sha256": "baf47a90772e9051c6139f8d40f3192e93058e1ed26c328efba158e8784aaf6d"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "alloc",
+          "desc": "(I)Lorg/embeddedt/embeddium/impl/gl/arena/GlBufferSegment;",
+          "sha256": "31cbd1efedd2f8b3a29b0d5e5853375c8304ed0cd7899d2d4ecea14b5442a281"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "findFree",
+          "desc": "(I)Lorg/embeddedt/embeddium/impl/gl/arena/GlBufferSegment;",
+          "sha256": "4f53f398555d55fcba07742c2356d0dbb6723c6e2efc1536f0970bc0db8eb296"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "free",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/arena/GlBufferSegment;)V",
+          "sha256": "6c1d02384981e7fe29dbd1f22286ed50ce9858a3784cf72dda4a6ca2de762167"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "delete",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;)V",
+          "sha256": "58d01d432e247b6c5cd08fb141c00998d50bf4aa8363ddb77005758e6c96f458"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "isEmpty",
+          "desc": "()Z",
+          "sha256": "834f062d40fa42ebd9fda85fa19d8fffd788792b53c68f91dc24ce98b32feac4"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "getBufferObject",
+          "desc": "()Lorg/embeddedt/embeddium/impl/gl/buffer/GlBuffer;",
+          "sha256": "2694e87f9be4ef9a0264aef9c1be968d70d3a638121814bfaa8cc0fed8c986a5"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "upload",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;Ljava/util/stream/Stream;)Z",
+          "sha256": "35ecb1935ae5993cdfb83c2205b27ad6a221ba27d4d1a7871d1ead92156b36b2"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "tryUploads",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;Ljava/util/List;)V",
+          "sha256": "a2177b5a87f3826e8e44201485f5725f81cb11072836f63ab5960e51a4072461"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "tryUpload",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;Lorg/embeddedt/embeddium/impl/gl/arena/PendingUpload;)Z",
+          "sha256": "e25e6808e21ae3f4e3b5f6136a6e0d9385ca98e3dc82b0019e9663d12969576c"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "ensureCapacity",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;I)V",
+          "sha256": "3c3aad7fe03de9ffe928abc2729abce67a7fd676b5aadbec9d31a43264e52c25"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "checkAssertions",
+          "desc": "()V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "checkAssertions0",
+          "desc": "()V",
+          "sha256": "c519c6499e46ced2d9cb147465fd2cfb27ca849c827daa908576e2b253d4c798"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "lambda$tryUploads$1",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;Lorg/embeddedt/embeddium/impl/gl/arena/PendingUpload;)Z",
+          "sha256": "a4041bced259b57b20452ee6e6026fa091cac5372e6594f7409b8bb52d49e6e3"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "lambda$upload$0",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/arena/PendingUpload;)J",
+          "sha256": "1ce736b929a9f6cc25f000abe06dbfcd46bc9cfe1133aa33ac7e5b96731fd520"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "f5641ca0358990b51480610328b42e1eaed4af2ae308b7add5e0fec440282e53"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "<init>",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;)V",
+          "sha256": "cec32412fcf6356392c635c02a10b59d3b91e51c304277ef88cadfa4821ef7f5"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "update",
+          "desc": "()V",
+          "sha256": "14afd7483556376c0b91570f807150324adf0f4b2ceb93a3fe32aeb49b8c784e"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "uploadMeshes",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;Ljava/util/Collection;)V",
+          "sha256": "6a3c875c77e558cdae9254f5096998ed194b2e16fe49df2d597e7706255ea0d0"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "uploadMeshes",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;Lorg/embeddedt/embeddium/impl/render/chunk/region/RenderRegion;Ljava/util/Collection;)V",
+          "sha256": "3241c3b51a5dc759ac699524d1fc9e89abf14418393d7e471f24e7199c79cb1f"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "uploadResorts",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;Lorg/embeddedt/embeddium/impl/render/chunk/region/RenderRegion;Ljava/util/Collection;)V",
+          "sha256": "426ac90476d2b9f93b5f235adf224012dd6bbf36977f902d011e256fe0131db7"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "createMeshUploadQueues",
+          "desc": "(Ljava/util/Collection;)Lit/unimi/dsi/fastutil/objects/Reference2ReferenceMap$FastEntrySet;",
+          "sha256": "a4dc7e622d00c89a218059ae43fd2a701df0dd31db5b50856833a7c83de41e21"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "delete",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;)V",
+          "sha256": "959d563fa60df75e69c8a3aeb07dbeb21d6fef40d74dc7f0f140eec96efa05ca"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "getLoadedRegions",
+          "desc": "()Ljava/util/Collection;",
+          "sha256": "30bcee2f45e4c39c1ecf7d429394e1477601ce41809bab85152d3fe1e9016de0"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "getStagingBuffer",
+          "desc": "()Lorg/embeddedt/embeddium/impl/gl/arena/staging/StagingBuffer;",
+          "sha256": "140d9d2980698a3cf182a118dbe9236466440d95a536ac57b6b9b86cd5b8df21"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "createForChunk",
+          "desc": "(III)Lorg/embeddedt/embeddium/impl/render/chunk/region/RenderRegion;",
+          "sha256": "312b9e889e289f4ccf30ee0385fb908243ebd549bb8aa5e6876ab6355c743e64"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "create",
+          "desc": "(III)Lorg/embeddedt/embeddium/impl/render/chunk/region/RenderRegion;",
+          "sha256": "54395b7027124ba22934315593d36bbe62d1da4381d46d5eabf552524d68683d"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "createStagingBuffer",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;)Lorg/embeddedt/embeddium/impl/gl/arena/staging/StagingBuffer;",
+          "sha256": "81d1b30e6ec79ee97cb82d3aad61c574b5d3b32162c98bc805a4b0b4b3d43556"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "lambda$createMeshUploadQueues$4",
+          "desc": "(Ljava/lang/Object;)Ljava/util/List;",
+          "sha256": "a35d1b2543f0428d094205f6e002e32952c48e2fa63c2a626c71c418e877a033"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "lambda$uploadResorts$3",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager$PendingResortUpload;)Lorg/embeddedt/embeddium/impl/gl/arena/PendingUpload;",
+          "sha256": "c36d61b93512dba4a9b2a872a28835f0c120f96b768cfb5c2640c4999257d2d6"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "lambda$uploadMeshes$2",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager$PendingSectionUpload;)Lorg/embeddedt/embeddium/impl/gl/arena/PendingUpload;",
+          "sha256": "5eb8ba262e136b5d1b8cdfed43c85b3f5649d0013a135248b99dd331ee1a27a7"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "lambda$uploadMeshes$1",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager$PendingSectionUpload;)Lorg/embeddedt/embeddium/impl/gl/arena/PendingUpload;",
+          "sha256": "f93406dc5e02faa677e03f199921c8e85a6261a4974158b864bed1b2bf7391e0"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "lambda$uploadMeshes$0",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/compile/ChunkBuildOutput;)Z",
+          "sha256": "a7fbba7bfc9fd82b34e16f54fedc4a7d8e015b58dfa08c7fdee4703e3ed1a8bc"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors",
+      "license": "LGPL-3.0: method bodies may be carried in our GPL-3.0 source"
+    },
+    "embeddium_upload_classification": {
+      "mod": "embeddium",
+      "scripts": [
+        "furious10-classification.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.embeddium.RenderRegionManagerClassifyMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "<init>",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;)V",
+          "sha256": "cec32412fcf6356392c635c02a10b59d3b91e51c304277ef88cadfa4821ef7f5"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "update",
+          "desc": "()V",
+          "sha256": "14afd7483556376c0b91570f807150324adf0f4b2ceb93a3fe32aeb49b8c784e"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "uploadMeshes",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;Ljava/util/Collection;)V",
+          "sha256": "6a3c875c77e558cdae9254f5096998ed194b2e16fe49df2d597e7706255ea0d0"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "uploadMeshes",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;Lorg/embeddedt/embeddium/impl/render/chunk/region/RenderRegion;Ljava/util/Collection;)V",
+          "sha256": "3241c3b51a5dc759ac699524d1fc9e89abf14418393d7e471f24e7199c79cb1f"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "uploadResorts",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;Lorg/embeddedt/embeddium/impl/render/chunk/region/RenderRegion;Ljava/util/Collection;)V",
+          "sha256": "426ac90476d2b9f93b5f235adf224012dd6bbf36977f902d011e256fe0131db7"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "createMeshUploadQueues",
+          "desc": "(Ljava/util/Collection;)Lit/unimi/dsi/fastutil/objects/Reference2ReferenceMap$FastEntrySet;",
+          "sha256": "a4dc7e622d00c89a218059ae43fd2a701df0dd31db5b50856833a7c83de41e21"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "delete",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;)V",
+          "sha256": "959d563fa60df75e69c8a3aeb07dbeb21d6fef40d74dc7f0f140eec96efa05ca"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "getLoadedRegions",
+          "desc": "()Ljava/util/Collection;",
+          "sha256": "30bcee2f45e4c39c1ecf7d429394e1477601ce41809bab85152d3fe1e9016de0"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "getStagingBuffer",
+          "desc": "()Lorg/embeddedt/embeddium/impl/gl/arena/staging/StagingBuffer;",
+          "sha256": "140d9d2980698a3cf182a118dbe9236466440d95a536ac57b6b9b86cd5b8df21"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "createForChunk",
+          "desc": "(III)Lorg/embeddedt/embeddium/impl/render/chunk/region/RenderRegion;",
+          "sha256": "312b9e889e289f4ccf30ee0385fb908243ebd549bb8aa5e6876ab6355c743e64"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "create",
+          "desc": "(III)Lorg/embeddedt/embeddium/impl/render/chunk/region/RenderRegion;",
+          "sha256": "54395b7027124ba22934315593d36bbe62d1da4381d46d5eabf552524d68683d"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "createStagingBuffer",
+          "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;)Lorg/embeddedt/embeddium/impl/gl/arena/staging/StagingBuffer;",
+          "sha256": "81d1b30e6ec79ee97cb82d3aad61c574b5d3b32162c98bc805a4b0b4b3d43556"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "lambda$createMeshUploadQueues$4",
+          "desc": "(Ljava/lang/Object;)Ljava/util/List;",
+          "sha256": "a35d1b2543f0428d094205f6e002e32952c48e2fa63c2a626c71c418e877a033"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "lambda$uploadResorts$3",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager$PendingResortUpload;)Lorg/embeddedt/embeddium/impl/gl/arena/PendingUpload;",
+          "sha256": "c36d61b93512dba4a9b2a872a28835f0c120f96b768cfb5c2640c4999257d2d6"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "lambda$uploadMeshes$2",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager$PendingSectionUpload;)Lorg/embeddedt/embeddium/impl/gl/arena/PendingUpload;",
+          "sha256": "5eb8ba262e136b5d1b8cdfed43c85b3f5649d0013a135248b99dd331ee1a27a7"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "lambda$uploadMeshes$1",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager$PendingSectionUpload;)Lorg/embeddedt/embeddium/impl/gl/arena/PendingUpload;",
+          "sha256": "f93406dc5e02faa677e03f199921c8e85a6261a4974158b864bed1b2bf7391e0"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+          "method": "lambda$uploadMeshes$0",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/compile/ChunkBuildOutput;)Z",
+          "sha256": "a7fbba7bfc9fd82b34e16f54fedc4a7d8e015b58dfa08c7fdee4703e3ed1a8bc"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "embeddium_lazy_completed_jobs": {
+      "mod": "embeddium",
+      "scripts": [
+        "furious10-collector.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.embeddium.RenderSectionManagerMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/multiplayer/ClientLevel;ILorg/embeddedt/embeddium/impl/gl/device/CommandList;)V",
+          "sha256": "fd26a371de6fc9b7df4adb788a53cc5b8e5c8ae69d664eacf4f9dccf71255d14"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "runAsyncTasks",
+          "desc": "()V",
+          "sha256": "d4a201836baf6930adff166c4b9afb48f1ecb0fd83f982beebbefb9800d956db"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "update",
+          "desc": "(Lnet/minecraft/client/Camera;Lorg/embeddedt/embeddium/impl/render/viewport/Viewport;IZ)V",
+          "sha256": "ff21bba1ea9f363b6625e8ae93c7a21860282a71611d0bbf07210ef4dc2e0aa3"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "checkTranslucencyChange",
+          "desc": "()V",
+          "sha256": "b605a0230b54a5f0a18afe9b31b3c67531edafe54c4e4e34799ca14db839ded9"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "scheduleTranslucencyUpdates",
+          "desc": "(III)V",
+          "sha256": "60bee89d345c4ee4d7091c4901863d1ea0a4528873e53f25853a837973670af7"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "createTerrainRenderList",
+          "desc": "(Lnet/minecraft/client/Camera;Lorg/embeddedt/embeddium/impl/render/viewport/Viewport;IZ)V",
+          "sha256": "97847cb6257779498f902a9da190216f7acb09114e4b4ad7e6935c4272a9683f"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "getSearchDistance",
+          "desc": "()F",
+          "sha256": "52f2576f4cd2771c341988c3d15b88e11639b29e32055322e145070a5db5a23a"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "shouldUseOcclusionCulling",
+          "desc": "(Lnet/minecraft/client/Camera;Z)Z",
+          "sha256": "f6fe4c0741589cfd436e5b2b1683268509f77f21ef4c0809d4136c4d1c44f997"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "resetRenderLists",
+          "desc": "()V",
+          "sha256": "938d3ffb738eb8f93c67c6fe13dfbde0df5dbcdb1d41f1a2c89059d730eab0d4"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "onSectionAdded",
+          "desc": "(III)V",
+          "sha256": "eefa40b181abb5dbdfef79343a5edddc44b2ac99174b56c6135b2861eeab7942"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "onSectionRemoved",
+          "desc": "(III)V",
+          "sha256": "6ca84b0d8025c9a4bc6830f1e80f2da6610a4d3f21e6517a81146cb797291381"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "renderLayer",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/ChunkRenderMatrices;Lorg/embeddedt/embeddium/impl/render/chunk/terrain/TerrainRenderPass;DDD)V",
+          "sha256": "2fd07fb04422cd951571d5dbc53011b71917baf37104066b65a190107156409a"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "tickVisibleRenders",
+          "desc": "()V",
+          "sha256": "faeae88af8a3bcc6aa0b193a9a736a82d9ed486e604db4e66dd42e8990c88a38"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "isSectionVisible",
+          "desc": "(III)Z",
+          "sha256": "5a7b13d291984fe9cd53bea63102a05f057c492de3bb08e38398563cb3ed05f3"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "updateChunks",
+          "desc": "(Z)V",
+          "sha256": "29d964e14d7b36711994a5aca0bfeeb42c59268b1f6105742f183856dd818cf9"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "uploadChunks",
+          "desc": "()V",
+          "sha256": "c1ac21e0a3511e70e4794165075766da50278ecba38557079d55538668d82978"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "processChunkBuildResults",
+          "desc": "(Ljava/util/ArrayList;)V",
+          "sha256": "505964c7a867cec0b15951ca82693bded631d85560d92cdfd293c958f91001f7"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "updateTranslucencyInfo",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/RenderSection;Ljava/util/Map;)V",
+          "sha256": "4ed6df2e35efffe660a4884bfc8e82315d588811ea8cc0ddd775521590b1be86"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "updateSectionInfo",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/RenderSection;Lorg/embeddedt/embeddium/impl/render/chunk/data/BuiltSectionInfo;)V",
+          "sha256": "6a222631067c500b770e6a9826412b3e5bd4f19be659ed4fb7bf8b276a065ea0"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "filterChunkBuildResults",
+          "desc": "(Ljava/util/ArrayList;)Ljava/util/List;",
+          "sha256": "b8afa284e940d0241d3ee0222980c21b4dc08cbc5fe93b6d1737ce3c407bebe1"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "collectChunkBuildResults",
+          "desc": "()Ljava/util/ArrayList;",
+          "sha256": "bc767159839b9c0d467441e3fba850e40bc2b226b9fe2b6a40ff14f65941c106"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "submitRebuildTasks",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/compile/executor/ChunkJobCollector;Lorg/embeddedt/embeddium/impl/render/chunk/ChunkUpdateType;)V",
+          "sha256": "2a73eba22ae65b76fe754b51605e7ee31b5c0e1c08ff6d39ec50cd9c625190ed"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "createRebuildTask",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/RenderSection;I)Lorg/embeddedt/embeddium/impl/render/chunk/compile/tasks/ChunkBuilderMeshingTask;",
+          "sha256": "ecca6f97d91f7251610d53a1aa63a9081b502fe60ef5e1e18a8927d4e22633b5"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "createSortTask",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/RenderSection;I)Lorg/embeddedt/embeddium/impl/render/chunk/compile/tasks/ChunkBuilderSortTask;",
+          "sha256": "0d6c01deeaad7860b21ac9a3fffe317bb3cf51a6bbfdf2da0210f066c9ba98d7"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "markGraphDirty",
+          "desc": "()V",
+          "sha256": "eabf5d6717372ddd81725f69bce73b195d3dbcb3987da72e9934c2fe8cfd3a4e"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "needsUpdate",
+          "desc": "()Z",
+          "sha256": "5e59c126e32e2a088aa744c69335044129ccd6020928962b6a3be31631266a8d"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "getBuilder",
+          "desc": "()Lorg/embeddedt/embeddium/impl/render/chunk/compile/executor/ChunkBuilder;",
+          "sha256": "ae656a9f8dc1da3bfe639aef72895a8bfc52e08df5cda023b69c19bd350798b7"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "destroy",
+          "desc": "()V",
+          "sha256": "aaebf57cc46c7f864830f047c0dbe09e5ed2e578c3badb6957e1e2a72c63c34f"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "getTotalSections",
+          "desc": "()I",
+          "sha256": "fa927a0d3bfc2c72f0f5dd2cec87b4dde00365cacb67bd6b9887686e0feba09d"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "getVisibleChunkCount",
+          "desc": "()I",
+          "sha256": "df67edd929f12c6bb12814b9532ab2b889c02ef44187bc20dc8f3557f1906de0"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "scheduleRebuildOffThread",
+          "desc": "(IIIZ)V",
+          "sha256": "584039e68862f1df9be57aa7d54cfef4c4c79a4828605990dcf745cd37819442"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "scheduleRebuild",
+          "desc": "(IIIZ)V",
+          "sha256": "ad38fe87b693f4f0c9d3de277fbd707972f0c3916847150f32935dd87e92d01a"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "shouldPrioritizeRebuild",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/RenderSection;)Z",
+          "sha256": "1d2da9e6c4c0bb30159c216dbadbb55b24226df5a3eaf8b3605f1c11d5b59fae"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "allowImportantRebuilds",
+          "desc": "()Z",
+          "sha256": "3af19f4adbcbab58d23f2bff4921789626fc9c7d494301d02e60975952646d33"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "getEffectiveRenderDistance",
+          "desc": "()F",
+          "sha256": "6c2604679c9f7b17335977ccbf3076b03da62d1b9aa3a1e3bfb2cb22edbffd23"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "getRenderDistance",
+          "desc": "()F",
+          "sha256": "0bdc923bfabb9edb578094691ae626c4e744a80de9ab046d6507d5090227c7ea"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "connectNeighborNodes",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/RenderSection;)V",
+          "sha256": "bbbf87c0f30ed8358b58196e2373cc998d7ad8f694650fc0a63fecc4dc41df1c"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "disconnectNeighborNodes",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/RenderSection;)V",
+          "sha256": "6c253f92e4e6519aeadb70f65bc2f3c52ac525a4636916f7105f0db217fec9ef"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "getRenderSection",
+          "desc": "(III)Lorg/embeddedt/embeddium/impl/render/chunk/RenderSection;",
+          "sha256": "a3e5bf027fa50c90044f2b21115079b8c825d5594a8353d9aaaee0213dd46de5"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "getSortingStrings",
+          "desc": "()Ljava/util/Collection;",
+          "sha256": "abbce01965ece15f5a53d1e5602500902d9c875614bf177a39acc6f192f6501f"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "getDebugStrings",
+          "desc": "()Ljava/util/Collection;",
+          "sha256": "e222c4e38f6ea03a3c79b494864495046804906606f191d20d4728596217eb7d"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "getRenderLists",
+          "desc": "()Lorg/embeddedt/embeddium/impl/render/chunk/lists/SortedRenderLists;",
+          "sha256": "6eb98b95e1d87148479852f6c45198037d48f697d6ae31b6a11cd8e53a1c582d"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "isSectionBuilt",
+          "desc": "(III)Z",
+          "sha256": "bb526a70b68800a573ccdb5cb56fe9d91dbd179105933b81a32e65d487d018f9"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "onChunkAdded",
+          "desc": "(II)V",
+          "sha256": "e70e026b1effe5c6be8e6d24462776037038986bcd684d73c2ca8f96d7a26fca"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "onChunkRemoved",
+          "desc": "(II)V",
+          "sha256": "aaf48d5e28fb73d04503b69be1f3fbafa06b439b555e4dfb831fe4b163cb66ba"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "getSectionsWithGlobalEntities",
+          "desc": "()Ljava/util/Collection;",
+          "sha256": "152cf9d997eafce1d0337225b9f24e9627caccd832b32ef2c6217d87756ebb87"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "getVertexType",
+          "desc": "()Lorg/embeddedt/embeddium/impl/render/chunk/vertex/format/ChunkVertexType;",
+          "sha256": "18ad0ed543ad425f63e8ef8d6a4f80e87c09644bbdabc8b7dfa181cc61298e43"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "lambda$scheduleRebuildOffThread$0",
+          "desc": "(IIIZ)V",
+          "sha256": "481f3ef1f2d6b908100361db41b114989db2bd5cb3b36d672724450d7bef8846"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "54daa4649b79faa137e73976d80529e7f3da66c5bb7e0bf8e5ee7b999e31064a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "embeddium_serializer_lookup_snapshot": {
+      "mod": "embeddium",
+      "scripts": [],
+      "since": "1.0.21",
+      "mixins": [
+        "bons.furious.mixin.embeddium.SerializerLookupSnapshotMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/embeddedt/embeddium/impl/render/vertex/serializers/VertexSerializerRegistryImpl",
+          "method": "find",
+          "desc": "(J)Lorg/embeddedt/embeddium/api/vertex/serializer/VertexSerializer;",
+          "sha256": "bc90bfc9181c95422a760b05c722f023d2786a07b2c2399d08cef65c15b44840"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/vertex/serializers/VertexSerializerRegistryImpl",
+          "method": "create",
+          "desc": "(JLorg/embeddedt/embeddium/api/vertex/format/VertexFormatDescription;Lorg/embeddedt/embeddium/api/vertex/format/VertexFormatDescription;)Lorg/embeddedt/embeddium/api/vertex/serializer/VertexSerializer;",
+          "sha256": "71a643d0c4e3c29677fd9a834004f6344a510592c902dca30138a91c9668af68"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/vertex/serializers/VertexSerializerRegistryImpl",
+          "method": "get",
+          "desc": "(Lorg/embeddedt/embeddium/api/vertex/format/VertexFormatDescription;Lorg/embeddedt/embeddium/api/vertex/format/VertexFormatDescription;)Lorg/embeddedt/embeddium/api/vertex/serializer/VertexSerializer;",
+          "sha256": "0fca6624f59ece9ac1a93c3a161e161f62df53753a3963d9ef1275774f450ddd"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/vertex/serializers/VertexSerializerRegistryImpl",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "e1e1ec3057223dc6df8cf28b8efe0f3e9d9612c37af74db2d271e83a19769fe7"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/vertex/serializers/VertexSerializerRegistryImpl",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set: create must stay the only writer of the cache",
+          "sha256": "054c0cba0cb87b6fcaa42e1ed525024fa916be474b7c0cd0880248e2ebd8cd42"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    }
+  }
+}

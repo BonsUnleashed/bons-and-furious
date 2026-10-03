@@ -1,0 +1,65 @@
+{
+  "group": "ryoamiclights",
+  "keys": {
+    "ryoamiclights_chunk_iteration": {
+      "mod": "ryoamiclights",
+      "scripts": [
+        "furious3-EntityMixin.js",
+        "furious3-BlockEntityMixin.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.ryoamiclights.EntityChunkRebuildMixin",
+        "bons.furious.mixin.ryoamiclights.BlockEntityChunkRebuildMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/thinkingstudio/ryoamiclights/mixin/lightsource/EntityMixin",
+          "method": "ryoamiclights$scheduleTrackedChunksRebuild",
+          "desc": "(Lnet/minecraft/client/renderer/LevelRenderer;)V",
+          "sha256": "37d9c6abc625408b67cbe20afb298d02d7b4929aa641938bd317e5878b8f725b"
+        },
+        {
+          "class": "org/thinkingstudio/ryoamiclights/mixin/lightsource/BlockEntityMixin",
+          "method": "ryoamiclights$scheduleTrackedChunksRebuild",
+          "desc": "(Lnet/minecraft/client/renderer/LevelRenderer;)V",
+          "sha256": "92858623fcebd5b87b6e5daf52b8af420321a31ecd603fdf190835b92b19bc81"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "MIT: the method bodies may be carried in our GPL-3.0 source"
+    },
+    "ryoamiclights_block_entity_lock_skip": {
+      "mod": "ryoamiclights",
+      "scripts": [],
+      "since": "1.0.21",
+      "mixins": [
+        "bons.furious.mixin.ryoamiclights.BlockEntityLockSkipMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/thinkingstudio/ryoamiclights/RyoamicLights",
+          "method": "addLightSource",
+          "desc": "(Lorg/thinkingstudio/ryoamiclights/DynamicLightSource;)V",
+          "sha256": "d17c3fd249e8e43a89532d82ca24854573df141e1ac77efdba9f39d1fbef4905"
+        },
+        {
+          "class": "org/thinkingstudio/ryoamiclights/RyoamicLights",
+          "method": "containsLightSource",
+          "desc": "(Lorg/thinkingstudio/ryoamiclights/DynamicLightSource;)Z",
+          "sha256": "ef8370b5af831b4d36b705affb0dcf7875b5535c5062b13d986f16079b582fcf"
+        },
+        {
+          "class": "org/thinkingstudio/ryoamiclights/RyoamicLights",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set: addLightSource must stay the only way into dynamicLightSources",
+          "sha256": "e590e0ff841db223692b09357d64696e4ec7087d82ba537d13ef5203e8a07222"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "MIT: the method bodies may be carried in our GPL-3.0 source"
+    }
+  }
+}

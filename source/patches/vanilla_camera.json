@@ -1,0 +1,37 @@
+{
+  "group": "vanilla_camera",
+  "keys": {
+    "vanilla_camera_fluid_memo": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.26",
+      "mixins": [
+        "bons.furious.mixin.vanilla_camera.CameraFluidMemoMixin",
+        "bons.furious.mixin.vanilla_camera.CameraFluidFrameMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/Camera",
+          "method": "getFluidInCamera",
+          "desc": "()Lnet/minecraft/world/level/material/FogType;",
+          "sha256": "4c662c99318a574d12d3bc38ee5527f5c3f5503d4a0c005e3fdcb407a87b96ba"
+        },
+        {
+          "class": "net/minecraft/client/Camera",
+          "method": "getNearPlane",
+          "desc": "()Lnet/minecraft/client/Camera$NearPlane;",
+          "sha256": "6b890e6f767be527a6872b3d931ee4211cabc87178bb41a9e7fd78ef429ed836"
+        },
+        {
+          "class": "net/minecraft/client/renderer/GameRenderer",
+          "method": "render",
+          "desc": "(Lnet/minecraft/client/DeltaTracker;Z)V",
+          "sha256": "60fac9c75b68a44e76acb5a22efc1b3b7a8dd2499f2b030534ea7bbfe4b07afa"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapMethod on Camera.getFluidInCamera at priority 2000, outermost; @Inject at the start and returns of GameRenderer.render)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.vanilla_camera.CameraFluidMemo); the foreign mixins are only fingerprinted, not changed"
+    }
+  }
+}

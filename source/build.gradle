@@ -1,0 +1,113 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.148'
+}
+version = '1.0.27+mc1.21.1'
+group = 'bons.furious'
+base { archivesName = 'bons_and_furious-neoforge' }
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+sourceSets {
+    guardTools {
+        java.srcDir 'tools'
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+    }
+    probe {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+    }
+}
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.bawnorton.com/releases' }
+}
+neoForge {
+    version = '21.1.252'
+    runs {
+        client {
+            client()
+            gameDirectory = file('../runtime/' + providers.gradleProperty('probeRun').getOrElse('client'))
+            programArguments.addAll('--quickPlaySingleplayer', 'BonsPortProbe', '--width', '960', '--height', '540')
+            jvmArgument '-Xmx4G'
+            systemProperty 'bons_and_furious.clientProbe', 'true'
+        }
+        server {
+            server(); programArgument '--nogui'
+            gameDirectory = file('../runtime/' + providers.gradleProperty('probeRun').getOrElse('server'))
+            jvmArgument '-Xmx3G'
+            systemProperty 'bons_and_furious.portProbe', 'true'
+            systemProperty 'bons_and_furious.finalDensityReuse.metrics', 'true'
+            systemProperty 'bons_and_furious.surfaceEstimateShare.metrics', 'true'
+        }
+    }
+    mods {
+        bons_and_furious { sourceSet(sourceSets.main) }
+        bons_port_probe { sourceSet(sourceSets.probe) }
+    }
+}
+dependencies {
+    compileOnly 'com.github.bawnorton.mixinsquared:mixinsquared-common:0.3.6-beta.1'
+    compileOnly fileTree(dir: '../targets', include: '*.jar')
+    implementation 'com.github.bawnorton.mixinsquared:mixinsquared-neoforge:0.3.6-beta.1'
+    jarJar 'com.github.bawnorton.mixinsquared:mixinsquared-neoforge:0.3.6-beta.1'
+}
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += ['-proc:none']
+}
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+tasks.register('writeClasspath') {
+    dependsOn 'createMinecraftArtifacts'
+    doLast {
+        file('build').mkdirs()
+        file('build/compile-classpath.txt').text = sourceSets.main.compileClasspath.asPath
+    }
+}
+tasks.register('probeJar', Jar) {
+    archiveBaseName = 'bons-port-probe'
+    archiveVersion = '1'
+    from sourceSets.probe.output
+}
+tasks.register('verifyGuards', Exec) {
+    dependsOn classes, guardToolsClasses
+    doFirst {
+        def toolArgs = ['-cp', sourceSets.guardTools.runtimeClasspath.asPath, 'GuardTool',
+                'emit', 'patches', 'src/main/resources', 'build/verified-guards.tsv',
+                'build/moddev/artifacts/neoforge-21.1.252.jar'] +
+                fileTree('../targets').matching { include '*.jar' }.files.collect { it.path }.sort() +
+                fileTree('../targets-nested').matching { include '*.jar' }.files.collect { it.path }.sort()
+        def argumentFile = file('build/guard-tool.args')
+        argumentFile.text = toolArgs.collect { '"' + it.replace('\\', '/').replace('"', '\\"') + '"' }.join('\n')
+        executable = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(21) }.get().executablePath.asFile.absolutePath
+        args = ['@' + argumentFile.absolutePath]
+    }
+    doLast {
+        if (file('build/verified-guards.tsv').text != file('src/main/resources/bons_and_furious.guards.tsv').text)
+            throw new GradleException('The checked-in guard table is stale; review and regenerate it before building.')
+    }
+}
+check.dependsOn verifyGuards
+
+// Match the project's audited, deterministic JAR format: sorted files, no directory entries.
+jar.doLast {
+    def original = archiveFile.get().asFile
+    def temp = new File(original.parentFile, original.name + '.canonical')
+    def entries = new TreeMap<String, byte[]>()
+    new java.util.zip.ZipFile(original).withCloseable { zip ->
+        zip.entries().each { entry ->
+            if (!entry.directory) entries[entry.name] = zip.getInputStream(entry).withCloseable { it.bytes }
+        }
+    }
+    new java.util.zip.ZipOutputStream(new FileOutputStream(temp)).withCloseable { zip ->
+        zip.setLevel(9)
+        entries.each { name, bytes ->
+            def entry = new java.util.zip.ZipEntry(name)
+            entry.setTimeLocal(java.time.LocalDateTime.of(1980, 1, 1, 0, 0))
+            zip.putNextEntry(entry); zip.write(bytes); zip.closeEntry()
+        }
+    }
+    java.nio.file.Files.move(temp.toPath(), original.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING)
+}

@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.c2me_compat",
+  "compatibilityLevel": "JAVA_21",
+  "priority": 900,
+  "plugin": "bons.furious.compat.C2meCompatPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "StrongholdCacheOptionTrigger",
+    "DistantHorizonsDirectReadsMixin",
+    "RadiumExperimentalOptionTrigger"
+  ]
+}

@@ -1,0 +1,16 @@
+--- dev
+
++++ production
+
+@@ -145,7 +145,9 @@
+
+      241: dload         11
+      243: ddiv
+      244: invokevirtual # // Method net/minecraft/world/phys/Vec3.scale:(D)Lnet/minecraft/world/phys/Vec3;
+-     247: areturn
++     247: astore        13
++     249: aload         13
++     251: areturn
+ 
+   static {};
+     Code:

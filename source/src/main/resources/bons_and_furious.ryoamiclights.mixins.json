@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.ryoamiclights",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "bons.pure.config.PureMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "EntityChunkRebuildMixin",
+    "BlockEntityChunkRebuildMixin",
+    "BlockEntityLockSkipMixin"
+  ]
+}

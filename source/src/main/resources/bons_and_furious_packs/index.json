@@ -1,0 +1,13 @@
+{
+  "fixes": [
+    {
+      "key": "scorched_sandcrab_burrow_gate",
+      "target": "mr_scorched",
+      "title": "Scorched sandcrab burrow gate",
+      "originals": {
+        "data/scorched/function/tick.mcfunction": "441475b446fd372e845124eaa891985751ad334c57594626d578d39843d48b50",
+        "data/scorched/function/mob/sandcrab/burrow_stay.mcfunction": "601eeab26e5708c47fe0e3e1a8cca24d7b510a65b1b05b786a5034c0c732b766"
+      }
+    }
+  ]
+}

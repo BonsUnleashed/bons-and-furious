@@ -1,0 +1,86 @@
+{
+  "group": "hostilevillages",
+  "keys": {
+    "hostilevillages_distant_generation_queue": {
+      "mod": "hostilevillages",
+      "scripts": [
+        "bons_and_furious-EventHandler.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.hostilevillages.DistantGenerationQueueMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/hostilevillages/event/EventHandler",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "com/hostilevillages/event/EventHandler",
+          "method": "onEntityAdd",
+          "desc": "(Lnet/neoforged/neoforge/event/entity/EntityJoinLevelEvent;)V",
+          "sha256": "54800d3d5abff4b237f11f6917f14c2bfa732e51980c656715042f05e9e231a0"
+        },
+        {
+          "class": "com/hostilevillages/event/EventHandler",
+          "method": "replaceEntityOnSpawn",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/ServerLevelAccessor;)Z",
+          "sha256": "45ac8f84f78fa928d660de1f6a0f9114325d343d694cdcdf4c577ec1a3e47016"
+        },
+        {
+          "class": "com/hostilevillages/event/EventHandler",
+          "method": "addToWorld",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/LevelTickEvent$Post;)V",
+          "sha256": "41e69a0e0ff457b3a6660604157ec92b92faf7d322fbef577c3662f1d5f638d5"
+        },
+        {
+          "class": "com/hostilevillages/event/EventHandler",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "89308f2f98e0deddade99415f0c917fa80830ed6342dccc6339be1e48898f9d4"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors",
+      "license": "All Rights Reserved: no-copy, the mixin carries only our check"
+    },
+    "hostilevillages_pending_chunk_queue": {
+      "mod": "hostilevillages",
+      "scripts": [],
+      "since": "1.0.24",
+      "mixins": [
+        "bons.furious.mixin.hostilevillages.PendingChunkQueueMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/hostilevillages/event/EventHandler",
+          "method": "addToWorld",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/LevelTickEvent$Post;)V",
+          "sha256": "41e69a0e0ff457b3a6660604157ec92b92faf7d322fbef577c3662f1d5f638d5"
+        },
+        {
+          "class": "com/hostilevillages/event/EventHandler",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "89308f2f98e0deddade99415f0c917fa80830ed6342dccc6339be1e48898f9d4"
+        },
+        {
+          "class": "com/hostilevillages/event/EventHandler",
+          "method": "replaceEntityOnSpawn",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/ServerLevelAccessor;)Z",
+          "sha256": "45ac8f84f78fa928d660de1f6a0f9114325d343d694cdcdf4c577ec1a3e47016"
+        },
+        {
+          "class": "com/hostilevillages/RandomVillageDataSet",
+          "method": "onEntitySpawn",
+          "desc": "(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/level/ServerLevelAccessor;)V",
+          "sha256": "616852bfd8ebdb67b5da28030f03d599f582df68ebd674b5d75b457e8b0526d6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation on the draining loop condition of addToWorld, @Inject at the end of <clinit>)",
+      "license": "All Rights Reserved (no-copy): the mixin only wraps the loop condition and the end of the static initializer; helper bons.furious.patch.hostilevillages.PendingChunkQueue; no Hostile Villages code is carried"
+    }
+  }
+}

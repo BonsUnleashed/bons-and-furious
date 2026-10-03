@@ -1,0 +1,307 @@
+{
+  "group": "geckolib",
+  "keys": {
+    "geckolib_primitive_easing": {
+      "mod": "geckolib",
+      "scripts": [
+        "furious6-EasingType.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.geckolib.EasingTypeMixin"
+      ],
+      "guard": [
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "apply",
+          "desc": "(Lsoftware/bernie/geckolib/animation/keyframe/AnimationPoint;Ljava/lang/Double;D)D",
+          "sha256": "a045990c1a358e0da83193cf8df832c44c35c564e4e59f477b4e7eff300f375e"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "easeOut",
+          "desc": "(Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "4ced37966adbaa0ad5b48880f44699fc45fda4362b89e9368d415c7b714e8d11"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "easeInOut",
+          "desc": "(Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "0290eb1e0b2c563d0cb07b041a0e765faa4012fba6b05998bb47a13526d31c6b"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "stepPositive",
+          "desc": "(Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "7bdffe37e45ad6529dbdd4c761038b35773647cf3ee3007a0196c7aac917bc9d"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "stepNonNegative",
+          "desc": "(Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "ca4b1b51561670a4d2fdf89bc6095e8273f5b14caa0c99a08fa413c0e6a7a936"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "elastic",
+          "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "17919919274ae389d036cc45edaa7b055bdd05c07c188baf38d22530a3def4e6"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "bounce",
+          "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "0845ade7bee41e79cc89769f43a5a657efa8d3f0b01c4998909743a5c9a230c9"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "back",
+          "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "4fbf9e9680f95f49dec4d29f48a514abec15d2c9d19d6291aa8287cb4a13a076"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "pow",
+          "desc": "(D)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "cbded3de9137f390af8ea32b0613c1716016a9aee4915eb414e0d86fc7f680b8"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "step",
+          "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "3435aa8ecd297de1f41e746fcc1db0082b5292fd3c79b91f30cb3c102add7ccd"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$easeOut$32",
+          "desc": "(Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;D)D",
+          "sha256": "7212e5ed2dd4ec536c15d4b34826d7ca406a566ccbfa3168a020f5a57d4e9c6d"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$easeInOut$33",
+          "desc": "(Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;D)D",
+          "sha256": "eb6e92a503d3937c4a83b44a006d0513d2d33fd59db5b10540de3e3c7926a89f"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$stepPositive$34",
+          "desc": "(D)D",
+          "sha256": "59b82be990d7295f8e4a9ec832a1faa9c955a5ee668c0736f59074efc43a9579"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$stepNonNegative$35",
+          "desc": "(D)D",
+          "sha256": "6f831c5ebbb459006a65f6317ed5de07917382cec31f6275627f4192250cb340"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$elastic$36",
+          "desc": "(DD)D",
+          "sha256": "39b698bcd09b6a3bdfa1e26f0c095c3576ffc650dfb4a9dc5480ad1b347cb747"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$bounce$37",
+          "desc": "(D)D",
+          "sha256": "ef189a69eaa29545a0447ac05ed37f175d136f4fcd246479c0bb9e251f7c25f7"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$bounce$38",
+          "desc": "(DD)D",
+          "sha256": "270a116278ee9c2d9e62273dc5090f91823128cae3cc9ecb12c7b0a87d8f299a"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$bounce$39",
+          "desc": "(DD)D",
+          "sha256": "6d694cc574f9afad8b87a8f22701140f8ca41cba374ec7df236eee1e9a59463a"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$bounce$40",
+          "desc": "(DD)D",
+          "sha256": "04ebfbd880a122044f9f309b4178c0c0f94dfa7d79a5e0806b6b3282596406f9"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$bounce$41",
+          "desc": "(Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;D)D",
+          "sha256": "b98f012d4dd8c3d1c162c9a877ae1e9e95090d717b5918b8d39244c86f3374b5"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$back$42",
+          "desc": "(DD)D",
+          "sha256": "2d68a5d70a4b5b3673e3dffeddbafbf3dcf754421b8349b8801a84edc5e7d389"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$pow$43",
+          "desc": "(DD)D",
+          "sha256": "40f5d5c25ada9ed41dbe2466a8a7e8f41e6ccc98e51e29dfb1b1dd37e00acc10"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$step$44",
+          "desc": "(ID)D",
+          "sha256": "ec54fb58ce9d124ed25aa616f585bab0d041fc177daeea0d5b90d00b36607c5e"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$static$0",
+          "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "dfbdefc2c9942fcebfe809116d30074c6b1e70b8826fcafc71916b2d0cd93878"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$static$2",
+          "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "9f92e8afd13995a4b94a49abc9bf061998cd65d78cec83f38cc4ba07c5cc4307"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$static$3",
+          "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "2dd525be66a028bbd6fcb28da3e3aeeafa75f81f0696516552bf0d63f213aea5"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$static$4",
+          "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "645064835c9310631c9a0794dafe8425786d950501b279510f252bdc9b1879f3"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$static$5",
+          "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "3cc5b94a983908187e661ce53b97a870c0955f43e14768bb889a4d700082de0b"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$static$6",
+          "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "9cd8c1a36d53efc0e359ac49257a0d336d59dceab403db34c7036699a78113d9"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$static$7",
+          "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "3c2542c76abc5a2d66df25c95b5326a21df49655e0ac3f84d238e456b7bd6a09"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$static$8",
+          "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "b324597f87e9905a27bb00f2f33a5edb4c5e7ba4f7b8f0a45c323f58f88e5415"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$static$9",
+          "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "c48b9d119feaf8923a0d77ee39e68fa060a028b5af98c10803cef2a2196039ff"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$static$10",
+          "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "8edea784142d31bb96d6c2f8b9f190ed893f19d0c27bea356a39e317e4db6fb1"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$static$17",
+          "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "9b458940d43f7d88119efea8fb10350772806df9dc2514769d2040bad1e47f59"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$static$18",
+          "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "af61900ccc5440b1338195ba06cab20d29faa11129a9d03df7e674f331343616"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$static$19",
+          "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "61f7cde66cd0b9ee7255241da4548bad769203142c0e1cdbd32ab923237534df"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$static$20",
+          "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "3ebc32b10585419dd92759f1ef26b634e80489c01477763c11f0cb7708f2e032"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$static$21",
+          "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "b6be45aac67516c724b5622a6177a821775ad63de332e19b27d02d5bcc6b5712"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/EasingType",
+          "method": "lambda$static$22",
+          "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+          "sha256": "bd5672a783ccacd114ce3b018ba53b0d7bfe8ad8fef8aa6751261d20159e736b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "MIT: the method bodies may be carried in our GPL-3.0 source"
+    },
+    "geckolib_animation_hashes": {
+      "mod": "geckolib",
+      "scripts": [
+        "furious8-framehash.js",
+        "furious8-rawhash.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.geckolib.KeyframeMixin",
+        "bons.furious.mixin.geckolib.RawAnimationMixin"
+      ],
+      "guard": [
+        {
+          "class": "software/bernie/geckolib/animation/keyframe/Keyframe",
+          "method": "hashCode",
+          "desc": "()I",
+          "sha256": "d787fb5b503c8f989194972d7d71df2bd9d1ea7211413c0577ee2fa37266511d"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/RawAnimation",
+          "method": "hashCode",
+          "desc": "()I",
+          "sha256": "8fc34a790b9a72c87a4f0f0a4f94cec9f3aef94596479cebe16efb4ee0f7e59f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "MIT: the method bodies may be carried in our GPL-3.0 source"
+    },
+    "geckolib_keyframe_locals": {
+      "mod": "geckolib",
+      "scripts": [
+        "furious8-keyframe.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.geckolib.AnimationControllerMixin"
+      ],
+      "guard": [
+        {
+          "class": "software/bernie/geckolib/animation/AnimationController",
+          "method": "getAnimationPointAtTick",
+          "desc": "(Ljava/util/List;DZLnet/minecraft/core/Direction$Axis;)Lsoftware/bernie/geckolib/animation/keyframe/AnimationPoint;",
+          "sha256": "9c52df1769b4125627407eeb29fbd6c6c8864c0a881892d9da95b35b9958b6cb"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/AnimationController",
+          "method": "getCurrentKeyFrameLocation",
+          "desc": "(Ljava/util/List;D)Lsoftware/bernie/geckolib/animation/keyframe/KeyframeLocation;",
+          "sha256": "e9ac2394d0ed4626ea6f43754cd67a3025d7dc0927902ee4564a55cd8d7aa39c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "MIT: the method body may be carried in our GPL-3.0 source"
+    }
+  }
+}

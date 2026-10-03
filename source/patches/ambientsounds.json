@@ -1,0 +1,51 @@
+{
+  "group": "ambientsounds",
+  "keys": {
+    "ambientsounds_biome_match_cache": {
+      "mod": "ambientsounds",
+      "scripts": [
+        "bons_and_furious-BiomeEnvironment_BiomeArea.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.ambientsounds.BiomeAreaMixin"
+      ],
+      "guard": [
+        {
+          "class": "team/creative/ambientsounds/environment/BiomeEnvironment$BiomeArea",
+          "method": "checkBiome",
+          "desc": "([Lteam/creative/ambientsounds/condition/BiomeCondition;)Z",
+          "sha256": "18d6329d5ba61b8d52911e00fba725d781a0548c3fdf199812996c4a4bcb109b"
+        },
+        {
+          "class": "team/creative/ambientsounds/environment/BiomeEnvironment$BiomeArea",
+          "method": "lambda$checkBiome$0",
+          "desc": "(Lteam/creative/ambientsounds/condition/BiomeCondition;Lnet/minecraft/tags/TagKey;)Z",
+          "sha256": "8a7a71e18b8501c37a0784f0cf4b8347bfdae57b599756922697c6eeead38e92"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method bodies may be carried in our GPL-3.0 source"
+    },
+    "ambientsounds_terrain_scan_bound": {
+      "mod": "ambientsounds",
+      "scripts": [
+        "furious7-AmbientHeight.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.ambientsounds.TerrainEnvironmentMixin"
+      ],
+      "guard": [
+        {
+          "class": "team/creative/ambientsounds/environment/TerrainEnvironment",
+          "method": "getHeightBlock",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos$MutableBlockPos;)I",
+          "sha256": "0c03d51cf144949c6543ae268eb7c043804c1ad835ac70be823f50ab5a34ed4e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    }
+  }
+}

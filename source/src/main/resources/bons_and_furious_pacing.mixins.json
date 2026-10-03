@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.pure.pacing.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "MinecraftPacingMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "plugin": "bons.pure.config.PureMixinPlugin"
+}

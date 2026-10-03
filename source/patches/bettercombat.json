@@ -1,0 +1,91 @@
+{
+  "group": "bettercombat",
+  "keys": {
+    "bettercombat_offhand_lookup": {
+      "mod": "bettercombat",
+      "scripts": [
+        "furious19-bettercombat-PlayerEntityMixin.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.bettercombat.OffhandLookupMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/bettercombat/mixin/player/PlayerEntityMixin",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "05b11865dfdfad10fd439f41dd60b40487a7fc77230234d59781ecacf69237a2"
+        },
+        {
+          "class": "net/bettercombat/mixin/player/PlayerEntityMixin",
+          "method": "getComboCount",
+          "desc": "()I",
+          "sha256": "926006de9b1f8c1b2ad3fa5687db1ad05327eee3a8c7d39dc60e30abb9a67f00"
+        },
+        {
+          "class": "net/bettercombat/mixin/player/PlayerEntityMixin",
+          "method": "setComboCount",
+          "desc": "(I)V",
+          "sha256": "83e0f886d4387790dc988cad6d39b2bfcbda604c0eddd9b1727b736023ce4204"
+        },
+        {
+          "class": "net/bettercombat/mixin/player/PlayerEntityMixin",
+          "method": "post_Tick",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "d71a35aaefebd87824b6b45341eda8dbc7813bce7bef893ca3019a3da67eaf1d"
+        },
+        {
+          "class": "net/bettercombat/mixin/player/PlayerEntityMixin",
+          "method": "disableSweeping",
+          "desc": "(Z)Z",
+          "sha256": "3d591eeedcb06af12313574ee909b0f143b964ba70a2ea8dd97b71c4e8d85637"
+        },
+        {
+          "class": "net/bettercombat/mixin/player/PlayerEntityMixin",
+          "method": "getEquippedStack_Pre",
+          "desc": "(Lnet/minecraft/world/entity/EquipmentSlot;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "sha256": "6b5c17d69f9d402f7d3e1e75432f39b9fd29713b8a5713e29b3f8adfa859a8d0"
+        },
+        {
+          "class": "net/bettercombat/mixin/player/PlayerEntityMixin",
+          "method": "updateDualWieldingSpeedBoost",
+          "desc": "()V",
+          "sha256": "25a4a6482c97c8dcd404c199c133001fc7a258c41b11b646ab37853512dc8c5e"
+        },
+        {
+          "class": "net/bettercombat/mixin/player/PlayerEntityMixin",
+          "method": "getHand",
+          "desc": "(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionHand;",
+          "sha256": "6c68801972f5f7f9c4c648ff45b0c735179bc91c65d04ad0f30f2e3580c0df14"
+        },
+        {
+          "class": "net/bettercombat/mixin/player/PlayerEntityMixin",
+          "method": "getMainHandStack_Redirect",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "9ed66ea823835b7523b2f4bad3b1adcee5b1f03066b7ac541d78871e3f75be47"
+        },
+        {
+          "class": "net/bettercombat/mixin/player/PlayerEntityMixin",
+          "method": "setStackInHand_Redirect",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/item/ItemStack;)V",
+          "sha256": "a6ec1ceb90140030ff7fa01dafad7a85e4f35bdfc3d338cf63d5300e513ccaa9"
+        },
+        {
+          "class": "net/bettercombat/mixin/player/PlayerEntityMixin",
+          "method": "getCurrentAttack",
+          "desc": "()Lnet/bettercombat/api/AttackHand;",
+          "sha256": "d278c2a58545a763ba1ddfd6fea1f5cd2f83b6a74f669e8280534957971d2b64"
+        },
+        {
+          "class": "net/bettercombat/mixin/player/PlayerEntityMixin",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "8887a670ac6be279950218bcd396f63b8e938fd3b941af5f0e76bdcb9128b63c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "targethandler",
+      "license": "All Rights Reserved (no-copy): the mixin holds only the slot check; Better Combat's code stays in its own class"
+    }
+  }
+}

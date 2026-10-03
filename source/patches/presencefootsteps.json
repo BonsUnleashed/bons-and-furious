@@ -1,0 +1,43 @@
+{
+  "group": "presencefootsteps",
+  "keys": {
+    "presencefootsteps_duplicate_tracking": {
+      "mod": "presencefootsteps",
+      "scripts": [
+        "furious6-SoundEngine.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.presencefootsteps.SoundEngineMixin"
+      ],
+      "guard": [
+        {
+          "class": "eu/ha3/presencefootsteps/sound/SoundEngine",
+          "method": "getTargets",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Ljava/util/stream/Stream;",
+          "sha256": "a50729759cd2d7cdfe294715bfd095e3e014f74eaf4a99bc409bb2afc49505cc"
+        },
+        {
+          "class": "eu/ha3/presencefootsteps/sound/SoundEngine",
+          "method": "lambda$getTargets$1",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "52013eba2fc54126a63e8a65a8d04810be54abc4285330ac02ad65387c277ff5"
+        },
+        {
+          "class": "eu/ha3/presencefootsteps/sound/SoundEngine",
+          "method": "lambda$getTargets$2",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;)D",
+          "sha256": "ad97efaa1eadb523198641a6e0ba04fc576db01cdaba330ba54bf34a24846a02"
+        },
+        {
+          "class": "eu/ha3/presencefootsteps/sound/SoundEngine",
+          "method": "lambda$getTargets$3",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Ljava/util/Set;Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "011e8469af69dfbd5205e4cdf4e6a7f644721b9f61f686b92c00748870135986"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "MIT: the method bodies may be carried in our GPL-3.0 source"
+    }
+  }
+}

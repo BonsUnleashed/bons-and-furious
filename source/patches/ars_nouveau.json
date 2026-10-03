@@ -1,0 +1,129 @@
+{
+  "group": "ars_nouveau",
+  "keys": {
+    "ars_primitive_mana_discounts": {
+      "mod": "ars_nouveau",
+      "scripts": [
+        "furious10-mana.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.ars_nouveau.ManaUtilMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/hollingsworth/arsnouveau/api/util/ManaUtil",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "com/hollingsworth/arsnouveau/api/util/ManaUtil",
+          "method": "getPlayerDiscounts",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lcom/hollingsworth/arsnouveau/api/spell/Spell;Lnet/minecraft/world/item/ItemStack;)I",
+          "sha256": "7a2c8a665c03c12211d823e28094c4907bd4d63a13a51398ff1443545eb72ed2"
+        },
+        {
+          "class": "com/hollingsworth/arsnouveau/api/util/ManaUtil",
+          "method": "getCurrentMana",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)D",
+          "sha256": "47dfc2bf2e81b2c8d63f2cdaa046a7f3d9df2aa8829f4314f8920a765493e234"
+        },
+        {
+          "class": "com/hollingsworth/arsnouveau/api/util/ManaUtil",
+          "method": "calcMaxMana",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Lcom/hollingsworth/arsnouveau/api/util/ManaUtil$Mana;",
+          "sha256": "df1b77e6010f265df98e4066cc37d1741b3cbe1418fe8a0d6a989a24dd4e24f9"
+        },
+        {
+          "class": "com/hollingsworth/arsnouveau/api/util/ManaUtil",
+          "method": "getMaxMana",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)I",
+          "sha256": "2b1931c6ef00716adb376db32cd4a4d113d6726974cb00269e929efe108443d8"
+        },
+        {
+          "class": "com/hollingsworth/arsnouveau/api/util/ManaUtil",
+          "method": "getManaRegen",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)D",
+          "sha256": "0f315ae5acb66870e6a264e51a1e5def03f348bf9c330384ab79e84b4a30bcca"
+        },
+        {
+          "class": "com/hollingsworth/arsnouveau/api/util/ManaUtil",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "cdd13d93e3dce62848baebc32c6244e03c55b93a79eb5fd0a8ac1aeb88c1290e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "GPL-3.0 per its mods.toml (the repository licence text bundled as META-INF/licenses/baileyholl--Ars-Nouveau.txt is LGPL-3.0): the method body may be carried in our GPL-3.0 source"
+    },
+    "ars_direct_perk_snapshots": {
+      "mod": "ars_nouveau",
+      "scripts": [
+        "furious10-perks.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.ars_nouveau.PerkUtilMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/hollingsworth/arsnouveau/api/util/PerkUtil",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "com/hollingsworth/arsnouveau/api/util/PerkUtil",
+          "method": "getPerkHolder",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Lcom/hollingsworth/arsnouveau/common/items/data/ArmorPerkHolder;",
+          "sha256": "17cac4679397847e5b78020ce183bae1d83cb2eff673eac6819bd5fb18fe6dc0"
+        },
+        {
+          "class": "com/hollingsworth/arsnouveau/api/util/PerkUtil",
+          "method": "perkValue",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/core/Holder;)D",
+          "sha256": "0f4bfd3751869d6267a6739a54b11622ab4836e05d3a46c0b5f731c0c6cdd14b"
+        },
+        {
+          "class": "com/hollingsworth/arsnouveau/api/util/PerkUtil",
+          "method": "valueOrZero",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/core/Holder;)D",
+          "sha256": "758bb0fdcb0c8f0007756412271ae309f693e76b1f88d7cd4874f6d3d6ae8b14"
+        },
+        {
+          "class": "com/hollingsworth/arsnouveau/api/util/PerkUtil",
+          "method": "getPerksAsItems",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Ljava/util/List;",
+          "sha256": "3500c912c2aab051eda9f36e27705c37a75302ea72a454945823b10741b6fc1d"
+        },
+        {
+          "class": "com/hollingsworth/arsnouveau/api/util/PerkUtil",
+          "method": "getPerksFromItem",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Ljava/util/List;",
+          "sha256": "337d8693c17d3bd1ecdea7cc7fa0ca55aefc69849ae640f63f9729d6d9a41ab2"
+        },
+        {
+          "class": "com/hollingsworth/arsnouveau/api/util/PerkUtil",
+          "method": "getPerksFromLiving",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/List;",
+          "sha256": "47c68a5e48e5238834159729fa394a972064cecd84867da01c41b3c58c84a14f"
+        },
+        {
+          "class": "com/hollingsworth/arsnouveau/api/util/PerkUtil",
+          "method": "countForPerk",
+          "desc": "(Lcom/hollingsworth/arsnouveau/api/perk/IPerk;Lnet/minecraft/world/entity/LivingEntity;)I",
+          "sha256": "feccb38c693f659b830adaf80bdcaf2c2ea9ebf2040bd5ac51196d39ca466af4"
+        },
+        {
+          "class": "com/hollingsworth/arsnouveau/api/util/PerkUtil",
+          "method": "getHolderForPerk",
+          "desc": "(Lcom/hollingsworth/arsnouveau/api/perk/IPerk;Lnet/minecraft/world/entity/LivingEntity;)Loshi/util/tuples/Pair;",
+          "sha256": "840050a54cdafd2ff0f7cfd74acc88c673f1b9908127ae119ce9df668e09ac94"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "GPL-3.0 per its mods.toml (the repository licence text bundled as META-INF/licenses/baileyholl--Ars-Nouveau.txt is LGPL-3.0): the method body may be carried in our GPL-3.0 source"
+    }
+  }
+}

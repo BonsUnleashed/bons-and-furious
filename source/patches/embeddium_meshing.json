@@ -1,0 +1,195 @@
+{
+  "group": "embeddium_meshing",
+  "keys": {
+    "embeddium_weighted_pick_table": {
+      "mod": "embeddium",
+      "scripts": [],
+      "since": "1.0.26",
+      "mixins": [
+        "bons.furious.mixin.embeddium_meshing.WeightedPickTableMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/resources/model/WeightedBakedModel",
+          "method": "<init>",
+          "desc": "(Ljava/util/List;)V",
+          "sha256": "1646db2a5c3d7f579647f6b1d13c71cdb665972e395a2b49e949e4d247252d60"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/mixin/features/model/WeightedBakedModelMixin",
+          "method": "getQuads",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/util/RandomSource;Lnet/neoforged/neoforge/client/model/data/ModelData;Lnet/minecraft/client/renderer/RenderType;)Ljava/util/List;",
+          "sha256": "4a744c2b32dcc6b2c39bd145ae214b883b5782047adcc0a7244226e31d8646e4"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/mixin/features/model/WeightedBakedModelMixin",
+          "method": "getRenderTypes",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/util/RandomSource;Lnet/neoforged/neoforge/client/model/data/ModelData;)Lnet/neoforged/neoforge/client/ChunkRenderTypeSet;",
+          "sha256": "75d4f864f7c1679eeb664c263cfd3ae242ef99903fb6989eae3b471e330b3193"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/mixin/features/model/WeightedBakedModelMixin",
+          "method": "getAt",
+          "desc": "(Ljava/util/List;I)Lnet/minecraft/util/random/WeightedEntry;",
+          "sha256": "0e6e37bed3fc82680b3deb82e25e41210e95cec7e5de86c67307422c5500ce93"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/mixin/features/model/WeightedBakedModelMixin",
+          "method": "embeddium$getInnerModel",
+          "desc": "(Lnet/minecraft/util/RandomSource;)Lnet/minecraft/client/resources/model/BakedModel;",
+          "sha256": "abcb9e176c875af26b33a1cade60c239d238397a863049dd271e39fcb9bd0d43"
+        },
+        {
+          "class": "net/minecraft/util/random/WeightedRandom",
+          "method": "getTotalWeight",
+          "desc": "(Ljava/util/List;)I",
+          "sha256": "aacf2fb2dd646af021b0e15886295fbc23d08965c748a0bb7c226d0cbf2197c3"
+        },
+        {
+          "class": "net/minecraft/util/random/WeightedEntry$Wrapper",
+          "method": "getWeight",
+          "desc": "()Lnet/minecraft/util/random/Weight;",
+          "sha256": "beeda686d4eb761b29b2a6a6722f4f26bded71b706ffdff22f14da2a5940584b"
+        },
+        {
+          "class": "net/minecraft/util/random/Weight",
+          "method": "asInt",
+          "desc": "()I",
+          "sha256": "627493388f33f2ba0b772d2369bd75b49ce2859a0c54e838510d5de3f9a9e251"
+        },
+        {
+          "class": "net/minecraft/util/random/Weight",
+          "method": "of",
+          "desc": "(I)Lnet/minecraft/util/random/Weight;",
+          "sha256": "24ae884440e67dea660271e921e45319823c06515de8535abe8414ae1c310e0b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Inject at the end of WeightedBakedModel's constructor; MixinExtras @WrapOperation of Embeddium's merged getAt call in getQuads, getRenderTypes and embeddium$getInnerModel, priority 1100)",
+      "license": "Minecraft (Mojang) target with Embeddium's LGPL-3.0 overwrite: only Embeddium's getAt call is wrapped, none of its code is copied; helper bons.furious.patch.embeddium_meshing.WeightedPickTable"
+    },
+    "embeddium_visible_faces_first": {
+      "mod": "embeddium",
+      "scripts": [],
+      "since": "1.0.26",
+      "mixins": [
+        "bons.furious.mixin.embeddium_meshing.VisibleFacesFirstMixin",
+        "bons.furious.mixin.embeddium_meshing.EntryModelsMixin",
+        "bons.furious.mixin.embeddium_meshing.VariantAllowlistMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/compile/pipeline/BlockRenderer",
+          "method": "renderModel",
+          "desc": "(Lorg/embeddedt/embeddium/api/render/chunk/BlockRenderContext;Lorg/embeddedt/embeddium/impl/render/chunk/compile/ChunkBuildBuffers;)V",
+          "sha256": "e99ce1590f8e8c31526f0cb5720cb5d2ef22fee652b550e4302d6a5e7b3b6158"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/compile/pipeline/BlockRenderer",
+          "method": "getGeometry",
+          "desc": "(Lorg/embeddedt/embeddium/api/render/chunk/BlockRenderContext;Lnet/minecraft/core/Direction;)Ljava/util/List;",
+          "sha256": "33a4fc93f6b4c2c96fdc503937bc0cf845c749ba9ecb6ae36810e8d0e5747b64"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/compile/pipeline/BlockRenderer",
+          "method": "isFaceVisible",
+          "desc": "(Lorg/embeddedt/embeddium/api/render/chunk/BlockRenderContext;Lnet/minecraft/core/Direction;)Z",
+          "sha256": "dc105d355cda9bfa2ae0b8f78db8ac65c1647bde037142e83c81682e16885a07"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/compile/pipeline/BlockOcclusionCache",
+          "method": "shouldDrawSide",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z",
+          "sha256": "82c9100041af063867b93cc1d459d205f02e31d91fed1e509320ad91d85b9dd7"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/mixin/features/model/WeightedBakedModelMixin",
+          "method": "getQuads",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/util/RandomSource;Lnet/neoforged/neoforge/client/model/data/ModelData;Lnet/minecraft/client/renderer/RenderType;)Ljava/util/List;",
+          "sha256": "4a744c2b32dcc6b2c39bd145ae214b883b5782047adcc0a7244226e31d8646e4"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/mixin/features/model/WeightedBakedModelMixin",
+          "method": "getRenderTypes",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/util/RandomSource;Lnet/neoforged/neoforge/client/model/data/ModelData;)Lnet/neoforged/neoforge/client/ChunkRenderTypeSet;",
+          "sha256": "75d4f864f7c1679eeb664c263cfd3ae242ef99903fb6989eae3b471e330b3193"
+        },
+        {
+          "class": "net/minecraft/client/resources/model/SimpleBakedModel",
+          "method": "getQuads",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/util/RandomSource;)Ljava/util/List;",
+          "sha256": "d0cb29735c0d26a7f3442f15f920697f95d072673578e17c3ba2eaa8d1d96031"
+        },
+        {
+          "class": "net/minecraft/client/resources/model/SimpleBakedModel",
+          "method": "getRenderTypes",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/util/RandomSource;Lnet/neoforged/neoforge/client/model/data/ModelData;)Lnet/neoforged/neoforge/client/ChunkRenderTypeSet;",
+          "sha256": "2fdb4f067cf7ea19929b83ce835f2f958472d8e357d8a806c44c89f80893e659"
+        },
+        {
+          "class": "com/supermartijn642/fusion/model/CombinedBakedModel",
+          "method": "getQuads",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/util/RandomSource;Lnet/neoforged/neoforge/client/model/data/ModelData;Lnet/minecraft/client/renderer/RenderType;)Ljava/util/List;",
+          "sha256": "0dc1e7cb9de6cfced4862eca0ebac279f6e65d492dd5ede2ae8fa2f3ff569799"
+        },
+        {
+          "class": "com/supermartijn642/fusion/model/modifiers/block/ModelsByRandomOffset$Entry",
+          "method": "getModels",
+          "desc": "()Ljava/util/List;",
+          "sha256": "900d0586f6b969c796718c06bf1954b1b75503ce4da84f54657c4f0806c011eb"
+        },
+        {
+          "class": "com/supermartijn642/fusion/model/types/base/BaseBakedModel",
+          "method": "getQuads",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/util/RandomSource;Lnet/neoforged/neoforge/client/model/data/ModelData;Lnet/minecraft/client/renderer/RenderType;)Ljava/util/List;",
+          "sha256": "0bbde45a67cc75fef7e94587818c69c7f2bcca67a3e99b16ea3504d848e7c8eb"
+        },
+        {
+          "class": "com/supermartijn642/fusion/model/types/base/BaseBakedModel",
+          "method": "getRenderTypes",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/util/RandomSource;Lnet/neoforged/neoforge/client/model/data/ModelData;)Lnet/neoforged/neoforge/client/ChunkRenderTypeSet;",
+          "sha256": "f1298ab10d211dc4ac6966a7394d9fdeb193601132c446e4d94904a50eca8f56"
+        },
+        {
+          "class": "com/supermartijn642/fusion/model/types/base/BaseBakedModel",
+          "method": "getRenderData",
+          "desc": "(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Lcom/supermartijn642/fusion/model/types/base/BaseBakedModel$RenderData;",
+          "sha256": "f1f5fb6e1373d8f931a3efe803739becb8db4817dfb891b2fb768451348576fd"
+        },
+        {
+          "class": "com/supermartijn642/fusion/model/types/base/BaseBakedModel",
+          "method": "processQuads",
+          "desc": "(Ljava/util/List;Ljava/util/List;Lcom/supermartijn642/fusion/api/util/PropertyStore;Lnet/minecraft/client/renderer/RenderType;)Ljava/util/Map;",
+          "sha256": "03445a81339a2ac12d63542f20c5d2ff78c3584899f2cce88259fb2a5c83e47d"
+        },
+        {
+          "class": "com/supermartijn642/fusion/model/types/base/BaseBakedModel$LazyQuadProcessor",
+          "method": "get",
+          "desc": "(Lnet/minecraft/core/Direction;Lnet/minecraft/client/renderer/RenderType;)Ljava/util/List;",
+          "sha256": "686e1505f8cd7a3b61b7af43b459706d1dd40f5cf683d9270296afac3f13f771"
+        },
+        {
+          "class": "com/supermartijn642/fusion/texture/types/connecting/ConnectingTextureType$1",
+          "method": "processQuad",
+          "desc": "(Lcom/supermartijn642/fusion/api/model/custom/quad/EmittableQuad;Lcom/supermartijn642/fusion/api/texture/custom/SpriteInstance;Lcom/supermartijn642/fusion/api/util/Pair;Lcom/supermartijn642/fusion/api/util/PropertyStore;)V",
+          "sha256": "a7387fc0fd980dd556cf8257804dfdd63b80a3a875afa65f131754021921bdc9"
+        },
+        {
+          "class": "com/supermartijn642/fusion/texture/types/continuous/ContinuousTextureType$1",
+          "method": "processQuad",
+          "desc": "(Lcom/supermartijn642/fusion/api/model/custom/quad/EmittableQuad;Lcom/supermartijn642/fusion/api/texture/custom/SpriteInstance;Lnet/minecraft/core/BlockPos;Lcom/supermartijn642/fusion/api/util/PropertyStore;)V",
+          "sha256": "eb184b54e98a36d0ec3d18845147fb76a72a592edb921aed275e6d6e8acacf3c"
+        },
+        {
+          "class": "com/supermartijn642/fusion/texture/types/random/RandomTextureType$1",
+          "method": "processQuad",
+          "desc": "(Lcom/supermartijn642/fusion/api/model/custom/quad/EmittableQuad;Lcom/supermartijn642/fusion/api/texture/custom/SpriteInstance;Lcom/supermartijn642/fusion/api/util/Pair;Lcom/supermartijn642/fusion/api/util/PropertyStore;)V",
+          "sha256": "e603eb5a048e59386280b2c5b9d46acdcc34b732e72d64703835eb41db33d753"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Redirect of the face loop's getGeometry call (ordinal 0) and of its isFaceVisible call in renderModel; two small mixins add read-only interface methods to Fusion's random-offset entry and to WeightedBakedModel)",
+      "license": "Embeddium LGPL-3.0 target (two calls redirected, none of its code copied); Fusion All Rights Reserved (no-copy): one read-only accessor method; helper bons.furious.patch.embeddium_meshing.VisibleFacesFirst"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "checks": 269,
+  "unresolved": [
+    "bons.furious.mixin.embeddium_meshing.WeightedPickTableMixin injector bons$tablePick missing INVOKE Lnet/minecraft/client/resources/model/WeightedBakedModel;getAt(Ljava/util/List;I)Lnet/minecraft/util/random/WeightedEntry; in getQuads ordinal\u003d-1",
+    "bons.furious.mixin.embeddium_meshing.WeightedPickTableMixin injector bons$tablePick missing INVOKE Lnet/minecraft/client/resources/model/WeightedBakedModel;getAt(Ljava/util/List;I)Lnet/minecraft/util/random/WeightedEntry; in getRenderTypes ordinal\u003d-1",
+    "bons.furious.mixin.embeddium_meshing.WeightedPickTableMixin injector bons$tablePick unresolved method embeddium$getInnerModel (possibly merged by another mod)"
+  ]
+}

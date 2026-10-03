@@ -1,0 +1,45 @@
+{
+  "group": "curios",
+  "keys": {
+    "curios_slot_map_lookup": {
+      "mod": "curios",
+      "scripts": [
+        "furious6-CuriosEntityManager.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.curios.CuriosEntityManagerMixin"
+      ],
+      "guard": [
+        {
+          "class": "top/theillusivec4/curios/common/data/CuriosEntityManager",
+          "method": "getEntitySlots",
+          "desc": "(Lnet/minecraft/world/entity/EntityType;)Ljava/util/Map;",
+          "sha256": "412a049a953011d6e02e81a17095cb78fd882a37bf33f4473d8ed2c6b509a9e7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "curios_lazy_modifier_map": {
+      "mod": "curios",
+      "scripts": [
+        "furious8-curios.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.curios.CurioInventoryWrapperMixin"
+      ],
+      "guard": [
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability",
+          "method": "clearCachedSlotModifiers",
+          "desc": "()V",
+          "sha256": "6e7e3e968cd4df5700479f3f29f08767a0f57d9a2218f6fa50b4396969e80153"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    }
+  }
+}

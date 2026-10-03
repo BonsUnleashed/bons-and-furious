@@ -1,0 +1,49 @@
+{
+  "group": "butterflies",
+  "keys": {
+    "butterflies_landing_rule_lookup": {
+      "mod": "butterflies",
+      "scripts": [
+        "furious13-butterflies.js"
+      ],
+      "mixins": [
+        "bons.furious.mixin.butterflies.LandingRulesMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/bokmcdok/butterflies/butterfly_data/LandingRules",
+          "method": "<init>",
+          "desc": "(Ljava/util/Set;)V",
+          "sha256": "6459feca468d39ce0d864a26e7d1f6ce2a3b012c863702c1887cd2a7460ea3c0"
+        },
+        {
+          "class": "com/bokmcdok/butterflies/butterfly_data/LandingRules",
+          "method": "isValidLandingBlock",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;)Z",
+          "sha256": "239691d2b7f5432625147560f247489d4fd54dc051936d63d316573a21f245bb"
+        },
+        {
+          "class": "com/bokmcdok/butterflies/butterfly_data/LandingRules",
+          "method": "requireResourceLocation",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+          "sha256": "45ffe1bb3d15d9c0ade00cc3936b1e8948dc5e08891694f6c5253159fc0c837d"
+        },
+        {
+          "class": "com/bokmcdok/butterflies/butterfly_data/LandingRules",
+          "method": "requireBlock",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/world/level/block/Block;",
+          "sha256": "157589b13a43f101d569ac92e066326bff88ca0f2069003426ec57bc71c452ff"
+        },
+        {
+          "class": "com/bokmcdok/butterflies/butterfly_data/LandingRules",
+          "method": "requireBlockTag",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/tags/TagKey;",
+          "sha256": "0b3b3329a311004089007206bc6a9effc5d6c386dad33f49e5ded215b6953e64"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "All Rights Reserved: the @Overwrite body is our own 1.0.19 algorithm (set lookup + cached tag array), written from the behaviour; no Butterflies code is carried"
+    }
+  }
+}
