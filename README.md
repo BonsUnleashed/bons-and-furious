@@ -4,13 +4,26 @@
 
 **Your CPU lives its life one tick at a time.**
 
-[**Download 1.0.27**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.27) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
+[**Forge 1.20.1: 1.0.27**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.27) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
 
-Bons and Furious patches 127 specific, measured hot spots in vanilla Minecraft 1.20.1, in Forge itself and in 44 popular Forge mods, from Valkyrien Skies, Distant Horizons and Alex's Caves to Embeddium, Oculus and GeckoLib. Each patch is one switch in one config file. It applies only to the exact mod build it was tested against and leaves anything else untouched, with one line in the log.
+Bons and Furious reduces repeated work in Minecraft and optional mods. Each optimization or fix has its own switch in one config file. Choose the build for your Minecraft version and loader.
 
-**Minecraft 1.20.1 · Forge 47.3.22 or newer · no required dependencies · one JAR for client and server**
+| Minecraft | Loader | Controls | Requirements |
+| --- | --- | ---: | --- |
+| 1.20.1 | Forge | 127 | Forge 47.3.22 or newer |
+| 1.21.1 | NeoForge | 82 | Java 21; NeoForge 21.1.252 or newer |
 
-## Measured on top of an already optimized modpack
+Both builds use one JAR for client and server, with no required target mods.
+
+## New: Minecraft 1.21.1 / NeoForge
+
+The 1.0.27 port brings terrain, rendering, animation and library optimizations to NeoForge. Iris takes over the shader patches from Oculus. Dedicated-server, Iris with shaders and Embeddium checks passed, with matching sampled terrain and animation output when the relevant controls were switched on and off.
+
+[Download the NeoForge build](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.27+mc1.21.1) · [Installation, compatibility and all 82 controls](https://github.com/BonsUnleashed/bons-and-furious/wiki/Minecraft-1.21.1-NeoForge)
+
+Thirteen original controls were retired after upstream changes; 32 depend on mods without a compatible release. The performance figures and detailed mod list below describe **Minecraft 1.20.1 / Forge**. The NeoForge port has no published speed benchmark.
+
+## Minecraft 1.20.1 / Forge: measured on an already optimized modpack
 
 **5.6× faster world generation. 4.8× faster spawn preparation. Previously measured: +10% average FPS with 64 animated mobs and +29% 1% lows in a GPU-bound scene.**
 
@@ -47,7 +60,7 @@ The 1.0.26 saved-world baseline froze its integrated server in all four runs, wh
 
 Every run, the retained earlier results, the baseline mod versions and the method: [Whole-modpack benchmark](https://github.com/BonsUnleashed/bons-and-furious/wiki/Whole-modpack-benchmark).
 
-## What it does
+## What the Forge 1.20.1 build does
 
 - **110 optimizations** reduce repeated work: fewer allocations, no repeated lookups, no state rebuilt only to come out identical. Terrain preparation, ground-height estimates, climate lookups, Distant Horizons' rough-surface generation, chunk render layers, ship chunk bookkeeping, shader graph resets, animation easing and event dispatch are the largest. Eight controls restore or provide compatible versions of performance paths disabled in the tested setup, including Radium, ModernFix, ImmediatelyFast and Distant Horizons integrations. Each checks the relevant mod builds and configuration.
 - **13 fixes** repair reproduced server freezes, worker-thread crashes, generation exceptions and one chunk-tracking gap between Radium and SecurityCraft, mostly where Distant Horizons or C2ME worker threads meet a content mod's world generation.
@@ -55,7 +68,7 @@ Every run, the retained earlier results, the baseline mod versions and the metho
 
 All 127 are listed in `config/bons_and_furious.properties` with their target mod, tested build, side and measurement. Set any key to `false` and restart. Every control is explained in the [wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki).
 
-## Measured results, per patch
+## Forge 1.20.1 results, per patch
 
 | Where | What changed | Measured |
 | --- | --- | --- |
@@ -81,7 +94,7 @@ Smaller allocation and lookup savings in Ars Nouveau, Curios API, Alex's Caves, 
 
 > **How to read the per-patch numbers.** Each figure measures the named method, phase or reproduction in a fixture, on the build it was measured on. The figures are not additive; the whole-modpack comparison above is the aggregate measurement. Method, fixture settings and the result for every control: [Measurements and caveats](https://github.com/BonsUnleashed/bons-and-furious/wiki/Measurements-and-caveats).
 
-## Covered mods (all optional)
+## Forge 1.20.1 covered mods (all optional)
 
 **Rendering, shaders and ambience:** Embeddium, Oculus, ImmediatelyFast, Entity Texture Features, Entity Model Features, EntityCulling, Fusion, Colorwheel, Ryoamic Lights, Presence Footsteps, AmbientSounds.
 
@@ -93,7 +106,11 @@ Smaller allocation and lookup savings in Ars Nouveau, Curios API, Alex's Caves, 
 
 Coverage means the tested build and the specific code paths of each mod, not every feature. Tested builds per mod: [Compatibility and target versions](https://github.com/BonsUnleashed/bons-and-furious/wiki/Compatibility-and-target-versions).
 
-## Install
+## Install the matching build
+
+For Minecraft 1.21.1, use `bons_and_furious-neoforge-1.0.27+mc1.21.1.jar`, Java 21 and NeoForge 21.1.252 or newer. MixinSquared is bundled; NeoForge supplies MixinExtras. [NeoForge setup and compatibility](https://github.com/BonsUnleashed/bons-and-furious/wiki/Minecraft-1.21.1-NeoForge).
+
+For Minecraft 1.20.1 / Forge:
 
 1. Download `bons_and_furious-1.0.27.jar` from the [1.0.27 release](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.27) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load. The two small mixin libraries it uses, MixinExtras and MixinSquared, are bundled inside it.
 2. Start once. The mod writes its config file with every switch on and logs how many controls are enabled.
