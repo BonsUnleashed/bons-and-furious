@@ -19,7 +19,7 @@ Both builds use one JAR for client and server, with no required target mods.
 
 The 1.0.27 port brings terrain, rendering, animation and library optimizations to NeoForge. Iris takes over the shader patches from Oculus. Dedicated-server, Iris with shaders and Embeddium checks passed, with matching sampled terrain and animation output when the relevant controls were switched on and off.
 
-[Download the NeoForge build](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.27+mc1.21.1) · [Installation, compatibility and all 82 controls](https://github.com/BonsUnleashed/bons-and-furious/wiki/Minecraft-1.21.1-NeoForge)
+[Download the NeoForge build](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.27%2Bmc1.21.1) · [Installation, compatibility and all 82 controls](https://github.com/BonsUnleashed/bons-and-furious/wiki/Minecraft-1.21.1-NeoForge)
 
 Thirteen original controls were retired after upstream changes; 32 depend on mods without a compatible release. The performance figures and detailed mod list below describe **Minecraft 1.20.1 / Forge**. The NeoForge port has no published speed benchmark.
 
@@ -156,7 +156,7 @@ The 1.0.26 release JAR is the qualified, benchmarked artifact. It was tested in 
 
 ### Upstream pull requests
 
-Pull requests sent to the projects this mod patches: 5 merged, 32 open, 3 closed without merge (status checked 2 October 2026).
+Pull requests sent to the projects this mod patches: 5 merged, 32 open, 3 closed without merge (status checked 3 October 2026).
 
 | Project | Pull requests | Status |
 | --- | --- | --- |
