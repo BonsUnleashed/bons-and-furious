@@ -1,0 +1,92 @@
+{
+  "group": "vanilla_long_jump",
+  "keys": {
+    "vanilla_long_jump_weighted_pick": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.vanilla_long_jump.LongJumpToRandomPosMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/ai/behavior/LongJumpToRandomPos",
+          "method": "getJumpCandidate",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;)Ljava/util/Optional;",
+          "sha256": "2ba306eb8ab94c57bf5998c69a86729088379ab0a506a65ecaac1fe3093e0292"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/behavior/LongJumpToRandomPos",
+          "method": "start",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Mob;J)V",
+          "sha256": "698a12fa9a254ff8a6d07442cd4d75fe5e8ba788feeab62eb6386982b20836d4"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/behavior/LongJumpToRandomPos",
+          "method": "pickCandidate",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Mob;J)V",
+          "sha256": "b578b1960c79eb14ef80a0f4ef0598a2c35e9f1020296c9f3b7594a7a300e31f",
+          "sha256_variants": [
+            "7a95605d42466e1bd9e411e55eacacd2afa0ab8399021d31a55304de2873953f"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): null test inverted with block reorder (ifnull/ifnonnull + goto); same calls. See evidence/variant-review/net.minecraft.world.entity.ai.behavior.LongJumpToRandomPos.pickCandidate.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/behavior/LongJumpToPreferredBlock",
+          "method": "getJumpCandidate",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;)Ljava/util/Optional;",
+          "sha256": "b97fd919a47f7a01bf49163f0d509e8ec2fb23451bf3818c37a47a4ad7016294",
+          "sha256_variants": [
+            "6fc909091a72a336a1a8ccb69a63def70a6f184310525e494e0c69f083edb240"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): return layout only; same calls. See evidence/variant-review/net.minecraft.world.entity.ai.behavior.LongJumpToPreferredBlock.getJumpCandidate.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/behavior/LongJumpToPreferredBlock",
+          "method": "start",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Mob;J)V",
+          "sha256": "b2f624188821845d15d3a81208add23a9080d45e603b12e48c8385ee542917e1"
+        },
+        {
+          "class": "net/minecraft/util/random/WeightedRandom",
+          "method": "getRandomItem",
+          "desc": "(Lnet/minecraft/util/RandomSource;Ljava/util/List;)Ljava/util/Optional;",
+          "sha256": "3f218102a90acc62f2e2077f00327f9d23b27283911f3e5075971e7d857d4bee"
+        },
+        {
+          "class": "net/minecraft/util/random/WeightedRandom",
+          "method": "getRandomItem",
+          "desc": "(Lnet/minecraft/util/RandomSource;Ljava/util/List;I)Ljava/util/Optional;",
+          "sha256": "607442d6bd62d02cb04742105187fa8b2ff34332dc31dbc635d21d7460682169"
+        },
+        {
+          "class": "net/minecraft/util/random/WeightedRandom",
+          "method": "getTotalWeight",
+          "desc": "(Ljava/util/List;)I",
+          "sha256": "aacf2fb2dd646af021b0e15886295fbc23d08965c748a0bb7c226d0cbf2197c3"
+        },
+        {
+          "class": "net/minecraft/util/random/WeightedRandom",
+          "method": "getWeightedItem",
+          "desc": "(Ljava/util/List;I)Ljava/util/Optional;",
+          "sha256": "a51d1a1324a97db3b7b8c4e3139f8098ca77e4babccfd9b3e66a3683f368ce0d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on LongJumpToRandomPos.getJumpCandidate (getJumpCandidate): for the exact classes LongJumpToRandomPos and LongJumpToPreferredBlock the same draw is made from the same random source and the same candidate is found and removed through Fenwick trees kept beside the candidate list (rebuilt when the list is replaced; a list that does not match the trees falls back to WeightedRandom.getWeightedItem with the draw already made); other classes and the switch off call the original",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_long_jump.LongJumpPicks)"
+    }
+  },
+  "yields": [
+    {
+      "key": "vanilla_long_jump_weighted_pick",
+      "mod": "radium",
+      "name": "Radium",
+      "mixin": "me.jellysquid.mods.lithium.mixin.ai.task.run.long_jump_weighted_choice.LongJumpTaskMixin",
+      "config": "lithium.properties",
+      "option": "mixin.ai.task.run.long_jump_weighted_choice",
+      "default": true,
+      "why": "Radium 0.13.1's ai.task.run.long_jump_weighted_choice (on by default; Radium reads config/lithium.properties) makes the same change: it cancels LongJumpToRandomPos.start at the candidate stream to build its own weighted structure and @Redirects WeightedRandom.getRandomItem and Optional.ifPresent inside getJumpCandidate. Our @WrapMethod on getJumpCandidate would bypass its redirects and keep a second index of a list it replaced. Exactly one copy may run: while that option is on our switch steps aside."
+    }
+  ]
+}

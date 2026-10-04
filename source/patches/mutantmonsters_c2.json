@@ -1,0 +1,63 @@
+{
+  "group": "mutantmonsters_c2",
+  "keys": {
+    "mutantmonsters_empty_shoulder_skip": {
+      "mod": "mutantmonsters",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.mutantmonsters_c2.PlayerEventsHandlerShoulderMixin"
+      ],
+      "guard": [
+        {
+          "class": "fuzs/mutantmonsters/handler/PlayerEventsHandler",
+          "method": "onEndPlayerTick",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "note": "1.21.1 name of 1.20.1's onPlayerTick$End",
+          "sha256": "e8c002a6372e8651cc927f82f70bd645685576722dcb0c393dcf313a5dba2e86"
+        },
+        {
+          "class": "fuzs/mutantmonsters/handler/PlayerEventsHandler",
+          "method": "playShoulderEntitySound",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/nbt/CompoundTag;)V",
+          "sha256": "2ffd1009c1ccc3e13ee595c3c7c80ad35976c6e41feca1a296e8dcabb07eca10"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "getString",
+          "desc": "(Ljava/lang/String;)Ljava/lang/String;",
+          "sha256": "02d9e8aa52ad73b87b5262859163b2b3a7582897e91a618e65e39276605aec94"
+        },
+        {
+          "class": "net/minecraft/world/entity/EntityType",
+          "method": "byString",
+          "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+          "sha256": "4f32dc8c307bcbd656bd88fb3c21095e4d22a13b24c9099523b1c365053bf815"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "tryParse",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+          "sha256": "85cc49e601e026f54aeb7a3986b7e4f2e38fb0fdf851dfd49965838e91330952"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "tryBySeparator",
+          "desc": "(Ljava/lang/String;C)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "1.21.1 guard added: tryParse(\"\") -> minecraft: with an empty path",
+          "sha256": "120fd184257c90280b45157d179084d3353a42b5b7c5653222956ca1843e40fd"
+        },
+        {
+          "class": "net/minecraft/core/DefaultedMappedRegistry",
+          "method": "getOptional",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Ljava/util/Optional;",
+          "note": "1.21.1 guard added: byString's registry answer (no default value)",
+          "sha256": "9a89c13318add071d48aecd79bb7d14d0be40bf216864a6d46f443b586ba7b14"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injector (MixinExtras @WrapWithCondition on the two playShoulderEntitySound calls in PlayerEventsHandler.onEndPlayerTick)",
+      "license": "AGPL-3.0 (Mutant Monsters): no Mutant Monsters code is carried; the condition (bons.furious.patch.mutantmonsters_c2.EmptyShoulderSkip) is ours and Mutant Monsters' methods are unchanged"
+    }
+  }
+}

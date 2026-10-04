@@ -1,0 +1,103 @@
+{
+  "group": "artifacts",
+  "keys": {
+    "artifacts_living_tick_order": {
+      "mod": "artifacts",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.artifacts.ArtifactHooksNeoForgeTickOrderMixin",
+        "bons.furious.mixin.artifacts.UmbrellaItemGlideOrderMixin"
+      ],
+      "guard": [
+        {
+          "class": "artifacts/neoforge/event/ArtifactHooksNeoForge",
+          "method": "onKittySlippersLivingUpdate",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "sha256": "79b29f2814d63f7d3fe0d854ba266f2bb521a1cb1c6b71713ef77652ca4f2a8a"
+        },
+        {
+          "class": "artifacts/item/UmbrellaItem",
+          "method": "shouldGlide",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "sha256": "638fa903985377559e178c28f1a95f5b9264bebc6b4af7c99fbaef56b8c2d9cb"
+        },
+        {
+          "class": "artifacts/item/UmbrellaItem",
+          "method": "isHoldingUmbrellaUpright",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "sha256": "71f4dc6912e73687fadf8fc4d96fe97fce6fa89a9003a2525ba79a151b6974b6"
+        },
+        {
+          "class": "artifacts/item/UmbrellaItem",
+          "method": "isHoldingUmbrellaUpright",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/InteractionHand;)Z",
+          "sha256": "b11242b5366192efb87fccb21975af96d278bbfc1aa6183135b8327c01a1fee9"
+        },
+        {
+          "class": "artifacts/equipment/EquipmentHelper",
+          "method": "hasAbilityActive",
+          "desc": "(Lnet/minecraft/core/component/DataComponentType;Lnet/minecraft/world/entity/LivingEntity;Z)Z",
+          "sha256": "858c745c8e28c12bc34cb59d8e0f4021074cc34dd6be08bd297c5a47ff92dabb"
+        },
+        {
+          "class": "artifacts/equipment/EquipmentHelper",
+          "method": "hasAbilityActive",
+          "desc": "(Lnet/minecraft/core/component/DataComponentType;Lnet/minecraft/world/entity/LivingEntity;ZLjava/util/function/Predicate;)Z",
+          "sha256": "578a13c317453cef9ab6b8962ccb6402557e517e763f5b66d660765ff9edb485"
+        },
+        {
+          "class": "artifacts/equipment/EquipmentHelper",
+          "method": "lambda$hasAbilityActive$2",
+          "desc": "(Ljava/util/function/Predicate;Lartifacts/component/ability/EquipmentAbility;Lnet/minecraft/world/item/ItemStack;Ljava/lang/Boolean;)Ljava/lang/Boolean;",
+          "sha256": "0fa97957d1069d910087d24bbe7d559ad2ac8700644625f82879b75486bd50e0"
+        },
+        {
+          "class": "artifacts/equipment/EquipmentHelper",
+          "method": "reduceAbilities",
+          "desc": "(Lnet/minecraft/core/component/DataComponentType;Lnet/minecraft/world/entity/LivingEntity;ZZLjava/lang/Object;Lorg/apache/commons/lang3/function/TriFunction;)Ljava/lang/Object;",
+          "sha256": "28e35bc19a40a4635012e8516cf50a81c9f27c39d660503dd1b3698f537019de"
+        },
+        {
+          "class": "artifacts/equipment/EquipmentHelper",
+          "method": "lambda$reduceAbilities$10",
+          "desc": "(Lnet/minecraft/core/component/DataComponentType;ZLnet/minecraft/world/entity/LivingEntity;ZLorg/apache/commons/lang3/function/TriFunction;Lnet/minecraft/world/item/ItemStack;Ljava/lang/Object;)Ljava/lang/Object;",
+          "sha256": "0ac672022003541fe2dccf35890afa5851d75d88d16893148de52392962d3d95"
+        },
+        {
+          "class": "artifacts/equipment/EquipmentHelper",
+          "method": "reduceEquipment",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;",
+          "sha256": "15766bb6149a212d6291055aed99f5fc16f4e8202686f94da5685d2635a00e87"
+        },
+        {
+          "class": "artifacts/equipment/EquipmentSlotManager",
+          "method": "reduceEquipment",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;",
+          "sha256": "0d42fa48763ff84adc37cd21958f77aac9e3a5e6f1d94eced611498fb1d6ba66"
+        },
+        {
+          "class": "artifacts/integration/minecraft/ArmorSlotProvider",
+          "method": "reduceEquipment",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;",
+          "sha256": "d2812e20ced2bff1ea70b00fbfce69960dd2b4e484b833d83c30b9241ce8b21d"
+        },
+        {
+          "class": "artifacts/neoforge/integration/curios/CuriosSlotProvider",
+          "method": "reduceEquipment",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;",
+          "sha256": "d43c6109041533c773de30ba154b95a2fa018eb52a7efeb9a0c47797774ebd36"
+        },
+        {
+          "class": "artifacts/config/value/ConfigValue",
+          "method": "get",
+          "desc": "()Ljava/lang/Object;",
+          "sha256": "3dac2afd6f30745ee4499310e981734af13abaea8bb7dd2a0f91d27f48f79c46"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite (ArtifactHooksNeoForge.onKittySlippersLivingUpdate and UmbrellaItem.shouldGlide: Artifacts' bodies with the operands of each condition reordered, the creeper test before the attacker's equipment scan and the water / sinking test after the umbrella-held test)",
+      "license": "MIT (Artifacts): the method bodies may be carried in our GPL-3.0 source; helper bons.furious.patch.artifacts.ArtifactsTickOrder"
+    }
+  }
+}

@@ -220,6 +220,68 @@
       "cancel": [],
       "conversion": "@Overwrite of runQueueingLoop (DH's loop plus the idle park) and two MixinExtras @WrapOperation progress hooks",
       "license": "LGPL-3.0: the mixin carries a modified copy of ChunkUpdateQueueManager.runQueueingLoop (helper bons.furious.patch.distanthorizons.UpdateQueueWait)"
+    },
+    "distanthorizons_lod_biome_memo": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.distanthorizons.LodBiomeMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/core/dataObjects/transformers/LodDataBuilder",
+          "method": "createFromChunk",
+          "desc": "(Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/ILevelWrapper;Lcom/seibel/distanthorizons/core/wrapperInterfaces/chunk/IChunkWrapper;)Lcom/seibel/distanthorizons/core/dataObjects/fullData/sources/FullDataSourceV2;",
+          "sha256": "c05d24a43b58b54316e79b8a7acd52db18dbdc9dfd790b86c34215d241592eb8"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/chunk/ChunkWrapper_neoforge",
+          "method": "getBiome",
+          "desc": "(III)Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/IBiomeWrapper;",
+          "sha256": "0d9fc0dbd3f9d33c8aa1d8c1d0aa11f408540a7309592236e9e8294da9e662e4"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/block/BiomeWrapper_neoforge",
+          "method": "getBiomeWrapper",
+          "desc": "(Lnet/minecraft/core/Holder;Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/ILevelWrapper;)Lcom/seibel/distanthorizons/common/wrappers/block/BiomeWrapper_neoforge;",
+          "sha256": "b98658da7890af96b92c08df8ba24c07d0933c77834ad71d19eb1b48113eb44c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of both IChunkWrapper.getBiome calls in LodDataBuilder.createFromChunk with a MixinExtras @Share local (one memo per call; a redirect so the miss path does not box the three ints)",
+      "license": "LGPL-3.0 (Distant Horizons): no DH code is carried; the wrap only reuses the previous answer (helper bons.furious.patch.distanthorizons.LodBiomeMemo)"
+    },
+    "distanthorizons_biome_blend_memo": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.distanthorizons.BiomeBlendMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/block/AbstractDhTintGetter_neoforge",
+          "method": "tryGetBlockTint",
+          "desc": "(Lcom/seibel/distanthorizons/core/pos/blockPos/DhBlockPosMutable;Lnet/minecraft/world/level/ColorResolver;)I",
+          "sha256": "13b8b3ce80d3372df5bb04c7d6a068b8cbf56d9e9145a62ba6c208eec88deae2"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/block/AbstractDhTintGetter_neoforge",
+          "method": "tryGetClientBiomeColor",
+          "desc": "(Lnet/minecraft/world/level/ColorResolver;Lcom/seibel/distanthorizons/common/wrappers/block/BiomeWrapper_neoforge;)I",
+          "sha256": "a12ad3d20a18f4e570e3b2308c932dc66c3756344c0adb191d435babd4949311"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/dataObjects/BlockBiomeWrapperPair",
+          "method": "get",
+          "desc": "(Lcom/seibel/distanthorizons/core/wrapperInterfaces/block/IBlockStateWrapper;Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/IBiomeWrapper;)Lcom/seibel/distanthorizons/core/dataObjects/BlockBiomeWrapperPair;",
+          "sha256": "775b286ff97fbc4ba006468f612953ad80fa17eb6bf74ab79e81245bc62d96aa"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the loop's tryGetClientBiomeColor call in AbstractDhTintGetter_neoforge.tryGetBlockTint with two MixinExtras @Share locals",
+      "license": "LGPL-3.0 (Distant Horizons): no DH code is carried (helper bons.furious.patch.distanthorizons.BiomeBlendMemo)"
     }
   }
 }

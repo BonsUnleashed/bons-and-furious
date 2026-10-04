@@ -1,0 +1,194 @@
+vanilla_framed_map_holder_scan
+net/minecraft/world/level/saveddata/maps/MapItemSavedData.tickCarriedBy(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)V
+
+--- dev neoforge-21.1.252.jar
++++ prod client-1.21.1-20240808.144430-srg.jar
+@@ -3,9 +3,9 @@
+     Code:
+        0: aload_0
+-       1: getfield      #                 // Field carriedByPlayers:Ljava/util/Map;
++       1: getfield      #                // Field carriedByPlayers:Ljava/util/Map;
+        4: aload_1
+        5: invokeinterface #,  2          // InterfaceMethod java/util/Map.containsKey:(Ljava/lang/Object;)Z
+       10: ifne          46
+-      13: new           #                // class net/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer
++      13: new           #                  // class net/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer
+       16: dup
+       17: aload_0
+@@ -14,5 +14,5 @@
+       22: astore_3
+       23: aload_0
+-      24: getfield      #                 // Field carriedByPlayers:Ljava/util/Map;
++      24: getfield      #                // Field carriedByPlayers:Ljava/util/Map;
+       27: aload_1
+       28: aload_3
+@@ -20,5 +20,5 @@
+       34: pop
+       35: aload_0
+-      36: getfield      #                 // Field carriedBy:Ljava/util/List;
++      36: getfield      #                // Field carriedBy:Ljava/util/List;
+       39: aload_3
+       40: invokeinterface #,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+@@ -41,12 +41,12 @@
+       78: iload         4
+       80: aload_0
+-      81: getfield      #                 // Field carriedBy:Ljava/util/List;
++      81: getfield      #                // Field carriedBy:Ljava/util/List;
+       84: invokeinterface #,  1          // InterfaceMethod java/util/List.size:()I
+       89: if_icmpge     273
+       92: aload_0
+-      93: getfield      #                 // Field carriedBy:Ljava/util/List;
++      93: getfield      #                // Field carriedBy:Ljava/util/List;
+       96: iload         4
+       98: invokeinterface #,  2          // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
+-     103: checkcast     #                // class net/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer
++     103: checkcast     #                  // class net/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer
+      106: astore        5
+      108: aload         5
+@@ -58,5 +58,5 @@
+      125: getfield      #                // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer.player:Lnet/minecraft/world/entity/player/Player;
+      128: invokevirtual #                // Method net/minecraft/world/entity/player/Player.isRemoved:()Z
+-     131: ifne          234
++     131: ifne          156
+      134: aload         5
+      136: getfield      #                // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer.player:Lnet/minecraft/world/entity/player/Player;
+@@ -64,54 +64,54 @@
+      142: aload_3
+      143: invokevirtual #                // Method net/minecraft/world/entity/player/Inventory.contains:(Ljava/util/function/Predicate;)Z
+-     146: ifne          156
++     146: ifne          192
+      149: aload_2
+      150: invokevirtual #                // Method net/minecraft/world/item/ItemStack.isFramed:()Z
+-     153: ifeq          234
+-     156: aload_2
+-     157: invokevirtual #                // Method net/minecraft/world/item/ItemStack.isFramed:()Z
+-     160: ifne          267
+-     163: aload         5
+-     165: getfield      #                // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer.player:Lnet/minecraft/world/entity/player/Player;
+-     168: invokevirtual #                // Method net/minecraft/world/entity/player/Player.level:()Lnet/minecraft/world/level/Level;
+-     171: invokevirtual #                // Method net/minecraft/world/level/Level.dimension:()Lnet/minecraft/resources/ResourceKey;
+-     174: aload_0
+-     175: getfield      #                 // Field dimension:Lnet/minecraft/resources/ResourceKey;
+-     178: if_acmpne     267
+-     181: aload_0
+-     182: getfield      #                 // Field trackingPosition:Z
+-     185: ifeq          267
+-     188: aload_0
+-     189: getstatic     #                // Field net/minecraft/world/level/saveddata/maps/MapDecorationTypes.PLAYER:Lnet/minecraft/core/Holder;
+-     192: aload         5
+-     194: getfield      #                // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer.player:Lnet/minecraft/world/entity/player/Player;
+-     197: invokevirtual #                // Method net/minecraft/world/entity/player/Player.level:()Lnet/minecraft/world/level/Level;
+-     200: aload         6
+-     202: aload         5
+-     204: getfield      #                // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer.player:Lnet/minecraft/world/entity/player/Player;
+-     207: invokevirtual #                // Method net/minecraft/world/entity/player/Player.getX:()D
+-     210: aload         5
+-     212: getfield      #                // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer.player:Lnet/minecraft/world/entity/player/Player;
+-     215: invokevirtual #                // Method net/minecraft/world/entity/player/Player.getZ:()D
+-     218: aload         5
+-     220: getfield      #                // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer.player:Lnet/minecraft/world/entity/player/Player;
+-     223: invokevirtual #                // Method net/minecraft/world/entity/player/Player.getYRot:()F
+-     226: f2d
+-     227: aconst_null
+-     228: invokevirtual #                // Method addDecoration:(Lnet/minecraft/core/Holder;Lnet/minecraft/world/level/LevelAccessor;Ljava/lang/String;DDDLnet/minecraft/network/chat/Component;)V
+-     231: goto          267
+-     234: aload_0
+-     235: getfield      #                 // Field carriedByPlayers:Ljava/util/Map;
++     153: ifne          192
++     156: aload_0
++     157: getfield      #                // Field carriedByPlayers:Ljava/util/Map;
++     160: aload         5
++     162: getfield      #                // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer.player:Lnet/minecraft/world/entity/player/Player;
++     165: invokeinterface #,  2          // InterfaceMethod java/util/Map.remove:(Ljava/lang/Object;)Ljava/lang/Object;
++     170: pop
++     171: aload_0
++     172: getfield      #                // Field carriedBy:Ljava/util/List;
++     175: aload         5
++     177: invokeinterface #,  2          // InterfaceMethod java/util/List.remove:(Ljava/lang/Object;)Z
++     182: pop
++     183: aload_0
++     184: aload         6
++     186: invokevirtual #                // Method removeDecoration:(Ljava/lang/String;)V
++     189: goto          267
++     192: aload_2
++     193: invokevirtual #                // Method net/minecraft/world/item/ItemStack.isFramed:()Z
++     196: ifne          267
++     199: aload         5
++     201: getfield      #                // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer.player:Lnet/minecraft/world/entity/player/Player;
++     204: invokevirtual #                // Method net/minecraft/world/entity/player/Player.level:()Lnet/minecraft/world/level/Level;
++     207: invokevirtual #                // Method net/minecraft/world/level/Level.dimension:()Lnet/minecraft/resources/ResourceKey;
++     210: aload_0
++     211: getfield      #                // Field dimension:Lnet/minecraft/resources/ResourceKey;
++     214: if_acmpne     267
++     217: aload_0
++     218: getfield      #                // Field trackingPosition:Z
++     221: ifeq          267
++     224: aload_0
++     225: getstatic     #                // Field net/minecraft/world/level/saveddata/maps/MapDecorationTypes.PLAYER:Lnet/minecraft/core/Holder;
++     228: aload         5
++     230: getfield      #                // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer.player:Lnet/minecraft/world/entity/player/Player;
++     233: invokevirtual #                // Method net/minecraft/world/entity/player/Player.level:()Lnet/minecraft/world/level/Level;
++     236: aload         6
+      238: aload         5
+      240: getfield      #                // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer.player:Lnet/minecraft/world/entity/player/Player;
+-     243: invokeinterface #,  2          // InterfaceMethod java/util/Map.remove:(Ljava/lang/Object;)Ljava/lang/Object;
+-     248: pop
+-     249: aload_0
+-     250: getfield      #                 // Field carriedBy:Ljava/util/List;
+-     253: aload         5
+-     255: invokeinterface #,  2          // InterfaceMethod java/util/List.remove:(Ljava/lang/Object;)Z
+-     260: pop
+-     261: aload_0
+-     262: aload         6
+-     264: invokevirtual #                // Method removeDecoration:(Ljava/lang/String;)V
++     243: invokevirtual #                // Method net/minecraft/world/entity/player/Player.getX:()D
++     246: aload         5
++     248: getfield      #                // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer.player:Lnet/minecraft/world/entity/player/Player;
++     251: invokevirtual #                // Method net/minecraft/world/entity/player/Player.getZ:()D
++     254: aload         5
++     256: getfield      #                // Field net/minecraft/world/level/saveddata/maps/MapItemSavedData$HoldingPlayer.player:Lnet/minecraft/world/entity/player/Player;
++     259: invokevirtual #                // Method net/minecraft/world/entity/player/Player.getYRot:()F
++     262: f2d
++     263: aconst_null
++     264: invokevirtual #                // Method addDecoration:(Lnet/minecraft/core/Holder;Lnet/minecraft/world/level/LevelAccessor;Ljava/lang/String;DDDLnet/minecraft/network/chat/Component;)V
+      267: iinc          4, 1
+      270: goto          78
+@@ -120,5 +120,5 @@
+      277: ifeq          454
+      280: aload_0
+-     281: getfield      #                 // Field trackingPosition:Z
++     281: getfield      #                // Field trackingPosition:Z
+      284: ifeq          454
+      287: aload_2
+@@ -129,5 +129,5 @@
+      298: astore        5
+      300: aload_0
+-     301: getfield      #                 // Field frameMarkers:Ljava/util/Map;
++     301: getfield      #                // Field frameMarkers:Ljava/util/Map;
+      304: aload         5
+      306: invokestatic  #                // Method net/minecraft/world/level/saveddata/maps/MapFrame.frameId:(Lnet/minecraft/core/BlockPos;)Ljava/lang/String;
+@@ -143,5 +143,5 @@
+      334: if_icmpeq     366
+      337: aload_0
+-     338: getfield      #                 // Field frameMarkers:Ljava/util/Map;
++     338: getfield      #                // Field frameMarkers:Ljava/util/Map;
+      341: aload         6
+      343: invokevirtual #                // Method net/minecraft/world/level/saveddata/maps/MapFrame.getId:()Ljava/lang/String;
+@@ -187,5 +187,5 @@
+      434: invokevirtual #                // Method addDecoration:(Lnet/minecraft/core/Holder;Lnet/minecraft/world/level/LevelAccessor;Ljava/lang/String;DDDLnet/minecraft/network/chat/Component;)V
+      437: aload_0
+-     438: getfield      #                 // Field frameMarkers:Ljava/util/Map;
++     438: getfield      #                // Field frameMarkers:Ljava/util/Map;
+      441: aload         7
+      443: invokevirtual #                // Method net/minecraft/world/level/saveddata/maps/MapFrame.getId:()Ljava/lang/String;
+@@ -197,8 +197,8 @@
+      458: getstatic     #                // Field net/minecraft/world/item/component/MapDecorations.EMPTY:Lnet/minecraft/world/item/component/MapDecorations;
+      461: invokevirtual #                // Method net/minecraft/world/item/ItemStack.getOrDefault:(Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)Ljava/lang/Object;
+-     464: checkcast     #                // class net/minecraft/world/item/component/MapDecorations
++     464: checkcast     #                 // class net/minecraft/world/item/component/MapDecorations
+      467: astore        4
+      469: aload_0
+-     470: getfield      #                 // Field decorations:Ljava/util/Map;
++     470: getfield      #                // Field decorations:Ljava/util/Map;
+      473: invokeinterface #,  1          // InterfaceMethod java/util/Map.keySet:()Ljava/util/Set;
+      478: aload         4

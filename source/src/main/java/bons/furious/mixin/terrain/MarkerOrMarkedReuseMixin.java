@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.Overwrite;
  * replaced; past the check it does what vanilla does: wrap the mapped input in a marker of the same type and hand that
  * to the visitor.
  */
-@Mixin(value = DensityFunctions.MarkerOrMarked.class, remap = false)
+@Mixin(value = DensityFunctions.MarkerOrMarked.class, remap = false, priority = 499)
 public interface MarkerOrMarkedReuseMixin extends DensityFunctions.MarkerOrMarked {
     /**
      * @author BonsUnleashed

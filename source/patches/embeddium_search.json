@@ -1,0 +1,446 @@
+{
+  "group": "embeddium_search",
+  "keys": {
+    "embeddium_search_replay": {
+      "mod": "embeddium",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.embeddium_search.OcclusionCullerReplayMixin",
+        "bons.furious.mixin.embeddium_search.RenderSectionManagerEpochMixin",
+        "bons.furious.mixin.embeddium_search.ViewportAccessMixin",
+        "bons.furious.mixin.embeddium_search.RenderSectionInfoEpochMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/occlusion/OcclusionCuller",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "557dcd02952f2ea1bf5f96d437ff92f5128eb6b5be5e786a8ff8d93244f707e9"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/occlusion/OcclusionCuller",
+          "method": "<init>",
+          "desc": "(Lit/unimi/dsi/fastutil/longs/Long2ReferenceMap;Lnet/minecraft/world/level/Level;)V",
+          "sha256": "79b52a502b02afc3e78c41b646e108580ba2a2c10cf8f0b26e538bcfc05aa032"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/occlusion/OcclusionCuller",
+          "method": "findVisible",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/occlusion/OcclusionCuller$Visitor;Lorg/embeddedt/embeddium/impl/render/viewport/Viewport;FZI)V",
+          "sha256": "3d5a8ac642646928401bd074ff3d030c430b7e46df0e4a893949e0f12ac71236"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/occlusion/OcclusionCuller",
+          "method": "processQueue",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/occlusion/OcclusionCuller$Visitor;Lorg/embeddedt/embeddium/impl/render/viewport/Viewport;FZILorg/embeddedt/embeddium/impl/util/collections/ReadQueue;Lorg/embeddedt/embeddium/impl/util/collections/WriteQueue;)V",
+          "sha256": "e790bc29b3831796d3bbf406694a5385da3ef837b439ce260e5490884697ea44"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/occlusion/OcclusionCuller",
+          "method": "isSectionVisible",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/RenderSection;Lorg/embeddedt/embeddium/impl/render/viewport/Viewport;F)Z",
+          "sha256": "b5ef338f6ed33cf597b67a9f0d1ca4c5623e11e63e6bea5722fd11035c712c7e"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/occlusion/OcclusionCuller",
+          "method": "visitNeighbors",
+          "desc": "(Lorg/embeddedt/embeddium/impl/util/collections/WriteQueue;Lorg/embeddedt/embeddium/impl/render/chunk/RenderSection;II)V",
+          "sha256": "e1a909e5a8770ba33f30f9b21f3b7cf283e921f54635cfbc5bb9b9c4b25860ba"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/occlusion/OcclusionCuller",
+          "method": "visitNode",
+          "desc": "(Lorg/embeddedt/embeddium/impl/util/collections/WriteQueue;Lorg/embeddedt/embeddium/impl/render/chunk/RenderSection;II)V",
+          "sha256": "4f2a0b97d281e05fee1f9302bf53f7a52880cac284e6d220863d3798ee3396c2"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/occlusion/OcclusionCuller",
+          "method": "getOutwardDirections",
+          "desc": "(Lnet/minecraft/core/SectionPos;Lorg/embeddedt/embeddium/impl/render/chunk/RenderSection;)I",
+          "sha256": "e845b13511b3a64223a2ab2c409b546bf3561725dd13b6bd49c0e2a28daad6e8"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/occlusion/OcclusionCuller",
+          "method": "isWithinRenderDistance",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/viewport/CameraTransform;Lorg/embeddedt/embeddium/impl/render/chunk/RenderSection;F)Z",
+          "sha256": "a03020914af762d91a4947d8f556774d3095436e399d8ba4c18bca7fa0374251"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/occlusion/OcclusionCuller",
+          "method": "nearestToZero",
+          "desc": "(II)I",
+          "sha256": "bc4d03714c55dc775df0f9b3746a5fe1eaeafddf9b4d12b9fa7f2f2a566c7a0b"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/occlusion/OcclusionCuller",
+          "method": "isWithinFrustum",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/viewport/Viewport;Lorg/embeddedt/embeddium/impl/render/chunk/RenderSection;)Z",
+          "sha256": "410288ddcbc391781b9904fff72ee702d751150ea14b9233fd2cfc0a16575624"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/occlusion/OcclusionCuller",
+          "method": "init",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/occlusion/OcclusionCuller$Visitor;Lorg/embeddedt/embeddium/impl/util/collections/WriteQueue;Lorg/embeddedt/embeddium/impl/render/viewport/Viewport;FZI)V",
+          "sha256": "f7b7debac672cbca9346f803a0322b8fa13d958f20202fa3c21d2f8b6713e332"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/occlusion/OcclusionCuller",
+          "method": "initWithinWorld",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/occlusion/OcclusionCuller$Visitor;Lorg/embeddedt/embeddium/impl/util/collections/WriteQueue;Lorg/embeddedt/embeddium/impl/render/viewport/Viewport;ZI)V",
+          "sha256": "fe04166bc054840a626757673c3531ed26d316a42c81300d94de43fd18619bf1"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/occlusion/OcclusionCuller",
+          "method": "initOutsideWorldHeight",
+          "desc": "(Lorg/embeddedt/embeddium/impl/util/collections/WriteQueue;Lorg/embeddedt/embeddium/impl/render/viewport/Viewport;FIII)V",
+          "sha256": "89c9060008fe457c5174ea2ed77aeb5d46a8b672dc56518d1b68ade1b7127c83"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/occlusion/OcclusionCuller",
+          "method": "tryVisitNode",
+          "desc": "(Lorg/embeddedt/embeddium/impl/util/collections/WriteQueue;IIIIILorg/embeddedt/embeddium/impl/render/viewport/Viewport;)V",
+          "sha256": "261ac4725b2b9d7385f2ed386f0ff64123aca2a4ef93b80c954c3642bb82a15d"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/occlusion/OcclusionCuller",
+          "method": "getRenderSection",
+          "desc": "(III)Lorg/embeddedt/embeddium/impl/render/chunk/RenderSection;",
+          "sha256": "cdf99b30b24a9fdc6dea293ce9f367db6d65877c83039e3fd283f8219e883815"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "ea9c64e99e46f02635a45aea09234e49e8102fd2d0767e832342bf46b3a01ce0"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "<init>",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/region/RenderRegion;III)V",
+          "sha256": "35223ae8831f3acf95beca18157ebb68100dc195d4e0a0388c209434e114c9a3"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "setAdjacentNode",
+          "desc": "(ILorg/embeddedt/embeddium/impl/render/chunk/RenderSection;)V",
+          "sha256": "5a72e831faba363cbd05ce978b7c2fd0c65a9a8c6cda67d421151760deb6321a"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "getAdjacentMask",
+          "desc": "()I",
+          "sha256": "6d55a174f726d40a9cf4048b4924690971e21092fd42fbda9201774b4a272628"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "setLastVisibleFrame",
+          "desc": "(I)V",
+          "sha256": "c3be193dbc49877b063fec96af5495c919acd6b8c50391ec0d8981ea8249150e"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "getLastVisibleFrame",
+          "desc": "()I",
+          "sha256": "94879255bd9e5ee279b7f5bb49c3a8529e435ecb51bc85c97c4f786a2b64f71e"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "getIncomingDirections",
+          "desc": "()I",
+          "sha256": "b14c82d6bffe21158614f5339d705c1163c4952e034376404d8435fb6ad372c5"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "addIncomingDirections",
+          "desc": "(I)V",
+          "sha256": "c6b344e97b5cfe4eeef75e1eed6cb6960521ff0b426e55ab325bbcea0ab05d41"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "setIncomingDirections",
+          "desc": "(I)V",
+          "sha256": "ec1246a94777afecc64944fc466fe7cbeb864fdd3e6e46d30e45380fc884a83e"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "getVisibilityData",
+          "desc": "()J",
+          "sha256": "539d64a9fff015d59cde0ec86eea32d675fee1e136b41568b12ccd110b1727c5"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "setInfo",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/data/BuiltSectionInfo;)V",
+          "sha256": "8827ce23b3a50b2f54a7b5295cb034c067168a62f5015a5d27b8d2cb125f5385"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "setRenderState",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/data/BuiltSectionInfo;)V",
+          "sha256": "f2efb9c47409f3755d76a1b00611c7d8d22f81ecf24580ecaa174b0052865412"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "clearRenderState",
+          "desc": "()V",
+          "sha256": "d73580a4e2f62860f76b7a199f4ac1d216e6e4a6b9700d070674a292ab9c66fc"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "delete",
+          "desc": "()V",
+          "sha256": "e1cc67404f508dc18f7e15307888fc6e973b183b2b918f8bfb1ba0366b1fd99d"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "getOriginX",
+          "desc": "()I",
+          "sha256": "325ee088db5dfa8d393c02dc965ca93e5b9dc701bde452cb11263c1d5afa08d9"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "getOriginY",
+          "desc": "()I",
+          "sha256": "67e418a2fe5e2960a3c8be173fd45c6bd3efa5ae088151e8dec302073674d575"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "getOriginZ",
+          "desc": "()I",
+          "sha256": "5efe32bf2046d8e6210bd3fb95f98260fbbe19a964ccf6f955d763a859777320"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "getCenterX",
+          "desc": "()I",
+          "sha256": "ed336d18b76f9830971e80a713b72850cff497aab37a378029fb7dca337e2af2"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "getCenterY",
+          "desc": "()I",
+          "sha256": "61ea4c43bcbcd480bfe846819bc6707f6e49793cc347ebc4a450fa320791b6cd"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "getCenterZ",
+          "desc": "()I",
+          "sha256": "14a4430dad464e376fece1b4551cf4aa91f7413060df58e40d73d61c2fb8bd9c"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "getChunkX",
+          "desc": "()I",
+          "sha256": "abc513eb1a2b5ab92b3bea13560da18a748f9d3cf2b584aef58b5d4862ac034e"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "getChunkY",
+          "desc": "()I",
+          "sha256": "ce141b98944d8910c691b224fb7e2a4b6796dba5884222efe237ec88f00364dc"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSection",
+          "method": "getChunkZ",
+          "desc": "()I",
+          "sha256": "e1f696083020668abf40cd320fba64e2a51e416d2460486d350c9aadced3d326"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "connectNeighborNodes",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/RenderSection;)V",
+          "sha256": "bbbf87c0f30ed8358b58196e2373cc998d7ad8f694650fc0a63fecc4dc41df1c"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "disconnectNeighborNodes",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/RenderSection;)V",
+          "sha256": "6c253f92e4e6519aeadb70f65bc2f3c52ac525a4636916f7105f0db217fec9ef"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "onSectionAdded",
+          "desc": "(III)V",
+          "sha256": "eefa40b181abb5dbdfef79343a5edddc44b2ac99174b56c6135b2861eeab7942"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "onSectionRemoved",
+          "desc": "(III)V",
+          "sha256": "6ca84b0d8025c9a4bc6830f1e80f2da6610a4d3f21e6517a81146cb797291381"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "createTerrainRenderList",
+          "desc": "(Lnet/minecraft/client/Camera;Lorg/embeddedt/embeddium/impl/render/viewport/Viewport;IZ)V",
+          "sha256": "97847cb6257779498f902a9da190216f7acb09114e4b4ad7e6935c4272a9683f"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+          "method": "update",
+          "desc": "(Lnet/minecraft/client/Camera;Lorg/embeddedt/embeddium/impl/render/viewport/Viewport;IZ)V",
+          "sha256": "ff21bba1ea9f363b6625e8ae93c7a21860282a71611d0bbf07210ef4dc2e0aa3"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/lists/VisibleChunkCollector",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "93e8e622b7a34ad802b58fbf6a1978ef59f59cd3cb74575bd970e8eeb0fb60a5"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/lists/VisibleChunkCollector",
+          "method": "<init>",
+          "desc": "(I)V",
+          "sha256": "85924ebc7428f511a5a865e9621a20a84ae79beba966acfdbf8e26d2c48e69ef"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/lists/VisibleChunkCollector",
+          "method": "visit",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/RenderSection;Z)V",
+          "sha256": "d312016ad74019216da127d3225b45236f080e7d9410b6d6f7d172850c7cf0d9"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/lists/VisibleChunkCollector",
+          "method": "addToRebuildLists",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/RenderSection;)V",
+          "sha256": "6b32180657b6d1b4ae2667efbc8eede30840392483f31a4522d32ec5d3e2fec5"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/viewport/Viewport",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "f406324a51e695fc763e3529d03f3881cce9d182f0dc5624311d4976e1dcda37"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/viewport/Viewport",
+          "method": "<init>",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/viewport/frustum/Frustum;Lorg/joml/Vector3d;)V",
+          "sha256": "038ee1ca17968223e30844f957d56b9e427bcdb78ae8cd75e457bb3f14f7759a"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/viewport/Viewport",
+          "method": "isBoxVisible",
+          "desc": "(IIIF)Z",
+          "sha256": "890ff0778ba15c81e10abb415d74580e15c5ebb9e569626279c72039062c0e20"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/viewport/Viewport",
+          "method": "isBoxVisible",
+          "desc": "(IIIFFF)Z",
+          "sha256": "1ee29a29ade6f1c9cde793990097bf81507d12d72b18e79c14485a51ef429010"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/viewport/Viewport",
+          "method": "getTransform",
+          "desc": "()Lorg/embeddedt/embeddium/impl/render/viewport/CameraTransform;",
+          "sha256": "7e46a77aac64de3549bd921f6e40c2e50e60b0d594140f42d17f8e3bd40618a4"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/viewport/Viewport",
+          "method": "getChunkCoord",
+          "desc": "()Lnet/minecraft/core/SectionPos;",
+          "sha256": "fce69f503d08a399fecddd1bf3041ef59cb1d12e478dc8f54d1ff1aab8ee0ecb"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/viewport/CameraTransform",
+          "method": "<init>",
+          "desc": "(DDD)V",
+          "sha256": "5625f17544ba5356c652fbd70bdd62cc9d3fcc49b38cfe93d9d4b0f2c860a5d2"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/viewport/CameraTransform",
+          "method": "integral",
+          "desc": "(D)I",
+          "sha256": "5a28d1212e360a3a257b2ce218f17beb1793074176a7aded434fc8c18cb0ecef"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/viewport/CameraTransform",
+          "method": "fractional",
+          "desc": "(D)F",
+          "sha256": "75c98004cbd41b8b34f51e3ade14f69b2ba65f0ab05acc6ed2cd578b99393de0"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/viewport/frustum/SimpleFrustum",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "8df784fbd88e41530eb324352c7c7da305c335b0ea27d47365d5e7b24f9c20d1"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/viewport/frustum/SimpleFrustum",
+          "method": "testAab",
+          "desc": "(FFFFFF)Z",
+          "sha256": "7c6f83a9db4b0cd0b9320099265350ba23ea25426fa9204a6401ae8b387c7719"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/util/collections/DoubleBufferedQueue",
+          "method": "flip",
+          "desc": "()Z",
+          "sha256": "885fccfb502b237e44324eb11473a711e79c0e111cc4e3219461c66f801b9141"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/util/collections/DoubleBufferedQueue",
+          "method": "reset",
+          "desc": "()V",
+          "sha256": "fbe98712d993cf0d93c3a1488ca487ece591f2d7b5de701562dd7ffaf302f7c6"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/util/collections/DoubleBufferedQueue$QueueImpl",
+          "method": "enqueue",
+          "desc": "(Ljava/lang/Object;)V",
+          "sha256": "2a4d0682aeefb486e1d02ba561dc4c896d4092f67f2da76b5729ca329c305290"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/util/collections/DoubleBufferedQueue$QueueImpl",
+          "method": "dequeue",
+          "desc": "()Ljava/lang/Object;",
+          "sha256": "16bb62b0bcafdb7d7511664e1cbfdd552a0e34fff9193ab294aabe4153a85cf2"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/util/collections/DoubleBufferedQueue$QueueImpl",
+          "method": "ensureCapacity",
+          "desc": "(I)V",
+          "sha256": "743da983b85b827876d7aefd8455f121de021c77fe068235c844da5525547e39"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/util/collections/DoubleBufferedQueue$QueueImpl",
+          "method": "clear",
+          "desc": "()V",
+          "sha256": "d68f3c28656ce9a05cdfe620867ca8f368ee459d31d89a2a0d8e20d80bbae796"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/occlusion/VisibilityEncoding",
+          "method": "getConnections",
+          "desc": "(JI)I",
+          "sha256": "2276fdfce9686d8d47836cb81c879bbe6d11ce9280a930445005f58e09e740d2"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/occlusion/VisibilityEncoding",
+          "method": "getConnections",
+          "desc": "(J)I",
+          "sha256": "c1137de280db50952069585f72b08b2b7adf4cdde7eccb495444fa656d6b1b92"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/occlusion/GraphDirectionSet",
+          "method": "of",
+          "desc": "(I)I",
+          "sha256": "3099a289eba531d68e311e3925922fb221648fde6cb8927537f720906ba2779e"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/occlusion/GraphDirectionSet",
+          "method": "contains",
+          "desc": "(II)Z",
+          "sha256": "5b117184510c7c116d4bb4693115a8c6a2dbd8f511c37859b5926edefd6d44db"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapMethod around OcclusionCuller.findVisible; @Inject at the head of RenderSectionManager.connectNeighborNodes / disconnectNeighborNodes and of RenderSection.setRenderState / clearRenderState; an @Accessor for Viewport.frustum)",
+      "license": "Embeddium is LGPL-3.0-only: no Embeddium code is carried; the wrapper calls Embeddium's own findVisible, isSectionVisible and visitor (helper bons.furious.patch.embeddium_search.SearchReplay)"
+    }
+  }
+}

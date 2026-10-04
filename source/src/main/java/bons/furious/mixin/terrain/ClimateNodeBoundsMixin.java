@@ -1,5 +1,6 @@
 package bons.furious.mixin.terrain;
 
+import bons.furious.patch.terrain.ClimateBoundsShare;
 import java.util.List;
 import net.minecraft.world.level.biome.Climate;
 import org.spongepowered.asm.mixin.Final;
@@ -20,7 +21,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * never change), and distance reads that array. The method is a pure integer computation called for every node a biome
  * search visits, so an @Overwrite is used: the body is written from the method's behaviour (for each dimension the
  * amount by which the target lies above max, else below min, else 0, squared and summed in dimension order), not copied.
- * The results are the same 64-bit values in the same order, including overflow behaviour.
+ * The results are the same 64-bit values in the same order, including overflow behaviour. Nodes whose bounds are equal
+ * share one array (ClimateBoundsShare): the many region trees of a modded overworld repeat the same ranges.
  */
 @Mixin(targets = "net.minecraft.world.level.biome.Climate$RTree$Node", remap = false)
 public abstract class ClimateNodeBoundsMixin {
@@ -32,9 +34,10 @@ public abstract class ClimateNodeBoundsMixin {
     @Unique
     private long[] bons$bounds;
 
+    /** The bounds array is shared with every other node whose bounds are equal (ClimateBoundsShare; it is never written). */
     @Inject(method = "<init>", at = @At("RETURN"))
     private void bons$flattenBounds(List<Climate.Parameter> parameters, CallbackInfo ci) {
-        this.bons$bounds = bons$flatten(this.parameterSpace);
+        this.bons$bounds = ClimateBoundsShare.share(bons$flatten(this.parameterSpace));
     }
 
     @Unique

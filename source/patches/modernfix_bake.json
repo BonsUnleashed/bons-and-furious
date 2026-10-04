@@ -1,0 +1,102 @@
+{
+  "group": "modernfix_bake",
+  "keys": {
+    "modernfix_bake_location_order": {
+      "mod": "modernfix",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.modernfix_bake.LocationOrderMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/embeddedt/modernfix/neoforge/dynresources/ModelBakeEventHelper",
+          "method": "<init>",
+          "desc": "(Ljava/util/Map;)V",
+          "sha256": "c03e28b8f334b7c6c69b1209a11eba85f09dc06256a93e2b9cfc3d2e98feeead"
+        },
+        {
+          "class": "org/embeddedt/modernfix/neoforge/dynresources/ModelBakeEventHelper",
+          "method": "*",
+          "desc": "",
+          "sha256": "d0cd74ec651a3ba0f35aaf17e83b942320121193761f891890678495713608ec"
+        },
+        {
+          "class": "org/embeddedt/modernfix/neoforge/dynresources/ModelBakeEventHelper",
+          "method": "wrapRegistry",
+          "desc": "(Ljava/lang/String;)Ljava/util/Map;",
+          "sha256": "e3ccfd49716e3bb0a23bea7b4952918dfc4bb8e0ff122e72004ea3239ec47560"
+        },
+        {
+          "class": "org/embeddedt/modernfix/neoforge/dynresources/ModelBakeEventHelper",
+          "method": "lambda$new$0",
+          "desc": "(Lorg/embeddedt/modernfix/neoforge/dynresources/ModelLocationBuilder;Ljava/util/Map$Entry;)V",
+          "sha256": "7a5674e30e93e42018b802def0df24a6af00f9f79dccadd85ad6ab9aace77a2e"
+        },
+        {
+          "class": "org/embeddedt/modernfix/neoforge/dynresources/ModelBakeEventHelper",
+          "method": "lambda$new$1",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)V",
+          "sha256": "9fa47e10d55252f72d7dfe8356baa42c875954ba38908ba5a0e46553c0462f58"
+        },
+        {
+          "class": "org/embeddedt/modernfix/neoforge/dynresources/ModelBakeEventHelper",
+          "method": "lambda$new$2",
+          "desc": "(Lnet/minecraft/resources/FileToIdConverter;Lnet/minecraft/resources/ResourceLocation;)V",
+          "sha256": "50610451d522a6f5c349e71bdd23fe2e5f02f59f0a56d19489416d316c721a02"
+        },
+        {
+          "class": "org/embeddedt/modernfix/neoforge/dynresources/ModelLocationBuilder",
+          "method": "generateForBlock",
+          "desc": "(Ljava/util/Set;Lnet/minecraft/world/level/block/Block;Lnet/minecraft/resources/ResourceLocation;)V",
+          "sha256": "05fb764911e87c18c9f534d38696750687c7d01265437d09e8816331875ca9b0"
+        },
+        {
+          "class": "org/embeddedt/modernfix/neoforge/dynresources/ModelBakeEventHelper$EmulatedModelRegistry",
+          "method": "*",
+          "desc": "",
+          "sha256": "8e4c4269d55cad9d24ea096edd058415ca0401a24562f7ce3cbe627154c9c3ae"
+        },
+        {
+          "class": "org/embeddedt/modernfix/neoforge/dynresources/ModelBakeEventHelper$EmulatedModelRegistry",
+          "method": "keySet",
+          "desc": "()Ljava/util/Set;",
+          "sha256": "62465fb6f68ce5bbce08d075e46219ad92a1f7340aaac70dda7e400e7f15007b"
+        },
+        {
+          "class": "org/embeddedt/modernfix/neoforge/dynresources/ModelBakeEventHelper$EmulatedModelRegistry",
+          "method": "containsKey",
+          "desc": "(Ljava/lang/Object;)Z",
+          "sha256": "b62326e8354d63cce33912623a5637c1a91a56a631453315179938e72d387e54"
+        },
+        {
+          "class": "org/embeddedt/modernfix/neoforge/dynresources/ModelBakeEventHelper$EmulatedModelRegistry",
+          "method": "entrySet",
+          "desc": "()Ljava/util/Set;",
+          "sha256": "28aa4626a8996fb4d492ec233be9b2cafb588b856c4c040751fffc811fefdd9d"
+        },
+        {
+          "class": "org/embeddedt/modernfix/neoforge/dynresources/ModelBakeEventHelper$EmulatedModelRegistry",
+          "method": "replaceAll",
+          "desc": "(Ljava/util/function/BiFunction;)V",
+          "sha256": "33f9bb186ba0fbf7a9aa20d539073f9175d6fee346a5f35122ce36b0e54e13e9"
+        },
+        {
+          "class": "org/embeddedt/modernfix/neoforge/dynresources/ModelBakeEventHelper$DynamicModelEntrySet",
+          "method": "*",
+          "desc": "",
+          "sha256": "609a41224fe58f19812642b0b81e1229cb38957966ea9fa3ddeed98414e9f108"
+        },
+        {
+          "class": "org/embeddedt/modernfix/neoforge/dynresources/ModelBakeEventHelper$DynamicModelEntrySet",
+          "method": "iterator",
+          "desc": "()Ljava/util/Iterator;",
+          "sha256": "98968efad71775beeb5161ea6d5c63f2a797a334494248e1a89b5ae2d40f907d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation on the NEW ObjectLinkedOpenHashSet(int) in ModelBakeEventHelper.<init>: the switch on yields bons.furious.patch.modernfix_bake.LocationOrderSet, a subclass of the same fastutil 8.5.12 class that records its insertion order; flag, shadow and self-test in BakeLocations). The method sets of the helper and its two inner classes are guarded because every use of the set lives there (1.21.1 adds lambda$new$2, the item-model-file locations); fastutil is a library (not fingerprintable): its add-order contract is self-tested at start-up and every iteration checks the array length",
+      "license": "LGPL-3.0 (ModernFix): no ModernFix code is carried, the mixin only replaces one constructor expression with an equivalent set; fastutil is Apache-2.0, extended (not copied)"
+    }
+  }
+}

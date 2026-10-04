@@ -1,0 +1,122 @@
+﻿dev : neoforge-21.1.252.jar 67 lines; prod: client-1.21.1-20240808.144430-srg.jar 66 lines
+--- dev
++++ prod
+@@ -7,61 +7,60 @@
+        3: invokevirtual #                 // Method isInvalid:()Z
+-       6: ifeq          12
+-       9: goto          104
+-      12: invokestatic  #                 // Method com/mojang/blaze3d/systems/RenderSystem.assertOnRenderThread:()V
+-      15: aload_1
+-      16: invokevirtual #                 // Method com/mojang/blaze3d/vertex/MeshData.drawState:()Lcom/mojang/blaze3d/vertex/MeshData$DrawState;
+-      19: astore_3
+-      20: aload_0
+-      21: aload_0
+-      22: aload_3
+-      23: aload_1
+-      24: invokevirtual #                 // Method com/mojang/blaze3d/vertex/MeshData.vertexBuffer:()Ljava/nio/ByteBuffer;
+-      27: invokevirtual #                 // Method uploadVertexBuffer:(Lcom/mojang/blaze3d/vertex/MeshData$DrawState;Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/vertex/VertexFormat;
+-      30: putfield      #                 // Field format:Lcom/mojang/blaze3d/vertex/VertexFormat;
+-      33: aload_0
+-      34: aload_0
+-      35: aload_3
+-      36: aload_1
+-      37: invokevirtual #                 // Method com/mojang/blaze3d/vertex/MeshData.indexBuffer:()Ljava/nio/ByteBuffer;
+-      40: invokevirtual #                 // Method uploadIndexBuffer:(Lcom/mojang/blaze3d/vertex/MeshData$DrawState;Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/systems/RenderSystem$AutoStorageIndexBuffer;
+-      43: putfield      #                 // Field sequentialIndices:Lcom/mojang/blaze3d/systems/RenderSystem$AutoStorageIndexBuffer;
+-      46: aload_0
+-      47: aload_3
+-      48: invokevirtual #                 // Method com/mojang/blaze3d/vertex/MeshData$DrawState.indexCount:()I
+-      51: putfield      #                 // Field indexCount:I
+-      54: aload_0
+-      55: aload_3
+-      56: invokevirtual #                 // Method com/mojang/blaze3d/vertex/MeshData$DrawState.indexType:()Lcom/mojang/blaze3d/vertex/VertexFormat$IndexType;
+-      59: putfield      #                 // Field indexType:Lcom/mojang/blaze3d/vertex/VertexFormat$IndexType;
+-      62: aload_0
+-      63: aload_3
+-      64: invokevirtual #                 // Method com/mojang/blaze3d/vertex/MeshData$DrawState.mode:()Lcom/mojang/blaze3d/vertex/VertexFormat$Mode;
+-      67: putfield      #                 // Field mode:Lcom/mojang/blaze3d/vertex/VertexFormat$Mode;
+-      70: goto          95
+-      73: astore_3
+-      74: aload_1
+-      75: ifnull        93
+-      78: aload_2
+-      79: invokevirtual #                 // Method com/mojang/blaze3d/vertex/MeshData.close:()V
+-      82: goto          93
+-      85: astore        4
+-      87: aload_3
+-      88: aload         4
+-      90: invokevirtual #                 // Method java/lang/Throwable.addSuppressed:(Ljava/lang/Throwable;)V
+-      93: aload_3
+-      94: athrow
+-      95: aload_1
+-      96: ifnull        103
+-      99: aload_1
+-     100: invokevirtual #                 // Method com/mojang/blaze3d/vertex/MeshData.close:()V
+-     103: return
+-     104: aload_1
+-     105: ifnull        112
+-     108: aload_1
+-     109: invokevirtual #                 // Method com/mojang/blaze3d/vertex/MeshData.close:()V
+-     112: return
++       6: ifeq          18
++       9: aload_2
++      10: ifnull        17
++      13: aload_2
++      14: invokevirtual #                 // Method com/mojang/blaze3d/vertex/MeshData.close:()V
++      17: return
++      18: invokestatic  #                 // Method com/mojang/blaze3d/systems/RenderSystem.assertOnRenderThread:()V
++      21: aload_1
++      22: invokevirtual #                 // Method com/mojang/blaze3d/vertex/MeshData.drawState:()Lcom/mojang/blaze3d/vertex/MeshData$DrawState;
++      25: astore_3
++      26: aload_0
++      27: aload_0
++      28: aload_3
++      29: aload_1
++      30: invokevirtual #                // Method com/mojang/blaze3d/vertex/MeshData.vertexBuffer:()Ljava/nio/ByteBuffer;
++      33: invokevirtual #                // Method uploadVertexBuffer:(Lcom/mojang/blaze3d/vertex/MeshData$DrawState;Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/vertex/VertexFormat;
++      36: putfield      #                // Field format:Lcom/mojang/blaze3d/vertex/VertexFormat;
++      39: aload_0
++      40: aload_0
++      41: aload_3
++      42: aload_1
++      43: invokevirtual #                // Method com/mojang/blaze3d/vertex/MeshData.indexBuffer:()Ljava/nio/ByteBuffer;
++      46: invokevirtual #                // Method uploadIndexBuffer:(Lcom/mojang/blaze3d/vertex/MeshData$DrawState;Ljava/nio/ByteBuffer;)Lcom/mojang/blaze3d/systems/RenderSystem$AutoStorageIndexBuffer;
++      49: putfield      #                // Field sequentialIndices:Lcom/mojang/blaze3d/systems/RenderSystem$AutoStorageIndexBuffer;
++      52: aload_0
++      53: aload_3
++      54: invokevirtual #                // Method com/mojang/blaze3d/vertex/MeshData$DrawState.indexCount:()I
++      57: putfield      #                // Field indexCount:I
++      60: aload_0
++      61: aload_3
++      62: invokevirtual #                // Method com/mojang/blaze3d/vertex/MeshData$DrawState.indexType:()Lcom/mojang/blaze3d/vertex/VertexFormat$IndexType;
++      65: putfield      #                // Field indexType:Lcom/mojang/blaze3d/vertex/VertexFormat$IndexType;
++      68: aload_0
++      69: aload_3
++      70: invokevirtual #                // Method com/mojang/blaze3d/vertex/MeshData$DrawState.mode:()Lcom/mojang/blaze3d/vertex/VertexFormat$Mode;
++      73: putfield      #                // Field mode:Lcom/mojang/blaze3d/vertex/VertexFormat$Mode;
++      76: aload_2
++      77: ifnull        109
++      80: aload_2
++      81: invokevirtual #                 // Method com/mojang/blaze3d/vertex/MeshData.close:()V
++      84: goto          109
++      87: astore_3
++      88: aload_2
++      89: ifnull        107
++      92: aload_2
++      93: invokevirtual #                 // Method com/mojang/blaze3d/vertex/MeshData.close:()V
++      96: goto          107
++      99: astore        4
++     101: aload_3
++     102: aload         4
++     104: invokevirtual #                // Method java/lang/Throwable.addSuppressed:(Ljava/lang/Throwable;)V
++     107: aload_3
++     108: athrow
++     109: return
+     Exception table:
+        from    to  target type
+-           2     9    73   Class java/lang/Throwable
+-          12    70    73   Class java/lang/Throwable
+-          78    82    85   Class java/lang/Throwable
++           2     9    87   Class java/lang/Throwable
++          18    76    87   Class java/lang/Throwable
++          92    96    99   Class java/lang/Throwable

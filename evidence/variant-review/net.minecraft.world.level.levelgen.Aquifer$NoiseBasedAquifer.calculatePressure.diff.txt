@@ -1,0 +1,277 @@
+vanilla_aquifer_high_air
+net/minecraft/world/level/levelgen/Aquifer$NoiseBasedAquifer.calculatePressure(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;Lorg/apache/commons/lang3/mutable/MutableDouble;Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;)D
+
+--- dev neoforge-21.1.252.jar
++++ prod client-1.21.1-20240808.144430-srg.jar
+@@ -20,140 +20,140 @@
+       38: getstatic     #                // Field net/minecraft/world/level/block/Blocks.WATER:Lnet/minecraft/world/level/block/Block;
+       41: invokevirtual #                // Method net/minecraft/world/level/block/state/BlockState.is:(Lnet/minecraft/world/level/block/Block;)Z
+-      44: ifne          328
++      44: ifne          69
+       47: aload         6
+       49: getstatic     #                // Field net/minecraft/world/level/block/Blocks.WATER:Lnet/minecraft/world/level/block/Block;
+       52: invokevirtual #                // Method net/minecraft/world/level/block/state/BlockState.is:(Lnet/minecraft/world/level/block/Block;)Z
+-      55: ifeq          69
++      55: ifeq          73
+       58: aload         7
+       60: getstatic     #                // Field net/minecraft/world/level/block/Blocks.LAVA:Lnet/minecraft/world/level/block/Block;
+       63: invokevirtual #                // Method net/minecraft/world/level/block/state/BlockState.is:(Lnet/minecraft/world/level/block/Block;)Z
+-      66: ifne          328
+-      69: aload_3
+-      70: getfield      #                // Field net/minecraft/world/level/levelgen/Aquifer$FluidStatus.fluidLevel:I
+-      73: aload         4
+-      75: getfield      #                // Field net/minecraft/world/level/levelgen/Aquifer$FluidStatus.fluidLevel:I
+-      78: isub
+-      79: invokestatic  #                // Method java/lang/Math.abs:(I)I
+-      82: istore        8
+-      84: iload         8
+-      86: ifne          91
+-      89: dconst_0
+-      90: dreturn
+-      91: ldc2_w        #                // double 0.5d
+-      94: aload_3
+-      95: getfield      #                // Field net/minecraft/world/level/levelgen/Aquifer$FluidStatus.fluidLevel:I
+-      98: aload         4
+-     100: getfield      #                // Field net/minecraft/world/level/levelgen/Aquifer$FluidStatus.fluidLevel:I
+-     103: iadd
+-     104: i2d
+-     105: dmul
+-     106: dstore        9
+-     108: iload         5
+-     110: i2d
+-     111: ldc2_w        #                // double 0.5d
+-     114: dadd
+-     115: dload         9
+-     117: dsub
+-     118: dstore        11
+-     120: iload         8
+-     122: i2d
+-     123: ldc2_w        #                // double 2.0d
+-     126: ddiv
+-     127: dstore        13
+-     129: dconst_0
+-     130: dstore        15
+-     132: ldc2_w        #                // double 2.5d
+-     135: dstore        17
+-     137: ldc2_w        #                // double 1.5d
+-     140: dstore        19
+-     142: ldc2_w        #                // double 3.0d
+-     145: dstore        21
+-     147: ldc2_w        #                // double 10.0d
+-     150: dstore        23
+-     152: ldc2_w        #                // double 3.0d
+-     155: dstore        25
+-     157: dload         13
+-     159: dload         11
+-     161: invokestatic  #                // Method java/lang/Math.abs:(D)D
+-     164: dsub
+-     165: dstore        27
+-     167: dload         11
+-     169: dconst_0
+-     170: dcmpl
+-     171: ifle          209
+-     174: dconst_0
+-     175: dload         27
+-     177: dadd
+-     178: dstore        31
+-     180: dload         31
+-     182: dconst_0
+-     183: dcmpl
+-     184: ifle          198
+-     187: dload         31
+-     189: ldc2_w        #                // double 1.5d
+-     192: ddiv
+-     193: dstore        29
+-     195: goto          206
+-     198: dload         31
+-     200: ldc2_w        #                // double 2.5d
+-     203: ddiv
+-     204: dstore        29
+-     206: goto          243
+-     209: ldc2_w        #                // double 3.0d
+-     212: dload         27
+-     214: dadd
+-     215: dstore        31
+-     217: dload         31
+-     219: dconst_0
+-     220: dcmpl
+-     221: ifle          235
+-     224: dload         31
+-     226: ldc2_w        #                // double 3.0d
+-     229: ddiv
+-     230: dstore        29
+-     232: goto          243
+-     235: dload         31
+-     237: ldc2_w        #                // double 10.0d
+-     240: ddiv
+-     241: dstore        29
+-     243: ldc2_w        #                // double 2.0d
+-     246: dstore        31
+-     248: dload         29
+-     250: ldc2_w        #                // double -2.0d
+-     253: dcmpg
+-     254: iflt          315
+-     257: dload         29
+-     259: ldc2_w        #                // double 2.0d
+-     262: dcmpl
+-     263: ifgt          315
+-     266: aload_2
+-     267: invokevirtual #                // Method org/apache/commons/lang3/mutable/MutableDouble.getValue:()Ljava/lang/Double;
+-     270: invokevirtual #                // Method java/lang/Double.doubleValue:()D
+-     273: dstore        35
+-     275: dload         35
+-     277: invokestatic  #                // Method java/lang/Double.isNaN:(D)Z
+-     280: ifeq          308
+-     283: aload_0
+-     284: getfield      #                 // Field barrierNoise:Lnet/minecraft/world/level/levelgen/DensityFunction;
+-     287: aload_1
+-     288: invokeinterface #,  2          // InterfaceMethod net/minecraft/world/level/levelgen/DensityFunction.compute:(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D
+-     293: dstore        37
+-     295: aload_2
+-     296: dload         37
+-     298: invokevirtual #                // Method org/apache/commons/lang3/mutable/MutableDouble.setValue:(D)V
+-     301: dload         37
+-     303: dstore        33
+-     305: goto          312
+-     308: dload         35
+-     310: dstore        33
+-     312: goto          318
+-     315: dconst_0
+-     316: dstore        33
+-     318: ldc2_w        #                // double 2.0d
+-     321: dload         33
+-     323: dload         29
+-     325: dadd
+-     326: dmul
+-     327: dreturn
+-     328: ldc2_w        #                // double 2.0d
++      66: ifeq          73
++      69: ldc2_w        #                // double 2.0d
++      72: dreturn
++      73: aload_3
++      74: getfield      #                // Field net/minecraft/world/level/levelgen/Aquifer$FluidStatus.fluidLevel:I
++      77: aload         4
++      79: getfield      #                // Field net/minecraft/world/level/levelgen/Aquifer$FluidStatus.fluidLevel:I
++      82: isub
++      83: invokestatic  #                // Method java/lang/Math.abs:(I)I
++      86: istore        8
++      88: iload         8
++      90: ifne          95
++      93: dconst_0
++      94: dreturn
++      95: ldc2_w        #                // double 0.5d
++      98: aload_3
++      99: getfield      #                // Field net/minecraft/world/level/levelgen/Aquifer$FluidStatus.fluidLevel:I
++     102: aload         4
++     104: getfield      #                // Field net/minecraft/world/level/levelgen/Aquifer$FluidStatus.fluidLevel:I
++     107: iadd
++     108: i2d
++     109: dmul
++     110: dstore        9
++     112: iload         5
++     114: i2d
++     115: ldc2_w        #                // double 0.5d
++     118: dadd
++     119: dload         9
++     121: dsub
++     122: dstore        11
++     124: iload         8
++     126: i2d
++     127: ldc2_w        #                // double 2.0d
++     130: ddiv
++     131: dstore        13
++     133: dconst_0
++     134: dstore        15
++     136: ldc2_w        #                // double 2.5d
++     139: dstore        17
++     141: ldc2_w        #                // double 1.5d
++     144: dstore        19
++     146: ldc2_w        #                // double 3.0d
++     149: dstore        21
++     151: ldc2_w        #                // double 10.0d
++     154: dstore        23
++     156: ldc2_w        #                // double 3.0d
++     159: dstore        25
++     161: dload         13
++     163: dload         11
++     165: invokestatic  #                // Method java/lang/Math.abs:(D)D
++     168: dsub
++     169: dstore        27
++     171: dload         11
++     173: dconst_0
++     174: dcmpl
++     175: ifle          213
++     178: dconst_0
++     179: dload         27
++     181: dadd
++     182: dstore        31
++     184: dload         31
++     186: dconst_0
++     187: dcmpl
++     188: ifle          202
++     191: dload         31
++     193: ldc2_w        #                // double 1.5d
++     196: ddiv
++     197: dstore        29
++     199: goto          210
++     202: dload         31
++     204: ldc2_w        #                // double 2.5d
++     207: ddiv
++     208: dstore        29
++     210: goto          247
++     213: ldc2_w        #                // double 3.0d
++     216: dload         27
++     218: dadd
++     219: dstore        31
++     221: dload         31
++     223: dconst_0
++     224: dcmpl
++     225: ifle          239
++     228: dload         31
++     230: ldc2_w        #                // double 3.0d
++     233: ddiv
++     234: dstore        29
++     236: goto          247
++     239: dload         31
++     241: ldc2_w        #                // double 10.0d
++     244: ddiv
++     245: dstore        29
++     247: ldc2_w        #                // double 2.0d
++     250: dstore        31
++     252: dload         29
++     254: ldc2_w        #                // double -2.0d
++     257: dcmpg
++     258: iflt          270
++     261: dload         29
++     263: ldc2_w        #                // double 2.0d
++     266: dcmpl
++     267: ifle          276
++     270: dconst_0
++     271: dstore        33
++     273: goto          322
++     276: aload_2
++     277: invokevirtual #                // Method org/apache/commons/lang3/mutable/MutableDouble.getValue:()Ljava/lang/Double;
++     280: invokevirtual #                // Method java/lang/Double.doubleValue:()D
++     283: dstore        35
++     285: dload         35
++     287: invokestatic  #                // Method java/lang/Double.isNaN:(D)Z
++     290: ifeq          318
++     293: aload_0
++     294: getfield      #                 // Field barrierNoise:Lnet/minecraft/world/level/levelgen/DensityFunction;
++     297: aload_1
++     298: invokeinterface #,  2          // InterfaceMethod net/minecraft/world/level/levelgen/DensityFunction.compute:(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D
++     303: dstore        37
++     305: aload_2
++     306: dload         37
++     308: invokevirtual #                // Method org/apache/commons/lang3/mutable/MutableDouble.setValue:(D)V
++     311: dload         37
++     313: dstore        33
++     315: goto          322
++     318: dload         35
++     320: dstore        33
++     322: ldc2_w        #                // double 2.0d
++     325: dload         33
++     327: dload         29
++     329: dadd
++     330: dmul
+      331: dreturn

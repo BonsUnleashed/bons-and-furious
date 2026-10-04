@@ -1,0 +1,46 @@
+{
+  "group": "vanilla_framed_maps",
+  "keys": {
+    "vanilla_framed_map_holder_scan": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.vanilla_framed_maps.MapItemSavedDataFramedMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/saveddata/maps/MapItemSavedData",
+          "method": "tickCarriedBy",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)V",
+          "sha256": "fb09992968e9b60170473a42d62c13b8431d42c7587ecff9cd901a95b1fe888d",
+          "sha256_variants": [
+            "6de9c38a23b47e0eba3737e39abf1054b80cd2f6d38f7e32d47255f2155dad52"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): block order after the per-holder test differs (ifne target); both contains(Predicate) calls at the same offsets 56/143, so ordinal 1 is the same call. See evidence/variant-review/net.minecraft.world.level.saveddata.maps.MapItemSavedData.tickCarriedBy.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/level/saveddata/maps/MapItemSavedData",
+          "method": "mapMatcher",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Ljava/util/function/Predicate;",
+          "sha256": "04d24b2db67377719984c8dc53fd4fcf62db30e74720caf2747302544bfbf01b"
+        },
+        {
+          "class": "net/minecraft/world/entity/player/Inventory",
+          "method": "contains",
+          "desc": "(Ljava/util/function/Predicate;)Z",
+          "sha256": "ca0728c38bbe68c7e2da12326647c2b2a146cfd44e9e0dacd8062b5ef0f79326"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "isFramed",
+          "desc": "()Z",
+          "sha256": "db200c2c1b467e73b26cf451e6335dbe6ef21947d6243080d5e5ec5f95cb1fdc"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the second Inventory.contains(Predicate) (ordinal 1: the per-holder test inside the carriedBy loop) in MapItemSavedData.tickCarriedBy: true without the call when the map stack (tickCarriedBy's argument, @Local argsOnly) is framed (the expression is `contains || isFramed()`), the call itself otherwise; require = 0, degrades to vanilla. 1.21.1: contains(Predicate) with mapMatcher's predicate replaces 1.20.1's contains(ItemStack)",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_framed_maps.FramedMaps)"
+    }
+  }
+}

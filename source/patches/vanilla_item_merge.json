@@ -1,0 +1,126 @@
+{
+  "group": "vanilla_item_merge",
+  "keys": {
+    "vanilla_item_merge_candidates": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.vanilla_item_merge.ItemEntityMergeMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/item/ItemEntity",
+          "method": "mergeWithNeighbours",
+          "desc": "()V",
+          "sha256": "016b17c6cb6c1969065873438ce27bf37b104cd02eb68da07a49045296cf29a4"
+        },
+        {
+          "class": "net/minecraft/world/entity/item/ItemEntity",
+          "method": "lambda$mergeWithNeighbours$0",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "a977cf691bf35aecd3f00efd9bd73a4b644db2d8e1025633bebccebc442c4976"
+        },
+        {
+          "class": "net/minecraft/world/entity/item/ItemEntity",
+          "method": "isMergable",
+          "desc": "()Z",
+          "sha256": "b5285383dc35aac983e92e10dbdf47a64b7d8d88c418e0e76e1f9bac15046857"
+        },
+        {
+          "class": "net/minecraft/world/entity/item/ItemEntity",
+          "method": "tryToMerge",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)V",
+          "sha256": "aca3c06a342f26b21243244b88fad7417feb608b58b65e517200b9a31badf881"
+        },
+        {
+          "class": "net/minecraft/world/entity/item/ItemEntity",
+          "method": "areMergable",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+          "sha256": "9bfb41590922c6a85e72784d51190c1dc433bdefe6c2bf0128268c6362c26169"
+        },
+        {
+          "class": "net/minecraft/world/entity/item/ItemEntity",
+          "method": "merge",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/item/ItemStack;)V",
+          "sha256": "ee7c8e50a169c363872b2b6494b418175b134af26e6ff30df731c7a60a5aaa3c"
+        },
+        {
+          "class": "net/minecraft/world/entity/item/ItemEntity",
+          "method": "merge",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)V",
+          "sha256": "b67ef7eb5d66ba23546b078424bab7f56b5653048409a524915b8e26f9535cf5"
+        },
+        {
+          "class": "net/minecraft/world/entity/item/ItemEntity",
+          "method": "merge",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;I)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "73db36598ac18b5be0ff4f699fa3c0aa4e8f5fbeaf59a98f6d7cf79bd15eadd7"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "getItem",
+          "desc": "()Lnet/minecraft/world/item/Item;",
+          "sha256": "3a6fb84c9fb8b13d8a893bf8ef0510480605b691247ef1d9962c46088e2e7612"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "getCount",
+          "desc": "()I",
+          "sha256": "1b992f26a0443a7c562d244809cd2fc005326cca67c563970224246899af82dd"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "getMaxStackSize",
+          "desc": "()I",
+          "sha256": "6933c9892968fbae7cee0c6d76b47b708878c85a23b9ba0e38df2dfcde10573f"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "copyWithCount",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "5f2a71e957c441098170c679dd7c4029f472161831d09a49f3afa255cc3294af"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "copy",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "6368b72382fb6d72045513735a6a385334d2a94aa21730e80c1f9667094d9be7"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "isSameItemSameComponents",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+          "sha256": "b9540c50fe7ca944e2314768b89965b1246fd014ebfed33744ab45ba035ab233"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "is",
+          "desc": "(Lnet/minecraft/world/item/Item;)Z",
+          "sha256": "47801399c530d893af2f8833d094ad01156c84cc4782d51687b7657d682b6f73"
+        },
+        {
+          "class": "net/neoforged/neoforge/common/extensions/IItemExtension",
+          "method": "getMaxStackSize",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "sha256": "308c4fdacfc69034e9237bdecafdc215c0267359ef8cb7771c70b85a559c1f59"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on Level.getEntitiesOfClass in ItemEntity.mergeWithNeighbours: the same call with MergeCandidates.Filter wrapped around vanilla's predicate (rejects other items and count sums over the maximum, then runs vanilla's predicate; only items whose getMaxStackSize(ItemStack) is NeoForge's IItemExtension default, the MAX_STACK_SIZE data component, are ever left out); @WrapOperation on ItemEntity.merge in tryToMerge: unchanged call, plus the shadow-mode check; both require = 0 and degrade to vanilla",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_item_merge.MergeCandidates)"
+    }
+  },
+  "yields": [
+    {
+      "key": "vanilla_item_merge_candidates",
+      "mod": "radium",
+      "name": "Radium",
+      "mixin": "me.jellysquid.mods.lithium.mixin.experimental.entity.item_entity_merging.ItemEntityMixin",
+      "config": "lithium.properties",
+      "option": "mixin.experimental.entity.item_entity_merging",
+      "default": false,
+      "why": "Radium 0.13.1's experimental item_entity_merging (off by default, like every experimental option; Radium reads config/lithium.properties) @Redirects the same Level.getEntitiesOfClass call in ItemEntity.mergeWithNeighbours with its own search by item type and stack size. Our wrap would hand its redirect a filtered predicate on top of its own categories; while that option is on our switch steps aside."
+    }
+  ]
+}

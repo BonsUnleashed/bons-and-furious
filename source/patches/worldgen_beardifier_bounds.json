@@ -1,0 +1,108 @@
+{
+  "group": "worldgen_beardifier_bounds",
+  "keys": {
+    "vanilla_beardifier_influence_bounds": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.worldgen_beardifier_bounds.BeardifierBoundsMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/Beardifier",
+          "method": "compute",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "note": "compute: the two loops (sum order, term arguments, the five adjustment cases incl. 1.21.1's ENCAPSULATE) the views feed",
+          "sha256": "8ecafc1433c8c7f4e78ad41802e29919574bb410a8513bbd7b70e9eaafec1a45"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Beardifier",
+          "method": "getBeardContribution",
+          "desc": "(IIII)D",
+          "note": "getBeardContribution: literal 0.0 outside -12..11 per axis",
+          "sha256": "9ce65b41ce0a879a5d430f2964d5e243efecbbfa73bd3c26d809606925c32265"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Beardifier",
+          "method": "getBuryContribution",
+          "desc": "(DDD)D",
+          "note": "getBuryContribution (1.21.1: doubles; BURY passes dy / 2.0, ENCAPSULATE all three halved): clampedMap of the distance, 0.0 from 6 on",
+          "sha256": "5bf9281d41176a470bbd5782295ef95a0180c3a891bf0f1f208b83ce7dc8d163"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Beardifier",
+          "method": "isInKernelRange",
+          "desc": "(I)Z",
+          "note": "isInKernelRange: 0 <= i < 24",
+          "sha256": "c3bd236c1f2a0b8b536510bf7fb12d25cc683fca1a3f96fd72cfb58e8ad57bca"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Beardifier",
+          "method": "<init>",
+          "desc": "(Lit/unimi/dsi/fastutil/objects/ObjectListIterator;Lit/unimi/dsi/fastutil/objects/ObjectListIterator;)V",
+          "note": "the two iterators the snapshot reads",
+          "sha256": "d60d96bbc8d20df1f082bb3832bcf459075bbc4519523f6673dc78ac439a3c98"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Beardifier",
+          "method": "forStructuresInChunk",
+          "desc": "(Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/ChunkPos;)Lnet/minecraft/world/level/levelgen/Beardifier;",
+          "note": "forStructuresInChunk: lists built once, then only iterated",
+          "sha256": "b53dfa961043268a0991baa8042caf736eba09eef0e5d90fa47986aa9ee11e0f"
+        },
+        {
+          "class": "net/minecraft/util/Mth",
+          "method": "clampedMap",
+          "desc": "(DDDDD)D",
+          "note": "clampedMap",
+          "sha256": "ce5c0339e1a6145e0ce47bd9ff24e96f5e1dd031c64be1d621e1dd8319da158d"
+        },
+        {
+          "class": "net/minecraft/util/Mth",
+          "method": "clampedLerp",
+          "desc": "(DDD)D",
+          "note": "clampedLerp: the upper clamp returns the end value 0.0",
+          "sha256": "44e101c6e3d334ebc10c6deb3b6da44fddb76df11918280b80077dc376a11680",
+          "sha256_variants": [
+            "c077530eecd515c073712ab957c155a7d31190dde4d18f343192090823c6f667"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): return layout only; same calls. See evidence/variant-review/net.minecraft.util.Mth.clampedLerp.diff.txt."
+        },
+        {
+          "class": "net/minecraft/util/Mth",
+          "method": "lerp",
+          "desc": "(DDD)D",
+          "note": "lerp",
+          "sha256": "330111ec8c90da62ddc82ed774203b7d9ff0273327fed673061bc776e77ca6f1"
+        },
+        {
+          "class": "net/minecraft/util/Mth",
+          "method": "length",
+          "desc": "(DDD)D",
+          "note": "length: sqrt of lengthSquared (1.21.1)",
+          "sha256": "eb2aba7563138c4b7769058ce22786b0dec2f4dfe911c6f96815c5151b67cedc"
+        },
+        {
+          "class": "net/minecraft/util/Mth",
+          "method": "lengthSquared",
+          "desc": "(DDD)D",
+          "note": "lengthSquared: sum of the three squares (at least each square; new guard on 1.21.1, where length calls it)",
+          "sha256": "bdc666bc6b04a7ab74717d6d0fc834a2c14e6a9c5689d2a52d2be2d711d2383f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on the reads of Beardifier's two iterator fields inside compute(DensityFunction$FunctionContext)D (a filtered view per block position, built from a per-Beardifier snapshot; 1.21.1 adds the ENCAPSULATE box [minX-11, maxX+11] x [minY-11, maxY+11] x [minZ-11, maxZ+11]); no cancel, the loops and every other mod's handler run",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.worldgen_beardifier_bounds.BeardifierBounds); it reads the census bons.furious.patch.beardifier.EmptyBeardifiers.census() of worldgen_empty_beardifier_marker; other mods' Beardifier code is only checked by SHA-256 there"
+    }
+  },
+  "yields": [
+    {
+      "key": "vanilla_beardifier_influence_bounds",
+      "mod": "c2me_opts_worldgen_vanilla",
+      "name": "C2ME (vanilla worldgen optimizations)",
+      "mixin": "com.ishland.c2me.opts.worldgen.vanilla.mixin.structure_weight_sampler.MixinStructureWeightSampler",
+      "why": "C2ME 0.4.0-alpha.0.122's opts-worldgen-vanilla module @Overwrites Beardifier.compute at the default priority; Mixin refuses our @ModifyExpressionValue into a method overwritten at equal priority (the class would fail to load), so this switch steps aside whenever that module lists its mixin. Found by the crash-class sweep of the 1.21.1 port."
+    }
+  ]
+}

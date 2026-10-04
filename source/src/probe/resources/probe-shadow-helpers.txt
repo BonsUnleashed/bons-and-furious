@@ -1,0 +1,67 @@
+# Helper classes with in-game shadow counters (SHADOW, SHADOW_CHECKS, SHADOW_MISMATCHES), harvested by the port probe.
+# "client <class>" = client-only helper (never initialised on the dedicated server); "both <class>" = either side.
+# Distant Horizons
+both bons.furious.patch.dh_loader.PooledStringIndex
+both bons.furious.patch.dh_loader.WrapperAirFlag
+client bons.furious.patch.dh_loader.AdjacentFaceSkip
+client bons.furious.patch.dh_loader.QuadSortKeys
+both bons.furious.patch.distanthorizons.LodBiomeMemo
+client bons.furious.patch.distanthorizons.BiomeBlendMemo
+# world generation
+both bons.furious.patch.beardifier.EmptyBeardifiers
+both bons.furious.patch.terrablender.NamespaceRuleMemo
+both bons.furious.patch.terrablender.LazyNamespaceRules
+# entities
+both bons.furious.patch.vanilla_entity.BlockScans
+both bons.furious.patch.chunk_tick.TickingChunkMemo
+both bons.furious.patch.mesh_air.BlockStateAirFlag
+both bons.furious.patch.datapack_selectors.SelectorPrefilter
+# other mods
+both bons.furious.patch.cucumber.CucumberTileDispatch
+both bons.furious.patch.almostunified.DuplicateGroups
+both bons.furious.patch.artifacts.ArtifactsTickOrder
+# 1.0.30 rendering (ShadowOutlineDiscard deliberately absent: its mismatch counter counts the upstream bug firing)
+client bons.furious.patch.embeddium_draw.DrawBatchCache
+client bons.furious.patch.embeddium_draw.MergedDraws
+client bons.furious.patch.embeddium_search.SearchReplay
+client bons.furious.patch.embeddium_sorting.QuadKeySort
+client bons.furious.patch.jei_search.BackgroundGrams
+client bons.furious.patch.jei_search.SortKeys
+# 1.0.30 mods (a)
+both bons.furious.patch.curios_tooltip.CuriosTagKeys
+both bons.furious.patch.radium_fixes.PartEntityCollisions
+both bons.furious.patch.fluidwalk_c2.LionfishFluidWalk
+both bons.furious.patch.structurify_c2.CheckMemo
+# 1.0.30 mods (b)
+both bons.furious.patch.mutantmonsters_c2.EmptyShoulderSkip
+# 1.0.30 vanilla (a)
+both bons.furious.patch.tag_ids.TagIds
+both bons.furious.patch.ticker_gate.TickerGate
+both bons.furious.patch.spawn_gate.SpawnGate
+both bons.furious.patch.state_memo.SeaLifeWaterlogged
+both bons.furious.patch.worldgen_aquifer.AquiferCandidates
+both bons.furious.patch.worldgen_beardifier_bounds.BeardifierBounds
+# 1.0.30 vanilla (b)
+both bons.furious.patch.vanilla_text.StripFormatting
+both bons.furious.patch.module_resources.DhSqlScriptLookup
+client bons.furious.patch.armorbake_c2.CubeBakeMemo
+client bons.furious.patch.modernfix_bake.BakeLocations
+# 1.0.30 mods (c)
+both bons.furious.patch.pipez_logistics.SortedConnections
+both bons.furious.patch.pipez_logistics.EmptyFilters
+# 1.0.30 vanilla (c)
+both bons.furious.patch.mob_sunburn.SunBurnOrder
+both bons.furious.patch.vanilla_framed_maps.FramedMaps
+both bons.furious.patch.vanilla_game_events.GameEventRegistries
+both bons.furious.patch.vanilla_goal_flags.GoalFlags
+both bons.furious.patch.vanilla_item_merge.MergeCandidates
+both bons.furious.patch.vanilla_long_jump.LongJumpPicks
+both bons.furious.patch.vanilla_raycast.ClipFast
+both bons.furious.patch.vanilla_search.TurtleEggSearch
+both bons.furious.patch.vanilla_search.RepellentSearch
+both bons.furious.patch.crittersandcompanions_c2.EntityClassCounts
+both bons.furious.patch.crittersandcompanions_c2.RedPandaGate
+both bons.furious.patch.fdbosses_c2.SpawnerPresence
+# rendering
+client bons.furious.patch.embeddium_sprites.SpriteFrameTimes
+client bons.furious.patch.storagedrawers.CountLabels

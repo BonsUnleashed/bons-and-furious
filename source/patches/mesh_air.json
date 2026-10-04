@@ -1,0 +1,43 @@
+{
+  "group": "mesh_air",
+  "keys": {
+    "vanilla_block_state_air_flag": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.29",
+      "mixins": [
+        "bons.furious.mixin.mesh_air.BlockBehaviourAirInvoker",
+        "bons.furious.mixin.mesh_air.BlockStateAirFlagMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase",
+          "method": "isAir",
+          "desc": "()Z",
+          "sha256": "7c5d849eaa583830f7fdc1a051b2a05a064afb9e2563910ff1f7e474c136bb0f"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase",
+          "method": "getBlock",
+          "desc": "()Lnet/minecraft/world/level/block/Block;",
+          "sha256": "292e181158f1e9be4c4c95a6018fb1605adbd6098797b6023bce78ef1f190703"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour",
+          "method": "isAir",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;)Z",
+          "sha256": "d5ac7b358138ff2f4b5895bcd4079da937d7d722f426f06c4ba75d54b7dcab0d"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/block/Block;Lit/unimi/dsi/fastutil/objects/Reference2ObjectArrayMap;Lcom/mojang/serialization/MapCodec;)V",
+          "sha256": "bcbc6505071c40d2540124e06b4fdd00d93fdbb6635e89a20bb6ed00f7628b60"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of Block.isAir(BlockState) inside BlockStateBase.isAir (isAir) with a @Unique flag byte; @Invoker on BlockBehaviour.isAir(BlockState) for the original virtual call (allocation-free off path)",
+      "license": "Minecraft: no Minecraft code is carried; the redirect makes the original virtual call through a generated invoker whenever it does not answer from its own byte (helper bons.furious.patch.mesh_air.BlockStateAirFlag)"
+    }
+  }
+}

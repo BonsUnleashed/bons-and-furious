@@ -1,0 +1,23 @@
+vanilla_repellent_search_sections
+net/minecraft/world/entity/ai/sensing/PiglinSpecificSensor.isValidRepellent(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Z
+
+--- dev neoforge-21.1.252.jar
++++ prod client-1.21.1-20240808.144430-srg.jar
+@@ -11,12 +11,12 @@
+       13: istore_3
+       14: iload_3
+-      15: ifeq          35
++      15: ifeq          33
+       18: aload_2
+       19: getstatic     #                // Field net/minecraft/world/level/block/Blocks.SOUL_CAMPFIRE:Lnet/minecraft/world/level/block/Block;
+       22: invokevirtual #                // Method net/minecraft/world/level/block/state/BlockState.is:(Lnet/minecraft/world/level/block/Block;)Z
+-      25: ifeq          35
++      25: ifeq          33
+       28: aload_2
+       29: invokestatic  #                // Method net/minecraft/world/level/block/CampfireBlock.isLitCampfire:(Lnet/minecraft/world/level/block/state/BlockState;)Z
+-      32: goto          36
+-      35: iload_3
+-      36: ireturn
++      32: ireturn
++      33: iload_3
++      34: ireturn

@@ -1,0 +1,30 @@
+{
+  "group": "vanilla_text",
+  "keys": {
+    "vanilla_strip_formatting_fast_path": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.vanilla_text.StripFormattingMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/ChatFormatting",
+          "method": "stripFormatting",
+          "desc": "(Ljava/lang/String;)Ljava/lang/String;",
+          "sha256": "3a2154488cfe217baa3feffa279797f243f4234ed93b05481103b0a7dc48e721"
+        },
+        {
+          "class": "net/minecraft/ChatFormatting",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "f3aaff7aefc3b2914ee6edfb72fbe64e9c19e550668fc801dbfd45b08828b1c4"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapMethod on ChatFormatting.stripFormatting; the static initializer is guarded because it compiles the pattern the fast path relies on)",
+      "license": "Minecraft: no Minecraft code is carried; the fast path is derived from the pattern's and Matcher.replaceAll's documented behaviour (helper bons.furious.patch.vanilla_text.StripFormatting)"
+    }
+  }
+}

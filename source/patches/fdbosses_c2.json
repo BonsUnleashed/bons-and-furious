@@ -1,0 +1,99 @@
+{
+  "group": "fdbosses_c2",
+  "keys": {
+    "fdbosses_spawner_presence_gate": {
+      "mod": "fdbosses",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.fdbosses_c2.BossEventsSpawnerGateMixin",
+        "bons.furious.mixin.fdbosses_c2.KineticFieldGateMixin",
+        "bons.furious.mixin.fdbosses_c2.HellscapeSkyGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/finderfeed/fdbosses/BossEvents",
+          "method": "preventArenaDestruction",
+          "desc": "(Lnet/neoforged/neoforge/event/level/BlockEvent$BreakEvent;)V",
+          "sha256": "f6ad033a7b326822ebed9c0eb57e6a69e3249263cb17b46c0824113f9180b14a"
+        },
+        {
+          "class": "com/finderfeed/fdbosses/BossEvents",
+          "method": "preventArenaDestruction",
+          "desc": "(Lnet/neoforged/neoforge/event/level/BlockEvent$EntityPlaceEvent;)V",
+          "sha256": "055d00e675dc42b8e56750a660384854251798f65ffdbaa94950c257efa43ad5"
+        },
+        {
+          "class": "com/finderfeed/fdbosses/BossEvents",
+          "method": "preventArenaDestruction",
+          "desc": "(Lnet/neoforged/neoforge/event/level/ExplosionEvent$Detonate;)V",
+          "sha256": "4fd6d03dcfd979a9a4fc10fa5f8f6d5cb416ba951f305f7795c03a8fe5dc131f"
+        },
+        {
+          "class": "com/finderfeed/fdbosses/BossEvents",
+          "method": "deathEvent",
+          "desc": "(Lnet/neoforged/neoforge/event/entity/living/LivingDropsEvent;)V",
+          "sha256": "775c6999c52f5034669eac195d91579d8ef127816b3c6dbdaf3d0bad3e4efee2"
+        },
+        {
+          "class": "com/finderfeed/fdbosses/client/BossCommonMixinHandle",
+          "method": "entityCollidersMixin",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/Level;Ljava/util/List;Lnet/minecraft/world/phys/AABB;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;Lcom/google/common/collect/ImmutableList$Builder;)V",
+          "sha256": "c40d70bdb681a7d72dfce616c580a0dc7fc70a31e20c18586f6987024791699a"
+        },
+        {
+          "class": "com/finderfeed/fdbosses/BossClientEvents",
+          "method": "tickHellscapeSky",
+          "desc": "()V",
+          "sha256": "952491dec0ca8de96c33e6ea1a6c2cc9013fe25c29d314e838ca494e449f007a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the six getEntitiesOfClass calls (four in BossEvents, one in BossCommonMixinHandle.entityCollidersMixin, one in BossClientEvents.tickHellscapeSky, client only); an empty list after the profiler's getEntities count while vanilla_entity_class_count_layer says the level has none of the searched class (reached through a method handle to EntityClassCounts.noneOf)",
+      "license": "FD Bosses: All Rights Reserved; Minecraft (Mojang): no-copy. The mixins carry only our own logic (helper bons.furious.patch.fdbosses_c2.SpawnerPresence)"
+    },
+    "fdbosses_phase_sphere_local_only": {
+      "mod": "fdbosses",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.fdbosses_c2.PhaseSphereLocalOnlyMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/finderfeed/fdbosses/content/items/chesed/PhaseSphereHandler",
+          "method": "onChesedItemUse",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "sha256": "b1b2b3b673f28241b0a2684bfea2ea66d8d4f7f19f748fccd7e135c3574487c7"
+        },
+        {
+          "class": "com/finderfeed/fdbosses/BossClientPackets",
+          "method": "chesedItemUse",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;ZZ)V",
+          "sha256": "39d986b51d2325220d47d32fb11a6e94106fd98cf9a6a9a0af575c56296f28c1"
+        },
+        {
+          "class": "com/finderfeed/fdbosses/mixin/PlayerMixin",
+          "method": "tick",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "9e29d2c212296866f16233986666a0a2bd0c795abdc8350c533e3b7d59b7c8d8"
+        },
+        {
+          "class": "com/finderfeed/fdbosses/BossClientModEvents",
+          "method": "lambda$registerClientExtensions$10",
+          "desc": "(Lnet/minecraft/world/item/ItemDisplayContext;Lnet/minecraft/world/item/ItemStack;)Lcom/finderfeed/fdlib/util/FDColor;",
+          "sha256": "e287e506f26417b8dda11063a3b6f7f52de1289c62692034c790bba143e641b3"
+        },
+        {
+          "class": "com/finderfeed/fdbosses/BossClientEvents",
+          "method": "deathEvent",
+          "desc": "(Lnet/neoforged/neoforge/event/entity/living/LivingDeathEvent;)V",
+          "sha256": "c463b3fa35f408767a0d1ed3ec2c9810559d713e3a32983e0b2b51065b1c6ca5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on PhaseSphereHandler.onChesedItemUse (client config list): a player of a client level other than the local player is skipped; everything else is the original call. 1.21.1: the use counter is read by the Phase Sphere colour lambda registered through NeoForge client extensions (BossClientModEvents.lambda$registerClientExtensions$10, was PhaseSphere.lambda$initializeClient$0), and BossClientEvents.deathEvent resets isUsingChesedItem when the local player dies; both guarded",
+      "license": "FD Bosses: All Rights Reserved. The mixin carries only our own logic (helper bons.furious.patch.fdbosses_c2.PhaseSphereLocal)"
+    }
+  }
+}

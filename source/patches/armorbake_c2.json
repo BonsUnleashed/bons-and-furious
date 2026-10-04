@@ -1,0 +1,73 @@
+{
+  "group": "armorbake_c2",
+  "keys": {
+    "vanilla_layer_bake_streamless": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.armorbake_c2.LayerBakeStreamlessMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/model/geom/builders/PartDefinition",
+          "method": "bake",
+          "desc": "(II)Lnet/minecraft/client/model/geom/ModelPart;",
+          "sha256": "b802c5035a5e42578b485f54e84b4f1258573d3db1d90db3303c138dfd468892"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/builders/PartDefinition",
+          "method": "lambda$bake$2",
+          "desc": "(IILnet/minecraft/client/model/geom/builders/CubeDefinition;)Lnet/minecraft/client/model/geom/ModelPart$Cube;",
+          "sha256": "cd2b28ddbf5749d9dd83faff725f9483578b96a70abb1cbe6b7e5e56deca6e34"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/builders/PartDefinition",
+          "method": "lambda$bake$0",
+          "desc": "(IILjava/util/Map$Entry;)Lnet/minecraft/client/model/geom/ModelPart;",
+          "sha256": "3712646640870795558100ef7622693c2c81c84aa7a7c909021cf7e0a5720f50"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/builders/PartDefinition",
+          "method": "lambda$bake$1",
+          "desc": "(Lnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/model/geom/ModelPart;)Lnet/minecraft/client/model/geom/ModelPart;",
+          "sha256": "d6ee11652b8fc4b605d91bac434ba2b5574e707e7f1d329704c05f8c39a592e8"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/builders/PartDefinition",
+          "method": "<init>",
+          "desc": "(Ljava/util/List;Lnet/minecraft/client/model/geom/PartPose;)V",
+          "sha256": "a2fece94568dd9900bde3143ea67c3d4eceed76467ce32919f8713665aedcdde"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Overwrite of PartDefinition.bake (bake) delegating to bons.furious.patch.armorbake_c2.LayerBake (our plain-loop implementation only; runtime flag: none, the config switch removes the mixin at the next start); EMF's RETURN injector on bake applies to the new body",
+      "license": "Mojang: no Minecraft code is carried; the bake is our own loop implementation of the same result"
+    },
+    "modernfix_cube_bake_memo": {
+      "mod": "modernfix",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.armorbake_c2.CubeBakeMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/model/geom/builders/CubeDefinition",
+          "method": "bake",
+          "desc": "(II)Lnet/minecraft/client/model/geom/ModelPart$Cube;",
+          "sha256": "941aec1e59f7638f516f37c5527d0c257bdf18a8079f74efd3ee1ddc69b0dee1"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/compact_entity_models/CubeDefinitionMixin",
+          "method": "modernfix$deduplicateCube",
+          "desc": "(IIFFFFFFFFFZFFLjava/util/Set;Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;)Lnet/minecraft/client/model/geom/ModelPart$Cube;",
+          "sha256": "5367374eec39723d1a0a48344ba44c4e257799a3b78901692e85dd662736f947"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on CubeDefinition.bake (bake, outside ModernFix's @WrapOperation on the cube constructor) + @Unique memo field; helper bons.furious.patch.armorbake_c2.CubeBakeMemo; active only when ModernFix's CubeDefinitionMixin is merged (checked at runtime from @MixinMerged)",
+      "license": "LGPL-3.0 (ModernFix): its mixin is fingerprinted, not changed; no ModernFix or Minecraft code is carried"
+    }
+  }
+}

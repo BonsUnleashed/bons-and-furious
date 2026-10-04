@@ -1,0 +1,23 @@
+vanilla_entity_class_count_layer
+net/minecraft/util/ClassInstanceMultiMap.iterator()Ljava/util/Iterator;
+
+--- dev neoforge-21.1.252.jar
++++ prod client-1.21.1-20240808.144430-srg.jar
+@@ -5,10 +5,10 @@
+        1: getfield      #                 // Field allInstances:Ljava/util/List;
+        4: invokeinterface #,  1          // InterfaceMethod java/util/List.isEmpty:()Z
+-       9: ifeq          18
++       9: ifeq          16
+       12: invokestatic  #                // Method java/util/Collections.emptyIterator:()Ljava/util/Iterator;
+-      15: goto          30
+-      18: aload_0
+-      19: getfield      #                 // Field allInstances:Ljava/util/List;
+-      22: invokeinterface #,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+-      27: invokestatic  #                // Method com/google/common/collect/Iterators.unmodifiableIterator:(Ljava/util/Iterator;)Lcom/google/common/collect/UnmodifiableIterator;
+-      30: areturn
++      15: areturn
++      16: aload_0
++      17: getfield      #                 // Field allInstances:Ljava/util/List;
++      20: invokeinterface #,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
++      25: invokestatic  #                // Method com/google/common/collect/Iterators.unmodifiableIterator:(Ljava/util/Iterator;)Lcom/google/common/collect/UnmodifiableIterator;
++      28: areturn

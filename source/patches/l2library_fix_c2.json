@@ -1,0 +1,73 @@
+{
+  "group": "l2library_fix_c2",
+  "keys": {
+    "l2library_stop_tracking_noop": {
+      "mod": "l2core",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.l2library_fix_c2.StopTrackingNoopMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/xkmc/l2core/events/EffectSyncEvents",
+          "method": "onPlayerStopTracking",
+          "desc": "(Lnet/neoforged/neoforge/event/entity/player/PlayerEvent$StopTracking;)V",
+          "note": "1.21.1: L2 Core 3.0.8+15 (Jar-in-Jar of L2 Library 3.0.8)",
+          "sha256": "fead3f26b64e0e902f70ae56ef385bad090344aac35fd5f9347e4a449d7be38a"
+        },
+        {
+          "class": "dev/xkmc/l2core/events/EffectSyncEvents",
+          "method": "onEffectDisappear",
+          "desc": "(Lnet/minecraft/core/Holder;Lnet/minecraft/world/entity/LivingEntity;)V",
+          "sha256": "adc11f418063eeb4911d1810a8fbe1ea3027db1fbe24549b80b113ed3ac34fdc"
+        },
+        {
+          "class": "dev/xkmc/l2serial/network/PacketHandler",
+          "method": "toTrackingPlayers",
+          "desc": "(Ldev/xkmc/l2serial/network/SimplePacketBase;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "1.21.1: L2 Serial 3.1.1 sends to the entity's viewers and the entity itself (sendToPlayersTrackingEntityAndSelf)",
+          "sha256": "5ad1cc5951171ab3b584a77cb3a55d280e234c74602d8885ba816e66c5e7aadb"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerEntity",
+          "method": "removePairing",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "note": "remove packet first, StopTracking event after",
+          "sha256": "b0ea7039ea2c82ff63b551c16eecb6a5fd53abfb5e5bc027c5329b22fb9c8c7e"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap$TrackedEntity",
+          "method": "removePlayer",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "note": "the leaving player is out of seenBy before removePairing",
+          "sha256": "78bbb0cecf81c80c0fb521fd8681dcc0cfbcfcc65ba12282d04eef31f39a1619"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap$TrackedEntity",
+          "method": "updatePlayer",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "note": "1.21.1 guard added: the out-of-range path, same order as removePlayer",
+          "sha256": "f840c9ec3f58f9e5aeeceae131d4a05fbec5f5443fb4abe120002fa85bd9d607"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap",
+          "method": "removeEntity",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "1.21.1 guard added: the TrackedEntity leaves entityMap before broadcastRemoved, so the handler sends nothing then",
+          "sha256": "6a60af6334784b80c8fdb03d1bda08f0a550b74377f558e2581737550777368f"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap",
+          "method": "broadcastAndSend",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/network/protocol/Packet;)V",
+          "sha256": "3eb1b41e9c0149f1dd521d60866f2a8292cae9daad71fcf422415c6bfcb64aa3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at HEAD of L2 Core's EffectSyncEvents.onPlayerStopTracking, cancelled (the handler's packets only ever reach players who still see the entity, or the entity itself, with the effect still active)",
+      "license": "LGPL-2.1 (L2 Core / L2 Library); Minecraft/NeoForge classes only fingerprinted: no code is carried (helper bons.furious.patch.l2library_fix_c2.StopTrackingNoop)",
+      "kind": "fix"
+    }
+  }
+}

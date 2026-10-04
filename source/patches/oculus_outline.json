@@ -1,0 +1,183 @@
+{
+  "group": "oculus_outline",
+  "keys": {
+    "oculus_shadow_outline_discard": {
+      "mod": "iris",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.oculus_outline.ShadowOutlineDiscardMixin",
+        "bons.furious.mixin.oculus_outline.OutlineSourceAccessor",
+        "bons.furious.mixin.oculus_outline.BufferSourceAccessor",
+        "bons.furious.mixin.oculus_outline.ByteBufferBuilderAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/irisshaders/iris/shadows/ShadowRenderer",
+          "method": "renderShadows",
+          "desc": "(Lnet/irisshaders/iris/mixin/LevelRendererAccessor;Lnet/minecraft/client/Camera;)V",
+          "sha256": "aecb557623b7641c0483f1511950c134a5b277a9f14aa7e4bdbd2238f1734db2"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/mixin/MixinRenderBuffers",
+          "method": "batchedentityrendering$replaceOutlineBufferSource",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "sha256": "5e849931bd8b0124971b7bd0b7f45b0a48471e53ffc2f691c5164a447645902e"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/mixin/MixinRenderBuffers",
+          "method": "beginLevelRendering",
+          "desc": "()V",
+          "sha256": "e0e750276614297479ac8ccab62bdc5722852d1adf95a0730f253201419894b8"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/mixin/MixinRenderBuffers",
+          "method": "endLevelRendering",
+          "desc": "()V",
+          "sha256": "4b8a15504b55536feec40d7872704c332cde9bb2ba9934768f1865db943bf329"
+        },
+        {
+          "class": "net/minecraft/client/renderer/RenderBuffers",
+          "method": "outlineBufferSource",
+          "desc": "()Lnet/minecraft/client/renderer/OutlineBufferSource;",
+          "sha256": "37df8a6fb2b9c8d2905c1411b708c0a48646de4ce6d34876176be4203e3c6234"
+        },
+        {
+          "class": "net/minecraft/client/renderer/OutlineBufferSource",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;)V",
+          "sha256": "f4a0b58cac655677790f6f46c236900675441de75ca8bbef619652a812790097"
+        },
+        {
+          "class": "net/minecraft/client/renderer/OutlineBufferSource",
+          "method": "getBuffer",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "sha256": "e2fec128f53384cf77e9319594a2597591f117d463a30a6dfbec7a220332cef1"
+        },
+        {
+          "class": "net/minecraft/client/renderer/OutlineBufferSource",
+          "method": "endOutlineBatch",
+          "desc": "()V",
+          "sha256": "519beac8034db3ecb4e280401ca4de58c954c69da3499e613d78e255e0ba5e39"
+        },
+        {
+          "class": "net/minecraft/client/renderer/MultiBufferSource$BufferSource",
+          "method": "getBuffer",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "sha256": "61e698552d1e6b589f9d3eca2cf4689b35becc5697b73d6e1aa73f68d7687e56"
+        },
+        {
+          "class": "net/minecraft/client/renderer/MultiBufferSource$BufferSource",
+          "method": "endBatch",
+          "desc": "()V",
+          "sha256": "0e9a3dda349b6e34e0354af652b416d654d9a5f4c5217dbc637df1e36ba7ffa1"
+        },
+        {
+          "class": "net/minecraft/client/renderer/MultiBufferSource$BufferSource",
+          "method": "endBatch",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)V",
+          "sha256": "06b52e94b5a12989948860de7bd4f6ed2d6b0dd5c4f874900ade9dd48dcefc3a"
+        },
+        {
+          "class": "net/minecraft/client/renderer/MultiBufferSource$BufferSource",
+          "method": "endLastBatch",
+          "desc": "()V",
+          "sha256": "311ed3405ca698d617c1f3c08148e4ec03dc95c7198492f6681b3098343c4192"
+        },
+        {
+          "class": "net/minecraft/client/renderer/MultiBufferSource$BufferSource",
+          "method": "endBatch",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;Lcom/mojang/blaze3d/vertex/BufferBuilder;)V",
+          "note": "build(), sortOnUpload, RenderType.draw, clear lastSharedType: the state changes discard() makes minus the draw",
+          "sha256": "94e387396a6277690b918a5abbc0c13f9246e35b463f2200f92576628cf2d4bb"
+        },
+        {
+          "class": "net/minecraft/client/renderer/MultiBufferSource$BufferSource",
+          "method": "<init>",
+          "desc": "(Lcom/mojang/blaze3d/vertex/ByteBufferBuilder;Ljava/util/SequencedMap;)V",
+          "sha256": "96da746ae2c2589593e6f24b53e634885092ba8e7e8b935a3285059f5efa8c6f"
+        },
+        {
+          "class": "net/minecraft/client/renderer/MultiBufferSource",
+          "method": "immediate",
+          "desc": "(Lcom/mojang/blaze3d/vertex/ByteBufferBuilder;)Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;",
+          "note": "OutlineBufferSource's inner source: exact BufferSource class, no fixed buffers",
+          "sha256": "91583d23d592078a1ba2f0846e279a777c7e6232e2182b512552fad17fe2296c"
+        },
+        {
+          "class": "net/minecraft/client/renderer/RenderType",
+          "method": "draw",
+          "desc": "(Lcom/mojang/blaze3d/vertex/MeshData;)V",
+          "note": "the draw discard() leaves out",
+          "sha256": "99fc0dcf06125a72a30f9d759aa8e43ae35109ff58c5d09699351cac1486de34"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferUploader",
+          "method": "drawWithShader",
+          "desc": "(Lcom/mojang/blaze3d/vertex/MeshData;)V",
+          "sha256": "b26c61f2933dec576cb948531ff62b0f391f2d68fcdbc98881f660e5f1d088e1"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/VertexBuffer",
+          "method": "upload",
+          "desc": "(Lcom/mojang/blaze3d/vertex/MeshData;)V",
+          "note": "closes the mesh on the normal path (try-with-resources)",
+          "sha256": "ab6fa4e1299895dc79f55244dff7c1152cd69d8faf3dc4f500e14112a9b32789",
+          "sha256_variants": [
+            "7f424957c21dc535e5938a55209cb349c0f39c39f0b7fef4831898cfcd627373"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (client 1.21.1-20240808.144430-srg jar): the same try-with-resources compiled differently (production closes the mesh and returns on the invalid branch and closes it after the upload before one return; the NeoForm recompilation jumps to shared close blocks); every path still closes the MeshData exactly once. See work/lanes/R/evidence/VertexBuffer.upload-bytecode-diff.txt."
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferBuilder",
+          "method": "build",
+          "desc": "()Lcom/mojang/blaze3d/vertex/MeshData;",
+          "sha256": "e7ff78f6ce32e84599ee04ba7825800fdbd51c6438e666b8a7c310c3fe656b90"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferBuilder",
+          "method": "storeMesh",
+          "desc": "()Lcom/mojang/blaze3d/vertex/MeshData;",
+          "sha256": "7d11efb06feb815459cdc2573e0b87c9f084ce90815085a2a286032ff88a0931"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/MeshData",
+          "method": "close",
+          "desc": "()V",
+          "sha256": "a69277a142acb55376be19f8096c91d9886c3a1d96b0eb507ceb3a951c7dbeb1"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/ByteBufferBuilder",
+          "method": "build",
+          "desc": "()Lcom/mojang/blaze3d/vertex/ByteBufferBuilder$Result;",
+          "sha256": "12bef5404b63eb0d260fe0876ab793ed901492b68a7067c007fd825dd80a3de7"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/ByteBufferBuilder",
+          "method": "freeResult",
+          "desc": "()V",
+          "sha256": "36916e05c81a9608117cf5ae5ff3c55bfa48b9c1bc0099af6948119dcde9e6d8"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/ByteBufferBuilder",
+          "method": "discardResults",
+          "desc": "()V",
+          "sha256": "29b52b32ff270cb1e3a6b751719f04cf938351f8212504d7eee547bcf8f406e3"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/ByteBufferBuilder$Result",
+          "method": "close",
+          "desc": "()V",
+          "sha256": "c3bf17c4b373e329d589d4eaf522380fdc3e52ad189d4abe2d472b8cfa75f21b",
+          "sha256_variants": [
+            "e7dce74ed76601d2dc8525c08d685fd879631b7250813d0e2eee0e48a8939b3b"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (client 1.21.1-20240808.144430-srg jar): production returns early when already closed where the NeoForm recompilation branches over the body; same instructions otherwise (set closed, isValid(generation), freeResult). See work/lanes/R/evidence/ByteBufferBuilder.Result.close-bytecode-diff.txt."
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation around RenderBuffersExt.endLevelRendering() in Iris 1.8.12's ShadowRenderer.renderShadows; three @Accessor interfaces on vanilla OutlineBufferSource, MultiBufferSource$BufferSource and ByteBufferBuilder). 1.21.1: the vanilla discard follows the 1.21 buffer API (startedBuilders/lastSharedType, BufferBuilder.build() -> MeshData.close()); the ImmediatelyFast 1.5.5 branch is dropped (no 1.21.1 build; IF 1.6.x is the idea source): any non-vanilla outline source is left alone (WARN once)",
+      "license": "Iris is LGPL-3.0-only: nothing of its code is carried or changed (one call wrapped); Minecraft (Mojang): no vanilla code is carried, accessors only"
+    }
+  }
+}

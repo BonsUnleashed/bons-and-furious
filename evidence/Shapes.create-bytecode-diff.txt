@@ -1,0 +1,570 @@
+Shapes.create(DDDDDD)Lnet/minecraft/world/phys/shapes/VoxelShape; - NeoForm dev artifact (source/build/moddev/artifacts/neoforge-21.1.252.jar,
+sha256 42ae7fbd...) vs Mojang production bytecode (client-1.21.1-20240808.144430-srg.jar; Shapes is not in neoforge-21.1.252-client.jar,
+i.e. not binary-patched; the server srg jar gives the same fingerprint 5c97e84e...). javap -c, constant-pool indices stripped.
+Verdict: 143 instructions each, identical calls/constants/order; only the 'return Shapes.empty()' block (any extent < 1e-7) sits
+first in production (third test inverted to ifge over it) and last in the NeoForm recompilation (all three tests iflt to it).
+
+dev insns 143 prod insns 143
+--- dev
++++ prod
+@@ -4,5 +4,5 @@
+ 4: ldc2_w // double 1.0E-7d
+ 7: dcmpg 
+-8: iflt 250
++8: iflt 34
+ 11: dload 8
+ 13: dload_2 
+@@ -10,5 +10,5 @@
+ 15: ldc2_w // double 1.0E-7d
+ 18: dcmpg 
+-19: iflt 250
++19: iflt 34
+ 22: dload 10
+ 24: dload 4
+@@ -16,128 +16,128 @@
+ 27: ldc2_w // double 1.0E-7d
+ 30: dcmpg 
+-31: iflt 250
+-34: dload_0 
+-35: dload 6
+-37: invokestatic // Method findBits:(DD)I
+-40: istore 12
+-42: dload_2 
+-43: dload 8
+-45: invokestatic // Method findBits:(DD)I
+-48: istore 13
+-50: dload 4
+-52: dload 10
+-54: invokestatic // Method findBits:(DD)I
+-57: istore 14
+-59: iload 12
+-61: iflt 74
+-64: iload 13
+-66: iflt 74
+-69: iload 14
+-71: ifge 134
+-74: new // class net/minecraft/world/phys/shapes/ArrayVoxelShape
+-77: dup 
+-78: getstatic // Field BLOCK:Lnet/minecraft/world/phys/shapes/VoxelShape;
+-81: getfield // Field net/minecraft/world/phys/shapes/VoxelShape.shape:Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape;
+-84: iconst_2 
+-85: newarray double
+-87: dup 
+-88: iconst_0 
+-89: dload_0 
+-90: dastore 
++31: ifge 38
++34: invokestatic // Method empty:()Lnet/minecraft/world/phys/shapes/VoxelShape;
++37: areturn 
++38: dload_0 
++39: dload 6
++41: invokestatic // Method findBits:(DD)I
++44: istore 12
++46: dload_2 
++47: dload 8
++49: invokestatic // Method findBits:(DD)I
++52: istore 13
++54: dload 4
++56: dload 10
++58: invokestatic // Method findBits:(DD)I
++61: istore 14
++63: iload 12
++65: iflt 78
++68: iload 13
++70: iflt 78
++73: iload 14
++75: ifge 138
++78: new // class net/minecraft/world/phys/shapes/ArrayVoxelShape
++81: dup 
++82: getstatic // Field BLOCK:Lnet/minecraft/world/phys/shapes/VoxelShape;
++85: getfield // Field net/minecraft/world/phys/shapes/VoxelShape.shape:Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape;
++88: iconst_2 
++89: newarray double
+ 91: dup 
+-92: iconst_1 
+-93: dload 6
+-95: dastore 
+-96: invokestatic // Method it/unimi/dsi/fastutil/doubles/DoubleArrayList.wrap:([D)Lit/unimi/dsi/fastutil/doubles/DoubleArrayList;
+-99: iconst_2 
+-100: newarray double
+-102: dup 
+-103: iconst_0 
+-104: dload_2 
+-105: dastore 
++92: iconst_0 
++93: dload_0 
++94: dastore 
++95: dup 
++96: iconst_1 
++97: dload 6
++99: dastore 
++100: invokestatic // Method it/unimi/dsi/fastutil/doubles/DoubleArrayList.wrap:([D)Lit/unimi/dsi/fastutil/doubles/DoubleArrayList;
++103: iconst_2 
++104: newarray double
+ 106: dup 
+-107: iconst_1 
+-108: dload 8
+-110: dastore 
+-111: invokestatic // Method it/unimi/dsi/fastutil/doubles/DoubleArrayList.wrap:([D)Lit/unimi/dsi/fastutil/doubles/DoubleArrayList;
+-114: iconst_2 
+-115: newarray double
+-117: dup 
+-118: iconst_0 
+-119: dload 4
+-121: dastore 
+-122: dup 
+-123: iconst_1 
+-124: dload 10
+-126: dastore 
+-127: invokestatic // Method it/unimi/dsi/fastutil/doubles/DoubleArrayList.wrap:([D)Lit/unimi/dsi/fastutil/doubles/DoubleArrayList;
+-130: invokespecial // Method net/minecraft/world/phys/shapes/ArrayVoxelShape."<init>":(Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape;Lit/unimi/dsi/fastutil/doubles/DoubleList;Lit/unimi/dsi/fastutil/doubles/DoubleList;Lit/unimi/dsi/fastutil/doubles/DoubleList;)V
+-133: areturn 
+-134: iload 12
+-136: ifne 153
+-139: iload 13
+-141: ifne 153
+-144: iload 14
+-146: ifne 153
+-149: invokestatic // Method block:()Lnet/minecraft/world/phys/shapes/VoxelShape;
+-152: areturn 
+-153: iconst_1 
+-154: iload 12
+-156: ishl 
+-157: istore 15
+-159: iconst_1 
+-160: iload 13
+-162: ishl 
+-163: istore 16
+-165: iconst_1 
+-166: iload 14
+-168: ishl 
+-169: istore 17
+-171: iload 15
+-173: iload 16
+-175: iload 17
+-177: dload_0 
+-178: iload 15
+-180: i2d 
+-181: dmul 
+-182: invokestatic // Method java/lang/Math.round:(D)J
+-185: l2i 
+-186: dload_2 
+-187: iload 16
+-189: i2d 
+-190: dmul 
+-191: invokestatic // Method java/lang/Math.round:(D)J
+-194: l2i 
+-195: dload 4
+-197: iload 17
+-199: i2d 
+-200: dmul 
+-201: invokestatic // Method java/lang/Math.round:(D)J
+-204: l2i 
+-205: dload 6
+-207: iload 15
+-209: i2d 
+-210: dmul 
+-211: invokestatic // Method java/lang/Math.round:(D)J
+-214: l2i 
+-215: dload 8
+-217: iload 16
+-219: i2d 
+-220: dmul 
+-221: invokestatic // Method java/lang/Math.round:(D)J
+-224: l2i 
+-225: dload 10
+-227: iload 17
+-229: i2d 
+-230: dmul 
+-231: invokestatic // Method java/lang/Math.round:(D)J
+-234: l2i 
+-235: invokestatic // Method net/minecraft/world/phys/shapes/BitSetDiscreteVoxelShape.withFilledBounds:(IIIIIIIII)Lnet/minecraft/world/phys/shapes/BitSetDiscreteVoxelShape;
+-238: astore 18
+-240: new // class net/minecraft/world/phys/shapes/CubeVoxelShape
+-243: dup 
+-244: aload 18
+-246: invokespecial // Method net/minecraft/world/phys/shapes/CubeVoxelShape."<init>":(Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape;)V
+-249: areturn 
+-250: invokestatic // Method empty:()Lnet/minecraft/world/phys/shapes/VoxelShape;
++107: iconst_0 
++108: dload_2 
++109: dastore 
++110: dup 
++111: iconst_1 
++112: dload 8
++114: dastore 
++115: invokestatic // Method it/unimi/dsi/fastutil/doubles/DoubleArrayList.wrap:([D)Lit/unimi/dsi/fastutil/doubles/DoubleArrayList;
++118: iconst_2 
++119: newarray double
++121: dup 
++122: iconst_0 
++123: dload 4
++125: dastore 
++126: dup 
++127: iconst_1 
++128: dload 10
++130: dastore 
++131: invokestatic // Method it/unimi/dsi/fastutil/doubles/DoubleArrayList.wrap:([D)Lit/unimi/dsi/fastutil/doubles/DoubleArrayList;
++134: invokespecial // Method net/minecraft/world/phys/shapes/ArrayVoxelShape."<init>":(Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape;Lit/unimi/dsi/fastutil/doubles/DoubleList;Lit/unimi/dsi/fastutil/doubles/DoubleList;Lit/unimi/dsi/fastutil/doubles/DoubleList;)V
++137: areturn 
++138: iload 12
++140: ifne 157
++143: iload 13
++145: ifne 157
++148: iload 14
++150: ifne 157
++153: invokestatic // Method block:()Lnet/minecraft/world/phys/shapes/VoxelShape;
++156: areturn 
++157: iconst_1 
++158: iload 12
++160: ishl 
++161: istore 15
++163: iconst_1 
++164: iload 13
++166: ishl 
++167: istore 16
++169: iconst_1 
++170: iload 14
++172: ishl 
++173: istore 17
++175: iload 15
++177: iload 16
++179: iload 17
++181: dload_0 
++182: iload 15
++184: i2d 
++185: dmul 
++186: invokestatic // Method java/lang/Math.round:(D)J
++189: l2i 
++190: dload_2 
++191: iload 16
++193: i2d 
++194: dmul 
++195: invokestatic // Method java/lang/Math.round:(D)J
++198: l2i 
++199: dload 4
++201: iload 17
++203: i2d 
++204: dmul 
++205: invokestatic // Method java/lang/Math.round:(D)J
++208: l2i 
++209: dload 6
++211: iload 15
++213: i2d 
++214: dmul 
++215: invokestatic // Method java/lang/Math.round:(D)J
++218: l2i 
++219: dload 8
++221: iload 16
++223: i2d 
++224: dmul 
++225: invokestatic // Method java/lang/Math.round:(D)J
++228: l2i 
++229: dload 10
++231: iload 17
++233: i2d 
++234: dmul 
++235: invokestatic // Method java/lang/Math.round:(D)J
++238: l2i 
++239: invokestatic // Method net/minecraft/world/phys/shapes/BitSetDiscreteVoxelShape.withFilledBounds:(IIIIIIIII)Lnet/minecraft/world/phys/shapes/BitSetDiscreteVoxelShape;
++242: astore 18
++244: new // class net/minecraft/world/phys/shapes/CubeVoxelShape
++247: dup 
++248: aload 18
++250: invokespecial // Method net/minecraft/world/phys/shapes/CubeVoxelShape."<init>":(Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape;)V
+ 253: areturn 
+
+
+==== dev (javap)
+  public static net.minecraft.world.phys.shapes.VoxelShape create(double, double, double, double, double, double);
+    Code:
+       0: dload         6
+       2: dload_0
+       3: dsub
+       4: ldc2_w        #27                 // double 1.0E-7d
+       7: dcmpg
+       8: iflt          250
+      11: dload         8
+      13: dload_2
+      14: dsub
+      15: ldc2_w        #27                 // double 1.0E-7d
+      18: dcmpg
+      19: iflt          250
+      22: dload         10
+      24: dload         4
+      26: dsub
+      27: ldc2_w        #27                 // double 1.0E-7d
+      30: dcmpg
+      31: iflt          250
+      34: dload_0
+      35: dload         6
+      37: invokestatic  #29                 // Method findBits:(DD)I
+      40: istore        12
+      42: dload_2
+      43: dload         8
+      45: invokestatic  #29                 // Method findBits:(DD)I
+      48: istore        13
+      50: dload         4
+      52: dload         10
+      54: invokestatic  #29                 // Method findBits:(DD)I
+      57: istore        14
+      59: iload         12
+      61: iflt          74
+      64: iload         13
+      66: iflt          74
+      69: iload         14
+      71: ifge          134
+      74: new           #33                 // class net/minecraft/world/phys/shapes/ArrayVoxelShape
+      77: dup
+      78: getstatic     #13                 // Field BLOCK:Lnet/minecraft/world/phys/shapes/VoxelShape;
+      81: getfield      #35                 // Field net/minecraft/world/phys/shapes/VoxelShape.shape:Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape;
+      84: iconst_2
+      85: newarray       double
+      87: dup
+      88: iconst_0
+      89: dload_0
+      90: dastore
+      91: dup
+      92: iconst_1
+      93: dload         6
+      95: dastore
+      96: invokestatic  #41                 // Method it/unimi/dsi/fastutil/doubles/DoubleArrayList.wrap:([D)Lit/unimi/dsi/fastutil/doubles/DoubleArrayList;
+      99: iconst_2
+     100: newarray       double
+     102: dup
+     103: iconst_0
+     104: dload_2
+     105: dastore
+     106: dup
+     107: iconst_1
+     108: dload         8
+     110: dastore
+     111: invokestatic  #41                 // Method it/unimi/dsi/fastutil/doubles/DoubleArrayList.wrap:([D)Lit/unimi/dsi/fastutil/doubles/DoubleArrayList;
+     114: iconst_2
+     115: newarray       double
+     117: dup
+     118: iconst_0
+     119: dload         4
+     121: dastore
+     122: dup
+     123: iconst_1
+     124: dload         10
+     126: dastore
+     127: invokestatic  #41                 // Method it/unimi/dsi/fastutil/doubles/DoubleArrayList.wrap:([D)Lit/unimi/dsi/fastutil/doubles/DoubleArrayList;
+     130: invokespecial #47                 // Method net/minecraft/world/phys/shapes/ArrayVoxelShape."<init>":(Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape;Lit/unimi/dsi/fastutil/doubles/DoubleList;Lit/unimi/dsi/fastutil/doubles/DoubleList;Lit/unimi/dsi/fastutil/doubles/DoubleList;)V
+     133: areturn
+     134: iload         12
+     136: ifne          153
+     139: iload         13
+     141: ifne          153
+     144: iload         14
+     146: ifne          153
+     149: invokestatic  #50                 // Method block:()Lnet/minecraft/world/phys/shapes/VoxelShape;
+     152: areturn
+     153: iconst_1
+     154: iload         12
+     156: ishl
+     157: istore        15
+     159: iconst_1
+     160: iload         13
+     162: ishl
+     163: istore        16
+     165: iconst_1
+     166: iload         14
+     168: ishl
+     169: istore        17
+     171: iload         15
+     173: iload         16
+     175: iload         17
+     177: dload_0
+     178: iload         15
+     180: i2d
+     181: dmul
+     182: invokestatic  #54                 // Method java/lang/Math.round:(D)J
+     185: l2i
+     186: dload_2
+     187: iload         16
+     189: i2d
+     190: dmul
+     191: invokestatic  #54                 // Method java/lang/Math.round:(D)J
+     194: l2i
+     195: dload         4
+     197: iload         17
+     199: i2d
+     200: dmul
+     201: invokestatic  #54                 // Method java/lang/Math.round:(D)J
+     204: l2i
+     205: dload         6
+     207: iload         15
+     209: i2d
+     210: dmul
+     211: invokestatic  #54                 // Method java/lang/Math.round:(D)J
+     214: l2i
+     215: dload         8
+     217: iload         16
+     219: i2d
+     220: dmul
+     221: invokestatic  #54                 // Method java/lang/Math.round:(D)J
+     224: l2i
+     225: dload         10
+     227: iload         17
+     229: i2d
+     230: dmul
+     231: invokestatic  #54                 // Method java/lang/Math.round:(D)J
+     234: l2i
+     235: invokestatic  #60                 // Method net/minecraft/world/phys/shapes/BitSetDiscreteVoxelShape.withFilledBounds:(IIIIIIIII)Lnet/minecraft/world/phys/shapes/BitSetDiscreteVoxelShape;
+     238: astore        18
+     240: new           #66                 // class net/minecraft/world/phys/shapes/CubeVoxelShape
+     243: dup
+     244: aload         18
+     246: invokespecial #68                 // Method net/minecraft/world/phys/shapes/CubeVoxelShape."<init>":(Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape;)V
+     249: areturn
+     250: invokestatic  #71                 // Method empty:()Lnet/minecraft/world/phys/shapes/VoxelShape;
+     253: areturn
+
+==== production (javap)
+  public static net.minecraft.world.phys.shapes.VoxelShape create(double, double, double, double, double, double);
+    Code:
+       0: dload         6
+       2: dload_0
+       3: dsub
+       4: ldc2_w        #29                 // double 1.0E-7d
+       7: dcmpg
+       8: iflt          34
+      11: dload         8
+      13: dload_2
+      14: dsub
+      15: ldc2_w        #29                 // double 1.0E-7d
+      18: dcmpg
+      19: iflt          34
+      22: dload         10
+      24: dload         4
+      26: dsub
+      27: ldc2_w        #29                 // double 1.0E-7d
+      30: dcmpg
+      31: ifge          38
+      34: invokestatic  #70                 // Method empty:()Lnet/minecraft/world/phys/shapes/VoxelShape;
+      37: areturn
+      38: dload_0
+      39: dload         6
+      41: invokestatic  #74                 // Method findBits:(DD)I
+      44: istore        12
+      46: dload_2
+      47: dload         8
+      49: invokestatic  #74                 // Method findBits:(DD)I
+      52: istore        13
+      54: dload         4
+      56: dload         10
+      58: invokestatic  #74                 // Method findBits:(DD)I
+      61: istore        14
+      63: iload         12
+      65: iflt          78
+      68: iload         13
+      70: iflt          78
+      73: iload         14
+      75: ifge          138
+      78: new           #76                 // class net/minecraft/world/phys/shapes/ArrayVoxelShape
+      81: dup
+      82: getstatic     #50                 // Field BLOCK:Lnet/minecraft/world/phys/shapes/VoxelShape;
+      85: getfield      #82                 // Field net/minecraft/world/phys/shapes/VoxelShape.shape:Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape;
+      88: iconst_2
+      89: newarray       double
+      91: dup
+      92: iconst_0
+      93: dload_0
+      94: dastore
+      95: dup
+      96: iconst_1
+      97: dload         6
+      99: dastore
+     100: invokestatic  #88                 // Method it/unimi/dsi/fastutil/doubles/DoubleArrayList.wrap:([D)Lit/unimi/dsi/fastutil/doubles/DoubleArrayList;
+     103: iconst_2
+     104: newarray       double
+     106: dup
+     107: iconst_0
+     108: dload_2
+     109: dastore
+     110: dup
+     111: iconst_1
+     112: dload         8
+     114: dastore
+     115: invokestatic  #88                 // Method it/unimi/dsi/fastutil/doubles/DoubleArrayList.wrap:([D)Lit/unimi/dsi/fastutil/doubles/DoubleArrayList;
+     118: iconst_2
+     119: newarray       double
+     121: dup
+     122: iconst_0
+     123: dload         4
+     125: dastore
+     126: dup
+     127: iconst_1
+     128: dload         10
+     130: dastore
+     131: invokestatic  #88                 // Method it/unimi/dsi/fastutil/doubles/DoubleArrayList.wrap:([D)Lit/unimi/dsi/fastutil/doubles/DoubleArrayList;
+     134: invokespecial #91                 // Method net/minecraft/world/phys/shapes/ArrayVoxelShape."<init>":(Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape;Lit/unimi/dsi/fastutil/doubles/DoubleList;Lit/unimi/dsi/fastutil/doubles/DoubleList;Lit/unimi/dsi/fastutil/doubles/DoubleList;)V
+     137: areturn
+     138: iload         12
+     140: ifne          157
+     143: iload         13
+     145: ifne          157
+     148: iload         14
+     150: ifne          157
+     153: invokestatic  #93                 // Method block:()Lnet/minecraft/world/phys/shapes/VoxelShape;
+     156: areturn
+     157: iconst_1
+     158: iload         12
+     160: ishl
+     161: istore        15
+     163: iconst_1
+     164: iload         13
+     166: ishl
+     167: istore        16
+     169: iconst_1
+     170: iload         14
+     172: ishl
+     173: istore        17
+     175: iload         15
+     177: iload         16
+     179: iload         17
+     181: dload_0
+     182: iload         15
+     184: i2d
+     185: dmul
+     186: invokestatic  #99                 // Method java/lang/Math.round:(D)J
+     189: l2i
+     190: dload_2
+     191: iload         16
+     193: i2d
+     194: dmul
+     195: invokestatic  #99                 // Method java/lang/Math.round:(D)J
+     198: l2i
+     199: dload         4
+     201: iload         17
+     203: i2d
+     204: dmul
+     205: invokestatic  #99                 // Method java/lang/Math.round:(D)J
+     208: l2i
+     209: dload         6
+     211: iload         15
+     213: i2d
+     214: dmul
+     215: invokestatic  #99                 // Method java/lang/Math.round:(D)J
+     218: l2i
+     219: dload         8
+     221: iload         16
+     223: i2d
+     224: dmul
+     225: invokestatic  #99                 // Method java/lang/Math.round:(D)J
+     228: l2i
+     229: dload         10
+     231: iload         17
+     233: i2d
+     234: dmul
+     235: invokestatic  #99                 // Method java/lang/Math.round:(D)J
+     238: l2i
+     239: invokestatic  #105                // Method net/minecraft/world/phys/shapes/BitSetDiscreteVoxelShape.withFilledBounds:(IIIIIIIII)Lnet/minecraft/world/phys/shapes/BitSetDiscreteVoxelShape;
+     242: astore        18
+     244: new           #107                // class net/minecraft/world/phys/shapes/CubeVoxelShape
+     247: dup
+     248: aload         18
+     250: invokespecial #110                // Method net/minecraft/world/phys/shapes/CubeVoxelShape."<init>":(Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape;)V
+     253: areturn

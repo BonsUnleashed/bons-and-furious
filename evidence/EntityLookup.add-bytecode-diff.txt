@@ -1,0 +1,120 @@
+net/minecraft/world/level/entity/EntityLookup.add(Lnet/minecraft/world/level/entity/EntityAccess;)V
+dev (NeoForm): <port>\source\build\moddev\artifacts\neoforge-21.1.252.jar
+public void add(T);
+    Code:
+       0: aload_1
+       1: invokeinterface #           // InterfaceMethod net/minecraft/world/level/entity/EntityAccess.getUUID:()Ljava/util/UUID;
+       6: astore_2
+       7: aload_0
+       8: getfield      #                 // Field byUuid:Ljava/util/Map;
+      11: aload_2
+      12: invokeinterface #           // InterfaceMethod java/util/Map.containsKey:(Ljava/lang/Object;)Z
+      17: ifeq          35
+      20: getstatic     #                 // Field LOGGER:Lorg/slf4j/Logger;
+      23: ldc           #                 // String Duplicate entity UUID {}: {}
+      25: aload_2
+      26: aload_1
+      27: invokeinterface #           // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
+      32: goto          64
+      35: aload_0
+      36: getfield      #                 // Field byUuid:Ljava/util/Map;
+      39: aload_2
+      40: aload_1
+      41: invokeinterface #           // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      46: pop
+      47: aload_0
+      48: getfield      #                 // Field byId:Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;
+      51: aload_1
+      52: invokeinterface #           // InterfaceMethod net/minecraft/world/level/entity/EntityAccess.getId:()I
+      57: aload_1
+      58: invokeinterface #          // InterfaceMethod it/unimi/dsi/fastutil/ints/Int2ObjectMap.put:(ILjava/lang/Object;)Ljava/lang/Object;
+      63: pop
+      64: return
+
+production: <workspace>/projects/furious_neoforge_1211_20261003\runtime\production-core-a\libraries\net\minecraft\server\1.21.1-20240808.144430\server-1.21.1-20240808.144430-srg.jar
+public void add(T);
+    Code:
+       0: aload_1
+       1: invokeinterface #          // InterfaceMethod net/minecraft/world/level/entity/EntityAccess.getUUID:()Ljava/util/UUID;
+       6: astore_2
+       7: aload_0
+       8: getfield      #                 // Field byUuid:Ljava/util/Map;
+      11: aload_2
+      12: invokeinterface #          // InterfaceMethod java/util/Map.containsKey:(Ljava/lang/Object;)Z
+      17: ifeq          33
+      20: getstatic     #                // Field LOGGER:Lorg/slf4j/Logger;
+      23: ldc           #                // String Duplicate entity UUID {}: {}
+      25: aload_2
+      26: aload_1
+      27: invokeinterface #          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
+      32: return
+      33: aload_0
+      34: getfield      #                 // Field byUuid:Ljava/util/Map;
+      37: aload_2
+      38: aload_1
+      39: invokeinterface #          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      44: pop
+      45: aload_0
+      46: getfield      #                 // Field byId:Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;
+      49: aload_1
+      50: invokeinterface #          // InterfaceMethod net/minecraft/world/level/entity/EntityAccess.getId:()I
+      55: aload_1
+      56: invokeinterface #          // InterfaceMethod it/unimi/dsi/fastutil/ints/Int2ObjectMap.put:(ILjava/lang/Object;)Ljava/lang/Object;
+      61: pop
+      62: return
+
+unified diff (dev -> production):
+--- dev
++++ production
+@@ -1,30 +1,30 @@
+ public void add(T);
+     Code:
+        0: aload_1
+-       1: invokeinterface #           // InterfaceMethod net/minecraft/world/level/entity/EntityAccess.getUUID:()Ljava/util/UUID;
++       1: invokeinterface #          // InterfaceMethod net/minecraft/world/level/entity/EntityAccess.getUUID:()Ljava/util/UUID;
+        6: astore_2
+        7: aload_0
+        8: getfield      #                 // Field byUuid:Ljava/util/Map;
+       11: aload_2
+-      12: invokeinterface #           // InterfaceMethod java/util/Map.containsKey:(Ljava/lang/Object;)Z
+-      17: ifeq          35
+-      20: getstatic     #                 // Field LOGGER:Lorg/slf4j/Logger;
+-      23: ldc           #                 // String Duplicate entity UUID {}: {}
++      12: invokeinterface #          // InterfaceMethod java/util/Map.containsKey:(Ljava/lang/Object;)Z
++      17: ifeq          33
++      20: getstatic     #                // Field LOGGER:Lorg/slf4j/Logger;
++      23: ldc           #                // String Duplicate entity UUID {}: {}
+       25: aload_2
+       26: aload_1
+-      27: invokeinterface #           // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
+-      32: goto          64
+-      35: aload_0
+-      36: getfield      #                 // Field byUuid:Ljava/util/Map;
+-      39: aload_2
+-      40: aload_1
+-      41: invokeinterface #           // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+-      46: pop
+-      47: aload_0
+-      48: getfield      #                 // Field byId:Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;
+-      51: aload_1
+-      52: invokeinterface #           // InterfaceMethod net/minecraft/world/level/entity/EntityAccess.getId:()I
+-      57: aload_1
+-      58: invokeinterface #          // InterfaceMethod it/unimi/dsi/fastutil/ints/Int2ObjectMap.put:(ILjava/lang/Object;)Ljava/lang/Object;
+-      63: pop
+-      64: return
++      27: invokeinterface #          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
++      32: return
++      33: aload_0
++      34: getfield      #                 // Field byUuid:Ljava/util/Map;
++      37: aload_2
++      38: aload_1
++      39: invokeinterface #          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
++      44: pop
++      45: aload_0
++      46: getfield      #                 // Field byId:Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;
++      49: aload_1
++      50: invokeinterface #          // InterfaceMethod net/minecraft/world/level/entity/EntityAccess.getId:()I
++      55: aload_1
++      56: invokeinterface #          // InterfaceMethod it/unimi/dsi/fastutil/ints/Int2ObjectMap.put:(ILjava/lang/Object;)Ljava/lang/Object;
++      61: pop
++      62: return

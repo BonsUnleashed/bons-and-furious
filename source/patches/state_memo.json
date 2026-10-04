@@ -1,0 +1,36 @@
+{
+  "group": "state_memo",
+  "keys": {
+    "spawn_sealife_waterlogged_memo": {
+      "mod": "spawn",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.state_memo.SeaLifeWaterloggedMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ninni/spawn/server/block/entity/SeaLifeDecoBlockEntity",
+          "method": "tick",
+          "desc": "(Lcom/ninni/spawn/server/block/entity/SeaLifeDecoBlockEntity;)V",
+          "sha256": "6d559b515022de2842cd1fc731221bab266b23c29bd53c5f59f1162849990a20"
+        },
+        {
+          "class": "com/ninni/spawn/server/block/SeaLifeDecoBlock",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "c59e6705afb3b1bdb521848c181e4766f595dec570342195f437bf09cac6996f"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/StateHolder",
+          "method": "getValue",
+          "desc": "(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;",
+          "sha256": "21db77f153599a1f544957df6ce118556c01e1a414869f5c7840dc9936c86805"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the first BlockState.getValue call (WATERLOGGED) in SeaLifeDecoBlockEntity.tick(SeaLifeDecoBlockEntity)V: answered from StateValueMemo, a 1,024-slot identity-keyed open-addressing table of immutable (state, value) entries (8-slot probe window; a full window starts an empty table), else asked as before and remembered; spawn_sealife_tick's five redirects in the same method target other calls",
+      "license": "Spawn is All Rights Reserved: nothing of Spawn's or Minecraft's code is carried; the redirect and the helpers bons.furious.patch.state_memo.SeaLifeWaterlogged / StateValueMemo hold only our own logic"
+    }
+  }
+}

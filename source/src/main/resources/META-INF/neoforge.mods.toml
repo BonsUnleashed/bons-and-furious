@@ -4,7 +4,7 @@ license="GPL-3.0-only"
 issueTrackerURL="https://github.com/BonsUnleashed/bons-and-furious/issues"
 [[mods]]
 modId="bons_and_furious"
-version="1.0.27+mc1.21.1"
+version="1.0.30+mc1.21.1"
 displayName="Bons and Furious"
 authors="BonsUnleashed"
 description="Targeted performance patches and compatibility fixes for Minecraft 1.21.1 and NeoForge."
@@ -25,16 +25,31 @@ side="BOTH"
 config="bons_and_furious.adastra.mixins.json"
 
 [[mixins]]
+config="bons_and_furious.almostunified.mixins.json"
+
+[[mixins]]
 config="bons_and_furious.ambientsounds.mixins.json"
 
 [[mixins]]
 config="bons_and_furious.architectury.mixins.json"
 
 [[mixins]]
+config="bons_and_furious.armorbake_c2.mixins.json"
+
+[[mixins]]
 config="bons_and_furious.ars_nouveau.mixins.json"
 
 [[mixins]]
+config="bons_and_furious.artifacts.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.beardifier.mixins.json"
+
+[[mixins]]
 config="bons_and_furious.bettercombat.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.bomd_c2.mixins.json"
 
 [[mixins]]
 config="bons_and_furious.butterflies.mixins.json"
@@ -43,16 +58,52 @@ config="bons_and_furious.butterflies.mixins.json"
 config="bons_and_furious.c2me_compat.mixins.json"
 
 [[mixins]]
+config="bons_and_furious.chunk_tick.mixins.json"
+
+[[mixins]]
 config="bons_and_furious.chunksending.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.citadel.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.climate_build.mixins.json"
 
 [[mixins]]
 config="bons_and_furious.colorwheel.mixins.json"
 
 [[mixins]]
+config="bons_and_furious.crittersandcompanions_c2.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.cucumber.mixins.json"
+
+[[mixins]]
 config="bons_and_furious.curios.mixins.json"
 
 [[mixins]]
+config="bons_and_furious.curios_c2.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.curios_tooltip.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.datapack_selectors.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.dh_loader.mixins.json"
+
+[[mixins]]
 config="bons_and_furious.distanthorizons.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.distanthorizons_c2.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.dungeonsdelight_c2.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.dynamictrees_c2.mixins.json"
 
 [[mixins]]
 config="bons_and_furious.embeddium.mixins.json"
@@ -61,7 +112,19 @@ config="bons_and_furious.embeddium.mixins.json"
 config="bons_and_furious.embeddium_cache.mixins.json"
 
 [[mixins]]
+config="bons_and_furious.embeddium_draw.mixins.json"
+
+[[mixins]]
 config="bons_and_furious.embeddium_meshing.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.embeddium_search.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.embeddium_sorting.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.embeddium_sprites.mixins.json"
 
 [[mixins]]
 config="bons_and_furious.emf.mixins.json"
@@ -76,7 +139,16 @@ config="bons_and_furious.entityculling.mixins.json"
 config="bons_and_furious.etf.mixins.json"
 
 [[mixins]]
+config="bons_and_furious.fancymenu.mixins.json"
+
+[[mixins]]
 config="bons_and_furious.farmersdelight.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.fdbosses_c2.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.fluidwalk_c2.mixins.json"
 
 [[mixins]]
 config="bons_and_furious.forge.mixins.json"
@@ -100,10 +172,34 @@ config="bons_and_furious.immediatelyfast.mixins.json"
 config="bons_and_furious.jei.mixins.json"
 
 [[mixins]]
+config="bons_and_furious.jei_search.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.l2library_fix_c2.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.legendarymonsters_c2.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.mesh_air.mixins.json"
+
+[[mixins]]
 config="bons_and_furious.mixins.json"
 
 [[mixins]]
+config="bons_and_furious.mob_sunburn.mixins.json"
+
+[[mixins]]
 config="bons_and_furious.models.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.modernfix_bake.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.module_resources.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.mutantmonsters_c2.mixins.json"
 
 [[mixins]]
 config="bons_and_furious.netherdepths.mixins.json"
@@ -115,13 +211,28 @@ config="bons_and_furious.occult.mixins.json"
 config="bons_and_furious.oculus.mixins.json"
 
 [[mixins]]
+config="bons_and_furious.oculus_outline.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.pehkui.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.pipez_logistics.mixins.json"
+
+[[mixins]]
 config="bons_and_furious.presencefootsteps.mixins.json"
 
 [[mixins]]
 config="bons_and_furious.radium_compat.mixins.json"
 
 [[mixins]]
+config="bons_and_furious.radium_fixes.mixins.json"
+
+[[mixins]]
 config="bons_and_furious.relics.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.ribbits_c2.mixins.json"
 
 [[mixins]]
 config="bons_and_furious.ryoamiclights.mixins.json"
@@ -130,16 +241,79 @@ config="bons_and_furious.ryoamiclights.mixins.json"
 config="bons_and_furious.spawn.mixins.json"
 
 [[mixins]]
+config="bons_and_furious.spawn_gate.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.state_memo.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.storagedrawers.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.storagedrawers_sync_c2.mixins.json"
+
+[[mixins]]
 config="bons_and_furious.structurify.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.structurify_c2.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.tag_ids.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.terrablender.mixins.json"
 
 [[mixins]]
 config="bons_and_furious.terrain.mixins.json"
 
 [[mixins]]
+config="bons_and_furious.ticker_gate.mixins.json"
+
+[[mixins]]
 config="bons_and_furious.vanilla.mixins.json"
 
 [[mixins]]
+config="bons_and_furious.vanilla_c2.mixins.json"
+
+[[mixins]]
 config="bons_and_furious.vanilla_camera.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.vanilla_entity.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.vanilla_framed_maps.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.vanilla_game_events.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.vanilla_goal_flags.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.vanilla_item_merge.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.vanilla_long_jump.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.vanilla_raycast.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.vanilla_search.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.vanilla_text.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.worldgen_aquifer.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.worldgen_beardifier_bounds.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.worldgen_biome_fiddle.mixins.json"
 
 [[mixins]]
 config="bons_and_furious_pacing.mixins.json"

@@ -1,0 +1,358 @@
+vanilla_aquifer_candidate_cache
+net/minecraft/world/level/levelgen/Aquifer$NoiseBasedAquifer.computeSubstance(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;D)Lnet/minecraft/world/level/block/state/BlockState;
+
+--- dev neoforge-21.1.252.jar
++++ prod client-1.21.1-20240808.144430-srg.jar
+@@ -21,5 +21,5 @@
+       36: areturn
+       37: aload_0
+-      38: getfield      #                 // Field globalFluidPicker:Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;
++      38: getfield      #                // Field globalFluidPicker:Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;
+       41: iload         4
+       43: iload         5
+@@ -106,14 +106,14 @@
+      200: iload         26
+      202: laload
+-     203: lstore        27
+-     205: lload         27
++     203: lstore        29
++     205: lload         29
+      207: ldc2_w        #                // long 9223372036854775807l
+      210: lcmp
+      211: ifeq          221
+-     214: lload         27
+-     216: lstore        29
++     214: lload         29
++     216: lstore        27
+      218: goto          297
+      221: aload_0
+-     222: getfield      #                 // Field positionalRandomFactory:Lnet/minecraft/world/level/levelgen/PositionalRandomFactory;
++     222: getfield      #                // Field positionalRandomFactory:Lnet/minecraft/world/level/levelgen/PositionalRandomFactory;
+      225: iload         23
+      227: iload         24
+@@ -143,21 +143,21 @@
+      282: iadd
+      283: invokestatic  #                // Method net/minecraft/core/BlockPos.asLong:(III)J
+-     286: lstore        29
++     286: lstore        27
+      288: aload_0
+      289: getfield      #                // Field aquiferLocationCache:[J
+      292: iload         26
+-     294: lload         29
++     294: lload         27
+      296: lastore
+-     297: lload         29
++     297: lload         27
+      299: invokestatic  #                // Method net/minecraft/core/BlockPos.getX:(J)I
+      302: iload         4
+      304: isub
+      305: istore        31
+-     307: lload         29
++     307: lload         27
+      309: invokestatic  #                // Method net/minecraft/core/BlockPos.getY:(J)I
+      312: iload         5
+      314: isub
+      315: istore        32
+-     317: lload         29
++     317: lload         27
+      319: invokestatic  #                // Method net/minecraft/core/BlockPos.getZ:(J)I
+      322: iload         6
+@@ -183,5 +183,5 @@
+      357: lload         14
+      359: lstore        16
+-     361: lload         29
++     361: lload         27
+      363: lstore        14
+      365: iload         12
+@@ -197,5 +197,5 @@
+      387: lload         16
+      389: lstore        18
+-     391: lload         29
++     391: lload         27
+      393: lstore        16
+      395: iload         12
+@@ -207,5 +207,5 @@
+      408: iload         34
+      410: if_icmplt     421
+-     413: lload         29
++     413: lload         27
+      415: lstore        18
+      417: iload         34
+@@ -229,139 +229,141 @@
+      460: invokevirtual #                // Method net/minecraft/world/level/levelgen/Aquifer$FluidStatus.at:(I)Lnet/minecraft/world/level/block/state/BlockState;
+      463: astore        23
+-     465: dload         21
+-     467: dconst_0
+-     468: dcmpg
+-     469: ifgt          493
+-     472: aload_0
+-     473: dload         21
+-     475: getstatic     #                // Field FLOWING_UPDATE_SIMULARITY:D
+-     478: dcmpl
+-     479: iflt          486
+-     482: iconst_1
+-     483: goto          487
+-     486: iconst_0
+-     487: putfield      #                // Field shouldScheduleFluidUpdate:Z
+-     490: aload         23
+-     492: areturn
+-     493: aload         23
+-     495: getstatic     #                // Field net/minecraft/world/level/block/Blocks.WATER:Lnet/minecraft/world/level/block/Block;
+-     498: invokevirtual #                // Method net/minecraft/world/level/block/state/BlockState.is:(Lnet/minecraft/world/level/block/Block;)Z
+-     501: ifeq          545
+-     504: aload_0
+-     505: getfield      #                 // Field globalFluidPicker:Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;
+-     508: iload         4
+-     510: iload         5
+-     512: iconst_1
+-     513: isub
+-     514: iload         6
+-     516: invokeinterface #,  4          // InterfaceMethod net/minecraft/world/level/levelgen/Aquifer$FluidPicker.computeFluid:(III)Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;
+-     521: iload         5
+-     523: iconst_1
+-     524: isub
+-     525: invokevirtual #                // Method net/minecraft/world/level/levelgen/Aquifer$FluidStatus.at:(I)Lnet/minecraft/world/level/block/state/BlockState;
+-     528: getstatic     #                // Field net/minecraft/world/level/block/Blocks.LAVA:Lnet/minecraft/world/level/block/Block;
+-     531: invokevirtual #                // Method net/minecraft/world/level/block/state/BlockState.is:(Lnet/minecraft/world/level/block/Block;)Z
+-     534: ifeq          545
+-     537: aload_0
+-     538: iconst_1
+-     539: putfield      #                // Field shouldScheduleFluidUpdate:Z
+-     542: aload         23
+-     544: areturn
+-     545: new           #                // class org/apache/commons/lang3/mutable/MutableDouble
+-     548: dup
+-     549: ldc2_w        #                // double NaNd
+-     552: invokespecial #                // Method org/apache/commons/lang3/mutable/MutableDouble."<init>":(D)V
+-     555: astore        24
+-     557: aload_0
+-     558: lload         16
+-     560: invokevirtual #                // Method getAquiferStatus:(J)Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;
+-     563: astore        25
+-     565: dload         21
+-     567: aload_0
+-     568: aload_1
+-     569: aload         24
+-     571: aload         20
++     465: aload         23
++     467: astore        24
++     469: dload         21
++     471: dconst_0
++     472: dcmpg
++     473: ifgt          497
++     476: aload_0
++     477: dload         21
++     479: getstatic     #                // Field FLOWING_UPDATE_SIMULARITY:D
++     482: dcmpl
++     483: iflt          490
++     486: iconst_1
++     487: goto          491
++     490: iconst_0
++     491: putfield      #                // Field shouldScheduleFluidUpdate:Z
++     494: aload         24
++     496: areturn
++     497: aload         23
++     499: getstatic     #                // Field net/minecraft/world/level/block/Blocks.WATER:Lnet/minecraft/world/level/block/Block;
++     502: invokevirtual #                // Method net/minecraft/world/level/block/state/BlockState.is:(Lnet/minecraft/world/level/block/Block;)Z
++     505: ifeq          549
++     508: aload_0
++     509: getfield      #                // Field globalFluidPicker:Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;
++     512: iload         4
++     514: iload         5
++     516: iconst_1
++     517: isub
++     518: iload         6
++     520: invokeinterface #,  4          // InterfaceMethod net/minecraft/world/level/levelgen/Aquifer$FluidPicker.computeFluid:(III)Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;
++     525: iload         5
++     527: iconst_1
++     528: isub
++     529: invokevirtual #                // Method net/minecraft/world/level/levelgen/Aquifer$FluidStatus.at:(I)Lnet/minecraft/world/level/block/state/BlockState;
++     532: getstatic     #                // Field net/minecraft/world/level/block/Blocks.LAVA:Lnet/minecraft/world/level/block/Block;
++     535: invokevirtual #                // Method net/minecraft/world/level/block/state/BlockState.is:(Lnet/minecraft/world/level/block/Block;)Z
++     538: ifeq          549
++     541: aload_0
++     542: iconst_1
++     543: putfield      #                // Field shouldScheduleFluidUpdate:Z
++     546: aload         24
++     548: areturn
++     549: new           #                // class org/apache/commons/lang3/mutable/MutableDouble
++     552: dup
++     553: ldc2_w        #                // double NaNd
++     556: invokespecial #                // Method org/apache/commons/lang3/mutable/MutableDouble."<init>":(D)V
++     559: astore        25
++     561: aload_0
++     562: lload         16
++     564: invokevirtual #                // Method getAquiferStatus:(J)Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;
++     567: astore        26
++     569: dload         21
++     571: aload_0
++     572: aload_1
+      573: aload         25
+-     575: invokevirtual #                // Method calculatePressure:(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;Lorg/apache/commons/lang3/mutable/MutableDouble;Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;)D
+-     578: dmul
+-     579: dstore        26
+-     581: dload_2
+-     582: dload         26
+-     584: dadd
+-     585: dconst_0
+-     586: dcmpl
+-     587: ifle          597
+-     590: aload_0
+-     591: iconst_0
+-     592: putfield      #                // Field shouldScheduleFluidUpdate:Z
+-     595: aconst_null
+-     596: areturn
+-     597: aload_0
+-     598: lload         18
+-     600: invokevirtual #                // Method getAquiferStatus:(J)Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;
+-     603: astore        28
+-     605: iload         11
+-     607: iload         13
+-     609: invokestatic  #                // Method similarity:(II)D
+-     612: dstore        29
+-     614: dload         29
+-     616: dconst_0
+-     617: dcmpl
+-     618: ifle          656
+-     621: dload         21
+-     623: dload         29
+-     625: dmul
+-     626: aload_0
+-     627: aload_1
+-     628: aload         24
+-     630: aload         20
+-     632: aload         28
+-     634: invokevirtual #                // Method calculatePressure:(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;Lorg/apache/commons/lang3/mutable/MutableDouble;Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;)D
+-     637: dmul
+-     638: dstore        31
+-     640: dload_2
+-     641: dload         31
+-     643: dadd
+-     644: dconst_0
+-     645: dcmpl
+-     646: ifle          656
+-     649: aload_0
+-     650: iconst_0
+-     651: putfield      #                // Field shouldScheduleFluidUpdate:Z
+-     654: aconst_null
+-     655: areturn
+-     656: iload         12
+-     658: iload         13
+-     660: invokestatic  #                // Method similarity:(II)D
+-     663: dstore        31
+-     665: dload         31
+-     667: dconst_0
+-     668: dcmpl
+-     669: ifle          707
+-     672: dload         21
+-     674: dload         31
+-     676: dmul
+-     677: aload_0
+-     678: aload_1
+-     679: aload         24
+-     681: aload         25
+-     683: aload         28
+-     685: invokevirtual #                // Method calculatePressure:(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;Lorg/apache/commons/lang3/mutable/MutableDouble;Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;)D
+-     688: dmul
+-     689: dstore        33
+-     691: dload_2
+-     692: dload         33
+-     694: dadd
+-     695: dconst_0
+-     696: dcmpl
+-     697: ifle          707
+-     700: aload_0
+-     701: iconst_0
+-     702: putfield      #                // Field shouldScheduleFluidUpdate:Z
+-     705: aconst_null
+-     706: areturn
+-     707: aload_0
+-     708: iconst_1
+-     709: putfield      #                // Field shouldScheduleFluidUpdate:Z
+-     712: aload         23
+-     714: areturn
++     575: aload         20
++     577: aload         26
++     579: invokevirtual #                // Method calculatePressure:(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;Lorg/apache/commons/lang3/mutable/MutableDouble;Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;)D
++     582: dmul
++     583: dstore        27
++     585: dload_2
++     586: dload         27
++     588: dadd
++     589: dconst_0
++     590: dcmpl
++     591: ifle          601
++     594: aload_0
++     595: iconst_0
++     596: putfield      #                // Field shouldScheduleFluidUpdate:Z
++     599: aconst_null
++     600: areturn
++     601: aload_0
++     602: lload         18
++     604: invokevirtual #                // Method getAquiferStatus:(J)Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;
++     607: astore        29
++     609: iload         11
++     611: iload         13
++     613: invokestatic  #                // Method similarity:(II)D
++     616: dstore        30
++     618: dload         30
++     620: dconst_0
++     621: dcmpl
++     622: ifle          660
++     625: dload         21
++     627: dload         30
++     629: dmul
++     630: aload_0
++     631: aload_1
++     632: aload         25
++     634: aload         20
++     636: aload         29
++     638: invokevirtual #                // Method calculatePressure:(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;Lorg/apache/commons/lang3/mutable/MutableDouble;Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;)D
++     641: dmul
++     642: dstore        32
++     644: dload_2
++     645: dload         32
++     647: dadd
++     648: dconst_0
++     649: dcmpl
++     650: ifle          660
++     653: aload_0
++     654: iconst_0
++     655: putfield      #                // Field shouldScheduleFluidUpdate:Z
++     658: aconst_null
++     659: areturn
++     660: iload         12
++     662: iload         13
++     664: invokestatic  #                // Method similarity:(II)D
++     667: dstore        32
++     669: dload         32
++     671: dconst_0
++     672: dcmpl
++     673: ifle          711
++     676: dload         21
++     678: dload         32
++     680: dmul
++     681: aload_0
++     682: aload_1
++     683: aload         25
++     685: aload         26
++     687: aload         29
++     689: invokevirtual #                // Method calculatePressure:(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;Lorg/apache/commons/lang3/mutable/MutableDouble;Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;)D
++     692: dmul
++     693: dstore        34
++     695: dload_2
++     696: dload         34
++     698: dadd
++     699: dconst_0
++     700: dcmpl
++     701: ifle          711
++     704: aload_0
++     705: iconst_0
++     706: putfield      #                // Field shouldScheduleFluidUpdate:Z
++     709: aconst_null
++     710: areturn
++     711: aload_0
++     712: iconst_1
++     713: putfield      #                // Field shouldScheduleFluidUpdate:Z
++     716: aload         24
++     718: areturn

@@ -1,0 +1,83 @@
+{
+  "group": "embeddium_sprites",
+  "keys": {
+    "embeddium_sprite_tick_frame_times": {
+      "mod": "embeddium",
+      "scripts": [],
+      "since": "1.0.29",
+      "mixins": [
+        "bons.furious.mixin.embeddium_sprites.SpriteTickerFrameTimesMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/renderer/texture/SpriteContents$Ticker",
+          "method": "tickAndUpload",
+          "desc": "(II)V",
+          "sha256": "06e677fdeac8b4601d884d29aa571d8f29b4a776d87605e457b8b7bdcc6eb2b5"
+        },
+        {
+          "class": "net/minecraft/client/renderer/texture/SpriteContents$Ticker",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/texture/SpriteContents;Lnet/minecraft/client/renderer/texture/SpriteContents$AnimatedTexture;Lnet/minecraft/client/renderer/texture/SpriteContents$InterpolationData;)V",
+          "note": "the only constructor: its first argument is the owner sprite we keep and Embeddium's parent",
+          "sha256": "65177b4ac485fcb6f4124e92afdc0b53b49fde0c116894eb18b4aeecdcdb84a7"
+        },
+        {
+          "class": "net/minecraft/client/renderer/texture/SpriteContents$Ticker",
+          "method": "*",
+          "desc": "",
+          "sha256": "5dfbba2f26ce561c85631f33a2ca0f6a76f34ab951542cc6251ea71ccf59e75c"
+        },
+        {
+          "class": "net/minecraft/client/renderer/texture/SpriteContents$AnimatedTexture",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/texture/SpriteContents;Ljava/util/List;IZ)V",
+          "note": "stores the frames list as given (vanilla passes ImmutableList.copyOf)",
+          "sha256": "0e57a89d2cd05d51401873ef69c489041312ce5ad5432f2f161abc3af0731dbd"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/mixin/features/textures/animations/tracking/SpriteContentsAnimatorImplMixin",
+          "method": "preTick",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "the handler we sit in and restate",
+          "sha256": "93fad8921ee2491ed0a386e36e95c7743c70f380e88ad70709ec0d604c14560e"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/mixin/features/textures/animations/tracking/SpriteContentsAnimatorImplMixin",
+          "method": "assignParent",
+          "desc": "(Lnet/minecraft/client/renderer/texture/SpriteContents;Lnet/minecraft/client/renderer/texture/SpriteContents$AnimatedTexture;Lnet/minecraft/client/renderer/texture/SpriteContents$InterpolationData;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "Embeddium's parent is the constructor's first argument, kept at RETURN",
+          "sha256": "fb59ddcdd35a66ed9daee95e7529f16724defd8441f19381d72fa722d8e1c056"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/mixin/features/textures/animations/tracking/SpriteContentsAnimatorImplMixin",
+          "method": "postTick",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "417a75ff3dca6d8db3bc533fb3e764d2ef1c349973a366dfdf8048eb782f202d"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/mixin/features/textures/animations/tracking/SpriteContentsAnimatorImplMixin",
+          "method": "*",
+          "desc": "",
+          "sha256": "c94e8c9a809b9ac31e38f4b22be1dcdd16ca92a43eab70f56f74c2255c215e8e"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/mixin/features/textures/animations/tracking/SpriteContentsMixin",
+          "method": "sodium$isActive",
+          "desc": "()Z",
+          "sha256": "347e8b3b40d7185eacf208a1aca7356b828932fe38465a9160bc546d664cf636"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/Embeddium",
+          "method": "options",
+          "desc": "()Lorg/embeddedt/embeddium/impl/gui/EmbeddiumOptions;",
+          "note": "the options holder (SodiumClientMod.options() before Embeddium 1.0)",
+          "sha256": "9ab3680d61c4d67b4f0c4765b6785223e43ac74a277dec4a139750acd0e8475a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinSquared @TargetHandler: @Inject at the HEAD of Embeddium's merged SpriteContentsAnimatorImplMixin.preTick handler in SpriteContents$Ticker, cancellable, require = 0, expect = 0; it cancels tickAndUpload's CallbackInfo as Embeddium does) + @Inject at the RETURN of the Ticker constructor keeping its first argument (the owner sprite)",
+      "license": "Embeddium is LGPL-3.0-only: the handler restates Embeddium's preTick frame advance (helper bons.furious.patch.embeddium_sprites.SpriteFrameTimes); Minecraft (Mojang): no vanilla code is carried, the vanilla body is never replaced"
+    }
+  }
+}

@@ -1,0 +1,288 @@
+{
+  "group": "radium_fixes",
+  "keys": {
+    "radium_world_border_keep_listeners": {
+      "mod": "radium",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.radium_fixes.WorldBorderKeepListenersMixin"
+      ],
+      "guard": [
+        {
+          "class": "me/jellysquid/mods/lithium/common/world/listeners/WorldBorderListenerOnceMulti",
+          "method": "onBorderSetWarningTime",
+          "desc": "(Lnet/minecraft/world/level/border/WorldBorder;I)V",
+          "note": "warning time: the wrapped clear()",
+          "sha256": "456ff1d73e84a3d06686603ce26ba4a0318d749db115af1d94fca91fc8c6b2ce"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/world/listeners/WorldBorderListenerOnceMulti",
+          "method": "onBorderSetWarningBlocks",
+          "desc": "(Lnet/minecraft/world/level/border/WorldBorder;I)V",
+          "note": "warning distance: the wrapped clear()",
+          "sha256": "80341eed4cc78d44884723dac7b9892fde5badf408849d91a890e01d99a96b80"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/world/listeners/WorldBorderListenerOnceMulti",
+          "method": "onBorderSetDamagePerBlock",
+          "desc": "(Lnet/minecraft/world/level/border/WorldBorder;D)V",
+          "note": "damage per block: the wrapped clear()",
+          "sha256": "f5561f24ba2a4a6e93b4fbb6411616504c9bf23aafe09f7385ece6fa9263c82b"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/world/listeners/WorldBorderListenerOnceMulti",
+          "method": "onBorderSetDamageSafeZOne",
+          "desc": "(Lnet/minecraft/world/level/border/WorldBorder;D)V",
+          "note": "damage buffer: the wrapped clear()",
+          "sha256": "c77139bba548b7959a476d72dbc480adb082f89ca1d928632ff970292d0454ea"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/world/listeners/WorldBorderListenerOnceMulti",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set: the shape-change handlers that still clear",
+          "sha256": "fb29105ddbb5d5bc98e4e162e4a5d7c690929035152e29b18008fe04d92e2cde"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/world/listeners/WorldBorderListenerOnce",
+          "method": "*",
+          "desc": "",
+          "note": "the subscribers' handlers: empty for the four size-unrelated events",
+          "sha256": "8f18c1d2d0f2363e22318c027ca3273ddb8ef87f65273c16369cbdbfa27c8bad"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/world/listeners/WorldBorderListenerOnce",
+          "method": "onBorderSetWarningTime",
+          "desc": "(Lnet/minecraft/world/level/border/WorldBorder;I)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/world/listeners/WorldBorderListenerOnce",
+          "method": "onBorderSetWarningBlocks",
+          "desc": "(Lnet/minecraft/world/level/border/WorldBorder;I)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/world/listeners/WorldBorderListenerOnce",
+          "method": "onBorderSetDamagePerBlock",
+          "desc": "(Lnet/minecraft/world/level/border/WorldBorder;D)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/world/listeners/WorldBorderListenerOnce",
+          "method": "onBorderSetDamageSafeZOne",
+          "desc": "(Lnet/minecraft/world/level/border/WorldBorder;D)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/mixin/world/block_entity_ticking/world_border/DirectBlockEntityTickInvokerMixin",
+          "method": "isInsideWorldBorder",
+          "desc": "()Z",
+          "note": "the ticker's cached border answer",
+          "sha256": "3571016b3fd484ec33adf61c78bc3721d177d4d2e897375bc92ea9c69e6b97f1"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/mixin/world/block_entity_ticking/world_border/DirectBlockEntityTickInvokerMixin",
+          "method": "startWorldBorderCaching",
+          "desc": "()V",
+          "note": "subscribes again whenever the cache was reset",
+          "sha256": "6975b910feea8c8e781b0509b8a73b0d89dbe0b01dc1ec73272f53ab74a7b1c5"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/mixin/world/block_entity_ticking/world_border/DirectBlockEntityTickInvokerMixin",
+          "method": "lithium$onWorldBorderShapeChange",
+          "desc": "(Lnet/minecraft/world/level/border/WorldBorder;)V",
+          "note": "the reset (1.20.1 name: onWorldBorderShapeChange)",
+          "sha256": "5b0a4523fa6aab0906c16964b879d3370a6998406082e22756c0b49fff455e76"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/mixin/util/world_border_listener/WorldBorderMixin",
+          "method": "addSimpleListenerOnce",
+          "desc": "(Lnet/minecraft/world/level/border/BorderChangeListener;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "routes the tickers into WorldBorderListenerOnceMulti",
+          "sha256": "88d771f9e5127b9bf018a60056a23a5021f3c77f83347e5b034dfaa1113bb746"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/mixin/util/world_border_listener/WorldBorderMixin",
+          "method": "getUpdatedArea",
+          "desc": "(Lnet/minecraft/world/level/border/WorldBorder$BorderExtent;)Lnet/minecraft/world/level/border/WorldBorder$BorderExtent;",
+          "note": "the end of a size lerp is a shape change too",
+          "sha256": "8902e993a0e1293faf06d39dcc38974957bfa41d0c04ca457da7156b2ce04b77"
+        },
+        {
+          "class": "net/minecraft/world/level/border/WorldBorder",
+          "method": "setWarningTime",
+          "desc": "(I)V",
+          "note": "setWarningTime: sets a field and notifies, the border does not move",
+          "sha256": "09ca22b90c39d462a2d67674e152f8e4da587a72b000730879a647b2ab38ef75"
+        },
+        {
+          "class": "net/minecraft/world/level/border/WorldBorder",
+          "method": "setWarningBlocks",
+          "desc": "(I)V",
+          "note": "setWarningBlocks",
+          "sha256": "5f3140e54b6a95f209e04dfd179e1e8e9b8d4ba3c9cec9adb64390e399fb7eaa"
+        },
+        {
+          "class": "net/minecraft/world/level/border/WorldBorder",
+          "method": "setDamagePerBlock",
+          "desc": "(D)V",
+          "note": "setDamagePerBlock",
+          "sha256": "45e0308fcbac947f7837a43c12ae586f0804324e6eb2798cd55466776429859b"
+        },
+        {
+          "class": "net/minecraft/world/level/border/WorldBorder",
+          "method": "setDamageSafeZone",
+          "desc": "(D)V",
+          "note": "setDamageSafeZone",
+          "sha256": "dcb33e91c7f5584506682bffd53b1c51ae2385971566aa61c20ead0e2b28dcb8"
+        },
+        {
+          "class": "net/minecraft/world/level/border/WorldBorder",
+          "method": "isWithinBounds",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Z",
+          "note": "isWithinBounds: the vanilla answer the cache must equal",
+          "sha256": "bcd3a1a846e34b81a6ac0ca6d49ac01a5a1e91dd9121d82b00e4a91d98e5c7d6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the WeakHashMap.clear() call in Radium's four size-unrelated WorldBorderListenerOnceMulti handlers",
+      "license": "LGPL-3.0 (Radium): no Radium code carried; the wrap skips one call in Radium's class (helper bons.furious.patch.radium_fixes.WorldBorderKeepListeners)"
+    },
+    "radium_part_entity_collisions": {
+      "mod": "radium",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.radium_fixes.PartEntityCollisionsMixin"
+      ],
+      "guard": [
+        {
+          "class": "me/jellysquid/mods/lithium/common/world/WorldHelper",
+          "method": "getEntitiesForCollision",
+          "desc": "(Lnet/minecraft/world/level/EntityGetter;Lnet/minecraft/world/phys/AABB;Lnet/minecraft/world/entity/Entity;)Ljava/util/List;",
+          "note": "the redirected call: the shortcut branch",
+          "sha256": "191cc1e3e6248fd92fcbca3ab23beb1afcbd2acb8c4b60bacc5aa389e3026c00"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/world/WorldHelper",
+          "method": "getEntitiesOfClassGroup",
+          "desc": "(Lnet/minecraft/world/level/entity/EntitySectionStorage;Lnet/minecraft/world/entity/Entity;Lme/jellysquid/mods/lithium/common/entity/EntityClassGroup$NoDragonClassGroup;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;",
+          "note": "returns a fresh ArrayList the parts are appended to",
+          "sha256": "ca2481b383fd2b37bed4d8b095307dd12e1963ce731f6d0ab8b95792fadde23a"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/world/WorldHelper",
+          "method": "lambda$getEntitiesOfClassGroup$0",
+          "desc": "(Lme/jellysquid/mods/lithium/common/entity/EntityClassGroup$NoDragonClassGroup;Lnet/minecraft/world/phys/AABB;Lnet/minecraft/world/entity/Entity;Ljava/util/ArrayList;Lnet/minecraft/world/level/entity/EntitySection;)Lnet/minecraft/util/AbortableIterationConsumer$Continuation;",
+          "note": "the section filter mirrored for the parts: intersects, not a spectator, not the moving entity",
+          "sha256": "c47d3a91d402e77dc4f44139bb2a28affdaf3bfbc311812c0f2297fa7f76d18c"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/entity/LithiumEntityCollisions$1$1",
+          "method": "computeNext",
+          "desc": "()Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "note": "Radium's filter after the lookup (noCollision path): canCollideWith, or canBeCollidedWith without a moving entity",
+          "sha256": "1bb1db78610600355a712229f332177e52e0a7d714121765d7c073ad9b9ddb7d"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/entity/LithiumEntityCollisions",
+          "method": "getEntityWorldBorderCollisionIterable",
+          "desc": "(Lnet/minecraft/world/level/EntityGetter;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;Z)Ljava/lang/Iterable;",
+          "sha256": "39cd82d9dd7b5494a7a373592f87e826c37f16213d0879625a40a096c111dde3"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/entity/LithiumEntityCollisions",
+          "method": "appendEntityCollisions",
+          "desc": "(Ljava/util/List;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;)V",
+          "note": "1.21.1: Radium's movement path and its filter after the lookup (same test as the iterable)",
+          "sha256": "d9eab41eb24ac02eaad3e7a3f387d2085fca650af1cede5371c0e7e50028ae46"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/entity/EntityClassGroup",
+          "method": "contains",
+          "desc": "(Ljava/lang/Class;)Z",
+          "sha256": "6acf6ae57feab169c668e09a52d159b252558cc48ee8034d7b6643a77e42e54d"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "getEntities",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+          "note": "NeoForge's getEntities: sections, then every part entity of the level (the behaviour restored)",
+          "sha256": "d5de4df402f9340dc4e51f23d6406970a5cf98f58c2290476f45e2386a22d641"
+        },
+        {
+          "class": "net/minecraft/world/level/EntityGetter",
+          "method": "getEntityCollisions",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;",
+          "note": "vanilla getEntityCollisions: inflated box, NO_SPECTATORS and canCollideWith",
+          "sha256": "46bdb515d1471fae6ca17e408dd9146c04b9eb3d9630c20da95c582ff1ba406c"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "getPartEntities",
+          "desc": "()Ljava/util/Collection;",
+          "sha256": "36d41c9508a9f468e5ed11c575fe55a5c22c7131bbeaf001e464b2109d617422"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect (with target-argument capture for the level) of the getEntitiesOfClassGroup call in Radium's WorldHelper.getEntitiesForCollision; the handler makes the same call and appends",
+      "license": "LGPL-3.0 (Radium): no Radium code carried; the redirect appends to Radium's result (helper bons.furious.patch.radium_fixes.PartEntityCollisions). Minecraft/NeoForge: no code carried, only calls"
+    },
+    "radium_hash_palette_copy": {
+      "mod": "radium",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.radium_fixes.HashPaletteCopyMixin",
+        "bons.furious.mixin.radium_fixes.HashPaletteTableAccessor"
+      ],
+      "guard": [
+        {
+          "class": "me/jellysquid/mods/lithium/common/world/chunk/LithiumHashPalette",
+          "method": "copy",
+          "desc": "()Lnet/minecraft/world/level/chunk/Palette;",
+          "note": "copy(): the copy whose map gets the absent marker",
+          "sha256": "701b1e1616e33766d009888488d6640542e044f6641333e121cc855a0a103db2"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/world/chunk/LithiumHashPalette",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/core/IdMap;ILnet/minecraft/world/level/chunk/PaletteResize;)V",
+          "note": "a new palette's map answers -1 for an absent entry",
+          "sha256": "55f3aee2cacc782b89c21ceb8c862f78c543f93be641caa981cb9fcc83de92a7"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/world/chunk/LithiumHashPalette",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/core/IdMap;Lnet/minecraft/world/level/chunk/PaletteResize;I[Ljava/lang/Object;Lit/unimi/dsi/fastutil/objects/Reference2IntMap;I)V",
+          "note": "the copy constructor stores the map as given",
+          "sha256": "98ec1c963eeeaab7857ce45630fe7c6a181e9df5f71af1fab4e5b0045f9b2552"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/world/chunk/LithiumHashPalette",
+          "method": "idFor",
+          "desc": "(Ljava/lang/Object;)I",
+          "note": "idFor: -1 means a new entry",
+          "sha256": "e9cfcb628e7116f0c04b36eb5f88e83ddb5190b938385d87ba6f876aa66ff722"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/world/chunk/LithiumHashPalette",
+          "method": "computeEntry",
+          "desc": "(Ljava/lang/Object;)I",
+          "sha256": "0e90172a075b6e29da59dcc7280020b81ac8d51f6ba138e73dbc76503f4c43dc"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/world/chunk/LithiumHashPalette",
+          "method": "addEntry",
+          "desc": "(Ljava/lang/Object;)I",
+          "sha256": "8bd27d3b0a7cfd8a4e76400a8998e7777ef8acfcdcbaa8ee967a50f7e9ac172a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyReturnValue on Radium's LithiumHashPalette.copy() + an @Accessor for its private map",
+      "license": "LGPL-3.0 (Radium): no Radium code carried; the handler sets one value on the copy Radium built (helper bons.furious.patch.radium_fixes.HashPaletteCopy)"
+    }
+  }
+}

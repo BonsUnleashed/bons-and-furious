@@ -1,0 +1,137 @@
+{
+  "group": "dynamictrees_c2",
+  "keys": {
+    "dynamictrees_rot_cycle_guard": {
+      "mod": "dynamictrees",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.dynamictrees_c2.RotCycleBranchMixin",
+        "bons.furious.mixin.dynamictrees_c2.RotCycleRootsMixin",
+        "bons.furious.mixin.dynamictrees_c2.RotCycleOuterMixin",
+        "bons.furious.mixin.dynamictrees_c2.RotWriteBreakMixin",
+        "bons.furious.mixin.dynamictrees_c2.RotWriteFeatureMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/dtteam/dynamictrees/block/branch/BasicBranchBlock",
+          "method": "checkForRot",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;Lcom/dtteam/dynamictrees/tree/species/Species;IILnet/minecraft/util/RandomSource;FZ)Z",
+          "sha256": "639ed703d6f5812ec1353a10adb231c8480936bdfc02d1b7e83a3870d9ef53d0"
+        },
+        {
+          "class": "com/dtteam/dynamictrees/block/branch/BasicRootsBlock",
+          "method": "checkForRot",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;Lcom/dtteam/dynamictrees/tree/species/Species;IILnet/minecraft/util/RandomSource;FZ)Z",
+          "sha256": "2f18dcdb19dd8cfbd8cafa5079e8706e7626da082b8e13811bd7f0ee617ad60c"
+        },
+        {
+          "class": "com/dtteam/dynamictrees/block/branch/BranchBlock",
+          "method": "breakDeliberate",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;Lcom/dtteam/dynamictrees/DynamicTrees$DestroyMode;)V",
+          "sha256": "7f2c4a1a144f7153c44003b7b8a0448f47186b2c70735ebbc350732c82f98b5b"
+        },
+        {
+          "class": "com/dtteam/dynamictrees/block/branch/BranchBlock",
+          "method": "rot",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;)V",
+          "sha256": "f222c09e32bbe770713531d15f7e8db38c068edff8c8c83378bf8abc2027a2fe"
+        },
+        {
+          "class": "com/dtteam/dynamictrees/tree/species/Species",
+          "method": "rot",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;IIILnet/minecraft/util/RandomSource;ZZ)Z",
+          "sha256": "6e72ee7e0d2c1a6ccdfada7af9379e64bb480f31646dbf7c326bcf9c2b9061a7"
+        },
+        {
+          "class": "com/dtteam/dynamictrees/tree/species/Species",
+          "method": "postRot",
+          "desc": "(Lcom/dtteam/dynamictrees/systems/genfeature/context/PostRotContext;)V",
+          "sha256": "2967b92b5fe49d77dda67f7638a47170eb098e39b6580427ed37eadb17c77367"
+        },
+        {
+          "class": "com/dtteam/dynamictrees/tree/species/Species",
+          "method": "handleRot",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Ljava/util/List;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;IZ)Z",
+          "note": "1.21.1: the rapid flag is the boolean worldGen parameter (1.20.1: safeBounds != SafeChunkBounds.ANY)",
+          "sha256": "86455e237f5fd850964faa80c57d9eeb4ac151426c6c978c86f2e69048271a4f"
+        },
+        {
+          "class": "com/dtteam/dynamictrees/systems/genfeature/GenFeature",
+          "method": "generate",
+          "desc": "(Lcom/dtteam/dynamictrees/systems/genfeature/GenFeatureConfiguration;Lcom/dtteam/dynamictrees/systems/genfeature/GenFeature$Type;Lcom/dtteam/dynamictrees/systems/genfeature/context/GenFeatureContext;)Ljava/lang/Object;",
+          "sha256": "73619d6175098b56122d58cfdeb9dcf193bffdbc3a5bd02956dbdf5f7cfbf0da"
+        },
+        {
+          "class": "com/dtteam/dynamictrees/systems/genfeature/GenFeature",
+          "method": "postRot",
+          "desc": "(Lcom/dtteam/dynamictrees/systems/genfeature/GenFeatureConfiguration;Lcom/dtteam/dynamictrees/systems/genfeature/context/PostRotContext;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "com/dtteam/dynamictrees/systems/genfeature/GenFeatureConfiguration",
+          "method": "generate",
+          "desc": "(Lcom/dtteam/dynamictrees/systems/genfeature/GenFeature$Type;Lcom/dtteam/dynamictrees/systems/genfeature/context/GenFeatureContext;)Ljava/lang/Object;",
+          "sha256": "0a517886e17770d317a47ba518695be744b419010ec2d2f94f37cd228356d50f"
+        },
+        {
+          "class": "com/dtteam/dynamictrees/systems/genfeature/MushroomRotGenFeature",
+          "method": "postRot",
+          "desc": "(Lcom/dtteam/dynamictrees/systems/genfeature/GenFeatureConfiguration;Lcom/dtteam/dynamictrees/systems/genfeature/context/PostRotContext;)Z",
+          "sha256": "c7e393571837c7949868c34f012f54fff1c3d5cb5195af6e90f3094a9705fdb6"
+        },
+        {
+          "class": "com/dtteam/dynamictrees/systems/genfeature/RotSoilGenFeature",
+          "method": "postRot",
+          "desc": "(Lcom/dtteam/dynamictrees/systems/genfeature/GenFeatureConfiguration;Lcom/dtteam/dynamictrees/systems/genfeature/context/PostRotContext;)Z",
+          "sha256": "a94e5ba1615452d2276d6149f247a48f9b1d29fcfa5eb1eb430f4eb6206ac6ba"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Species.rot call and @ModifyReturnValue at the final return of both checkForRot bodies (small, so the JIT still inlines the recursion); @Inject at the start of Species.handleRot (clears left-over records); @ModifyExpressionValue on the rot path's three writes, results passed through",
+      "license": "MIT (Dynamic Trees): injections only, the mixins carry our own bookkeeping (helper bons.furious.patch.dynamictrees_c2.RotCycleGuard); no Dynamic Trees code is carried"
+    },
+    "dynamictrees_thick_shape_memo": {
+      "mod": "dynamictrees",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.dynamictrees_c2.TrunkShellShapeMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/dtteam/dynamictrees/block/branch/TrunkShellBlock",
+          "method": "getShape",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "sha256": "7f96bdbd560b7d553b56c150ae9ecc848b40512dfecd67cd827fd279aabb7cbc"
+        },
+        {
+          "class": "com/dtteam/dynamictrees/block/branch/TrunkShellBlock",
+          "method": "lambda$getShape$3",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lcom/dtteam/dynamictrees/block/branch/TrunkShellBlock$ShellMuse;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "sha256": "f54a94f86c47a05f1de74092216125bb2d4c6b8389b30188f7cc8f2c276930ec"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/Shapes",
+          "method": "create",
+          "desc": "(Lnet/minecraft/world/phys/AABB;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "sha256": "60c839da2c34816b2b3a3d052858c1c74320d2f41df7eeee86bf90fb1f8cbe03"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/Shapes",
+          "method": "create",
+          "desc": "(DDDDDD)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "sha256": "42ae7fbd5f15f23e4e761bfc3bd6f636e1eb3caca95c505916ce76f5e66673ea",
+          "sha256_variants": [
+            "5c97e84e0b3e2d3f3c03d2521acc9256e20762fe3041251c82a61c18d3f83757"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (server and client 1.21.1-20240808.144430-srg jars; Shapes is not binary-patched by NeoForge): same 143 instructions, calls and constants in the same order; only the 'return Shapes.empty()' block for an extent below 1e-7 sits first in production (third test inverted to ifge over it) and last in the NeoForm recompilation. See work/lanes/M1/evidence/Shapes.create-bytecode-diff.txt."
+        }
+      ],
+      "cancel": [],
+      "note": "1.21.1: Dynamic Trees 1.7.2 already builds the thick core shapes once (ThickBranchBlock.precomputeTrunkShapes; getShape returns trunkShapes[radius - 1]), so the 1.20.1 ThickShapeMixin has nothing to answer and is not shipped; only the trunk shell lambda (lambda$getShape$3) is patched",
+      "conversion": "MixinExtras @WrapOperation on the Shapes.create(AABB) call in TrunkShellBlock's getShape lambda",
+      "license": "MIT (Dynamic Trees); Minecraft (Mojang): no-copy. The mixin only routes the create call through our table (helper bons.furious.patch.dynamictrees_c2.ThickShapes); no Dynamic Trees code is carried"
+    }
+  }
+}

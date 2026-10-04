@@ -1,0 +1,42 @@
+{
+  "group": "chunk_tick",
+  "keys": {
+    "vanilla_ticking_chunk_memo": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.29",
+      "mixins": [
+        "bons.furious.mixin.chunk_tick.ChunkHolderTickingMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/server/level/ChunkHolder",
+          "method": "getTickingChunk",
+          "desc": "()Lnet/minecraft/world/level/chunk/LevelChunk;",
+          "sha256": "e72b71719b79a8b2e01d069b1af811911857d69efe8e92da267203dfcd0b3d70"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkHolder",
+          "method": "getTickingChunkFuture",
+          "desc": "()Ljava/util/concurrent/CompletableFuture;",
+          "sha256": "f26a4f8d8b88ddda686f42b82e4058bfa7afa67f5825ea6157cff49e171b1515"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkResult$Success",
+          "method": "orElse",
+          "desc": "(Ljava/lang/Object;)Ljava/lang/Object;",
+          "sha256": "27b9fc0a750340f65785c53ec774ac84ebec92baf78ff9c923eb06ff4b141d97"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkResult$Fail",
+          "method": "orElse",
+          "desc": "(Ljava/lang/Object;)Ljava/lang/Object;",
+          "sha256": "72fcd0e5276e14969919dbc011814c34cfef707610c9c7d87ed3604d562d615b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on ChunkHolder.getTickingChunk: on the server thread of the holder's level, for a holder whose class is exactly ChunkHolder, answers from two fields of the holder (the future last answered for and that answer) while the holder's tickingChunkFuture is that same future; records only answers proven for a plain CompletableFuture that completed normally with one of the game's ChunkResult records (Success or Fail) and stayed in the field during the call (assumes no mod calls obtrudeValue/obtrudeException on a chunk holder's futures); other threads, other holder classes, and every call while C2ME's chunk system rewrite is installed run the method",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.chunk_tick.TickingChunkMemo)"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.ticker_gate",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "bons.pure.config.PureMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "DistanceManagerTrackerAccessor",
+    "LevelTickerContextMixin",
+    "ServerLevelTickerGateMixin",
+    "TickerWrapperMemoMixin",
+    "TickingTrackerEpochsMixin"
+  ]
+}

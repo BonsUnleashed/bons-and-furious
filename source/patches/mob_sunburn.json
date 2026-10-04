@@ -1,0 +1,85 @@
+{
+  "group": "mob_sunburn",
+  "keys": {
+    "vanilla_sun_burn_deferred_wet_check": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.mob_sunburn.MobSunBurnOrderMixin",
+        "bons.furious.mixin.mob_sunburn.EntityInBlockStateAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/Mob",
+          "method": "isSunBurnTick",
+          "desc": "()Z",
+          "sha256": "25e5d5fff7ab9f717af15f670144ec0a48399e4619d99918ce94ac20e8df885f"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "isInWaterRainOrBubble",
+          "desc": "()Z",
+          "sha256": "31cb3c6e424f9a0669d70ac8fc50140acc4c78965c4ef90fed8cd2c088cbf641"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "isInWater",
+          "desc": "()Z",
+          "sha256": "4b68352711bc895918af6bfe2b23a2d6eda14375943914dc4fcc02a5a2ba1d1b"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "isInRain",
+          "desc": "()Z",
+          "sha256": "8d4e44408bde3b181ee9d9231da0e13ccbdfae492770395cfbd4ef47a46b05fb"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "isInBubbleColumn",
+          "desc": "()Z",
+          "sha256": "880cdd737f6c1ade2f1a9b23c27fa1b1e8cc79469c823eeb0af57f8558fc4b68"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "getInBlockState",
+          "desc": "()Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "38554e455f4b04f75a138d33ef87c917de057fe80f30cb62f90e7669b645e28d"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "tick",
+          "desc": "()V",
+          "sha256": "f04bdbad37276e6d77ad8d442201dca4b72df7d5f7f5e186c3a6e06d4edf1968"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "baseTick",
+          "desc": "()V",
+          "sha256": "1e5c0ef08cba060c696c0b65e412ec23500906935a7ebfb3dfde5993bb9a47e6"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "tick",
+          "desc": "()V",
+          "sha256": "517cbd73c6820bcc99b599d7a40e3241c5ff22756ea3a15fea3f3682977b2087"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "baseTick",
+          "desc": "()V",
+          "sha256": "24a46d66a5d7d4e2259f5079947dc845a206282b60efbe7ef1119aa13efa654c"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "updateInWaterStateAndDoFluidPushing",
+          "desc": "()Z",
+          "sha256": "97bf12350a9ca08375c1aaf3d2f686f44576bce476e19fa04a39bcbbf600160f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Two @Redirects inside Mob.isSunBurnTick: isInWaterRainOrBubble answers false and is asked instead inside the redirect of Level.canSeeSky, i.e. only after the light test, the roll and the powder snow flags pass; a byte of the mob carries the decision between the two; classes with their own isInWater / isInWaterRainOrBubble / getInBlockState or water update keep vanilla's order. 1.21.1: moved only while Entity's inBlockState memo is set (read through the @Accessor EntityInBlockStateAccessor), because 1.21.1's isInBubbleColumn fills that memo when it is empty; LivingEntity.baseTick sets it for every dry mob each tick before aiStep",
+      "license": "Minecraft: no Minecraft code is carried; the redirects, the accessor and helper bons.furious.patch.mob_sunburn.SunBurnOrder hold only our own logic"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "group": "vanilla_goal_flags",
+  "keys": {
+    "vanilla_goal_flags_none_disabled": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.vanilla_goal_flags.GoalSelectorFlagsMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/ai/goal/GoalSelector",
+          "method": "goalContainsAnyFlags",
+          "desc": "(Lnet/minecraft/world/entity/ai/goal/WrappedGoal;Ljava/util/EnumSet;)Z",
+          "sha256": "6edc74d9f571443ea407dd9b698343de27cbebca3df1726f4b05b5b7d95014fc"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the WrappedGoal.getFlags call inside GoalSelector.goalContainsAnyFlags (goalContainsAnyFlags): the call is made as before (once, same receiver); while the selector's disabled-flag set is empty the loop iterates an empty flag set (every contains on an empty set answers false, so the loop's result is false either way), otherwise the goal's own set",
+      "license": "Minecraft (Mojang): no-copy; the mixin and helper carry only our own logic (helper bons.furious.patch.vanilla_goal_flags.GoalFlags)"
+    }
+  }
+}

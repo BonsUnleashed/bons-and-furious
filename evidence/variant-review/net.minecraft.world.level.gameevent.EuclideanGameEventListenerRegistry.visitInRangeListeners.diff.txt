@@ -1,0 +1,44 @@
+vanilla_game_event_registry_lookup
+net/minecraft/world/level/gameevent/EuclideanGameEventListenerRegistry.visitInRangeListeners(Lnet/minecraft/core/Holder;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/level/gameevent/GameEvent$Context;Lnet/minecraft/world/level/gameevent/GameEventListenerRegistry$ListenerVisitor;)Z
+
+--- dev neoforge-21.1.252.jar
++++ prod client-1.21.1-20240808.144430-srg.jar
+@@ -9,29 +9,29 @@
+        8: aload_0
+        9: getfield      #                 // Field listeners:Ljava/util/List;
+-      12: invokeinterface #,  1           // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
++      12: invokeinterface #,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+       17: astore        6
+       19: aload         6
+-      21: invokeinterface #,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
++      21: invokeinterface #,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+       26: ifeq          108
+       29: aload         6
+-      31: invokeinterface #,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+-      36: checkcast     #                 // class net/minecraft/world/level/gameevent/GameEventListener
++      31: invokeinterface #,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
++      36: checkcast     #                // class net/minecraft/world/level/gameevent/GameEventListener
+       39: astore        7
+       41: aload_0
+       42: getfield      #                 // Field listenersToRemove:Ljava/util/Set;
+       45: aload         7
+-      47: invokeinterface #,  2           // InterfaceMethod java/util/Set.remove:(Ljava/lang/Object;)Z
++      47: invokeinterface #,  2          // InterfaceMethod java/util/Set.remove:(Ljava/lang/Object;)Z
+       52: ifeq          65
+       55: aload         6
+-      57: invokeinterface #,  1           // InterfaceMethod java/util/Iterator.remove:()V
+-      62: goto          105
++      57: invokeinterface #,  1          // InterfaceMethod java/util/Iterator.remove:()V
++      62: goto          19
+       65: aload_0
+       66: getfield      #                 // Field level:Lnet/minecraft/server/level/ServerLevel;
+       69: aload_2
+       70: aload         7
+-      72: invokestatic  #                 // Method getPostableListenerPosition:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/level/gameevent/GameEventListener;)Ljava/util/Optional;
++      72: invokestatic  #                // Method getPostableListenerPosition:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/level/gameevent/GameEventListener;)Ljava/util/Optional;
+       75: astore        8
+       77: aload         8
+-      79: invokevirtual #                 // Method java/util/Optional.isPresent:()Z
++      79: invokevirtual #                // Method java/util/Optional.isPresent:()Z
+       82: ifeq          105
+       85: aload         4

@@ -1,0 +1,25 @@
+{
+  "group": "worldgen_biome_fiddle",
+  "keys": {
+    "vanilla_biome_fiddle_mask": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.worldgen_biome_fiddle.BiomeFiddleMaskMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/biome/BiomeManager",
+          "method": "getFiddle",
+          "desc": "(J)D",
+          "note": "getFiddle: floorMod(seed >> 24, 1024) / 1024.0, minus 0.5, times 0.9",
+          "sha256": "cd28af3972d625c447071263692059db873277b8e1ea9abf0f2f7afa51e09743"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the Math.floorMod(JI)I call in BiomeManager.getFiddle to a bit mask for the divisor 1024",
+      "license": "Minecraft (Mojang): no-copy; only a JDK call is redirected (helper bons.furious.patch.worldgen_biome_fiddle.BiomeFiddleMask)"
+    }
+  }
+}

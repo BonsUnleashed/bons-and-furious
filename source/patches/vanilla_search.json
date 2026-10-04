@@ -1,0 +1,250 @@
+{
+  "group": "vanilla_search",
+  "keys": {
+    "vanilla_turtle_egg_search_sections": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.vanilla_search.MoveToBlockGoalSearchMixin",
+        "bons.furious.mixin.vanilla_search.RemoveBlockGoalAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/ai/goal/MoveToBlockGoal",
+          "method": "findNearestBlock",
+          "desc": "()Z",
+          "sha256": "39fc1b5056d8bf7b9d25babcf53fb9b01754069cbd58329f9a41e72040a27cf6"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/goal/RemoveBlockGoal",
+          "method": "isValidTarget",
+          "desc": "(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "7f4cc3fe7ab91ae571603ef1508113c6a02ed070507800e2eedc658a13df289b"
+        },
+        {
+          "class": "net/minecraft/world/entity/Mob",
+          "method": "isWithinRestriction",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "0bb36768ca3ed662959b4ade10dc48937b78c703bd415667f4dc66cc85c3c687"
+        },
+        {
+          "class": "net/minecraft/world/entity/Mob",
+          "method": "hasRestriction",
+          "desc": "()Z",
+          "sha256": "b64c8bab18efd84deb781fb60663fbe549334579d2fc80bbde281c46daaf8b7c"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunk",
+          "method": "getBlockState",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "4e64da0e5a1c25f05dde0b588e80ce58043c21860b356d75b55136d7f6fe9ba7"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunkSection",
+          "method": "getBlockState",
+          "desc": "(III)Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "c6e3b48d9fd13c1c77238202b5aba3989d6d863eee95836933f6d9f6aee32069"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LinearPalette",
+          "method": "maybeHas",
+          "desc": "(Ljava/util/function/Predicate;)Z",
+          "sha256": "a9a7603a38286d0a69c6c0a6761fd2ef972101bbfe0ddc72333ca27fa015d224"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LinearPalette",
+          "method": "idFor",
+          "desc": "(Ljava/lang/Object;)I",
+          "sha256": "447fe4723af617e79e07698e5e715913c422254f9ddbda13f5d0a8b95fc4f086"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/HashMapPalette",
+          "method": "maybeHas",
+          "desc": "(Ljava/util/function/Predicate;)Z",
+          "sha256": "fb3d0b6c092424840f12eff32b59bd5740aeb88fa019c79f205829042881c869"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/HashMapPalette",
+          "method": "idFor",
+          "desc": "(Ljava/lang/Object;)I",
+          "sha256": "563d7c5fba619fe5d0bf5c4f0de2d19ab8059786f1837d213168bb1ee2bb8961"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/SingleValuePalette",
+          "method": "maybeHas",
+          "desc": "(Ljava/util/function/Predicate;)Z",
+          "sha256": "c0b49d1064d48e28b9c52f9e7b9cdaf8a1b5339a6d2747c2ce4e6c63f96c3688"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/SingleValuePalette",
+          "method": "idFor",
+          "desc": "(Ljava/lang/Object;)I",
+          "sha256": "c84a7be6f9705b7e3030aa7e884340f8a26f419f2be47576f993b5bb2fc5acf0",
+          "sha256_variants": [
+            "82a6b1e40ba9cb1ddd4608c92f2322129ac6eaf7bf3f3a99b75635d40ef5ce21"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): branch polarity and block order swapped (if_acmpeq/if_acmpne); same resize/assign paths. See evidence/variant-review/net.minecraft.world.level.chunk.SingleValuePalette.idFor.diff.txt."
+        },
+        {
+          "class": "net/neoforged/neoforge/common/extensions/IBlockExtension",
+          "method": "canEntityDestroy",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "NeoForge 1.21.1 name of Forge's IForgeBlock.canEntityDestroy (same descriptor and default body)",
+          "sha256": "d20cc935d466a8296b76d9b0b8a784338c887ff4491c3c2d77f6146bacb1af12"
+        },
+        {
+          "class": "net/neoforged/neoforge/common/extensions/IBlockStateExtension",
+          "method": "canEntityDestroy",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "NeoForge 1.21.1 name of Forge's IForgeBlockState.canEntityDestroy (same descriptor and default body)",
+          "sha256": "745cdb3179083cda2c5f7d7c7eba2463e63f5c2f50379d5eee5652f297cdbcd1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on MoveToBlockGoal.findNearestBlock for RemoveBlockGoal classes that keep isValidTarget and findNearestBlock (decided once per goal and mob class): the same positions in the same order with the same getChunk(x, z, FULL, false) calls (an immediate repeat is dropped); positions in chunk sections whose palette holds neither the target block nor a block overriding NeoForge's IBlockExtension.canEntityDestroy are skipped (isValidTarget is a pure false there); other positions run the goal's own isValidTarget; the found MutableBlockPos is stored as the original stores it",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helpers bons.furious.patch.vanilla_search.TurtleEggSearch, NonPoiSearch)"
+    },
+    "vanilla_repellent_search_sections": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.vanilla_search.PiglinRepellentSearchMixin",
+        "bons.furious.mixin.vanilla_search.HoglinRepellentSearchMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/ai/sensing/PiglinSpecificSensor",
+          "method": "findNearestRepellent",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/Optional;",
+          "sha256": "a0b2e23f693ba7fd3a36ef40c9b7cc800e028a61f93963a2a2d377a83fc2d781"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/sensing/PiglinSpecificSensor",
+          "method": "lambda$findNearestRepellent$1",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "4e61137e196d0bbf7b00519c4a75e6ba500e48902104b6a9841ee000e226f405"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/sensing/PiglinSpecificSensor",
+          "method": "isValidRepellent",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "fe9761431c19303cc44f6c440dbd17429c627d13d742790e0a897d7b4c43ea85",
+          "sha256_variants": [
+            "16f1ba618c9c8953f5035f1e24f8c953af460bd329de76f3e3031764aba84961"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): return layout only; same calls. See evidence/variant-review/net.minecraft.world.entity.ai.sensing.PiglinSpecificSensor.isValidRepellent.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/sensing/HoglinSpecificSensor",
+          "method": "findNearestRepellent",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/monster/hoglin/Hoglin;)Ljava/util/Optional;",
+          "sha256": "d0d609b865b0d9486a6947184d7194a81a9d11e00ab7316c1f7cb9b2150fd5ca"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/sensing/HoglinSpecificSensor",
+          "method": "lambda$findNearestRepellent$1",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "7b785fec2b1355176e962ed1944966faa476c99f391da6af7f6e6a954b671374"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "findClosestMatch",
+          "desc": "(Lnet/minecraft/core/BlockPos;IILjava/util/function/Predicate;)Ljava/util/Optional;",
+          "sha256": "842e7a48c0e88dd58ca4e633ea47eb5811a1fc0d96fd9d6a49fbf6a5d1ce54c7"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "withinManhattan",
+          "desc": "(Lnet/minecraft/core/BlockPos;III)Ljava/lang/Iterable;",
+          "sha256": "a2437e5cfd014866fb3a80596df73d43331b52388fa66d3dce1268f5f40da827"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos$3",
+          "method": "computeNext",
+          "desc": "()Lnet/minecraft/core/BlockPos;",
+          "note": "withinManhattan's iterator is BlockPos$3 in 1.21.1 (1.20.1: BlockPos$2); BlockPos$1 is now the STREAM_CODEC and BlockPos$2 randomBetweenClosed's iterator",
+          "sha256": "2821af1d289ec42789e7219e0faaf5f40d6d59e289847226f7ec1ef1e65f0b8c",
+          "sha256_variants": [
+            "e9cde32e3bf95fe034d0800dbfbac29daa5b12488e22132f73c2b74397315237"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): synthetic captured-field names differ (NeoForm val$l/val$i/... vs Mojang val$originZ/val$maxDepth/...); same code, fields self-consistent per build, never referenced by our code. See evidence/variant-review/net.minecraft.core.BlockPos$3.computeNext.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "getBlockState",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "4ff4f96e5ead04e8279a0bd18788c2cd0e8c69ea472aeed667af2ea7c8b52827"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "getChunkAt",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/chunk/LevelChunk;",
+          "sha256": "81ae33d8586d8c891a391f48887eb7c950f8cf41fe3606e2c238f8368798f9e4"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "getChunk",
+          "desc": "(II)Lnet/minecraft/world/level/chunk/LevelChunk;",
+          "sha256": "2104628e4674e822311ea2c00d0a002b0b17fd5070466b081b88382846bd9608"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunk",
+          "method": "getBlockState",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "4e64da0e5a1c25f05dde0b588e80ce58043c21860b356d75b55136d7f6fe9ba7"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunkSection",
+          "method": "getBlockState",
+          "desc": "(III)Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "c6e3b48d9fd13c1c77238202b5aba3989d6d863eee95836933f6d9f6aee32069"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LinearPalette",
+          "method": "maybeHas",
+          "desc": "(Ljava/util/function/Predicate;)Z",
+          "sha256": "a9a7603a38286d0a69c6c0a6761fd2ef972101bbfe0ddc72333ca27fa015d224"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LinearPalette",
+          "method": "idFor",
+          "desc": "(Ljava/lang/Object;)I",
+          "sha256": "447fe4723af617e79e07698e5e715913c422254f9ddbda13f5d0a8b95fc4f086"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/HashMapPalette",
+          "method": "maybeHas",
+          "desc": "(Ljava/util/function/Predicate;)Z",
+          "sha256": "fb3d0b6c092424840f12eff32b59bd5740aeb88fa019c79f205829042881c869"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/HashMapPalette",
+          "method": "idFor",
+          "desc": "(Ljava/lang/Object;)I",
+          "sha256": "563d7c5fba619fe5d0bf5c4f0de2d19ab8059786f1837d213168bb1ee2bb8961"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/SingleValuePalette",
+          "method": "maybeHas",
+          "desc": "(Ljava/util/function/Predicate;)Z",
+          "sha256": "c0b49d1064d48e28b9c52f9e7b9cdaf8a1b5339a6d2747c2ce4e6c63f96c3688"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/SingleValuePalette",
+          "method": "idFor",
+          "desc": "(Ljava/lang/Object;)I",
+          "sha256": "c84a7be6f9705b7e3030aa7e884340f8a26f419f2be47576f993b5bb2fc5acf0",
+          "sha256_variants": [
+            "82a6b1e40ba9cb1ddd4608c92f2322129ac6eaf7bf3f3a99b75635d40ef5ce21"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): branch polarity and block order swapped (if_acmpeq/if_acmpne); same resize/assign paths. See evidence/variant-review/net.minecraft.world.level.chunk.SingleValuePalette.idFor.diff.txt."
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on PiglinSpecificSensor.findNearestRepellent and HoglinSpecificSensor.findNearestRepellent (BlockPos.findClosestMatch(entity.blockPosition(), 8, 4, test)): the same 2,601 positions in withinManhattan order with the same Level.getChunk(x, z) lookups (an immediate repeat is dropped); positions in chunk sections whose palette holds no state of the repellent tag are skipped (the test is a pure false there); other positions run the sensor's own test (@Shadow calls of isValidRepellent / the hoglin lambda lambda$findNearestRepellent$1); only when the whole box is inside the build height, outside debug worlds, and the level class keeps Level's block and chunk lookups; otherwise the original method runs",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helpers bons.furious.patch.vanilla_search.RepellentSearch, NonPoiSearch)"
+    }
+  }
+}

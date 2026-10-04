@@ -13,7 +13,10 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.objectweb.asm.tree.AbstractInsnNode;
+import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.spongepowered.asm.service.MixinService;
 
@@ -31,6 +34,8 @@ import org.spongepowered.asm.service.MixinService;
  *                                the supported version (...); the class is left unchanged"
  *   another mod does the same   "Bons and Furious: KEY steps aside: MOD VERSION makes the same change (MIXIN, option ...
  *                                on); CLASS is left unchanged by this switch"   (see ForeignPatches)
+ *   another mod refines a mixin "Bons and Furious: KEY steps aside: MOD VERSION (MIXIN) changes FOREIGN_MIXIN, which this
+ *   this switch would replace    switch would replace; CLASS is left unchanged by this switch"   (since 1.0.30)
  *
  * The decision is all or nothing per switch, so a patch spread over several classes never applies halfway.
  */
@@ -158,6 +163,55 @@ public final class Guards {
         return DECISIONS.computeIfAbsent(key, Guards::compute);
     }
 
+    /**
+     * Since 1.0.30: an injector of ours that stands down when another mod has replaced
+     * the method it works on (mixin -> method, desc, handler name; Mojang names on 1.21.1). Such an injector has
+     * require = 0 and a priority above the default, so Mixin lets it into the other mod's @Overwrite, where it finds
+     * nothing to change; postApply then logs that the method is left to that mod.
+     */
+    private static final Map<String, String[]> STAND_DOWN = Map.of(
+            "bons.furious.mixin.models.BoneLookupMixin", new String[] {"getAnyDescendantWithName", "(Ljava/lang/String;)Ljava/util/Optional;", "bons$partsWithBone"});
+
+    /** IMixinConfigPlugin.postApply: one line when a STAND_DOWN injector found the method replaced by another mod. */
+    public static void checkStandDown(String mixinClass, ClassNode target) {
+        String[] s = STAND_DOWN.get(mixinClass);
+        String key = s == null ? null : keyOf(mixinClass);
+        if (key == null) return;
+        for (MethodNode m : target.methods) {
+            if (!m.name.equals(s[0]) || !m.desc.equals(s[1])) continue;
+            for (AbstractInsnNode n : m.instructions)
+                if (n instanceof MethodInsnNode mi && mi.name.endsWith("$" + s[2])) return;   // our handler is called: applied
+            String by = "another mod";
+            if (m.visibleAnnotations != null)
+                for (AnnotationNode a : m.visibleAnnotations)
+                    if (a.desc.equals("Lorg/spongepowered/asm/mixin/transformer/meta/MixinMerged;") && a.values != null)
+                        for (int i = 0; i + 1 < a.values.size(); i += 2) if ("mixin".equals(a.values.get(i))) by = String.valueOf(a.values.get(i + 1));
+            if (LOGGED.add("standdown|" + key + "|" + target.name))
+                LOGGER.info("Bons and Furious: {} steps aside: {} already replaces {}.{}; that method is left to it",
+                        key, by, target.name.replace('/', '.'), s[0]);
+            return;
+        }
+    }
+
+    /**
+     * Since 1.0.30: a switch that replaces another mod's mixin (patches cancel list)
+     * steps aside while a third mod refines that mixin through MixinSquared's @TargetHandler; without it, the third mod's
+     * injectors find no handler and the game stops at start ("Critical injection failure ... @MixinSquared:Handler").
+     */
+    private static Decision handlerDecision(String key) {
+        Map<String, String> owners = new LinkedHashMap<>();   // every mixin a switch may cancel -> the mod that ships it
+        for (Map.Entry<String, String> c : CANCEL.entrySet()) {
+            ForeignPatches.Yield y = YIELD_MIXIN.get(c.getKey());
+            owners.put(c.getKey(), y != null ? y.mod() : MOD.getOrDefault(c.getValue(), "?"));
+        }
+        for (Map.Entry<String, String> c : CANCEL.entrySet()) {
+            if (!c.getValue().equals(key)) continue;
+            String user = ForeignPatches.handlerUser(c.getKey(), owners);
+            if (user != null) return new Decision(State.YIELD, user + " changes " + c.getKey() + ", which this switch would replace");
+        }
+        return null;
+    }
+
     private static Decision compute(String key) {
         if (!PureConfig.isEnabled(key)) return new Decision(State.DISABLED, "disabled by config");
         // Mixed vanilla/mod guards must not look like an incompatible installed build when the optional mod is absent.
@@ -173,6 +227,8 @@ public final class Guards {
         List<String[]> guard = GUARD.getOrDefault(key, List.of());
         if (guard.isEmpty()) {
             if (!UNGUARDED.contains(key)) return new Decision(State.MISMATCH, "no fingerprints recorded for " + key);
+            Decision h = handlerDecision(key);
+            if (h != null) return h;
             Decision y = ForeignPatches.yieldDecision(YIELDS.get(key));
             return y != null ? y : new Decision(State.APPLY, "switched on");
         }
@@ -195,6 +251,8 @@ public final class Guards {
         if (absent == guard.size()) return new Decision(State.ABSENT, "target mod " + MOD.getOrDefault(key, "?") + " is not installed");
         if (!problems.isEmpty()) return new Decision(State.MISMATCH, String.join(", ", problems.subList(0, Math.min(3, problems.size())))
                 + (problems.size() > 3 ? " and " + (problems.size() - 3) + " more" : ""));
+        Decision h = handlerDecision(key);
+        if (h != null) return h;
         Decision y = ForeignPatches.yieldDecision(YIELDS.get(key));
         if (y != null) return y;
         return new Decision(State.APPLY, "all " + guard.size() + " fingerprints match");

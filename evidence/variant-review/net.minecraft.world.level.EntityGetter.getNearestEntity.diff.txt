@@ -1,0 +1,60 @@
+crittersandcompanions_red_panda_gate
+net/minecraft/world/level/EntityGetter.getNearestEntity(Ljava/util/List;Lnet/minecraft/world/entity/ai/targeting/TargetingConditions;Lnet/minecraft/world/entity/LivingEntity;DDD)Lnet/minecraft/world/entity/LivingEntity;
+
+--- dev neoforge-21.1.252.jar
++++ prod client-1.21.1-20240808.144430-srg.jar
+@@ -11,5 +11,5 @@
+       16: aload         13
+       18: invokeinterface #,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+-      23: ifeq          89
++      23: ifeq          92
+       26: aload         13
+       28: invokeinterface #,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+@@ -20,24 +20,25 @@
+       40: aload         14
+       42: invokevirtual #                // Method net/minecraft/world/entity/ai/targeting/TargetingConditions.test:(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z
+-      45: ifeq          86
+-      48: aload         14
+-      50: dload         4
+-      52: dload         6
+-      54: dload         8
+-      56: invokevirtual #                // Method net/minecraft/world/entity/LivingEntity.distanceToSqr:(DDD)D
+-      59: dstore        15
+-      61: dload         10
+-      63: ldc2_w        #                // double -1.0d
+-      66: dcmpl
+-      67: ifeq          78
+-      70: dload         15
+-      72: dload         10
+-      74: dcmpg
+-      75: ifge          86
+-      78: dload         15
+-      80: dstore        10
+-      82: aload         14
+-      84: astore        12
+-      86: goto          16
+-      89: aload         12
+-      91: areturn
++      45: ifne          51
++      48: goto          16
++      51: aload         14
++      53: dload         4
++      55: dload         6
++      57: dload         8
++      59: invokevirtual #                // Method net/minecraft/world/entity/LivingEntity.distanceToSqr:(DDD)D
++      62: dstore        15
++      64: dload         10
++      66: ldc2_w        #                // double -1.0d
++      69: dcmpl
++      70: ifeq          81
++      73: dload         15
++      75: dload         10
++      77: dcmpg
++      78: ifge          89
++      81: dload         15
++      83: dstore        10
++      85: aload         14
++      87: astore        12
++      89: goto          16
++      92: aload         12
++      94: areturn

@@ -1,0 +1,91 @@
+{
+  "group": "vanilla_entity",
+  "keys": {
+    "vanilla_suffocation_scan_loop": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.vanilla_entity.EntityInWallScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "isInWall",
+          "desc": "()Z",
+          "sha256": "be25bc415f71a9caafe141ed6cd4b7cba6aace87ce43434a884e3d2f12eeb06a"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "betweenClosedStream",
+          "desc": "(Lnet/minecraft/world/phys/AABB;)Ljava/util/stream/Stream;",
+          "sha256": "e816be848bbc948ca884036a3012bbc23a3c01ee0f80804761b844826f351c42"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "betweenClosedStream",
+          "desc": "(IIIIII)Ljava/util/stream/Stream;",
+          "sha256": "6540baca9b9e63329175500c2871bfa6bd2f8e759901d1545b4b180aa802b9e4"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "betweenClosed",
+          "desc": "(IIIIII)Ljava/lang/Iterable;",
+          "sha256": "e42e179365ca45e024a129c6e09278eba73affe1faecac825f6b4d57ba82c88b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on BlockPos.betweenClosedStream(AABB) in Entity.isInWall (priority 1500, require 0); the returned DeferredStream answers the match with a loop over BlockPos.betweenClosed and builds the vanilla stream for anything else",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helpers bons.furious.patch.vanilla_entity.BlockScans, DeferredStream)"
+    },
+    "vanilla_fire_scan_loop": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.vanilla_entity.EntityFireScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "move",
+          "desc": "(Lnet/minecraft/world/entity/MoverType;Lnet/minecraft/world/phys/Vec3;)V",
+          "sha256": "78717aca845c3bcc96cc686e88f49b7f92bbf99383b5488b69917c2e4274a67a"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "betweenClosedStream",
+          "desc": "(Lnet/minecraft/world/phys/AABB;)Ljava/util/stream/Stream;",
+          "sha256": "e816be848bbc948ca884036a3012bbc23a3c01ee0f80804761b844826f351c42"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "betweenClosedStream",
+          "desc": "(IIIIII)Ljava/util/stream/Stream;",
+          "sha256": "6540baca9b9e63329175500c2871bfa6bd2f8e759901d1545b4b180aa802b9e4"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "betweenClosed",
+          "desc": "(IIIIII)Ljava/lang/Iterable;",
+          "sha256": "e42e179365ca45e024a129c6e09278eba73affe1faecac825f6b4d57ba82c88b"
+        },
+        {
+          "class": "net/minecraft/world/level/LevelReader",
+          "method": "getBlockStatesIfLoaded",
+          "desc": "(Lnet/minecraft/world/phys/AABB;)Ljava/util/stream/Stream;",
+          "sha256": "a02ccde082a5e21ea514f98300c5448403c94b60c367ffdb06a5f595a10b722d"
+        },
+        {
+          "class": "net/minecraft/world/level/BlockGetter",
+          "method": "getBlockStates",
+          "desc": "(Lnet/minecraft/world/phys/AABB;)Ljava/util/stream/Stream;",
+          "sha256": "07ee8dae78ecd8c347ac48f333c1c419e40a1ccc450c184f223ded6ec38c33a2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on Level.getBlockStatesIfLoaded(AABB) in Entity.move (priority 1500, require 0); the returned DeferredStream answers the match with hasChunksAt plus a loop over BlockPos.betweenClosed and builds the vanilla stream for anything else",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helpers bons.furious.patch.vanilla_entity.BlockScans, DeferredStream)"
+    }
+  }
+}

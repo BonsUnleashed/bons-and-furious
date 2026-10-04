@@ -1,0 +1,66 @@
+vanilla_repellent_search_sections
+net/minecraft/core/BlockPos$3.computeNext()Lnet/minecraft/core/BlockPos;
+
+--- dev neoforge-21.1.252.jar
++++ prod client-1.21.1-20240808.144430-srg.jar
+@@ -11,10 +11,10 @@
+       13: getfield      #                 // Field cursor:Lnet/minecraft/core/BlockPos$MutableBlockPos;
+       16: aload_0
+-      17: getfield      #                  // Field val$l:I
++      17: getfield      #                 // Field val$originZ:I
+       20: aload_0
+       21: getfield      #                 // Field cursor:Lnet/minecraft/core/BlockPos$MutableBlockPos;
+       24: invokevirtual #                 // Method net/minecraft/core/BlockPos$MutableBlockPos.getZ:()I
+       27: aload_0
+-      28: getfield      #                  // Field val$l:I
++      28: getfield      #                 // Field val$originZ:I
+       31: isub
+       32: isub
+@@ -53,13 +53,13 @@
+       91: getfield      #                 // Field currentDepth:I
+       94: aload_0
+-      95: getfield      #                  // Field val$i:I
++      95: getfield      #                 // Field val$maxDepth:I
+       98: if_icmple     109
+      101: aload_0
+      102: invokevirtual #                 // Method endOfData:()Ljava/lang/Object;
+-     105: checkcast     #                 // class net/minecraft/core/BlockPos
++     105: checkcast     #                  // class net/minecraft/core/BlockPos
+      108: areturn
+      109: aload_0
+      110: aload_0
+-     111: getfield      #                 // Field val$p_121927_:I
++     111: getfield      #                 // Field val$reachX:I
+      114: aload_0
+      115: getfield      #                 // Field currentDepth:I
+@@ -73,5 +73,5 @@
+      133: aload_0
+      134: aload_0
+-     135: getfield      #                 // Field val$p_121928_:I
++     135: getfield      #                 // Field val$reachY:I
+      138: aload_0
+      139: getfield      #                 // Field currentDepth:I
+@@ -104,5 +104,5 @@
+      191: iload         4
+      193: aload_0
+-     194: getfield      #                 // Field val$p_121929_:I
++     194: getfield      #                 // Field val$reachZ:I
+      197: if_icmpgt     241
+      200: aload_0
+@@ -116,13 +116,13 @@
+      215: getfield      #                 // Field cursor:Lnet/minecraft/core/BlockPos$MutableBlockPos;
+      218: aload_0
+-     219: getfield      #                 // Field val$j:I
++     219: getfield      #                 // Field val$originX:I
+      222: iload_2
+      223: iadd
+      224: aload_0
+-     225: getfield      #                 // Field val$k:I
++     225: getfield      #                 // Field val$originY:I
+      228: iload_3
+      229: iadd
+      230: aload_0
+-     231: getfield      #                  // Field val$l:I
++     231: getfield      #                 // Field val$originZ:I
+      234: iload         4
+      236: iadd

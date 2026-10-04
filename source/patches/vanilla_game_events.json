@@ -1,0 +1,87 @@
+{
+  "group": "vanilla_game_events",
+  "keys": {
+    "vanilla_game_event_registry_lookup": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.vanilla_game_events.GameEventDispatcherMixin",
+        "bons.furious.mixin.vanilla_game_events.LevelChunkRegistriesAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/gameevent/GameEventDispatcher",
+          "method": "post",
+          "desc": "(Lnet/minecraft/core/Holder;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/level/gameevent/GameEvent$Context;)V",
+          "sha256": "3fdafe6f0f047b6fa3e887f1049356af3c28974f1b1b120ef5371e51c0d15588"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunk",
+          "method": "getListenerRegistry",
+          "desc": "(I)Lnet/minecraft/world/level/gameevent/GameEventListenerRegistry;",
+          "sha256": "a4841551ebbd5567186c4d73a731a40326a507cee7c3732d2efa6e87c67f9b57"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunk",
+          "method": "removeGameEventListenerRegistry",
+          "desc": "(I)V",
+          "sha256": "efa9c7b12140a50ab22086c56692a4e65c8f469b192836c541c2d254679a11a8"
+        },
+        {
+          "class": "net/minecraft/world/level/gameevent/EuclideanGameEventListenerRegistry",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;ILnet/minecraft/world/level/gameevent/EuclideanGameEventListenerRegistry$OnEmptyAction;)V",
+          "sha256": "92dd74504fbdd19e914d6516e1ca794c9c7f464af9b3bee65d7ef9ed4ebdec33"
+        },
+        {
+          "class": "net/minecraft/world/level/gameevent/EuclideanGameEventListenerRegistry",
+          "method": "visitInRangeListeners",
+          "desc": "(Lnet/minecraft/core/Holder;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/level/gameevent/GameEvent$Context;Lnet/minecraft/world/level/gameevent/GameEventListenerRegistry$ListenerVisitor;)Z",
+          "sha256": "4623cd21c7ac93e02255c61c419cb96050a4ca49f920e85ee9da109b0a2505cc",
+          "sha256_variants": [
+            "683cb2814100998d8c2ab0d5213bb53fb8ff4f7fdfb066dff8e7d0bfb149c351"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): loop continue jumps to the condition instead of a shared continue point; same calls. See evidence/variant-review/net.minecraft.world.level.gameevent.EuclideanGameEventListenerRegistry.visitInRangeListeners.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/level/gameevent/EuclideanGameEventListenerRegistry",
+          "method": "register",
+          "desc": "(Lnet/minecraft/world/level/gameevent/GameEventListener;)V",
+          "sha256": "dc42f08e9e460b4580c88cbc16df2cff1e66fa849d619e924ab1fc2c86c26eb6"
+        },
+        {
+          "class": "net/minecraft/world/level/gameevent/EuclideanGameEventListenerRegistry",
+          "method": "unregister",
+          "desc": "(Lnet/minecraft/world/level/gameevent/GameEventListener;)V",
+          "sha256": "dda78c0cf1be9d8caac5cb93ec1325f0f6e211815dfbc7dd10c921547bbf097c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect on ChunkAccess.getListenerRegistry in GameEventDispatcher.post: the chunk's existing registry, or GameEventListenerRegistry.NOOP where LevelChunk would create an empty one (exact LevelChunk class only, otherwise the call itself; require = 0, degrades to vanilla; a Redirect because a WrapOperation's per-call Operation cost about what the lookup saves); a LevelChunk @Shadow accessor for its registry map (gameEventListenerRegistrySections), read only. 1.21.1: post and visitInRangeListeners take a Holder<GameEvent>; same section loop and registry code",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.vanilla_game_events.GameEventRegistries)"
+    }
+  },
+  "yields": [
+    {
+      "key": "vanilla_game_event_registry_lookup",
+      "mod": "radium",
+      "name": "Radium",
+      "mixin": "me.jellysquid.mods.lithium.mixin.world.game_events.dispatch.GameEventDispatchManagerMixin",
+      "config": "lithium.properties",
+      "option": "mixin.world.game_events.dispatch",
+      "default": false,
+      "why": "Radium 0.13.1's optional world.game_events.dispatch (off by default; Radium reads config/lithium.properties) @Redirects the same ChunkAccess.getListenerRegistry call in GameEventDispatcher.post (plus getChunkNow and visitInRangeListeners) to create section dispatchers only when a listener is added. Two redirects of one call cannot both apply; while that option is on our switch steps aside."
+    },
+    {
+      "key": "vanilla_game_event_registry_lookup",
+      "mod": "lithium",
+      "name": "Lithium",
+      "mixin": "net.caffeinemc.mods.lithium.mixin.world.game_events.dispatch.GameEventDispatcherMixin",
+      "config": "lithium.properties",
+      "option": "mixin.world.game_events.dispatch",
+      "default": true,
+      "why": "Native Lithium 0.15.4's world.game_events.dispatch @Redirects the same ChunkAccess.getListenerRegistry call in GameEventDispatcher.post. Two redirects of one call cannot both apply; while that option is on (assumed on unless lithium.properties says false) our switch steps aside. Found by the crash-class sweep."
+    }
+  ]
+}

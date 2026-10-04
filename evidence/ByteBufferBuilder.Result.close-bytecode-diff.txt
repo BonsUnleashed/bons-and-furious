@@ -1,0 +1,35 @@
+﻿dev : neoforge-21.1.252.jar 20 lines; prod: client-1.21.1-20240808.144430-srg.jar 21 lines
+--- dev
++++ prod
+@@ -5,16 +5,17 @@
+        1: getfield      #                 // Field closed:Z
+-       4: ifne          33
+-       7: aload_0
+-       8: iconst_1
+-       9: putfield      #                 // Field closed:Z
+-      12: aload_0
+-      13: getfield      #                  // Field this$0:Lcom/mojang/blaze3d/vertex/ByteBufferBuilder;
+-      16: aload_0
+-      17: getfield      #                 // Field generation:I
+-      20: invokevirtual #                 // Method com/mojang/blaze3d/vertex/ByteBufferBuilder.isValid:(I)Z
+-      23: ifeq          33
+-      26: aload_0
+-      27: getfield      #                  // Field this$0:Lcom/mojang/blaze3d/vertex/ByteBufferBuilder;
+-      30: invokevirtual #                 // Method com/mojang/blaze3d/vertex/ByteBufferBuilder.freeResult:()V
+-      33: return
++       4: ifeq          8
++       7: return
++       8: aload_0
++       9: iconst_1
++      10: putfield      #                 // Field closed:Z
++      13: aload_0
++      14: getfield      #                 // Field this$0:Lcom/mojang/blaze3d/vertex/ByteBufferBuilder;
++      17: aload_0
++      18: getfield      #                 // Field generation:I
++      21: invokevirtual #                 // Method com/mojang/blaze3d/vertex/ByteBufferBuilder.isValid:(I)Z
++      24: ifeq          34
++      27: aload_0
++      28: getfield      #                 // Field this$0:Lcom/mojang/blaze3d/vertex/ByteBufferBuilder;
++      31: invokevirtual #                 // Method com/mojang/blaze3d/vertex/ByteBufferBuilder.freeResult:()V
++      34: return
+ }

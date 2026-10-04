@@ -1,0 +1,36 @@
+{
+  "group": "fancymenu",
+  "keys": {
+    "fancymenu_render_thread_state": {
+      "mod": "fancymenu",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.fancymenu.FancyMenuStateMixin"
+      ],
+      "guard": [
+        {
+          "class": "de/keksuccino/fancymenu/util/rendering/RenderScaleUtil",
+          "method": "*",
+          "desc": "",
+          "sha256": "52c28dc7dcf4223d0170964c5b19a11cde1de550a9248f0a71443bbab24dae98"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/util/rendering/RenderTranslationUtil",
+          "method": "*",
+          "desc": "",
+          "sha256": "2d1aa357a3522bed3d192b4a3af43b6d88ca40ff7ec333a81425aad456b31f1e"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/util/rendering/RenderRotationUtil",
+          "method": "*",
+          "desc": "",
+          "sha256": "7b00623dff7a23bd6b13ced497ccc8ca4a95094b460d28daec7096be14a3cd09"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of ThreadLocal.withInitial in the static initialisers of FancyMenu's three render-state util classes",
+      "license": "FancyMenu custom licence (DSMSL): none of its code is carried; the redirect only builds our ThreadLocal subclass (helper bons.furious.patch.fancymenu.RenderThreadLocal)"
+    }
+  }
+}

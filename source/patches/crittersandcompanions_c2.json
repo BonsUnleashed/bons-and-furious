@@ -1,0 +1,246 @@
+{
+  "group": "crittersandcompanions_c2",
+  "keys": {
+    "vanilla_entity_class_count_layer": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.crittersandcompanions_c2.EntityClassCountStorageMixin",
+        "bons.furious.mixin.crittersandcompanions_c2.EntityClassCountSectionMixin",
+        "bons.furious.mixin.crittersandcompanions_c2.LevelClassCountMixin",
+        "bons.furious.mixin.crittersandcompanions_c2.EntityGetterClassCountMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/entity/EntitySection",
+          "method": "<init>",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/level/entity/Visibility;)V",
+          "sha256": "d2c0879199b243134298a01af19a1cfceb7bb56f08d543e1b52df67faf9907df"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntitySection",
+          "method": "add",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)V",
+          "sha256": "1bb20e746f8f5b2fddcecce71d175d2368a0606954c9af52fb707717ce253063"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntitySection",
+          "method": "remove",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)Z",
+          "sha256": "10fd6f24c424f3dd908643dc871d7b07d7d23b2118915400975182e7387859b6"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntitySection",
+          "method": "getEntities",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/world/phys/AABB;Lnet/minecraft/util/AbortableIterationConsumer;)Lnet/minecraft/util/AbortableIterationConsumer$Continuation;",
+          "sha256": "d03334dd33520fb14651384253cc259ebb9f19d16de44e544ecd7926df81b189"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntitySectionStorage",
+          "method": "<init>",
+          "desc": "(Ljava/lang/Class;Lit/unimi/dsi/fastutil/longs/Long2ObjectFunction;)V",
+          "sha256": "19d19ff881833e5eeae9a3879f2cd17c9d8a5c33654a55b09f87964c903e404e"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntitySectionStorage",
+          "method": "createSection",
+          "desc": "(J)Lnet/minecraft/world/level/entity/EntitySection;",
+          "sha256": "40ad6e615d346e079030bf5b77b999deaa2b68ac0b7617433473e36d6687cbec"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntitySectionStorage",
+          "method": "getOrCreateSection",
+          "desc": "(J)Lnet/minecraft/world/level/entity/EntitySection;",
+          "sha256": "5c2a644ea6835bbe4b351e8522fa4a8001fc5fa556ed1ac20d189c5ee3f5a0ee"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntitySectionStorage",
+          "method": "getEntities",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/world/phys/AABB;Lnet/minecraft/util/AbortableIterationConsumer;)V",
+          "sha256": "cecb1e5f44822e998c67dc378c515ccfe93945f48258f539e9e257ff827bdef9"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntitySectionStorage",
+          "method": "lambda$getEntities$2",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/world/phys/AABB;Lnet/minecraft/util/AbortableIterationConsumer;Lnet/minecraft/world/level/entity/EntitySection;)Lnet/minecraft/util/AbortableIterationConsumer$Continuation;",
+          "sha256": "94270b36224ff6e310115467af2643ac9d017a901e5753328c146559814d4fb4"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntitySectionStorage",
+          "method": "forEachAccessibleNonEmptySection",
+          "desc": "(Lnet/minecraft/world/phys/AABB;Lnet/minecraft/util/AbortableIterationConsumer;)V",
+          "sha256": "d77cb4599577a2dc468e5eae54c49c27701e9cdfa7e8d3ee9ae1b9469662828c"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/LevelEntityGetterAdapter",
+          "method": "get",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/world/phys/AABB;Lnet/minecraft/util/AbortableIterationConsumer;)V",
+          "sha256": "24a7ac45d2f3359eb3e2c21cd77936b3a34ee172b5fbdfa853fa09c5dd40422e"
+        },
+        {
+          "class": "net/minecraft/util/ClassInstanceMultiMap",
+          "method": "add",
+          "desc": "(Ljava/lang/Object;)Z",
+          "sha256": "3d70238231759c16ba3aca77283f8e3811c5973711fd9438a988be65cb0a4c87"
+        },
+        {
+          "class": "net/minecraft/util/ClassInstanceMultiMap",
+          "method": "remove",
+          "desc": "(Ljava/lang/Object;)Z",
+          "sha256": "571188725d932fa511426b0d94fcd4189f3139db75ec88c8beeb9a5613f2d320"
+        },
+        {
+          "class": "net/minecraft/util/ClassInstanceMultiMap",
+          "method": "find",
+          "desc": "(Ljava/lang/Class;)Ljava/util/Collection;",
+          "sha256": "d79d5d7aa34452a5eb22d074560cba2841bce51a2e847396c67fafb0036e49bb"
+        },
+        {
+          "class": "net/minecraft/util/ClassInstanceMultiMap",
+          "method": "iterator",
+          "desc": "()Ljava/util/Iterator;",
+          "sha256": "a85ae98963397d30f2176d85b3c50cc1d6a70f91d84a0312eac8c2f46275f4f0",
+          "sha256_variants": [
+            "9139b61a313640c9d6a70fc45d9ea47f6ede9d1f2a7e8e4c8d36097905536128"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): return layout only (two areturns vs goto to one); same calls. See evidence/variant-review/net.minecraft.util.ClassInstanceMultiMap.iterator.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "<init>",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/level/entity/LevelCallback;Lnet/minecraft/world/level/entity/EntityPersistentStorage;)V",
+          "sha256": "97d6c559f34db7ea78bc0164c8a26b1f3ab862293779182de1cc8a6a5c364dbe"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "addEntityWithoutEvent",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;Z)Z",
+          "sha256": "1b8cdcac69b1c570d7e769cb36daf7640d3061551ce383b76816adfd95dfd87c"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "removeSectionIfEmpty",
+          "desc": "(JLnet/minecraft/world/level/entity/EntitySection;)V",
+          "sha256": "de9c96abc12647462a9dd37477154ab1e1fc523f96db479b2d1ede754ba28cdb"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager$Callback",
+          "method": "onMove",
+          "desc": "()V",
+          "sha256": "6b6fe50cb2268b0160fca6996f312f28f345ce78cd6921b63fe08f0a4fbf7c3c"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager$Callback",
+          "method": "onRemove",
+          "desc": "(Lnet/minecraft/world/entity/Entity$RemovalReason;)V",
+          "sha256": "4e48bd17ebc7635167d4a7fc416ec4006845c13ebbc34665a3cd7017c1b4acd0"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/TransientEntitySectionManager",
+          "method": "<init>",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/level/entity/LevelCallback;)V",
+          "sha256": "c8a1f595b48ee600959b5aefa2683126d019aad189a062d90bce58a360cb78d8"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/TransientEntitySectionManager",
+          "method": "addEntity",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)V",
+          "sha256": "2e80a586e6440e5df6d72bf75e59ff892dc99e399b07001c8e7d7c5f48472c29"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/TransientEntitySectionManager",
+          "method": "removeSectionIfEmpty",
+          "desc": "(JLnet/minecraft/world/level/entity/EntitySection;)V",
+          "sha256": "2b76b8bae661b08be6852b7cbde0d7efaf3f76f33613ae0db51c67749b48a2a2"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/TransientEntitySectionManager$Callback",
+          "method": "onMove",
+          "desc": "()V",
+          "sha256": "a3e8da11c4e01233e8854a98020e0bcceb4a830cfb27f7d968800bfbbc7f166f"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/TransientEntitySectionManager$Callback",
+          "method": "onRemove",
+          "desc": "(Lnet/minecraft/world/entity/Entity$RemovalReason;)V",
+          "sha256": "fcd6b852d1f62915657fc0421f4fd6fac501a278d1aa1f8cadf4e18f7fc31e83"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "getEntities",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+          "sha256": "33301a576eb95b679bb5a2ab266d346fd20e608217681faf9d39a5e557c902af"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "getEntities",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;Ljava/util/List;)V",
+          "sha256": "52b1e498d7f1bf76d231b4ce9f9d82a33057076c40645e357dcdfff98ae70126"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "getEntities",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;Ljava/util/List;I)V",
+          "sha256": "0e1edeb19cd7d9d17a2bb5e39404c65424f29753ed481d31c948c295a8639251"
+        },
+        {
+          "class": "net/minecraft/world/level/EntityGetter",
+          "method": "getEntitiesOfClass",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+          "sha256": "45d34338c3479c10eb7733f6281ae56514da55a6533d45e3ae1bc4ffb9a5d5fa"
+        },
+        {
+          "class": "net/minecraft/world/level/EntityGetter",
+          "method": "getEntitiesOfClass",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;",
+          "sha256": "e16e4930f257d382c7a5e263a7ba942adcf3253dbbe2e54ee34b39a48dd6a26f"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "getEntities",
+          "desc": "()Lnet/minecraft/world/level/entity/LevelEntityGetter;",
+          "sha256": "a309214c1b250595d4d3ae3d760ac9dd6426f15555035ef70bbaeca8b1b70341"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "getPartEntities",
+          "desc": "()Ljava/util/Collection;",
+          "sha256": "36d41c9508a9f468e5ed11c575fe55a5c22c7131bbeaf001e464b2109d617422"
+        }
+      ],
+      "cancel": [],
+      "conversion": "fields added to EntitySectionStorage/EntitySection (counts, owner thread, storage stamp via @ModifyReturnValue on createSection); counting via @ModifyExpressionValue on the multimap add/remove calls of EntitySection.add/remove and @ModifyArg before the remove; duck interfaces on Level (getEntities() getter) and LevelEntityGetterAdapter (its section storage)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.crittersandcompanions_c2.EntityClassCounts)"
+    },
+    "crittersandcompanions_red_panda_gate": {
+      "mod": "crittersandcompanions",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.crittersandcompanions_c2.AvoidEntityGoalRedPandaMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/ai/goal/AvoidEntityGoal",
+          "method": "canUse",
+          "desc": "()Z",
+          "sha256": "3e9b7c21cc4daa1f0d5c5e8c5c1c59f3e4dc39d9418c89e5fa9b0dcd16d4fdb7"
+        },
+        {
+          "class": "net/minecraft/world/level/EntityGetter",
+          "method": "getNearestEntity",
+          "desc": "(Ljava/util/List;Lnet/minecraft/world/entity/ai/targeting/TargetingConditions;Lnet/minecraft/world/entity/LivingEntity;DDD)Lnet/minecraft/world/entity/LivingEntity;",
+          "sha256": "3ebf53f2574adb3a80499864019996349b88df8e5cf577ab36914935662f185f",
+          "sha256_variants": [
+            "a8058c2f66093837fcb221a15970af22e80d4acdebd4e0cd027a75b76f159dae"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): loop body branch inverted (ifeq/ifne + goto); same calls, fields and comparisons. See evidence/variant-review/net.minecraft.world.level.EntityGetter.getNearestEntity.diff.txt."
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on the vanilla AvoidEntityGoal.canUse; acts only for goals whose avoided class is named com.github.eterdelta.crittersandcompanions.entity.RedPandaEntity (the goals Critters and Companions 2.3.5 adds through its NeutralMobsMixin) and only while vanilla_entity_class_count_layer says the level holds none",
+      "license": "Minecraft (Mojang): no-copy; no Critters and Companions code is touched (MIT). The mixin carries only our own logic (helpers RedPandaGate, EntityClassCounts)"
+    }
+  }
+}

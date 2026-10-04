@@ -18,18 +18,44 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
-/** Development-only probe. Never included in the release JAR. */
+/**
+ * Development-only probe. Never included in the release JAR.
+ *
+ * <p>1.0.29 port addition: with {@code -Dbons_and_furious.probeSoakTicks=N} the server keeps running N ticks after the
+ * terrain hashes, runs the scheduled commands of {@code -Dbons_and_furious.probeCommands=<file>} ("tick command" per
+ * line, relative to the game directory) and then harvests every shadow helper's counters (ShadowHarvest). Without the
+ * property the probe behaves exactly as in the 1.0.27 port.
+ */
 @Mod("bons_port_probe")
 public final class PortProbe {
+    private MinecraftServer server;
+    private Map<String, Object> pending;
+    private int soakTotal, soakDone;
+    private final NavigableMap<Integer, List<String>> commands = new TreeMap<>();
+    private final List<Map<String, Object>> commandLog = new ArrayList<>();
+
     public PortProbe() {
         NeoForge.EVENT_BUS.addListener(this::started);
+        NeoForge.EVENT_BUS.addListener(this::tick);
     }
 
     private void started(ServerStartedEvent event) {
         if (!Boolean.getBoolean("bons_and_furious.portProbe")) return;
-        MinecraftServer server = event.getServer();
+        server = event.getServer();
         Map<String,Object> result = new LinkedHashMap<>();
+        boolean ok = initial(server, result);
+        int soak = Integer.getInteger("bons_and_furious.probeSoakTicks", 0);
+        if (!ok || soak <= 0) { finish(result); return; }
+        try { loadCommands(); }
+        catch (Exception e) { result.put("passed", false); result.put("error", "probe commands: " + e); finish(result); return; }
+        soakTotal = soak;
+        pending = result;
+        System.out.println("BONS_PORT_PROBE_SOAK " + soak + " ticks, " + commands.values().stream().mapToInt(List::size).sum() + " commands");
+    }
+
+    private boolean initial(MinecraftServer server, Map<String,Object> result) {
         try {
             if(net.neoforged.fml.loading.FMLLoader.isProduction() && net.neoforged.fml.ModList.get().isLoaded("radium")) {
                 Class.forName("me.jellysquid.mods.lithium.common.entity.EntityClassGroup",true,getClass().getClassLoader());
@@ -86,13 +112,55 @@ public final class PortProbe {
             result.put("surface_misses",bons.pure.terrain.SurfaceEstimateShare.MISSES.sum());
             result.put("passed",true);
             System.out.println("BONS_PORT_PROBE_PASS "+dimensions);
+            return true;
         } catch(Throwable t) {
             result.put("passed",false);result.put("error",t.toString());t.printStackTrace();
             System.out.println("BONS_PORT_PROBE_FAIL "+t);
-        } finally {
-            try { Files.writeString(Path.of("probe-result.json"),new GsonBuilder().setPrettyPrinting().create().toJson(result)+"\n"); }
-            catch(Exception e){throw new RuntimeException(e);}
-            server.halt(false);
+            return false;
         }
+    }
+
+    private void loadCommands() throws Exception {
+        String file = System.getProperty("bons_and_furious.probeCommands");
+        if (file == null || file.isBlank()) return;
+        for (String line : Files.readAllLines(Path.of(file), StandardCharsets.UTF_8)) {
+            line = line.strip();
+            if (line.isEmpty() || line.startsWith("#")) continue;
+            int space = line.indexOf(' ');
+            commands.computeIfAbsent(Integer.parseInt(line.substring(0, space)), k -> new ArrayList<>()).add(line.substring(space + 1).strip());
+        }
+    }
+
+    private void tick(ServerTickEvent.Post event) {
+        if (pending == null) return;
+        int t = soakDone++;
+        for (String command : commands.getOrDefault(t, List.of())) {
+            Map<String, Object> row = new LinkedHashMap<>();
+            row.put("tick", t);
+            row.put("command", command);
+            try {
+                server.getCommands().performPrefixedCommand(server.createCommandSourceStack(), command);
+                row.put("ok", true);
+            } catch (Throwable e) {
+                row.put("ok", false);
+                row.put("error", e.toString());
+            }
+            commandLog.add(row);
+        }
+        if (t < soakTotal) return;
+        Map<String, Object> result = pending;
+        pending = null;
+        result.put("soak_ticks", soakDone);
+        result.put("commands", commandLog);
+        Map<String, Object> shadow = ShadowHarvest.harvest(false);
+        result.put("shadow", shadow);
+        if (!ShadowHarvest.clean(shadow)) result.put("passed", false);
+        finish(result);
+    }
+
+    private void finish(Map<String,Object> result) {
+        try { Files.writeString(Path.of("probe-result.json"),new GsonBuilder().setPrettyPrinting().create().toJson(result)+"\n"); }
+        catch(Exception e){throw new RuntimeException(e);}
+        finally { server.halt(false); }
     }
 }

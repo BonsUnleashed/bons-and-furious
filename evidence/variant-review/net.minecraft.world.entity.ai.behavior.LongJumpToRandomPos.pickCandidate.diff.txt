@@ -1,0 +1,131 @@
+vanilla_long_jump_weighted_pick
+net/minecraft/world/entity/ai/behavior/LongJumpToRandomPos.pickCandidate(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Mob;J)V
+
+--- dev neoforge-21.1.252.jar
++++ prod client-1.21.1-20240808.144430-srg.jar
+@@ -3,7 +3,7 @@
+     Code:
+        0: aload_0
+-       1: getfield      #                 // Field jumpCandidates:Ljava/util/List;
++       1: getfield      #                // Field jumpCandidates:Ljava/util/List;
+        4: invokeinterface #,  1          // InterfaceMethod java/util/List.isEmpty:()Z
+-       9: ifne          141
++       9: ifne          150
+       12: aload_0
+       13: aload_1
+@@ -12,57 +12,60 @@
+       19: aload         5
+       21: invokevirtual #                // Method java/util/Optional.isEmpty:()Z
+-      24: ifne          138
+-      27: aload         5
+-      29: invokevirtual #                // Method java/util/Optional.get:()Ljava/lang/Object;
+-      32: checkcast     #                // class net/minecraft/world/entity/ai/behavior/LongJumpToRandomPos$PossibleJump
+-      35: astore        6
+-      37: aload         6
+-      39: invokevirtual #                // Method net/minecraft/world/entity/ai/behavior/LongJumpToRandomPos$PossibleJump.getJumpTarget:()Lnet/minecraft/core/BlockPos;
+-      42: astore        7
+-      44: aload_0
+-      45: aload_1
+-      46: aload_2
+-      47: aload         7
+-      49: invokevirtual #                // Method isAcceptableLandingPosition:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Mob;Lnet/minecraft/core/BlockPos;)Z
+-      52: ifeq          138
+-      55: aload         7
+-      57: invokestatic  #                // Method net/minecraft/world/phys/Vec3.atCenterOf:(Lnet/minecraft/core/Vec3i;)Lnet/minecraft/world/phys/Vec3;
+-      60: astore        8
+-      62: aload_0
+-      63: aload_2
+-      64: aload         8
+-      66: invokevirtual #                // Method calculateOptimalJumpVector:(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;
+-      69: astore        9
+-      71: aload         9
+-      73: ifnull        138
+-      76: aload_2
+-      77: invokevirtual #                // Method net/minecraft/world/entity/Mob.getBrain:()Lnet/minecraft/world/entity/ai/Brain;
+-      80: getstatic     #                 // Field net/minecraft/world/entity/ai/memory/MemoryModuleType.LOOK_TARGET:Lnet/minecraft/world/entity/ai/memory/MemoryModuleType;
+-      83: new           #                // class net/minecraft/world/entity/ai/behavior/BlockPosTracker
+-      86: dup
+-      87: aload         7
+-      89: invokespecial #                // Method net/minecraft/world/entity/ai/behavior/BlockPosTracker."<init>":(Lnet/minecraft/core/BlockPos;)V
+-      92: invokevirtual #                // Method net/minecraft/world/entity/ai/Brain.setMemory:(Lnet/minecraft/world/entity/ai/memory/MemoryModuleType;Ljava/lang/Object;)V
+-      95: aload_2
+-      96: invokevirtual #                // Method net/minecraft/world/entity/Mob.getNavigation:()Lnet/minecraft/world/entity/ai/navigation/PathNavigation;
+-      99: astore        10
+-     101: aload         10
+-     103: aload         7
+-     105: iconst_0
+-     106: bipush        8
+-     108: invokevirtual #                // Method net/minecraft/world/entity/ai/navigation/PathNavigation.createPath:(Lnet/minecraft/core/BlockPos;II)Lnet/minecraft/world/level/pathfinder/Path;
+-     111: astore        11
+-     113: aload         11
+-     115: ifnull        126
+-     118: aload         11
+-     120: invokevirtual #                // Method net/minecraft/world/level/pathfinder/Path.canReach:()Z
+-     123: ifne          138
+-     126: aload_0
+-     127: aload         9
+-     129: putfield      #                // Field chosenJump:Lnet/minecraft/world/phys/Vec3;
+-     132: aload_0
+-     133: lload_3
+-     134: putfield      #                // Field prepareJumpStart:J
+-     137: return
+-     138: goto          0
+-     141: return
++      24: ifeq          30
++      27: goto          0
++      30: aload         5
++      32: invokevirtual #                // Method java/util/Optional.get:()Ljava/lang/Object;
++      35: checkcast     #                  // class net/minecraft/world/entity/ai/behavior/LongJumpToRandomPos$PossibleJump
++      38: astore        6
++      40: aload         6
++      42: invokevirtual #                // Method net/minecraft/world/entity/ai/behavior/LongJumpToRandomPos$PossibleJump.getJumpTarget:()Lnet/minecraft/core/BlockPos;
++      45: astore        7
++      47: aload_0
++      48: aload_1
++      49: aload_2
++      50: aload         7
++      52: invokevirtual #                // Method isAcceptableLandingPosition:(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Mob;Lnet/minecraft/core/BlockPos;)Z
++      55: ifne          61
++      58: goto          0
++      61: aload         7
++      63: invokestatic  #                // Method net/minecraft/world/phys/Vec3.atCenterOf:(Lnet/minecraft/core/Vec3i;)Lnet/minecraft/world/phys/Vec3;
++      66: astore        8
++      68: aload_0
++      69: aload_2
++      70: aload         8
++      72: invokevirtual #                // Method calculateOptimalJumpVector:(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;
++      75: astore        9
++      77: aload         9
++      79: ifnonnull     85
++      82: goto          0
++      85: aload_2
++      86: invokevirtual #                // Method net/minecraft/world/entity/Mob.getBrain:()Lnet/minecraft/world/entity/ai/Brain;
++      89: getstatic     #                // Field net/minecraft/world/entity/ai/memory/MemoryModuleType.LOOK_TARGET:Lnet/minecraft/world/entity/ai/memory/MemoryModuleType;
++      92: new           #                // class net/minecraft/world/entity/ai/behavior/BlockPosTracker
++      95: dup
++      96: aload         7
++      98: invokespecial #                // Method net/minecraft/world/entity/ai/behavior/BlockPosTracker."<init>":(Lnet/minecraft/core/BlockPos;)V
++     101: invokevirtual #                // Method net/minecraft/world/entity/ai/Brain.setMemory:(Lnet/minecraft/world/entity/ai/memory/MemoryModuleType;Ljava/lang/Object;)V
++     104: aload_2
++     105: invokevirtual #                // Method net/minecraft/world/entity/Mob.getNavigation:()Lnet/minecraft/world/entity/ai/navigation/PathNavigation;
++     108: astore        10
++     110: aload         10
++     112: aload         7
++     114: iconst_0
++     115: bipush        8
++     117: invokevirtual #                // Method net/minecraft/world/entity/ai/navigation/PathNavigation.createPath:(Lnet/minecraft/core/BlockPos;II)Lnet/minecraft/world/level/pathfinder/Path;
++     120: astore        11
++     122: aload         11
++     124: ifnull        135
++     127: aload         11
++     129: invokevirtual #                // Method net/minecraft/world/level/pathfinder/Path.canReach:()Z
++     132: ifne          147
++     135: aload_0
++     136: aload         9
++     138: putfield      #                // Field chosenJump:Lnet/minecraft/world/phys/Vec3;
++     141: aload_0
++     142: lload_3
++     143: putfield      #                // Field prepareJumpStart:J
++     146: return
++     147: goto          0
++     150: return

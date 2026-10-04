@@ -1,0 +1,24 @@
+{
+  "group": "module_resources",
+  "keys": {
+    "distanthorizons_sql_script_lookup_index": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.module_resources.DhSqlScriptLookupMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/core/sql/DatabaseUpdater",
+          "method": "getAutoUpdateScripts",
+          "desc": "()Ljava/util/ArrayList;",
+          "sha256": "69c4a4e3ec4ee1be8c07d09421102d7dc3c5bc927ab635304f372e8be3aa44c7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation on both ClassLoader.getResourceAsStream calls in DatabaseUpdater.getAutoUpdateScripts); the game-layer lookup rules (securejarhandler 3.0.8 ModuleClassLoader/JarContentsImpl/UnionFileSystem, modlauncher 11.0.5 fallback wiring) are library classes: checked by version at runtime instead of fingerprints",
+      "license": "LGPL-3.0 (Distant Horizons); no DH code is carried (helpers bons.furious.patch.module_resources.DhSqlScriptLookup, GameLayerResources, ResourceSite)"
+    }
+  }
+}

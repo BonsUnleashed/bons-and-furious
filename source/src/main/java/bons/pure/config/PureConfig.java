@@ -157,10 +157,14 @@ public final class PureConfig {
         List<String> disabled = new ArrayList<>();
         for (String[] entry : defaults) {
             String key = entry[0];
-            boolean enabled = true;
+            // since 1.0.30: a key starts from its bundled value; a key the bundled defaults ship "=false" stays off until
+            // the user enables it (a fresh file and a key missing from an older file take the bundled value; every
+            // switch before 1.0.30 ships "=true", so they behave exactly as before)
+            boolean byDefault = !"false".equalsIgnoreCase(entry[2]);
+            boolean enabled = byDefault;
             String raw = file.getProperty(key);
             if (raw == null) {
-                if (existing != null) append.append(entry[1]).append(key).append("=true\n\n");
+                if (existing != null) append.append(entry[1]).append(key).append('=').append(byDefault).append("\n\n");
             } else {
                 String v = raw.trim().toLowerCase(java.util.Locale.ROOT);
                 if (v.equals("true")) enabled = true;
@@ -267,7 +271,7 @@ public final class PureConfig {
             if (trimmed.isEmpty()) { continue; }
             int eq = trimmed.indexOf('=');
             if (eq <= 0) continue;
-            out.add(new String[] {trimmed.substring(0, eq).trim(), comment.toString()});
+            out.add(new String[] {trimmed.substring(0, eq).trim(), comment.toString(), trimmed.substring(eq + 1).trim()});
             comment.setLength(0);
         }
     }

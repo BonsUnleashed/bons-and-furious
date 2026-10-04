@@ -1,0 +1,79 @@
+{
+  "group": "spawn_gate",
+  "keys": {
+    "vanilla_spawn_gate_visibility_memo": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.spawn_gate.ServerLevelEntityManagerAccessor",
+        "bons.furious.mixin.spawn_gate.EntityManagerEpochsMixin",
+        "bons.furious.mixin.spawn_gate.ServerLevelSaveEpochsMixin",
+        "bons.furious.mixin.spawn_gate.LevelChunkVisibilityMixin",
+        "bons.furious.mixin.spawn_gate.ServerChunkCacheSpawnGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/server/level/ServerChunkCache",
+          "method": "tickChunks",
+          "desc": "()V",
+          "sha256": "9afa6fc2a9d1d7a7d6566a95f1ffea42b2231fe3be4edb5e784b965dfb6e9db8"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "isNaturalSpawningAllowed",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;)Z",
+          "sha256": "d60dcc23534b54afdd5725d1703c2ccbff5804fca7340868132cfc45ab5c2c71"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "save",
+          "desc": "(Lnet/minecraft/util/ProgressListener;ZZ)V",
+          "sha256": "f7a3a0e0dbf4e5eaa864c441a26f28a8fd79977dedd8b55caa06cc2e50dd68a5"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "canPositionTick",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;)Z",
+          "sha256": "3ee4f9a76ac04091fb1cc04a0b8e06cf05809b8052715cb0903d78a6cea47bad"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "updateChunkStatus",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/level/entity/Visibility;)V",
+          "sha256": "6fd076417d717e376efd5a4aa1e9591454a6e3be034fe04db68c4fce1b32e397"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "updateChunkStatus",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/server/level/FullChunkStatus;)V",
+          "sha256": "40e9214578b3ef5ed8b3c8b79342c9a3b6a37feff232eee6d9d5d63952e845ab"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "saveAll",
+          "desc": "()V",
+          "sha256": "2f5f7a4ab5dde1e1562177f76ae30cdb0193953ea37c6b0745ca1f3334e6c715"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "<init>",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/level/entity/LevelCallback;Lnet/minecraft/world/level/entity/EntityPersistentStorage;)V",
+          "sha256": "97d6c559f34db7ea78bc0164c8a26b1f3ab862293779182de1cc8a6a5c364dbe"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of ServerLevel.isNaturalSpawningAllowed(ChunkPos) inside ServerChunkCache.tickChunks()V, given the loop's LevelChunk by a @ModifyVariable at the STORE of local slot 14 (1.21.1; slot 16 on 1.20.1; kept in a @Unique field of the cache, returned unchanged; no MixinExtras @Local, which boxes a LocalRef per call): the chunk keeps its last answer, its 8x8-chunk region group and that group's epoch when the answer was taken (three @Unique fields); PersistentEntitySectionManager keeps 256 long epochs (@Unique), bumped by an @Inject at the head of updateChunkStatus(ChunkPos, Visibility) (selected by descriptor; the only writer of chunkVisibility) and in full at the return of saveAll()V and ServerLevel.save(ProgressListener, boolean, boolean)V; answers come from the chunk while its group's epoch is unchanged, else from the manager (and are stamped)",
+      "license": "Minecraft: no Minecraft code is carried; the redirect, injects and helper bons.furious.patch.spawn_gate.SpawnGate hold only our own logic"
+    }
+  },
+  "yields": [
+    {
+      "key": "vanilla_spawn_gate_visibility_memo",
+      "mod": "servercore",
+      "name": "ServerCore",
+      "mixin": "me.wesley1808.servercore.mixin.optimizations.ticking.chunk.cache.ServerChunkCacheMixin",
+      "why": "ServerCore 1.5.19's chunk-cache optimization @Redirects the same ServerLevel.isNaturalSpawningAllowed call in ServerChunkCache.tickChunks (priority 900). Two redirects of one call cannot both apply (the second would fail and the server would not start), so this switch steps aside whenever ServerCore lists that mixin. Found by the crash-class sweep; the Forge release steps aside for ServerCore the same way."
+    }
+  ]
+}

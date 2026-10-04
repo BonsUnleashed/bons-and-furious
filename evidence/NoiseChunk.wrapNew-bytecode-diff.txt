@@ -1,0 +1,29 @@
+NoiseChunk.wrapNew(Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;
+dev sha256 d0c362bb055be2cea6b5b8e4270b0dc7e31b257613142ea596da56df615b451a
+prod sha256 23e4b89d4124607734c39b3963fb8e12d56ebe95330e9d6b1e5007c2dcd02c4b (server and client jars)
+constant-pool indices and javap comment alignment normalised
+
+--- dev (NeoForm recompile, neoforge-21.1.252.jar)
++++ production (server/client-1.21.1-20240808.144430-srg.jar)
+@@ -89,15 +89,15 @@
+      184: areturn
+      185: aload_1
+      186: instanceof    #  // class net/minecraft/world/level/levelgen/DensityFunctions$HolderHolder
+-     189: ifeq          212
++     189: ifeq          210
+      192: aload_1
+      193: checkcast     #  // class net/minecraft/world/level/levelgen/DensityFunctions$HolderHolder
+-     196: astore_3
+-     197: aload_3
++     196: astore_2
++     197: aload_2
+      198: invokevirtual #  // Method net/minecraft/world/level/levelgen/DensityFunctions$HolderHolder.function:()Lnet/minecraft/core/Holder;
+      201: invokeinterface #  // InterfaceMethod net/minecraft/core/Holder.value:()Ljava/lang/Object;
+      206: checkcast     #  // class net/minecraft/world/level/levelgen/DensityFunction
+-     209: goto          213
+-     212: aload_1
+-     213: areturn
++     209: areturn
++     210: aload_1
++     211: areturn
+ 

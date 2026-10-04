@@ -1,0 +1,23 @@
+vanilla_beardifier_influence_bounds
+net/minecraft/util/Mth.clampedLerp(DDD)D
+
+--- dev neoforge-21.1.252.jar
++++ prod client-1.21.1-20240808.144430-srg.jar
+@@ -11,10 +11,10 @@
+       11: dconst_1
+       12: dcmpl
+-      13: ifle          20
++      13: ifle          18
+       16: dload_2
+-      17: goto          27
+-      20: dload         4
+-      22: dload_0
+-      23: dload_2
+-      24: invokestatic  #                 // Method lerp:(DDD)D
+-      27: dreturn
++      17: dreturn
++      18: dload         4
++      20: dload_0
++      21: dload_2
++      22: invokestatic  #                // Method lerp:(DDD)D
++      25: dreturn

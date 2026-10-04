@@ -1,0 +1,47 @@
+{
+  "group": "curios_c2",
+  "keys": {
+    "curios_thread_safe_caches": {
+      "mod": "curios",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.curios_c2.SlotAttributeMapMixin"
+      ],
+      "guard": [
+        {
+          "class": "top/theillusivec4/curios/api/SlotAttribute",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "SLOT_ATTRIBUTES is a plain HashMap created here",
+          "sha256": "5dd60281f7ba90cb9fd938f8df35c1e2e1ed44f69331eeaf2db3103941de5883"
+        },
+        {
+          "class": "top/theillusivec4/curios/api/SlotAttribute",
+          "method": "getOrCreate",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/core/Holder;",
+          "note": "the wrapped accessor: one computeIfAbsent on SLOT_ATTRIBUTES",
+          "sha256": "b0877ac95ef4d0744eace1f949875ccc111a05c85a4c0c4dca0a3e89844b3bb4"
+        },
+        {
+          "class": "top/theillusivec4/curios/api/SlotAttribute",
+          "method": "lambda$getOrCreate$0",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/core/Holder;",
+          "note": "the mapping function run under the lock: builds the attribute, never re-enters getOrCreate",
+          "sha256": "8c15bcf402467ad61dce324879321003ef9e8e853def7b1ae2bdf440bac5f87a"
+        },
+        {
+          "class": "top/theillusivec4/curios/api/SlotAttribute",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set: no other accessor of the private map",
+          "sha256": "d2cd2c4bdc9ec268256a2ac4fb9b586a24cd8cca4f0f67c3d12446f7d5978042"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on SlotAttribute.getOrCreate, the only accessor of the static HashMap SLOT_ATTRIBUTES, under a lock (1.21.1: the 1.20.1 getUuid half is gone with Curios' UUID-keyed modifiers)",
+      "license": "LGPL-3.0-or-later: no Curios code is carried; the mixin only locks around the original method (helper bons.furious.patch.curios_c2.CuriosMaps)",
+      "kind": "fix"
+    }
+  }
+}

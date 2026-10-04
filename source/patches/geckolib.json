@@ -302,6 +302,58 @@
       "cancel": [],
       "conversion": "overwrite",
       "license": "MIT: the method body may be carried in our GPL-3.0 source"
+    },
+    "geckolib_bone_queue_reuse": {
+      "mod": "geckolib",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.geckolib.AnimationControllerQueueMixin"
+      ],
+      "guard": [
+        {
+          "class": "software/bernie/geckolib/animation/AnimationController",
+          "method": "createInitialQueues",
+          "desc": "(Ljava/util/Collection;)V",
+          "sha256": "68dc3006e85d872094f42cd5a762f56323356db58e5a8ee75f1680563e70e161"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/keyframe/BoneAnimationQueue",
+          "method": "<init>",
+          "desc": "(Lsoftware/bernie/geckolib/cache/object/GeoBone;)V",
+          "note": "the record a new queue set is: the bone and nine new AnimationPointQueue lists",
+          "sha256": "645c87a18b203fd6660601f9984e2fb2e209259fe5328047917da7c339a4a4b5"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/keyframe/BoneAnimationQueue",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set: a record with more or other components would not be fully reset by the drain",
+          "sha256": "dd238dcc09dd56a149f077e15874a95a3f0b887e8e8e5e1cab85360d30b7d4a9"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "MIT: the method body may be carried in our GPL-3.0 source"
+    },
+    "geckolib_quad_vectors": {
+      "mod": "geckolib",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.geckolib.GeoRendererQuadMixin"
+      ],
+      "guard": [
+        {
+          "class": "software/bernie/geckolib/renderer/GeoRenderer",
+          "method": "createVerticesOfQuad",
+          "desc": "(Lsoftware/bernie/geckolib/cache/object/GeoQuad;Lorg/joml/Matrix4f;Lorg/joml/Vector3f;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V",
+          "sha256": "988f5a6418ffdace26efecc5675d322a5b1c69986a7805e8e9363eef9ee1f3a1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite (interface default method; Mixin accepts no injectors in interface mixins)",
+      "license": "MIT: the method body may be carried in our GPL-3.0 source"
     }
   }
 }

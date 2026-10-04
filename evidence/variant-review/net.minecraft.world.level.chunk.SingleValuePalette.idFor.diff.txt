@@ -1,0 +1,35 @@
+vanilla_turtle_egg_search_sections
+net/minecraft/world/level/chunk/SingleValuePalette.idFor(Ljava/lang/Object;)I
+
+--- dev neoforge-21.1.252.jar
++++ prod client-1.21.1-20240808.144430-srg.jar
+@@ -4,18 +4,18 @@
+        0: aload_0
+        1: getfield      #                 // Field value:Ljava/lang/Object;
+-       4: ifnull        27
++       4: ifnull        15
+        7: aload_0
+        8: getfield      #                 // Field value:Ljava/lang/Object;
+       11: aload_1
+-      12: if_acmpeq     27
++      12: if_acmpne     22
+       15: aload_0
+-      16: getfield      #                 // Field resizeHandler:Lnet/minecraft/world/level/chunk/PaletteResize;
+-      19: iconst_1
+-      20: aload_1
+-      21: invokeinterface #,  3           // InterfaceMethod net/minecraft/world/level/chunk/PaletteResize.onResize:(ILjava/lang/Object;)I
+-      26: ireturn
+-      27: aload_0
+-      28: aload_1
+-      29: putfield      #                 // Field value:Ljava/lang/Object;
+-      32: iconst_0
++      16: aload_1
++      17: putfield      #                 // Field value:Ljava/lang/Object;
++      20: iconst_0
++      21: ireturn
++      22: aload_0
++      23: getfield      #                 // Field resizeHandler:Lnet/minecraft/world/level/chunk/PaletteResize;
++      26: iconst_1
++      27: aload_1
++      28: invokeinterface #,  3           // InterfaceMethod net/minecraft/world/level/chunk/PaletteResize.onResize:(ILjava/lang/Object;)I
+       33: ireturn

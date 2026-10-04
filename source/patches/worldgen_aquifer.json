@@ -1,0 +1,121 @@
+{
+  "group": "worldgen_aquifer",
+  "keys": {
+    "vanilla_aquifer_candidate_cache": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.worldgen_aquifer.AquiferCandidateMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$NoiseBasedAquifer",
+          "method": "computeSubstance",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;D)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "computeSubstance: the behaviour the table path reproduces (branches, order of status reads, flag values)",
+          "sha256": "8480b0fb7ee1147e5fad3bbc01a1419dd2e2ca60faa9431fec1873e1f8c48123",
+          "sha256_variants": [
+            "99e893cacb23c9816abfff65771c0ce237a6d8d355bf9e74da0eda94f3a5dba0"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): long local slots 27/29 swapped and one extra temporary aload/astore in Mojang's build; same calls and arithmetic. See evidence/variant-review/net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$NoiseBasedAquifer",
+          "method": "getAquiferStatus",
+          "desc": "(J)Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;",
+          "note": "getAquiferStatus: index of the cell holding the position, computeFluid when the slot is empty",
+          "sha256": "5a9722599ec1322186f28c5623ab951eddce0348a72d0c8e50fff76d696c5d6c"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$NoiseBasedAquifer",
+          "method": "getIndex",
+          "desc": "(III)I",
+          "note": "getIndex: the cache layout the slot indices follow",
+          "sha256": "5a8d141f6ba893f3c06279c8a0d5cb273d758ad7e68420acb02358d000726313"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$NoiseBasedAquifer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/levelgen/NoiseChunk;Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/level/levelgen/NoiseRouter;Lnet/minecraft/world/level/levelgen/PositionalRandomFactory;IILnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;)V",
+          "note": "grid minimum and sizes, cache arrays (locations start at Long.MAX_VALUE)",
+          "sha256": "2950c25503caffa67b9faff369c824977848c1b9e3f2e24f6b0bc0cc1c8feabc"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$NoiseBasedAquifer",
+          "method": "gridX",
+          "desc": "(I)I",
+          "note": "gridX = floorDiv(x, 16)",
+          "sha256": "14d2a42db8f15f4948f089ab1b40a1beb4a836944532c8aa695d1258b0aebd53"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$NoiseBasedAquifer",
+          "method": "gridY",
+          "desc": "(I)I",
+          "note": "gridY = floorDiv(y, 12)",
+          "sha256": "a12d8c4057b8234220c0db3988f9ac46f8bee3b06d46e276f8f81f9f42be0d06"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$NoiseBasedAquifer",
+          "method": "gridZ",
+          "desc": "(I)I",
+          "note": "gridZ = floorDiv(z, 16)",
+          "sha256": "14d2a42db8f15f4948f089ab1b40a1beb4a836944532c8aa695d1258b0aebd53"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on Aquifer$NoiseBasedAquifer.computeSubstance: a per-aquifer table of grid cells answers the call (our logic; vanilla's computeFluid, calculatePressure, similarity and fluid picker are called as the original calls them); anything the table cannot answer runs the original",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.worldgen_aquifer.AquiferCandidates); other mods' NoiseBasedAquifer mixins are only checked by SHA-256, never copied (none verified for 1.21.1 yet)"
+    },
+    "vanilla_aquifer_high_air": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.worldgen_aquifer.AquiferHighAirMixin",
+        "bons.furious.mixin.worldgen_aquifer.FluidStatusLevelAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$NoiseBasedAquifer",
+          "method": "computeSubstance",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;D)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "computeSubstance: the branch the early air return replaces (statuses 2 and 3, three pressures, flag true)",
+          "sha256": "8480b0fb7ee1147e5fad3bbc01a1419dd2e2ca60faa9431fec1873e1f8c48123",
+          "sha256_variants": [
+            "99e893cacb23c9816abfff65771c0ce237a6d8d355bf9e74da0eda94f3a5dba0"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): long local slots 27/29 swapped and one extra temporary aload/astore in Mojang's build; same calls and arithmetic. See evidence/variant-review/net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.computeSubstance.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$NoiseBasedAquifer",
+          "method": "calculatePressure",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;Lorg/apache/commons/lang3/mutable/MutableDouble;Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;)D",
+          "note": "calculatePressure: 0 or at most -4.4 when both levels are 5 or more below y; no barrier sample there",
+          "sha256": "4f82f599fe49ce159dd55252deb5a1d1fcbe645dd601a27ab10ced2e56f2231c",
+          "sha256_variants": [
+            "4fc455edd4c9ea8fd19ac3908905e44064c05e9cae35e56236806581409b0a77"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): branch polarity swapped with block reorder (ifne/ifgt vs ifeq/ifle); same arithmetic. See evidence/variant-review/net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer.calculatePressure.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$FluidStatus",
+          "method": "at",
+          "desc": "(I)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "at(y): air at or above the fluid level",
+          "sha256": "900cd39a2e00afe22f78b369806b8702b333a44b761b336dd8eaa95b44a0fd78"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$FluidStatus",
+          "method": "<init>",
+          "desc": "(ILnet/minecraft/world/level/block/state/BlockState;)V",
+          "note": "fluidLevel is the level at(y) compares with",
+          "sha256": "aa46d0d034981de90490341aa2846091318037067bb4e926b02593caa2765079"
+        }
+      ],
+      "cancel": [],
+      "conversion": "a marker interface on Aquifer$NoiseBasedAquifer and a read-only @Accessor on Aquifer$FluidStatus.fluidLevel; the return itself sits in vanilla_aquifer_candidate_cache's table path",
+      "license": "Minecraft (Mojang): no-copy; nothing of the classes is carried"
+    }
+  }
+}

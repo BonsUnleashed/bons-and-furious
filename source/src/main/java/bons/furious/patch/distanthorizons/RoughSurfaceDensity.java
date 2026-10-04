@@ -22,6 +22,16 @@ import org.slf4j.Logger;
  * {@link XzCache}: the same value at the same x and z, remembered per thread. The copy is used only when the whole graph
  * contains only known pure types (mapping another mod's type might not reproduce it), and only after 256 probes of the
  * copy and the original at the same positions returned the same bits; otherwise DH keeps the original density.
+ *
+ * The parameters get a {@link Deferred} density, which makes that copy on its first evaluation instead of when the
+ * parameters are built: DH builds them for every level on both sides, but only the client's surface plan ever evaluates
+ * them, and the overworld copy holds tens of thousands of objects (each cached part with its per-thread slot). Every
+ * evaluation still goes to the same copy, made by the same prepare() and its self-check, so the values are unchanged.
+ *
+ * 1.0.29 heap fix ported to 1.21.1: Deferred implements the six abstract methods DensityFunction declares on 1.21.1, the
+ * same six as on 1.20.1 (compute, fillArray, mapAll, minValue, maxValue, codec; Mojang names, which NeoForge runs in
+ * production), and DH 3.3.3 still reads GenParams_neoforge.density only in isNoiseSolidAtBlockPos, through compute at a
+ * SinglePointContext. prepare(), flatOrCache2dInput() and selfCheck() are unchanged by the fix.
  */
 public final class RoughSurfaceDensity {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -30,6 +40,72 @@ public final class RoughSurfaceDensity {
     public static volatile boolean enabled = !"false".equalsIgnoreCase(System.getProperty("bons_and_furious.dhRoughSurfaceCache", "true"));
 
     private RoughSurfaceDensity() {
+    }
+
+    /** What the parameters keep: a density that runs prepare() on its first evaluation. Never throws. */
+    public static DensityFunction deferred(DensityFunction original) {
+        if (!enabled || original == null) return original;
+        return new Deferred(original);
+    }
+
+    /**
+     * Stands for prepare(original): the first call of any method makes it (once, whichever thread comes first) and every
+     * call goes to it. DH only calls compute (isNoiseSolidAtBlockPos); the other methods are delegated the same way.
+     */
+    public static final class Deferred implements DensityFunction {
+        private final DensityFunction original;
+        private volatile DensityFunction resolved;
+
+        Deferred(DensityFunction original) {
+            this.original = original;
+        }
+
+        /** prepare(original), made on the first call. */
+        public DensityFunction resolved() {
+            DensityFunction d = resolved;
+            if (d == null) {
+                synchronized (this) {
+                    d = resolved;
+                    if (d == null) resolved = d = prepare(original);
+                }
+            }
+            return d;
+        }
+
+        /** True once the copy (or the original, when it could not be proven exact) has been chosen. */
+        public boolean isResolved() {
+            return resolved != null;
+        }
+
+        @Override
+        public double compute(DensityFunction.FunctionContext context) {
+            return resolved().compute(context);
+        }
+
+        @Override
+        public void fillArray(double[] values, DensityFunction.ContextProvider provider) {
+            resolved().fillArray(values, provider);
+        }
+
+        @Override
+        public DensityFunction mapAll(DensityFunction.Visitor visitor) {
+            return resolved().mapAll(visitor);
+        }
+
+        @Override
+        public double minValue() {
+            return resolved().minValue();
+        }
+
+        @Override
+        public double maxValue() {
+            return resolved().maxValue();
+        }
+
+        @Override
+        public net.minecraft.util.KeyDispatchDataCodec<? extends DensityFunction> codec() {
+            return resolved().codec();
+        }
     }
 
     /** The density DH should use: the cached copy when it is exact, otherwise the original. Never throws. */

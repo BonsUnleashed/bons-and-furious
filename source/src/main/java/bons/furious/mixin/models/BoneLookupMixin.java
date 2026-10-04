@@ -20,10 +20,16 @@ import org.spongepowered.asm.mixin.injection.Redirect;
  * the method (filter, findFirst, map to getChild) runs unchanged on it. A part class that overrides getAllParts or
  * hasChild, anywhere in the walk, sends the lookup back to the original stream. Minecraft's code is not carried here:
  * only the stream source is redirected.
+ *
+ * Priority 1001 and require = 0 (since 1.0.30): a mod that replaces this method
+ * with an @Overwrite at the default 1000 (Embeddium 1.0.15's remove_streams HierarchicalModelMixin on 1.21.1) would make
+ * Mixin refuse this redirect at equal priority and the class fail to load. Above 1000 the redirect is let in, finds no
+ * stream in that body and stands down (one log line from PureMixinPlugin.postApply). Guards also yields this switch
+ * whenever Embeddium is installed, so this is the second line of defence on 1.21.1.
  */
-@Mixin(value = HierarchicalModel.class, remap = false)
+@Mixin(value = HierarchicalModel.class, remap = false, priority = 1001)
 public abstract class BoneLookupMixin {
-    @Redirect(method = "getAnyDescendantWithName", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/geom/ModelPart;getAllParts()Ljava/util/stream/Stream;"))
+    @Redirect(method = "getAnyDescendantWithName", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/geom/ModelPart;getAllParts()Ljava/util/stream/Stream;"), require = 0)
     private Stream<ModelPart> bons$partsWithBone(ModelPart root, String name) {
         BoneSearch search = new BoneSearch();
         ModelPart parent = bons$parentOf(root, name, search);

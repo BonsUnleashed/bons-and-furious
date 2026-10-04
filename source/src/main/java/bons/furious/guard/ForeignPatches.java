@@ -94,6 +94,118 @@ final class ForeignPatches {
         }
     }
 
+    private static Map<String, String> handlerUsers;   // foreign mixin -> "NAME VERSION (MIXIN)" of a mod that refines it
+
+    /**
+     * Since 1.0.30 (NeoForge loading API): the installed mod that refines
+     * {@code foreignMixin} through MixinSquared's @TargetHandler, as "NAME VERSION (MIXIN)", or null. The annotation names
+     * the refined mixin class as a string, so a mixin class containing that name is such a refinement (TaCZ Tweaks'
+     * crawl.LivingEntityMixinMixin on TaCZ's LivingEntityMixin, on Forge 1.20.1). Read once for every mixin a switch may
+     * cancel, and only in the mods that can use @TargetHandler: those that bundle MixinSquared or depend on it or on the
+     * mod that ships one of those mixins. A mod is never counted for a mixin it ships itself.
+     */
+    static synchronized String handlerUser(String foreignMixin, Map<String, String> cancelled) {
+        if (handlerUsers == null) handlerUsers = scanHandlerUsers(cancelled);
+        return handlerUsers.get(foreignMixin);
+    }
+
+    /** cancelled: every foreign mixin a switch may cancel -> the mod that ships it. */
+    private static Map<String, String> scanHandlerUsers(Map<String, String> cancelled) {
+        Map<String, String> users = new HashMap<>();
+        try {
+            var loading = net.neoforged.fml.loading.LoadingModList.get();
+            if (loading == null) return users;   // not running under FML (offline tools): no installed mod to read
+            for (var info : loading.getModFiles()) {
+                var mods = info.getMods();
+                if (mods.isEmpty()) continue;
+                List<String> ids = new ArrayList<>();
+                for (var m : mods) ids.add(m.getModId());
+                if (ids.contains("bons_and_furious")) continue;
+                if (!mayUseTargetHandler(info, mods, cancelled.values())) continue;
+                List<String> open = new ArrayList<>();
+                for (Map.Entry<String, String> c : cancelled.entrySet())
+                    if (!users.containsKey(c.getKey()) && !ids.contains(c.getValue())) open.add(c.getKey());
+                if (open.isEmpty()) continue;
+                for (Path cls : mixinClassFiles(info)) {
+                    byte[] bytes = Files.readAllBytes(cls);
+                    for (String mixin : open) {
+                        if (users.containsKey(mixin) || !contains(bytes, mixin.getBytes(StandardCharsets.UTF_8))) continue;
+                        var mod = mods.get(0);
+                        String name = cls.toString().replace('\\', '/');
+                        name = name.substring(name.lastIndexOf('/') + 1).replace(".class", "");
+                        users.put(mixin, mod.getDisplayName() + " " + mod.getVersion() + " (" + name + ")");
+                    }
+                }
+            }
+        } catch (Throwable t) {
+            LOGGER.warn("Bons and Furious: could not check the installed mods for MixinSquared refinements ({}); the switches that "
+                    + "replace another mod's mixin step aside", t.toString());
+            for (String mixin : cancelled.keySet()) users.putIfAbsent(mixin, "an installed mod that could not be checked");
+        }
+        return users;
+    }
+
+    /** The jar bundles MixinSquared (Jar-in-Jar), or one of its mods depends on MixinSquared or on one of the owners. */
+    private static boolean mayUseTargetHandler(net.neoforged.fml.loading.moddiscovery.ModFileInfo info,
+                                               List<net.neoforged.neoforgespi.language.IModInfo> mods,
+                                               java.util.Collection<String> owners) throws Exception {
+        for (var m : mods)
+            for (var d : m.getDependencies())
+                if (d.getModId().equals("mixinsquared") || owners.contains(d.getModId())) return true;
+        Path meta = info.getFile().findResource("META-INF", "jarjar", "metadata.json");
+        return Files.isRegularFile(meta) && Files.readString(meta, StandardCharsets.UTF_8).toLowerCase(java.util.Locale.ROOT).contains("mixinsquared");
+    }
+
+    /** Every mixin class the mod file's mixin configs name for either side ([[mixins]] in neoforge.mods.toml, plus the
+     *  legacy manifest MixinConfigs attribute), and, for a config with a plugin, every class in its package (a plugin may
+     *  add mixins the lists do not name). */
+    private static List<Path> mixinClassFiles(net.neoforged.fml.loading.moddiscovery.ModFileInfo info) throws Exception {
+        List<Path> out = new ArrayList<>();
+        var file = info.getFile();
+        java.util.Set<String> configs = new java.util.LinkedHashSet<>();
+        for (var entry : info.getConfig().getConfigList("mixins"))
+            entry.<String>getConfigElement("config").ifPresent(c -> configs.add(c.trim()));
+        Path mf = file.findResource("META-INF", "MANIFEST.MF");
+        if (Files.isRegularFile(mf)) {
+            try (InputStream in = Files.newInputStream(mf)) {
+                String legacy = new Manifest(in).getMainAttributes().getValue("MixinConfigs");
+                if (legacy != null) for (String n : legacy.split(",")) if (!n.isBlank()) configs.add(n.trim());
+            }
+        }
+        for (String name : configs) {
+            Path p = file.findResource(name);
+            if (!Files.isRegularFile(p)) continue;
+            JsonObject cfg = JsonParser.parseString(Files.readString(p, StandardCharsets.UTF_8)).getAsJsonObject();
+            if (!cfg.has("package")) continue;
+            String pkg = cfg.get("package").getAsString();
+            for (String list : new String[] {"mixins", "client", "server"}) {
+                if (!cfg.has(list) || !cfg.get(list).isJsonArray()) continue;
+                for (JsonElement e : cfg.getAsJsonArray(list)) {
+                    Path c = file.findResource((pkg + "." + e.getAsString()).replace('.', '/') + ".class");
+                    if (Files.isRegularFile(c)) out.add(c);
+                }
+            }
+            if (cfg.has("plugin")) {
+                Path dir = file.findResource(pkg.split("\\."));
+                if (Files.isDirectory(dir)) {
+                    try (var walk = Files.walk(dir)) {
+                        walk.filter(x -> x.toString().endsWith(".class")).forEach(out::add);
+                    }
+                }
+            }
+        }
+        return out;
+    }
+
+    private static boolean contains(byte[] hay, byte[] needle) {
+        outer:
+        for (int i = 0, n = hay.length - needle.length; i <= n; i++) {
+            for (int j = 0; j < needle.length; j++) if (hay[i + j] != needle[j]) continue outer;
+            return true;
+        }
+        return false;
+    }
+
     /** TOML booleans as Forge writes them; anything else (or nothing) is the default. */
     private static boolean on(String value, boolean byDefault) {
         if ("true".equals(value)) return true;

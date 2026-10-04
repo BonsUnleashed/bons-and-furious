@@ -494,5 +494,561 @@
       "net.minecraft.client.Camera",
       "net.minecraft.client.renderer.GameRenderer"
     ]
+  },
+  "almostunified_duplicate_groups": {
+    "client": false,
+    "targets": [
+      "com.almostreliable.unified.unification.recipe.RecipeLink",
+      "com.almostreliable.unified.unification.recipe.RecipeTransformer",
+      "com.almostreliable.unified.utils.JsonCompare$CompareSettings"
+    ]
+  },
+  "artifacts_living_tick_order": {
+    "client": false,
+    "targets": [
+      "artifacts.item.UmbrellaItem",
+      "artifacts.neoforge.event.ArtifactHooksNeoForge"
+    ]
+  },
+  "citadel_model_vertices": {
+    "client": true,
+    "targets": [
+      "com.github.alexthe666.citadel.client.model.AdvancedModelBox",
+      "com.github.alexthe666.citadel.client.model.basic.BasicModelPart"
+    ]
+  },
+  "cucumber_tile_dispatch_range_first": {
+    "client": false,
+    "targets": [
+      "com.blakebr0.cucumber.helper.TileEntityHelper"
+    ]
+  },
+  "distanthorizons_adjacent_face_skip": {
+    "client": true,
+    "targets": [
+      "com.seibel.distanthorizons.core.dataObjects.render.bufferBuilding.ColumnBox"
+    ]
+  },
+  "distanthorizons_biome_blend_memo": {
+    "client": true,
+    "targets": [
+      "com.seibel.distanthorizons.common.wrappers.block.AbstractDhTintGetter_neoforge"
+    ]
+  },
+  "distanthorizons_lod_biome_memo": {
+    "client": false,
+    "targets": [
+      "com.seibel.distanthorizons.core.dataObjects.transformers.LodDataBuilder"
+    ]
+  },
+  "distanthorizons_pooled_string_index": {
+    "client": false,
+    "targets": [
+      "com.seibel.distanthorizons.core.dataObjects.fullData.FullDataPointIdMap",
+      "com.seibel.distanthorizons.core.util.objects.pooling.StringPool"
+    ]
+  },
+  "distanthorizons_quad_sort_keys": {
+    "client": true,
+    "targets": [
+      "com.seibel.distanthorizons.core.dataObjects.render.bufferBuilding.LodQuadBuilder"
+    ]
+  },
+  "distanthorizons_unlocked_byte_stream": {
+    "client": false,
+    "targets": [
+      "com.seibel.distanthorizons.core.util.objects.dataStreams.DhDataInputStream"
+    ]
+  },
+  "distanthorizons_wrapper_air_flag": {
+    "client": false,
+    "targets": [
+      "com.seibel.distanthorizons.common.wrappers.block.BlockStateWrapper_neoforge"
+    ]
+  },
+  "embeddium_sprite_tick_frame_times": {
+    "client": true,
+    "targets": [
+      "net.minecraft.client.renderer.texture.SpriteContents$Ticker"
+    ]
+  },
+  "fancymenu_render_thread_state": {
+    "client": true,
+    "targets": [
+      "de.keksuccino.fancymenu.util.rendering.RenderRotationUtil",
+      "de.keksuccino.fancymenu.util.rendering.RenderScaleUtil",
+      "de.keksuccino.fancymenu.util.rendering.RenderTranslationUtil"
+    ]
+  },
+  "geckolib_bone_queue_reuse": {
+    "client": false,
+    "targets": [
+      "software.bernie.geckolib.animation.AnimationController"
+    ]
+  },
+  "geckolib_quad_vectors": {
+    "client": true,
+    "targets": [
+      "software.bernie.geckolib.renderer.GeoRenderer"
+    ]
+  },
+  "lionfishapi_model_vertices": {
+    "client": true,
+    "targets": [
+      "com.github.L_Ender.lionfishapi.client.model.tools.AdvancedModelBox",
+      "com.github.L_Ender.lionfishapi.client.model.tools.BasicModelPart"
+    ]
+  },
+  "pehkui_scale_tick_callbacks": {
+    "client": false,
+    "targets": [
+      "virtuoel.pehkui.util.ScaleUtils"
+    ]
+  },
+  "storagedrawers_count_label_memo": {
+    "client": true,
+    "targets": [
+      "com.jaquadro.minecraft.storagedrawers.util.CountFormatter"
+    ]
+  },
+  "terrablender_lazy_namespace_rules": {
+    "client": false,
+    "targets": [
+      "terrablender.worldgen.surface.NamespacedSurfaceRuleSource"
+    ]
+  },
+  "terrablender_namespace_rule_memo": {
+    "client": false,
+    "targets": [
+      "terrablender.worldgen.surface.NamespacedSurfaceRuleSource$NamespacedRule"
+    ]
+  },
+  "vanilla_block_state_air_flag": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.block.state.BlockBehaviour",
+      "net.minecraft.world.level.block.state.BlockBehaviour$BlockStateBase"
+    ]
+  },
+  "vanilla_climate_tree_sort_keys": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.biome.Climate$RTree",
+      "net.minecraft.world.level.biome.Climate$RTree$Node"
+    ]
+  },
+  "vanilla_climate_tree_span_bounds": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.biome.Climate$RTree",
+      "net.minecraft.world.level.biome.Climate$RTree$Node"
+    ]
+  },
+  "vanilla_fire_scan_loop": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.entity.Entity"
+    ]
+  },
+  "vanilla_selector_type_index": {
+    "client": false,
+    "targets": [
+      "net.minecraft.commands.arguments.selector.EntitySelector",
+      "net.minecraft.commands.arguments.selector.EntitySelectorParser",
+      "net.minecraft.commands.arguments.selector.options.EntitySelectorOptions",
+      "net.minecraft.world.level.entity.EntityLookup"
+    ]
+  },
+  "vanilla_suffocation_scan_loop": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.entity.Entity"
+    ]
+  },
+  "vanilla_ticking_chunk_memo": {
+    "client": false,
+    "targets": [
+      "net.minecraft.server.level.ChunkHolder"
+    ]
+  },
+  "worldgen_empty_beardifier_marker": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.levelgen.Beardifier",
+      "net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator",
+      "net.minecraft.world.level.levelgen.NoiseChunk"
+    ]
+  },
+  "bomd_block_cache_presence": {
+    "client": false,
+    "targets": [
+      "com.cerbon.bosses_of_mass_destruction.block.custom.LevitationBlockEntity",
+      "com.cerbon.bosses_of_mass_destruction.capability.ChunkBlockCache",
+      "net.minecraft.server.level.ServerLevel",
+      "net.minecraft.world.level.NaturalSpawner"
+    ]
+  },
+  "crittersandcompanions_red_panda_gate": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.entity.ai.goal.AvoidEntityGoal"
+    ]
+  },
+  "curios_tag_predicate_keys": {
+    "client": false,
+    "targets": [
+      "top.theillusivec4.curios.mixin.CuriosImplMixinHooks"
+    ]
+  },
+  "curios_thread_safe_caches": {
+    "client": false,
+    "targets": [
+      "top.theillusivec4.curios.api.SlotAttribute"
+    ]
+  },
+  "distanthorizons_sql_script_lookup_index": {
+    "client": false,
+    "targets": [
+      "com.seibel.distanthorizons.core.sql.DatabaseUpdater"
+    ]
+  },
+  "distanthorizons_world_change_biome_reset": {
+    "client": false,
+    "targets": [
+      "com.seibel.distanthorizons.core.api.internal.SharedApi"
+    ]
+  },
+  "dungeonsdelight_yam_single_add": {
+    "client": false,
+    "targets": [
+      "net.yirmiri.dungeonsdelight.common.entity.monster_yam.MonsterYamEntity"
+    ]
+  },
+  "dynamictrees_rot_cycle_guard": {
+    "client": false,
+    "targets": [
+      "com.dtteam.dynamictrees.block.branch.BasicBranchBlock",
+      "com.dtteam.dynamictrees.block.branch.BasicRootsBlock",
+      "com.dtteam.dynamictrees.block.branch.BranchBlock",
+      "com.dtteam.dynamictrees.systems.genfeature.MushroomRotGenFeature",
+      "com.dtteam.dynamictrees.systems.genfeature.RotSoilGenFeature",
+      "com.dtteam.dynamictrees.tree.species.Species"
+    ]
+  },
+  "dynamictrees_thick_shape_memo": {
+    "client": false,
+    "targets": [
+      "com.dtteam.dynamictrees.block.branch.TrunkShellBlock"
+    ]
+  },
+  "embeddium_draw_batch_cache": {
+    "client": true,
+    "targets": [
+      "org.embeddedt.embeddium.impl.render.chunk.DefaultChunkRenderer",
+      "org.embeddedt.embeddium.impl.render.chunk.data.SectionRenderDataStorage",
+      "org.embeddedt.embeddium.impl.render.chunk.lists.ChunkRenderList"
+    ]
+  },
+  "embeddium_entity_sort_radix": {
+    "client": true,
+    "targets": [
+      "org.embeddedt.embeddium.impl.util.sorting.VertexSorters$AbstractVertexSorter"
+    ]
+  },
+  "embeddium_merged_draws": {
+    "client": true,
+    "targets": [
+      "org.embeddedt.embeddium.impl.render.chunk.DefaultChunkRenderer"
+    ]
+  },
+  "embeddium_search_replay": {
+    "client": true,
+    "targets": [
+      "org.embeddedt.embeddium.impl.render.chunk.RenderSection",
+      "org.embeddedt.embeddium.impl.render.chunk.RenderSectionManager",
+      "org.embeddedt.embeddium.impl.render.chunk.occlusion.OcclusionCuller",
+      "org.embeddedt.embeddium.impl.render.viewport.Viewport"
+    ]
+  },
+  "fdbosses_phase_sphere_local_only": {
+    "client": true,
+    "targets": [
+      "com.finderfeed.fdbosses.content.items.chesed.PhaseSphereHandler"
+    ]
+  },
+  "fdbosses_spawner_presence_gate": {
+    "client": true,
+    "targets": [
+      "com.finderfeed.fdbosses.BossClientEvents",
+      "com.finderfeed.fdbosses.BossEvents",
+      "com.finderfeed.fdbosses.client.BossCommonMixinHandle"
+    ]
+  },
+  "jei_baked_index_background_grams": {
+    "client": true,
+    "targets": [
+      "mezz.jei.modshade.net.mezzdev.bakedsubstring.BakedSubstringIndex",
+      "mezz.jei.modshade.net.mezzdev.bakedsubstring.BakedSubstringIndex$Builder"
+    ]
+  },
+  "jei_sort_index_keys": {
+    "client": true,
+    "targets": [
+      "mezz.jei.common.config.sorting.MappedSortingConfig",
+      "mezz.jei.common.config.sorting.SortingConfig",
+      "mezz.jei.gui.ingredients.IngredientSorter",
+      "mezz.jei.gui.ingredients.IngredientSorterComparators"
+    ]
+  },
+  "l2library_stop_tracking_noop": {
+    "client": false,
+    "targets": [
+      "dev.xkmc.l2core.events.EffectSyncEvents"
+    ]
+  },
+  "legendary_monsters_camera_null_guard": {
+    "client": true,
+    "targets": [
+      "net.miauczel.legendary_monsters.client.event.ClientEvent"
+    ]
+  },
+  "lionfishapi_fluid_walk_scan": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.entity.Entity"
+    ]
+  },
+  "modernfix_bake_location_order": {
+    "client": true,
+    "targets": [
+      "org.embeddedt.modernfix.neoforge.dynresources.ModelBakeEventHelper"
+    ]
+  },
+  "modernfix_cube_bake_memo": {
+    "client": true,
+    "targets": [
+      "net.minecraft.client.model.geom.builders.CubeDefinition"
+    ]
+  },
+  "mutantmonsters_empty_shoulder_skip": {
+    "client": false,
+    "targets": [
+      "fuzs.mutantmonsters.handler.PlayerEventsHandler"
+    ]
+  },
+  "oculus_shadow_outline_discard": {
+    "client": true,
+    "targets": [
+      "com.mojang.blaze3d.vertex.ByteBufferBuilder",
+      "net.irisshaders.iris.shadows.ShadowRenderer",
+      "net.minecraft.client.renderer.MultiBufferSource$BufferSource",
+      "net.minecraft.client.renderer.OutlineBufferSource"
+    ]
+  },
+  "pipez_empty_filter_fast_path": {
+    "client": false,
+    "targets": [
+      "de.maxhenkel.pipez.blocks.tileentity.types.FluidPipeType",
+      "de.maxhenkel.pipez.blocks.tileentity.types.ItemPipeType"
+    ]
+  },
+  "pipez_sorted_connections_memo": {
+    "client": false,
+    "targets": [
+      "de.maxhenkel.pipez.blocks.tileentity.UpgradeTileEntity"
+    ]
+  },
+  "radium_hash_palette_copy": {
+    "client": false,
+    "targets": [
+      "me.jellysquid.mods.lithium.common.world.chunk.LithiumHashPalette"
+    ]
+  },
+  "radium_part_entity_collisions": {
+    "client": false,
+    "targets": [
+      "me.jellysquid.mods.lithium.common.world.WorldHelper"
+    ]
+  },
+  "radium_world_border_keep_listeners": {
+    "client": false,
+    "targets": [
+      "me.jellysquid.mods.lithium.common.world.listeners.WorldBorderListenerOnceMulti"
+    ]
+  },
+  "relics_fluid_walk_scan": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.entity.Entity"
+    ]
+  },
+  "ribbits_performer_absent_guard": {
+    "client": false,
+    "targets": [
+      "com.yungnickyoung.minecraft.ribbits.player.PlayerInstrumentTracker"
+    ]
+  },
+  "spawn_sealife_waterlogged_memo": {
+    "client": false,
+    "targets": [
+      "com.ninni.spawn.server.block.entity.SeaLifeDecoBlockEntity"
+    ]
+  },
+  "storagedrawers_count_sync_holders": {
+    "client": false,
+    "targets": [
+      "com.jaquadro.minecraft.storagedrawers.block.tile.BlockEntityDrawers",
+      "com.jaquadro.minecraft.storagedrawers.block.tile.BlockEntityDrawersComp$GroupData",
+      "net.minecraft.server.players.PlayerList"
+    ]
+  },
+  "structurify_check_memo_slim": {
+    "client": false,
+    "targets": [
+      "com.faboslav.structurify.common.world.level.structure.checks.StructureChecker"
+    ]
+  },
+  "vanilla_aquifer_candidate_cache": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer"
+    ]
+  },
+  "vanilla_aquifer_high_air": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.levelgen.Aquifer$FluidStatus",
+      "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer"
+    ]
+  },
+  "vanilla_beardifier_influence_bounds": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.levelgen.Beardifier"
+    ]
+  },
+  "vanilla_biome_fiddle_mask": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.biome.BiomeManager"
+    ]
+  },
+  "vanilla_cursor_counters": {
+    "client": false,
+    "targets": [
+      "net.minecraft.core.Cursor3D"
+    ]
+  },
+  "vanilla_entity_class_count_layer": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.Level",
+      "net.minecraft.world.level.entity.EntitySection",
+      "net.minecraft.world.level.entity.EntitySectionStorage",
+      "net.minecraft.world.level.entity.LevelEntityGetterAdapter"
+    ]
+  },
+  "vanilla_entity_section_x_overflow": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.entity.EntitySectionStorage"
+    ]
+  },
+  "vanilla_framed_map_holder_scan": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.saveddata.maps.MapItemSavedData"
+    ]
+  },
+  "vanilla_game_event_registry_lookup": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.chunk.LevelChunk",
+      "net.minecraft.world.level.gameevent.GameEventDispatcher"
+    ]
+  },
+  "vanilla_goal_flags_none_disabled": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.entity.ai.goal.GoalSelector"
+    ]
+  },
+  "vanilla_item_merge_candidates": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.entity.item.ItemEntity"
+    ]
+  },
+  "vanilla_layer_bake_streamless": {
+    "client": true,
+    "targets": [
+      "net.minecraft.client.model.geom.builders.PartDefinition"
+    ]
+  },
+  "vanilla_long_jump_weighted_pick": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.entity.ai.behavior.LongJumpToRandomPos"
+    ]
+  },
+  "vanilla_raycast_fluid_none": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.ClipContext",
+      "net.minecraft.world.level.Level"
+    ]
+  },
+  "vanilla_repellent_search_sections": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.entity.ai.sensing.HoglinSpecificSensor",
+      "net.minecraft.world.entity.ai.sensing.PiglinSpecificSensor"
+    ]
+  },
+  "vanilla_spawn_gate_visibility_memo": {
+    "client": false,
+    "targets": [
+      "net.minecraft.server.level.ServerChunkCache",
+      "net.minecraft.server.level.ServerLevel",
+      "net.minecraft.world.level.chunk.LevelChunk",
+      "net.minecraft.world.level.entity.PersistentEntitySectionManager"
+    ]
+  },
+  "vanilla_strip_formatting_fast_path": {
+    "client": false,
+    "targets": [
+      "net.minecraft.ChatFormatting"
+    ]
+  },
+  "vanilla_sun_burn_deferred_wet_check": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.entity.Entity",
+      "net.minecraft.world.entity.Mob"
+    ]
+  },
+  "vanilla_tag_membership_ids": {
+    "client": false,
+    "targets": [
+      "net.minecraft.core.Holder$Reference",
+      "net.minecraft.tags.TagKey"
+    ]
+  },
+  "vanilla_ticker_range_memo": {
+    "client": false,
+    "targets": [
+      "net.minecraft.server.level.DistanceManager",
+      "net.minecraft.server.level.ServerLevel",
+      "net.minecraft.server.level.TickingTracker",
+      "net.minecraft.world.level.Level",
+      "net.minecraft.world.level.chunk.LevelChunk$RebindableTickingBlockEntityWrapper"
+    ]
+  },
+  "vanilla_turtle_egg_search_sections": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.entity.ai.goal.MoveToBlockGoal",
+      "net.minecraft.world.entity.ai.goal.RemoveBlockGoal"
+    ]
   }
 }

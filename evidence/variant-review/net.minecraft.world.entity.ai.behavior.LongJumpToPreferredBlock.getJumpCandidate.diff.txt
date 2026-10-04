@@ -1,0 +1,65 @@
+vanilla_long_jump_weighted_pick
+net/minecraft/world/entity/ai/behavior/LongJumpToPreferredBlock.getJumpCandidate(Lnet/minecraft/server/level/ServerLevel;)Ljava/util/Optional;
+
+--- dev neoforge-21.1.252.jar
++++ prod client-1.21.1-20240808.144430-srg.jar
+@@ -9,5 +9,5 @@
+        9: invokespecial #                 // Method net/minecraft/world/entity/ai/behavior/LongJumpToRandomPos.getJumpCandidate:(Lnet/minecraft/server/level/ServerLevel;)Ljava/util/Optional;
+       12: areturn
+-      13: new           #                 // class net/minecraft/core/BlockPos$MutableBlockPos
++      13: new           #                  // class net/minecraft/core/BlockPos$MutableBlockPos
+       16: dup
+       17: invokespecial #                 // Method net/minecraft/core/BlockPos$MutableBlockPos."<init>":()V
+@@ -15,5 +15,5 @@
+       21: aload_0
+       22: getfield      #                 // Field jumpCandidates:Ljava/util/List;
+-      25: invokeinterface #,  1           // InterfaceMethod java/util/List.isEmpty:()Z
++      25: invokeinterface #,  1          // InterfaceMethod java/util/List.isEmpty:()Z
+       30: ifne          98
+       33: aload_0
+@@ -22,8 +22,8 @@
+       38: astore_3
+       39: aload_3
+-      40: invokevirtual #                 // Method java/util/Optional.isPresent:()Z
++      40: invokevirtual #                // Method java/util/Optional.isPresent:()Z
+       43: ifeq          95
+       46: aload_3
+-      47: invokevirtual #                 // Method java/util/Optional.get:()Ljava/lang/Object;
++      47: invokevirtual #                // Method java/util/Optional.get:()Ljava/lang/Object;
+       50: checkcast     #                 // class net/minecraft/world/entity/ai/behavior/LongJumpToRandomPos$PossibleJump
+       53: astore        4
+@@ -31,11 +31,11 @@
+       56: aload_2
+       57: aload         4
+-      59: invokevirtual #                 // Method net/minecraft/world/entity/ai/behavior/LongJumpToRandomPos$PossibleJump.getJumpTarget:()Lnet/minecraft/core/BlockPos;
+-      62: getstatic     #                 // Field net/minecraft/core/Direction.DOWN:Lnet/minecraft/core/Direction;
+-      65: invokevirtual #                 // Method net/minecraft/core/BlockPos$MutableBlockPos.setWithOffset:(Lnet/minecraft/core/Vec3i;Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos$MutableBlockPos;
+-      68: invokevirtual #                 // Method net/minecraft/server/level/ServerLevel.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
++      59: invokevirtual #                // Method net/minecraft/world/entity/ai/behavior/LongJumpToRandomPos$PossibleJump.getJumpTarget:()Lnet/minecraft/core/BlockPos;
++      62: getstatic     #                // Field net/minecraft/core/Direction.DOWN:Lnet/minecraft/core/Direction;
++      65: invokevirtual #                // Method net/minecraft/core/BlockPos$MutableBlockPos.setWithOffset:(Lnet/minecraft/core/Vec3i;Lnet/minecraft/core/Direction;)Lnet/minecraft/core/BlockPos$MutableBlockPos;
++      68: invokevirtual #                // Method net/minecraft/server/level/ServerLevel.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+       71: aload_0
+       72: getfield      #                 // Field preferredBlockTag:Lnet/minecraft/tags/TagKey;
+-      75: invokevirtual #                 // Method net/minecraft/world/level/block/state/BlockState.is:(Lnet/minecraft/tags/TagKey;)Z
++      75: invokevirtual #                // Method net/minecraft/world/level/block/state/BlockState.is:(Lnet/minecraft/tags/TagKey;)Z
+       78: ifeq          83
+       81: aload_3
+@@ -49,6 +49,6 @@
+       98: aload_0
+       99: getfield      #                 // Field notPrefferedJumpCandidates:Ljava/util/List;
+-     102: invokeinterface #,  1           // InterfaceMethod java/util/List.isEmpty:()Z
+-     107: ifne          129
++     102: invokeinterface #,  1          // InterfaceMethod java/util/List.isEmpty:()Z
++     107: ifne          127
+      110: aload_0
+      111: getfield      #                 // Field notPrefferedJumpCandidates:Ljava/util/List;
+@@ -57,5 +57,5 @@
+      120: checkcast     #                 // class net/minecraft/world/entity/ai/behavior/LongJumpToRandomPos$PossibleJump
+      123: invokestatic  #                // Method java/util/Optional.of:(Ljava/lang/Object;)Ljava/util/Optional;
+-     126: goto          132
+-     129: invokestatic  #                // Method java/util/Optional.empty:()Ljava/util/Optional;
+-     132: areturn
++     126: areturn
++     127: invokestatic  #                // Method java/util/Optional.empty:()Ljava/util/Optional;
++     130: areturn

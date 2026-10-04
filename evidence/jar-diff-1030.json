@@ -1,0 +1,42 @@
+{
+  "release": {
+    "old": {
+      "file": "work\\worker-build-rc-2fabf321\\bons_and_furious-neoforge-1.0.30+mc1.21.1.jar",
+      "sha256": "2fabf321936fd4aeccc644a9c4248bdb411b8d19715671c28af44ac9b1a8b80f",
+      "entries": 709
+    },
+    "new": {
+      "file": "work\\worker-build\\bons_and_furious-neoforge-1.0.30+mc1.21.1.jar",
+      "sha256": "351cd7f41311348c307cf6c05c6020dcbc2d25f50d42b4b6672f1320468267d9",
+      "entries": 709
+    },
+    "added": [],
+    "removed": [],
+    "changed": [
+      "bons/pure/config/PureConfig.class",
+      "bons_and_furious.guards.tsv"
+    ],
+    "metadata_changed": [],
+    "same_order": true
+  },
+  "probe": {
+    "old": {
+      "file": "work\\worker-build-rc-2fabf321\\bons-port-probe-1.jar",
+      "sha256": "cb98315168cef084e27f9ad717837e7541a2b6f5af2721a469e2efcc282f5f62",
+      "entries": 13
+    },
+    "new": {
+      "file": "work\\worker-build\\bons-port-probe-1.jar",
+      "sha256": "69401f0dac9fd50a095ddec844dfda7d31c215074009f85b7495b0e818f9d7cf",
+      "entries": 13
+    },
+    "added": [],
+    "removed": [],
+    "changed": [
+      "probe-shadow-helpers.txt"
+    ],
+    "metadata_changed": [],
+    "same_order": true
+  },
+  "guard_table_identical": false
+}

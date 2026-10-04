@@ -1,0 +1,219 @@
+{
+  "group": "terrablender",
+  "keys": {
+    "terrablender_namespace_rule_memo": {
+      "mod": "terrablender",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.terrablender.NamespacedRuleMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource$NamespacedRule",
+          "method": "tryApply",
+          "desc": "(III)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "the overwritten tryApply",
+          "sha256": "a2310b5eade4de7ae40c7501724fdae06dc4372360b39e5269ac0b430f0e7b55"
+        },
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource$NamespacedRule",
+          "method": "lambda$tryApply$0",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;)Z",
+          "note": "the namespace test the selection reproduces",
+          "sha256": "a35ed5f61c227a3ce82e3c81d6781ec74930c39c3eaefe9b08b7dc3d1e83e958"
+        },
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource$NamespacedRule",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set of the record (components context, baseRule, rules)",
+          "sha256": "1c2eff17aa98ed930e16be471d01c653e70479a084545395de0ecb1c406e8f79"
+        },
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule;",
+          "note": "one NamespacedRule per context, with an ImmutableMap of rules",
+          "sha256": "56b73168020b1ba5bf615dcaf41e1ab3100bbd1353c28f1aa9ef1bc516db80a7"
+        },
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource",
+          "method": "lambda$apply$1",
+          "desc": "(Lcom/google/common/collect/ImmutableMap$Builder;Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;Ljava/util/Map$Entry;)V",
+          "sha256": "83a36472fb88645828ff9bc45dd3554b43ea4f572da89b9f557664a32038e0a0"
+        },
+        {
+          "class": "net/minecraft/core/Holder$Reference",
+          "method": "is",
+          "desc": "(Ljava/util/function/Predicate;)Z",
+          "note": "is(Predicate) tests the reference's own key",
+          "sha256": "27e0a138f38507822c336e1390f71e472a17db6f99930c08e26cdd217033724c"
+        },
+        {
+          "class": "net/minecraft/core/Holder$Direct",
+          "method": "is",
+          "desc": "(Ljava/util/function/Predicate;)Z",
+          "note": "is(Predicate) is false for a direct holder",
+          "sha256": "a9057d062fb197564c8e845386d2280bde1a1cc2fd7f4098adc42ac45ea65ea5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Overwrite of NamespacedRule.tryApply (TerraBlender's body, re-derived from 4.1.0.8, around a per-rule memo of the last biome Holder and its selected namespace rule); record components and the context's biome supplier read through method handles created in the record's own static initializer",
+      "license": "LGPL-3.0 (TerraBlender): the overwrite carries TerraBlender 4.1.0.8's tryApply restructured around the memo (helper bons.furious.patch.terrablender.NamespaceRuleMemo)"
+    },
+    "terrablender_lazy_namespace_rules": {
+      "mod": "terrablender",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.terrablender.NamespacedSourceDeferMixin"
+      ],
+      "guard": [
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule;",
+          "note": "the forEach whose consumer is wrapped",
+          "sha256": "56b73168020b1ba5bf615dcaf41e1ab3100bbd1353c28f1aa9ef1bc516db80a7"
+        },
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource",
+          "method": "lambda$apply$1",
+          "desc": "(Lcom/google/common/collect/ImmutableMap$Builder;Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;Ljava/util/Map$Entry;)V",
+          "note": "puts key -> value.apply(context): the call that is deferred",
+          "sha256": "83a36472fb88645828ff9bc45dd3554b43ea4f572da89b9f557664a32038e0a0"
+        },
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource$NamespacedRule",
+          "method": "tryApply",
+          "desc": "(III)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "calls tryApply on the selected namespace rule only",
+          "sha256": "a2310b5eade4de7ae40c7501724fdae06dc4372360b39e5269ac0b430f0e7b55"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$SequenceRuleSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule;",
+          "note": "pure: reads only per-context constants, allocates",
+          "sha256": "f3185ee78ff28aa6e518c5b227de498dfaf34e680c205db6ec7e0d2904bffba3"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$TestRuleSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule;",
+          "note": "pure: reads only per-context constants, allocates",
+          "sha256": "96bc9797f66ac5ea746f4296afe6e9b526e2666e8daf74c80bf1e886b2e2c440"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$BlockRuleSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule;",
+          "note": "pure: reads only per-context constants, allocates",
+          "sha256": "10a2da016ecbad6bb8723cfb79c3e078c85fbf3c6efeb3a957d5e47d0538a78e"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$Bandlands",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule;",
+          "note": "pure: reads only per-context constants, allocates",
+          "sha256": "38371e091c8ab93378e94cbe8d9782913537cb08eec9c3bfae3b78c87e3fb6cc"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$NotConditionSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "pure: reads only per-context constants, allocates",
+          "sha256": "1645e628738bfe351021d238d4cb892beab95c1fba2f66feca66183dd8164c7a"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$BiomeConditionSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "pure: reads only per-context constants, allocates",
+          "sha256": "d1478aded7ad1ca25a5b230a3a3a37ef410b93bd5c22cda2885edd88df836cde"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$NoiseThresholdConditionSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "pure: reads only per-context constants, allocates",
+          "sha256": "d56e51f5ef8cdc98837285c2e849dc5df51868c0fb4e0f565566056d132c2b51"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$VerticalGradientConditionSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "pure: reads only per-context constants, allocates",
+          "sha256": "b8c4114e096338e73d6ac802c7f008e594d790315936763fbb5fa812769d5743"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$YConditionSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "pure: reads only per-context constants, allocates",
+          "sha256": "fdf03b9e4fe1569dbeb5841e3f804a0106fdf5f446b8978bdc8c1ce506be1c97"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$WaterConditionSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "pure: reads only per-context constants, allocates",
+          "sha256": "2ff53ad68dd85ba6bfb69f75f4841ade2292871c6d81f28739359171be972dfa"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$StoneDepthCheck",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "pure: reads only per-context constants, allocates",
+          "sha256": "a27183088497af45cb651996d06f1f60d180c07d71e37785e8ff98d04a580945"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$Hole",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "pure: reads only per-context constants, allocates",
+          "sha256": "c80d5aba155a98d9d7e60df26dd14b95ae5a841c225169066c9730c8df2bca86"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$Steep",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "pure: reads only per-context constants, allocates",
+          "sha256": "50823341f0cee6fd18eec140d55d7bf1e99835254ef6062da2e46aefe6de1cdd"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$Temperature",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "pure: reads only per-context constants, allocates",
+          "sha256": "14d8fa2d697f31a3efedca8624572f636e6201b4be8664eed11c465367e05f76"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$AbovePreliminarySurface",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "pure: reads only per-context constants, allocates",
+          "sha256": "37db86a26d95e27f351d070a5a74c61c69d1476deb209ee21902d609e81d729a"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$LazyCondition",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)V",
+          "note": "lastUpdate = counter - 1 at construction",
+          "sha256": "8ed828c6b43fb57e479133b7ca0bbb5b49e3ac8f7cb5b0ba246babdd18999be8"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$LazyCondition",
+          "method": "test",
+          "desc": "()Z",
+          "note": "test: computes when the counter moved",
+          "sha256": "71f82d649aab6d2f08fcf3313b89f3828785cc4e0f49e644afab5b4f2778c525"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@ModifyArg of the Consumer TerraBlender passes to sources.entrySet().forEach in NamespacedSurfaceRuleSource.apply: each entry goes through LazyNamespaceRules.defer (same key; a deferring source for namespaces made only of vanilla rule sources, else the original entry)",
+      "license": "LGPL-3.0 (TerraBlender): no TerraBlender code is carried; Minecraft (Mojang) no-copy: the vanilla sources are only walked and called (helper bons.furious.patch.terrablender.LazyNamespaceRules)"
+    }
+  }
+}

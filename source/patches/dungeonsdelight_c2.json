@@ -1,0 +1,58 @@
+{
+  "group": "dungeonsdelight_c2",
+  "keys": {
+    "dungeonsdelight_yam_single_add": {
+      "mod": "dungeonsdelight",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.dungeonsdelight_c2.YamSingleAddMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/yirmiri/dungeonsdelight/common/entity/monster_yam/MonsterYamEntity",
+          "method": "tick",
+          "desc": "()V",
+          "note": "exactly two Level.addFreshEntity calls, the second for the same zombie on Hard",
+          "sha256": "8b74368ed75f5c05f1df4688b6e35a9048545aefbb7c7f40d5b3a9d542fb5f72"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "addFreshEntity",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "d38d7369ca4a62a46c1473aa4f66916710e619292ef4bc5ca025662035b4540c"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "addEntity",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "74daf2af1fffec3e9941b9e7a9813384d6a5f05e47a72deb16517d3083bbd37c"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "addEntity",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;Z)Z",
+          "note": "NeoForge posts EntityJoinLevelEvent here, before the UUID check",
+          "sha256": "a7dac0f7260131c1a41518b267f174e8dd71434262d5890af8cf004ba5484452"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "addEntityWithoutEvent",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;Z)Z",
+          "note": "1.21.1: NeoForge's split of addEntity; the duplicate UUID refuses here",
+          "sha256": "1b8cdcac69b1c570d7e769cb36daf7640d3061551ce383b76816adfd95dfd87c"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "addEntityUuid",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)Z",
+          "sha256": "cf45ec7275af0c69c901f230d37a017329b087a7101e6b322eaf2b57197b7af0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the two Level.addFreshEntity calls of MonsterYamEntity.tick with a @Share flag: the second is skipped (answering false) only when the first added the same zombie",
+      "license": "Dungeons Delight: AZURUNE licence (custom): no-copy; the wrappers carry only our own logic (helper bons.furious.patch.dungeonsdelight_c2.YamSingleAdd); Minecraft/NeoForge methods only fingerprinted",
+      "kind": "fix"
+    }
+  }
+}
