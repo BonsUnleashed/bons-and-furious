@@ -4,65 +4,123 @@
 
 **Your CPU lives its life one tick at a time.**
 
-[**Downloads**](https://github.com/BonsUnleashed/bons-and-furious/releases) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
+[**Forge 1.20.1: 1.0.27**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.27) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
 
-Bons and Furious makes demanding modpacks run better: faster world generation, less waiting for worlds and resources to load, smoother rendering, and fixes for modded-world freezes and crashes.
+Bons and Furious reduces repeated work in Minecraft and optional mods. Each optimization or fix has its own switch in one config file. Choose the build for your Minecraft version and loader.
 
-It cuts repeated work in Minecraft and dozens of optional mods. **Keep your existing performance mods.** Bons and Furious builds on them, with one JAR for client and server and a separate switch for every change.
+| Minecraft | Loader | Controls | Requirements |
+| --- | --- | ---: | --- |
+| 1.20.1 | Forge | 127 | Forge 47.3.22 or newer |
+| 1.21.1 | NeoForge | 82 | Java 21; NeoForge 21.1.252 or newer |
 
-## More performance from the pack you love
+Both builds use one JAR for client and server, with no required target mods.
 
-- **Explore sooner.** Terrain preparation and ground-height calculations reuse work across chunks, helping new terrain and Distant Horizons landscapes build faster.
-- **Keep detailed worlds and animated mobs.** Rendering and animation optimizations reduce work in shader, model and connected-texture paths, including Oculus, Entity Model Features, GeckoLib and Embeddium with Fusion.
-- **Spend less time loading.** Recipe scans, ingredient indexing and animation compilation avoid repeated lookups, with targeted improvements for Farmer's Delight, JEI and Fresh Animations.
-- **Keep complex worlds moving.** Fixes address reproduced server freezes, worker-thread crashes and generation exceptions where content mods meet Distant Horizons or C2ME. Valkyrien Skies also gets faster ship chunk bookkeeping and terrain conversion.
-- **Tune every change.** Each optimization and fix has its own switch. Target mods are optional, and client rendering patches stay off dedicated servers.
+## New: Minecraft 1.21.1 / NeoForge
 
-Coverage depends on the Minecraft build and installed mod versions. [Browse the controls and compatibility](https://github.com/BonsUnleashed/bons-and-furious/wiki).
+The 1.0.27 port brings terrain, rendering, animation and library optimizations to NeoForge. Iris takes over the shader patches from Oculus. Dedicated-server, Iris with shaders and Embeddium checks passed, with matching sampled terrain and animation output when the relevant controls were switched on and off.
 
-## Measured on top of an optimized modpack
+[Download the NeoForge build](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.27%2Bmc1.21.1) · [Installation, compatibility and all 82 controls](https://github.com/BonsUnleashed/bons-and-furious/wiki/Minecraft-1.21.1-NeoForge)
 
-**5.6× faster world generation. 4.8× faster spawn preparation. Half the time from launching the game to standing in a new world.**
+Thirteen original controls were retired after upstream changes; 32 depend on mods without a compatible release. The performance figures and detailed mod list below describe **Minecraft 1.20.1 / Forge**. The NeoForge port has no published speed benchmark.
 
-These whole-pack tests kept **ModernFix, FerriteCore, Radium and C2ME** on both sides. Client tests also kept **Embeddium, ImmediatelyFast, EntityCulling, Oculus, Distant Horizons, Complementary shaders and Fresh Animations**. The comparison adds or removes Bons and Furious from that stack.
+## Minecraft 1.20.1 / Forge: measured on an already optimized modpack
 
-| What you gain | With Bons and Furious | Without Bons | Improvement |
+**5.6× faster world generation. 4.8× faster spawn preparation. Previously measured: +10% average FPS with 64 animated mobs and +29% 1% lows in a GPU-bound scene.**
+
+**These gains are ON TOP of the major performance mods already running in the test pack.** Both sides of the comparison keep **ModernFix, FerriteCore, Radium and C2ME**; the client also keeps **Embeddium, ImmediatelyFast and EntityCulling**, along with **Oculus, Distant Horizons, Complementary shaders and Fresh Animations**. The comparison adds or removes Bons and Furious from that existing setup. The figures below separate the latest 1.0.26 benchmark from the earlier clean FPS test.
+
+### Latest whole-pack results — 1.0.26, 2 October 2026
+
+Four matched runs per arm, ABBA-ABBA order, same PC and seed; the reference pack had 471 server / 510 client mod JARs at the snapshot. C2ME was enabled on both sides, with `reduceLockRadius=false` throughout this test.
+
+| Workload | With Bons and Furious 1.0.26 | Same stack without Bons | Result |
 | --- | ---: | ---: | --- |
-| Generate 512 new server chunks | 102 s | 567 s | **5.6× faster** |
-| Prepare a new singleplayer spawn | 58 s | 277 s | **4.8× faster** |
-| Launch the game and enter a new world | 242 s | 482 s | **50% less waiting** |
+| Dedicated server, 512 new chunks | 102 s | 567 s | **5.6× throughput** |
+| First 4 chunks of a new world | 23.5 s | 238 s | **90% less time** |
+| New singleplayer world, spawn preparation | 58 s | 277 s | **4.8× faster** |
+| Game launch to standing in a new world | 242 s | 482 s | **50% less time** |
 | CPU time per generated chunk | 0.56 s | 2.91 s | **81% less CPU** |
 | Memory allocated per generated chunk | 308 MB | 2,460 MB | **87% less allocation** |
-| Average FPS with 64 animated mobs | 72.6 | 66.1 | **10% higher** |
-| 1% low FPS in a shader-heavy overlook | 89 | 69 | **29% higher** |
+| Distant Horizons LOD records, same 4-minute session | 8,259 | 1,960 | **4.2× as many records built** |
 
-Measured on **Minecraft 1.20.1 / Forge**, with four matched runs per arm on the same PC and seed. Generation and loading figures use Bons and Furious 1.0.26; FPS figures use the separate 1.0.21 same-scene test. The mob scene was CPU-bound; average FPS in the GPU-bound overlook stayed unchanged. Allocation means temporary memory created, not RAM retained. Results depend on the pack and hardware and do not measure the 1.21.1 build. [Full benchmarks and methods](https://github.com/BonsUnleashed/bons-and-furious/wiki/Whole-modpack-benchmark).
+Client start-up before loading a world was 128 vs 136 s (6% faster). Server start-up was unchanged; live heap after server start-up was **70 MB higher** (2.30 vs 2.23 GB). Allocation saved while generating is separate from memory retained. These are whole-modpack results for this PC, pack and seed, not promises for every setup.
 
-## A few of the biggest improvements
+### Measured FPS gains — earlier 1.0.21 benchmark, 30 September 2026
 
-| System | Targeted improvement measured on Forge 1.20.1 |
-| --- | --- |
-| **Distant Horizons** | **85% less time** per rough-surface LOD column |
-| **Valkyrien Skies** | **94% less time** on ship chunk bookkeeping; **65–69% less** on physics terrain conversion |
-| **Embeddium + Fusion** | **25% less chunk-meshing time**, with identical vertices and indices |
-| **Farmer's Delight** | Client recipe-packet decoding fell from **8.8 to 0.4 seconds**, with the same ingredients |
-| **Entity Model Features + Fresh Animations** | Entity-renderer rebuild fell from **15–17 to 8.8 seconds** |
-| **Frame pacing** | **84% less frame-interval variation** at p95, at the same 120 FPS cap |
+The same saved scenes were drawn with the client optimization stack above enabled in both arms, shaders and resource packs on, Distant Horizons generation off, four runs each. These are **measured 1.0.21 results**, retained as historical evidence; they are not a new 1.0.26 FPS measurement.
 
-These measure individual tasks, not total FPS gains, and cannot be added together. [Per-patch measurements and caveats](https://github.com/BonsUnleashed/bons-and-furious/wiki/Measurements-and-caveats).
+| Same-scene rendering workload | With Bons 1.0.21 | Same stack without Bons | Result |
+| --- | ---: | ---: | --- |
+| 64 animated mobs, average FPS | 72.6 | 66.1 | **+10%** |
+| 64 animated mobs, 1% low FPS | 40 | 35 | **+16%** (from unrounded data) |
+| GPU-bound overlook, 1% low FPS | 89 | 69 | **+29%** |
+| GPU-bound overlook, average FPS | 172 | 171 | No significant change |
 
-## Install and make it yours
+The 1.0.26 saved-world baseline froze its integrated server in all four runs, while the Bons runs kept 20 TPS. That is documented as a stability result, not used to inflate the FPS comparison. New-world sessions also draw more terrain with Bons, so their frame rates are not a like-for-like comparison.
 
-| Minecraft / loader | Requirements and setup |
-| --- | --- |
-| **1.20.1 / Forge** | Forge 47.3.22 or newer. [Setup and controls](https://github.com/BonsUnleashed/bons-and-furious/wiki/Installation-and-configuration) |
-| **1.21.1 / NeoForge** | Java 21; NeoForge 21.1.252 or newer. [Setup and controls](https://github.com/BonsUnleashed/bons-and-furious/wiki/Minecraft-1.21.1-NeoForge) |
+Every run, the retained earlier results, the baseline mod versions and the method: [Whole-modpack benchmark](https://github.com/BonsUnleashed/bons-and-furious/wiki/Whole-modpack-benchmark).
 
-1. Download the JAR matching your Minecraft version and loader from [Downloads](https://github.com/BonsUnleashed/bons-and-furious/releases) and put it in `mods/` on the client, server, or both. No target mods are required.
-2. Start the game or server to create `config/bons_and_furious.properties`.
-3. To disable a change, set its key to `false` and restart.
+## What the Forge 1.20.1 build does
 
-Most controls remove redundant work; four make documented behaviour changes: frame pacing, Occult bed scans, Fowl Play flight targets and Scorched sandcrab processing. All can be disabled individually. [Controls, compatibility and troubleshooting](https://github.com/BonsUnleashed/bons-and-furious/wiki).
+- **110 optimizations** reduce repeated work: fewer allocations, no repeated lookups, no state rebuilt only to come out identical. Terrain preparation, ground-height estimates, climate lookups, Distant Horizons' rough-surface generation, chunk render layers, ship chunk bookkeeping, shader graph resets, animation easing and event dispatch are the largest. Eight controls restore or provide compatible versions of performance paths disabled in the tested setup, including Radium, ModernFix, ImmediatelyFast and Distant Horizons integrations. Each checks the relevant mod builds and configuration.
+- **13 fixes** repair reproduced server freezes, worker-thread crashes, generation exceptions and one chunk-tracking gap between Radium and SecurityCraft, mostly where Distant Horizons or C2ME worker threads meet a content mod's world generation.
+- **4 deliberate changes** (frame pacing, the Occult bed scan, Fowl Play flight targets, Scorched sandcrab processing) trade a documented behaviour difference for a large saving.
+
+All 127 are listed in `config/bons_and_furious.properties` with their target mod, tested build, side and measurement. Set any key to `false` and restart. Every control is explained in the [wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki).
+
+## Forge 1.20.1 results, per patch
+
+| Where | What changed | Measured |
+| --- | --- | --- |
+| **Minecraft** chunk generation (new in 1.0.18) | Neighbouring chunk work areas share their ground-height estimates instead of re-scanning the same columns | **95% of surface scans skipped** (349,843 → 16,494 in a 144-chunk run) and **about half the wall time** for that run (mean 162 → 75 s, shared machine) |
+| **Minecraft** terrain preparation (new in 1.0.16) | The second density-graph pass reuses what the first pass built instead of rebuilding it | **91% less CPU** per NoiseChunk (10.35 → 0.89 ms) and **53% less** per structure-placement height query (17.7 → 8.3 ms) |
+| **Embeddium + Fusion** (new in 1.0.26) | Hidden connected-texture faces are skipped before their quads are built | **25% less chunk-meshing time** (5.2 → 3.9 s for 733 sections), **41% less allocation**, byte-identical vertices and indices |
+| **Farmer's Delight** (new in 1.0.26) | Tool-action ingredients share their registry scan during a recipe load | Client recipe-packet decoding **8.8 → 0.4 s**; recipe rebuild **5.5–6.4 → 1.4 s** on the client and **3.6 → 1.2 s** on the server, same ingredients |
+| **Entity Model Features + Fresh Animations** (new in 1.0.26) | Variable indexes and model-part lookups are reused during animation compilation | Entity-renderer rebuild **15.1–16.6 → 8.8 s**, with 5.1 million variable answers and 692,000 part lookups checked in game |
+| **Distant Horizons** (new in 1.0.23) | The rough-surface generator keeps the parts of the terrain density that depend only on x and z instead of recomputing them at every probe height | **85% less time** per LOD column (3,351 → 494 µs) |
+| **Valkyrien Skies** | Ship chunk bookkeeping, after seven rounds of ship work | **94% less time** (329 → 21 µs, full-pack fixture); physics terrain conversion 65–69% less |
+| **Oculus** | Empty shader render-order graphs are reused instead of rebuilt | **90% less time** per reset (166 → 16 ns), 808 → 0 bytes |
+| **JEI** (new in 1.0.26) | Each ingredient keeps its display stack with the same expiry semantics | **84% less time** per indexing lookup (830 → 130 ns in the cache harness); the in-game index retained the same categories, recipes and stack content |
+| **GeckoLib** | Mixed animation easing without boxed doubles | **50% less time** per evaluation (67 → 34 ns) |
+| **Architectury API** | Event dispatch without re-resolving method handles | **19× faster** (649 → 34 ns per listener call) |
+| **Forge** + Oculus (new in 1.0.23) | Each block remembers its chunk render layers while the shader pack's layer map is unchanged | **59% less time** per lookup (122 → 50 ns), 12-14% of chunk meshing |
+| **Radium** with C2ME (new in 1.0.23) | Radium's fast chunk access runs again while C2ME's replacement for it is switched off | **43% less time** per loaded-chunk lookup (81 → 46 ns), `getBlockState` 133 → 73 ns |
+| **Entity Texture Features** (new in 1.0.21) | Each sprite's texture id is worked out once instead of on every draw of a chest, sign, bed or banner | **95% less time** per draw (134 → 7 ns) |
+| **AmbientSounds** | Bounded terrain scan | **88% lower p95** (5.45 → 0.65 ms per analysis) |
+| **Frame pacing** (client) | The FPS-limiter wait moves before the display update | **84% less frame-interval variation** at p95 (7.63 → 1.25 ms) at the same 120 FPS cap |
+| **ImmediatelyFast** | Horse-layer ordering without substrings | **46% less time** (28.9 → 15.5 ns), 64 → 0 bytes |
+
+Smaller allocation and lookup savings in Ars Nouveau, Curios API, Alex's Caves, Ice and Fire, TaCZ and others are on the wiki.
+
+> **How to read the per-patch numbers.** Each figure measures the named method, phase or reproduction in a fixture, on the build it was measured on. The figures are not additive; the whole-modpack comparison above is the aggregate measurement. Method, fixture settings and the result for every control: [Measurements and caveats](https://github.com/BonsUnleashed/bons-and-furious/wiki/Measurements-and-caveats).
+
+## Forge 1.20.1 covered mods (all optional)
+
+**Rendering, shaders and ambience:** Embeddium, Oculus, ImmediatelyFast, Entity Texture Features, Entity Model Features, EntityCulling, Fusion, Colorwheel, Ryoamic Lights, Presence Footsteps, AmbientSounds.
+
+**Shared libraries and server performance mods:** GeckoLib, Architectury API, Curios API, Structure Gel API, Radium, ModernFix, ChunkSending.
+
+**Ships, structures and distant terrain:** Valkyrien Skies, Trackwork, Distant Horizons, Structurify, Sakes Structures.
+
+**Content and gameplay:** Alex's Caves, Ice and Fire, Ars Nouveau, JEI, Farmer's Delight, Relics, Timeless and Classics Zero (TaCZ), Terramity, Ad Astra, Fowl Play, Butterflies, Goblins Tyranny, Under the Moon, Nether Depths Upgrade, Spawn, Cryptic Foes, Hostile Villages, Scuba Gear, Occult, Scorched and Better Combat.
+
+Coverage means the tested build and the specific code paths of each mod, not every feature. Tested builds per mod: [Compatibility and target versions](https://github.com/BonsUnleashed/bons-and-furious/wiki/Compatibility-and-target-versions).
+
+## Install the matching build
+
+For Minecraft 1.21.1, use `bons_and_furious-neoforge-1.0.27+mc1.21.1.jar`, Java 21 and NeoForge 21.1.252 or newer. MixinSquared is bundled; NeoForge supplies MixinExtras. [NeoForge setup and compatibility](https://github.com/BonsUnleashed/bons-and-furious/wiki/Minecraft-1.21.1-NeoForge).
+
+For Minecraft 1.20.1 / Forge:
+
+1. Download `bons_and_furious-1.0.27.jar` from the [1.0.27 release](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.27) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load. The two small mixin libraries it uses, MixinExtras and MixinSquared, are bundled inside it.
+2. Start once. The mod writes its config file with every switch on and logs how many controls are enabled.
+3. To turn one off, set its key to `false` and restart. Client-only patches (renderer, shaders, ambience) never load on a dedicated server.
+
+JVM overrides, log messages and troubleshooting: [Installation and configuration](https://github.com/BonsUnleashed/bons-and-furious/wiki/Installation-and-configuration).
+
+## Compatibility
+
+Keep your optimization stack: Embeddium, ImmediatelyFast, ModernFix, FerriteCore, Radium and C2ME. Bons and Furious changes paths that still did unnecessary work in the tested pack, including a few inside Embeddium, ImmediatelyFast and Oculus themselves. With C2ME installed it also gives Radium and ModernFix three optimizations back that they switch off for every C2ME build, as long as the C2ME module that would clash with each one is off in `c2me.toml`.
 
 ## Build from source
 
@@ -93,6 +151,8 @@ switch's mixins and guarded methods are listed in `patches/<mod>.json`.
 ## Licence and upstream
 
 Licensed GPL-3.0-only ([LICENSE](LICENSE)). Upstream attribution is in [NOTICE.md](NOTICE.md); the tested dependency builds are listed in [upstream-credits.json](upstream-credits.json).
+
+The 1.0.26 release JAR is the qualified, benchmarked artifact. It was tested in client and dedicated-server copies of the reference pack before release; the latest benchmark snapshot had 510 client and 471 server mod JARs.
 
 ### Upstream pull requests
 
