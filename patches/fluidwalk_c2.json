@@ -1,0 +1,67 @@
+{
+  "group": "fluidwalk_c2",
+  "keys": {
+    "lionfishapi_fluid_walk_scan": {
+      "mod": "lionfishapi",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.fluidwalk_c2.LionfishFluidWalkMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/lionfishapi/mixin/EntityMixin",
+          "method": "fluidCollision",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;",
+          "sha256": "7ce605c800a4d1f6206b32a31ccd4cbb19e2127767f9b0b0e485766bd80c8a46"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/server/event/StandOnFluidEvent",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/level/material/FluidState;)V",
+          "sha256": "d95d6d866f1901b1316703f41fc826d3aa72c0498d5bd5e4b7e4a344033b23dc"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "m_274561_",
+          "desc": "(DDD)Lnet/minecraft/core/BlockPos;",
+          "sha256": "1f37d2d51690af4391f72a9d641eb49ef94a6bb941b90f16027bea25d7cb8fc0"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_6425_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/FluidState;",
+          "sha256": "0a130f8d7b048efaeafd89317c904abee3110181ae46392bca5b4c90f3846626"
+        }
+      ],
+      "cancel": [],
+      "conversion": "targethandler (MixinSquared @ModifyExpressionValue on the handler's instanceof LivingEntity test + @ModifyReturnValue at its first return, no CallbackInfo; per-entity read cursor via @Unique field)",
+      "license": "LGPL (Lionfish API): a modified version of the handler's logic (same reads, shape test, comparison and StandOnFluidEvent, without allocations and with provably-identical repeat reads skipped) is carried in bons.furious.patch.fluidwalk_c2 (FluidWalkScan, LionfishFluidWalk), which the LGPL permits"
+    },
+    "relics_fluid_walk_scan": {
+      "mod": "relics",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.fluidwalk_c2.RelicsFluidWalkMixin"
+      ],
+      "guard": [
+        {
+          "class": "it/hurts/sskirillss/relics/mixin/EntityMixin",
+          "method": "fluidCollision",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;",
+          "sha256": "b1c8bc5e5f2392f39a010bab5dad35343891fabd2cbc58313e222e954d8cf51b"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_6425_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/FluidState;",
+          "sha256": "0a130f8d7b048efaeafd89317c904abee3110181ae46392bca5b4c90f3846626"
+        }
+      ],
+      "cancel": [],
+      "conversion": "targethandler (MixinSquared @ModifyExpressionValue on the handler's instanceof LivingEntity test: false, so the handler returns its argument at its first return, exactly when our pre-check shows all 12 probed cells hold no fluid; per-entity read cursor via @Unique field)",
+      "license": "All Rights Reserved (no-copy): no Relics code is carried; our own pre-check (bons.furious.patch.fluidwalk_c2.RelicsFluidWalk) reads the cells the handler probes, and Relics' handler runs unchanged for every case it does not settle"
+    }
+  }
+}

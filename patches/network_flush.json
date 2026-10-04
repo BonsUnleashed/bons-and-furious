@@ -1,0 +1,61 @@
+{
+  "group": "network_flush",
+  "keys": {
+    "vanilla_connection_flush_batching": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.network_flush.ConnectionFlushBatchMixin",
+        "bons.furious.mixin.network_flush.TickChunksBatchMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/network/Connection",
+          "method": "m_243124_",
+          "desc": "(Lnet/minecraft/network/protocol/Packet;Lnet/minecraft/network/PacketSendListener;)V",
+          "sha256": "b9c1080cebb15fd26becc485d4bb4d4b64a24528f6e928c4099cff115c5bfd31"
+        },
+        {
+          "class": "net/minecraft/network/Connection",
+          "method": "m_129520_",
+          "desc": "(Lnet/minecraft/network/protocol/Packet;Lnet/minecraft/network/PacketSendListener;)V",
+          "sha256": "3b634854ebd186766ae70d02a14ca55e7dd6b3f02f3a93ae063a8e7a5acbba67"
+        },
+        {
+          "class": "net/minecraft/network/Connection",
+          "method": "m_243087_",
+          "desc": "(Lnet/minecraft/network/protocol/Packet;Lnet/minecraft/network/PacketSendListener;Lnet/minecraft/network/ConnectionProtocol;Lnet/minecraft/network/ConnectionProtocol;)V",
+          "sha256": "e409535caa488e321c302e412187b409a2b3e9c26112b785eafdf3a2be85635c"
+        },
+        {
+          "class": "net/minecraft/network/Connection",
+          "method": "m_129483_",
+          "desc": "()V",
+          "sha256": "83f4251a769886514cd4571770f242310ca09939699d1767d6cee7f141e5ffe7"
+        },
+        {
+          "class": "net/minecraft/network/Connection",
+          "method": "m_129498_",
+          "desc": "(Lnet/minecraft/network/ConnectionProtocol;)V",
+          "sha256": "28a0fd7c40e1c754d5c5f0609b6cab342844540c1ad4117a3c96c697be71decd"
+        },
+        {
+          "class": "net/minecraft/network/Connection",
+          "method": "channel",
+          "desc": "()Lio/netty/channel/Channel;",
+          "sha256": "026c8946ac37e6db8cac8ad758cbeadc5b250d355bfd655b5a257fa62e8bfe8e"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerChunkCache",
+          "method": "m_8490_",
+          "desc": "()V",
+          "sha256": "c038d39abcb3c7fad0df3708dec7280646f8a6e03cfe2493f7609664ca047956"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on Connection.send's call of sendPacket (marks packets without listener while a batch is open on this thread), on sendPacket's EventLoop.execute (lazyExecute of Minecraft's own task wrapped in a BatchedWrite: same queue order, no wakeup), on doSendPacket's setProtocol (protocol switches keep writeAndFlush) and writeAndFlush (Channel.write for batched packets), on tick's Channel.flush; @WrapMethod on Connection.tick (batch for that connection only) and ServerChunkCache.tickChunks (batch for all connections, flushed once at its end); helper bons.furious.patch.network_flush.FlushBatch",
+      "license": "Minecraft (Mojang): no-copy; the mixins and helper carry only our own logic; Netty (Apache-2.0) is called, not copied"
+    }
+  }
+}

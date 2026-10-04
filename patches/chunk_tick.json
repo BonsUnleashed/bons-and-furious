@@ -1,0 +1,30 @@
+{
+  "group": "chunk_tick",
+  "keys": {
+    "vanilla_ticking_chunk_memo": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.29",
+      "mixins": [
+        "bons.furious.mixin.chunk_tick.ChunkHolderTickingMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/server/level/ChunkHolder",
+          "method": "m_140085_",
+          "desc": "()Lnet/minecraft/world/level/chunk/LevelChunk;",
+          "sha256": "0428498b0dc8f879bdff8cf2b9f5798b7dab5ffa8865964dfb3b43958d2a5f1b"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkHolder",
+          "method": "m_140026_",
+          "desc": "()Ljava/util/concurrent/CompletableFuture;",
+          "sha256": "733dcba7bff6835e8310ff812990e1972b09e5641d4d1897de88f21be60e6627"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on ChunkHolder.getTickingChunk (wraps ModernFix's perf.ticking_chunk_alloc overwrite where present): on the server thread of the holder's level, answers from two fields of the holder (the future last answered for and that answer) while the holder's tickingChunkFuture is that same future; records only answers proven for a plain CompletableFuture that completed normally and stayed in the field during the call (assumes no mod calls obtrudeValue/obtrudeException on a chunk holder's futures); other threads, and every call while C2ME's no-tick view distance module is on, run the method",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.chunk_tick.TickingChunkMemo)"
+    }
+  }
+}

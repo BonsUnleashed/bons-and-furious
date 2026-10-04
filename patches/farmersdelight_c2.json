@@ -1,0 +1,37 @@
+{
+  "group": "farmersdelight_c2",
+  "keys": {
+    "farmersdelight_overlay_lookup_memo": {
+      "mod": "farmersdelight",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.farmersdelight_c2.NourishmentOverlayLookupMixin",
+        "bons.furious.mixin.farmersdelight_c2.ComfortOverlayLookupMixin"
+      ],
+      "guard": [
+        {
+          "class": "vectorwing/farmersdelight/client/gui/NourishmentHungerOverlay",
+          "method": "onRenderGuiOverlayPost",
+          "desc": "(Lnet/minecraftforge/client/event/RenderGuiOverlayEvent$Post;)V",
+          "sha256": "cb7b5a7ec8d3995276b790de9a27c55c6c9bc46ee84050953b162352cd586e7a"
+        },
+        {
+          "class": "vectorwing/farmersdelight/client/gui/ComfortHealthOverlay",
+          "method": "onRenderGuiOverlayPost",
+          "desc": "(Lnet/minecraftforge/client/event/RenderGuiOverlayEvent$Post;)V",
+          "sha256": "ef6e7ee523c516a03012c407bf18e3609b0ebe03a24860d101584c53e611fbb4"
+        },
+        {
+          "class": "net/minecraftforge/client/gui/overlay/GuiOverlayManager",
+          "method": "findOverlay",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraftforge/client/gui/overlay/NamedGuiOverlay;",
+          "sha256": "9bd5180c3e54d0a32bdfdda8fd6d46ed5ffe27ec1ead0d9712bd379ba7100657"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation on the GuiOverlayManager.findOverlay call in each Farmer's Delight HUD listener); helper bons.furious.patch.farmersdelight_c2.OverlayLookupMemo reads Forge's overlay table through a getter MethodHandle",
+      "license": "MIT (Farmer's Delight): only the lookup call is wrapped, no FD code is carried; Forge (LGPL-2.1) is not modified"
+    }
+  }
+}

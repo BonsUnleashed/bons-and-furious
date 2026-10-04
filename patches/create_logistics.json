@@ -1,0 +1,307 @@
+{
+  "group": "create_logistics",
+  "keys": {
+    "create_mounted_slot_index": {
+      "mod": "create",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.create_logistics.MountedSlotIndexMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/simibubi/create/api/contraption/storage/item/MountedItemStorageWrapper",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set: a build that declares its own getIndexForSlot (as 1.21.1's PR #9706 does) would collide with the one this switch adds",
+          "sha256": "e55d815ad2f228fc9fd9de35056635368689ec57ab428ce98e7ac41a7430ce1c"
+        },
+        {
+          "class": "com/simibubi/create/content/contraptions/minecart/TrainCargoManager$CargoInvWrapper",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set: the train cargo wrapper must keep inheriting getIndexForSlot and never write baseIndex",
+          "sha256": "7f0b05d1ee99927d7d290fac9a390df330b8e9e0c6fea856b8677963230100fc"
+        },
+        {
+          "class": "com/simibubi/create/api/contraption/storage/item/MountedItemStorageWrapper",
+          "method": "<init>",
+          "desc": "(Lcom/google/common/collect/ImmutableMap;)V",
+          "sha256": "5740ffe4ef1bc5144549dc1b9074fabe00e901cf8c29171e71359dd82d3aa984"
+        },
+        {
+          "class": "net/minecraftforge/items/wrapper/CombinedInvWrapper",
+          "method": "<init>",
+          "desc": "([Lnet/minecraftforge/items/IItemHandlerModifiable;)V",
+          "sha256": "7754973ce509edd5a99622f1ccf077115f3081ddf270c57bc40e9ac232545f36"
+        },
+        {
+          "class": "net/minecraftforge/items/wrapper/CombinedInvWrapper",
+          "method": "getIndexForSlot",
+          "desc": "(I)I",
+          "sha256": "ce7ca629f928a1c705b3a5c3776eb6f6818555a61f44cfad73a5717cc41642f3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "a mixin method added to MountedItemStorageWrapper that overrides Forge's CombinedInvWrapper.getIndexForSlot (super call kept as the fallback)",
+      "license": "MIT (Create): only our own method is added to Create's class; Forge's CombinedInvWrapper (LGPL-2.1) is called, not copied; helper bons.furious.patch.create_logistics.MountedSlotIndex"
+    },
+    "create_item_helper_empty_slots": {
+      "mod": "create",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.create_logistics.ItemHelperExtractMixin",
+        "bons.furious.mixin.create_logistics.SidedInvWrapperAccessor",
+        "bons.furious.mixin.create_logistics.CompoundContainerAccessor"
+      ],
+      "guard": [
+        {
+          "class": "com/simibubi/create/foundation/item/ItemHelper",
+          "method": "extract",
+          "desc": "(Lnet/minecraftforge/items/IItemHandler;Ljava/util/function/Predicate;Lcom/simibubi/create/foundation/item/ItemHelper$ExtractionCountMode;IZ)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "c60f7406df2d20f92b22656ad173fcc1803f72e7468dced0eeff0c249f2687d9"
+        },
+        {
+          "class": "com/simibubi/create/foundation/item/ItemHelper",
+          "method": "canItemStackAmountsStack",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+          "sha256": "eaa3a9e981d08e7b2627540af3c67f2591c7331a2a667d20864e14a7b8bd33b3"
+        },
+        {
+          "class": "net/minecraftforge/items/ItemStackHandler",
+          "method": "getSlots",
+          "desc": "()I",
+          "sha256": "0c5f12e8d4631ce63f1ad6e82dacb957df7ef99f0f81c4d8a0e03d68fa9921a1"
+        },
+        {
+          "class": "net/minecraftforge/items/ItemStackHandler",
+          "method": "getStackInSlot",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "2f9f182e94a0376c88c9770d7c72c898c550cebdf618d9f2df63eec7a5ddc9dc"
+        },
+        {
+          "class": "net/minecraftforge/items/ItemStackHandler",
+          "method": "extractItem",
+          "desc": "(IIZ)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "e010eeac88c8f10faa06b5d6bcd9711b61c406da8cfee882b9d4741d48334996"
+        },
+        {
+          "class": "net/minecraftforge/items/ItemStackHandler",
+          "method": "validateSlotIndex",
+          "desc": "(I)V",
+          "sha256": "56a9ba991cc635b83bd61891855ebe0cfe9dc564fa674134d00c4a1af9524951"
+        },
+        {
+          "class": "net/minecraftforge/items/wrapper/InvWrapper",
+          "method": "getSlots",
+          "desc": "()I",
+          "sha256": "cc568503ac6beed618837f2fd3d6f89ed3a5f60cd45582b9a1cec8d026007c01"
+        },
+        {
+          "class": "net/minecraftforge/items/wrapper/InvWrapper",
+          "method": "getStackInSlot",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "c18728f17fec92f68c1b6cc5d4f7a57ec8c96e748cc656d126aa3f101605b54b"
+        },
+        {
+          "class": "net/minecraftforge/items/wrapper/InvWrapper",
+          "method": "extractItem",
+          "desc": "(IIZ)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "5a12df141dc18f387795df2f999f3228d61777042ee0a7e8ce07eadb904cd44e"
+        },
+        {
+          "class": "net/minecraftforge/items/wrapper/InvWrapper",
+          "method": "getInv",
+          "desc": "()Lnet/minecraft/world/Container;",
+          "sha256": "c3d1083223c2b841a46ca0f442a06c71c5a87d572b3805cc6c7fef5d78088306"
+        },
+        {
+          "class": "net/minecraftforge/items/wrapper/SidedInvWrapper",
+          "method": "getSlots",
+          "desc": "()I",
+          "sha256": "d737cf81f41920204fd57d1715e6269fb7aaa84c3ba8da7f7cc10cf98d622a84"
+        },
+        {
+          "class": "net/minecraftforge/items/wrapper/SidedInvWrapper",
+          "method": "getStackInSlot",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "fe9848bd262e54a1b6b2fbf42e8c870f163e7f1b2b5eebe68433d43d3a9d8849"
+        },
+        {
+          "class": "net/minecraftforge/items/wrapper/SidedInvWrapper",
+          "method": "extractItem",
+          "desc": "(IIZ)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "4c68a1f18dab102b525063b3a817a3fd2c5a6624696045a75c2d151a523573c7"
+        },
+        {
+          "class": "net/minecraftforge/items/wrapper/SidedInvWrapper",
+          "method": "getSlot",
+          "desc": "(Lnet/minecraft/world/WorldlyContainer;ILnet/minecraft/core/Direction;)I",
+          "sha256": "9fa6562996c0877692bb80286bc4ef5db2e99a7fa33a0a071fa28dc99b97c88f"
+        },
+        {
+          "class": "net/minecraftforge/items/wrapper/EmptyHandler",
+          "method": "getStackInSlot",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "d8b6d32a38347d69a36b6b6cf8971d07e4270ea0a735cd7beb385771728ae3bb"
+        },
+        {
+          "class": "net/minecraftforge/items/wrapper/EmptyHandler",
+          "method": "extractItem",
+          "desc": "(IIZ)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "d8b6d32a38347d69a36b6b6cf8971d07e4270ea0a735cd7beb385771728ae3bb"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/RandomizableContainerBlockEntity",
+          "method": "m_8020_",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "deb1c6b63a44d993fdb9273bc76c9d4f79a18c25557fa9faea35bc8dd7b70595"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/RandomizableContainerBlockEntity",
+          "method": "m_59640_",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "sha256": "5f714717007583696c672858a65009f3c94a846da27ef2d9eb733ba919a761fb"
+        },
+        {
+          "class": "net/minecraft/world/SimpleContainer",
+          "method": "m_8020_",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "7616ad3aace17bcac1c6e911b46d2bfb53ab71c813eef8ac4d03941187bc5e34"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity",
+          "method": "m_8020_",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "69394ac46f93a025bcaca389f65076a480befca383e7b8200fcfb9f5ff2441f5"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/BrewingStandBlockEntity",
+          "method": "m_8020_",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "01951d2d9df2bd618c82de7bd7fcbabb63b701c8b85e3828d00e84ced4234808"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/ChiseledBookShelfBlockEntity",
+          "method": "m_8020_",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "08e6b3b842711d13eacb3ea2382eac0a428185157a2817879807c420ad2360f3"
+        },
+        {
+          "class": "net/minecraft/world/CompoundContainer",
+          "method": "m_8020_",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "80af1bbbf2d914daeac574dbb6a6bc910051fe90994edb6514cd70d425b9afa7"
+        },
+        {
+          "class": "net/minecraft/world/CompoundContainer",
+          "method": "m_6643_",
+          "desc": "()I",
+          "sha256": "e2b46b3438c0c8b016e5a40522b7d75dde902012c5dbcaf9c85bf9a62963a65a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injector (MixinExtras @WrapMethod on ItemHelper.extract(IItemHandler, Predicate, ExtractionCountMode, int, boolean)); @Accessor interfaces on Forge's SidedInvWrapper and vanilla CompoundContainer",
+      "license": "MIT (Create): the wrapper runs Create's extraction loop with one added empty-slot check (helper bons.furious.patch.create_logistics.EmptySlotSkip, Create code under MIT with notice); the audited Forge and Minecraft methods are only called and fingerprinted"
+    },
+    "create_single_pass_extraction": {
+      "mod": "create",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.create_logistics.InvManipulationExtractMixin",
+        "bons.furious.mixin.create_logistics.FilteringBehaviourAccessor"
+      ],
+      "guard": [
+        {
+          "class": "com/simibubi/create/foundation/blockEntity/behaviour/inventory/InvManipulationBehaviour",
+          "method": "extract",
+          "desc": "(Lcom/simibubi/create/foundation/item/ItemHelper$ExtractionCountMode;ILjava/util/function/Predicate;)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "ab0f85b7af8ba8d78b5531b8e49ed21294a8e39282ebeb741db47b515ad73474"
+        },
+        {
+          "class": "com/simibubi/create/foundation/blockEntity/behaviour/inventory/InvManipulationBehaviour",
+          "method": "getFilterTest",
+          "desc": "(Ljava/util/function/Predicate;)Ljava/util/function/Predicate;",
+          "sha256": "09a6d676a838788c10601b34c080561e25e277daa55c00543a5aa053d8995e90"
+        },
+        {
+          "class": "com/simibubi/create/foundation/item/ItemHelper",
+          "method": "extract",
+          "desc": "(Lnet/minecraftforge/items/IItemHandler;Ljava/util/function/Predicate;Lcom/simibubi/create/foundation/item/ItemHelper$ExtractionCountMode;IZ)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "c60f7406df2d20f92b22656ad173fcc1803f72e7468dced0eeff0c249f2687d9"
+        },
+        {
+          "class": "com/simibubi/create/foundation/blockEntity/behaviour/filtering/FilteringBehaviour",
+          "method": "test",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "sha256": "b130381bc4e7405825b6aff12106774bec3a6bd854f26767c0440014ce975d12"
+        },
+        {
+          "class": "com/simibubi/create/foundation/blockEntity/behaviour/filtering/FilteringBehaviour",
+          "method": "isActive",
+          "desc": "()Z",
+          "sha256": "828f1a7bba3a80b72ef6c5b3ec320524d44a46263ef54386b09a70c6cdebea80"
+        },
+        {
+          "class": "com/simibubi/create/content/logistics/filter/FilterItemStack",
+          "method": "test",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;)Z",
+          "sha256": "ebe4cf22fb971c632ac65c04ba7fb399274cd7acd0cbbb2bde4f3ea805962e56"
+        },
+        {
+          "class": "com/simibubi/create/content/logistics/filter/FilterItemStack",
+          "method": "test",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;Z)Z",
+          "sha256": "54c928cffe26ef745b87de1c131b13bd38797e50a97189008332e8ab34b39ff4"
+        },
+        {
+          "class": "com/simibubi/create/content/logistics/filter/FilterItem",
+          "method": "testDirect",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Z)Z",
+          "sha256": "4f562d9002fd8d9f26191bc6165161d33e46188b6ac7cbd9dae9a3019c50f5c5"
+        },
+        {
+          "class": "com/simibubi/create/content/logistics/funnel/FunnelBlockEntity",
+          "method": "addBehaviours",
+          "desc": "(Ljava/util/List;)V",
+          "sha256": "94beb3c7d4847db236217d956a248226fc56ad1f853c2eb8838acfe07214d461"
+        },
+        {
+          "class": "com/simibubi/create/content/logistics/funnel/FunnelBlockEntity",
+          "method": "supportsFiltering",
+          "desc": "()Z",
+          "sha256": "083e02dd73c7c9b3c0c92717b0c88fbc5cd2a6bbd1180bf265d4e68a66facfec"
+        },
+        {
+          "class": "net/minecraftforge/items/ItemStackHandler",
+          "method": "extractItem",
+          "desc": "(IIZ)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "e010eeac88c8f10faa06b5d6bcd9711b61c406da8cfee882b9d4741d48334996"
+        },
+        {
+          "class": "net/minecraftforge/items/wrapper/InvWrapper",
+          "method": "extractItem",
+          "desc": "(IIZ)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "5a12df141dc18f387795df2f999f3228d61777042ee0a7e8ce07eadb904cd44e"
+        },
+        {
+          "class": "net/minecraftforge/items/wrapper/SidedInvWrapper",
+          "method": "extractItem",
+          "desc": "(IIZ)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "4c68a1f18dab102b525063b3a817a3fd2c5a6624696045a75c2d151a523573c7"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/RandomizableContainerBlockEntity",
+          "method": "m_8020_",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "deb1c6b63a44d993fdb9273bc76c9d4f79a18c25557fa9faea35bc8dd7b70595"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injector (MixinExtras @WrapMethod on InvManipulationBehaviour.extract(ExtractionCountMode, int, Predicate)); an @Accessor on FilteringBehaviour.filter",
+      "license": "MIT (Create): the wrapper repeats Create's prologue (simulateNext, client check, target inventory, getFilterTest) and makes Create's own real ItemHelper.extract call; helpers bons.furious.patch.create_logistics.SinglePassExtraction and PureHandlers"
+    }
+  }
+}

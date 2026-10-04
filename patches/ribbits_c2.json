@@ -1,0 +1,25 @@
+{
+  "group": "ribbits_c2",
+  "keys": {
+    "ribbits_performer_absent_guard": {
+      "mod": "ribbits",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.ribbits_c2.PerformerAbsentGuardMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/yungnickyoung/minecraft/ribbits/player/PlayerInstrumentTracker",
+          "method": "removePerformer",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "sha256": "4dd51e56224d6cf08b4f9dcb9205c7cd212942986703369ad3ff2595f6755d39"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the audience-map get in PlayerInstrumentTracker.removePerformer (absent -> empty set)",
+      "license": "LGPL-3.0: no Ribbits code is carried (helper bons.furious.patch.ribbits_c2.PerformerGuard)",
+      "kind": "fix"
+    }
+  }
+}

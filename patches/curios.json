@@ -59,6 +59,63 @@
       "cancel": [],
       "conversion": "overwrite",
       "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "curios_slotless_tick_skip": {
+      "mod": "curios",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.curios.CuriosEventHandlerSlotlessMixin",
+        "bons.furious.mixin.curios.CapabilityProviderCuriosAccessor",
+        "bons.furious.mixin.curios.LivingEntityCuriosStateMixin"
+      ],
+      "guard": [
+        {
+          "class": "top/theillusivec4/curios/common/event/CuriosEventHandler",
+          "method": "tick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "1a192524d3621b9a91af6226a46c2ece70e3f2133ee1c814aaebbeeea71dc9aa"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$Provider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "sha256": "c83347358428314ea4597f42900528fa209789e4b775380e83232eb7fe08fd5b"
+        },
+        {
+          "class": "top/theillusivec4/curios/mixin/CuriosImplMixinHooks",
+          "method": "getCuriosInventory",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "sha256": "d377711bfa7e71aab8e93c7645a17c99890920bf0ec0186b0bc2a16a104879b2"
+        },
+        {
+          "class": "top/theillusivec4/curios/mixin/CuriosImplMixinHooks",
+          "method": "getEntitySlots",
+          "desc": "(Lnet/minecraft/world/entity/EntityType;Z)Ljava/util/Map;",
+          "sha256": "dc9f8acc483c32a3243537d536adb6854cba55d5b5e1723d88f32ceeff83bedd"
+        },
+        {
+          "class": "top/theillusivec4/curios/api/CuriosApi",
+          "method": "getEntitySlots",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/Map;",
+          "sha256": "862ced084e347d52600212ce583248cefeb85b4f3799b386a85b9977ab622fe5"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "sha256": "84fca09ed93a5775f15ebb84533d079c78578a784fd7e8f016f41afbff45da9a"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityDispatcher",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "sha256": "aff7dbc58d1187f3f6603f119e7235c01bad0b716e879dac45d07ba84ecb5696"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: @Redirect of CuriosApi.getCuriosInventory in CuriosEventHandler.tick to our lookup (helper bons.furious.patch.curios.CuriosSlotlessTick); @Accessor for CapabilityProvider.valid/capabilities; one @Unique reference field on LivingEntity",
+      "license": "LGPL-3.0 (Curios): the mixin only redirects one call to our own logic; Minecraft/Forge: one field and accessors, no code"
     }
   }
 }

@@ -1,0 +1,48 @@
+{
+  "group": "mutantmonsters_c2",
+  "keys": {
+    "mutantmonsters_empty_shoulder_skip": {
+      "mod": "mutantmonsters",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.mutantmonsters_c2.PlayerEventsHandlerShoulderMixin"
+      ],
+      "guard": [
+        {
+          "class": "fuzs/mutantmonsters/handler/PlayerEventsHandler",
+          "method": "onPlayerTick$End",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "sha256": "33e5f2b04e38aadcd41d713c91202e71524e272daee3b68bff7c70fc2ba0226b"
+        },
+        {
+          "class": "fuzs/mutantmonsters/handler/PlayerEventsHandler",
+          "method": "playShoulderEntitySound",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/nbt/CompoundTag;)V",
+          "sha256": "88814aea00d45e630a5ebcce843ecc61173ddee88838e257e00b69b629e37938"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "m_128461_",
+          "desc": "(Ljava/lang/String;)Ljava/lang/String;",
+          "sha256": "29e8a1fcbf4d7b9eb13b29dd5acb06abc112e5464c94dca34f3655ef6aeadb4c"
+        },
+        {
+          "class": "net/minecraft/world/entity/EntityType",
+          "method": "m_20632_",
+          "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+          "sha256": "3c9e13ffb1ba0c48c0521f5a1208468832595e32a954bc4920e4084b1fab7b33"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "m_135820_",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+          "sha256": "b5ce38752bd5d15aaa2a30c61c05e03138f8015b7a6e940a0f208d4433557738"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injector (MixinExtras @WrapWithCondition on the two playShoulderEntitySound calls in PlayerEventsHandler.onPlayerTick$End)",
+      "license": "AGPL-3.0-or-later (Mutant Monsters): no Mutant Monsters code is carried; the condition (bons.furious.patch.mutantmonsters_c2.EmptyShoulderSkip) is ours and Mutant Monsters' methods are unchanged"
+    }
+  }
+}

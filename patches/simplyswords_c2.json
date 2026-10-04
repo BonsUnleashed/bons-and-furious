@@ -1,0 +1,42 @@
+{
+  "group": "simplyswords_c2",
+  "keys": {
+    "simplyswords_config_unchanged_reuse": {
+      "mod": "simplyswords",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.simplyswords_c2.ConfigFetchMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/sweenus/simplyswords/config/Config",
+          "method": "safeValueFetch",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)V",
+          "sha256": "02b377a3e0e5c07a2eeb73219ac354b889bd2ab1011c2ba8235cd9bc08591249"
+        },
+        {
+          "class": "net/sweenus/simplyswords/config/Config",
+          "method": "getJsonObject",
+          "desc": "(Ljava/lang/String;)Lcom/google/gson/JsonObject;",
+          "sha256": "003d4679be0cb538cbc196f335d16ac31e0c3761c9760bf757106a6fd02d6847"
+        },
+        {
+          "class": "net/sweenus/simplyswords/config/Config",
+          "method": "readFile",
+          "desc": "(Ljava/io/File;)Ljava/lang/String;",
+          "sha256": "500fb3c9cfbaf6a8bb4bb6c6137e719a4d0ba8f7a6a4820071f6d9ff5cf51932"
+        },
+        {
+          "class": "net/sweenus/simplyswords/config/Config",
+          "method": "*",
+          "desc": "",
+          "sha256": "118429e0d6a099ace35a7f89dd60966ac3e7c804c8594ff3d5b73b2ad5a1406d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on Config.safeValueFetch + @WrapOperation on its readFile, getJsonObject and HashMap.put calls (the file's bytes decide; kept puts are applied for the same bytes, otherwise the text made from those bytes by Scanner(File)'s own path is parsed and recorded)",
+      "license": "Simply Swords: Timefall Development License (custom): no-copy; the mixins carry only our own logic (helper bons.furious.patch.simplyswords_c2.ConfigFetchMemo)"
+    }
+  }
+}

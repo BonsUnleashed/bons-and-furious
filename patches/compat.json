@@ -1,6 +1,6 @@
 {
   "group": "compat",
-  "note": "Patches other mods make to the same code, the same way, as one of our switches. Exactly one copy may run: while the other mod's patch is active (installed, its mixin listed for this side, its option on), our switch steps aside; otherwise our switch applies and the other mod's mixin is cancelled. See bons.furious.guard.ForeignPatches. Checked against Collections Of Optimizations 4.4 (CurseForge file 9026925, sha1 d1b067885b0827c12b7eb75bc02896d270adaed8) on 2026-10-02.",
+  "note": "Patches other mods make to the same code, the same way, as one of our switches. Exactly one copy may run: while the other mod's patch is active (installed, its mixin listed for this side, its option on), our switch steps aside; otherwise our switch applies and the other mod's mixin is cancelled. See bons.furious.guard.ForeignPatches. Checked against Collections Of Optimizations 4.4 (CurseForge file 9026925, sha1 d1b067885b0827c12b7eb75bc02896d270adaed8) on 2026-10-02 and 2026-10-03 (1.0.28), GeckoBetterFPS 1.0.2 (1.0.28), and ServerCore 1.5.2 (2026-10-04).",
   "keys": {},
   "yields": [
     {
@@ -45,8 +45,348 @@
       "master": "general.enabled",
       "option": "geckolib.primitiveEasing",
       "default": true,
-      "unless_mods": ["gbf", "geckolib_animation_optimizer"],
+      "unless_mods": [
+        "gbf",
+        "geckolib_animation_optimizer"
+      ],
       "why": "Both @Overwrite EasingType.apply, easeOut, easeInOut and bounce to evaluate GeckoLib's own easing functions with primitive doubles (client only in COO). Mixin keeps one copy of each and logs four overwrite conflicts. COO skips its GeckoLib patches when gbf or geckolib_animation_optimizer is installed."
+    },
+    {
+      "key": "vanilla_suffocation_scan_loop",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.vanilla.MixinEntityInWallScan",
+      "option": "vanilla.leanSuffocationScan",
+      "default": true,
+      "why": "Both take the stream out of Entity.isInWall. With both applied one would patch a method the other already rewrote; COO keeps its mixin applied even with its option off, so ours leaves it out whenever ours applies."
+    },
+    {
+      "key": "worldgen_empty_beardifier_marker",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.vanilla.MixinNoiseBasedChunkGeneratorBeardifier",
+      "option": "vanilla.skipEmptyBeardifier",
+      "default": true,
+      "why": "Both stop NoiseBasedChunkGenerator filling a chunk with an empty Beardifier block by block. Two copies would each decide on a Beardifier the other already replaced; one copy only."
+    },
+    {
+      "key": "terrablender_namespace_rule_memo",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.terrablender.MixinNamespacedRule",
+      "option": "terrablender.cacheNamespaceRule",
+      "default": true,
+      "why": "Both keep the namespace rule TerraBlender selected for the last biome in NamespacedRule.tryApply. Ours @Overwrites the method, so COO's injectors would find no target (or Mixin keeps one of two overwrites)."
+    },
+    {
+      "key": "distanthorizons_lod_biome_memo",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.distanthorizons.MixinDhLodDataBuilder",
+      "option": "distanthorizons.cacheChunkBiomeLookup",
+      "default": true,
+      "why": "Both reuse the previous getBiome answer inside LodDataBuilder.createFromChunk; both redirect the same two calls, and Mixin lets only one redirect hold a call."
+    },
+    {
+      "key": "distanthorizons_biome_blend_memo",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.distanthorizons.MixinDhTintGetterBlend",
+      "option": "distanthorizons.memoBiomeBlendColors",
+      "default": true,
+      "why": "Both reuse a repeated sample colour in AbstractDhTintGetter_forge.tryGetBlockTint; both change the same call, and only one copy can hold it."
+    },
+    {
+      "key": "alexscaves_rare_biome_column_memo",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.alexscaves.MixinACBiomeRarity",
+      "option": "alexscaves.memoRareBiomeQuads",
+      "default": true,
+      "why": "Both remember ACBiomeRarity.getRareBiomeInfoForQuad per column; ours wraps the whole method, so COO's copy would run inside or around it and each would cache the other."
+    },
+    {
+      "key": "pehkui_scale_tick_callbacks",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.pehkui.MixinScaleUtils",
+      "option": "pehkui.leanScaleTick",
+      "default": true,
+      "why": "Both drop the empty pre/post-tick callback loops of ScaleUtils.tickScale; ours @Overwrites it, which leaves COO's injectors in that class without their target."
+    },
+    {
+      "key": "pehkui_scale_tick_callbacks",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.pehkui.MixinScaleUtils",
+      "option": "pehkui.memoInteractionBoxScales",
+      "default": true,
+      "why": "COO's pehkui.memoInteractionBoxScales is read by the same mixin class (MixinScaleUtils); while it is on COO's mixin is in use, so ours steps aside rather than leave that option without its code."
+    },
+    {
+      "key": "curios_slotless_tick_skip",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.curios.MixinCuriosEventHandler",
+      "option": "curios.skipSlotlessEntities",
+      "default": true,
+      "why": "Both skip the inventory lookup of CuriosEventHandler.tick for entities without slots; both change that call, and only one copy can hold it."
+    },
+    {
+      "key": "curios_slotless_tick_skip",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.curios.MixinCuriosEventHandler",
+      "option": "curios.cacheEntitySlotLookup",
+      "default": true,
+      "why": "COO's curios.cacheEntitySlotLookup is read by the same mixin class (MixinCuriosEventHandler); while it is on COO's mixin is in use, so ours steps aside rather than leave that option without its code."
+    },
+    {
+      "key": "curios_slotless_tick_skip",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.curios.MixinCuriosEventHandler",
+      "option": "curios.skipClientTickOnNonPlayers",
+      "default": true,
+      "why": "COO's curios.skipClientTickOnNonPlayers is read by the same mixin class (MixinCuriosEventHandler); while it is on COO's mixin is in use, so ours steps aside rather than leave that option without its code."
+    },
+    {
+      "key": "mowziesmobs_capability_handles",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.mowziesmobs.MixinCapabilityHandler",
+      "option": "mowziesmobs.fastCapabilityLookup",
+      "default": true,
+      "why": "Both answer Mowzie's CapabilityHandler.getCapability without walking the providers twice; both change the same two calls, and only one copy can hold them."
+    },
+    {
+      "key": "cucumber_tile_dispatch_range_first",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.cucumber.MixinCucumberTileDispatch",
+      "option": "cucumber.leanTileDispatch",
+      "default": true,
+      "why": "Both stop TileEntityHelper.dispatchToNearbyPlayers building a packet for nobody; ours @Overwrites the method, which leaves COO's injectors without their target."
+    },
+    {
+      "key": "artifacts_living_tick_order",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.artifacts.MixinArtifactEventsForge",
+      "option": "artifacts.fastPathKittySlippers",
+      "default": true,
+      "why": "Both make the kitty slippers and umbrella checks of ArtifactEventsForge cheaper; ours @Overwrites both handlers, which leaves COO's injectors in that class without their targets."
+    },
+    {
+      "key": "artifacts_living_tick_order",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.artifacts.MixinArtifactEventsForge",
+      "option": "artifacts.fastPathUmbrella",
+      "default": true,
+      "why": "Both make the kitty slippers and umbrella checks of ArtifactEventsForge cheaper; ours @Overwrites both handlers, which leaves COO's injectors in that class without their targets."
+    },
+    {
+      "key": "artifacts_living_tick_order",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.artifacts.MixinArtifactEventsForge",
+      "option": "artifacts.skipClientTickOnNonPlayers",
+      "default": true,
+      "why": "COO's artifacts.skipClientTickOnNonPlayers is read by the same mixin class (MixinArtifactEventsForge); while it is on COO's mixin is in use, so ours steps aside rather than leave that option without its code."
+    },
+    {
+      "key": "geckolib_bone_queue_reuse",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.geckolib.MixinAnimationController",
+      "option": "geckolib.reuseBoneQueues",
+      "default": true,
+      "why": "Both reuse the bone queues AnimationController.createInitialQueues rebuilt every frame; ours @Overwrites it, and Mixin keeps one of two overwrites (or COO's injectors find no target).",
+      "unless_mods": [
+        "gbf",
+        "geckolib_animation_optimizer"
+      ]
+    },
+    {
+      "key": "geckolib_quad_vectors",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.geckolib.MixinGeoRenderer",
+      "option": "geckolib.reuseRenderVectors",
+      "default": true,
+      "why": "Both stop GeoRenderer.createVerticesOfQuad allocating a vector per vertex; ours @Overwrites it, and Mixin keeps one of two overwrites (or COO's injectors find no target).",
+      "unless_mods": [
+        "gbf",
+        "geckolib_animation_optimizer"
+      ]
+    },
+    {
+      "key": "citadel_model_vertices",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.citadel.MixinAdvancedModelBoxFastRender",
+      "option": "citadel.fastModelRender",
+      "default": true,
+      "why": "Both take the per-vertex vectors out of Citadel's AdvancedModelBox / BasicModelPart doRender; COO renders the box through its own writer, which our redirects of the same constructions cannot share."
+    },
+    {
+      "key": "citadel_model_vertices",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.citadel.MixinBasicModelPartFastRender",
+      "option": "citadel.fastModelRender",
+      "default": true,
+      "why": "Both take the per-vertex vectors out of Citadel's AdvancedModelBox / BasicModelPart doRender; COO renders the box through its own writer, which our redirects of the same constructions cannot share."
+    },
+    {
+      "key": "fancymenu_render_thread_state",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.fancymenu.MixinFancyMenuRenderState",
+      "option": "fancymenu.pinRenderStateToRenderThread",
+      "default": true,
+      "why": "Both replace the ThreadLocal lookups of FancyMenu's render-state utils on the render thread; both change the same static initialisers, and one copy only."
+    },
+    {
+      "key": "immediatelyfast_idle_layer_skip",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.immediatelyfast.MixinBatchableBufferSource",
+      "option": "immediatelyfast.singleBufferLookup",
+      "default": true,
+      "why": "Both make BatchableBufferSource skip idle layers and double lookups; ours @Overwrites endBatch, getOrCreateBufferBuilder and three more, which leaves COO's injectors without their targets."
+    },
+    {
+      "key": "immediatelyfast_idle_layer_skip",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.immediatelyfast.MixinBatchableBufferSource",
+      "option": "immediatelyfast.skipIdleLayers",
+      "default": true,
+      "why": "Both make BatchableBufferSource skip idle layers and double lookups; ours @Overwrites endBatch, getOrCreateBufferBuilder and three more, which leaves COO's injectors without their targets."
+    },
+    {
+      "key": "storagedrawers_count_label_memo",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.storagedrawers.MixinDrawersCountLabel",
+      "option": "storagedrawers.cacheCountLabels",
+      "default": true,
+      "why": "Both reuse the text of a drawer count label in CountFormatter.formatApprox; both change its format calls, and one copy only."
+    },
+    {
+      "key": "cofh_translucent_renderer_memo",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.cofh.MixinCoreClientEvents",
+      "option": "cofh.cacheTranslucentRenderers",
+      "default": true,
+      "why": "Both shorten CoFH's per-frame translucent entity pass; COO changes CoreClientEvents around the call our switch changes inside, and one copy only."
+    },
+    {
+      "key": "biomeswevegone_foreign_chunk_skip",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.biomeswevegone.MixinBasaltBarreraExtension",
+      "option": "biomeswevegone.skipForeignChunkTerrain",
+      "default": true,
+      "why": "Both skip BWG's Crag Gardens and Basalt Barrera passes in chunks where those biomes cannot be; both cancel the same two passes, and one copy only."
+    },
+    {
+      "key": "biomeswevegone_foreign_chunk_skip",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.biomeswevegone.MixinCragGardenExtension",
+      "option": "biomeswevegone.skipForeignChunkTerrain",
+      "default": true,
+      "why": "Both skip BWG's Crag Gardens and Basalt Barrera passes in chunks where those biomes cannot be; both cancel the same two passes, and one copy only."
+    },
+    {
+      "key": "placebo_enchantment_event_skip",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.placebo.MixinPlaceboEventFactory",
+      "option": "placebo.skipEmptyEnchantmentEvent",
+      "default": true,
+      "why": "Both skip Placebo's GetEnchantmentLevelEvent when nothing listens; ours @Overwrites the two PlaceboEventFactory methods, which leaves COO's injectors without their targets."
+    },
+    {
+      "key": "geckolib_bone_queue_reuse",
+      "mod": "gbf",
+      "name": "GeckoBetterFPS",
+      "mixin": "com.moepus.gbf.mixin.AnimationControllerMixin",
+      "why": "GeckoBetterFPS 1.0.2 rewrites AnimationController.createInitialQueues and BoneAnimationQueue itself; ours would overwrite the same method and assume GeckoLib's own queues."
+    },
+    {
+      "key": "geckolib_quad_vectors",
+      "mod": "gbf",
+      "name": "GeckoBetterFPS",
+      "mixin": "com.moepus.gbf.mixin.GeoRendererMixin",
+      "why": "GeckoBetterFPS 1.0.2 rewrites GeoRenderer.renderCube and createVerticesOfQuad itself (client); two copies of the same method cannot both apply."
+    },
+    {
+      "key": "vanilla_spawn_gate_visibility_memo",
+      "mod": "servercore",
+      "name": "ServerCore",
+      "mixin": "me.wesley1808.servercore.mixin.optimizations.ticking.chunk.cache.ServerChunkCacheMixin",
+      "why": "ServerCore's mixin @Redirects the same call our switch @Redirects: ServerLevel.isNaturalSpawningAllowed(ChunkPos) inside ServerChunkCache.tickChunks. Mixin applies only one @Redirect of a call, so the second one fails; with ServerCore installed our switch steps aside and ServerCore keeps its own change. ServerCore's settings file is YAML, which is not read here, so the switch steps aside whenever ServerCore lists the mixin."
     }
   ]
 }

@@ -1,0 +1,61 @@
+{
+  "group": "alexsmobs_c2",
+  "keys": {
+    "alexsmobs_crow_scan_palette_check": {
+      "mod": "alexsmobs",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.alexsmobs_c2.CrowAvoidPumpkinsMixin",
+        "bons.furious.mixin.alexsmobs_c2.ServerChunkCacheHolderAccess"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/alexsmobs/entity/EntityCrow$AIAvoidPumpkins",
+          "method": "searchForDestination",
+          "desc": "()Z",
+          "sha256": "02c40fb573368c74bc3ca6b64f993a7ca44e984fc1f257666510f5d29d028695"
+        },
+        {
+          "class": "com/github/alexthe666/alexsmobs/entity/EntityCrow$AIAvoidPumpkins",
+          "method": "isPumpkin",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos$MutableBlockPos;)Z",
+          "sha256": "f2dd49aca186e35f6af9eac0970d119c922d98b3c990d1df5b24d94d40c51bc7"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_8055_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "cb0e4f7ff3d67591f62963ba1937adb91261c87b4c5adc352a50f532b8f8aa1b"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunk",
+          "method": "m_8055_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "d5a3f2bd5d95ad50a1dc4d8e118af704a17b2c9eb7dad1450788b33624d17fc8"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerChunkCache",
+          "method": "m_8364_",
+          "desc": "(J)Lnet/minecraft/server/level/ChunkHolder;",
+          "sha256": "9b3eb58e5940bba1e0ef67806dab46c8d91af46de9d0c1339133ebc33b986fed"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerChunkCache",
+          "method": "m_7587_",
+          "desc": "(IILnet/minecraft/world/level/chunk/ChunkStatus;Z)Lnet/minecraft/world/level/chunk/ChunkAccess;",
+          "sha256": "0127d484627eaf07c5be44f422503fcda3aa00fe79bf7daf20bd475206bb6fa9"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkHolder",
+          "method": "m_212234_",
+          "desc": "()Lnet/minecraft/world/level/chunk/LevelChunk;",
+          "sha256": "d7f84931a949fb834e69284b20d49760286b071a0718a771df52182828d9965b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Inject HEAD cancellable on Alex's Mobs' own AIAvoidPumpkins.searchForDestination) + an @Invoker on ServerChunkCache.getVisibleChunkIfPresent",
+      "license": "LGPL (Alex's Mobs, mods.toml \"GNU LESSER GENERAL PUBLIC LICENSE\"): no Alex's Mobs code is carried; the pre-check (bons.furious.patch.alexsmobs_c2.CrowPumpkinScan) is ours"
+    }
+  }
+}

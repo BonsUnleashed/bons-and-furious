@@ -1,0 +1,81 @@
+{
+  "group": "bomd_c2",
+  "keys": {
+    "bomd_block_cache_presence": {
+      "mod": "bosses_of_mass_destruction",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.bomd_c2.ChunkBlockCacheCountMixin",
+        "bons.furious.mixin.bomd_c2.MobWardSpawnGateMixin",
+        "bons.furious.mixin.bomd_c2.MonolithExplosionGateMixin",
+        "bons.furious.mixin.bomd_c2.LevitationFlightGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/cerbon/bosses_of_mass_destruction/capability/ChunkBlockCache",
+          "method": "*",
+          "desc": "",
+          "sha256": "4c126faa0639a20f475b7c614b23b81fbdb36f19fcf7f3945fbc5feea8444245"
+        },
+        {
+          "class": "com/cerbon/bosses_of_mass_destruction/capability/ChunkBlockCache",
+          "method": "addToChunk",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/level/block/Block;Lnet/minecraft/core/BlockPos;)V",
+          "sha256": "27195b5f950b33fdc11c51d42bbbd2dad3fd7837734c62b4586806cbb29962e5"
+        },
+        {
+          "class": "com/cerbon/bosses_of_mass_destruction/capability/ChunkBlockCache",
+          "method": "removeFromChunk",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/level/block/Block;Lnet/minecraft/core/BlockPos;)V",
+          "sha256": "89926be15c9ad868b31eb62f1e64e1d84ce791f97f409af4b570aa8e10ceea5f"
+        },
+        {
+          "class": "com/cerbon/bosses_of_mass_destruction/capability/ChunkBlockCache",
+          "method": "getBlocksFromChunk",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/level/block/Block;)Ljava/util/List;",
+          "sha256": "e3f9208f3cb50397280ea49f712ef980fc1f53def01d81b9f7a6cba2f478afe4"
+        },
+        {
+          "class": "com/cerbon/bosses_of_mass_destruction/capability/util/BMDCapabilities",
+          "method": "getChunkBlockCache",
+          "desc": "(Lnet/minecraft/world/level/Level;)Ljava/util/Optional;",
+          "sha256": "8bbc1c2a6d0ba19c380c371b831e0b80f004b9036fa93852f6d18363c375c2e9"
+        },
+        {
+          "class": "com/cerbon/bosses_of_mass_destruction/block/custom/MobWardBlock",
+          "method": "canSpawn",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos$MutableBlockPos;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "sha256": "2b624bcde37ae05d6e99ef534ee01c86db9330c7aa23fabc158e373049e750e9"
+        },
+        {
+          "class": "com/cerbon/bosses_of_mass_destruction/block/custom/MonolithBlock",
+          "method": "getExplosionPower",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;F)F",
+          "sha256": "d2f011652ffcfe30b9b14265422c24792c8c0208f81e54b60a27a0e59db492b1"
+        },
+        {
+          "class": "com/cerbon/bosses_of_mass_destruction/block/custom/LevitationBlockEntity",
+          "method": "tickFlight",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "sha256": "f3b3093e6ec422ad0cf89088abe9fb25299cec6c7ff99ebfe8d1face0582926a"
+        },
+        {
+          "class": "com/cerbon/bosses_of_mass_destruction/mixin/NaturalSpawnerMixin",
+          "method": "canSpawn",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/MobCategory;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/chunk/ChunkGenerator;Lnet/minecraft/world/level/biome/MobSpawnSettings$SpawnerData;Lnet/minecraft/core/BlockPos$MutableBlockPos;DLorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "sha256": "68bab0915aa8151206cb4c2675202b3a3d87141203c533b4b273c48cbf47b084"
+        },
+        {
+          "class": "com/cerbon/bosses_of_mass_destruction/mixin/ExplosionMixin",
+          "method": "Explosion",
+          "desc": "(FLnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;Lnet/minecraft/world/level/ExplosionDamageCalculator;DDDFZLnet/minecraft/world/level/Level$ExplosionInteraction;)F",
+          "sha256": "8173ddc4e584ca7df89e435253daca43371fc3fda11e9016c3167f25dae61750"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: @WrapOperation counts on ChunkBlockCache's HashSet.add / HashSet.remove; MixinSquared @Redirect of MobWardBlock.canSpawn and MonolithBlock.getExplosionPower inside BOMD's NaturalSpawnerMixin / ExplosionMixin handlers; @Inject HEAD cancellable on LevitationBlockEntity.tickFlight",
+      "license": "LGPL-3.0 (BOMD, mods.toml \"GNU LESSER GENERAL PUBLIC LICENSE\"): LevitationFlightGateMixin carries tickFlight's own hasLevitationBlock == false branch unchanged, which the LGPL permits; everything else is our own counting and gating"
+    }
+  }
+}

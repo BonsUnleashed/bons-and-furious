@@ -1,0 +1,163 @@
+{
+  "group": "create_contraptions",
+  "keys": {
+    "create_collision_single_pass": {
+      "mod": "create",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.create_contraptions.ContraptionCollisionMixin",
+        "bons.furious.mixin.create_contraptions.VoxelShapeAccessor"
+      ],
+      "guard": [
+        {
+          "class": "com/simibubi/create/content/contraptions/Contraption",
+          "method": "lambda$gatherBBsOffThread$24",
+          "desc": "()Ljava/util/List;",
+          "sha256": "af2204be17a5088d0d90329336d2f28cf50c09f70ce50669e12d575693061460"
+        },
+        {
+          "class": "com/simibubi/create/content/contraptions/Contraption",
+          "method": "gatherBBsOffThread",
+          "desc": "()V",
+          "sha256": "815cd336a2f87cbfb624572a39206fd4b821e3936a3f3b314ccb9aa278eae527"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/Shapes",
+          "method": "m_83148_",
+          "desc": "(Lnet/minecraft/world/phys/shapes/VoxelShape;Lnet/minecraft/world/phys/shapes/VoxelShape;Lnet/minecraft/world/phys/shapes/BooleanOp;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "sha256": "1cb3737fbe1ec85cbf127456068854c67ad9264ec0b1a942e6b46b3b6da88d6e"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/Shapes",
+          "method": "m_83058_",
+          "desc": "(ILit/unimi/dsi/fastutil/doubles/DoubleList;Lit/unimi/dsi/fastutil/doubles/DoubleList;ZZ)Lnet/minecraft/world/phys/shapes/IndexMerger;",
+          "sha256": "0e90b58d8f773d9300dd605d9d1be9580a496ae3217cfb709d4150fc4d013365"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/Shapes",
+          "method": "m_166049_",
+          "desc": "(DDDDDD)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "sha256": "93bda83ea836db82615ef3c2070e7ecbd4f0138a9545efb1762f41f5eb73cc0b"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/Shapes",
+          "method": "m_83048_",
+          "desc": "(DDDDDD)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "sha256": "3ec994a1c27c041470b34bf70ad6d013d7ae1c4e0e996fcc07129b0d981d36f8"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/Shapes",
+          "method": "m_83041_",
+          "desc": "(DD)I",
+          "sha256": "2c49eaa3178edcf7ad2c5b814a306d76b3f3f3ae39fd67bc4967a3377349f98c"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/VoxelShape",
+          "method": "m_83296_",
+          "desc": "()Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "sha256": "fba9fcc3a803239dd77ba1ff35c66ac5407706af9e198f0f3b2b904a5601ccf5"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/VoxelShape",
+          "method": "m_83299_",
+          "desc": "()Ljava/util/List;",
+          "sha256": "8cc0a5d60e35c3a5a1b5ed6f90cc400fa3953f03754776fc943f45d83c145a05"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/VoxelShape",
+          "method": "m_83286_",
+          "desc": "(Lnet/minecraft/world/phys/shapes/Shapes$DoubleLineConsumer;)V",
+          "sha256": "c4d2b4486fd2553484ce566705dfb2aa1b56dd0cfab4363a63732aac5ac67c7e"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/VoxelShape",
+          "method": "m_83216_",
+          "desc": "(DDD)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "sha256": "70b5259854cc11d8bd9ae5f4417b4e7f46d3afe1deb387fabb768bd2ffd945c0"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/BitSetDiscreteVoxelShape",
+          "method": "m_82641_",
+          "desc": "(Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape;Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape;Lnet/minecraft/world/phys/shapes/IndexMerger;Lnet/minecraft/world/phys/shapes/IndexMerger;Lnet/minecraft/world/phys/shapes/IndexMerger;Lnet/minecraft/world/phys/shapes/BooleanOp;)Lnet/minecraft/world/phys/shapes/BitSetDiscreteVoxelShape;",
+          "sha256": "75ebfc82d35b3c49703f929bb109b0720389ba713fb79efe30a2610ddd0ca1dd"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/BitSetDiscreteVoxelShape",
+          "method": "m_165963_",
+          "desc": "(Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape;Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape$IntLineConsumer;Z)V",
+          "sha256": "8a0598c43625fcb3a5dddd0b579b462c9914447deeaa038b751cc2029c931719"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/IndirectMerger",
+          "method": "<init>",
+          "desc": "(Lit/unimi/dsi/fastutil/doubles/DoubleList;Lit/unimi/dsi/fastutil/doubles/DoubleList;ZZ)V",
+          "sha256": "22fca5c3d7c2a674d7a37d0ac85a954e1e0a96fd4a0401fab91ee048c5ca6ca9"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/NonOverlappingMerger",
+          "method": "m_83023_",
+          "desc": "(Lnet/minecraft/world/phys/shapes/IndexMerger$IndexConsumer;)Z",
+          "sha256": "b3ab6745de5f491060bd05afc6d1013a87d4027680753d0e3c3d739eae9a8b6a"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/NonOverlappingMerger",
+          "method": "getDouble",
+          "desc": "(I)D",
+          "sha256": "71dda5b8e84c7afde3e2eb4e57671281c83c78aa7345e845b0c07402e5c564f8"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/IdenticalMerger",
+          "method": "m_6200_",
+          "desc": "(Lnet/minecraft/world/phys/shapes/IndexMerger$IndexConsumer;)Z",
+          "sha256": "3a51dd48d2c394928106829139307ddd55d98a74d64bba235c276667b67112d4"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/ArrayVoxelShape",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape;Lit/unimi/dsi/fastutil/doubles/DoubleList;Lit/unimi/dsi/fastutil/doubles/DoubleList;Lit/unimi/dsi/fastutil/doubles/DoubleList;)V",
+          "sha256": "3379391abf93502dbe1ae31c07108f8dd4b39faa986f5277d87a582f41a60bbe"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/OffsetDoubleList",
+          "method": "getDouble",
+          "desc": "(I)D",
+          "sha256": "c7034a39aede978a393aeb5f35ef93f6ee5e0aa9f7c3cbd6c70b6b35dc9fa2b2"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/CubePointRange",
+          "method": "getDouble",
+          "desc": "(I)D",
+          "sha256": "c81bf703494b02a039f3785349f536e44048de16867133258859cb34e3d3f56d"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/BitSetDiscreteVoxelShape",
+          "method": "<init>",
+          "desc": "(III)V",
+          "sha256": "26274882ca9901115fd9afc0e977dd7287556037746266c5311560ca6f3ea295"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/BitSetDiscreteVoxelShape",
+          "method": "m_142703_",
+          "desc": "(III)V",
+          "sha256": "ef00faa5749be10fe4e191fa556a703d8ac98f0428ac483765de2da79dc60e1f"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/DiscreteVoxelShape",
+          "method": "m_82832_",
+          "desc": "(Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape$IntLineConsumer;Z)V",
+          "sha256": "e9febafa90f6e224b80a146c43995a98821851b0822b9cd9904afc0bab571428"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/DiscreteVoxelShape",
+          "method": "m_82846_",
+          "desc": "(III)Z",
+          "sha256": "b177860ebbe3511caa05b3d743127c78f0a592ec5cb1cd55da89693b093d89bd"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (three MixinExtras @WrapOperation in Contraption's collider lambda: Shapes.joinUnoptimized, VoxelShape.optimize and VoxelShape.toAabbs); an @Accessor/@Invoker interface on VoxelShape; Shapes.findBits reached by reflection (a conservative rule if it cannot be)",
+      "license": "MIT (Create): Create's loop is untouched; the helper bons.furious.patch.create_contraptions.CollisionUnion is our own one-pass union and calls Minecraft's own BitSetDiscreteVoxelShape, forAllBoxes and findBits, carrying none of their code"
+    }
+  }
+}

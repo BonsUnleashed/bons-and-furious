@@ -4,13 +4,13 @@
 
 **Your CPU lives its life one tick at a time.**
 
-[**Forge 1.20.1: 1.0.27**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.27) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
+[**Forge 1.20.1: 1.0.30**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.30) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
 
 Bons and Furious reduces repeated work in Minecraft and optional mods. Each optimization or fix has its own switch in one config file. Choose the build for your Minecraft version and loader.
 
 | Minecraft | Loader | Controls | Requirements |
 | --- | --- | ---: | --- |
-| 1.20.1 | Forge | 127 | Forge 47.3.22 or newer |
+| 1.20.1 | Forge | 248 | Forge 47.3.22 or newer |
 | 1.21.1 | NeoForge | 82 | Java 21; NeoForge 21.1.252 or newer |
 
 Both builds use one JAR for client and server, with no required target mods.
@@ -54,11 +54,11 @@ Every run, the retained earlier results, the baseline mod versions and the metho
 
 ## What the Forge 1.20.1 build does
 
-- **110 optimizations** reduce repeated work: fewer allocations, no repeated lookups, no state rebuilt only to come out identical. Terrain preparation, ground-height estimates, climate lookups, Distant Horizons' rough-surface generation, chunk render layers, ship chunk bookkeeping, shader graph resets, animation easing and event dispatch are the largest. Eight controls restore or provide compatible versions of performance paths disabled in the tested setup, including Radium, ModernFix, ImmediatelyFast and Distant Horizons integrations. Each checks the relevant mod builds and configuration.
-- **13 fixes** repair reproduced server freezes, worker-thread crashes, generation exceptions and one chunk-tracking gap between Radium and SecurityCraft, mostly where Distant Horizons or C2ME worker threads meet a content mod's world generation.
+- **215 optimizations** reduce repeated work: fewer allocations, no repeated lookups, no state rebuilt only to come out identical. Terrain preparation, ground-height estimates, climate lookups, Distant Horizons' rough-surface generation, chunk render layers, ship chunk bookkeeping, shader graph resets, animation easing and event dispatch are the largest. Eight controls restore or provide compatible versions of performance paths disabled in the tested setup, including Radium, ModernFix, ImmediatelyFast and Distant Horizons integrations. Each checks the relevant mod builds and configuration.
+- **29 fixes** repair reproduced server freezes, worker-thread crashes, generation exceptions and defects in the target mods themselves: large mobs whose solid body parts could be walked through with Radium, caches that two threads could corrupt, data that piled up on every world join.
 - **4 deliberate changes** (frame pacing, the Occult bed scan, Fowl Play flight targets, Scorched sandcrab processing) trade a documented behaviour difference for a large saving.
 
-All 127 are listed in `config/bons_and_furious.properties` with their target mod, tested build, side and measurement. Set any key to `false` and restart. Every control is explained in the [wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki).
+All 248 are listed in `config/bons_and_furious.properties` with their target mod, tested build, side and measurement. Set any key to `false` and restart. Every control is explained in the [wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki).
 
 ## Forge 1.20.1 results, per patch
 
@@ -68,6 +68,11 @@ All 127 are listed in `config/bons_and_furious.properties` with their target mod
 | **Minecraft** terrain preparation (new in 1.0.16) | The second density-graph pass reuses what the first pass built instead of rebuilding it | **91% less CPU** per NoiseChunk (10.35 → 0.89 ms) and **53% less** per structure-placement height query (17.7 → 8.3 ms) |
 | **Embeddium + Fusion** (new in 1.0.26) | Hidden connected-texture faces are skipped before their quads are built | **25% less chunk-meshing time** (5.2 → 3.9 s for 733 sections), **41% less allocation**, byte-identical vertices and indices |
 | **Farmer's Delight** (new in 1.0.26) | Tool-action ingredients share their registry scan during a recipe load | Client recipe-packet decoding **8.8 → 0.4 s**; recipe rebuild **5.5–6.4 → 1.4 s** on the client and **3.6 → 1.2 s** on the server, same ingredients |
+| **Create** (new in 1.0.30) | Contraption collision boxes are built in one pass | A 400-block carriage **369 → 1.3 ms** and 108 → 0.25 MB, identical boxes |
+| **Minecraft** saving (new in 1.0.30) | Saved data and player files are compressed and written by a background writer | Server thread **4.9 → 0.9 s** for 500 data files at once, byte-identical files |
+| **Minecraft** networking (new in 1.0.30) | Packet bursts are flushed once instead of once per packet | 300 socket flushes → 1; network-thread CPU **8.7 → 2.6 µs per packet**, identical bytes |
+| **Embeddium** (new in 1.0.30) | A section search whose inputs are all unchanged replays the previous one | **58–68% less time** per search with a still camera; the search was 14.3% of the render thread there |
+| **Forge** (new in 1.0.30) | The mod and channel part of the server-list status is reused while it is unchanged | **4.5 → 0.15 ms** per status update with 440 mods; it was 16.6% of the server thread during a pregeneration |
 | **Entity Model Features + Fresh Animations** (new in 1.0.26) | Variable indexes and model-part lookups are reused during animation compilation | Entity-renderer rebuild **15.1–16.6 → 8.8 s**, with 5.1 million variable answers and 692,000 part lookups checked in game |
 | **Distant Horizons** (new in 1.0.23) | The rough-surface generator keeps the parts of the terrain density that depend only on x and z instead of recomputing them at every probe height | **85% less time** per LOD column (3,351 → 494 µs) |
 | **Valkyrien Skies** | Ship chunk bookkeeping, after seven rounds of ship work | **94% less time** (329 → 21 µs, full-pack fixture); physics terrain conversion 65–69% less |
@@ -88,13 +93,13 @@ Smaller allocation and lookup savings in Ars Nouveau, Curios API, Alex's Caves, 
 
 ## Forge 1.20.1 covered mods (all optional)
 
-**Rendering, shaders and ambience:** Embeddium, Oculus, ImmediatelyFast, Entity Texture Features, Entity Model Features, EntityCulling, Fusion, Colorwheel, Ryoamic Lights, Presence Footsteps, AmbientSounds.
+**Rendering, shaders and ambience:** Embeddium, Oculus, ImmediatelyFast, Entity Texture Features, Entity Model Features, EntityCulling, Fusion, Colorwheel, Ryoamic Lights, Presence Footsteps, AmbientSounds, CIT Reforged, FancyMenu, Particular.
 
-**Shared libraries and server performance mods:** GeckoLib, Architectury API, Curios API, Structure Gel API, Radium, ModernFix, ChunkSending.
+**Shared libraries and server performance mods:** GeckoLib, Architectury API, Curios API, Structure Gel API, Radium, ModernFix, ChunkSending, TerraBlender, Citadel, Lionfish API, Placebo, Kiwi, Cucumber, CoFH Core, L2 Library, Pehkui, Almost Unified.
 
-**Ships, structures and distant terrain:** Valkyrien Skies, Trackwork, Distant Horizons, Structurify, Sakes Structures.
+**Ships, structures and distant terrain:** Valkyrien Skies, Trackwork, Distant Horizons, Structurify, Sakes Structures, Oh The Biomes We've Gone, Dynamic Trees.
 
-**Content and gameplay:** Alex's Caves, Ice and Fire, Ars Nouveau, JEI, Farmer's Delight, Relics, Timeless and Classics Zero (TaCZ), Terramity, Ad Astra, Fowl Play, Butterflies, Goblins Tyranny, Under the Moon, Nether Depths Upgrade, Spawn, Cryptic Foes, Hostile Villages, Scuba Gear, Occult, Scorched and Better Combat.
+**Content and gameplay:** Alex's Caves, Ice and Fire, Ars Nouveau, JEI, Farmer's Delight, Relics, Timeless and Classics Zero (TaCZ), Terramity, Ad Astra, Fowl Play, Butterflies, Goblins Tyranny, Under the Moon, Nether Depths Upgrade, Spawn, Cryptic Foes, Hostile Villages, Scuba Gear, Occult, Scorched and Better Combat, Create, Pipez, Storage Drawers, Immersive Engineering, Slice & Dice, Cooking for Blockheads, Alex's Mobs, Mowzie's Mobs, Mutant Monsters, Critters and Companions, Bosses of Mass Destruction, FD Bosses, Legendary Monsters, Ribbits, Artifacts, Simply Swords, SlashBlade: Resharped, Dungeons Delight, Jaden's Nether Expansion, Regions Unexplored.
 
 Coverage means the tested build and the specific code paths of each mod, not every feature. Tested builds per mod: [Compatibility and target versions](https://github.com/BonsUnleashed/bons-and-furious/wiki/Compatibility-and-target-versions).
 
@@ -104,8 +109,8 @@ For Minecraft 1.21.1, use `bons_and_furious-neoforge-1.0.27+mc1.21.1.jar`, Java 
 
 For Minecraft 1.20.1 / Forge:
 
-1. Download `bons_and_furious-1.0.27.jar` from the [1.0.27 release](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.27) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load. The two small mixin libraries it uses, MixinExtras and MixinSquared, are bundled inside it.
-2. Start once. The mod writes its config file with every switch on and logs how many controls are enabled.
+1. Download `bons_and_furious-1.0.30.jar` from the [1.0.30 release](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.30) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load. The two small mixin libraries it uses, MixinExtras and MixinSquared, are bundled inside it.
+2. Start once. The mod writes its config file with its defaults (every switch on except `vanilla_background_level_dat`) and logs how many controls are enabled.
 3. To turn one off, set its key to `false` and restart. Client-only patches (renderer, shaders, ambience) never load on a dedicated server.
 
 JVM overrides, log messages and troubleshooting: [Installation and configuration](https://github.com/BonsUnleashed/bons-and-furious/wiki/Installation-and-configuration).
@@ -144,39 +149,75 @@ switch's mixins and guarded methods are listed in `patches/<mod>.json`.
 
 Licensed GPL-3.0-only ([LICENSE](LICENSE)). Upstream attribution is in [NOTICE.md](NOTICE.md); the tested dependency builds are listed in [upstream-credits.json](upstream-credits.json).
 
-The 1.0.26 release JAR is the qualified, benchmarked artifact. It was tested in client and dedicated-server copies of the reference pack before release; the latest benchmark snapshot had 510 client and 471 server mod JARs.
+The 1.0.30 release JAR was tested in client and dedicated-server copies of the reference pack before release. The whole-pack benchmark above was measured with 1.0.26; its snapshot had 510 client and 471 server mod JARs.
 
 ### Upstream pull requests
 
-Pull requests sent to the projects this mod patches: 5 merged, 32 open, 3 closed without merge (status checked 3 October 2026).
+Pull requests sent to the projects this mod patches: 9 merged, 95 open, 6 closed without merge (status checked 4 October 2026).
 
 | Project | Pull requests | Status |
 | --- | --- | --- |
 | Ad Astra | [#825](https://github.com/terrarium-earth/Ad-Astra/pull/825) | Open |
-| Alex's Caves | [#1759](https://github.com/AlexModGuy/AlexsCaves/pull/1759), [#1760](https://github.com/AlexModGuy/AlexsCaves/pull/1760) | Open |
+| Alex's Caves | [#1759](https://github.com/AlexModGuy/AlexsCaves/pull/1759), [#1760](https://github.com/AlexModGuy/AlexsCaves/pull/1760), [#1762](https://github.com/AlexModGuy/AlexsCaves/pull/1762) | Open |
+| Alex's Mobs | [#2385](https://github.com/AlexModGuy/AlexsMobs/pull/2385), [#2386](https://github.com/AlexModGuy/AlexsMobs/pull/2386) | Open |
+| Almost Unified | [#144](https://github.com/AlmostReliable/almostunified/pull/144) | Open |
 | AmbientSounds | [#348](https://github.com/CreativeMD/AmbientSounds/pull/348), [#349](https://github.com/CreativeMD/AmbientSounds/pull/349) | Merged |
 | Architectury API | [#747](https://github.com/architectury/architectury-api/pull/747) | Open |
 | Ars Nouveau | [#2258](https://github.com/baileyholl/Ars-Nouveau/pull/2258) | Open |
+| Artifacts | [#518](https://github.com/ochotonida/artifacts/pull/518) | Open |
+| Baked Substring Index | [#1](https://github.com/mezz/baked-substring-index/pull/1) | Open |
 | Better Combat | [#623](https://github.com/ZsoltMolnarrr/BetterCombat/pull/623) | Open |
+| Bosses of Mass Destruction Forge | [#31](https://github.com/CERBON-MODS/Bosses-of-Mass-Destruction-FORGE/pull/31) | Open |
 | Butterflies | [#493](https://github.com/doc-bok/Butterflies/pull/493) | Open |
-| ChunkSending | [#13](https://github.com/someaddons/chunksending/pull/13) | Open |
+| ChunkSending | [#13](https://github.com/someaddons/chunksending/pull/13) | Closed without merge |
+| CIT Reforged | [#16](https://github.com/tomwmth/cit-reforged/pull/16) | Open |
+| Citadel | [#232](https://github.com/AlexModGuy/Citadel/pull/232) | Open |
 | Colorwheel | [#84](https://github.com/djefrey/Colorwheel/pull/84) | Open |
+| Cooking for Blockheads | [#812](https://github.com/TwelveIterations/CookingForBlockheads/pull/812) | Open |
 | Cryptic Foes | [#7](https://github.com/min2222/Cryptic-Foes/pull/7) | Closed without merge |
-| Curios API | [#639](https://github.com/TheIllusiveC4/Curios/pull/639) | Open |
-| Embeddium | [#575](https://github.com/FiniteReality/embeddium/pull/575) | Open |
+| Cucumber Library | [#62](https://github.com/BlakeBr0/Cucumber/pull/62) | Open |
+| Curios API | [#639](https://github.com/TheIllusiveC4/Curios/pull/639), [#644](https://github.com/TheIllusiveC4/Curios/pull/644), [#645](https://github.com/TheIllusiveC4/Curios/pull/645) | Open |
+| Dungeon's Delight | [#126](https://github.com/Yirmiri/Dungeons-Delight/pull/126) | Open |
+| Dynamic Trees | [#1230](https://github.com/DynamicTreesTeam/DynamicTrees/pull/1230), [#1231](https://github.com/DynamicTreesTeam/DynamicTrees/pull/1231) | Open |
+| Embeddium | [#575](https://github.com/FiniteReality/embeddium/pull/575), [#576](https://github.com/FiniteReality/embeddium/pull/576), [#577](https://github.com/FiniteReality/embeddium/pull/577), [#578](https://github.com/FiniteReality/embeddium/pull/578), [#579](https://github.com/FiniteReality/embeddium/pull/579), [#580](https://github.com/FiniteReality/embeddium/pull/580), [#581](https://github.com/FiniteReality/embeddium/pull/581) | Open |
+| Entity Model Features | [#591](https://github.com/Traben-0/Entity_Model_Features/pull/591), [#592](https://github.com/Traben-0/Entity_Model_Features/pull/592) | Merged |
+| Entity Texture Features | [#508](https://github.com/Traben-0/Entity_Texture_Features/pull/508) | Merged |
+| Farmer's Delight | [#1397](https://github.com/vectorwing/FarmersDelight/pull/1397), [#1398](https://github.com/vectorwing/FarmersDelight/pull/1398) | Open |
+| FDBosses | [#42](https://github.com/FINDERFEED/FDBosses/pull/42) | Open |
 | Forge | [#10893](https://github.com/MinecraftForge/MinecraftForge/pull/10893), [#10894](https://github.com/MinecraftForge/MinecraftForge/pull/10894) | Merged |
+| Forge | [#10895](https://github.com/MinecraftForge/MinecraftForge/pull/10895), [#10896](https://github.com/MinecraftForge/MinecraftForge/pull/10896) | Open |
 | Fowl Play | [#242](https://github.com/aqariio/Fowl-Play/pull/242), [#243](https://github.com/aqariio/Fowl-Play/pull/243) | Open |
-| Hostile Villages | [#37](https://github.com/someaddons/HostileVillages/pull/37) | Open |
-| Ice and Fire | [#5641](https://github.com/AlexModGuy/Ice_and_Fire/pull/5641), [#5642](https://github.com/AlexModGuy/Ice_and_Fire/pull/5642), [#5643](https://github.com/AlexModGuy/Ice_and_Fire/pull/5643) | Open |
-| ImmediatelyFast | [#586](https://github.com/RaphiMC/ImmediatelyFast/pull/586) | Open |
+| Fusion | [#316](https://github.com/SuperMartijn642/Fusion/pull/316), [#317](https://github.com/SuperMartijn642/Fusion/pull/317), [#318](https://github.com/SuperMartijn642/Fusion/pull/318) | Open |
+| Hostile Villages | [#37](https://github.com/someaddons/HostileVillages/pull/37), [#38](https://github.com/someaddons/HostileVillages/pull/38) | Open |
+| Ice and Fire | [#5641](https://github.com/AlexModGuy/Ice_and_Fire/pull/5641), [#5642](https://github.com/AlexModGuy/Ice_and_Fire/pull/5642), [#5643](https://github.com/AlexModGuy/Ice_and_Fire/pull/5643), [#5644](https://github.com/AlexModGuy/Ice_and_Fire/pull/5644), [#5645](https://github.com/AlexModGuy/Ice_and_Fire/pull/5645) | Open |
+| ImmediatelyFast | [#586](https://github.com/RaphiMC/ImmediatelyFast/pull/586) | Closed without merge |
+| ImmediatelyFast | [#588](https://github.com/RaphiMC/ImmediatelyFast/pull/588), [#589](https://github.com/RaphiMC/ImmediatelyFast/pull/589) | Open |
+| Immersive Engineering | [#6448](https://github.com/BluSunrize/ImmersiveEngineering/pull/6448) | Open |
+| Jaden's Nether Expansion | [#353](https://github.com/ThatJadenXgamer/Jadens-Nether-Expansion/pull/353) | Open |
+| Just Enough Items | [#4525](https://github.com/mezz/JustEnoughItems/pull/4525), [#4527](https://github.com/mezz/JustEnoughItems/pull/4527) | Open |
+| L2 Library | [#34](https://github.com/Minecraft-LightLand/L2Library/pull/34), [#35](https://github.com/Minecraft-LightLand/L2Library/pull/35) | Open |
+| Legendary Monsters | [#13](https://github.com/Miauczel/Legendary-Monsters-1.20.1/pull/13) | Open |
+| Lionfish API | [#5](https://github.com/lender544/Lionfish-API/pull/5), [#6](https://github.com/lender544/Lionfish-API/pull/6) | Open |
 | ModernFix | [#696](https://github.com/embeddedt/ModernFix/pull/696) | Merged |
+| ModernFix | [#697](https://github.com/embeddedt/ModernFix/pull/697), [#698](https://github.com/embeddedt/ModernFix/pull/698), [#699](https://github.com/embeddedt/ModernFix/pull/699) | Open |
+| Mowzie's Mobs | [#65](https://github.com/BobMowzie/MowziesMobs-Public/pull/65) | Open |
+| Mutant Monsters | [#139](https://github.com/Fuzss/mutant-monsters/pull/139) | Open |
 | Nether Depths Upgrade | [#67](https://github.com/Scouter456/Nether_Depths_Upgrade/pull/67) | Closed without merge. The 1.20 branch is no longer maintained. |
 | OcclusionCulling (EntityCulling) | [#5](https://github.com/LogisticsCraft/OcclusionCulling/pull/5) | Open |
-| Oculus | [#869](https://github.com/Asek3/Oculus/pull/869), [#870](https://github.com/Asek3/Oculus/pull/870) | Open |
+| Oculus | [#869](https://github.com/Asek3/Oculus/pull/869), [#870](https://github.com/Asek3/Oculus/pull/870), [#871](https://github.com/Asek3/Oculus/pull/871), [#872](https://github.com/Asek3/Oculus/pull/872) | Open |
+| Oh The Biomes We've Gone | [#421](https://github.com/Potion-Studios/Oh-The-Biomes-Weve-Gone/pull/421) | Open |
+| Particular | [#59](https://github.com/Leclowndu93150/Particular/pull/59) | Open |
+| Pehkui | [#636](https://github.com/Virtuoel/Pehkui/pull/636) | Open |
+| Placebo | [#125](https://github.com/Shadows-of-Fire/Placebo/pull/125) | Closed without merge. The 1.20 branch is no longer maintained; newer branches removed this event. |
 | Presence Footsteps (Forge) | [#67](https://github.com/PaintNinja/Presence-Footsteps-Forge/pull/67) | Open |
-| Radium Re-Reforged | [#8](https://github.com/bigenergy/radium-reforged-patched/pull/8), [#9](https://github.com/bigenergy/radium-reforged-patched/pull/9) | Open |
-| Ryoamic Lights | [#54](https://github.com/ThinkingStudios/RyoamicLights/pull/54) | Open |
+| Radium Re-Reforged | [#8](https://github.com/bigenergy/radium-reforged-patched/pull/8), [#9](https://github.com/bigenergy/radium-reforged-patched/pull/9), [#11](https://github.com/bigenergy/radium-reforged-patched/pull/11), [#15](https://github.com/bigenergy/radium-reforged-patched/pull/15), [#16](https://github.com/bigenergy/radium-reforged-patched/pull/16), [#17](https://github.com/bigenergy/radium-reforged-patched/pull/17), [#18](https://github.com/bigenergy/radium-reforged-patched/pull/18) | Open |
+| Regions Unexplored | [#234](https://github.com/UHQ-GAMES-MODS/REGIONS_UNEXPLORED_FORGE/pull/234) | Open |
+| Relics | [#357](https://github.com/Octo-Studios/relics/pull/357), [#358](https://github.com/Octo-Studios/relics/pull/358) | Open |
+| Ribbits | [#85](https://github.com/yungnickyoung/Ribbits/pull/85) | Open |
+| Ryoamic Lights | [#54](https://github.com/ThinkingStudios/RyoamicLights/pull/54), [#55](https://github.com/ThinkingStudios/RyoamicLights/pull/55) | Open |
+| Storage Drawers | [#1307](https://github.com/jaquadro/StorageDrawers/pull/1307) | Open |
 | Structurify | [#93](https://github.com/Faboslav/structurify/pull/93) | Closed without merge |
+| TerraBlender | [#241](https://github.com/Glitchfiend/TerraBlender/pull/241) | Merged |
 | Timeless and Classics Zero (TaCZ) | [#745](https://github.com/MCModderAnchor/TACZ/pull/745) | Open |
 | Trackwork | [#70](https://github.com/Endalion/trackwork/pull/70) | Open |
 | Valkyrien Skies | [#1981](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1981), [#1982](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1982), [#1983](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1983), [#1984](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1984), [#1985](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1985) | Open |

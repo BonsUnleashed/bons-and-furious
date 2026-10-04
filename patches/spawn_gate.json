@@ -1,0 +1,70 @@
+{
+  "group": "spawn_gate",
+  "keys": {
+    "vanilla_spawn_gate_visibility_memo": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.spawn_gate.ServerLevelEntityManagerAccessor",
+        "bons.furious.mixin.spawn_gate.EntityManagerEpochsMixin",
+        "bons.furious.mixin.spawn_gate.ServerLevelSaveEpochsMixin",
+        "bons.furious.mixin.spawn_gate.LevelChunkVisibilityMixin",
+        "bons.furious.mixin.spawn_gate.ServerChunkCacheSpawnGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/server/level/ServerChunkCache",
+          "method": "m_8490_",
+          "desc": "()V",
+          "sha256": "c038d39abcb3c7fad0df3708dec7280646f8a6e03cfe2493f7609664ca047956"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "m_201916_",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;)Z",
+          "sha256": "bf474271e4c525475d21681eebb406d8f2d8cb406b4768c00e006c3ac1d65754"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "m_8643_",
+          "desc": "(Lnet/minecraft/util/ProgressListener;ZZ)V",
+          "sha256": "778c66492cf65f2737ed1446140aeb93b06a4e3baad93cf2aae0c6687be6b1a1"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_202165_",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;)Z",
+          "sha256": "7317f365ad106261192604676f7ae2e3bf1967ff77f3471904f7f1bb605918b9"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157527_",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/level/entity/Visibility;)V",
+          "sha256": "7f1353fde31999c657a258f209289e4084bb310cb5afca438f03a84ca0d3d663"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_287207_",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/server/level/FullChunkStatus;)V",
+          "sha256": "be6f301d22c2ecaac2ca6f19546e8b03e7df756b909843cc3ef8d7484b283687"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157561_",
+          "desc": "()V",
+          "sha256": "e7260937d63388d5a6752c8dc73f7b031eeecca65680814b9c7e60c72db86199"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "<init>",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/level/entity/LevelCallback;Lnet/minecraft/world/level/entity/EntityPersistentStorage;)V",
+          "sha256": "6c58e42363c4deff9943fede328f0751ccf5d5964bfd6b2bc347fda3870d4e3d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of ServerLevel.isNaturalSpawningAllowed(ChunkPos) inside ServerChunkCache.tickChunks, given the loop's LevelChunk by a @ModifyVariable at the STORE of local slot 16 (kept in a @Unique field of the cache, returned unchanged; no MixinExtras @Local, which boxes a LocalRef per call): the chunk keeps its last answer, its 8x8-chunk region group and that group's epoch when the answer was taken (three @Unique fields); PersistentEntitySectionManager keeps 256 long epochs (@Unique), bumped by an @Inject at the head of updateChunkStatus(ChunkPos, Visibility) (the only writer of chunkVisibility) and in full at the return of saveAll and ServerLevel.save; answers come from the chunk while its group's epoch is unchanged, else from the manager (and are stamped)",
+      "license": "Minecraft: no Minecraft code is carried; the redirect, injects and helper bons.furious.patch.spawn_gate.SpawnGate hold only our own logic"
+    }
+  }
+}

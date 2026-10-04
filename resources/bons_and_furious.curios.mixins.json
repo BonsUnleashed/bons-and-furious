@@ -10,6 +10,9 @@
   "mixins": [
     "CurioInventoryWrapperMixin",
     "CuriosEntityManagerMixin",
-    "ForeignCapabilityMixin"
+    "ForeignCapabilityMixin",
+    "CuriosEventHandlerSlotlessMixin",
+    "CapabilityProviderCuriosAccessor",
+    "LivingEntityCuriosStateMixin"
   ]
 }

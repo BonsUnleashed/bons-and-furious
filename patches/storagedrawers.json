@@ -1,0 +1,24 @@
+{
+  "group": "storagedrawers",
+  "keys": {
+    "storagedrawers_count_label_memo": {
+      "mod": "storagedrawers",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.storagedrawers.CountFormatterMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/jaquadro/minecraft/storagedrawers/util/CountFormatter",
+          "method": "formatApprox",
+          "desc": "(Lnet/minecraft/client/gui/Font;Lcom/jaquadro/minecraft/storagedrawers/api/storage/IDrawer;)Ljava/lang/String;",
+          "sha256": "5f77042dcee1fe937ea2991f43ccbf5ff9381446012e25ec40ff877ad07e8c76"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the five String.format calls in CountFormatter.formatApprox (render-thread table)",
+      "license": "MIT (Storage Drawers): no Storage Drawers code is carried (helper bons.furious.patch.storagedrawers.CountLabels)"
+    }
+  }
+}

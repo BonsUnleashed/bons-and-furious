@@ -1,0 +1,72 @@
+{
+  "group": "mob_sunburn",
+  "keys": {
+    "vanilla_sun_burn_deferred_wet_check": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.mob_sunburn.MobSunBurnOrderMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/Mob",
+          "method": "m_21527_",
+          "desc": "()Z",
+          "sha256": "c9a98b7c8d2581a86f0b62996e4fba95c919ae4bb8d36677eb728086776e732b"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_20071_",
+          "desc": "()Z",
+          "sha256": "79cb36bd3dc82feb17a179812d572308f16b9791ab0be80f2a5c2af106490d34"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_20069_",
+          "desc": "()Z",
+          "sha256": "e0fd2041c163897dcf68c1ae61fd8a679b0dca7dfad89923240859f98f26abf0"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_20285_",
+          "desc": "()Z",
+          "sha256": "46722a08c2c6199b98a2428502a36bb59e40d276f86246a31c9de85f2e4aa959"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_20305_",
+          "desc": "()Z",
+          "sha256": "9cdc1cf9955b83f7e4e3eec1ff35f57e32985db7f1470f17df9a059ff3d48354"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_8119_",
+          "desc": "()V",
+          "sha256": "4bbc94d7f9247158c4270818650114ed04813619792a4476946a800b520fcd45"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_8119_",
+          "desc": "()V",
+          "sha256": "8241dc086375970eb04656bf781b932aa278804ed85a184e1c116154fbf9d8cb"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "sha256": "d59f39f8df3449063c1f57fa23cf471224d7af3a433673de731bda03340f2631"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_20073_",
+          "desc": "()Z",
+          "sha256": "e26adb1405a4711093b89582eaf123e4eb2e845b7796a227beb3220df6db566d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Two @Redirects inside Mob.isSunBurnTick (m_21527_): isInWaterRainOrBubble (m_20071_) answers false and is asked instead inside the redirect of Level.canSeeSky (m_45527_), i.e. only after the light test, the roll and the powder snow flags pass; a byte of the mob carries the decision between the two; classes with their own isInWater / isInWaterRainOrBubble or water update keep vanilla's order",
+      "license": "Minecraft: no Minecraft code is carried; the redirects and helper bons.furious.patch.mob_sunburn.SunBurnOrder hold only our own logic"
+    }
+  }
+}

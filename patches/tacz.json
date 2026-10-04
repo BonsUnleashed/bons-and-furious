@@ -255,6 +255,13 @@
           "method": "lambda$initialData$0",
           "desc": "()Lnet/minecraft/world/item/ItemStack;",
           "sha256": "efd4aac48124fd1df89a2109a95c25f7095a18703621dccab7ee6979b9f3cc51"
+        },
+        {
+          "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
+          "method": "*",
+          "desc": "",
+          "note": "since 1.0.30: declared-method set of the class this switch replaces (TaCZ 1.1.5-1.1.7); TaCZ 1.1.8 adds shoot(Supplier,Supplier,long,float), which the copy lacks",
+          "sha256": "6ea6f3de624fa7f22b4165b84ea8b76829313cb5b72604724e944bcd9bdaaf94"
         }
       ],
       "cancel": [

@@ -1,0 +1,93 @@
+{
+  "group": "climate_build",
+  "keys": {
+    "vanilla_climate_tree_sort_keys": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.29",
+      "mixins": [
+        "bons.furious.mixin.climate_build.ClimateTreeSortMixin",
+        "bons.furious.mixin.climate_build.ClimateNodeSpaceAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree",
+          "method": "m_186937_",
+          "desc": "(Ljava/util/List;IIZ)V",
+          "sha256": "fe0ca4c22f7dd433942485eff5e313484f498bafe6828249529eae78a564889f"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree",
+          "method": "m_186923_",
+          "desc": "(IZ)Ljava/util/Comparator;",
+          "sha256": "4b61b3ae1137d0e8c74be00fe90f5cb6f7b9b78a35c764bec1675d86e31760ec"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree",
+          "method": "m_186926_",
+          "desc": "(IZLnet/minecraft/world/level/biome/Climate$RTree$Node;)J",
+          "sha256": "56417825a07e4da99d11e23bef32bb94f9d88c3719dba221b633533ff358c658"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$Parameter",
+          "method": "f_186813_",
+          "desc": "()J",
+          "sha256": "1689c09caf083947d1b99ba4bd9bfa7a18f38e82d265c639b4d8bc4524b87bee"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$Parameter",
+          "method": "f_186814_",
+          "desc": "()J",
+          "sha256": "90dd385d4767a5d19ef012c243ddac3cb8852f84ac71ac0e6927ff58a66de4a1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapMethod on Climate.RTree.sort, a read-only @Accessor on Climate.RTree.Node)",
+      "license": "Minecraft: no Minecraft code is carried; the sort keys are written from the comparator's behaviour (helper bons.furious.patch.climate_build.ClimateSortKeys)"
+    },
+    "vanilla_climate_tree_span_bounds": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.29",
+      "mixins": [
+        "bons.furious.mixin.climate_build.ClimateTreeSpanMixin",
+        "bons.furious.mixin.climate_build.ClimateNodeSpanAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree",
+          "method": "m_186946_",
+          "desc": "(Ljava/util/List;)Ljava/util/List;",
+          "sha256": "c3c8a22607a5d8496a7e815cef9fecc8a01554f04eefce7937f298f80dcebdc0"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$Parameter",
+          "method": "m_186836_",
+          "desc": "(Lnet/minecraft/world/level/biome/Climate$Parameter;)Lnet/minecraft/world/level/biome/Climate$Parameter;",
+          "sha256": "677e3b4187c5493c3b12f7b9aae07816358aee37780bb6670ce3245e564c5b58"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$Parameter",
+          "method": "<init>",
+          "desc": "(JJ)V",
+          "sha256": "789e8ef1f94a19a1de887d1239b98870c73d37b6c382f1ace1c136b72374c30e"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$Parameter",
+          "method": "f_186813_",
+          "desc": "()J",
+          "sha256": "1689c09caf083947d1b99ba4bd9bfa7a18f38e82d265c639b4d8bc4524b87bee"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$Parameter",
+          "method": "f_186814_",
+          "desc": "()J",
+          "sha256": "90dd385d4767a5d19ef012c243ddac3cb8852f84ac71ac0e6927ff58a66de4a1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapMethod on Climate.RTree.buildParameterSpace, a read-only @Accessor on Climate.RTree.Node)",
+      "license": "Minecraft: no Minecraft code is carried; the ranges are written from the method's behaviour (helper bons.furious.patch.climate_build.ClimateSpanBounds)"
+    }
+  }
+}

@@ -302,6 +302,58 @@
       "cancel": [],
       "conversion": "overwrite",
       "license": "MIT: the method body may be carried in our GPL-3.0 source"
+    },
+    "geckolib_bone_queue_reuse": {
+      "mod": "geckolib",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.geckolib.AnimationControllerQueueMixin"
+      ],
+      "guard": [
+        {
+          "class": "software/bernie/geckolib/core/animation/AnimationController",
+          "method": "createInitialQueues",
+          "desc": "(Ljava/util/Collection;)V",
+          "sha256": "1b505748157237e3316511162ce0908ac314cdd6b119f13944251d92075b4a84"
+        },
+        {
+          "class": "software/bernie/geckolib/core/keyframe/BoneAnimationQueue",
+          "method": "<init>",
+          "desc": "(Lsoftware/bernie/geckolib/core/animatable/model/CoreGeoBone;)V",
+          "note": "the record a new queue set is: the bone and nine new AnimationPointQueue lists",
+          "sha256": "ba2c99042a158fc549c10b3279c686020f8f15ad4f7b393cf2e1acacfa4a39fe"
+        },
+        {
+          "class": "software/bernie/geckolib/core/keyframe/BoneAnimationQueue",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set: a record with more or other components would not be fully reset by the drain",
+          "sha256": "3259df0cf9bebadfd9875aed69f8ff9e7fcd942fef2d32647434ce91496f8627"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite",
+      "license": "MIT: the method body may be carried in our GPL-3.0 source"
+    },
+    "geckolib_quad_vectors": {
+      "mod": "geckolib",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.geckolib.GeoRendererQuadMixin"
+      ],
+      "guard": [
+        {
+          "class": "software/bernie/geckolib/renderer/GeoRenderer",
+          "method": "createVerticesOfQuad",
+          "desc": "(Lsoftware/bernie/geckolib/cache/object/GeoQuad;Lorg/joml/Matrix4f;Lorg/joml/Vector3f;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V",
+          "sha256": "849680d43497ed4d373e3cd0c7c91d86897bba32a9a749632032fb62f7c2c955"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite (interface default method; Mixin 0.8.5 accepts no injectors in interface mixins)",
+      "license": "MIT: the method body may be carried in our GPL-3.0 source"
     }
   }
 }

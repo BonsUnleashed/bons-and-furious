@@ -1,0 +1,54 @@
+{
+  "group": "cucumber",
+  "keys": {
+    "cucumber_tile_dispatch_range_first": {
+      "mod": "cucumber",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.cucumber.TileEntityHelperDispatchMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/blakebr0/cucumber/helper/TileEntityHelper",
+          "method": "dispatchToNearbyPlayers",
+          "desc": "(Lnet/minecraft/world/level/block/entity/BlockEntity;)V",
+          "sha256": "96d06429143aa31c08b8dd5b7e96d1e879919425f5f38475b9af0183d1064f61"
+        },
+        {
+          "class": "com/blakebr0/cucumber/helper/TileEntityHelper",
+          "method": "isPlayerNearby",
+          "desc": "(DDDD)Z",
+          "sha256": "e148792ae9dc7c472b4205646124be72c57033e71b54fda46a074d92fd0ff13f"
+        },
+        {
+          "class": "com/blakebr0/cucumber/tileentity/BaseTileEntity",
+          "method": "getUpdatePacket",
+          "desc": "()Lnet/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket;",
+          "sha256": "10edd652c4ab641e0e589c4763ba571f4a5b45cb26da58af414fcbe8aba4875a"
+        },
+        {
+          "class": "com/blakebr0/cucumber/tileentity/BaseTileEntity",
+          "method": "m_58483_",
+          "desc": "()Lnet/minecraft/network/protocol/Packet;",
+          "sha256": "fad58c951e580f0a9d3b4c7b565022473cbffd94530146d25382cf1fd9777ec5"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/BlockEntity",
+          "method": "m_58483_",
+          "desc": "()Lnet/minecraft/network/protocol/Packet;",
+          "sha256": "fe201cf62cc60a7ae4200d6072b7e9c88752c4164348397e3cff4d4058effd8a"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "m_6907_",
+          "desc": "()Ljava/util/List;",
+          "sha256": "28da00f44ac7ac45b3d9d12f84a4e32075f030e57f3a0610c426417cfda79b6b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite (TileEntityHelper.dispatchToNearbyPlayers: Cucumber's body with the range question asked before the packet is built, and Math.hypot's answer computed without hypot away from the 64-block boundary)",
+      "license": "MIT (Cucumber): the method body may be carried in our GPL-3.0 source; helper bons.furious.patch.cucumber.CucumberTileDispatch"
+    }
+  }
+}

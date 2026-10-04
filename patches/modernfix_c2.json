@@ -1,0 +1,102 @@
+{
+  "group": "modernfix_c2",
+  "keys": {
+    "modernfix_represented_tabs_index": {
+      "mod": "modernfix",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.modernfix_c2.RepresentedTabsIndexMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/embeddedt/modernfix/searchtree/JEIRuntimeCapturer",
+          "method": "getRepresentedTabs",
+          "desc": "()Ljava/util/Set;",
+          "sha256": "7de76d339177fdf93c2a9dd2c2467bc7d31fb6978a315db49bc9aaf7af6bbb3e"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStackLinkedSet",
+          "method": "m_261170_",
+          "desc": "()Ljava/util/Set;",
+          "sha256": "6c11120fe13d15073361bdffe95e3d091e69093860bcbe4d178397520c15ab2b"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStackLinkedSet",
+          "method": "m_260929_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "sha256": "148ee7e63f71abf3d5fbefbd9c7c0d546a3fca041592de043cad4106dfecde26"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStackLinkedSet$1",
+          "method": "hashCode",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "sha256": "1ddbd9fdeb511d566968cf5582ae2bd4a803ce30542d896d9bc1236a011cd174"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStackLinkedSet$1",
+          "method": "equals",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+          "sha256": "de2fbc1abbf84cafedbbfc13fdc2e02abb21c5b0ac71f276403434efd27c98ad"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_150942_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+          "sha256": "bbb279d41b8d1f83f71ead1e8c87d30c4301e2d926c2e398be8a0c2c6ba37575"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_150930_",
+          "desc": "(Lnet/minecraft/world/item/Item;)Z",
+          "sha256": "c86f1f6d54703519c2d4d8c5537a9020c76acc703dd19a491c36d3dbcbf84eea"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41720_",
+          "desc": "()Lnet/minecraft/world/item/Item;",
+          "sha256": "ce7982961328f6d190746b117db6ef59920bc2a9dcbb28fadc3c325294da242c"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41783_",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "sha256": "52a5721be98fab658ea43b7a6883ff37506a83d79a1cd704bc00c7c44af5779c"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41619_",
+          "desc": "()Z",
+          "sha256": "8f98b32b0197e0943c848b64db2e019736072716a7da9afd7bf61b23ad3a46e1"
+        },
+        {
+          "class": "net/minecraft/world/item/CreativeModeTab",
+          "method": "m_261235_",
+          "desc": "()Ljava/util/Collection;",
+          "sha256": "a396b2e4fd406ab6644a7b4189c33ba45cc8b78325026f33fcf543e2b1f9dee0"
+        },
+        {
+          "class": "net/minecraft/world/item/CreativeModeTab$ItemDisplayBuilder",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/item/CreativeModeTab;Lnet/minecraft/world/flag/FeatureFlagSet;)V",
+          "sha256": "8a3f0a1e4b1db2879a9f6adae77ab63c0f3095fb563673e56dc56266a17dc99f"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "hashCode",
+          "desc": "()I",
+          "sha256": "3135aa639463947acf5f9108abb9225857bdc54b591a9dab04e947816bce3a05"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "sha256": "c6e0fdc32730fdf8dfdb632df006a89e572b5709b25d831c315889eaf656d7d5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation with two @Local captures on the IIngredientManager.getAllItemStacks call in JEIRuntimeCapturer.getRepresentedTabs); helper bons.furious.patch.modernfix_c2.RepresentedTabsIndex; fastutil's ObjectLinkedOpenCustomHashSet is a Minecraft library class (not guardable), checked at runtime by exact class and strategy identity",
+      "license": "LGPL-3.0 (ModernFix): only the call is wrapped, no ModernFix code is carried; Minecraft classes are only fingerprinted"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "group": "radium_flags",
+  "keys": {
+    "radium_entity_touchable_memo": {
+      "mod": "radium",
+      "scripts": [],
+      "since": "1.0.29",
+      "mixins": [
+        "bons.furious.mixin.radium_flags.EntityTouchableMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "me/jellysquid/mods/lithium/common/block/BlockStateFlags$5",
+          "method": "test",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;)Z",
+          "sha256": "ba139aaee63dea05060863d8c815651b008493c92e18a655a384a244b9db4966"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/block/BlockStateFlags$5",
+          "method": "<init>",
+          "desc": "(I)V",
+          "sha256": "3678a1d62dec476dddb117173a6e44aaaa50a09b54aa91f08761902e6f061ddc"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/common/reflection/ReflectionUtil",
+          "method": "hasMethodOverride",
+          "desc": "(Ljava/lang/Class;Ljava/lang/Class;ZLjava/lang/String;[Ljava/lang/Class;)Z",
+          "sha256": "b19ace220bc64d2e6c43b0dec435eebd4e7223a8618f5ca44ad7adb79eac0c86"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on Radium's BlockStateFlags$5.test (per-class memo around the original)",
+      "license": "LGPL-3.0 (Radium Re-Reforged): no Radium code carried, only a per-class memo around the original call (helper bons.furious.patch.radium_flags.EntityTouchableMemo)"
+    }
+  }
+}

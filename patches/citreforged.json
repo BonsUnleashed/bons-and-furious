@@ -1,0 +1,121 @@
+{
+  "group": "citreforged",
+  "keys": {
+    "citreforged_lazy_stack_caches": {
+      "mod": "citreforged",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.citreforged.CitLazyCachesMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/tomwmth/citreforged/mixin/defaults/types/item/ItemStackMixin",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set of CIT's item-type ItemStack mixin (field initialiser in <init>, getter)",
+          "sha256": "cebf4221f9a2497be93d62e79e312a21ff7c927322f41863e9a5df5b34009fac"
+        },
+        {
+          "class": "dev/tomwmth/citreforged/mixin/defaults/types/item/ItemStackMixin",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "35f88c3d4198a44e5254f6e4348eba13877b26bcefd6d9863f714e8ad592f9f2"
+        },
+        {
+          "class": "dev/tomwmth/citreforged/mixin/defaults/types/item/ItemStackMixin",
+          "method": "citresewn$getCacheTypeItem",
+          "desc": "()Ldev/tomwmth/citreforged/cit/CITCache$Single;",
+          "sha256": "5b47fe5d5f42f5b81dcff1867d733f43c50d0611177c14732603054b5465598d"
+        },
+        {
+          "class": "dev/tomwmth/citreforged/mixin/defaults/types/armor/ItemStackMixin",
+          "method": "*",
+          "desc": "",
+          "sha256": "b2a10effcc6685e9ff422467af8cf3b80ef9ded9e2b6a8702f5bf51243f4458a"
+        },
+        {
+          "class": "dev/tomwmth/citreforged/mixin/defaults/types/armor/ItemStackMixin",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "afc21d3712c8a5a8b67004895089b0bc092d47aea646259a78561d27aa2ce00e"
+        },
+        {
+          "class": "dev/tomwmth/citreforged/mixin/defaults/types/armor/ItemStackMixin",
+          "method": "citresewn$getCacheTypeArmor",
+          "desc": "()Ldev/tomwmth/citreforged/cit/CITCache$Single;",
+          "sha256": "12c1588bbeaf0bbe2de7bc16426832951cb6ec5ae5c64f6f9ee42054e783b91a"
+        },
+        {
+          "class": "dev/tomwmth/citreforged/mixin/defaults/types/elytra/ItemStackMixin",
+          "method": "*",
+          "desc": "",
+          "sha256": "e510da8965a172ae54639e05b13a1658a6a313b08d489187852ddc0b621de740"
+        },
+        {
+          "class": "dev/tomwmth/citreforged/mixin/defaults/types/elytra/ItemStackMixin",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "b215a0f0b3519677dbe21314a7ef65c4d342fc8d997c673b1ea2d2e853b0d362"
+        },
+        {
+          "class": "dev/tomwmth/citreforged/mixin/defaults/types/elytra/ItemStackMixin",
+          "method": "citresewn$getCacheTypeElytra",
+          "desc": "()Ldev/tomwmth/citreforged/cit/CITCache$Single;",
+          "sha256": "9093b3dc4fb36c01d23d176479fc4f15471130e7475ff0a8bbafd35812bea36d"
+        },
+        {
+          "class": "dev/tomwmth/citreforged/mixin/defaults/types/enchantment/ItemStackMixin",
+          "method": "*",
+          "desc": "",
+          "sha256": "3ea48c689caaf86eec23f7da8ed0e9bd89f6ad3cfd9fc1fbe14e99af21df939c"
+        },
+        {
+          "class": "dev/tomwmth/citreforged/mixin/defaults/types/enchantment/ItemStackMixin",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "a802f1e0886117c5bf8c507113a20b4a32390f840eb988f3833d5a3976ca8f6a"
+        },
+        {
+          "class": "dev/tomwmth/citreforged/mixin/defaults/types/enchantment/ItemStackMixin",
+          "method": "citresewn$getCacheTypeEnchantment",
+          "desc": "()Ldev/tomwmth/citreforged/cit/CITCache$MultiList;",
+          "sha256": "0c7d818d89a5d8563cca722406bc72eb8ee331ad31c949ade23f0840d3426377"
+        },
+        {
+          "class": "dev/tomwmth/citreforged/cit/CITCache",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "bc5a251d49500447acb3cb9bb0406e4b2df4ab8ee13790937be7114ae7a70810"
+        },
+        {
+          "class": "dev/tomwmth/citreforged/cit/CITCache$Single",
+          "method": "<init>",
+          "desc": "(Ljava/util/function/Function;)V",
+          "sha256": "7a34129adf681f2ff8ecbf3a4c77baae2eab1d2c3c8d8b9c39f663888500c4d1"
+        },
+        {
+          "class": "dev/tomwmth/citreforged/cit/CITCache$Single",
+          "method": "get",
+          "desc": "(Ldev/tomwmth/citreforged/cit/CITContext;)Ljava/lang/ref/WeakReference;",
+          "sha256": "35cc172402b7084b03987296fb4097a84c77ba171cc09b28ff9a3810789e2c87"
+        },
+        {
+          "class": "dev/tomwmth/citreforged/cit/CITCache$MultiList",
+          "method": "<init>",
+          "desc": "(Ljava/util/function/Function;)V",
+          "sha256": "cdcecc93e0f5049c69061f462eb7b701618700131e87bd690d42c429b60b5684"
+        },
+        {
+          "class": "dev/tomwmth/citreforged/cit/CITCache$MultiList",
+          "method": "get",
+          "desc": "(Ldev/tomwmth/citreforged/cit/CITContext;)Ljava/util/List;",
+          "sha256": "dd298cd6ae920d3cddfc9b9fc2096aae6b720762b076bb3cc79dd1f733bc7907"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation on the two CITCache constructions in ItemStack's constructors, @WrapMethod on CIT Reforged's four cache getters merged into ItemStack); mixin priority 1100, after CIT Reforged's",
+      "license": "MIT (CIT Reforged): CIT's initialiser expressions (new CITCache.Single/MultiList of the type container's getRealTimeCIT) are repeated in the getters; nothing else of CIT's code is carried"
+    }
+  }
+}

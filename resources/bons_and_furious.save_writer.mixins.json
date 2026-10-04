@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.save_writer",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "bons.pure.config.PureMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "SavedDataWriteMixin",
+    "PlayerDataStorageWriteMixin",
+    "PlayerAdvancementsWriteMixin",
+    "ServerStatsCounterWriteMixin",
+    "DimensionDataStorageWaitMixin",
+    "NbtIoReadWaitMixin",
+    "SaveFlushMixin",
+    "LevelSaveFlushMixin",
+    "WorldAccessWaitMixin",
+    "LevelDatWriteMixin",
+    "LevelDatFlushMixin"
+  ]
+}

@@ -2,7 +2,8 @@
 
 JDK 17+ and Python 3.11+ required. Pass --minecraft-dir, --forge-libraries and --java-home for your local install.
 The Minecraft directory supplies libraries/ (with the Forge-generated client *-srg.jar) and mods/ (the tested target
-mods, see upstream-credits.json). No Minecraft or target mod JAR is redistributed.
+mods, see upstream-credits.json); --extra-mods adds a tested target mod that directory does not have (its SHA-256 must be
+the one upstream-credits.json lists). No Minecraft or target mod JAR is redistributed.
 
 Two MIT mixin libraries are bundled as Jar-in-Jar (MixinExtras 0.5.0, MixinSquared 0.3.6-beta.1). The build takes them
 from --deps-dir when given, otherwise downloads them from their Maven repositories; either way each file must match the
@@ -16,7 +17,7 @@ from pathlib import Path
 import argparse, hashlib, json, os, subprocess, time, urllib.request, zipfile
 
 ROOT = Path(__file__).resolve().parent
-VERSION = '1.0.27'
+VERSION = '1.0.30'
 FORGE = '1.20.1-47.4.16'
 DEPS = [
     dict(file='mixinextras-forge-0.5.0.jar', group='io.github.llamalad7', artifact='mixinextras-forge', version='0.5.0',
@@ -86,6 +87,9 @@ def main():
     ap.add_argument('--forge-libraries', type=Path, required=True)
     ap.add_argument('--java-home', type=Path, required=True)
     ap.add_argument('--deps-dir', type=Path)
+    ap.add_argument('--extra-mods', type=Path, action='append', default=[],
+                    help='a tested target mod JAR the Minecraft directory does not have (repeatable); it must match its '
+                         'upstream-credits.json SHA-256 and is used for compiling and fingerprints only, never packaged')
     a = ap.parse_args()
     work = ROOT / 'build' / str(time.time_ns())
     work.mkdir(parents=True)
@@ -93,6 +97,14 @@ def main():
     nested_dir.mkdir()
     mods = sorted(p for p in (a.minecraft_dir / 'mods').glob('*.jar')
                   if not p.name.startswith(('bons_pure_optimizations', 'bons_and_furious', 'bons_valkyrien_fixes')))
+    tested = {c['jar']: c['sha256'] for c in json.loads((ROOT / 'upstream-credits.json').read_text(encoding='utf-8'))}
+    for p in a.extra_mods:
+        if not p.is_file() or p.suffix != '.jar':
+            raise SystemExit(f'--extra-mods {p}: not a JAR file')
+        if tested.get(p.name) != hashlib.sha256(p.read_bytes()).hexdigest():
+            raise SystemExit(f'--extra-mods {p.name}: not the tested build listed in upstream-credits.json')
+        if all(m.name != p.name for m in mods):
+            mods.append(p)
     vs = [p for p in mods if p.name == 'valkyrienskies-120-2.4.11.jar']
     if len(vs) != 1:
         raise SystemExit('The unmodified Valkyrien Skies 2.4.11 dependency is required.')

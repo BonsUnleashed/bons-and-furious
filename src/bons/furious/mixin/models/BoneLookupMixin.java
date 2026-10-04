@@ -20,10 +20,16 @@ import org.spongepowered.asm.mixin.injection.Redirect;
  * the method (filter, findFirst, map to getChild) runs unchanged on it. A part class that overrides getAllParts or
  * hasChild, anywhere in the walk, sends the lookup back to the original stream. Minecraft's code is not carried here:
  * only the stream source is redirected.
+ *
+ * Priority 1001 and require = 0 (since 1.0.30): Embeddium replaces this method with its own stream-free lookup
+ * (remove_streams HierarchicalModelMixin, an @Overwrite at 1000) unless Oculus or the user turns that off. Mixin
+ * refuses an injector into an overwritten method at equal priority, so Embeddium without Oculus crashed the game at
+ * start. Above 1000 the redirect is allowed in, finds no stream in Embeddium's body and stands down (one log line from
+ * PureMixinPlugin.postApply): exactly one copy of the change runs either way.
  */
-@Mixin(value = HierarchicalModel.class, remap = false)
+@Mixin(value = HierarchicalModel.class, remap = false, priority = 1001)
 public abstract class BoneLookupMixin {
-    @Redirect(method = "m_233393_", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/geom/ModelPart;m_171331_()Ljava/util/stream/Stream;"))
+    @Redirect(method = "m_233393_", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/geom/ModelPart;m_171331_()Ljava/util/stream/Stream;"), require = 0)
     private Stream<ModelPart> bons$partsWithBone(ModelPart root, String name) {
         BoneSearch search = new BoneSearch();
         ModelPart parent = bons$parentOf(root, name, search);

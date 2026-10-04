@@ -1,0 +1,42 @@
+{
+  "group": "pehkui",
+  "keys": {
+    "pehkui_scale_tick_callbacks": {
+      "mod": "pehkui",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.pehkui.ScaleUtilsTickMixin"
+      ],
+      "guard": [
+        {
+          "class": "virtuoel/pehkui/util/ScaleUtils",
+          "method": "tickScale",
+          "desc": "(Lvirtuoel/pehkui/api/ScaleData;)V",
+          "sha256": "280bef1c785d34d703ca9997867b95fa215933a44890cb84dd13fcc551499751"
+        },
+        {
+          "class": "virtuoel/pehkui/api/ScaleType",
+          "method": "getPreTickEvent",
+          "desc": "()Ljava/util/Collection;",
+          "sha256": "d6d09a7d3934ec2c570f381459e6c3d449b082a15cb410880cd1c12b5d77f3c8"
+        },
+        {
+          "class": "virtuoel/pehkui/api/ScaleType",
+          "method": "getPostTickEvent",
+          "desc": "()Ljava/util/Collection;",
+          "sha256": "9162be4b47630b5d91f63402e4e757703f63d4cc5112a4e0e37b20f36248a7e0"
+        },
+        {
+          "class": "virtuoel/pehkui/api/ScaleType",
+          "method": "<init>",
+          "desc": "(Lvirtuoel/pehkui/api/ScaleType$Builder;)V",
+          "sha256": "a645e896e9d057e652a6b7dcbafd9c824c401c1c5a94ea71ef952886247b6e9f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite (ScaleUtils.tickScale: Pehkui's body with each callback forEach, and its lambda, run only for a non-empty list)",
+      "license": "MIT (Pehkui): the method body may be carried in our GPL-3.0 source; helper bons.furious.patch.pehkui.PehkuiScaleTick"
+    }
+  }
+}

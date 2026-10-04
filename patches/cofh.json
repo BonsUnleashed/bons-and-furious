@@ -1,0 +1,40 @@
+{
+  "group": "cofh",
+  "keys": {
+    "cofh_translucent_renderer_memo": {
+      "mod": "cofh_core",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.cofh.DispatcherRenderersAccessor",
+        "bons.furious.mixin.cofh.TranslucentRendererLookupMixin"
+      ],
+      "guard": [
+        {
+          "class": "cofh/lib/client/renderer/entity/ITranslucentRenderer",
+          "method": "renderTranslucent",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;FLnet/minecraft/client/renderer/LevelRenderer;Lorg/joml/Matrix4f;)V",
+          "note": "the loop whose renderer lookup is redirected (null = not translucent, then continue)",
+          "sha256": "27d5ce458e38bb2147580bc3ff84d1d4e3572c6993901ee8b0b065417a0458f7"
+        },
+        {
+          "class": "net/minecraft/client/renderer/entity/EntityRenderDispatcher",
+          "method": "m_114382_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/client/renderer/entity/EntityRenderer;",
+          "note": "getRenderer: player model-name map, else the EntityType map; also re-checked after other mods' mixins (Guards.untouched)",
+          "sha256": "928039cc3971acd982228263b73ba3b27ec32e2e9e0257ac7ab7a7c5fa0c5016"
+        },
+        {
+          "class": "net/minecraft/client/renderer/entity/EntityRenderDispatcher",
+          "method": "m_6213_",
+          "desc": "(Lnet/minecraft/server/packs/resources/ResourceManager;)V",
+          "note": "reload replaces both renderer maps with new immutable maps",
+          "sha256": "8bfea8089acf1b9c47807e378f6136dd855dc8fae0e235f7797f2df57ba85347"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the getRenderer call in CoFH's ITranslucentRenderer.renderTranslucent + @Accessor of the player renderer map (probe mixin, priority 100000)",
+      "license": "CoFH 'Don't Be A Jerk' licence: no CoFH code is carried; the redirect only answers the lookup with our own logic (helper bons.furious.patch.cofh.TranslucentRenderers)"
+    }
+  }
+}

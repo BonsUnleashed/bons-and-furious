@@ -19,8 +19,14 @@ import org.spongepowered.asm.mixin.Unique;
  * vertex, and copied every vertex through a generic memCopy. The values are now read once per quad and reused, and
  * the fixed 36-byte vertex is copied with four long and one int load/store (overlapping ranges still use memCopy).
  * The mid-texture sums keep the original vertex order, so the float results are identical.
+ *
+ * Priority 999 (since 1.0.30): Mixin lets another mod's injector into an overwritten method apply only when the
+ * overwrite has the lower priority. Accelerated Rendering moves the mid-texture and tangent offsets with three
+ * @ModifyConstant (42, 46, 50) at the default 1000; at equal priority Mixin refused them and the class failed to load
+ * (a crash on the first entity drawn with shaders). The constants are in this body exactly as in Oculus', so its
+ * changes now apply to this method as they would to the original.
  */
-@Mixin(value = ModelToEntityVertexSerializer.class, remap = false)
+@Mixin(value = ModelToEntityVertexSerializer.class, remap = false, priority = 999)
 public abstract class EntityVertexSerializerMixin {
     /**
      * @author BonsUnleashed

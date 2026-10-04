@@ -53,6 +53,83 @@
       "cancel": [],
       "conversion": "targethandler (MixinSquared @TargetHandler + MixinExtras @WrapOperation)",
       "license": "LGPL-3.0 (ImmediatelyFast): no ImmediatelyFast code is carried; Call of Yucutan is only recognised by a SHA-256 of its file"
+    },
+    "immediatelyfast_idle_layer_skip": {
+      "mod": "immediatelyfast",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.immediatelyfast.BatchableBufferSourceIdleMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/raphimc/immediatelyfast/feature/core/BatchableBufferSource",
+          "method": "m_109911_",
+          "desc": "()V",
+          "sha256": "7f857425d40bb939540366a98fe9989bbebcdc3625bb3fe03ac53a45e410efdb"
+        },
+        {
+          "class": "net/raphimc/immediatelyfast/feature/core/BatchableBufferSource",
+          "method": "m_109912_",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)V",
+          "sha256": "376d8a2b9642a66cec0edefaddafbf4b8dfc006ed28eea4f1dc4b05823b0118e"
+        },
+        {
+          "class": "net/raphimc/immediatelyfast/feature/core/BatchableBufferSource",
+          "method": "close",
+          "desc": "()V",
+          "sha256": "cea0f02a224b7e77cca2f0fdc01be6a966e7ce67143f7a1e087bfcfa21ae7b8d"
+        },
+        {
+          "class": "net/raphimc/immediatelyfast/feature/core/BatchableBufferSource",
+          "method": "getOrCreateBufferBuilder",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/BufferBuilder;",
+          "sha256": "bfed7250707ef65221fce5eb8cd915a70b395a66a5c433188392555a725b7fdd"
+        },
+        {
+          "class": "net/raphimc/immediatelyfast/feature/core/BatchableBufferSource",
+          "method": "addNewFallbackBuffer",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/BufferBuilder;",
+          "sha256": "84754b0f552c18ccf100f4ac64874b645a188b38abe5f079bc92e8075dc01fca"
+        },
+        {
+          "class": "net/raphimc/immediatelyfast/feature/core/BatchableBufferSource",
+          "method": "getBufferBuilder",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)Ljava/util/Set;",
+          "note": "what endBatch(layer) and close() iterate in ImmediatelyFast's code",
+          "sha256": "c16d37e954b3aeed1fc3162e10c84eb169e9acefabcca0268264266f2f2b89e8"
+        },
+        {
+          "class": "net/raphimc/immediatelyfast/feature/core/BatchableBufferSource",
+          "method": "<init>",
+          "desc": "(Lcom/mojang/blaze3d/vertex/BufferBuilder;Ljava/util/Map;)V",
+          "note": "the fallback map and active set built at default capacity",
+          "sha256": "143c6e658e43ada85d4c2923567454f92fd71ae287a773eb7786e7441e5db0dd"
+        },
+        {
+          "class": "net/raphimc/immediatelyfast/feature/core/BatchableBufferSource",
+          "method": "m_6299_",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "note": "the only place that begins a builder and marks its layer active",
+          "sha256": "7016a8229d1dfdeb59d1725c2ed77683738f83405dd800ef3a03c560f870cf57"
+        },
+        {
+          "class": "net/minecraft/client/renderer/RenderType",
+          "method": "m_276775_",
+          "desc": "(Lcom/mojang/blaze3d/vertex/BufferBuilder;Lcom/mojang/blaze3d/vertex/VertexSorting;)V",
+          "note": "RenderType.end returns at once for a builder that is not building",
+          "sha256": "7665b2fd34d1244f0b02bb2c2130c5524ccf0f4fb1d4636b7690d3d18f3d3280"
+        },
+        {
+          "class": "com/mojang/blaze3d/systems/RenderSystem",
+          "method": "getVertexSorting",
+          "desc": "()Lcom/mojang/blaze3d/vertex/VertexSorting;",
+          "sha256": "ad30a298a9e110bb198dde3267b2e0c4b7de7f2ab2c2e2357d70118632130860"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite (endBatch(), endBatch(layer), close, getOrCreateBufferBuilder, addNewFallbackBuffer) + 4 NEW redirects in the constructor",
+      "license": "LGPL-3.0-or-later (ImmediatelyFast): the method bodies may be carried in our GPL-3.0 source"
     }
   }
 }

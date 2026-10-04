@@ -1,0 +1,30 @@
+{
+  "group": "vanilla_framed_maps",
+  "keys": {
+    "vanilla_framed_map_holder_scan": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.vanilla_framed_maps.MapItemSavedDataFramedMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/saveddata/maps/MapItemSavedData",
+          "method": "m_77918_",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)V",
+          "sha256": "c22bc6d9d5cd8776ef5dd70e48f5429fed8388a01f7746dea2d6fb1c57880564"
+        },
+        {
+          "class": "net/minecraft/world/entity/player/Inventory",
+          "method": "m_36063_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "sha256": "264902c29a58bd9652505f30d5e59f364afc82f43b8fa75f7ccd5a0c6dcdf9a9"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the second Inventory.contains(ItemStack) (m_36063_, ordinal 1: the per-holder test inside the carriedBy loop) in MapItemSavedData.tickCarriedBy (m_77918_): true without the call when the map stack is framed (the expression is `contains || isFramed()`), the call itself otherwise; require = 0, degrades to vanilla",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_framed_maps.FramedMaps)"
+    }
+  }
+}

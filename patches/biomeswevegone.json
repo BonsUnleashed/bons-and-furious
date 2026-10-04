@@ -1,0 +1,63 @@
+{
+  "group": "biomeswevegone",
+  "keys": {
+    "biomeswevegone_foreign_chunk_skip": {
+      "mod": "biomeswevegone",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.biomeswevegone.SurfaceRegionCaptureMixin",
+        "bons.furious.mixin.biomeswevegone.SurfaceRegionReleaseMixin",
+        "bons.furious.mixin.biomeswevegone.CragGardenSkipMixin",
+        "bons.furious.mixin.biomeswevegone.BasaltBarreraSkipMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/potionstudios/biomeswevegone/world/level/levelgen/customterrain/CragGardenExtension",
+          "method": "runCragGardenExtension",
+          "desc": "(Ljava/util/function/Function;Lnet/minecraft/world/level/chunk/ChunkAccess;JLnet/minecraft/world/level/levelgen/synth/NormalNoise$NoiseParameters;Lnet/minecraft/world/level/levelgen/synth/NormalNoise$NoiseParameters;)V",
+          "sha256": "3f83f4f3666b8d80728c64d48e77947d56c41ac268e82d00ea146aa0e6f15809"
+        },
+        {
+          "class": "net/potionstudios/biomeswevegone/world/level/levelgen/customterrain/BasaltBarreraExtension",
+          "method": "runBasaltBarreraExtension",
+          "desc": "(Lnet/minecraft/world/level/chunk/ChunkAccess;Lnet/minecraft/server/level/WorldGenRegion;Lnet/minecraft/world/level/chunk/ChunkGenerator;)V",
+          "sha256": "9f1ef463e62fce05c3e9c6a4c044d2159e5b05a0a29a290967e4677083bc171d"
+        },
+        {
+          "class": "net/potionstudios/biomeswevegone/mixin/ChunkStatusMixin",
+          "method": "injectCragTerrain",
+          "desc": "(Lnet/minecraft/world/level/chunk/ChunkStatus;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/chunk/ChunkGenerator;Ljava/util/List;Lnet/minecraft/world/level/chunk/ChunkAccess;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;Lnet/minecraft/server/level/WorldGenRegion;)V",
+          "sha256": "aeecd8e358dcda578a9fe44802465fd8c974e84c119248606daedd1344168dc3"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/ChunkStatus",
+          "method": "m_156246_",
+          "desc": "(Lnet/minecraft/world/level/chunk/ChunkStatus;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/chunk/ChunkGenerator;Ljava/util/List;Lnet/minecraft/world/level/chunk/ChunkAccess;)V",
+          "sha256": "e38e5f3bd91967a868ea0427a241e4b6f8648e04aa92a56f288fa14392040625"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/BiomeManager",
+          "method": "m_204214_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/Holder;",
+          "sha256": "55b4e8d489662fc391ef52f71de7e5879781d506cb3a5e2e9729c176fa4cce76"
+        },
+        {
+          "class": "net/minecraft/world/level/LevelReader",
+          "method": "m_203495_",
+          "desc": "(III)Lnet/minecraft/core/Holder;",
+          "sha256": "02bbd02b457b0d1368f250a3774e09db49cb77fd557a44e870c7c9dd04bed539"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/ChunkAccess",
+          "method": "m_203495_",
+          "desc": "(III)Lnet/minecraft/core/Holder;",
+          "sha256": "bb2da5694914d06711209847462fb0df9887279f5d6bbbeff6b4cfbb4175f8c2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject(HEAD, cancellable) into BWG's two terrain passes with our own 3x3 chunk palette check; two @Inject(RETURN) on the vanilla surface step keep its WorldGenRegion per thread around BWG's handler",
+      "license": "All Rights Reserved (BWG): none of its code is carried; the injections hold only our own check (helper bons.furious.patch.biomeswevegone.ForeignChunkTerrain)"
+    }
+  }
+}

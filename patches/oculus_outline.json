@@ -1,0 +1,110 @@
+{
+  "group": "oculus_outline",
+  "keys": {
+    "oculus_shadow_outline_discard": {
+      "mod": "oculus",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.oculus_outline.ShadowOutlineDiscardMixin",
+        "bons.furious.mixin.oculus_outline.OutlineSourceAccessor",
+        "bons.furious.mixin.oculus_outline.BufferSourceAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/irisshaders/iris/shadows/ShadowRenderer",
+          "method": "renderShadows",
+          "desc": "(Lnet/irisshaders/iris/mixin/LevelRendererAccessor;Lnet/minecraft/client/Camera;)V",
+          "sha256": "341a6554e3a8c301b2c5b0f02f85331ed32f0f27385de80f2d29d761dcbf06b6"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/mixin/MixinRenderBuffers",
+          "method": "batchedentityrendering$replaceOutlineBufferSource",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "sha256": "5e849931bd8b0124971b7bd0b7f45b0a48471e53ffc2f691c5164a447645902e"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/mixin/MixinRenderBuffers",
+          "method": "beginLevelRendering",
+          "desc": "()V",
+          "sha256": "e0e750276614297479ac8ccab62bdc5722852d1adf95a0730f253201419894b8"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/mixin/MixinRenderBuffers",
+          "method": "endLevelRendering",
+          "desc": "()V",
+          "sha256": "4b8a15504b55536feec40d7872704c332cde9bb2ba9934768f1865db943bf329"
+        },
+        {
+          "class": "net/minecraft/client/renderer/RenderBuffers",
+          "method": "m_110109_",
+          "desc": "()Lnet/minecraft/client/renderer/OutlineBufferSource;",
+          "sha256": "06fdd86aef92e4dad5f2b1a8005284555c29ed8db1d8e9872b852f568b8da984"
+        },
+        {
+          "class": "net/minecraft/client/renderer/OutlineBufferSource",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;)V",
+          "sha256": "6b13aeece6bcdc58a9854feebcf16ac6b7a16c34e1811ca013b9a653d0e0a467"
+        },
+        {
+          "class": "net/minecraft/client/renderer/OutlineBufferSource",
+          "method": "m_6299_",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "sha256": "d9d337890d9632f7f6b4789dcabdd3e7da5c6a1df9d7daf30dd1928749d23d5a"
+        },
+        {
+          "class": "net/minecraft/client/renderer/OutlineBufferSource",
+          "method": "m_109928_",
+          "desc": "()V",
+          "sha256": "28298d856c55f373b98070ad6378355f7b32f27062a5d20aed6408b3f842fed2"
+        },
+        {
+          "class": "net/minecraft/client/renderer/MultiBufferSource$BufferSource",
+          "method": "m_6299_",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "sha256": "6fa8509bcdabecc812f6bf6aecedf9964e9480cd28a6a6d59da398d03b97e900"
+        },
+        {
+          "class": "net/minecraft/client/renderer/MultiBufferSource$BufferSource",
+          "method": "m_109911_",
+          "desc": "()V",
+          "sha256": "44962765661acf30b2a3be1168201efd06368b08ecaa0dfa9ff4d2bc4711342f"
+        },
+        {
+          "class": "net/minecraft/client/renderer/MultiBufferSource$BufferSource",
+          "method": "m_109912_",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)V",
+          "sha256": "1f35b9f074c5649e747c2d5d11b01c82afd273d02c93274e7d71e7ea2396933b"
+        },
+        {
+          "class": "net/minecraft/client/renderer/MultiBufferSource$BufferSource",
+          "method": "m_173043_",
+          "desc": "()V",
+          "sha256": "a5205777368ad31a165455cd3b498498df003100facf995537688966a9b71f78"
+        },
+        {
+          "class": "net/minecraft/client/renderer/RenderType",
+          "method": "m_276775_",
+          "desc": "(Lcom/mojang/blaze3d/vertex/BufferBuilder;Lcom/mojang/blaze3d/vertex/VertexSorting;)V",
+          "sha256": "7665b2fd34d1244f0b02bb2c2130c5524ccf0f4fb1d4636b7690d3d18f3d3280"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferBuilder",
+          "method": "m_231175_",
+          "desc": "()Lcom/mojang/blaze3d/vertex/BufferBuilder$RenderedBuffer;",
+          "sha256": "9a727cb99b2583d25d7d1b6ab57653d6e002525a0ee0702b050819cf267a1642"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferBuilder$RenderedBuffer",
+          "method": "m_231200_",
+          "desc": "()V",
+          "sha256": "250a3b22a728a3221a85e8268b41be5d6de931955aaf0a35adfef1d6e73b1ebc"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation around RenderBuffersExt.endLevelRendering() in Oculus's ShadowRenderer.renderShadows; two @Accessor interfaces). ImmediatelyFast's BatchableBufferSource is not guarded here (a pack without IF must not read as a mismatch): ShadowOutlineDiscard.IF_FINGERPRINTS holds the 1.5.5 fingerprints of the 7 IF methods it relies on and checks them once at run time from the class bytes; on any difference the IF source is left alone",
+      "license": "Oculus is LGPL-3.0-only, ImmediatelyFast LGPL-3.0-or-later (its own close() is called, not copied); Minecraft (Mojang): no vanilla code is carried, accessors only"
+    }
+  }
+}

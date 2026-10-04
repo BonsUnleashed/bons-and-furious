@@ -1,0 +1,49 @@
+{
+  "group": "iceandfire_c2",
+  "keys": {
+    "iceandfire_entity_tag_keys": {
+      "mod": "iceandfire",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.iceandfire_c2.ServerEventsTagKeyMixin",
+        "bons.furious.mixin.iceandfire_c2.DragonUtilsTagKeyMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/iceandfire/event/ServerEvents",
+          "method": "isInEntityTag",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/world/entity/EntityType;)Z",
+          "sha256": "13067de899eb76d2630a2b01f3805ed9f209ca5cd4190ce8cb563179d0942fee"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/util/DragonUtils",
+          "method": "isVillager",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "e9ae3a838eadf3786c9ece78ecc6462674d6c728c3f8a9b2df8f0e832150c5b1"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/util/DragonUtils",
+          "method": "isDragonTargetable",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/resources/ResourceLocation;)Z",
+          "sha256": "340b2a1f8dd40220bd5c9ebc69efb185d214cf3972aef37d92c11ede1046d9ef"
+        },
+        {
+          "class": "net/minecraft/tags/TagKey",
+          "method": "m_203882_",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/tags/TagKey;",
+          "sha256": "9f2ed852b1a7ff8bf40c67b07db96933ed61ecc88f5a26367e571aa0d60ec0ef"
+        },
+        {
+          "class": "net/minecraft/world/entity/EntityType",
+          "method": "m_204039_",
+          "desc": "(Lnet/minecraft/tags/TagKey;)Z",
+          "sha256": "e79156c4143e96e87c903817e379f7758e016822d4d7aea324992fabb3224775"
+        }
+      ],
+      "cancel": [],
+      "conversion": "redirect (the ITagManager.createTagKey call in ServerEvents.isInEntityTag, DragonUtils.isVillager and DragonUtils.isDragonTargetable)",
+      "license": "LGPL-3.0 (Ice and Fire): no Ice and Fire code is carried; the redirects only supply the key (bons.furious.patch.iceandfire_c2.EntityTagKeys)"
+    }
+  }
+}

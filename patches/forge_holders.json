@@ -1,0 +1,81 @@
+{
+  "group": "forge_holders",
+  "keys": {
+    "forge_object_holder_pass_index": {
+      "mod": "forge",
+      "scripts": [],
+      "since": "1.0.29",
+      "mixins": [
+        "bons.furious.mixin.forge_holders.HolderPassGameDataMixin",
+        "bons.furious.mixin.forge_holders.HolderPassRegistryMixin",
+        "bons.furious.mixin.forge_holders.RegistryObjectAccessor",
+        "bons.furious.mixin.forge_holders.RegistryObjectHandlerAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraftforge/registries/GameData",
+          "method": "postRegisterEvents",
+          "desc": "()V",
+          "sha256": "22b6c0cadb8f15030abee86cfe952a40e2be02750f5af38678357ea728a49c6a"
+        },
+        {
+          "class": "net/minecraftforge/registries/ObjectHolderRegistry",
+          "method": "applyObjectHolders",
+          "desc": "(Ljava/util/function/Predicate;)V",
+          "sha256": "71dda4cd73e0f89ba399fedf7b55e9ed63c8a74bbf7a408c134582b662bd4658"
+        },
+        {
+          "class": "net/minecraftforge/registries/ObjectHolderRegistry",
+          "method": "lambda$applyObjectHolders$9",
+          "desc": "(Ljava/util/function/Predicate;Ljava/lang/RuntimeException;Ljava/util/function/Consumer;)V",
+          "sha256": "24b8c9e594f6957d29dbdd8f6ae19c9789c392cac9da79c16b18c0daa823c7a2"
+        },
+        {
+          "class": "net/minecraftforge/registries/ObjectHolderRegistry",
+          "method": "addHandler",
+          "desc": "(Ljava/util/function/Consumer;)V",
+          "sha256": "ec182ad2f8b248fcead252f295c70e7541877541398c4e56c2a52a24c4689018"
+        },
+        {
+          "class": "net/minecraftforge/registries/ObjectHolderRegistry",
+          "method": "removeHandler",
+          "desc": "(Ljava/util/function/Consumer;)Z",
+          "sha256": "d092ab7e6200c2fe9aacb2b81d6d3a5e4ffaa2381cf5e5fa57f53feca5192539"
+        },
+        {
+          "class": "net/minecraftforge/registries/RegistryObject$1",
+          "method": "accept",
+          "desc": "(Ljava/util/function/Predicate;)V",
+          "sha256": "03a2f06971c22f57ec46a5b4886f83d6e1af07d0a6905523ee4c245a4f1fb93f"
+        },
+        {
+          "class": "net/minecraftforge/registries/RegistryObject$1",
+          "method": "<init>",
+          "desc": "(Lnet/minecraftforge/registries/RegistryObject;Lnet/minecraft/resources/ResourceLocation;Ljava/lang/String;Ljava/lang/Throwable;)V",
+          "sha256": "96555584a49bfe0301c1fd1c6de605a27654962bd0b49dac49f6a6618158630f"
+        },
+        {
+          "class": "net/minecraftforge/registries/RegistryObject",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/resources/ResourceLocation;Ljava/lang/String;Z)V",
+          "sha256": "5cdbe26600c8e6e6cde14000b1644be37ddfe694b6a116859ff6ff1a641534d2"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "sha256": "3fef9a4090052f7b438d4823b18d1ded716f96c874bf4f62525161a717558c2a"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "hashCode",
+          "desc": "()I",
+          "sha256": "8e479b6f440f564f87d336b33c8a863a01602c82d45f4e6f0a18bc5762b6d821"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation of GameData.postRegisterEvents' applyObjectHolders call and of applyObjectHolders' Set.forEach, @WrapOperation of the Set.add/remove in addHandler/removeHandler, @Inject at the return of postRegisterEvents, two read-only @Accessor interfaces)",
+      "license": "Forge (LGPL-2.1): no Forge code is carried; the wrapper calls applyObjectHolders' own per-holder lambda for the holders that can act (helper bons.furious.patch.forge_holders.HolderPassIndex)"
+    }
+  }
+}

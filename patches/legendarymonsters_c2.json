@@ -1,0 +1,25 @@
+{
+  "group": "legendarymonsters_c2",
+  "keys": {
+    "legendary_monsters_camera_null_guard": {
+      "mod": "legendary_monsters",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.legendarymonsters_c2.CameraSetupNullGuardMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/miauczel/legendary_monsters/client/event/ClientEvent",
+          "method": "onCameraSetup",
+          "desc": "(Lnet/minecraftforge/client/event/ViewportEvent$ComputeCameraAngles;)V",
+          "sha256": "95a3757d1f17ed480767bed2a362ae3dfb6476461ac8eb1e792ae90ce86d199b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on ClientEvent.onCameraSetup: runs the original only when Minecraft has a local player",
+      "license": "Legendary Monsters: All Rights Reserved: no-copy; the wrapper carries only our own check (helper bons.furious.patch.legendarymonsters_c2.CameraNullGuard)",
+      "kind": "fix"
+    }
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "group": "cookingforblockheads_c2",
+  "keys": {
+    "cookingforblockheads_compat_reload_once": {
+      "mod": "cookingforblockheads",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.cookingforblockheads_c2.JsonCompatLoadMixin",
+        "bons.furious.mixin.cookingforblockheads_c2.CookingRegistryAddMixin",
+        "bons.furious.mixin.cookingforblockheads_c2.KitchenConnectorAddMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/blay09/mods/cookingforblockheads/compat/json/JsonCompatLoader",
+          "method": "m_6213_",
+          "desc": "(Lnet/minecraft/server/packs/resources/ResourceManager;)V",
+          "sha256": "08474631d3c69c76f0467c48b6e2660ccf3a83df064081e958bda2f0e56b6db2"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/compat/json/JsonCompatLoader",
+          "method": "load",
+          "desc": "(Lnet/blay09/mods/cookingforblockheads/compat/json/JsonCompatData;)V",
+          "sha256": "c91ee7c6c6925d42f00f405e1aeb24d6dda9c90bc7bfb5f37f4e1f0e967a21b2"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/compat/json/JsonCompatLoader",
+          "method": "findItemStack",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Ljava/util/Optional;",
+          "sha256": "375eedf9588c22ec31060fc5ef5fb1101c5ebe6ac73f8bbfb50a6638b8c365d9"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/registry/CookingRegistry",
+          "method": "addToolItem",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)V",
+          "sha256": "f15a3e9fe3247e63a7e3ef85cd88338d9e998423998d55c7d810ee8f1c920723"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/registry/CookingRegistry",
+          "method": "addWaterItem",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)V",
+          "sha256": "cf059af590aa0e93267a4e15d0470dd3b7ac07d4d0aa735db65658dab56214d0"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/registry/CookingRegistry",
+          "method": "addMilkItem",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)V",
+          "sha256": "b8c1310ffecb8a171019323b4e27bd61be0128552e6226ae6189ea57636f65c5"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/registry/CookingRegistry",
+          "method": "addOvenFuel",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;I)V",
+          "sha256": "a2b0017fc9bd26d51fd019711f242e5b14ea724a54a75bce76eaa92d66f5144f"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/registry/CookingRegistry",
+          "method": "addSmeltingItem",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)V",
+          "sha256": "139f1d9fa9719027b3672e5c5400e5cbc4e02474592ef5895f91f36fc9244941"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/registry/CookingRegistry",
+          "method": "addToasterHandler",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/blay09/mods/cookingforblockheads/api/ToasterHandler;)V",
+          "sha256": "d3a37144ea7c335839c28f1ca357876b6669c67c69db2207b9361df8c8fb06c0"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/KitchenMultiBlock",
+          "method": "registerConnectorBlock",
+          "desc": "(Lnet/minecraft/world/level/block/Block;)V",
+          "sha256": "bc607cc3dad1c44e8992b0d9400343df158313e6bc5c6925a2b4d94aae8f106d"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/InternalMethods",
+          "method": "addToolItem",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)V",
+          "sha256": "b286a79094ffdafce335a164cbc8d11fd53de574a6199173b76a12986e499976"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/InternalMethods",
+          "method": "addWaterItem",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)V",
+          "sha256": "8902b12c6541450f1427f7f7252c3599c96b826d777a50cd920ccc6a6df7373f"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/InternalMethods",
+          "method": "addMilkItem",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)V",
+          "sha256": "a0eea715e14d3039a3759760bed08fd241944dc4165401d78d442ec639a61ab6"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/InternalMethods",
+          "method": "addOvenFuel",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;I)V",
+          "sha256": "d02dbce2eee8c040ea31126309cd66964120664b2c161eb66f9711c61c63fde5"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/InternalMethods",
+          "method": "addOvenRecipe",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)V",
+          "sha256": "b7ecdcfb1b42c049fa68642ec209decb04224a825bd8f9b0835efe89dce13689"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/InternalMethods",
+          "method": "addToasterHandler",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/blay09/mods/cookingforblockheads/api/ToasterHandler;)V",
+          "sha256": "5e22c3e471dbf8748abb0659b8e9fa3af0807b1458463f093dd846d9c2ffdb5e"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41728_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+          "sha256": "dd4e6357ca6a48d4c46f5edf77a5123ed7776bd287aed456cdcb59f2bf508f14"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod around JsonCompatLoader.onResourceManagerReload, @ModifyExpressionValue on load's first findItemStack (foods), @WrapOperation on the list adds / map puts of six CookingRegistry methods and KitchenMultiBlock.registerConnectorBlock",
+      "license": "Cooking for Blockheads: All Rights Reserved (no-copy); the mixins only wrap calls and carry our own logic (helper bons.furious.patch.cookingforblockheads_c2.CompatReloadOnce); no Cooking for Blockheads code is carried"
+    }
+  }
+}

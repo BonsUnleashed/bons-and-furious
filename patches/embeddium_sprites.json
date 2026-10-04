@@ -1,0 +1,78 @@
+{
+  "group": "embeddium_sprites",
+  "keys": {
+    "embeddium_sprite_tick_frame_times": {
+      "mod": "embeddium",
+      "scripts": [],
+      "since": "1.0.29",
+      "mixins": [
+        "bons.furious.mixin.embeddium_sprites.SpriteTickerFrameTimesMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/renderer/texture/SpriteContents$Ticker",
+          "method": "m_247697_",
+          "desc": "(II)V",
+          "sha256": "52eca6051f40d946393c8c18cdd3a9b65ce402c832dd999e9c7ecc0caa41de62"
+        },
+        {
+          "class": "net/minecraft/client/renderer/texture/SpriteContents$Ticker",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/texture/SpriteContents;Lnet/minecraft/client/renderer/texture/SpriteContents$AnimatedTexture;Lnet/minecraft/client/renderer/texture/SpriteContents$InterpolationData;)V",
+          "sha256": "c2db39ec3ddef56d7052e6523913113f9e22ba3ae0b9cf7396ab42968a973e59"
+        },
+        {
+          "class": "net/minecraft/client/renderer/texture/SpriteContents$Ticker",
+          "method": "*",
+          "desc": "",
+          "sha256": "266448b5d293750c919d25c7ad1ce7321e43ab269552ded5216e5926049a5313"
+        },
+        {
+          "class": "net/minecraft/client/renderer/texture/SpriteContents$AnimatedTexture",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/texture/SpriteContents;Ljava/util/List;IZ)V",
+          "sha256": "d6b0574e2580096dfa25abdebb1b1c60147cc720039cbda4d224d8b125e598a2"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/mixin/features/textures/animations/tracking/SpriteContentsAnimatorImplMixin",
+          "method": "preTick",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "14aeecb2e30b3c3463f4089b2220682b8f5f810794dbd40473ec33d9667b0851"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/mixin/features/textures/animations/tracking/SpriteContentsAnimatorImplMixin",
+          "method": "assignParent",
+          "desc": "(Lnet/minecraft/client/renderer/texture/SpriteContents;Lnet/minecraft/client/renderer/texture/SpriteContents$AnimatedTexture;Lnet/minecraft/client/renderer/texture/SpriteContents$InterpolationData;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "f7e2f42e663132e1bf231810b54b8ee21bec1064c40cd600dfa24263762cb6cb"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/mixin/features/textures/animations/tracking/SpriteContentsAnimatorImplMixin",
+          "method": "postTick",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "fd129c65277c9f588f0bc706f05a8072dc78d30cad194c7036724d14ed3d2337"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/mixin/features/textures/animations/tracking/SpriteContentsAnimatorImplMixin",
+          "method": "*",
+          "desc": "",
+          "sha256": "c94e8c9a809b9ac31e38f4b22be1dcdd16ca92a43eab70f56f74c2255c215e8e"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/mixin/features/textures/animations/tracking/SpriteContentsMixin",
+          "method": "sodium$isActive",
+          "desc": "()Z",
+          "sha256": "8608a3527d26db53ab03691137e09f08278bee4df53aeb5a4e2cc90f1944b555"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/SodiumClientMod",
+          "method": "options",
+          "desc": "()Lme/jellysquid/mods/sodium/client/gui/SodiumGameOptions;",
+          "sha256": "b82330baaf9bca2b12ec291bcc095bd812ca2b97a70f59471d545c7d8c99ebea"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinSquared @TargetHandler: @Inject at the HEAD of Embeddium's merged SpriteContentsAnimatorImplMixin.preTick handler in SpriteContents$Ticker, cancellable, require = 0, expect = 0; it cancels tickAndUpload's CallbackInfo as Embeddium does)",
+      "license": "Embeddium is LGPL-3.0-only: the handler restates Embeddium's preTick frame advance (helper bons.furious.patch.embeddium_sprites.SpriteFrameTimes); Minecraft (Mojang): no vanilla code is carried, the vanilla body is never replaced"
+    }
+  }
+}

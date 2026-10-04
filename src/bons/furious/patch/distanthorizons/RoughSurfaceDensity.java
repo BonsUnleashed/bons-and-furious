@@ -22,6 +22,11 @@ import org.slf4j.Logger;
  * {@link XzCache}: the same value at the same x and z, remembered per thread. The copy is used only when the whole graph
  * contains only known pure types (mapping another mod's type might not reproduce it), and only after 256 probes of the
  * copy and the original at the same positions returned the same bits; otherwise DH keeps the original density.
+ *
+ * The parameters get a {@link Deferred} density, which makes that copy on its first evaluation instead of when the
+ * parameters are built: DH builds them for every level on both sides, but only the client's surface plan ever evaluates
+ * them, and the overworld copy holds tens of thousands of objects (each cached part with its per-thread slot). Every
+ * evaluation still goes to the same copy, made by the same prepare() and its self-check, so the values are unchanged.
  */
 public final class RoughSurfaceDensity {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -30,6 +35,72 @@ public final class RoughSurfaceDensity {
     public static volatile boolean enabled = !"false".equalsIgnoreCase(System.getProperty("bons_and_furious.dhRoughSurfaceCache", "true"));
 
     private RoughSurfaceDensity() {
+    }
+
+    /** What the parameters keep: a density that runs prepare() on its first evaluation. Never throws. */
+    public static DensityFunction deferred(DensityFunction original) {
+        if (!enabled || original == null) return original;
+        return new Deferred(original);
+    }
+
+    /**
+     * Stands for prepare(original): the first call of any method makes it (once, whichever thread comes first) and every
+     * call goes to it. DH only calls compute (isNoiseSolidAtBlockPos); the other methods are delegated the same way.
+     */
+    public static final class Deferred implements DensityFunction {
+        private final DensityFunction original;
+        private volatile DensityFunction resolved;
+
+        Deferred(DensityFunction original) {
+            this.original = original;
+        }
+
+        /** prepare(original), made on the first call. */
+        public DensityFunction resolved() {
+            DensityFunction d = resolved;
+            if (d == null) {
+                synchronized (this) {
+                    d = resolved;
+                    if (d == null) resolved = d = prepare(original);
+                }
+            }
+            return d;
+        }
+
+        /** True once the copy (or the original, when it could not be proven exact) has been chosen. */
+        public boolean isResolved() {
+            return resolved != null;
+        }
+
+        @Override
+        public double m_207386_(DensityFunction.FunctionContext context) {
+            return resolved().m_207386_(context);
+        }
+
+        @Override
+        public void m_207362_(double[] values, DensityFunction.ContextProvider provider) {
+            resolved().m_207362_(values, provider);
+        }
+
+        @Override
+        public DensityFunction m_207456_(DensityFunction.Visitor visitor) {
+            return resolved().m_207456_(visitor);
+        }
+
+        @Override
+        public double m_207402_() {
+            return resolved().m_207402_();
+        }
+
+        @Override
+        public double m_207401_() {
+            return resolved().m_207401_();
+        }
+
+        @Override
+        public net.minecraft.util.KeyDispatchDataCodec<? extends DensityFunction> m_214023_() {
+            return resolved().m_214023_();
+        }
     }
 
     /** The density DH should use: the cached copy when it is exact, otherwise the original. Never throws. */

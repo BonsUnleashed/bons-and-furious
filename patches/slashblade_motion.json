@@ -1,0 +1,103 @@
+{
+  "group": "slashblade_motion",
+  "keys": {
+    "slashblade_motion_update_memo": {
+      "mod": "slashblade",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.slashblade_motion.MmdMotionPlayerMemoMixin",
+        "bons.furious.mixin.slashblade_motion.MmdPmdModelStampMixin"
+      ],
+      "guard": [
+        {
+          "class": "jp/nyatla/nymmd/MmdMotionPlayer",
+          "method": "updateMotion",
+          "desc": "(F)V",
+          "sha256": "ce8fb72993c721484b1da7f1bc9343b7ed62ce023c663e6998adc634930a2d98"
+        },
+        {
+          "class": "jp/nyatla/nymmd/MmdMotionPlayer",
+          "method": "updateBone",
+          "desc": "(F)V",
+          "sha256": "a24cdfeee087d92d0e4d0c763533958c1c9767ba99096fe6866b1c11474b369a"
+        },
+        {
+          "class": "jp/nyatla/nymmd/MmdMotionPlayer",
+          "method": "updateFace",
+          "desc": "(F)V",
+          "sha256": "3a138b2fe4bd74b129536bdb2d3995773621a35db0484edb3d46a825bec6b95b"
+        },
+        {
+          "class": "jp/nyatla/nymmd/MmdMotionPlayer",
+          "method": "setPmd",
+          "desc": "(Ljp/nyatla/nymmd/MmdPmdModel_BasicClass;)V",
+          "sha256": "a0294411254a0988aa5bffebfad70ffa7658151d67a3696f8fa1db4824f3a075"
+        },
+        {
+          "class": "jp/nyatla/nymmd/MmdMotionPlayer",
+          "method": "setVmd",
+          "desc": "(Ljp/nyatla/nymmd/MmdVmdMotion_BasicClass;)V",
+          "sha256": "fa823a375b7d5f1b84691f2772254125cde3aaf13d5e2ee0e9fb68ff3afa55c6"
+        },
+        {
+          "class": "jp/nyatla/nymmd/MmdMotionPlayerGL2",
+          "method": "onUpdateSkinningMatrix",
+          "desc": "([Ljp/nyatla/nymmd/types/MmdMatrix;)V",
+          "sha256": "120d550d90eae4f0228eb9fef5fb0fa9d5b9544408e8ae71f015ed509a2b08b2"
+        },
+        {
+          "class": "jp/nyatla/nymmd/MmdMotionPlayerGL2",
+          "method": "setPmd",
+          "desc": "(Ljp/nyatla/nymmd/MmdPmdModel_BasicClass;)V",
+          "sha256": "ffd320ac584be5319f8d5bbc1cb5c40d61d6725aa7750c753dc187018732682b"
+        },
+        {
+          "class": "jp/nyatla/nymmd/MmdPmdModel_BasicClass",
+          "method": "getBoneArray",
+          "desc": "()[Ljp/nyatla/nymmd/core/PmdBone;",
+          "sha256": "c4b35f25cc876229fbe4d79cb3386dafb2428e8cb953e7f14f6cf7f7ee11c8b1"
+        },
+        {
+          "class": "jp/nyatla/nymmd/core/PmdBone",
+          "method": "reset",
+          "desc": "()V",
+          "sha256": "7fce986bb63cf810480e722494ab36d2175a5a4fb33f286eba275a05ea7032e7"
+        },
+        {
+          "class": "jp/nyatla/nymmd/core/PmdBone",
+          "method": "updateMatrix",
+          "desc": "()V",
+          "sha256": "8037b3851b188a9f5ca23ee5482592264d844dcfbd5ae4374ca7fb6f0cd962f8"
+        },
+        {
+          "class": "jp/nyatla/nymmd/core/PmdBone",
+          "method": "updateSkinningMat",
+          "desc": "(Ljp/nyatla/nymmd/types/MmdMatrix;)V",
+          "sha256": "1641017f80eed0e542fb078718928488dcc56b526cc76f3d94c0be015da92ca4"
+        },
+        {
+          "class": "jp/nyatla/nymmd/core/PmdIK",
+          "method": "update",
+          "desc": "()V",
+          "sha256": "f22892d0e57002b9f865862e43b51472cd1e313fdbab0886f36699e43284d780"
+        },
+        {
+          "class": "jp/nyatla/nymmd/types/MotionData",
+          "method": "getMotionPosRot",
+          "desc": "(FLjp/nyatla/nymmd/core/PmdBone;)V",
+          "sha256": "d58280c67ef41b626b5f99467c7086eae6304c7c955740ffc3f3fac8056e0a4f"
+        },
+        {
+          "class": "jp/nyatla/nymmd/types/MmdMatrix",
+          "method": "inverse",
+          "desc": "(Ljp/nyatla/nymmd/types/MmdMatrix;)Z",
+          "sha256": "03c1c679497a457605e034fd2d67661bb10089f26ad64d541b20a96df6a277cd"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) + @Inject RETURN on jp.nyatla.nymmd.MmdMotionPlayer.updateMotion(F)V (client): the call returns at once when it repeats the player's last completed update of the same model with the same motion, time bits and skinning-matrix array (per-model last-writer stamp added by MmdPmdModelStampMixin and cleared at the start of every updateMotion call), only for exact MmdMotionPlayerGL2 / MmdPmdModelMc / MmdVmdMotionMc classes with no mapped face track, look-at off and no Guava EventBus subscriber; every other call runs the original and is recorded at its normal return (no MixinExtras wrapper: it would box the float and allocate an argument array per call that runs)",
+      "license": "MIT (SlashBlade: Resharped code; NyMMD library as shipped in its jar): no SlashBlade code is carried (helper bons.furious.patch.slashblade_motion.MotionMemo); target not in our pack: SlashBladeResharped-1.20.1-1.9.65.jar (evidence/slashblade_motion/target.json)"
+    }
+  }
+}

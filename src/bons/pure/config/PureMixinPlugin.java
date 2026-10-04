@@ -60,11 +60,17 @@ public final class PureMixinPlugin implements IMixinConfigPlugin {
     }
 
     @Override
-    public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {}
+    public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+        if (Guards.keyOf(mixinClassName) != null) Guards.beforeApply(mixinClassName, targetClass);
+    }
 
     @Override
     public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
         String key = Guards.keyOf(mixinClassName);
-        if (key != null) LOGGER.debug("Bons and Furious: {} applied to {}", key, targetClassName);
+        if (key != null) {
+            LOGGER.debug("Bons and Furious: {} applied to {}", key, targetClassName);
+            Guards.afterApply(mixinClassName, targetClass);
+            Guards.checkStandDown(mixinClassName, targetClass);
+        }
     }
 }

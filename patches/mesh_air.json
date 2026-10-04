@@ -1,0 +1,43 @@
+{
+  "group": "mesh_air",
+  "keys": {
+    "vanilla_block_state_air_flag": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.29",
+      "mixins": [
+        "bons.furious.mixin.mesh_air.BlockBehaviourAirInvoker",
+        "bons.furious.mixin.mesh_air.BlockStateAirFlagMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase",
+          "method": "m_60795_",
+          "desc": "()Z",
+          "sha256": "865e29ea11f29674a1d7ca5c3a57e9267f1f083147ec5f795b6548e54e6b061c"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase",
+          "method": "m_60734_",
+          "desc": "()Lnet/minecraft/world/level/block/Block;",
+          "sha256": "812002b3b2e4a9155586dcf8037f1c32ab1457e19f40ed00ef53274cb29da290"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour",
+          "method": "isAir",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;)Z",
+          "sha256": "6683e9d411bb3f04abc4a98bc04c833c61007dd27a9244e8205ee509f3d8f185"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/block/Block;Lcom/google/common/collect/ImmutableMap;Lcom/mojang/serialization/MapCodec;)V",
+          "sha256": "aa6b741e35d3240d8c57d0461b6040039757d06982cda631de14d93f6b2177f2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of Block.isAir(BlockState) inside BlockStateBase.isAir (m_60795_) with a @Unique flag byte; @Invoker on BlockBehaviour.isAir(BlockState) for the original virtual call (allocation-free off path)",
+      "license": "Minecraft: no Minecraft code is carried; the redirect makes the original virtual call through a generated invoker whenever it does not answer from its own byte (helper bons.furious.patch.mesh_air.BlockStateAirFlag)"
+    }
+  }
+}

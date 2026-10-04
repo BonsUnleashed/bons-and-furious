@@ -1,0 +1,54 @@
+{
+  "group": "forge_status",
+  "keys": {
+    "forge_status_ping_memo": {
+      "mod": "forge",
+      "scripts": [],
+      "since": "1.0.29",
+      "mixins": [
+        "bons.furious.mixin.forge_status.ServerStatusPingMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraftforge/network/ServerStatusPing",
+          "method": "toBuf",
+          "desc": "()Lio/netty/buffer/ByteBuf;",
+          "sha256": "6e48276d3acb25233ddfca2ac604b4262ef54ba001c2afbcf62c50211b89733c"
+        },
+        {
+          "class": "net/minecraftforge/network/ServerStatusPing",
+          "method": "encodeOptimized",
+          "desc": "(Lio/netty/buffer/ByteBuf;)Ljava/lang/String;",
+          "sha256": "54952ff7bdc5e6b6207a3abbd6fdefce64f43f6e1f667a4625690e00e97238ff"
+        },
+        {
+          "class": "net/minecraftforge/network/ServerStatusPing",
+          "method": "getChannelsForMod",
+          "desc": "(Ljava/lang/String;)Ljava/util/List;",
+          "sha256": "4d8b8abf18c98b55b17f31fa2195308f07ec2faadc0d4310a6bfa60026f455a7"
+        },
+        {
+          "class": "net/minecraftforge/network/ServerStatusPing",
+          "method": "getNonModChannels",
+          "desc": "()Ljava/util/List;",
+          "sha256": "5adde9b79e08eb401584e780385df45764e7a6415d352b19969da6dcffbf6c5d"
+        },
+        {
+          "class": "net/minecraftforge/network/ServerStatusPing",
+          "method": "lambda$getChannelsForMod$10",
+          "desc": "(Ljava/lang/String;Ljava/util/Map$Entry;)Z",
+          "sha256": "be295e25e820900b6b2c4ea0a53d99cfda069b452c2b2b8ec161a3bceebb3958"
+        },
+        {
+          "class": "net/minecraftforge/network/ServerStatusPing",
+          "method": "lambda$getNonModChannels$11",
+          "desc": "(Ljava/util/Map$Entry;)Z",
+          "sha256": "b127a2bbb2cf959d28414addcd65ae6d899e89833dec84a5ee3a7e6f03d1d70b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on ServerStatusPing.toBuf and the private static encodeOptimized (memo of the last input)",
+      "license": "LGPL-2.1 (Forge): no Forge code carried, only a memo around the original calls (helper bons.furious.patch.forge_status.StatusPingMemo)"
+    }
+  }
+}

@@ -220,6 +220,68 @@
       "cancel": [],
       "conversion": "@Overwrite of runQueueingLoop (DH's loop plus the idle park) and two MixinExtras @WrapOperation progress hooks",
       "license": "LGPL-3.0: the mixin carries a modified copy of ChunkUpdateQueueManager.runQueueingLoop (helper bons.furious.patch.distanthorizons.UpdateQueueWait)"
+    },
+    "distanthorizons_lod_biome_memo": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.distanthorizons.LodBiomeMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/core/dataObjects/transformers/LodDataBuilder",
+          "method": "createFromChunk",
+          "desc": "(Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/ILevelWrapper;Lcom/seibel/distanthorizons/core/wrapperInterfaces/chunk/IChunkWrapper;)Lcom/seibel/distanthorizons/core/dataObjects/fullData/sources/FullDataSourceV2;",
+          "sha256": "c05d24a43b58b54316e79b8a7acd52db18dbdc9dfd790b86c34215d241592eb8"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/chunk/ChunkWrapper_forge",
+          "method": "getBiome",
+          "desc": "(III)Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/IBiomeWrapper;",
+          "sha256": "9e9cfc59833430df176d3b326399b0af51b7bfa8f0ee2b17b6d0f2d70a0ff949"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/block/BiomeWrapper_forge",
+          "method": "getBiomeWrapper",
+          "desc": "(Lnet/minecraft/core/Holder;Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/ILevelWrapper;)Lcom/seibel/distanthorizons/common/wrappers/block/BiomeWrapper_forge;",
+          "sha256": "3b163e08f9ead63ac11d1ae1bc96d74e6349c7893d05fe6ae5fd644c99b12b36"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of both IChunkWrapper.getBiome calls in LodDataBuilder.createFromChunk with a MixinExtras @Share local (one memo per call; a redirect so the miss path does not box the three ints)",
+      "license": "LGPL-3.0 (Distant Horizons): no DH code is carried; the wrap only reuses the previous answer (helper bons.furious.patch.distanthorizons.LodBiomeMemo)"
+    },
+    "distanthorizons_biome_blend_memo": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.distanthorizons.BiomeBlendMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/block/AbstractDhTintGetter_forge",
+          "method": "tryGetBlockTint",
+          "desc": "(Lcom/seibel/distanthorizons/core/pos/blockPos/DhBlockPosMutable;Lnet/minecraft/world/level/ColorResolver;)I",
+          "sha256": "479cafbc5a87771f4a070010acec6dce35d59a121138d4c94921f2bddb24140e"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/block/AbstractDhTintGetter_forge",
+          "method": "tryGetClientBiomeColor",
+          "desc": "(Lnet/minecraft/world/level/ColorResolver;Lcom/seibel/distanthorizons/common/wrappers/block/BiomeWrapper_forge;)I",
+          "sha256": "afc504b9592e590cf45b9afcaf0e365feacef003c84887c66900a0f62915b7f9"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/dataObjects/BlockBiomeWrapperPair",
+          "method": "get",
+          "desc": "(Lcom/seibel/distanthorizons/core/wrapperInterfaces/block/IBlockStateWrapper;Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/IBiomeWrapper;)Lcom/seibel/distanthorizons/core/dataObjects/BlockBiomeWrapperPair;",
+          "sha256": "775b286ff97fbc4ba006468f612953ad80fa17eb6bf74ab79e81245bc62d96aa"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the loop's tryGetClientBiomeColor call in AbstractDhTintGetter_forge.tryGetBlockTint with two MixinExtras @Share locals",
+      "license": "LGPL-3.0 (Distant Horizons): no DH code is carried (helper bons.furious.patch.distanthorizons.BiomeBlendMemo)"
     }
   }
 }

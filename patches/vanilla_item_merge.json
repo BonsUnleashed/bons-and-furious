@@ -1,0 +1,90 @@
+{
+  "group": "vanilla_item_merge",
+  "keys": {
+    "vanilla_item_merge_candidates": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.vanilla_item_merge.ItemEntityMergeMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/item/ItemEntity",
+          "method": "m_32069_",
+          "desc": "()V",
+          "sha256": "0080d545470e170ce67f174a89ea38af623fa169d9f8a2b950e0622c48c8fbad"
+        },
+        {
+          "class": "net/minecraft/world/entity/item/ItemEntity",
+          "method": "m_186267_",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "71549f8184f7b451ba05d1f4e0ead0ca1905f585c7ce2d80ed9dba68f39d75bd"
+        },
+        {
+          "class": "net/minecraft/world/entity/item/ItemEntity",
+          "method": "m_32070_",
+          "desc": "()Z",
+          "sha256": "fb92fff9a1b519d38b6c13a76b69e6594c332821f84f00777ef530a10b891883"
+        },
+        {
+          "class": "net/minecraft/world/entity/item/ItemEntity",
+          "method": "m_32015_",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)V",
+          "sha256": "4c516acb7704eed6705723c7a50bd0a3e395fa45ed92905d94bde5aa5691ae36"
+        },
+        {
+          "class": "net/minecraft/world/entity/item/ItemEntity",
+          "method": "m_32026_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+          "sha256": "f38c355482df1b4a052a82d2f195e572bb371adbb6ed761b5380c6d6139bf854"
+        },
+        {
+          "class": "net/minecraft/world/entity/item/ItemEntity",
+          "method": "m_32017_",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/item/ItemStack;)V",
+          "sha256": "5349614e246d76fc4454f7e45fffbdc370fe8e5df1ac14df12c247764fb0eadb"
+        },
+        {
+          "class": "net/minecraft/world/entity/item/ItemEntity",
+          "method": "m_32022_",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)V",
+          "sha256": "80b53fbd5f5e93deee615f9cae91dda513a5a51e9023f9623df5f4faee084f0a"
+        },
+        {
+          "class": "net/minecraft/world/entity/item/ItemEntity",
+          "method": "m_32029_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;I)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "92f9c951b88d3250907817219c42d475242946458ffeba82764b17945d015c91"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41720_",
+          "desc": "()Lnet/minecraft/world/item/Item;",
+          "sha256": "ce7982961328f6d190746b117db6ef59920bc2a9dcbb28fadc3c325294da242c"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41613_",
+          "desc": "()I",
+          "sha256": "73553c3fa8f031eacb4c9897aa71736699750b33e283397dc57249c2a7e94343"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41741_",
+          "desc": "()I",
+          "sha256": "a8ae7df50f9dfc3fe723902d39e9728537b0ee23e5317b30608676bd8be8d3f0"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_255036_",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "e87c4884b6dc90e8d95820323bb061f5cc525a814fed86af8bf754b94035d220"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on Level.getEntitiesOfClass (m_6443_) in ItemEntity.mergeWithNeighbours: the same call with MergeCandidates.Filter wrapped around vanilla's predicate (rejects other items and count sums over the maximum, then runs vanilla's predicate); @WrapOperation on ItemEntity.merge (m_32017_) in tryToMerge: unchanged call, plus the shadow-mode check; both require = 0 and degrade to vanilla",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_item_merge.MergeCandidates)"
+    }
+  }
+}

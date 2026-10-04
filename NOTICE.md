@@ -53,3 +53,27 @@ ObjectMethods bootstrap; its source explains the independent implementation.
 Relics is changed by an early-return injection. The other Fusion methods keep
 their installed bodies and receive targeted hooks. The separate BonsFusion
 project is not bundled in this release.
+
+Targets added in 1.0.30: Alex's Mobs (Alexthe668, Carro1001, Paint_Ninja, GNU
+LESSER GENERAL PUBLIC LICENSE); Bosses of Mass Destruction (CerbonXD, GNU
+LESSER GENERAL PUBLIC LICENSE); CIT Reforged (tomwmth, MIT);
+CookingForBlockheads (BlayTheNinth, All rights reserved); Create (simibubi,
+MIT); Critters and Companions (Joosh, EterDelta, MIT); Dungeon's Delight
+(Yirmiri & Betwixer, AZURUNE License); Dynamic Trees (Ferreusveritas, MIT);
+Qliphoth Awakening (FINDERFEED, All Rights Reserved); Immersive Engineering
+(BluSunrize and Damien A.W. Hazard, Blu's License of Common Sense); Kiwi
+Library (Snownee, MIT); L2 Library (lcy0x1 and LightLand team, LGPL v2.1);
+LegendaryMonsters (Miauczel, All Rights Reserved); Mutant Monsters (shcott21,
+Chumbanotz, Fuzs, tdstress, AGPL-3.0-or-later); Jaden's Nether Expansion
+(ThatJadenXgamer, CC-BY-NC-SA-4.0); Particular (MIT); Pipez (Max Henkel, All
+rights reserved); Regions Unexplored (UHQ_GAMES, All rights reserved); Ribbits
+(Joosh, YUNGNICKYOUNG, HellionGames, Refresh Studios, LGPLv3); Simply Swords
+(Sweenus, Timefall Development License); Slash Blade:Resharped (Furia,
+NyMmd-MIT:nyatla, ObjModelImporter:forge, Resharped Code: MMF-Group, MIT
+License, Art Resources: All Rights Reserved.); Create Slice & Dice
+(possible_triangle,
+https://github.com/pssbletrngle/sliceanddice/blob/1.20.x/LICENSE.txt). Their
+exact tested JAR digests are in upstream-credits.json; targets our test pack
+does not install were tested against the listed JARs. No target JAR or asset is
+redistributed. Targets under restricted or custom licences get only our own
+code, as described above.

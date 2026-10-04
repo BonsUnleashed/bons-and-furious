@@ -1,0 +1,76 @@
+{
+  "group": "ticker_gate",
+  "keys": {
+    "vanilla_ticker_range_memo": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.ticker_gate.DistanceManagerTrackerAccessor",
+        "bons.furious.mixin.ticker_gate.TickingTrackerEpochsMixin",
+        "bons.furious.mixin.ticker_gate.TickerWrapperMemoMixin",
+        "bons.furious.mixin.ticker_gate.LevelTickerContextMixin",
+        "bons.furious.mixin.ticker_gate.ServerLevelTickerGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_46463_",
+          "desc": "()V",
+          "sha256": "52244095a04c365ca7c406f024cbad7f891259a937fa20fcad98115fd87e484d"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "m_183438_",
+          "desc": "(J)Z",
+          "sha256": "e71f76e6377cc621d89ec088a28e8349be746d84cc414518dc51f93cef3d252a"
+        },
+        {
+          "class": "net/minecraft/server/level/DistanceManager",
+          "method": "m_183916_",
+          "desc": "(J)Z",
+          "sha256": "bf64970186c49a81ec553bd2c0c9464b5c9dd1a40ca7d7c5fea191ae397a2020"
+        },
+        {
+          "class": "net/minecraft/server/level/DistanceManager",
+          "method": "<init>",
+          "desc": "(Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;)V",
+          "sha256": "9f4a7ecf868277f7188e294ea945fb365423c51d3c950711a976fbc1acd6b380"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkLevel",
+          "method": "m_287283_",
+          "desc": "(I)Z",
+          "sha256": "34dd4f7c7c495e83fafa5ec4f362af290f9958904db9bc92399835060645de1c"
+        },
+        {
+          "class": "net/minecraft/server/level/TickingTracker",
+          "method": "m_7351_",
+          "desc": "(JI)V",
+          "sha256": "4cfea170c81f993e90a53d5960c22922021f94400685c1daf691884b6169d89f"
+        },
+        {
+          "class": "net/minecraft/server/level/TickingTracker",
+          "method": "m_6172_",
+          "desc": "(J)I",
+          "sha256": "9b155e0cc0829b3b48cc625935adeebe2d11f05254b768a9846aab081dbe8de0"
+        },
+        {
+          "class": "net/minecraft/server/level/TickingTracker",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d9daf450161ef2b33d24a07063e192d61a4ed87e4bb449b76cdc8b0029c2ae16"
+        },
+        {
+          "class": "net/minecraft/server/level/TickingTracker",
+          "method": "*",
+          "desc": "",
+          "sha256": "a5617140bcd97804b85c2e466fd31607912015e100f916f55711714436cb3452"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of DistanceManager.inBlockTickingRange inside ServerLevel.shouldTickBlocksAt(long), given the block-entity ticker by a @ModifyVariable at the STORE of Level.tickBlockEntities' local slot 3 (kept with the storing thread in two @Unique fields of the level, returned unchanged, taken by the first range check on that thread): the ticker wrapper keeps the epoch table, chunk, epoch and answer of its last check (four @Unique fields); TickingTracker keeps 256 long epochs (@Unique), bumped by @Injects at the head and return of setLevel (the only writer of the ticking-level map); answers come from the wrapper while chunk, table and epoch match, else from inBlockTickingRange (and are remembered)",
+      "license": "Minecraft: no Minecraft code is carried; the redirect, modify-variable, injects and helper bons.furious.patch.ticker_gate.TickerGate hold only our own logic"
+    }
+  }
+}

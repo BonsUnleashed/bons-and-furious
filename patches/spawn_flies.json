@@ -1,0 +1,114 @@
+{
+  "group": "spawn_flies",
+  "keys": {
+    "spawn_flyless_particle_check": {
+      "mod": "spawn",
+      "scripts": [],
+      "since": "1.0.29",
+      "mixins": [
+        "bons.furious.mixin.spawn_flies.FlyDataIdleMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ninni/spawn/server/gui/fly/FlyData",
+          "method": "spawnRandomFlyParticles",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;I)V",
+          "sha256": "c5865f27231bb6fd80ed02470fe82b154a246f220e4b94d3e3f8b9e0089d552b"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_20072_",
+          "desc": "()Z",
+          "sha256": "b772017b652b0519a36f02efaaeda74afd37a1881ba9057f8ac7025f5c9b9986"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_20305_",
+          "desc": "()Z",
+          "sha256": "9cdc1cf9955b83f7e4e3eec1ff35f57e32985db7f1470f17df9a059ff3d48354"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_6060_",
+          "desc": "()Z",
+          "sha256": "ec1d5bc7a1ac09598cbfe87917d3ea2ead1227943a2972b5c200febfb8914e87"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_5825_",
+          "desc": "()Z",
+          "sha256": "1548f07e37578db312879ee79293bd2be37325d559f28dfb10d5976611ae15e8"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_9236_",
+          "desc": "()Lnet/minecraft/world/level/Level;",
+          "sha256": "85177cb7bd893799ae40bf5a431ddd2cfdfc9fc8617e9db5118ce8a8cf953b94"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_217043_",
+          "desc": "()Lnet/minecraft/util/RandomSource;",
+          "sha256": "9d9395032c0f6f11e8dd877936cb6615f0299c67f1d05f3e0f3833945e76ce90"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "getPersistentData",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "sha256": "1355a99782fa41f3f4e5ab09b04e4a97f6beee3ef09f2d211b96ccc318e77ba1"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_8119_",
+          "desc": "()V",
+          "sha256": "4bbc94d7f9247158c4270818650114ed04813619792a4476946a800b520fcd45"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "sha256": "d59f39f8df3449063c1f57fa23cf471224d7af3a433673de731bda03340f2631"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_20073_",
+          "desc": "()Z",
+          "sha256": "e26adb1405a4711093b89582eaf123e4eb2e845b7796a227beb3220df6db566d"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_20074_",
+          "desc": "()V",
+          "sha256": "3ea5a71bf6f38bb499b932db615b7be315aedabff114e8ef54c3ffd4546a5d1f"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_204031_",
+          "desc": "(Lnet/minecraft/tags/TagKey;D)Z",
+          "sha256": "4880aa0075f0370f12c16278824b1000e2c3f6afca791adb53504acdd7fd6a43"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "updateFluidHeightAndDoFluidPushing",
+          "desc": "()V",
+          "sha256": "f7a5b768445ed291ca6a278d691368492158ea6170055fbfe48edb085df3c1db"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "updateFluidHeightAndDoFluidPushing",
+          "desc": "(Ljava/util/function/Predicate;)V",
+          "sha256": "7dc8886088b825b5d6830709ce01346af5af56f6aa623dd6f4fc51afe37ac374"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_20323_",
+          "desc": "()V",
+          "sha256": "78ba24a566753f5d7b06264820044dfaa4929c731c49a09616c079e65be4c570"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on FlyData.spawnRandomFlyParticles: a call with 0 flies, from an entity class without its own water/fire checks or water update (baseTick's water update reads the same chunk column in the same tick, so the skipped read's chunk ticket is added anyway) and with Forge's persistent-data tag already present (Create's fireImmune hook creates it lazily through getPersistentData), tests the level and tickCount % 100 first, then makes Spawn's water and fire checks and its one random draw; every other call runs Spawn's method",
+      "license": "All Rights Reserved (Spawn, no-copy): the mixin and helper bons.furious.patch.spawn_flies.IdleFlies hold only our own condition order; Spawn's code stays in its jar"
+    }
+  }
+}

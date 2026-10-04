@@ -1,0 +1,72 @@
+{
+  "group": "vanilla_long_jump",
+  "keys": {
+    "vanilla_long_jump_weighted_pick": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.vanilla_long_jump.LongJumpToRandomPosMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/ai/behavior/LongJumpToRandomPos",
+          "method": "m_213675_",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;)Ljava/util/Optional;",
+          "sha256": "8ae9b109589197499e59f6e219c1b61d31b04f7b9ec4d11e0539388f28bd4293"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/behavior/LongJumpToRandomPos",
+          "method": "m_6735_",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Mob;J)V",
+          "sha256": "4c0595a5ed66a38c22bb563dcf9cfd104a1098d5c7d7542690239a0fe9847467"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/behavior/LongJumpToRandomPos",
+          "method": "m_217318_",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Mob;J)V",
+          "sha256": "fd8392dbb7219e03c7bf4403a007c231f2f290d4fe546fd313333c1f7b53af91"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/behavior/LongJumpToPreferredBlock",
+          "method": "m_213675_",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;)Ljava/util/Optional;",
+          "sha256": "e961b33089a8169aea620e08a2c8870ed88349955cf0162351535931c2894477"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/behavior/LongJumpToPreferredBlock",
+          "method": "m_6735_",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Mob;J)V",
+          "sha256": "c0d5c8635797cd7a0c4a22b4595c777d1dbe1e4a1908fa22b28fbe7c55416c9f"
+        },
+        {
+          "class": "net/minecraft/util/random/WeightedRandom",
+          "method": "m_216822_",
+          "desc": "(Lnet/minecraft/util/RandomSource;Ljava/util/List;)Ljava/util/Optional;",
+          "sha256": "24f74670806582aac2f63a653976501937763fefc6be53266ccf087cd5db7aad"
+        },
+        {
+          "class": "net/minecraft/util/random/WeightedRandom",
+          "method": "m_216825_",
+          "desc": "(Lnet/minecraft/util/RandomSource;Ljava/util/List;I)Ljava/util/Optional;",
+          "sha256": "433b3cec192fbf28bdd411e5aa3ff3c802ea77fd987710bae0d6226bc859d883"
+        },
+        {
+          "class": "net/minecraft/util/random/WeightedRandom",
+          "method": "m_146312_",
+          "desc": "(Ljava/util/List;)I",
+          "sha256": "c933ff055e57edd4aee4a6fdcf7b59e61210ecb6a4bafd8952e95e2a54a7cf1a"
+        },
+        {
+          "class": "net/minecraft/util/random/WeightedRandom",
+          "method": "m_146314_",
+          "desc": "(Ljava/util/List;I)Ljava/util/Optional;",
+          "sha256": "9ceafd2843d7174c987c62bd8b4bf06fabbd60a0abae8aafbea498d70c7280a1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on LongJumpToRandomPos.getJumpCandidate (m_213675_): for the exact classes LongJumpToRandomPos and LongJumpToPreferredBlock the same draw is made from the same random source and the same candidate is found and removed through Fenwick trees kept beside the candidate list (rebuilt when the list is replaced; a list that does not match the trees falls back to WeightedRandom.getWeightedItem with the draw already made); other classes and the switch off call the original",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_long_jump.LongJumpPicks)"
+    }
+  }
+}

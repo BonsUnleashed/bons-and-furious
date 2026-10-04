@@ -1,0 +1,42 @@
+{
+  "group": "structurify_c2",
+  "keys": {
+    "structurify_check_memo_slim": {
+      "mod": "structurify",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.structurify_c2.StructureCheckMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/faboslav/structurify/common/world/level/structure/checks/StructureChecker",
+          "method": "checkStructure",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/StructureStart;Lnet/minecraft/resources/ResourceLocation;Lcom/faboslav/structurify/common/api/StructurifyStructure;Lnet/minecraft/world/level/chunk/ChunkGenerator;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/biome/BiomeSource;)Z",
+          "sha256": "c2d151d92c6ed1fc446886a974986e8dbfcae3598d8077a1b7555f02105b12e1"
+        },
+        {
+          "class": "com/faboslav/structurify/common/world/level/structure/checks/StructureChecker",
+          "method": "lambda$checkStructure$3",
+          "desc": "(JLnet/minecraft/resources/ResourceLocation;Lcom/faboslav/structurify/common/api/StructurifyStructure;Lnet/minecraft/world/level/levelgen/structure/StructureStart;Lcom/faboslav/structurify/common/api/StructurifyChunkGenerator;Lnet/minecraft/world/level/biome/BiomeSource;Lnet/minecraft/world/level/levelgen/RandomState;Lnet/minecraft/world/level/chunk/ChunkGenerator;Lnet/minecraft/world/level/LevelHeightAccessor;Ljava/lang/Long;)Ljava/lang/Boolean;",
+          "sha256": "88ec30f2d6cae1b53a217618a866685340d810ae35015561d542bb2257da3261"
+        },
+        {
+          "class": "com/faboslav/structurify/common/world/level/structure/checks/StructureChecker",
+          "method": "*",
+          "desc": "",
+          "sha256": "74204971b924f53eb682fd845bfbcc2fd67cfab5b5d69c723a721e479a6e587b"
+        },
+        {
+          "class": "com/faboslav/structurify/common/mixin/ChunkGeneratorMixin",
+          "method": "*",
+          "desc": "",
+          "sha256": "977c6be5e78a579736aaf7a7dcdb4d7bfb2f57111ea88c6eafb256d426331cda"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the three inner computeIfAbsent calls of the synthetic lambda$checkStructure$3 (apply the check directly; the inner maps are write-only)",
+      "license": "CC BY-NC-ND 4.0: no derivative code; the mixin only wraps call sites with our own logic (helper bons.furious.patch.structurify_c2.CheckMemo)"
+    }
+  }
+}

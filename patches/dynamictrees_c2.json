@@ -1,0 +1,138 @@
+{
+  "group": "dynamictrees_c2",
+  "keys": {
+    "dynamictrees_rot_cycle_guard": {
+      "mod": "dynamictrees",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.dynamictrees_c2.RotCycleBranchMixin",
+        "bons.furious.mixin.dynamictrees_c2.RotCycleRootsMixin",
+        "bons.furious.mixin.dynamictrees_c2.RotCycleOuterMixin",
+        "bons.furious.mixin.dynamictrees_c2.RotWriteBreakMixin",
+        "bons.furious.mixin.dynamictrees_c2.RotWriteFeatureMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ferreusveritas/dynamictrees/block/branch/BasicBranchBlock",
+          "method": "checkForRot",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;Lcom/ferreusveritas/dynamictrees/tree/species/Species;IILnet/minecraft/util/RandomSource;FZ)Z",
+          "sha256": "8da42ace382cb10782edaae1c7a1dcb40ea4f3aacb8382cb8e25a5fbd16da38a"
+        },
+        {
+          "class": "com/ferreusveritas/dynamictrees/block/branch/BasicRootsBlock",
+          "method": "checkForRot",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;Lcom/ferreusveritas/dynamictrees/tree/species/Species;IILnet/minecraft/util/RandomSource;FZ)Z",
+          "sha256": "78dcec160816f3024a494d95e56e4d85a89b2026de4c09eab2cc22f08c72f53c"
+        },
+        {
+          "class": "com/ferreusveritas/dynamictrees/block/branch/BranchBlock",
+          "method": "breakDeliberate",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;Lcom/ferreusveritas/dynamictrees/DynamicTrees$DestroyMode;)V",
+          "sha256": "9e3e705fd57e375a8d1e0527d7b7d1cc37d962cd33a4a2362d446a8391d66c74"
+        },
+        {
+          "class": "com/ferreusveritas/dynamictrees/block/branch/BranchBlock",
+          "method": "rot",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;)V",
+          "sha256": "2d96203252e3571d64bb3028a5be133f62e5ae48b7fa4210d85279fa8cf850c9"
+        },
+        {
+          "class": "com/ferreusveritas/dynamictrees/tree/species/Species",
+          "method": "rot",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;IIILnet/minecraft/util/RandomSource;ZZ)Z",
+          "sha256": "1b59b77b415ea9d1e084633941b2bd45633733d690884c8873f7aa9f04dd8d15"
+        },
+        {
+          "class": "com/ferreusveritas/dynamictrees/tree/species/Species",
+          "method": "postRot",
+          "desc": "(Lcom/ferreusveritas/dynamictrees/systems/genfeature/context/PostRotContext;)V",
+          "sha256": "04107f5bb5e90ee90bf9c100a8953494438aebe4f91348c8d98e4b0d401f4e37"
+        },
+        {
+          "class": "com/ferreusveritas/dynamictrees/tree/species/Species",
+          "method": "handleRot",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Ljava/util/List;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;ILcom/ferreusveritas/dynamictrees/util/SafeChunkBounds;)Z",
+          "sha256": "bc2e1371b6557b3e57cf7275b50076f9aa989f7efd15091fd0bf4ecaf14d3edf"
+        },
+        {
+          "class": "com/ferreusveritas/dynamictrees/systems/genfeature/GenFeature",
+          "method": "generate",
+          "desc": "(Lcom/ferreusveritas/dynamictrees/systems/genfeature/GenFeatureConfiguration;Lcom/ferreusveritas/dynamictrees/systems/genfeature/GenFeature$Type;Lcom/ferreusveritas/dynamictrees/systems/genfeature/context/GenerationContext;)Ljava/lang/Object;",
+          "sha256": "657ff8f8a0f0f5c42ac75b22b6214e809dd8645fcb609f90ef98c6758c1a14a6"
+        },
+        {
+          "class": "com/ferreusveritas/dynamictrees/systems/genfeature/GenFeature",
+          "method": "postRot",
+          "desc": "(Lcom/ferreusveritas/dynamictrees/systems/genfeature/GenFeatureConfiguration;Lcom/ferreusveritas/dynamictrees/systems/genfeature/context/PostRotContext;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "com/ferreusveritas/dynamictrees/systems/genfeature/GenFeatureConfiguration",
+          "method": "generate",
+          "desc": "(Lcom/ferreusveritas/dynamictrees/systems/genfeature/GenFeature$Type;Lcom/ferreusveritas/dynamictrees/systems/genfeature/context/GenerationContext;)Ljava/lang/Object;",
+          "sha256": "9b292b0d538dbea77be9ce81025124619085d4b80f19aca37f5dd1b8a6a5e17c"
+        },
+        {
+          "class": "com/ferreusveritas/dynamictrees/systems/genfeature/MushroomRotGenFeature",
+          "method": "postRot",
+          "desc": "(Lcom/ferreusveritas/dynamictrees/systems/genfeature/GenFeatureConfiguration;Lcom/ferreusveritas/dynamictrees/systems/genfeature/context/PostRotContext;)Z",
+          "sha256": "423264f42ba13aa25e4c560e5c3cfdfb0ed65308703573bbc886931677e54d97"
+        },
+        {
+          "class": "com/ferreusveritas/dynamictrees/systems/genfeature/RotSoilGenFeature",
+          "method": "postRot",
+          "desc": "(Lcom/ferreusveritas/dynamictrees/systems/genfeature/GenFeatureConfiguration;Lcom/ferreusveritas/dynamictrees/systems/genfeature/context/PostRotContext;)Z",
+          "sha256": "6403e7462fe9f578451eef571f705e1e6ce9167642c7fde16af75db7de3c5281"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Species.rot call and @ModifyReturnValue at the final return of both checkForRot bodies (small, so the JIT still inlines the recursion); @Inject at the start of Species.handleRot (clears left-over records); @ModifyExpressionValue on the rot path's three writes, results passed through",
+      "license": "MIT (Dynamic Trees): injections only, the mixins carry our own bookkeeping (helper bons.furious.patch.dynamictrees_c2.RotCycleGuard); no Dynamic Trees code is carried"
+    },
+    "dynamictrees_thick_shape_memo": {
+      "mod": "dynamictrees",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.dynamictrees_c2.ThickShapeMixin",
+        "bons.furious.mixin.dynamictrees_c2.TrunkShellShapeMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ferreusveritas/dynamictrees/block/branch/ThickBranchBlock",
+          "method": "m_5940_",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "sha256": "2e62216e008fdda2b1bcfce2ac8226e9153161fd092d2e3aec8933558872e2bf"
+        },
+        {
+          "class": "com/ferreusveritas/dynamictrees/block/branch/TrunkShellBlock",
+          "method": "m_5940_",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "sha256": "bfbe91a9cd3cf26ab84bf7eca4544a14b0f7a088f566787313973097c09358e1"
+        },
+        {
+          "class": "com/ferreusveritas/dynamictrees/block/branch/TrunkShellBlock",
+          "method": "lambda$getShape$5",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lcom/ferreusveritas/dynamictrees/block/branch/TrunkShellBlock$ShellMuse;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "sha256": "46439494e5bfc7f1a151c997a3ec1d3632bd83fd3ac61a77694e8fffad3527a2"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/Shapes",
+          "method": "m_83064_",
+          "desc": "(Lnet/minecraft/world/phys/AABB;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "sha256": "0f758aefa9eb24efc98188c1d8f61d4db8e225aa1bae74cd1f9b63bb05ab6690"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/Shapes",
+          "method": "m_166049_",
+          "desc": "(DDDDDD)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "sha256": "93bda83ea836db82615ef3c2070e7ecbd4f0138a9545efb1762f41f5eb73cc0b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Shapes.create(AABB) call in ThickBranchBlock.getShape and in TrunkShellBlock's getShape lambda",
+      "license": "MIT (Dynamic Trees); Minecraft (Mojang): no-copy. The mixins only route the create call through our table (helper bons.furious.patch.dynamictrees_c2.ThickShapes); no Dynamic Trees code is carried"
+    }
+  }
+}

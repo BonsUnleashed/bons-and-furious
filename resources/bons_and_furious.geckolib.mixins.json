@@ -9,8 +9,12 @@
   },
   "mixins": [
     "AnimationControllerMixin",
+    "AnimationControllerQueueMixin",
     "EasingTypeMixin",
     "KeyframeMixin",
     "RawAnimationMixin"
+  ],
+  "client": [
+    "GeoRendererQuadMixin"
   ]
 }

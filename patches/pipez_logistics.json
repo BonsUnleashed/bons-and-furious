@@ -1,0 +1,87 @@
+{
+  "group": "pipez_logistics",
+  "keys": {
+    "pipez_sorted_connections_memo": {
+      "mod": "pipez",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.pipez_logistics.UpgradeTileEntitySortMixin"
+      ],
+      "guard": [
+        {
+          "class": "de/maxhenkel/pipez/blocks/tileentity/UpgradeTileEntity",
+          "method": "getSortedConnections",
+          "desc": "(Lnet/minecraft/core/Direction;Lde/maxhenkel/pipez/blocks/tileentity/types/PipeType;)Ljava/util/List;",
+          "sha256": "b33a950b0e8288cacd0f5104a1cd77e330a533a99b6c877c4633b4249468fb17"
+        },
+        {
+          "class": "de/maxhenkel/pipez/blocks/tileentity/UpgradeTileEntity",
+          "method": "lambda$getSortedConnections$4",
+          "desc": "(Lde/maxhenkel/pipez/blocks/tileentity/PipeTileEntity$Connection;Lde/maxhenkel/pipez/blocks/tileentity/PipeTileEntity$Connection;)I",
+          "sha256": "5a066987c0f921e6613af2fbf3a4b2572804a40d4cc31a9bedee27261a325bd3"
+        },
+        {
+          "class": "de/maxhenkel/pipez/blocks/tileentity/UpgradeTileEntity",
+          "method": "getDistribution",
+          "desc": "(Lnet/minecraft/core/Direction;Lde/maxhenkel/pipez/blocks/tileentity/types/PipeType;)Lde/maxhenkel/pipez/blocks/tileentity/UpgradeTileEntity$Distribution;",
+          "sha256": "a52ab5e560863cbe3904fbab9cbba00eb5c0df66bec6e0de0c79c0b564dc58b0"
+        },
+        {
+          "class": "de/maxhenkel/pipez/blocks/tileentity/configuration/CachedPipeConfiguration",
+          "method": "getValue",
+          "desc": "(Lnet/minecraft/core/Direction;Lde/maxhenkel/pipez/blocks/tileentity/types/PipeType;)Ljava/lang/Object;",
+          "sha256": "41e80fc204e1c7ca95e4bae760aba222a3baf779c7cb66e89455560860df5892"
+        },
+        {
+          "class": "de/maxhenkel/pipez/blocks/tileentity/PipeTileEntity",
+          "method": "getConnections",
+          "desc": "()Ljava/util/List;",
+          "sha256": "8ef290bebc41bc558f9e74349227d5e52394c19ab98fe41f8d744ab8e763a1aa"
+        },
+        {
+          "class": "de/maxhenkel/pipez/blocks/tileentity/PipeTileEntity$Connection",
+          "method": "getDistance",
+          "desc": "()I",
+          "sha256": "0c62b6c29e156d567d71047ecbb77c1021716836a7a0becc5097bec04cf4ea15"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) on de.maxhenkel.pipez.blocks.tileentity.UpgradeTileEntity.getSortedConnections: after asking getDistribution and getConnections once each (as the original does), a new ArrayList of the order kept for the tile's unchanged connection list (same list object, same elements in the same order, same distribution; stable Arrays.sort by Connection.getDistance, reversed for FURTHEST) is returned; RANDOM, null elements and Connection subclasses run the original; shadow mode runs the original as a nested call and compares",
+      "license": "All Rights Reserved (Pipez): no Pipez code is carried (helper bons.furious.patch.pipez_logistics.SortedConnections, our own stable sort); target not in our pack: pipez-forge-1.20.1-1.2.26.jar (evidence/pipez_logistics/target.json)"
+    },
+    "pipez_empty_filter_fast_path": {
+      "mod": "pipez",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.pipez_logistics.ItemPipeTypeFilterMixin",
+        "bons.furious.mixin.pipez_logistics.FluidPipeTypeFilterMixin",
+        "bons.furious.mixin.pipez_logistics.GasPipeTypeFilterMixin"
+      ],
+      "guard": [
+        {
+          "class": "de/maxhenkel/pipez/blocks/tileentity/types/ItemPipeType",
+          "method": "canInsert",
+          "desc": "(Lde/maxhenkel/pipez/blocks/tileentity/PipeTileEntity$Connection;Lnet/minecraft/world/item/ItemStack;Ljava/util/List;)Z",
+          "sha256": "fedf4020d4284a4c3dc2e399e0a27c6d51fa74a568f190b05c5cb01a80cfad8b"
+        },
+        {
+          "class": "de/maxhenkel/pipez/blocks/tileentity/types/FluidPipeType",
+          "method": "canInsert",
+          "desc": "(Lde/maxhenkel/pipez/blocks/tileentity/PipeTileEntity$Connection;Lnet/minecraftforge/fluids/FluidStack;Ljava/util/List;)Z",
+          "sha256": "15829f341836b241a42718b8b40a54032b22368a48895852d270723813dea255"
+        },
+        {
+          "class": "de/maxhenkel/pipez/blocks/tileentity/types/GasPipeType",
+          "method": "canInsert",
+          "desc": "(Lde/maxhenkel/pipez/blocks/tileentity/PipeTileEntity$Connection;Lmekanism/api/chemical/ChemicalStack;Ljava/util/List;)Z",
+          "sha256": "f7cb57384c6b94e2be702b4c7ca01ed3c75475b5ffa76397b3fd84b930016b3b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) on ItemPipeType / FluidPipeType / GasPipeType.canInsert(Connection, stack, List): true at once when the filter list is empty (the original's answer: both of its streams run over nothing); non-empty and null lists run the original; shadow mode runs the original as a nested call and checks it answered true",
+      "license": "All Rights Reserved (Pipez): no Pipez code is carried (helper bons.furious.patch.pipez_logistics.EmptyFilters); target not in our pack: pipez-forge-1.20.1-1.2.26.jar (evidence/pipez_logistics/target.json)"
+    }
+  }
+}

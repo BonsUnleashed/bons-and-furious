@@ -1,0 +1,134 @@
+{
+  "group": "almostunified",
+  "keys": {
+    "almostunified_duplicate_groups": {
+      "mod": "almostunified",
+      "scripts": [],
+      "since": "1.0.29",
+      "mixins": [
+        "bons.furious.mixin.almostunified.DuplicateGroupsMixin",
+        "bons.furious.mixin.almostunified.RecipeLinkAccessor",
+        "bons.furious.mixin.almostunified.CompareSettingsAccessor"
+      ],
+      "guard": [
+        {
+          "class": "com/almostreliable/unified/recipe/RecipeTransformer",
+          "method": "transformRecipes",
+          "desc": "(Ljava/util/Map;Z)Lcom/almostreliable/unified/recipe/RecipeTransformer$Result;",
+          "sha256": "17aea09a5043e71cc127466c568e4ccb965af972522afbb4f550ab63ba9d6be0"
+        },
+        {
+          "class": "com/almostreliable/unified/recipe/RecipeTransformer",
+          "method": "handleDuplicate",
+          "desc": "(Lcom/almostreliable/unified/recipe/RecipeLink;Ljava/util/List;)Z",
+          "sha256": "5c5824142cf611faa44b8fd268b3172b953017842cac30286998aa17d0bd75b7"
+        },
+        {
+          "class": "com/almostreliable/unified/recipe/RecipeTransformer",
+          "method": "handleDuplicates",
+          "desc": "(Ljava/util/Collection;Ljava/util/List;)Ljava/util/Set;",
+          "sha256": "32706860be53efbe7457815f54a4e7219601c7d4faa075b8f16be070bfa550d7"
+        },
+        {
+          "class": "com/almostreliable/unified/recipe/RecipeLink",
+          "method": "handleDuplicate",
+          "desc": "(Lcom/almostreliable/unified/recipe/RecipeLink;Lcom/almostreliable/unified/utils/JsonCompare$CompareContext;)Z",
+          "sha256": "dc5918a6120b41407edda3e974245dd467e355fff41224c5974671e99fce29f9"
+        },
+        {
+          "class": "com/almostreliable/unified/recipe/RecipeLink",
+          "method": "compare",
+          "desc": "(Lcom/almostreliable/unified/recipe/RecipeLink;Lcom/almostreliable/unified/recipe/RecipeLink;Lcom/almostreliable/unified/utils/JsonCompare$CompareContext;)Lcom/almostreliable/unified/recipe/RecipeLink;",
+          "sha256": "8ee4e5c0c0c8e6de7fbfafaebc9f2c8c19841c70e6985e788a20ecede38d04e1"
+        },
+        {
+          "class": "com/almostreliable/unified/recipe/RecipeLink",
+          "method": "getCraftingRecipeOutput",
+          "desc": "()Lnet/minecraft/world/item/Item;",
+          "sha256": "f751c9735ad15d994e91a3d8f5cb958241a4fdbb4c6760ecb1eb6e45ac1563e4"
+        },
+        {
+          "class": "com/almostreliable/unified/recipe/RecipeLink",
+          "method": "getActual",
+          "desc": "()Lcom/google/gson/JsonObject;",
+          "sha256": "ae3c72a35fab8a02158e2f4938a457eb49e48cfb3b916ea5f4eb25998e12b8ed"
+        },
+        {
+          "class": "com/almostreliable/unified/recipe/RecipeLink",
+          "method": "updateDuplicateLink",
+          "desc": "(Lcom/almostreliable/unified/recipe/RecipeLink$DuplicateLink;)V",
+          "sha256": "f8513664c10a85eea07c81cb0c572af4c1fe137ef4e32bbf39343318bc31e218"
+        },
+        {
+          "class": "com/almostreliable/unified/recipe/RecipeLink",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;Lcom/google/gson/JsonObject;Lnet/minecraft/resources/ResourceLocation;)V",
+          "sha256": "c9423705ff76cc7220d495a20bca70e39adefc569421cd1570aaf42f0b3684a0"
+        },
+        {
+          "class": "com/almostreliable/unified/recipe/RecipeLink$DuplicateLink",
+          "method": "updateMaster",
+          "desc": "(Lcom/almostreliable/unified/recipe/RecipeLink;)V",
+          "sha256": "62c92b8a802143beb168cba35b3f4a7d8748d81365d0be91b7253c06f3c72434"
+        },
+        {
+          "class": "com/almostreliable/unified/utils/JsonCompare",
+          "method": "matches",
+          "desc": "(Lcom/google/gson/JsonObject;Lcom/google/gson/JsonObject;Lcom/almostreliable/unified/utils/JsonCompare$CompareContext;)Z",
+          "sha256": "6265ad4452a9d61c1fdd9cff2cf6b42fe12190a3377d5b266aae70e5dd7af553"
+        },
+        {
+          "class": "com/almostreliable/unified/utils/JsonCompare",
+          "method": "compareShaped",
+          "desc": "(Lcom/google/gson/JsonObject;Lcom/google/gson/JsonObject;Lcom/almostreliable/unified/utils/JsonCompare$CompareContext;)Lcom/google/gson/JsonObject;",
+          "sha256": "447046868697f795ffdd72b9d187ed871ff01f5ab87c1588d89280f35f35a294"
+        },
+        {
+          "class": "com/almostreliable/unified/utils/JsonCompare$CompareContext",
+          "method": "create",
+          "desc": "(Lcom/almostreliable/unified/utils/JsonCompare$CompareSettings;Lcom/google/gson/JsonObject;)Lcom/almostreliable/unified/utils/JsonCompare$CompareContext;",
+          "sha256": "5249237cc24cfb246acc9d4ec86c1da53a6964a22ac5aafef6681f43304279ce"
+        },
+        {
+          "class": "com/almostreliable/unified/utils/JsonCompare$CompareSettings",
+          "method": "getIgnoredFields",
+          "desc": "()Ljava/util/Set;",
+          "sha256": "1264539e3483eab0c0a9778542444a94b88cf8d91235813b0032cdc81dcbc1cc"
+        },
+        {
+          "class": "com/almostreliable/unified/utils/JsonCompare$CompareSettings",
+          "method": "hasIgnoredFields",
+          "desc": "()Z",
+          "sha256": "22c314c949acb4a353ff930f811d0603e63418e9ea24cddf28d2b9225cd72345"
+        },
+        {
+          "class": "com/almostreliable/unified/config/DuplicationConfig",
+          "method": "shouldIgnoreRecipe",
+          "desc": "(Lcom/almostreliable/unified/recipe/RecipeLink;)Z",
+          "sha256": "e1075e1481ecd34642152940bd88ffc0bc96e6e54255381c71a762a6a8b71f01"
+        },
+        {
+          "class": "com/almostreliable/unified/config/DuplicationConfig",
+          "method": "isRecipeTypeIgnored",
+          "desc": "(Lcom/almostreliable/unified/recipe/RecipeLink;)Z",
+          "sha256": "f887dd18d38868cbf4c5e78390ed734fc4562de71b67caffa03e9ceee569d897"
+        },
+        {
+          "class": "com/almostreliable/unified/config/DuplicationConfig",
+          "method": "getCompareContext",
+          "desc": "(Lcom/almostreliable/unified/recipe/RecipeLink;)Lcom/almostreliable/unified/utils/JsonCompare$CompareContext;",
+          "sha256": "0002d8f957b96949db9584baf875724058a09b85008fe4159d93275e4765161e"
+        },
+        {
+          "class": "com/almostreliable/unified/config/DuplicationConfig",
+          "method": "getCompareSettings",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lcom/almostreliable/unified/utils/JsonCompare$CompareSettings;",
+          "sha256": "0d251056c9533575106e693f7d73ab64b05ad509fb9b0ad050eae7608bf26382"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapMethod on RecipeTransformer.handleDuplicate, @Inject at the return of transformRecipes; an @Accessor/@Invoker interface on RecipeLink and an @Accessor on JsonCompare.CompareSettings)",
+      "license": "LGPL-3.0 (Almost Unified): the wrapper keeps AU's own loop (shouldIgnoreRecipe, getCompareContext, RecipeLink.handleDuplicate in list order) and replaces only its candidate list; helper bons.furious.patch.almostunified.DuplicateGroups"
+    }
+  }
+}

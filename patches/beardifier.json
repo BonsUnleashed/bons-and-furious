@@ -1,0 +1,79 @@
+{
+  "group": "beardifier",
+  "keys": {
+    "worldgen_empty_beardifier_marker": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.beardifier.BeardifierEmptyFillMixin",
+        "bons.furious.mixin.beardifier.NoiseChunkFillStateAccessor",
+        "bons.furious.mixin.beardifier.CreateNoiseChunkMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/Beardifier",
+          "method": "m_207386_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "sha256": "03dd32a5e7b1cc0dee947b2832ef33b1f881a97745e0714929c9cdcf314b29cf"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Beardifier",
+          "method": "m_223937_",
+          "desc": "(Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/ChunkPos;)Lnet/minecraft/world/level/levelgen/Beardifier;",
+          "sha256": "8a1b34d0ac33602f3b7e7f8f6f9721ece716adb369d533e3e5bda922217819e1"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Beardifier",
+          "method": "<init>",
+          "desc": "(Lit/unimi/dsi/fastutil/objects/ObjectListIterator;Lit/unimi/dsi/fastutil/objects/ObjectListIterator;)V",
+          "sha256": "0d5263abcb33b56f1f3b06c38c58962672cf21e80e900c2d7fb79d40642f79fa"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Beardifier",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set: a build that declares its own fillArray would collide with the one this switch adds",
+          "sha256": "3d2d7776088550a6e53df9b03978a5680091145a50a749993b2cbd0c4eee7889"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunction$SimpleFunction",
+          "method": "m_207362_",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V",
+          "note": "the inherited fillArray the added one reproduces for unflagged beardifiers",
+          "sha256": "88d5a86dc92bc6d0193853ba2db0b62625a0e0df2f502865718c5c3f449d408c"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator",
+          "method": "m_224256_",
+          "desc": "(Lnet/minecraft/world/level/chunk/ChunkAccess;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/levelgen/blending/Blender;Lnet/minecraft/world/level/levelgen/RandomState;)Lnet/minecraft/world/level/levelgen/NoiseChunk;",
+          "sha256": "93274b0fba3ea0e5afca93236abe74f939c2fd18aef216df8b1325b14a90235d"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_207207_",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction;)V",
+          "note": "fillAllDirectly: the values and the in-cell position / array index the flagged fill reproduces",
+          "sha256": "09a364603696c726df468edd99520d83242f3579b4d2f0ae27e5263d02d845e3"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "<init>",
+          "desc": "(ILnet/minecraft/world/level/levelgen/RandomState;IILnet/minecraft/world/level/levelgen/NoiseSettings;Lnet/minecraft/world/level/levelgen/DensityFunctions$BeardifierOrMarker;Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;Lnet/minecraft/world/level/levelgen/blending/Blender;)V",
+          "note": "cellWidth / cellHeight assignment and the beardifier's place in the final density",
+          "sha256": "4002da1eb3f5636a83ab187a1b58722401c681cc36856a9637687cf471c4f136"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_209233_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "note": "wrapNew: the beardifier marker resolves to the chunk's Beardifier",
+          "sha256": "291c1990c96d354f1b70484a90dcbb8a2c2d1fda67932799f7fc07843b312f6d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on Beardifier.forStructuresInChunk in NoiseBasedChunkGenerator.createNoiseChunk (returns the same object, flagged when it provably adds nothing); a fillArray added to Beardifier (SimpleFunction's one-call default unless flagged); accessors on NoiseChunk for the fill state",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helpers bons.furious.patch.beardifier.EmptyBeardifiers, EmptyFillBeardifier, NoiseChunkFillState); other mods' Beardifier code is only checked by SHA-256, never copied"
+    }
+  }
+}

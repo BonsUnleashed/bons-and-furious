@@ -1,0 +1,85 @@
+{
+  "group": "vanilla_c2",
+  "keys": {
+    "vanilla_entity_section_x_overflow": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.vanilla_c2.EntitySectionXOverflowMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/entity/EntitySectionStorage",
+          "method": "m_188362_",
+          "desc": "(Lnet/minecraft/world/phys/AABB;Lnet/minecraft/util/AbortableIterationConsumer;)V",
+          "sha256": "6486526750f73e1597cef041f725ad09dd48a7c75e9fc441519b29e504ec1c43"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntitySectionStorage",
+          "method": "m_156858_",
+          "desc": "(II)Lit/unimi/dsi/fastutil/longs/LongSortedSet;",
+          "sha256": "6099b134e73f8b2a865dc58af8f48f2b1eba2f504102c7305899565759ae5bff"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the two LongSortedSet.subSet calls of EntitySectionStorage (forEachAccessibleNonEmptySection, getChunkSections); only the call whose end wrapped to Long.MIN_VALUE becomes tailSet(start). A redirect, not a WrapOperation: Operation.call boxed 909 bytes per box query",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_c2.SectionXOverflow)"
+    },
+    "vanilla_cursor_counters": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.vanilla_c2.Cursor3DCounterMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/core/Cursor3D",
+          "method": "<init>",
+          "desc": "(IIIIII)V",
+          "sha256": "e4c40b6f3967458be5eca3b20a3950bf40ec0cbea1e045760c39dbba8ae62a20"
+        },
+        {
+          "class": "net/minecraft/core/Cursor3D",
+          "method": "m_122304_",
+          "desc": "()Z",
+          "sha256": "38f5af4ac8006be66a9bbd58adf3113be5b11cc174fef55e2ce01e49ec2b2fd3"
+        },
+        {
+          "class": "net/minecraft/core/Cursor3D",
+          "method": "m_122305_",
+          "desc": "()I",
+          "sha256": "979b5eb86895aede3076d75e86516a902ecf9a6a23fe3e60e62b6731b95388a8"
+        },
+        {
+          "class": "net/minecraft/core/Cursor3D",
+          "method": "m_122306_",
+          "desc": "()I",
+          "sha256": "f5824e5e6ff3a8f35bac7730caec792882731cdb8351f7ddbb9554f9bbfb9f3a"
+        },
+        {
+          "class": "net/minecraft/core/Cursor3D",
+          "method": "m_122307_",
+          "desc": "()I",
+          "sha256": "44a6cc3c00cac57e6856cb7eb77c01096e3dc0fc3ca34704d2485bc0c784ea7c"
+        },
+        {
+          "class": "net/minecraft/core/Cursor3D",
+          "method": "m_122308_",
+          "desc": "()I",
+          "sha256": "ae70fd670bd814086c7773fc864de615c22a3d0ddf16b93d619c585807c7cf0c"
+        },
+        {
+          "class": "net/minecraft/core/Cursor3D",
+          "method": "*",
+          "desc": "",
+          "sha256": "cd53716782bab69ed1f1b206febe46e5f9eb24292e26aa45a815f939796ef143"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at the constructor's return (mode decided once per cursor) and @Inject(HEAD, cancellable) on advance: counter mode answered by our own counter step, every other cursor falls through to the original advance in place",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own counter logic (helper bons.furious.patch.vanilla_c2.CursorCounters); the original advance runs unchanged for every other cursor"
+    }
+  }
+}

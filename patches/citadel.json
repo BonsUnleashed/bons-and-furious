@@ -1,0 +1,57 @@
+{
+  "group": "citadel",
+  "keys": {
+    "citadel_model_vertices": {
+      "mod": "citadel",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.citadel.CitadelBoxVerticesMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/citadel/client/model/AdvancedModelBox",
+          "method": "doRender",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V",
+          "note": "the box loop: four vertices per quad, vectors read before the vertex call",
+          "sha256": "507a5c68c17f6457bd17a7005fd49f58444d9007bc860d52c82d236dc0729782"
+        },
+        {
+          "class": "com/github/alexthe666/citadel/client/model/basic/BasicModelPart",
+          "method": "doRender",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V",
+          "sha256": "cfabcc44b257ec5efc56ca247fdd42a7fe8078f88d7dbf7c46a258618c3de658"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: @Redirect of new Vector3f(Vector3fc) and new Vector4f(FFFF) in doRender (AdvancedModelBox and BasicModelPart)",
+      "license": "LGPL-3.0 (Citadel): no Citadel code is carried; the redirects only replace two constructions and one call"
+    },
+    "lionfishapi_model_vertices": {
+      "mod": "lionfishapi",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.citadel.LionfishBoxVerticesMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/tools/AdvancedModelBox",
+          "method": "doRender",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V",
+          "note": "the same box loop as Citadel's",
+          "sha256": "36fa3aba77f5e68e1fb8ef0ef8bf2e3d8cd81e7a549c137735a28f2ec99a2a76"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/tools/BasicModelPart",
+          "method": "doRender",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V",
+          "sha256": "1c764813160d6c9777aa6bf7ad432d804cee23c3888c4487d5ff50ef158a7038"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: @Redirect of new Vector3f(Vector3fc) and new Vector4f(FFFF) in doRender (AdvancedModelBox and BasicModelPart)",
+      "license": "LGPL (LionfishAPI): no LionfishAPI code is carried"
+    }
+  }
+}

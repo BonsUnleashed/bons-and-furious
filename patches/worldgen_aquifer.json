@@ -1,0 +1,109 @@
+{
+  "group": "worldgen_aquifer",
+  "keys": {
+    "vanilla_aquifer_candidate_cache": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.worldgen_aquifer.AquiferCandidateMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$NoiseBasedAquifer",
+          "method": "m_207104_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;D)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "computeSubstance: the behaviour the table path reproduces (branches, order of status reads, flag values)",
+          "sha256": "b73553da44aa0c12b7cc1dc555cb7c2e31eabd8749effac2901950ee773e87b9"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$NoiseBasedAquifer",
+          "method": "m_188445_",
+          "desc": "(J)Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;",
+          "note": "getAquiferStatus: index of the cell holding the position, computeFluid when the slot is empty",
+          "sha256": "9b7be18ecc466f2590bfc07ad45608392033a3937bca21bbb7ca0eb768863dba"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$NoiseBasedAquifer",
+          "method": "m_158027_",
+          "desc": "(III)I",
+          "note": "getIndex: the cache layout the slot indices follow",
+          "sha256": "a3b516598891d0144abde81b43019a740d467f0c2a605f4f6a227b6836c0b8e7"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$NoiseBasedAquifer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/levelgen/NoiseChunk;Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/level/levelgen/NoiseRouter;Lnet/minecraft/world/level/levelgen/PositionalRandomFactory;IILnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;)V",
+          "note": "grid minimum and sizes, cache arrays (locations start at Long.MAX_VALUE)",
+          "sha256": "eb506b83f4d3d2295e95489ffbdeca1f34b7140aa6279dab59b009df04f037d8"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$NoiseBasedAquifer",
+          "method": "m_158039_",
+          "desc": "(I)I",
+          "note": "gridX = floorDiv(x, 16)",
+          "sha256": "14d2a42db8f15f4948f089ab1b40a1beb4a836944532c8aa695d1258b0aebd53"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$NoiseBasedAquifer",
+          "method": "m_158045_",
+          "desc": "(I)I",
+          "note": "gridY = floorDiv(y, 12)",
+          "sha256": "a12d8c4057b8234220c0db3988f9ac46f8bee3b06d46e276f8f81f9f42be0d06"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$NoiseBasedAquifer",
+          "method": "m_158047_",
+          "desc": "(I)I",
+          "note": "gridZ = floorDiv(z, 16)",
+          "sha256": "14d2a42db8f15f4948f089ab1b40a1beb4a836944532c8aa695d1258b0aebd53"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on Aquifer$NoiseBasedAquifer.computeSubstance: a per-aquifer table of grid cells answers the call (our logic; vanilla's computeFluid, calculatePressure, similarity and fluid picker are called as the original calls them); anything the table cannot answer runs the original",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.worldgen_aquifer.AquiferCandidates); YUNG's Cave Biomes' mixins are only checked by SHA-256, never copied"
+    },
+    "vanilla_aquifer_high_air": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.worldgen_aquifer.AquiferHighAirMixin",
+        "bons.furious.mixin.worldgen_aquifer.FluidStatusLevelAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$NoiseBasedAquifer",
+          "method": "m_207104_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;D)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "computeSubstance: the branch the early air return replaces (statuses 2 and 3, three pressures, flag true)",
+          "sha256": "b73553da44aa0c12b7cc1dc555cb7c2e31eabd8749effac2901950ee773e87b9"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$NoiseBasedAquifer",
+          "method": "m_208188_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;Lorg/apache/commons/lang3/mutable/MutableDouble;Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;Lnet/minecraft/world/level/levelgen/Aquifer$FluidStatus;)D",
+          "note": "calculatePressure: 0 or at most -4.4 when both levels are 5 or more below y; no barrier sample there",
+          "sha256": "81fd200eb7c2139415bea1ecce172e9ea1d887d86c33bda0abe6cb36cd4ea873"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$FluidStatus",
+          "method": "m_188405_",
+          "desc": "(I)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "at(y): air at or above the fluid level",
+          "sha256": "a57e48731326959b879702cde8e3a20b1ea6c74e968ad024f739327c0c8fa544"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Aquifer$FluidStatus",
+          "method": "<init>",
+          "desc": "(ILnet/minecraft/world/level/block/state/BlockState;)V",
+          "note": "fluidLevel is the level at(y) compares with",
+          "sha256": "1251a4448d4afdeaadda724a4642eb4afb304eea05dfcba2a6174bfb29a8e542"
+        }
+      ],
+      "cancel": [],
+      "conversion": "a marker interface on Aquifer$NoiseBasedAquifer and a read-only @Accessor on Aquifer$FluidStatus.fluidLevel; the return itself sits in vanilla_aquifer_candidate_cache's table path",
+      "license": "Minecraft (Mojang): no-copy; nothing of the classes is carried"
+    }
+  }
+}

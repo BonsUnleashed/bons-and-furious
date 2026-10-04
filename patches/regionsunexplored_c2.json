@@ -1,0 +1,37 @@
+{
+  "group": "regionsunexplored_c2",
+  "keys": {
+    "regionsunexplored_fuel_burn_memo": {
+      "mod": "regions_unexplored",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.regionsunexplored_c2.FurnaceBurnTimesMixin",
+        "bons.furious.mixin.regionsunexplored_c2.ItemFuelMemoSlotMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/regions_unexplored/block/compat/FurnaceBurnTimes",
+          "method": "burnTime",
+          "desc": "(Lnet/minecraftforge/event/furnace/FurnaceFuelBurnTimeEvent;)V",
+          "sha256": "97b5b4c096068a974637700bdb2c1ebe1c630650f442e13428002a2a1e1c0124"
+        },
+        {
+          "class": "net/minecraftforge/event/furnace/FurnaceFuelBurnTimeEvent",
+          "method": "getItemStack",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "911aee544bc2f246583fd104fb85bc0315a1d12686901df9a6ee96728f72f1ca"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41720_",
+          "desc": "()Lnet/minecraft/world/item/Item;",
+          "sha256": "ce7982961328f6d190746b117db6ef59920bc2a9dcbb28fadc3c325294da242c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on FurnaceBurnTimes.burnTime + @WrapOperation on its four setBurnTime calls (record, then replay per Item); a field added to Item holds the recorded calls",
+      "license": "Regions Unexplored: All Rights Reserved; Minecraft (Mojang): no-copy. The mixins carry only our own logic (helper bons.furious.patch.regionsunexplored_c2.FuelBurnMemo)"
+    }
+  }
+}

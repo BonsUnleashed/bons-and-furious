@@ -1,0 +1,43 @@
+{
+  "group": "tag_ids",
+  "keys": {
+    "vanilla_tag_membership_ids": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.tag_ids.HolderReferenceTagIdsMixin",
+        "bons.furious.mixin.tag_ids.TagKeyIdMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/core/Holder$Reference",
+          "method": "m_203656_",
+          "desc": "(Lnet/minecraft/tags/TagKey;)Z",
+          "sha256": "02ebca0f873704a76002edae5d15afa8a847425d7f8a78b824592c534ce1a33f"
+        },
+        {
+          "class": "net/minecraft/core/Holder$Reference",
+          "method": "m_205769_",
+          "desc": "(Ljava/util/Collection;)V",
+          "sha256": "49dae7d8e16107c737b626c8751ee3e4d6bcd399782e7e2a7d47d2eb99a7c8fb"
+        },
+        {
+          "class": "net/minecraft/tags/TagKey",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "sha256": "55faf04730f58b75fd602d970e3d1f113550c048f90693b260e7e07e7caee83c"
+        },
+        {
+          "class": "net/minecraft/tags/TagKey",
+          "method": "hashCode",
+          "desc": "()I",
+          "sha256": "6c8a3247271d3f1d819bd18fc99733e8aaf7b77dafb76e92c8b6ca346d8dadad"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of Set.contains inside Holder$Reference.is(TagKey) (m_203656_): membership by tag numbers (an int field added to TagKey, assigned per content from a map keyed by the TagKey itself) against the sorted numbers of the holder's current immutable tag set, rebuilt whenever the holder's set is another object (every bindTags); non-JDK-immutable sets, null and non-TagKey arguments and the runtime switch off call contains()",
+      "license": "Minecraft: no Minecraft code is carried; the redirect and helper bons.furious.patch.tag_ids.TagIds hold only our own logic"
+    }
+  }
+}

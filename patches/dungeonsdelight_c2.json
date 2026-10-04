@@ -1,0 +1,49 @@
+{
+  "group": "dungeonsdelight_c2",
+  "keys": {
+    "dungeonsdelight_yam_single_add": {
+      "mod": "dungeonsdelight",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.dungeonsdelight_c2.YamSingleAddMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/yirmiri/dungeonsdelight/common/entity/monster_yam/MonsterYamEntity",
+          "method": "m_8119_",
+          "desc": "()V",
+          "sha256": "64da2e6d4002d5b6dca5827ddb41f53b2eeee55144234f10b3797fa1ab8e8a80"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "m_7967_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "ddbfd21ad3e2df64300b475078ed674fa8af850e5a228e6abdcd5580a10cff43"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "m_8872_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "7a5dae80b97f765cf0af16d82772ee2821393fbb01f57b4b2c2f74ba101015a6"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157538_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;Z)Z",
+          "sha256": "7b5334759592ca4715f2f01d0eb5b321e47eaaa68b6b963b303f0f44318ffb79"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157557_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)Z",
+          "sha256": "41d4b710ab405aca2edd831464150e3b640558e2934410faeb635d2202b94983"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the two Level.addFreshEntity calls of MonsterYamEntity.tick with a @Share flag: the second is skipped (answering false) only when the first added the same zombie",
+      "license": "Dungeons Delight: AZURUNE licence (custom): no-copy; the wrappers carry only our own logic (helper bons.furious.patch.dungeonsdelight_c2.YamSingleAdd); Minecraft/Forge methods only fingerprinted",
+      "kind": "fix"
+    }
+  }
+}

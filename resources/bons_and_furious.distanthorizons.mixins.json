@@ -10,13 +10,15 @@
   "mixins": [
     "IgnoredDimensionCsvHandlerMixin",
     "RoughSurfaceDensityMixin",
-    "UpdateQueueWaitMixin"
+    "UpdateQueueWaitMixin",
+    "LodBiomeMemoMixin"
   ],
   "client": [
     "CloudParamsAccessor",
     "CloudRenderHandlerMixin",
     "RenderParamInverseMixin",
     "CloudPassInvariantsMixin",
-    "GenericRenderPassMixin"
+    "GenericRenderPassMixin",
+    "BiomeBlendMemoMixin"
   ]
 }

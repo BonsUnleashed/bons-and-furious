@@ -1,0 +1,68 @@
+{
+  "group": "state_memo",
+  "keys": {
+    "particular_chest_waterlogged_memo": {
+      "mod": "particular",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.state_memo.ChestBubbleWaterloggedMixin",
+        "bons.furious.mixin.state_memo.EnderChestBubbleWaterloggedMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/leclowndu93150/particular/mixin/InjectChestBlockEntity",
+          "method": "randomlyOpen",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/ChestBlockEntity;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "109c63e878356dded6c7b76de378da0d4263dcef586d23d9d06641300c68c43e"
+        },
+        {
+          "class": "com/leclowndu93150/particular/mixin/InjectEnderChestBlockEntity",
+          "method": "randomlyOpen",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/EnderChestBlockEntity;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "8b32f0fdeec3341308e7397c95e6444696d076476de21b8e2374eda1e585d91f"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/StateHolder",
+          "method": "m_61143_",
+          "desc": "(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;",
+          "sha256": "f3f4f76bfa7b1ec4910af70745e0e2983bad7c439a172902a8d05259e8900f4f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinSquared @TargetHandler + @Redirect (priority 1500, after Particular's mixins) of the first BlockState.getValue call (WATERLOGGED) in Particular's InjectChestBlockEntity.randomlyOpen and InjectEnderChestBlockEntity.randomlyOpen handlers: answered from StateValueMemo, a 1,024-slot identity-keyed open-addressing table of immutable (state, value) entries (8-slot probe window; a full window starts an empty table), else asked as before and remembered",
+      "license": "Particular is MIT; nothing of Particular's or Minecraft's code is carried: the redirects and the helpers bons.furious.patch.state_memo.ParticularWaterlogged / StateValueMemo hold only our own logic"
+    },
+    "spawn_sealife_waterlogged_memo": {
+      "mod": "spawn",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.state_memo.SeaLifeWaterloggedMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ninni/spawn/server/block/entity/SeaLifeDecoBlockEntity",
+          "method": "tick",
+          "desc": "(Lcom/ninni/spawn/server/block/entity/SeaLifeDecoBlockEntity;)V",
+          "sha256": "d7b925636a427c28f461393b055efee52f3f139a85fd84bf89f0ed21cd6f2010"
+        },
+        {
+          "class": "com/ninni/spawn/server/block/SeaLifeDecoBlock",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "3a21e21dc1dae4610e60ad09d9536f06c23acf329ab313033084f1e001491dcf"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/StateHolder",
+          "method": "m_61143_",
+          "desc": "(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;",
+          "sha256": "f3f4f76bfa7b1ec4910af70745e0e2983bad7c439a172902a8d05259e8900f4f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the first BlockState.getValue call (WATERLOGGED) in SeaLifeDecoBlockEntity.tick: answered from StateValueMemo (the same table), else asked as before and remembered; spawn_sealife_tick's five redirects in the same method target other calls",
+      "license": "Spawn is All Rights Reserved: nothing of Spawn's or Minecraft's code is carried; the redirect and the helpers bons.furious.patch.state_memo.SeaLifeWaterlogged / StateValueMemo hold only our own logic"
+    }
+  }
+}

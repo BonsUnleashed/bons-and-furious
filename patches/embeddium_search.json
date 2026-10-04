@@ -1,0 +1,543 @@
+{
+  "group": "embeddium_search",
+  "keys": {
+    "embeddium_search_replay": {
+      "mod": "embeddium",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.embeddium_search.OcclusionCullerReplayMixin",
+        "bons.furious.mixin.embeddium_search.RenderSectionManagerEpochMixin",
+        "bons.furious.mixin.embeddium_search.ViewportAccessMixin",
+        "bons.furious.mixin.embeddium_search.RenderSectionInfoEpochMixin"
+      ],
+      "guard": [
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/occlusion/OcclusionCuller",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "b73a3139a69b1f969b00199eacec71640180d7a16a8369df01e9903219fa9ed6"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/occlusion/OcclusionCuller",
+          "method": "<init>",
+          "desc": "(Lit/unimi/dsi/fastutil/longs/Long2ReferenceMap;Lnet/minecraft/world/level/Level;)V",
+          "sha256": "2ec11f31535b6651f8058737f762b218197b3c050ff3e902ac0a9c9b00ca629e"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/occlusion/OcclusionCuller",
+          "method": "findVisible",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/occlusion/OcclusionCuller$Visitor;Lme/jellysquid/mods/sodium/client/render/viewport/Viewport;FZI)V",
+          "sha256": "f35018ed7cf222462f327bb81b8cdb1fc8c89bc154cca2ff2200c61af1d584cf"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/occlusion/OcclusionCuller",
+          "method": "processQueue",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/occlusion/OcclusionCuller$Visitor;Lme/jellysquid/mods/sodium/client/render/viewport/Viewport;FZILme/jellysquid/mods/sodium/client/util/collections/ReadQueue;Lme/jellysquid/mods/sodium/client/util/collections/WriteQueue;)V",
+          "sha256": "8dbf25a4f82984ef79e7848d802ab284cbf6b78125165e65de3eebb4bd320108"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/occlusion/OcclusionCuller",
+          "method": "isSectionVisible",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/RenderSection;Lme/jellysquid/mods/sodium/client/render/viewport/Viewport;F)Z",
+          "sha256": "ff10e590817db08bc31be65cfef33c5f213efec563baeec01b8374d0fdaac9ba"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/occlusion/OcclusionCuller",
+          "method": "visitNeighbors",
+          "desc": "(Lme/jellysquid/mods/sodium/client/util/collections/WriteQueue;Lme/jellysquid/mods/sodium/client/render/chunk/RenderSection;II)V",
+          "sha256": "34091f83eff739445400e4f986b0e06ef6e15042a28ff2947bc7417c83f79f28"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/occlusion/OcclusionCuller",
+          "method": "visitNode",
+          "desc": "(Lme/jellysquid/mods/sodium/client/util/collections/WriteQueue;Lme/jellysquid/mods/sodium/client/render/chunk/RenderSection;II)V",
+          "sha256": "d73018db9f11a854e8639e437eec44ceac5aef7083bbf11f95c43f2238bb55b3"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/occlusion/OcclusionCuller",
+          "method": "getOutwardDirections",
+          "desc": "(Lnet/minecraft/core/SectionPos;Lme/jellysquid/mods/sodium/client/render/chunk/RenderSection;)I",
+          "sha256": "87ae7ddbf240f2492b91f8f7f1474cc1fac2186b16f508f1e9b5b6b62360f3b4"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/occlusion/OcclusionCuller",
+          "method": "isWithinRenderDistance",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/viewport/CameraTransform;Lme/jellysquid/mods/sodium/client/render/chunk/RenderSection;F)Z",
+          "sha256": "8a0cd9e06efd93edd6caed51c05489132569ab8086ad039de237ca4618b997b5"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/occlusion/OcclusionCuller",
+          "method": "nearestToZero",
+          "desc": "(II)I",
+          "sha256": "bc4d03714c55dc775df0f9b3746a5fe1eaeafddf9b4d12b9fa7f2f2a566c7a0b"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/occlusion/OcclusionCuller",
+          "method": "isWithinFrustum",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/viewport/Viewport;Lme/jellysquid/mods/sodium/client/render/chunk/RenderSection;)Z",
+          "sha256": "4aef103ce4f4563ecb7853609aad15e57b5a7714d9a3e8071c554441a26c8a61"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/occlusion/OcclusionCuller",
+          "method": "init",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/occlusion/OcclusionCuller$Visitor;Lme/jellysquid/mods/sodium/client/util/collections/WriteQueue;Lme/jellysquid/mods/sodium/client/render/viewport/Viewport;FZI)V",
+          "sha256": "56f66322ff1efa59365d3500efe9f180a33417c3e15f8ca9049fc4ec3d17c52f"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/occlusion/OcclusionCuller",
+          "method": "initWithinWorld",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/occlusion/OcclusionCuller$Visitor;Lme/jellysquid/mods/sodium/client/util/collections/WriteQueue;Lme/jellysquid/mods/sodium/client/render/viewport/Viewport;ZI)V",
+          "sha256": "987372f3c3655f337bb64e8bb733d50f6bfa526e3219811f76fa6efadf8982e8"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/occlusion/OcclusionCuller",
+          "method": "initOutsideWorldHeight",
+          "desc": "(Lme/jellysquid/mods/sodium/client/util/collections/WriteQueue;Lme/jellysquid/mods/sodium/client/render/viewport/Viewport;FIII)V",
+          "sha256": "1eb0c570cbca3b036c52e368fb75cac34f4c2c89af5413f13c6f55500dcab650"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/occlusion/OcclusionCuller",
+          "method": "tryVisitNode",
+          "desc": "(Lme/jellysquid/mods/sodium/client/util/collections/WriteQueue;IIIIILme/jellysquid/mods/sodium/client/render/viewport/Viewport;)V",
+          "sha256": "e7013b249d81925cf13c83ea2269269eda4f3081b2e410399ddd9db5b9b74448"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/occlusion/OcclusionCuller",
+          "method": "getRenderSection",
+          "desc": "(III)Lme/jellysquid/mods/sodium/client/render/chunk/RenderSection;",
+          "sha256": "64b16eb0ab46c445911905135adbff11ddaca94d38efc3b2cc3ceaffea6fadb7"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "502d04f160c68960fd23d3645979d494ddd5e658004f04e70e31c5a327888f0a"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "<init>",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/region/RenderRegion;III)V",
+          "sha256": "1a56632479bb5b8d75362cff744c102366a9a00faffb9c6d238869e76556f107"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "setAdjacentNode",
+          "desc": "(ILme/jellysquid/mods/sodium/client/render/chunk/RenderSection;)V",
+          "sha256": "abc17f8aed497e73cfc63765aca2a15ea6b92a04bb5147bfab9673f7a54d0e63"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "getAdjacentMask",
+          "desc": "()I",
+          "sha256": "28a8c08af0290e25c3d1abb616975b82dd85967f5ecd3ac23662fffb76fef465"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "setLastVisibleFrame",
+          "desc": "(I)V",
+          "sha256": "649703e3e8366c42393ea2862d2405c87cb693a257673c731384854d28a0f7a0"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "getLastVisibleFrame",
+          "desc": "()I",
+          "sha256": "f119a0aeff2a3e66f11e45c98b77412f09ed6cffb50702b807f3b0ac5437d7aa"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "getIncomingDirections",
+          "desc": "()I",
+          "sha256": "613027a8c98cfed63b8597bef68cf4359991e4845aa05c94af10f7c4187a0bae"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "addIncomingDirections",
+          "desc": "(I)V",
+          "sha256": "07db53c619f1e700a6067da6fcb9d561acfbcf0f2794badf7da529988b411286"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "setIncomingDirections",
+          "desc": "(I)V",
+          "sha256": "d74722ec3faf21071b9b56a9e9175f8637bbfa89b28e116e14fdd59a207b1446"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "getVisibilityData",
+          "desc": "()J",
+          "sha256": "ee59875987bf7afda6a7a3a2214cab936dbaaea6818a751d5ec89ce5bd0a6745"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "setInfo",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/data/BuiltSectionInfo;)V",
+          "sha256": "eb4e5cefc2b181266a65ba6c77edb7cc4a81ee3be87391081a14ab6dc8fe6653"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "setRenderState",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/data/BuiltSectionInfo;)V",
+          "sha256": "21dc1c5dd91d94c66317a6ea5aae1c47981bbd15f1e629c2c0f14524ed1f587f"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "clearRenderState",
+          "desc": "()V",
+          "sha256": "f6557c8089de0c633e877cef4ae849627077959ef4d88288c7f3f2fc65bf62b3"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "delete",
+          "desc": "()V",
+          "sha256": "9325a5f9ceecf59d6240e3be64a4ab26afc44c2277f0af4fc22e296b5974972b"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "getOriginX",
+          "desc": "()I",
+          "sha256": "1629208fafe15f8ae068f7c770fe9b33fd5ec052b73120185b28042a467367ea"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "getOriginY",
+          "desc": "()I",
+          "sha256": "38428cabc91443b091d53da2b8eee40106d557f721b48a3ecee572c61b760804"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "getOriginZ",
+          "desc": "()I",
+          "sha256": "90a4665da65a91178cc116b590abf7aadf21cde72e3235ced35085b5db970eaf"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "getCenterX",
+          "desc": "()I",
+          "sha256": "e99e87eec5e34e72d5663f117b03f2ca03459b87779cf36e84c0928398bb5aaa"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "getCenterY",
+          "desc": "()I",
+          "sha256": "b501c24582e20ab82749111dc8c508ae570baabd32601232a72123fed32048fb"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "getCenterZ",
+          "desc": "()I",
+          "sha256": "2b9fc35a6cf66be8bbfa0b1b00dfee373efece9f2545d46b409d9729e96972f8"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "getChunkX",
+          "desc": "()I",
+          "sha256": "7818443efb9be7fab1053045a7e287f4f96e7bce1f45189a424c95483cb2391d"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "getChunkY",
+          "desc": "()I",
+          "sha256": "8b912b654782c02623fcf2d5dae2de1316eb357ebecc5be3cd459ae73e9cfd30"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSection",
+          "method": "getChunkZ",
+          "desc": "()I",
+          "sha256": "ae618b5a9a061a66bf20a01a28e6474176c67588b6b1a90cee7ef01f7ce8be13"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSectionManager",
+          "method": "connectNeighborNodes",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/RenderSection;)V",
+          "sha256": "01475e535ff308d0503f2d27dc12d5899b4037de1a87f60dad86b7d785d6fa76"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSectionManager",
+          "method": "disconnectNeighborNodes",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/RenderSection;)V",
+          "sha256": "825e298f7657380a627e0bdb446424b8e484e2d8f841e44622ba74fd780a4e0e"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSectionManager",
+          "method": "onSectionAdded",
+          "desc": "(III)V",
+          "sha256": "0a56dc442f9d696c1c55afe9820b4a152db9b5e55b5fda082f7cd5644ded1a8e"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSectionManager",
+          "method": "onSectionRemoved",
+          "desc": "(III)V",
+          "sha256": "9079d4424e1e2fa3d3456dd9653a1a5ec43f690477d1a67b528ffd8244d79f85"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSectionManager",
+          "method": "createTerrainRenderList",
+          "desc": "(Lnet/minecraft/client/Camera;Lme/jellysquid/mods/sodium/client/render/viewport/Viewport;IZ)V",
+          "sha256": "fa5a08c03f66d1cab1e15bb1d4f2c2976c75cf58f31ea689ff30d45d75069bdd"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/RenderSectionManager",
+          "method": "update",
+          "desc": "(Lnet/minecraft/client/Camera;Lme/jellysquid/mods/sodium/client/render/viewport/Viewport;IZ)V",
+          "sha256": "4d549576a33ff26f99aebe25df867393b65578be536e7386930ae5ebfa964d32"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/lists/VisibleChunkCollector",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "33f214e7b4b0c9ce24d8db876d84eb786c2bbf7c07e98c4572fc03cc0ea9e3f1"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/lists/VisibleChunkCollector",
+          "method": "<init>",
+          "desc": "(I)V",
+          "sha256": "b60b9d90f6f5e59024c1c84a8e0470a630d5cb69ccfcee873f5a4b428db358f3"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/lists/VisibleChunkCollector",
+          "method": "visit",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/RenderSection;Z)V",
+          "sha256": "a04e390d03406bcbc31b21fccaf998457af362092f212cced20c960c03c8bb05"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/lists/VisibleChunkCollector",
+          "method": "addToRebuildLists",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/RenderSection;)V",
+          "sha256": "e66ed575e54530f0be05c25723d7073e16580ccb451a152bc6023f389c9e0919"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/viewport/Viewport",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "682f78b07f7602b40848177b13e801ce6c50ad55bbb36402c745da1b0c532418"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/viewport/Viewport",
+          "method": "<init>",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/viewport/frustum/Frustum;Lorg/joml/Vector3d;)V",
+          "sha256": "cd3f797e2f4c28fe3d1a0e4fbfebfcafe8e1757ca8b86194d108046694e8a340"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/viewport/Viewport",
+          "method": "isBoxVisible",
+          "desc": "(IIIF)Z",
+          "sha256": "2841675b379ba014571144f9216b14d8dfdf2da67659f824be93ba3d9351a2be"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/viewport/Viewport",
+          "method": "isBoxVisible",
+          "desc": "(IIIFFF)Z",
+          "sha256": "6f6d9308e24e70bca9023dab06335f6f0fc34df9e4a805c9d257e602ed50d703"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/viewport/Viewport",
+          "method": "getTransform",
+          "desc": "()Lme/jellysquid/mods/sodium/client/render/viewport/CameraTransform;",
+          "sha256": "848841362a2a2ff53824a21ad7ff3adada99767fb1f3ec7c4e4ae81c73d541d4"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/viewport/Viewport",
+          "method": "getChunkCoord",
+          "desc": "()Lnet/minecraft/core/SectionPos;",
+          "sha256": "56e2f9e603eee325ef66f906e21a9f3f43b242eb004fb753b4b45f611e57710d"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/viewport/CameraTransform",
+          "method": "<init>",
+          "desc": "(DDD)V",
+          "sha256": "ca585632fe21b4657654ec5587a2e71e4cf54364e261760354cab22f3864bbfd"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/viewport/CameraTransform",
+          "method": "integral",
+          "desc": "(D)I",
+          "sha256": "5a28d1212e360a3a257b2ce218f17beb1793074176a7aded434fc8c18cb0ecef"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/viewport/CameraTransform",
+          "method": "fractional",
+          "desc": "(D)F",
+          "sha256": "7a3931d560474d86c583239a2f45536356256d450b50f140b04bd4825e541cdf"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/viewport/frustum/SimpleFrustum",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "8df784fbd88e41530eb324352c7c7da305c335b0ea27d47365d5e7b24f9c20d1"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/viewport/frustum/SimpleFrustum",
+          "method": "testAab",
+          "desc": "(FFFFFF)Z",
+          "sha256": "38e4094dd3c92d156366383044533ee4741ac51565fcff160e171506f575178e"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/util/collections/DoubleBufferedQueue",
+          "method": "flip",
+          "desc": "()Z",
+          "sha256": "23d2086fd9534ae0d8d0fb1793c0b250f873414635ae11d3f10e486becb2377a"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/util/collections/DoubleBufferedQueue",
+          "method": "reset",
+          "desc": "()V",
+          "sha256": "575d70b048f2436d0c8a2da6284b26990cbacb718e9fd7c1ff2ad2265e464ab8"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/util/collections/DoubleBufferedQueue$QueueImpl",
+          "method": "enqueue",
+          "desc": "(Ljava/lang/Object;)V",
+          "sha256": "729a14bdc496427700f5427a547390c523ed44d5dfecb86e700200d8ad6a2aac"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/util/collections/DoubleBufferedQueue$QueueImpl",
+          "method": "dequeue",
+          "desc": "()Ljava/lang/Object;",
+          "sha256": "255ce26dc03f3e90d2172a9a91ad1c6307384c689f0ca6b8525ac812b8297fe3"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/util/collections/DoubleBufferedQueue$QueueImpl",
+          "method": "ensureCapacity",
+          "desc": "(I)V",
+          "sha256": "35e4ff386c7d9eea98a8539fb4858bfcc2ae9a711f8f06488abc85f8af029436"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/util/collections/DoubleBufferedQueue$QueueImpl",
+          "method": "clear",
+          "desc": "()V",
+          "sha256": "27c660cb462acb8e7a3d323cf84b47d40ddd352798695ab77b8ce54fa8a1aaaf"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/occlusion/VisibilityEncoding",
+          "method": "getConnections",
+          "desc": "(JI)I",
+          "sha256": "943c2be58963d790cad59db647dd91c47436089c461883bb04de645be89fc0c5"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/occlusion/VisibilityEncoding",
+          "method": "getConnections",
+          "desc": "(J)I",
+          "sha256": "a1e6ea69fb665a07f634db0ed37476d90f78cea229c1c0bfd765e11e3c604aae"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/occlusion/GraphDirectionSet",
+          "method": "of",
+          "desc": "(I)I",
+          "sha256": "3099a289eba531d68e311e3925922fb221648fde6cb8927537f720906ba2779e"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/occlusion/GraphDirectionSet",
+          "method": "contains",
+          "desc": "(II)Z",
+          "sha256": "c7d31b2a6a0f4752cf58494c6546889c66be70408fe15fbb3918fdc22a84901c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapMethod around OcclusionCuller.findVisible; @Inject at the head of RenderSectionManager.connectNeighborNodes / disconnectNeighborNodes and of RenderSection.setRenderState / clearRenderState; an @Accessor for Viewport.frustum)",
+      "license": "Embeddium is LGPL-3.0-only: no Embeddium code is carried; the wrapper calls Embeddium's own findVisible, isSectionVisible and visitor (helper bons.furious.patch.embeddium_search.SearchReplay)"
+    },
+    "oculus_shadow_search_replay": {
+      "mod": "oculus",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.embeddium_search.ShadowFrustumMarkerMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/irisshaders/iris/compat/sodium/mixin/shadow_map/frustum/MixinAdvancedShadowCullingFrustum",
+          "method": "testAab",
+          "desc": "(FFFFFF)Z",
+          "sha256": "1e293f6c60ef733b02fc97f789b59e4515345ab2b4d42962b721baac8a405b97"
+        },
+        {
+          "class": "net/irisshaders/iris/compat/sodium/mixin/shadow_map/frustum/MixinBoxCullingFrustum",
+          "method": "testAab",
+          "desc": "(FFFFFF)Z",
+          "sha256": "61d10b8c39a0c76335aef34c88a90274392b6c7f61ecccf4594667baee3dcb4e"
+        },
+        {
+          "class": "net/irisshaders/iris/compat/sodium/mixin/shadow_map/frustum/MixinNonCullingFrustum",
+          "method": "testAab",
+          "desc": "(FFFFFF)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/irisshaders/iris/compat/sodium/mixin/shadow_map/frustum/MixinCullEverythingFrustum",
+          "method": "testAab",
+          "desc": "(FFFFFF)Z",
+          "sha256": "a9057d062fb197564c8e845386d2280bde1a1cc2fd7f4098adc42ac45ea65ea5"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/frustum/advanced/AdvancedShadowCullingFrustum",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "763430dace0d9db3aa20d28271e8b626a7f618b58c2bc82a0013d9632a019e7f"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/frustum/advanced/AdvancedShadowCullingFrustum",
+          "method": "checkCornerVisibility",
+          "desc": "(FFFFFF)I",
+          "sha256": "509b3764c9987e326118fca924b44c5d82ccbf9b485b95820098db72a2fa259f"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/frustum/advanced/ReversedAdvancedShadowCullingFrustum",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "f2527a11898469d8ab6943c868fde20310d534d47d846113572cf971770c75af"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/frustum/advanced/ReversedAdvancedShadowCullingFrustum",
+          "method": "testAab",
+          "desc": "(FFFFFF)Z",
+          "sha256": "d529ac1571d6d34501974c6b6a1d6e843205947cff87d8f274262e82cac00333"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/frustum/fallback/BoxCullingFrustum",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "591da72f657c978f2d208cec4ec3d42b7d1ea42edb11fd8c997ec6cab6f3d98b"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/frustum/fallback/NonCullingFrustum",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "c5a6d8e70e4a13e0cf5b38e57287cb1f83f888bfee5c82b13baf42f6257d7d6c"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/frustum/CullEverythingFrustum",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "c5a6d8e70e4a13e0cf5b38e57287cb1f83f888bfee5c82b13baf42f6257d7d6c"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/frustum/BoxCuller",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "f8600fa3586ca9fe79ef41a36626266a628bbdb36397744eff852bfb4fff890d"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/frustum/BoxCuller",
+          "method": "isCulledSodium",
+          "desc": "(DDDDDD)Z",
+          "sha256": "0c2a5ae19342985662d43522787bafa37c562e54eec6e9e07fc3adb1494e184c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (an empty mixin that adds the marker interface PureShadowFrustum to four Oculus frustum classes)",
+      "license": "Oculus is LGPL-3.0-only: nothing of Oculus is carried or changed (marker interface only)"
+    }
+  }
+}

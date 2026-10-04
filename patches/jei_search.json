@@ -1,0 +1,209 @@
+{
+  "group": "jei_search",
+  "keys": {
+    "jei_baked_index_background_grams": {
+      "mod": "jei",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.jei_search.BakedIndexBuilderMixin",
+        "bons.furious.mixin.jei_search.BakedIndexAccessor"
+      ],
+      "guard": [
+        {
+          "class": "mezz/jei/modshade/net/mezzdev/bakedsubstring/BakedSubstringIndex$Builder",
+          "method": "put",
+          "desc": "(Ljava/lang/String;Ljava/lang/Object;)Lmezz/jei/modshade/net/mezzdev/bakedsubstring/BakedSubstringIndex$Builder;",
+          "sha256": "6209222fc437c8857edde335ac35970da9c5a447c10ea2282a0d5aaece8047dc"
+        },
+        {
+          "class": "mezz/jei/modshade/net/mezzdev/bakedsubstring/BakedSubstringIndex$Builder",
+          "method": "build",
+          "desc": "()Lmezz/jei/modshade/net/mezzdev/bakedsubstring/BakedSubstringIndex;",
+          "sha256": "a4f438bb5c7486f7f501694721829265efebf04400ca872a8a85ca7619285c67"
+        },
+        {
+          "class": "mezz/jei/modshade/net/mezzdev/bakedsubstring/BakedSubstringIndex$Builder",
+          "method": "addGrams",
+          "desc": "(Lit/unimi/dsi/fastutil/longs/Long2ObjectOpenHashMap;Lit/unimi/dsi/fastutil/longs/Long2IntOpenHashMap;Ljava/lang/String;I)V",
+          "sha256": "ab5614c1d46b1e0bd2de13013b45a0ee730627c51619c5aacfd85596c8d09324"
+        },
+        {
+          "class": "mezz/jei/modshade/net/mezzdev/bakedsubstring/BakedSubstringIndex$Builder",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "555a1acb7178b7c570d042fb935724749ce11abb2694349810edbcd18aec8aeb"
+        },
+        {
+          "class": "mezz/jei/modshade/net/mezzdev/bakedsubstring/BakedSubstringIndex",
+          "method": "<init>",
+          "desc": "([Ljava/lang/String;[Ljava/lang/Object;Lit/unimi/dsi/fastutil/longs/Long2ObjectOpenHashMap;Z)V",
+          "sha256": "0b70fb67890677f1fce5d671ce7684eb91f51b18b9aacb38b076be50cf23a41c"
+        },
+        {
+          "class": "mezz/jei/modshade/net/mezzdev/bakedsubstring/BakedSubstringIndex",
+          "method": "encodeGram",
+          "desc": "(Ljava/lang/String;II)J",
+          "sha256": "7029c247785ce76bc625ded7ac76474d02274f660f2d39df5abc9356972a52b4"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapMethod on BakedSubstringIndex$Builder.put and build; @WrapOperation in build() on the addGrams call, the repeated-value Set.add and the NEW of BakedSubstringIndex; @Shadow of the builder's two final lists; read-only @Accessors of BakedSubstringIndex's fields for the shadow comparison)",
+      "license": "MIT (JEI, incl. its shaded net.mezzdev.bakedsubstring); no JEI code is carried: the postings are computed by our own code (helper bons.furious.patch.jei_search.BackgroundGrams) from the documented behaviour of build()"
+    },
+    "jei_sort_index_keys": {
+      "mod": "jei",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.jei_search.IngredientSorterMixin",
+        "bons.furious.mixin.jei_search.SorterComparatorsAccessor",
+        "bons.furious.mixin.jei_search.SortingConfigAccessor",
+        "bons.furious.mixin.jei_search.MappedSortingConfigAccessor"
+      ],
+      "guard": [
+        {
+          "class": "mezz/jei/gui/ingredients/IngredientSorter",
+          "method": "sortIngredients",
+          "desc": "(Lmezz/jei/common/config/IClientConfig;Lmezz/jei/gui/config/ModNameSortingConfig;Lmezz/jei/gui/config/IngredientTypeSortingConfig;Lmezz/jei/api/runtime/IIngredientManager;Ljava/util/List;)Ljava/util/Comparator;",
+          "sha256": "05ba9bb2fe81fe715d710bfd513861001357dd44d81343d9a74fd48f1c857811"
+        },
+        {
+          "class": "mezz/jei/gui/ingredients/IngredientSorterComparators",
+          "method": "<init>",
+          "desc": "(Lmezz/jei/api/runtime/IIngredientManager;Lmezz/jei/gui/config/ModNameSortingConfig;Lmezz/jei/gui/config/IngredientTypeSortingConfig;Ljava/util/Set;)V",
+          "sha256": "fba0de74026bd3266e81e0231810ecfd23aae13c880d13914c7326bbfbd4113e"
+        },
+        {
+          "class": "mezz/jei/gui/ingredients/IngredientSorterComparators",
+          "method": "getComparator",
+          "desc": "(Ljava/util/List;)Ljava/util/Comparator;",
+          "sha256": "b09f0b4c486bf1ab0fd47b3251ba6f61632151c3b5e60e530c06feef7d1fea82"
+        },
+        {
+          "class": "mezz/jei/gui/ingredients/IngredientSorterComparators",
+          "method": "getComparator",
+          "desc": "(Lmezz/jei/common/config/IngredientSortStage;)Ljava/util/Comparator;",
+          "sha256": "ad5de44760066739b8c1d64f4b08922b9cd071ee861d60de7e43bdfee0dda05d"
+        },
+        {
+          "class": "mezz/jei/gui/ingredients/IngredientSorterComparators",
+          "method": "getDefault",
+          "desc": "()Ljava/util/Comparator;",
+          "sha256": "19b8605b6efc596338fa0c3ddff782722e1e9688c64b548aa6f84f48664bacc0"
+        },
+        {
+          "class": "mezz/jei/gui/ingredients/IngredientSorterComparators",
+          "method": "getCreativeMenuComparator",
+          "desc": "()Ljava/util/Comparator;",
+          "sha256": "3d9b2c544b598f8aa6654e0bd1113cdf6d51775072302d1787414aa8d2485eac"
+        },
+        {
+          "class": "mezz/jei/gui/ingredients/IngredientSorterComparators",
+          "method": "getAlphabeticalComparator",
+          "desc": "()Ljava/util/Comparator;",
+          "sha256": "5759665550ac5ac7fbcf2d8b4853263bd15e9bbe7ba45c2bcb24f65728f23b22"
+        },
+        {
+          "class": "mezz/jei/gui/ingredients/IngredientSorterComparators",
+          "method": "lambda$getAlphabeticalComparator$0",
+          "desc": "(Lmezz/jei/gui/ingredients/IListElementInfo;)Ljava/lang/String;",
+          "sha256": "1d68827904248269dd718cdb4b0b4af9109bd9666922e44392c372029073df13"
+        },
+        {
+          "class": "mezz/jei/gui/ingredients/IngredientSorterComparators",
+          "method": "getModNameComparator",
+          "desc": "()Ljava/util/Comparator;",
+          "sha256": "923399f13e3b6ee7f6e56983624c62a12d07db9606c3b152cc0d69c7064a2fe8"
+        },
+        {
+          "class": "mezz/jei/gui/ingredients/IngredientSorterComparators",
+          "method": "getIngredientTypeComparator",
+          "desc": "()Ljava/util/Comparator;",
+          "sha256": "e2698702952b0d0405cd1282eec5db6a8c0de0cebf6378e53bbd5695378c4f8c"
+        },
+        {
+          "class": "mezz/jei/common/config/sorting/SortingConfig",
+          "method": "getComparator",
+          "desc": "(Ljava/util/Collection;Ljava/util/function/Function;)Ljava/util/Comparator;",
+          "sha256": "72a65c2f5d20d8cfeb296609e52225e44873de4c24a7e106ebf988467393d74d"
+        },
+        {
+          "class": "mezz/jei/common/config/sorting/SortingConfig",
+          "method": "lambda$getComparator$3",
+          "desc": "(Ljava/util/function/Function;Ljava/util/List;Ljava/lang/Object;)I",
+          "sha256": "9f9b4a7ea7ef70f6021d43ac1c1cfc9a8c8d857d68a0190a693bb1697a558315"
+        },
+        {
+          "class": "mezz/jei/common/config/sorting/SortingConfig",
+          "method": "indexOfSort",
+          "desc": "(I)I",
+          "sha256": "ca087b6fb09a2d3537550bfdf6ab43bd2efbfbcb6a87d516b6b5c8b92a6ca336"
+        },
+        {
+          "class": "mezz/jei/common/config/sorting/SortingConfig",
+          "method": "getSorted",
+          "desc": "(Ljava/util/Collection;)Ljava/util/List;",
+          "sha256": "0d7d54f1e1181339e18201eb1f813dd68b038713def733adbf88abeb08152d92"
+        },
+        {
+          "class": "mezz/jei/common/config/sorting/MappedSortingConfig",
+          "method": "<init>",
+          "desc": "(Ljava/nio/file/Path;Lmezz/jei/common/config/sorting/serializers/ISortingSerializer;Ljava/util/function/Function;)V",
+          "sha256": "94c869ffbb60171bfa354fc4f2c865d0a8013a73382d693fd4a7db18462b8fb4"
+        },
+        {
+          "class": "mezz/jei/common/config/sorting/MappedSortingConfig",
+          "method": "getComparatorFromMappedValues",
+          "desc": "(Ljava/util/Collection;)Ljava/util/Comparator;",
+          "sha256": "c99a6e5422a9a43ba59191967109878c7a60e5527d00164aeb4d4f41a21ce0ca"
+        },
+        {
+          "class": "mezz/jei/gui/config/ModNameSortingConfig",
+          "method": "<init>",
+          "desc": "(Ljava/nio/file/Path;)V",
+          "sha256": "e38de4842e5a1fd1e3ce712f15072d6bff56c778c1ab4a21cbbadfb8e63ee53f"
+        },
+        {
+          "class": "mezz/jei/gui/config/IngredientTypeSortingConfig",
+          "method": "<init>",
+          "desc": "(Ljava/nio/file/Path;)V",
+          "sha256": "b8710d4ceb274d5559685c7d9fa25380af5c3d625f1dbf7ab242f5ba894104b1"
+        },
+        {
+          "class": "mezz/jei/gui/config/IngredientTypeSortingConfig",
+          "method": "getIngredientTypeString",
+          "desc": "(Lmezz/jei/gui/ingredients/IListElementInfo;)Ljava/lang/String;",
+          "sha256": "490df4c2faf5d9f2875e84e047d2928f0e8beddb0d8c35b99eb2edbf18214ac9"
+        },
+        {
+          "class": "mezz/jei/gui/config/IngredientTypeSortingConfig",
+          "method": "getIngredientTypeString",
+          "desc": "(Lmezz/jei/api/ingredients/IIngredientType;)Ljava/lang/String;",
+          "sha256": "4478dd8b185e81456d1f6d6a3257f3c3b5835e8f8836d9c1469017b7644a813a"
+        },
+        {
+          "class": "mezz/jei/gui/ingredients/ListElementInfo",
+          "method": "getModNameForSorting",
+          "desc": "()Ljava/lang/String;",
+          "sha256": "71433c68c81033f1eaa3ecb9337241da5b6c77eca7a972c32d0db91d13e3d775"
+        },
+        {
+          "class": "mezz/jei/gui/ingredients/ListElementInfo",
+          "method": "getCreatedIndex",
+          "desc": "()I",
+          "sha256": "7bd9268f2d78c33d7910cdcbca4cbcd1264ea88660267b50c8c618d42ab562f5"
+        },
+        {
+          "class": "mezz/jei/gui/ingredients/ListElementInfo",
+          "method": "getNames",
+          "desc": "()Ljava/util/List;",
+          "sha256": "6e273b5f577e269ce86b2663869076bfec394ee82d59dca077683b4d19e7006c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation in IngredientSorter.sortIngredients on IngredientSorterComparators.getComparator(List) (noted, result unchanged) and on List.sort; read-only @Accessors of the sorting configs, their loaded order and mapping)",
+      "license": "MIT (JEI); no JEI code is carried: the keys are computed with JEI's own mapping functions and the order from the comparators' documented behaviour (helper bons.furious.patch.jei_search.SortKeys)"
+    }
+  }
+}

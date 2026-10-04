@@ -1,0 +1,49 @@
+{
+  "group": "netherexp_c2",
+  "keys": {
+    "netherexp_antidote_effect_guard": {
+      "mod": "netherexp",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.netherexp_c2.AntidoteEffectGuardMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/jadenxgamer/netherexp/registry/item/custom/AntidoteItem",
+          "method": "getAntidoteEffect",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/effect/MobEffect;",
+          "sha256": "e63886b446fb1e18c07d80d50571f5142811da271fb59346914b7370933968c5"
+        },
+        {
+          "class": "net/jadenxgamer/netherexp/registry/item/custom/AntidoteItem",
+          "method": "getColor",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "sha256": "c7f99faac487a2f92dfcc431cc0ae5fa65d8b0f6a75cbb086a394a76e753e7ee"
+        },
+        {
+          "class": "net/jadenxgamer/netherexp/registry/item/custom/AntidoteItem",
+          "method": "m_5922_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "8389f772419ab2acb2aed4a6060120642d3c91b96cfc392debe0f1fb144a2b9e"
+        },
+        {
+          "class": "net/jadenxgamer/netherexp/registry/item/custom/AntidoteItem",
+          "method": "m_7373_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",
+          "sha256": "f331d4783cbdcedc1d62ab38c3c9e1a70aff1c2d7380101887a4008c0ec1502b"
+        },
+        {
+          "class": "net/jadenxgamer/netherexp/registry/item/custom/AntidoteItem",
+          "method": "*",
+          "desc": "",
+          "sha256": "421977f882d2208ebd11ee2ca7066058edee57b68edfcc311de7e11ba881fef8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the ResourceLocation constructor and the Objects.requireNonNull call in AntidoteItem.getAntidoteEffect (malformed or unregistered id -> null, the method's own 'no effect' answer)",
+      "license": "CC-BY-NC-SA-4.0: no-copy; the wrappers carry only our own handling (helper bons.furious.patch.netherexp_c2.AntidoteGuard)",
+      "kind": "fix"
+    }
+  }
+}

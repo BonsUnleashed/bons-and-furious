@@ -1,0 +1,84 @@
+{
+  "group": "l2library_c2",
+  "keys": {
+    "l2library_effect_icon_fast_path": {
+      "mod": "l2library",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.l2library_c2.EffectIconFastPathMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/xkmc/l2library/init/events/ClientEffectRenderEvents",
+          "method": "onLivingRenderEvents",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "sha256": "a2779c311dc9f787a40483b4d80756070875b0dba7c3f2fb491e17890ec33a9e"
+        },
+        {
+          "class": "dev/xkmc/l2library/capability/entity/GeneralCapabilityHolder",
+          "method": "isProper",
+          "desc": "(Lnet/minecraftforge/common/capabilities/ICapabilityProvider;)Z",
+          "sha256": "f57fa874a7fc92e253b98d3b21f40c75e46987af93f76cf5748fe1502165cd8d"
+        },
+        {
+          "class": "dev/xkmc/l2library/capability/entity/GeneralCapabilityHolder",
+          "method": "get",
+          "desc": "(Lnet/minecraftforge/common/capabilities/ICapabilityProvider;)Ldev/xkmc/l2library/capability/entity/GeneralCapabilityTemplate;",
+          "sha256": "b19cee3682687ee8d47f77083d4c3b25452c20698793bb383543d70349fa2028"
+        },
+        {
+          "class": "dev/xkmc/l2library/capability/entity/GeneralCapabilityTemplate",
+          "method": "check",
+          "desc": "()Ldev/xkmc/l2library/capability/entity/GeneralCapabilityTemplate;",
+          "sha256": "d1e09d643f1559dc3b74eab06d332db2d4a350f4e4949d1c73fd639ea9d5039a"
+        },
+        {
+          "class": "dev/xkmc/l2library/capability/entity/GeneralCapabilityTemplate",
+          "method": "getThis",
+          "desc": "()Ldev/xkmc/l2library/capability/entity/GeneralCapabilityTemplate;",
+          "sha256": "599f85507c4149eb5ebbc53c4af4be481af39269dc80d8492cc8314ad3e317b5"
+        },
+        {
+          "class": "dev/xkmc/l2serial/util/Wrappers",
+          "method": "cast",
+          "desc": "(Ljava/lang/Object;)Ljava/lang/Object;",
+          "sha256": "d6ee11652b8fc4b605d91bac434ba2b5574e707e7f1d329704c05f8c39a592e8"
+        },
+        {
+          "class": "dev/xkmc/l2library/base/effects/ClientEffectCap",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "176461ed58260609d237fec9e731505e705ecec672f2711540491e7f143cab46"
+        },
+        {
+          "class": "dev/xkmc/l2library/capability/entity/GeneralCapabilitySerializer",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "sha256": "eb93cbf5ad062e540d1bc2b95b1151451619817d7b5b0f1a1701f546edbf2cc8"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "isPresent",
+          "desc": "()Z",
+          "sha256": "528ff0650ee32736aedfad726cb2cecad9ff733967636cf3f368cb7713d94073"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "orElse",
+          "desc": "(Ljava/lang/Object;)Ljava/lang/Object;",
+          "sha256": "28cc736150f375e63b5bb2b18a75e6a6fd4174c63e31bee4e8bc428c049cb292"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_19880_",
+          "desc": "()Ljava/util/Set;",
+          "sha256": "0a583d37161c8410d3f46db6e1bc6a536ac1ada4f4491ab97a45d8592bc03048"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation on the GeneralCapabilityHolder.isProper call that opens ClientEffectRenderEvents.onLivingRenderEvents); helper bons.furious.patch.l2library_c2.EffectIconFastPath; the L2 classes are Jar-in-Jar (Ars Delight 1.2.2 ships l2library-2.5.1-slim and l2serial-1.2.0) and are fingerprinted from the nested jars, as c2me_compat does for C2ME's modules",
+      "license": "LGPL-2.1 (L2 Library): only the isProper call is wrapped, no L2 code is carried"
+    }
+  }
+}

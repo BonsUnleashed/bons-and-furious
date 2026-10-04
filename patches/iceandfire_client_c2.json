@@ -1,0 +1,60 @@
+{
+  "group": "iceandfire_client_c2",
+  "keys": {
+    "iceandfire_path_debug_stage_gate": {
+      "mod": "iceandfire",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.iceandfire_client_c2.PathDebugStageGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/iceandfire/event/ClientEvents",
+          "method": "renderWorldLastEvent",
+          "desc": "(Lnet/minecraftforge/client/event/RenderLevelStageEvent;)V",
+          "sha256": "d1e8e71d382a72c639e61ba98d885e804535c7790ecca0f7c7f6e5cca80fbc00"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/pathfinding/raycoms/WorldEventContext",
+          "method": "renderWorldLastEvent",
+          "desc": "(Lnet/minecraftforge/client/event/RenderLevelStageEvent;)V",
+          "sha256": "365147694f605f92285883d9216810c97804b81233584353390dfc759c7b4dbe"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/pathfinding/raycoms/WorldEventContext",
+          "method": "*",
+          "desc": "",
+          "sha256": "039076d8bb1f5ce81b95d8d817ebd3f04b1cabac8164283823c6017eda2aa498"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/pathfinding/raycoms/WorldRenderMacros",
+          "method": "getBufferSource",
+          "desc": "()Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;",
+          "sha256": "8f26670ae8b7e9089b9d2e949020150748d0d14bc710e1e93f19d394e5efd6ac"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/client/render/pathfinding/PathfindingDebugRenderer",
+          "method": "render",
+          "desc": "(Lcom/github/alexthe666/iceandfire/pathfinding/raycoms/WorldEventContext;)V",
+          "sha256": "86224de161e32ec6ea39db6f9d2b6960689ca87bacaba5b952d5e5658db6e5c1"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/PoseStack",
+          "method": "m_85836_",
+          "desc": "()V",
+          "sha256": "e5fdd9f898521d9ba5fb8aa72ecdf76d8c055725c3b0d233cd21cf75b37f7c56"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/PoseStack",
+          "method": "m_85849_",
+          "desc": "()V",
+          "sha256": "a3d29bc63ac0a35cd6b0be1a5fb2cf09e7865d607e0b0e6ebaa52c054c8c5684"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation on ClientEvents.renderWorldLastEvent's call of WorldEventContext.renderWorldLastEvent); helper bons.furious.patch.iceandfire_client_c2.PathDebugStageGate",
+      "license": "LGPL-3.0 (Ice and Fire): only the call is wrapped, no Ice and Fire code is carried; Minecraft's PoseStack is only fingerprinted"
+    }
+  }
+}

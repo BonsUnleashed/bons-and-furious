@@ -1,0 +1,73 @@
+{
+  "group": "ie_sound",
+  "keys": {
+    "ie_multiblock_sound_replaced": {
+      "mod": "immersiveengineering",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.ie_sound.MultiblockSoundMixin",
+        "bons.furious.mixin.ie_sound.SoundEngineReplacementMixin"
+      ],
+      "guard": [
+        {
+          "class": "blusunrize/immersiveengineering/common/util/sound/MultiblockSound",
+          "method": "lambda$startSound$0",
+          "desc": "(Lnet/minecraft/client/sounds/SoundManager;Lblusunrize/immersiveengineering/common/util/sound/MultiblockSound;)Z",
+          "sha256": "80bc8c7889ab37e1a619a3697f13dfb10381589983e9e976f2c4e43a1671fe04"
+        },
+        {
+          "class": "blusunrize/immersiveengineering/common/util/sound/MultiblockSound",
+          "method": "startSound",
+          "desc": "(Ljava/util/function/BooleanSupplier;Ljava/util/function/BooleanSupplier;Lnet/minecraft/world/phys/Vec3;Lnet/minecraftforge/registries/RegistryObject;ZF)Ljava/util/function/BooleanSupplier;",
+          "sha256": "ba5b03b8429c5ba565759f437437e4bccaca7d82eb9fee905f5d41a4008771e8"
+        },
+        {
+          "class": "blusunrize/immersiveengineering/common/util/sound/MultiblockSound",
+          "method": "m_7788_",
+          "desc": "()V",
+          "sha256": "2037fbdf7821589bb6e2cad0f8fac0b824e3b8326963c2abc121b9a4363862a8"
+        },
+        {
+          "class": "blusunrize/immersiveengineering/common/util/sound/IEMuffledTickableSound",
+          "method": "m_7801_",
+          "desc": "()Z",
+          "sha256": "837dfa7523602f6639d45c9e4fd354a1eac5f430f733f6075f87e724d01a758c"
+        },
+        {
+          "class": "blusunrize/immersiveengineering/common/util/sound/IEMuffledTickableSound",
+          "method": "m_7788_",
+          "desc": "()V",
+          "sha256": "9dbacf961dbae91086e8fc219f04a634842b309cd0fcdaea851044729ff7eea2"
+        },
+        {
+          "class": "blusunrize/immersiveengineering/client/ClientEventHandler",
+          "method": "onPlaySound",
+          "desc": "(Lnet/minecraftforge/client/event/sound/PlaySoundEvent;)V",
+          "sha256": "0d457ac82e8bcff623a615838aa4a11a65084476547a6c99869676c23245106b"
+        },
+        {
+          "class": "net/minecraft/client/sounds/SoundEngine",
+          "method": "m_120312_",
+          "desc": "(Lnet/minecraft/client/resources/sounds/SoundInstance;)V",
+          "sha256": "b2012b224165a305123c4880001fba1dc1fdab321d3a2756abc933142d407ebe"
+        },
+        {
+          "class": "net/minecraft/client/sounds/SoundEngine",
+          "method": "m_120305_",
+          "desc": "(Lnet/minecraft/client/resources/sounds/SoundInstance;)Z",
+          "sha256": "9f9f96adb8a67805b467249e350f6826542c2776fdf1b19bec92030c1fd96dfe"
+        },
+        {
+          "class": "net/minecraft/client/sounds/SoundManager",
+          "method": "m_120403_",
+          "desc": "(Lnet/minecraft/client/resources/sounds/SoundInstance;)Z",
+          "sha256": "b60668d6b3af95e9171e268059f86629b37e4743571f82f99ea651695d01e2ad"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation on ForgeHooksClient.playSound in SoundEngine.play and on SoundManager.isActive in MultiblockSound's startSound supplier); an interface + field added to MultiblockSound",
+      "license": "Immersive Engineering (Blu's License of Common Sense) and Minecraft: none of their code is carried; the helper bons.furious.patch.ie_sound.MultiblockSoundFix is our own"
+    }
+  }
+}

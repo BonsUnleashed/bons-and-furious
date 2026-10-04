@@ -1,0 +1,62 @@
+{
+  "group": "module_resources",
+  "keys": {
+    "kiwi_manifest_lookup_index": {
+      "mod": "kiwi",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.module_resources.KiwiManifestLookupMixin"
+      ],
+      "guard": [
+        {
+          "class": "snownee/kiwi/loader/AnnotatedTypeLoader",
+          "method": "get",
+          "desc": "()Lsnownee/kiwi/loader/KiwiConfiguration;",
+          "sha256": "3bcd0bd244b8fb2cf5f3d683e29c12fef89dddf85becede6027d70061d93a9c3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation on ClassLoader.getResourceAsStream in AnnotatedTypeLoader.get); the game-layer lookup rules (securejarhandler 2.1.10 ModuleClassLoader/Jar/UnionFileSystem, modlauncher 10.0.9 fallback wiring) are library classes: checked by version at runtime instead of fingerprints",
+      "license": "MIT (Kiwi); no Kiwi code is carried (helpers bons.furious.patch.module_resources.KiwiManifestLookup, GameLayerResources, ResourceSite)"
+    },
+    "iceandfire_tabula_lookup_index": {
+      "mod": "iceandfire",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.module_resources.IceAndFireTabulaLookupMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/iceandfire/client/model/util/TabulaModelHandlerHelper",
+          "method": "loadTabulaModel",
+          "desc": "(Ljava/lang/String;)Lcom/github/alexthe666/citadel/client/model/container/TabulaModelContainer;",
+          "sha256": "df28e06049c7187fb541f31701c1688c3968381f663f5ec79ab92e08282d18fe"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation on ClassLoader.getResourceAsStream in TabulaModelHandlerHelper.loadTabulaModel); the game-layer lookup rules are library classes: checked by version at runtime",
+      "license": "LGPL (Ice and Fire); no Ice and Fire code is carried (helpers bons.furious.patch.module_resources.IceAndFireTabulaLookup, GameLayerResources, ResourceSite)"
+    },
+    "distanthorizons_sql_script_lookup_index": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.module_resources.DhSqlScriptLookupMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/core/sql/DatabaseUpdater",
+          "method": "getAutoUpdateScripts",
+          "desc": "()Ljava/util/ArrayList;",
+          "sha256": "69c4a4e3ec4ee1be8c07d09421102d7dc3c5bc927ab635304f372e8be3aa44c7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation on both ClassLoader.getResourceAsStream calls in DatabaseUpdater.getAutoUpdateScripts); the game-layer lookup rules are library classes: checked by version at runtime",
+      "license": "LGPL-3.0 (Distant Horizons); no DH code is carried (helpers bons.furious.patch.module_resources.DhSqlScriptLookup, GameLayerResources, ResourceSite)"
+    }
+  }
+}

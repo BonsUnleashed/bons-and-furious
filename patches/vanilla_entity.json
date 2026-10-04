@@ -1,0 +1,91 @@
+{
+  "group": "vanilla_entity",
+  "keys": {
+    "vanilla_suffocation_scan_loop": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.vanilla_entity.EntityInWallScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_5830_",
+          "desc": "()Z",
+          "sha256": "c59f6a53d3e06cbadb8d3cb95377c7c70de78832ad09230561fa00c32a4cc034"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "m_121921_",
+          "desc": "(Lnet/minecraft/world/phys/AABB;)Ljava/util/stream/Stream;",
+          "sha256": "ffc76d2e377aa43451a2ae083dc333236b84927cf2b6c9fbce6f8220068edb22"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "m_121886_",
+          "desc": "(IIIIII)Ljava/util/stream/Stream;",
+          "sha256": "dc308d1a7d0b51d80951f238f0f1a7a0392dda003fd2338dd6bfb3f764f36b76"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "m_121976_",
+          "desc": "(IIIIII)Ljava/lang/Iterable;",
+          "sha256": "6ad7169593cb9ee627f45c7d7810150dbd7033c0139fc0bcf179f98ecb003263"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on BlockPos.betweenClosedStream(AABB) in Entity.isInWall (priority 1500, require 0); the returned DeferredStream answers the match with a loop over BlockPos.betweenClosed and builds the vanilla stream for anything else",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helpers bons.furious.patch.vanilla_entity.BlockScans, DeferredStream)"
+    },
+    "vanilla_fire_scan_loop": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.vanilla_entity.EntityFireScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_6478_",
+          "desc": "(Lnet/minecraft/world/entity/MoverType;Lnet/minecraft/world/phys/Vec3;)V",
+          "sha256": "17b339289be52d730ba555a5d266c77e87b2baee7061ba2e547ea971795ba8bc"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "m_121921_",
+          "desc": "(Lnet/minecraft/world/phys/AABB;)Ljava/util/stream/Stream;",
+          "sha256": "ffc76d2e377aa43451a2ae083dc333236b84927cf2b6c9fbce6f8220068edb22"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "m_121886_",
+          "desc": "(IIIIII)Ljava/util/stream/Stream;",
+          "sha256": "dc308d1a7d0b51d80951f238f0f1a7a0392dda003fd2338dd6bfb3f764f36b76"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "m_121976_",
+          "desc": "(IIIIII)Ljava/lang/Iterable;",
+          "sha256": "6ad7169593cb9ee627f45c7d7810150dbd7033c0139fc0bcf179f98ecb003263"
+        },
+        {
+          "class": "net/minecraft/world/level/LevelReader",
+          "method": "m_46847_",
+          "desc": "(Lnet/minecraft/world/phys/AABB;)Ljava/util/stream/Stream;",
+          "sha256": "9cb19637bc4dd76ebbfff6dc67e0c2706185a9c9c4b075c4295620d20046b37a"
+        },
+        {
+          "class": "net/minecraft/world/level/BlockGetter",
+          "method": "m_45556_",
+          "desc": "(Lnet/minecraft/world/phys/AABB;)Ljava/util/stream/Stream;",
+          "sha256": "51a5da8f1248ee6c0362ba799b8bc6a7c03793e2b3b5c6c86fc69f8f02e305cd"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on Level.getBlockStatesIfLoaded(AABB) in Entity.move (priority 1500, require 0); the returned DeferredStream answers the match with hasChunksAt plus a loop over BlockPos.betweenClosed and builds the vanilla stream for anything else",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helpers bons.furious.patch.vanilla_entity.BlockScans, DeferredStream)"
+    }
+  }
+}

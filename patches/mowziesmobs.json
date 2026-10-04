@@ -1,0 +1,68 @@
+{
+  "group": "mowziesmobs",
+  "keys": {
+    "mowziesmobs_capability_handles": {
+      "mod": "mowziesmobs",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.mowziesmobs.CapabilityHandlerLookupMixin",
+        "bons.furious.mixin.mowziesmobs.CapabilityProviderStateAccessor",
+        "bons.furious.mixin.mowziesmobs.LivingEntityCapabilityHandlesMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/capability/CapabilityHandler",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraftforge/common/capabilities/Capability;)Ljava/lang/Object;",
+          "sha256": "3aa108999211f5260b06416a5e24b6717e6382268d95d26681717323a5ff4d30"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/capability/CapabilityHandler",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "9dbd9e1baedd1165fe67d34ff2806a0ec886178da2b78e1f0fedefeccd9bfd93"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/capability/FrozenCapability$FrozenProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "sha256": "81c665a13a199ebb668b67e2b15c8ca31ff4aaf049db5ace0b9a6d00038ada56"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/capability/LivingCapability$LivingProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "sha256": "90ba56cb842abb09e650107207f33c246099bfdb761598e2e4dd9be1e9804d9e"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/capability/AbilityCapability$AbilityProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "sha256": "9f81cebd5cd60f8d3865ec6d5c1b0ba9d701b500111f8ca3fdcb85c41648138b"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/capability/PlayerCapability$PlayerProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "sha256": "f43d5e2ac8647ffd59d054e6a886a07f630cddc44a252cdd7689fb3677a75ba2"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "sha256": "84fca09ed93a5775f15ebb84533d079c78578a784fd7e8f016f41afbff45da9a"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityDispatcher",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "sha256": "aff7dbc58d1187f3f6603f119e7235c01bad0b716e879dac45d07ba84ecb5696"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: two @Redirects of Entity.getCapability(Capability) in CapabilityHandler.getCapability to our lookup (helper bons.furious.patch.mowziesmobs.MowzieCapabilityHandles); @Accessor for CapabilityProvider.valid/capabilities; one @Unique reference field on LivingEntity",
+      "license": "custom (Mowzie's Mobs, treated as All Rights Reserved): no Mowzie's Mobs code is carried, the mixins only redirect the two dispatcher calls to our own lookup; Minecraft/Forge: one field and accessors, no code"
+    }
+  }
+}

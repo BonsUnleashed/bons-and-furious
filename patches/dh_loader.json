@@ -1,0 +1,257 @@
+{
+  "group": "dh_loader",
+  "keys": {
+    "distanthorizons_pooled_string_index": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.29",
+      "mixins": [
+        "bons.furious.mixin.dh_loader.PooledStringIndexMixin",
+        "bons.furious.mixin.dh_loader.StringPoolClearMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/core/dataObjects/fullData/FullDataPointIdMap",
+          "method": "deserialize",
+          "desc": "(Lcom/seibel/distanthorizons/core/dataObjects/fullData/FullDataPointIdMap;Lcom/seibel/distanthorizons/core/util/objects/dataStreams/DhDataInputStream;JLcom/seibel/distanthorizons/core/wrapperInterfaces/world/ILevelWrapper;)V",
+          "sha256": "d614bb1d87f9f7805fdd698bcb8469f9a70821f66283528af14c88448390cb34"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/util/objects/pooling/StringPool",
+          "method": "getPooledString",
+          "desc": "(Lit/unimi/dsi/fastutil/chars/CharArrayList;)Ljava/lang/String;",
+          "sha256": "19be17c2a23cd848e9e2cd94f819cfa596b976091d0ed093f9727b0cd73d5d42"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/util/objects/pooling/StringPool",
+          "method": "getPooledString",
+          "desc": "(Lit/unimi/dsi/fastutil/chars/CharArrayList;II)Ljava/lang/String;",
+          "sha256": "c06ffe5b3dd2306410d6fd925e2e1ce3986cd3b6cc10e277b1ff283b5cb718c0"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/util/objects/pooling/StringPool",
+          "method": "clear",
+          "desc": "()V",
+          "sha256": "de4b9ca9ea86d0ffe6a16eb7f8b478f4e2f0cc060eedc729919a8afc8d63497c"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/util/objects/pooling/StringPool$TrieNode",
+          "method": "getOrCreateChild",
+          "desc": "(C)Lcom/seibel/distanthorizons/core/util/objects/pooling/StringPool$TrieNode;",
+          "sha256": "61863b647aef6142aad0f9b9e46c1fcdeb8cc6ff651167918e5f490af9cf869e"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/util/objects/pooling/StringPool$TrieNode",
+          "method": "getOrSetString",
+          "desc": "(Lit/unimi/dsi/fastutil/chars/CharArrayList;II)Ljava/lang/String;",
+          "sha256": "b8a4a742e5bd80e4ccc313b440b1f0b3d44fe042389c8d62c4b8178c0ba0eb6e"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/util/objects/pooling/StringPool$TrieNode",
+          "method": "clear",
+          "desc": "()V",
+          "sha256": "e231a3093ad3073b8da47d4d57aa6ca02967c46b8c6ffccdb812a80dcdea4be9"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect x2 of StringPool.getPooledString(CharArrayList) in FullDataPointIdMap.deserialize; @Inject at the head of StringPool.clear (the index steps aside)",
+      "license": "LGPL-3.0 (Distant Horizons): no DH code is carried; the redirect asks DH's own pool on every miss (helper bons.furious.patch.dh_loader.PooledStringIndex)"
+    },
+    "distanthorizons_wrapper_air_flag": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.29",
+      "mixins": [
+        "bons.furious.mixin.dh_loader.WrapperAirFlagMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/block/BlockStateWrapper_forge",
+          "method": "isAir",
+          "desc": "()Z",
+          "sha256": "cfb45228670899604851f11622fc160d535ea7e7c432506dc73c5cfa260ba659"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/block/BlockStateWrapper_forge",
+          "method": "isAir",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;)Z",
+          "sha256": "fd0fc69143f082b16459979814202aa970b8c1cd51e7e63d9d32a2ce797d3132"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/block/BlockStateWrapper_forge",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/ILevelWrapper;Lcom/seibel/distanthorizons/api/methods/events/abstractEvents/DhApiBlockStateWrapperCreatedEvent$EventParam;)V",
+          "sha256": "3b078157216f3b349c5c7690ce69ae0a57c89b5af299902c9e8e00651809df65"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase",
+          "method": "m_60795_",
+          "desc": "()Z",
+          "sha256": "865e29ea11f29674a1d7ca5c3a57e9267f1f083147ec5f795b6548e54e6b061c"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase",
+          "method": "m_60734_",
+          "desc": "()Lnet/minecraft/world/level/block/Block;",
+          "sha256": "812002b3b2e4a9155586dcf8037f1c32ab1457e19f40ed00ef53274cb29da290"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour",
+          "method": "isAir",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;)Z",
+          "sha256": "6683e9d411bb3f04abc4a98bc04c833c61007dd27a9244e8205ee509f3d8f185"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Overwrite of BlockStateWrapper_forge.isAir() (DH's one-line body plus a remembered flag byte, @Unique field)",
+      "license": "LGPL-3.0 (Distant Horizons): the mixin carries DH's one-line isAir() body (return isAir(this.blockState)) with the flag added (helper bons.furious.patch.dh_loader.WrapperAirFlag); no Minecraft code is carried"
+    },
+    "distanthorizons_adjacent_face_skip": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.29",
+      "mixins": [
+        "bons.furious.mixin.dh_loader.AdjacentFaceSkipMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/core/dataObjects/render/bufferBuilding/ColumnBox",
+          "method": "makeAdjVerticalQuad",
+          "desc": "(Lcom/seibel/distanthorizons/core/dataObjects/render/bufferBuilding/LodQuadBuilder;Lcom/seibel/distanthorizons/core/util/objects/pooling/PhantomArrayList/PhantomArrayListCheckout;Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/IClientLevelWrapper;Lcom/seibel/distanthorizons/core/dataObjects/render/columnViews/ColumnRenderView;[SZILcom/seibel/distanthorizons/core/enums/EDhDirection;SSSSSIBB)V",
+          "sha256": "75f82e179f8c0334c7fb7cb4b756b2836218e3565137969f0205f29cc84bfd7b"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/dataObjects/render/bufferBuilding/ColumnBox",
+          "method": "applyLightToRangeAndPopulateNewSgements",
+          "desc": "(Lit/unimi/dsi/fastutil/longs/LongArrayList;Lit/unimi/dsi/fastutil/longs/LongArrayList;SSB)V",
+          "sha256": "ad642f07b899b3a7052df77e3440d47f2e73b3d5cfffc843620f828afee3fa20"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/dataObjects/render/bufferBuilding/ColumnBox$YSegmentUtil",
+          "method": "encode",
+          "desc": "(SSB)J",
+          "sha256": "9e0a58ec101f136c940a73da7e67f82b1e1b02eb2ba2ab0104da878c24cd89ee"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/dataObjects/render/bufferBuilding/ColumnBox$YSegmentUtil",
+          "method": "getStartY",
+          "desc": "(J)S",
+          "sha256": "576bfdac4e92f83b89efe81cf7e0ca30b5351bb633a2497928cd3961e52c032a"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/dataObjects/render/bufferBuilding/ColumnBox$YSegmentUtil",
+          "method": "getEndY",
+          "desc": "(J)S",
+          "sha256": "de84b65ea4318daac5c24c6b8fcc8de4d126d48384627c55b64e4994f8128811"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/dataObjects/render/columnViews/ColumnRenderView",
+          "method": "get",
+          "desc": "(I)J",
+          "sha256": "f25dd462b3b8b61801c891b829ef1f8ad0b7d4ba3e0a3cb596f6710d5cdf3e17"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/util/RenderDataPointUtil",
+          "method": "getYMin",
+          "desc": "(J)S",
+          "sha256": "eff61f7eedea7097880f83213a7072d92438e4ed975fd3a14fe1e70943622a97"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/util/RenderDataPointUtil",
+          "method": "getYMax",
+          "desc": "(J)S",
+          "sha256": "3a2bede8639431c3273781fe3d384742e40b3d1639c43815aa4e20b4c05a75ee"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/util/RenderDataPointUtil",
+          "method": "doesDataPointExist",
+          "desc": "(J)Z",
+          "sha256": "d30e4f432f0eb4385633403a29ea6f24e596a40825a06b7fb39881615bf6a173"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue x2 in ColumnBox.makeAdjVerticalQuad: the GETFIELD ColumnRenderView.size that becomes the loop bound (ordinal 1) and ColumnRenderView.get(I)J (ordinal 1, the loop's current point), with @Local (the adjacent view and yMin arguments, adjIndex local 22, segments local 16)",
+      "license": "LGPL-3.0 (Distant Horizons): no DH code is carried; the handler returns DH's own value or the empty data point (helper bons.furious.patch.dh_loader.AdjacentFaceSkip)"
+    },
+    "distanthorizons_quad_sort_keys": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.29",
+      "mixins": [
+        "bons.furious.mixin.dh_loader.QuadSortKeysMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/core/dataObjects/render/bufferBuilding/LodQuadBuilder",
+          "method": "mergeQuadsInternal",
+          "desc": "([Ljava/util/ArrayList;ILcom/seibel/distanthorizons/core/dataObjects/render/bufferBuilding/BufferMergeDirectionEnum;)J",
+          "sha256": "7b9358239f1289807f63a15d4044f4b34eabafe272a71e90225e6513a1835667"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/dataObjects/render/bufferBuilding/LodQuadBuilder",
+          "method": "lambda$mergeQuadsInternal$0",
+          "desc": "(Lcom/seibel/distanthorizons/core/dataObjects/render/bufferBuilding/BufferMergeDirectionEnum;Lcom/seibel/distanthorizons/core/dataObjects/render/bufferBuilding/BufferQuad;Lcom/seibel/distanthorizons/core/dataObjects/render/bufferBuilding/BufferQuad;)I",
+          "sha256": "f8dbeb0121c0185946a8b610fd5cca6174a52955de130c5090419daac050b179"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/dataObjects/render/bufferBuilding/BufferQuad",
+          "method": "compare",
+          "desc": "(Lcom/seibel/distanthorizons/core/dataObjects/render/bufferBuilding/BufferQuad;Lcom/seibel/distanthorizons/core/dataObjects/render/bufferBuilding/BufferMergeDirectionEnum;)I",
+          "sha256": "a650d2c530f81269e87fb2567af1d4e3038f9b8c34c8d010f38194e140170cf7"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/dataObjects/render/bufferBuilding/BufferQuad",
+          "method": "computeSortKey",
+          "desc": "(Lcom/seibel/distanthorizons/core/enums/EDhDirection;Z)J",
+          "sha256": "6fdfd9c96080149c0b7c6e4d900ddc90752ca3f16e9ef118f4e5db6884bcfbcf"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/dataObjects/render/bufferBuilding/BufferQuad",
+          "method": "set",
+          "desc": "(SSSSSISBBBLcom/seibel/distanthorizons/core/enums/EDhDirection;)V",
+          "sha256": "834d1990f3e029b908edf96c1d68dd43fae924112f4a73cd20dd4419a51ac10b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of ArrayList.sort(Comparator) in LodQuadBuilder.mergeQuadsInternal (no captured locals; the key is read from DH's comparator with two probe quads)",
+      "license": "LGPL-3.0 (Distant Horizons): no DH code is carried; every fallback makes the original call (DH's sort with DH's comparator) (helper bons.furious.patch.dh_loader.QuadSortKeys)"
+    },
+    "distanthorizons_unlocked_byte_stream": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.29",
+      "mixins": [
+        "bons.furious.mixin.dh_loader.UnlockedByteStreamMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/core/util/objects/dataStreams/DhDataInputStream",
+          "method": "create",
+          "desc": "([BLcom/seibel/distanthorizons/api/enums/config/EDhApiDataCompressionMode;Lcom/seibel/distanthorizons/core/util/objects/pooling/PhantomArrayList/PhantomArrayListCheckout;)Lcom/seibel/distanthorizons/core/util/objects/dataStreams/DhDataInputStream;",
+          "sha256": "ec302e6c165a9f3f3066daa2ae86f9d06ea34cec4cd2bfb3586be2b3a3c8596c"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/util/objects/dataStreams/DhDataInputStream",
+          "method": "<init>",
+          "desc": "(Ljava/io/ByteArrayInputStream;Lcom/seibel/distanthorizons/api/enums/config/EDhApiDataCompressionMode;)V",
+          "sha256": "660451279a892761806fa7b46574cffc3e18296053b992a9640cbfe773a4e464"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/util/objects/dataStreams/DhDataInputStream",
+          "method": "warpStream",
+          "desc": "(Ljava/io/ByteArrayInputStream;Lcom/seibel/distanthorizons/api/enums/config/EDhApiDataCompressionMode;)Ljava/io/InputStream;",
+          "sha256": "0049b992a7a97eb864121a99efdd64ca9444b2f417ba89907fa575ba245ec1e0"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/util/objects/dataStreams/DhDataInputStream",
+          "method": "read",
+          "desc": "()I",
+          "sha256": "55938ac1d68096e9e1fe68d329b90a12f4b2254a0173f3aad06bb05156b4a9d1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect x2 of new ByteArrayInputStream(...) (NEW, both constructors) in DhDataInputStream.create(byte[], mode, checkout)",
+      "license": "LGPL-3.0 (Distant Horizons): no DH code is carried; the redirected constructions build our ByteArrayInputStream subclass (helper bons.furious.patch.dh_loader.UnlockedByteStream: read() and read(byte[],int,int) written for it, every other method the JDK's own)"
+    }
+  }
+}

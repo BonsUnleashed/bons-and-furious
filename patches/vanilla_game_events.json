@@ -1,0 +1,61 @@
+{
+  "group": "vanilla_game_events",
+  "keys": {
+    "vanilla_game_event_registry_lookup": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.vanilla_game_events.GameEventDispatcherMixin",
+        "bons.furious.mixin.vanilla_game_events.LevelChunkRegistriesAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/gameevent/GameEventDispatcher",
+          "method": "m_245905_",
+          "desc": "(Lnet/minecraft/world/level/gameevent/GameEvent;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/level/gameevent/GameEvent$Context;)V",
+          "sha256": "98ca9ba4533a99d18a7ee4ea13e9b67cd867cb6a72df9d505a33b28a453c5b76"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunk",
+          "method": "m_246686_",
+          "desc": "(I)Lnet/minecraft/world/level/gameevent/GameEventListenerRegistry;",
+          "sha256": "37d81d70983a359254076b61ca15197e936ca2048ea476f0b2a352dafd0ec1ff"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunk",
+          "method": "m_280642_",
+          "desc": "(I)V",
+          "sha256": "029520c3010cbd21a2059d473ca45bf0bb908ec288977904530b65a08885c0b0"
+        },
+        {
+          "class": "net/minecraft/world/level/gameevent/EuclideanGameEventListenerRegistry",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;ILnet/minecraft/world/level/gameevent/EuclideanGameEventListenerRegistry$OnEmptyAction;)V",
+          "sha256": "702432bf523fd9306c555fc48fb4345d7b6104e730c1965b9ab8fa59a83dd83b"
+        },
+        {
+          "class": "net/minecraft/world/level/gameevent/EuclideanGameEventListenerRegistry",
+          "method": "m_245521_",
+          "desc": "(Lnet/minecraft/world/level/gameevent/GameEvent;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/level/gameevent/GameEvent$Context;Lnet/minecraft/world/level/gameevent/GameEventListenerRegistry$ListenerVisitor;)Z",
+          "sha256": "1f8d3b948ffeeeb8756ee94464857a38929e25c3522434143c46255832e15d57"
+        },
+        {
+          "class": "net/minecraft/world/level/gameevent/EuclideanGameEventListenerRegistry",
+          "method": "m_245531_",
+          "desc": "(Lnet/minecraft/world/level/gameevent/GameEventListener;)V",
+          "sha256": "a83fdbb706340eef01aec5476b180acdbee3685bc59e0d9cb87a015ecfad1bd5"
+        },
+        {
+          "class": "net/minecraft/world/level/gameevent/EuclideanGameEventListenerRegistry",
+          "method": "m_246052_",
+          "desc": "(Lnet/minecraft/world/level/gameevent/GameEventListener;)V",
+          "sha256": "d347e69974b3ae33f98019d9b2ecbf5028920dc679a09bce2b17e9460d1a0258"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect on ChunkAccess.getListenerRegistry (m_246686_) in GameEventDispatcher.post (m_245905_): the chunk's existing registry, or GameEventListenerRegistry.NOOP where LevelChunk would create an empty one (exact LevelChunk class only, otherwise the call itself; require = 0, degrades to vanilla; a Redirect because a WrapOperation's per-call Operation cost about what the lookup saves); a LevelChunk @Shadow accessor for its registry map (f_244451_), read only",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.vanilla_game_events.GameEventRegistries)"
+    }
+  }
+}

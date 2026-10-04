@@ -1,0 +1,165 @@
+{
+  "group": "datapack_selectors",
+  "keys": {
+    "vanilla_selector_type_index": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.29",
+      "mixins": [
+        "bons.furious.mixin.datapack_selectors.EntityLookupMixin",
+        "bons.furious.mixin.datapack_selectors.EntitySelectorMixin",
+        "bons.furious.mixin.datapack_selectors.EntitySelectorParserMixin",
+        "bons.furious.mixin.datapack_selectors.EntitySelectorTypeOptionMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/commands/arguments/selector/options/EntitySelectorOptions",
+          "method": "m_121533_",
+          "desc": "(Lnet/minecraft/commands/arguments/selector/EntitySelectorParser;)V",
+          "sha256": "89b29b090f780fa725f5e3904369ebea635dd143980c5da8c7a4d13ed601adb2"
+        },
+        {
+          "class": "net/minecraft/commands/arguments/selector/options/EntitySelectorOptions",
+          "method": "m_205688_",
+          "desc": "(Lnet/minecraft/tags/TagKey;ZLnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "321a0137d5cbcebe4ed101db2f94bfefc84a46d33130a24488a6b5096ee9e85b"
+        },
+        {
+          "class": "net/minecraft/commands/arguments/selector/options/EntitySelectorOptions",
+          "method": "m_175148_",
+          "desc": "(Lnet/minecraft/world/entity/EntityType;ZLnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "fe1fff9f58ec075dbca2b4d3912414a3fdd666b79ce95425c660e961d87c5a5b"
+        },
+        {
+          "class": "net/minecraft/commands/arguments/selector/EntitySelectorParser",
+          "method": "m_121281_",
+          "desc": "()V",
+          "sha256": "2a85cfe4ca6cac627c63686cf7843b89ea565edf6ea2fdd7d06c3e010d18169f"
+        },
+        {
+          "class": "net/minecraft/commands/arguments/selector/EntitySelectorParser",
+          "method": "m_121317_",
+          "desc": "()V",
+          "sha256": "a387cf16a87d58f067e8cf6fb5a9f38ef1fa1f1e87a25f2a5749dcf7c909db34"
+        },
+        {
+          "class": "net/minecraft/commands/arguments/selector/EntitySelectorParser",
+          "method": "m_121272_",
+          "desc": "(Ljava/util/function/Predicate;)V",
+          "sha256": "f28a9e46615f2060c806ee4eea74ea2e7d0512d40b108ca0cefac9d7779c3dcd"
+        },
+        {
+          "class": "net/minecraft/commands/arguments/selector/EntitySelectorParser",
+          "method": "m_121229_",
+          "desc": "()V",
+          "sha256": "da5254ead4899e8db8918dd9342cce957684949401632afb922753eeb20ac492"
+        },
+        {
+          "class": "net/minecraft/commands/arguments/selector/EntitySelectorParser",
+          "method": "m_121230_",
+          "desc": "()Lnet/minecraft/commands/arguments/selector/EntitySelector;",
+          "sha256": "126d3f1f9aec2171abc27cf723618f2e8f3d4cc4b3fc498d5f54ecb096da04c5"
+        },
+        {
+          "class": "net/minecraft/commands/arguments/selector/EntitySelector",
+          "method": "<init>",
+          "desc": "(IZZLjava/util/function/Predicate;Lnet/minecraft/advancements/critereon/MinMaxBounds$Doubles;Ljava/util/function/Function;Lnet/minecraft/world/phys/AABB;Ljava/util/function/BiConsumer;ZLjava/lang/String;Ljava/util/UUID;Lnet/minecraft/world/entity/EntityType;Z)V",
+          "sha256": "8cf5843b25fca72f03cd214e6ec0f3b806226d9bdefb559f13407abb7bb7f610"
+        },
+        {
+          "class": "net/minecraft/commands/arguments/selector/EntitySelector",
+          "method": "m_245733_",
+          "desc": "(Lnet/minecraft/commands/CommandSourceStack;)Ljava/util/List;",
+          "sha256": "3a55b4319d50b6df740e043537277136b341b3f31a02084fd139301b9fcdb3b6"
+        },
+        {
+          "class": "net/minecraft/commands/arguments/selector/EntitySelector",
+          "method": "m_121154_",
+          "desc": "(Ljava/util/List;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/phys/Vec3;Ljava/util/function/Predicate;)V",
+          "sha256": "f2997d1f9802cff94639e3c4eba0966ea44b98672b387403673bae851bc234c0"
+        },
+        {
+          "class": "net/minecraft/commands/arguments/selector/EntitySelector",
+          "method": "m_121144_",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;)Ljava/util/function/Predicate;",
+          "sha256": "099cdffd3b3201233837798ee2b9e18068a3a4ccf19ed99b3702aeabde49f393"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "m_261178_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Ljava/util/function/Predicate;Ljava/util/List;I)V",
+          "sha256": "0e6f9fa0a2d46da9150f2026062f90e08be6fbda121d3fe1839af1efd7017ff5"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/LevelEntityGetterAdapter",
+          "method": "m_142690_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/util/AbortableIterationConsumer;)V",
+          "sha256": "9dae490fd03023a39437a570d3ceec39330e76ae74be6b9b5e198f8f359fb2d8"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntityLookup",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "2f3769e88e4d7050a1464710904d76144dfb6ebee924b76332c800187c0fd4a0"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntityLookup",
+          "method": "m_260822_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/util/AbortableIterationConsumer;)V",
+          "sha256": "ba63429637a5e1d3bd07d1274083eea47af2f4a01221d28970b3b554abf68cca"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntityLookup",
+          "method": "m_156814_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)V",
+          "sha256": "55294288c8c74f668751b70ad730c5fa56ab360a78eefdf3f913c97c3d90e3f1"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntityLookup",
+          "method": "m_156822_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)V",
+          "sha256": "9319cb41032d0995646641cf4d0bfaf72827ff1c677e320a643da9c47c247fac"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_6084_",
+          "desc": "()Z",
+          "sha256": "2194b1df405a7e7358f1a2f80942f43d127269680cb11039aa9d66dc829fa62e"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_213877_",
+          "desc": "()Z",
+          "sha256": "3ec5735127f5800d2e27231671acc1324f7a4f743023c7c986b3558ca847ca6a"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_6095_",
+          "desc": "()Lnet/minecraft/world/entity/EntityType;",
+          "sha256": "a6b0d80644427fd9656ff7ecea5059bcc1bd04eef0adb1de6601d9862f028f2b"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_6084_",
+          "desc": "()Z",
+          "sha256": "af19779c8d93e0dc30cb84abdbe2cbb33dc35df530aba6310a0effbb290f1699"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21223_",
+          "desc": "()F",
+          "sha256": "6defa0566f6e682048621ceb47bdb88ad77a82f3c0b34693b41f6147b5e0c5a6"
+        },
+        {
+          "class": "net/minecraft/world/entity/EntityType",
+          "method": "m_204039_",
+          "desc": "(Lnet/minecraft/tags/TagKey;)Z",
+          "sha256": "e79156c4143e96e87c903817e379f7758e016822d4d7aea324992fabb3224775"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on the type option handler's shouldInvertValue, TagKey.create and Optional.orElseThrow results (noted on the parser, returned unchanged) and @WrapOperation on its two EntitySelectorParser.addPredicate calls (offer a TypeFirstOption), @Inject after parseSelector's write of the predicate field and @ModifyReturnValue on getSelector (parser state), @WrapOperation on ServerLevel.getEntities(EntityTypeTest, Predicate, List, int) in EntitySelector.addEntities (scan filter), @WrapMethod on EntityLookup.getEntities/add/remove (type index); the parser and selector injectors are require = 0 and degrade to the vanilla scan",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helpers bons.furious.patch.datapack_selectors.SelectorPrefilter, TypeIndex, SelectorParserState, PrefilteredSelector, IndexedLookup)"
+    }
+  }
+}

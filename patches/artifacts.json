@@ -1,0 +1,72 @@
+{
+  "group": "artifacts",
+  "keys": {
+    "artifacts_living_tick_order": {
+      "mod": "artifacts",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.artifacts.ArtifactEventsForgeTickOrderMixin"
+      ],
+      "guard": [
+        {
+          "class": "artifacts/forge/event/ArtifactEventsForge",
+          "method": "onKittySlippersLivingUpdate",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "8935fec284a4aa497878786c48acdca5e4d71d17c1034782e5ef57a714883897"
+        },
+        {
+          "class": "artifacts/forge/event/ArtifactEventsForge",
+          "method": "onUmbrellaLivingUpdate",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "20b1d5fe72b083a1e7172a5892d9fcb4e03ecb4bfd3811949f088093d537d927"
+        },
+        {
+          "class": "artifacts/item/wearable/necklace/CharmOfSinkingItem",
+          "method": "shouldSink",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "sha256": "42f8ea926061438070f68c8f0f9220d384766629f63c29edae5ee79ec09f51aa"
+        },
+        {
+          "class": "artifacts/item/UmbrellaItem",
+          "method": "isHoldingUmbrellaUpright",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "sha256": "71f4dc6912e73687fadf8fc4d96fe97fce6fa89a9003a2525ba79a151b6974b6"
+        },
+        {
+          "class": "artifacts/item/UmbrellaItem",
+          "method": "isHoldingUmbrellaUpright",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/InteractionHand;)Z",
+          "sha256": "a4ebe5675ae85e48496a10878e3d8ae3fb379ececec0881a9ff83ef4e32e8ed2"
+        },
+        {
+          "class": "artifacts/item/wearable/WearableArtifactItem",
+          "method": "isEquippedBy",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "sha256": "fcca6dff468e2adfc66031cc905322bef0c9783ad3e3015ef24bc9a07180e866"
+        },
+        {
+          "class": "artifacts/platform/PlatformHelper",
+          "method": "isEquippedBy",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/Item;)Z",
+          "sha256": "ebe8fe9a9d56789eb420b0a9d19a2f9471e2002d63bff2e7593327bd59d41fdd"
+        },
+        {
+          "class": "artifacts/forge/platform/ForgePlatformHelper",
+          "method": "isEquippedBy",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Ljava/util/function/Predicate;)Z",
+          "sha256": "d8e8c0475fcab0d5ed54afc58e3df2b1c5fdab1b6b323a324fa655530744774e"
+        },
+        {
+          "class": "artifacts/registry/ModGameRules$BooleanValue",
+          "method": "get",
+          "desc": "()Ljava/lang/Boolean;",
+          "sha256": "d78c02abd9b6dd6d0fb3fd16a5929ad2aa0b5e78dfeb1618340d3aa6d107f22d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "overwrite (ArtifactEventsForge.onKittySlippersLivingUpdate and onUmbrellaLivingUpdate: Artifacts' bodies with the operands of each condition reordered, the creeper test first and the water/charm of sinking test last)",
+      "license": "MIT (Artifacts): the method bodies may be carried in our GPL-3.0 source; helper bons.furious.patch.artifacts.ArtifactsTickOrder"
+    }
+  }
+}

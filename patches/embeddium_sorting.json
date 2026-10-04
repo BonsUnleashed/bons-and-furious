@@ -1,0 +1,60 @@
+{
+  "group": "embeddium_sorting",
+  "keys": {
+    "embeddium_entity_sort_radix": {
+      "mod": "embeddium",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.embeddium_sorting.VertexSorterRadixMixin"
+      ],
+      "guard": [
+        {
+          "class": "me/jellysquid/mods/sodium/client/util/sorting/VertexSorters$AbstractVertexSorter",
+          "method": "mergeSort",
+          "desc": "([Lorg/joml/Vector3f;)[I",
+          "sha256": "77ae3148f21933100c07a97a64852ddb00a9f28b4199de4e21d43437c4a25b46"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/util/sorting/VertexSorters$AbstractVertexSorter",
+          "method": "m_277065_",
+          "desc": "([Lorg/joml/Vector3f;)[I",
+          "sha256": "b3455a67f878c3c82a3c931227714920da28fd7b4015a47bf66519fba8fed027"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/util/sorting/MergeSort",
+          "method": "mergeSort",
+          "desc": "([F)[I",
+          "sha256": "b83799ca9087f5574bcd205f950b01c71d974285b5f5672f8fa800811df35fe0"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/util/sorting/MergeSort",
+          "method": "mergeSort",
+          "desc": "([I[F)V",
+          "sha256": "ada93742264d4d40a262b108ed228ca67d8e7305d734e333f5d9fbed20786d29"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/util/sorting/MergeSort",
+          "method": "mergeSort",
+          "desc": "([I[FII[I)V",
+          "sha256": "e56c0e6f028481e0a66894f7b207f850346ac891e7f24d987a30626ec4933068"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/util/sorting/InsertionSort",
+          "method": "insertionSort",
+          "desc": "([III[F)V",
+          "sha256": "9440a3286cc733f7a2b71cce83fb417a2dd8f48bf3f2e0e7f255af8c3737cbca"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/util/sorting/AbstractSort",
+          "method": "createIndexBuffer",
+          "desc": "(I)[I",
+          "sha256": "ceffbd9caa54a34904d4b889932d176da63f1e2f67551d0e20aae6c69cdbe0a2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Redirect of the one MergeSort.mergeSort([F)[I call in Embeddium's VertexSorters$AbstractVertexSorter.mergeSort; Embeddium's MergeSort is called directly for short buffers, NaN keys, the runtime switch off and SHADOW mode)",
+      "license": "Embeddium is LGPL-3.0-only: its sort is called, not replaced, and no Embeddium code is carried (helper bons.furious.patch.embeddium_sorting.QuadKeySort is written from the comparisons' behaviour)"
+    }
+  }
+}

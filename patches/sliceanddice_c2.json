@@ -1,0 +1,122 @@
+{
+  "group": "sliceanddice_c2",
+  "keys": {
+    "sliceanddice_wet_air_gate": {
+      "mod": "sliceanddice",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.sliceanddice_c2.WetAirRainCheckMixin",
+        "bons.furious.mixin.sliceanddice_c2.WetAirExtinguishMixin",
+        "bons.furious.mixin.sliceanddice_c2.HashMapPaletteWetAirScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/possible_triangle/sliceanddice/mixins/LevelMixin",
+          "method": "isRainingAt",
+          "desc": "(Lnet/minecraft/core/BlockPos;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "sha256": "6056676b1705a0bc9e079cad1a0e1417cddac189404ae54809233654f3add6a9"
+        },
+        {
+          "class": "com/possible_triangle/sliceanddice/mixins/EntityMixin",
+          "method": "baseTick",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "b21971e691daeb28e2291bdf1b85147e64bd77058a5ffac9d66086871b4bce72"
+        },
+        {
+          "class": "com/possible_triangle/sliceanddice/block/sprinkler/WetAir",
+          "method": "check",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "ff341096a03a73c6da402199f4f62e05df14274751167c8c3d754512b87367e5"
+        },
+        {
+          "class": "com/possible_triangle/sliceanddice/block/sprinkler/WetAir$Companion",
+          "method": "check",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "8839fa35e0312ac9d6591459399e4879810478ee27c0e8fe117fa8019641e85b"
+        },
+        {
+          "class": "com/possible_triangle/sliceanddice/Content",
+          "method": "getWET_AIR",
+          "desc": "()Lcom/tterrag/registrate/util/entry/BlockEntry;",
+          "sha256": "e674c22304676495a70b8dd7323ea620ceb92ed320dd0e2b08b04fb21bd44d3d"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_8055_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "cb0e4f7ff3d67591f62963ba1937adb91261c87b4c5adc352a50f532b8f8aa1b"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunk",
+          "method": "m_8055_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "d5a3f2bd5d95ad50a1dc4d8e118af704a17b2c9eb7dad1450788b33624d17fc8"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunkSection",
+          "method": "m_62982_",
+          "desc": "(III)Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "a0a3a4d31019eef9394ff35797f75f77b563d54a8a3b30d9c8783e668960dd8a"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunkSection",
+          "method": "m_188008_",
+          "desc": "()Z",
+          "sha256": "9c89c7fb82b800713dff576b559458466c89d883e7f94e912ab59d93f51186fc"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/PalettedContainer",
+          "method": "m_63085_",
+          "desc": "(I)Ljava/lang/Object;",
+          "sha256": "c431234623e3e3d690d5f67ccf83bc8597b4ca48a3e2deaaa9ee8af1a5677ada"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/HashMapPalette",
+          "method": "m_6796_",
+          "desc": "(Ljava/lang/Object;)I",
+          "sha256": "63ef3b2f910b92101e0e6f47047e617f778cc5ce878d51cb74223e026340270b"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/HashMapPalette",
+          "method": "m_5680_",
+          "desc": "(Lnet/minecraft/network/FriendlyByteBuf;)V",
+          "sha256": "c4749619087b5df2ecf36bb464ee37542830f2a3ae28109492ef0d184c207962"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/HashMapPalette",
+          "method": "m_5795_",
+          "desc": "(I)Ljava/lang/Object;",
+          "sha256": "cf14947392a6bb34ddd01ae774fe17e337acb1593a81259d7d9fe3af564994b9"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/HashMapPalette",
+          "method": "m_62680_",
+          "desc": "()I",
+          "sha256": "2a49f6b2b5821662a1e3e30cd4e695e38b5dbeef9480e062fcd90db1ae2ffe90"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LinearPalette",
+          "method": "m_5795_",
+          "desc": "(I)Ljava/lang/Object;",
+          "sha256": "ed228701f423b6f9c881eb4ca18b9adf26dd2aa9d682861c17dfcbef359cdf9b"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/SingleValuePalette",
+          "method": "m_5795_",
+          "desc": "(I)Ljava/lang/Object;",
+          "sha256": "e443d92e81b7aeef1f73615a9aaef4e0476fcd59487193237ee8e964cc47c034"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerChunkCache",
+          "method": "m_7587_",
+          "desc": "(IILnet/minecraft/world/level/chunk/ChunkStatus;Z)Lnet/minecraft/world/level/chunk/ChunkAccess;",
+          "sha256": "0127d484627eaf07c5be44f422503fcda3aa00fe79bf7daf20bd475206bb6fa9"
+        }
+      ],
+      "cancel": [],
+      "conversion": "targethandler (MixinSquared @Redirect of WetAir.check in Slice & Dice's LevelMixin.isRainingAt handler and of Level.getBlockState in its EntityMixin.baseTick handler) + a scan-state field on vanilla HashMapPalette reset at the head of read(FriendlyByteBuf)",
+      "license": "Slice & Dice: licence not bundled (mods.toml points to its repository), treated as custom: no Slice & Dice code is carried; the redirects only call our gate (bons.furious.patch.sliceanddice_c2.WetAirGate) or Slice & Dice's own method"
+    }
+  }
+}

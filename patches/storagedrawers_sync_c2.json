@@ -1,0 +1,57 @@
+{
+  "group": "storagedrawers_sync_c2",
+  "keys": {
+    "storagedrawers_count_sync_holders": {
+      "mod": "storagedrawers",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.storagedrawers_sync_c2.DrawerCountSyncMixin",
+        "bons.furious.mixin.storagedrawers_sync_c2.CompDrawerCountSyncMixin",
+        "bons.furious.mixin.storagedrawers_sync_c2.PlayerListCountSyncMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/jaquadro/minecraft/storagedrawers/block/tile/BlockEntityDrawers",
+          "method": "syncClientCount",
+          "desc": "(II)V",
+          "sha256": "3114994eb5f7649ee8366b1c31b12479c179c10ad078de80382e5d8c173a5a0e"
+        },
+        {
+          "class": "com/jaquadro/minecraft/storagedrawers/block/tile/BlockEntityDrawersComp$GroupData",
+          "method": "onAmountChanged",
+          "desc": "()V",
+          "sha256": "278f84a56fe79d19dfe11b8f82b5f81b5731a7ba67c5c50af8a8d1e22225e5f1"
+        },
+        {
+          "class": "com/texelsaurus/minecraft/chameleon/service/ForgeNetworking",
+          "method": "sendToPlayersNear",
+          "desc": "(Lcom/texelsaurus/minecraft/chameleon/network/ChameleonPacket;Lnet/minecraft/server/level/ServerLevel;DDDD)V",
+          "sha256": "f07ecfb9137b94ee9bb0619ad05cdeff5405b26bd818c45621d72a59332bf800"
+        },
+        {
+          "class": "com/texelsaurus/minecraft/chameleon/service/ForgeNetworking",
+          "method": "registerPacketInternal",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;Lcom/texelsaurus/minecraft/chameleon/network/ChameleonPacketHandler;Z)V",
+          "sha256": "1db952faee422c8074ff96970fe9ec62c2b7b108e9f96b37d24b659ca6d8486a"
+        },
+        {
+          "class": "com/jaquadro/minecraft/storagedrawers/network/CountUpdateMessage$Handler",
+          "method": "handle",
+          "desc": "(Lcom/jaquadro/minecraft/storagedrawers/network/CountUpdateMessage;Lnet/minecraft/world/entity/player/Player;Ljava/util/function/Consumer;)V",
+          "sha256": "341cfe7fb092ec416e39a852214fac73d53595d7d8bb9c04b2c449711ca7b5c8"
+        },
+        {
+          "class": "com/jaquadro/minecraft/storagedrawers/network/CountUpdateMessageHandler",
+          "method": "handle",
+          "desc": "(Lcom/jaquadro/minecraft/storagedrawers/network/CountUpdateMessage;)V",
+          "sha256": "61fe79f8c43791df85ce3a85ddd55e28fdd6f959cc6d1f9f5880ba847af645b4"
+        }
+      ],
+      "cancel": [],
+      "note": "PlayerList.broadcast (m_11241_) and ChunkMap.getPlayers (m_183262_) are deliberately not fingerprinted: PlayerListCountSyncMixin targets a vanilla class, so a vanilla entry would make Guards log a 'does not match' warning in every pack without Storage Drawers (mixed guard, mod absent). The wrap uses require = 0 and only acts inside Storage Drawers' count send.",
+      "conversion": "MixinExtras @WrapOperation on Storage Drawers' two sendToPlayersNear calls (scope) and on the per-player send in PlayerList.broadcast (filter)",
+      "license": "MIT (Storage Drawers, Chameleon); Minecraft (Mojang): no-copy. The mixins carry only our own logic (helper bons.furious.patch.storagedrawers_sync_c2.CountSyncHolders); no Storage Drawers code is carried"
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "group": "curios_tooltip",
+  "keys": {
+    "curios_tag_predicate_keys": {
+      "mod": "curios",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.curios_tooltip.TagPredicateKeysMixin"
+      ],
+      "guard": [
+        {
+          "class": "top/theillusivec4/curios/mixin/CuriosImplMixinHooks",
+          "method": "lambda$static$9",
+          "desc": "(Ltop/theillusivec4/curios/api/SlotResult;)Z",
+          "sha256": "3692fdcf2370b1e6b86ae18ce9366d33b6f82db3e5e9d6706bb4954bad251053"
+        },
+        {
+          "class": "top/theillusivec4/curios/mixin/CuriosImplMixinHooks",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "aa55567940d3967852014fcf8fd5491fb01fb629cad9f0560b0ad25abb373264"
+        },
+        {
+          "class": "top/theillusivec4/curios/api/SlotResult",
+          "method": "slotContext",
+          "desc": "()Ltop/theillusivec4/curios/api/SlotContext;",
+          "sha256": "76d49ee95c6f3d7227b69dcfef182ee1cf4ac3a95e84ba0e641668856c711a7b"
+        },
+        {
+          "class": "top/theillusivec4/curios/api/SlotResult",
+          "method": "stack",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "f449d6bc00ffc629e7bb7ae2c159af6a1e79bc69485f163a56f246b254397a35"
+        },
+        {
+          "class": "top/theillusivec4/curios/api/SlotContext",
+          "method": "identifier",
+          "desc": "()Ljava/lang/String;",
+          "sha256": "2507bb98dbefeb0014665f1bf7c9cf46b8945f14cc5c59da85659b143115ac14"
+        },
+        {
+          "class": "net/minecraft/tags/ItemTags",
+          "method": "create",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/tags/TagKey;",
+          "sha256": "786939ebec5843dd92aad6a873acada43067cb765a8eaaa5df30ff5f8a878dee"
+        },
+        {
+          "class": "net/minecraft/tags/TagKey",
+          "method": "m_203882_",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/tags/TagKey;",
+          "sha256": "9f2ed852b1a7ff8bf40c67b07db96933ed61ecc88f5a26367e571aa0d60ec0ef"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)V",
+          "sha256": "dbcd98c634304656158821ac98904f21b8879bc312842adb1d3f8f8bcac49859"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "m_245185_",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;",
+          "sha256": "2301ac50c8a8423ff0943ab3353617e2d86bcdc164f30cf830c03f959378dfce"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "m_135841_",
+          "desc": "(Ljava/lang/String;)Z",
+          "sha256": "779f5974ad257bea4bf03084cea90b6b9cee5825df0b775756318826ef8bceec"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "m_135828_",
+          "desc": "(C)Z",
+          "sha256": "55c3b69af47f7c0c372b21ea76fc21e765ae67dc6b9a9be82d23a2b9dbc4e409"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapMethod on Curios' synthetic curios:tag validator CuriosImplMixinHooks.lambda$static$9; the switch on answers through helper bons.furious.patch.curios_tooltip.CuriosTagKeys with the two TagKeys kept; <clinit> is guarded because it binds that lambda to curios:tag; ResourceLocation's validity methods are guarded because the kept-id rule replicates them)",
+      "license": "LGPL-3.0-or-later (Curios): the validator's three statements are carried in our helper with kept keys, as LGPL allows; Minecraft: no code is carried, the path-character rule is our own test"
+    }
+  }
+}

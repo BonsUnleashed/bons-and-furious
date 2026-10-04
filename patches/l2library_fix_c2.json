@@ -1,0 +1,43 @@
+{
+  "group": "l2library_fix_c2",
+  "keys": {
+    "l2library_stop_tracking_noop": {
+      "mod": "l2library",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.l2library_fix_c2.StopTrackingNoopMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/xkmc/l2library/init/events/EffectSyncEvents",
+          "method": "onPlayerStopTracking",
+          "desc": "(Lnet/minecraftforge/event/entity/player/PlayerEvent$StopTracking;)V",
+          "sha256": "1c712e85c1f36c336ce71296ec9787bacfa922c7a310990b50c7da531a55343c"
+        },
+        {
+          "class": "dev/xkmc/l2library/init/events/EffectSyncEvents",
+          "method": "onEffectDisappear",
+          "desc": "(Lnet/minecraft/world/effect/MobEffect;Lnet/minecraft/world/entity/LivingEntity;)V",
+          "sha256": "5b5984c83acf9d964cfdf3b69dbbb4a1f5af9dc5c3b0d91a6f30f7804727d901"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerEntity",
+          "method": "m_8534_",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "sha256": "004288a2d0ff0220622be88e1e54bba24039b3a9aa1d63ef2866b956cf977347"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap$TrackedEntity",
+          "method": "m_140485_",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "sha256": "f210582f376da33a5f26cb6b4ae0a31a8112e9d82ea894e9f9e1f436d1669cbe"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at HEAD of EffectSyncEvents.onPlayerStopTracking, cancelled (the handler's packets only ever reach viewers who still see the entity)",
+      "license": "LGPL-2.1 (L2 Library); Minecraft/Forge classes only fingerprinted: no code is carried (helper bons.furious.patch.l2library_fix_c2.StopTrackingNoop)",
+      "kind": "fix"
+    }
+  }
+}

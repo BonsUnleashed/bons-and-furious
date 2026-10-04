@@ -97,6 +97,37 @@
       "cancel": [],
       "conversion": "overwrite",
       "license": "LGPL-3.0: the method body may be carried in our GPL-3.0 source"
+    },
+    "alexscaves_rare_biome_column_memo": {
+      "mod": "alexscaves",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.alexscaves.RareBiomeColumnMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexmodguy/alexscaves/server/level/biome/ACBiomeRarity",
+          "method": "getRareBiomeInfoForQuad",
+          "desc": "(JII)Lcom/github/alexmodguy/alexscaves/server/misc/VoronoiGenerator$VoronoiInfo;",
+          "sha256": "f8faa881b6c78e3e1d7552011b567aed1f0ced16a22ee61f1c3aa98b2839923f"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/server/level/biome/ACBiomeRarity",
+          "method": "init",
+          "desc": "()V",
+          "sha256": "b78bb7a7f5f9e2805703213df2d5baba5b3bac7e088282967ace1ce8dc905586"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/server/level/biome/ACBiomeRarity",
+          "method": "*",
+          "desc": "",
+          "sha256": "f0eb71691fa1dc764ffc196240898711a671e5924d1f5577b63d2ad67d06c343"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on ACBiomeRarity.getRareBiomeInfoForQuad (per-thread 64-entry table) + @Inject at the RETURN of init (generation)",
+      "license": "LGPL-3.0 (Alex's Caves): no Alex's Caves code is carried (helper bons.furious.patch.alexscaves.RareBiomeColumns)"
     }
   }
 }

@@ -1,0 +1,36 @@
+{
+  "group": "alexsmobs_search",
+  "keys": {
+    "alexsmobs_partner_min_scan": {
+      "mod": "alexsmobs",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.alexsmobs_search.PartnerSortMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/alexsmobs/entity/EntityDevilsHolePupfish$ChaseGoal",
+          "method": "m_8036_",
+          "desc": "()Z",
+          "sha256": "71e5f410c4c83e23e83eacfb6ad34e94b015da1035e8b9f99b256f9c1405860c"
+        },
+        {
+          "class": "com/github/alexthe666/alexsmobs/entity/EntityTriops$BreedGoal",
+          "method": "m_8036_",
+          "desc": "()Z",
+          "sha256": "55011aaad33084223f4c9a2483c3d96c45932db0f52a91fe3a8acfc50fe38239"
+        },
+        {
+          "class": "com/github/alexthe666/alexsmobs/entity/EntityCatfish$TargetFoodGoal",
+          "method": "m_8036_",
+          "desc": "()Z",
+          "sha256": "6b091735332fc3a36fe99c390c8959d556a4177ff73a2e9d149b2bf83915d3c6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injector (MixinExtras @WrapOperation on List.sort in the three goals' canUse)",
+      "license": "LGPL-3.0 (Alex's Mobs): no Alex's Mobs code is carried; the helper bons.furious.patch.alexsmobs_search.PartnerScan is our own one-pass minimum"
+    }
+  }
+}

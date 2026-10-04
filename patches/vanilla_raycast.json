@@ -1,0 +1,76 @@
+{
+  "group": "vanilla_raycast",
+  "keys": {
+    "vanilla_raycast_fluid_none": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.vanilla_raycast.LevelClipMixin",
+        "bons.furious.mixin.vanilla_raycast.ClipContextAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/BlockGetter",
+          "method": "m_45547_",
+          "desc": "(Lnet/minecraft/world/level/ClipContext;)Lnet/minecraft/world/phys/BlockHitResult;",
+          "sha256": "ef00393c1b080047d0e820e6d1f2d7f59c224c91e0bc8e09940b21aceb0b3c9b"
+        },
+        {
+          "class": "net/minecraft/world/level/BlockGetter",
+          "method": "m_151358_",
+          "desc": "(Lnet/minecraft/world/level/ClipContext;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/BlockHitResult;",
+          "sha256": "391c674d7f0691e5205f90a94a51c074aa5813fd09985770f21b9ccb34fbb701"
+        },
+        {
+          "class": "net/minecraft/world/level/BlockGetter",
+          "method": "m_274262_",
+          "desc": "(Lnet/minecraft/world/level/ClipContext;)Lnet/minecraft/world/phys/BlockHitResult;",
+          "sha256": "fbda13eca417dcb346ad681125d30cf7416505c830d0728c3cab2763023a5186"
+        },
+        {
+          "class": "net/minecraft/world/level/BlockGetter",
+          "method": "m_151361_",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Ljava/lang/Object;Ljava/util/function/BiFunction;Ljava/util/function/Function;)Ljava/lang/Object;",
+          "sha256": "6894f5938d142c8a08a653fa51fd125953a084d96912bbd24b425b8b4ed40d44"
+        },
+        {
+          "class": "net/minecraft/world/level/ClipContext",
+          "method": "m_45698_",
+          "desc": "(Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "sha256": "b560224e804ee923ce55aa203098fbe1b7c9832d331f6da3c7c606dd8219fa98"
+        },
+        {
+          "class": "net/minecraft/world/level/ClipContext$Fluid",
+          "method": "m_45731_",
+          "desc": "(Lnet/minecraft/world/level/material/FluidState;)Z",
+          "sha256": "e9e6e18e8ebd31be51fb890340d46d5b8a9d56d4714f05cabe2b77a802b88e5a"
+        },
+        {
+          "class": "net/minecraft/world/level/ClipContext$Fluid",
+          "method": "m_45735_",
+          "desc": "(Lnet/minecraft/world/level/material/FluidState;)Z",
+          "sha256": "a9057d062fb197564c8e845386d2280bde1a1cc2fd7f4098adc42ac45ea65ea5"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_6425_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/FluidState;",
+          "sha256": "0a130f8d7b048efaeafd89317c904abee3110181ae46392bca5b4c90f3846626"
+        }
+      ],
+      "cancel": [],
+      "conversion": "A mixin method added to Level overrides BlockGetter's default clip (Mixin 0.8.5 has no injectors in interfaces): for a ClipContext of exactly that class with Fluid.NONE on a level whose class keeps Level.getFluidState, vanilla's own traversal (BlockGetter.traverseBlocks) runs with a step that makes every call of the original step in the same order except the fluid-state read (the fluid shape is asked for the empty fluid state, which NONE never looks at); every other clip calls BlockGetter's default method The added method is an @Intrinsic soft implementation of BlockGetter.m_45547_ in a mixin of priority 1,000,000,000 (applied after every other mixin on Level): if any other mod has given Level its own m_45547_, Mixin keeps theirs and skips ours (generic stand-down, proven offline in evidence/vanilla_raycast/yield-proof.json); the Valkyrien Skies yield below stays.",
+      "license": "Minecraft (Mojang): no-copy; the mixin and helper carry only our own logic (helper bons.furious.patch.vanilla_raycast.ClipFast)"
+    }
+  },
+  "yields": [
+    {
+      "key": "vanilla_raycast_fluid_none",
+      "mod": "valkyrienskies",
+      "name": "Valkyrien Skies",
+      "mixin": "org.valkyrienskies.mod.mixin.feature.clip_replace.MixinLevel",
+      "why": "Valkyrien Skies gives Level its own clip too (feature.clip_replace.MixinLevel: shipyard check, then its clipIncludeShips raycast through ships). Both mixins add Level.m_45547_; only one method can exist, and Mixin skips the second with an overwrite-conflict warning, which would drop VS's ship raycasts. Our switch therefore stands down whenever VS's mixin is active (a yield never cancels VS's mixin: that only happens while our switch applies, i.e. without it)."
+    }
+  ]
+}

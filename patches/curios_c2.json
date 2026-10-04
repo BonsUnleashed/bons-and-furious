@@ -1,0 +1,62 @@
+{
+  "group": "curios_c2",
+  "keys": {
+    "curios_thread_safe_caches": {
+      "mod": "curios",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.curios_c2.SlotAttributeMapMixin",
+        "bons.furious.mixin.curios_c2.SlotUuidMapMixin"
+      ],
+      "guard": [
+        {
+          "class": "top/theillusivec4/curios/api/SlotAttribute",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "5dd60281f7ba90cb9fd938f8df35c1e2e1ed44f69331eeaf2db3103941de5883"
+        },
+        {
+          "class": "top/theillusivec4/curios/api/SlotAttribute",
+          "method": "getOrCreate",
+          "desc": "(Ljava/lang/String;)Ltop/theillusivec4/curios/api/SlotAttribute;",
+          "sha256": "ead19e3146948b730db762cb059b1e5e2e36684f692de834aa23d197059a508f"
+        },
+        {
+          "class": "top/theillusivec4/curios/mixin/core/MixinSlotAttribute",
+          "method": "curios$slotAttribute",
+          "desc": "(Ljava/lang/String;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "sha256": "d781aa09ae232b5aee814fb744fcf6b5c7443831fe4dda29814028239be15040"
+        },
+        {
+          "class": "top/theillusivec4/curios/mixin/CuriosImplMixinHooks",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "aa55567940d3967852014fcf8fd5491fb01fb629cad9f0560b0ad25abb373264"
+        },
+        {
+          "class": "top/theillusivec4/curios/api/SlotAttribute",
+          "method": "*",
+          "desc": "",
+          "sha256": "7b5fb244d0c94a61c35319bcc2dc2dd2b1c042115a5236e5f1fbda4601fd45c5"
+        },
+        {
+          "class": "top/theillusivec4/curios/mixin/CuriosImplMixinHooks",
+          "method": "*",
+          "desc": "",
+          "sha256": "79757fc468bee489a38fab86e66b4b2176cb125271f30ab75ad21e74267d1f78"
+        },
+        {
+          "class": "top/theillusivec4/curios/mixin/CuriosImplMixinHooks",
+          "method": "getUuid",
+          "desc": "(Ltop/theillusivec4/curios/api/SlotContext;)Ljava/util/UUID;",
+          "sha256": "5632fd960e1759382536bc8ccc447f05cfa88cc0f398711d5d1bd12a5f643bb5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on SlotAttribute.getOrCreate (incl. Curios' own HEAD inject) and CuriosImplMixinHooks.getUuid, the only accessors of the two static HashMaps, each under its own lock",
+      "license": "LGPL-3.0-or-later: no Curios code is carried; the mixins only lock around the original methods (helper bons.furious.patch.curios_c2.CuriosMaps)",
+      "kind": "fix"
+    }
+  }
+}

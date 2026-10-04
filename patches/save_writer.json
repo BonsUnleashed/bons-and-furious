@@ -1,0 +1,262 @@
+{
+  "group": "save_writer",
+  "keys": {
+    "vanilla_background_saves": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.save_writer.SavedDataWriteMixin",
+        "bons.furious.mixin.save_writer.PlayerDataStorageWriteMixin",
+        "bons.furious.mixin.save_writer.PlayerAdvancementsWriteMixin",
+        "bons.furious.mixin.save_writer.ServerStatsCounterWriteMixin",
+        "bons.furious.mixin.save_writer.DimensionDataStorageWaitMixin",
+        "bons.furious.mixin.save_writer.NbtIoReadWaitMixin",
+        "bons.furious.mixin.save_writer.SaveFlushMixin",
+        "bons.furious.mixin.save_writer.LevelSaveFlushMixin",
+        "bons.furious.mixin.save_writer.WorldAccessWaitMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/saveddata/SavedData",
+          "method": "m_77757_",
+          "desc": "(Ljava/io/File;)V",
+          "sha256": "5d6be1c57717c575e964eb70eae77742e33a37b8cb59cef38cae52ffa475ed62"
+        },
+        {
+          "class": "net/minecraft/world/level/storage/PlayerDataStorage",
+          "method": "m_78433_",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "sha256": "d12a4c3745d505cf08ae3e225124f582e9c9c350d88e8dac339e42d42372b1ef"
+        },
+        {
+          "class": "net/minecraft/world/level/storage/PlayerDataStorage",
+          "method": "m_78435_",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Lnet/minecraft/nbt/CompoundTag;",
+          "sha256": "574f41074414089f4abe8a27b10fbe3097bee572c1f290bcb5c778ff75e979a6"
+        },
+        {
+          "class": "net/minecraft/server/PlayerAdvancements",
+          "method": "m_135991_",
+          "desc": "()V",
+          "sha256": "ca917a9b0bddf2933f1eda34c72177e4ad2e44c9c7802540bdd8a7be3fe77a02"
+        },
+        {
+          "class": "net/minecraft/server/PlayerAdvancements",
+          "method": "m_136006_",
+          "desc": "(Lnet/minecraft/server/ServerAdvancementManager;)V",
+          "sha256": "55fe84b80427175472a3dee9bd79a192afe59e5c150f4ac4ea863b6c4b88d932"
+        },
+        {
+          "class": "net/minecraft/stats/ServerStatsCounter",
+          "method": "m_12818_",
+          "desc": "()V",
+          "sha256": "61162e15ca03f07027e94571176c0851639187f0d9276ae3e060000210c86db2"
+        },
+        {
+          "class": "net/minecraft/stats/ServerStatsCounter",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/server/MinecraftServer;Ljava/io/File;)V",
+          "sha256": "00a65b809e13fe6dfd6d1f49ec8c907dc5d409bd49b9808c123f0a6cefe012f0"
+        },
+        {
+          "class": "net/minecraft/world/level/storage/DimensionDataStorage",
+          "method": "m_164868_",
+          "desc": "(Ljava/util/function/Function;Ljava/lang/String;)Lnet/minecraft/world/level/saveddata/SavedData;",
+          "sha256": "2e17d4e95b6d1dc225bd8b595ffe21293071b5d2f5bcee372b937a2c7ebf66a6"
+        },
+        {
+          "class": "net/minecraft/world/level/storage/DimensionDataStorage",
+          "method": "m_78158_",
+          "desc": "(Ljava/lang/String;I)Lnet/minecraft/nbt/CompoundTag;",
+          "sha256": "5df81c574201b635343e3a81336dbcdf54adf3ea86fa7974b87ce1018f6444c1"
+        },
+        {
+          "class": "net/minecraft/world/level/storage/DimensionDataStorage",
+          "method": "m_78151_",
+          "desc": "()V",
+          "sha256": "56883d95197dcfd660841dfbed4e07ce99855a33cb30d976ee430c85cb09ab09"
+        },
+        {
+          "class": "net/minecraft/nbt/NbtIo",
+          "method": "m_128944_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Ljava/io/File;)V",
+          "sha256": "938911d9442bb6ebf2dc1fafd0566004144f14a2b2a1e32ae2489910c9bea1c1"
+        },
+        {
+          "class": "net/minecraft/nbt/NbtIo",
+          "method": "m_128947_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Ljava/io/OutputStream;)V",
+          "sha256": "78db8cab1a3c6783e3db4019efa0712d7eedfed1de8e906f397a21ca528c6b25"
+        },
+        {
+          "class": "net/minecraft/nbt/NbtIo",
+          "method": "m_128941_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Ljava/io/DataOutput;)V",
+          "sha256": "b8d1e8fef970b0c0511772536876774ef57987739e20644e41e7626578fcecfa"
+        },
+        {
+          "class": "net/minecraft/nbt/NbtIo",
+          "method": "m_128937_",
+          "desc": "(Ljava/io/File;)Lnet/minecraft/nbt/CompoundTag;",
+          "sha256": "380e9d3582a3c2dcad1d756a579487306d60ef75521e74cfdb53f86d5c096446"
+        },
+        {
+          "class": "net/minecraft/nbt/NbtIo",
+          "method": "m_202487_",
+          "desc": "(Ljava/io/File;Lnet/minecraft/nbt/StreamTagVisitor;)V",
+          "sha256": "4dc312e7fdad94d667bb1dc8e088c32986aa463ab610c0935c43b0b660589f3e"
+        },
+        {
+          "class": "net/minecraft/nbt/NbtIo",
+          "method": "m_128953_",
+          "desc": "(Ljava/io/File;)Lnet/minecraft/nbt/CompoundTag;",
+          "sha256": "02ad84fb8152f67c11ae8a55ce140ef4a2592191bf08e35c09b7749fb1732387"
+        },
+        {
+          "class": "net/minecraft/server/MinecraftServer",
+          "method": "m_129885_",
+          "desc": "(ZZZ)Z",
+          "sha256": "470c2971fd983670d9836657fdf52f47b669d1a1dd7f782320076a32a3548779"
+        },
+        {
+          "class": "net/minecraft/server/MinecraftServer",
+          "method": "m_195514_",
+          "desc": "(ZZZ)Z",
+          "sha256": "82e250611e1de45f7aafcd933c0c8f97345fd0288671baae10a3461469e0c189"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "m_8643_",
+          "desc": "(Lnet/minecraft/util/ProgressListener;ZZ)V",
+          "sha256": "778c66492cf65f2737ed1446140aeb93b06a4e3baad93cf2aae0c6687be6b1a1"
+        },
+        {
+          "class": "net/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess",
+          "method": "close",
+          "desc": "()V",
+          "sha256": "87ff6e4e4293684569af9bd7de0fda41a5bf7ed0eae7e857a2b22289dacd346e"
+        },
+        {
+          "class": "net/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess",
+          "method": "m_78311_",
+          "desc": "()V",
+          "sha256": "a380ad9d0c38b6c742518e3389d6d56f9fe77b058b5d6700c9a0bbe94c011cc6"
+        },
+        {
+          "class": "net/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess",
+          "method": "m_78312_",
+          "desc": "()J",
+          "sha256": "ac406389cbe310e12757ef8193e5e0556971d8e4a8315c8a96c919941e8feb31"
+        },
+        {
+          "class": "net/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess",
+          "method": "m_78297_",
+          "desc": "(Ljava/lang/String;)V",
+          "sha256": "63352cf9ec115b995b47aedd570d6594a4ab290d061379e06a36a3f8d7d7d5a6"
+        },
+        {
+          "class": "net/minecraft/nbt/NbtIo",
+          "method": "m_128955_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Ljava/io/File;)V",
+          "sha256": "968294c95274c29114aab05cffa94f2803b9328c1144a2b51293149a6e3cec2d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the file writes inside SavedData.save(File), PlayerDataStorage.save, PlayerAdvancements.save and ServerStatsCounter.save (the content is still built on the server thread: NBT serialized to its uncompressed bytes, the advancements and stats text); one daemon writer thread (bons.furious.patch.save_writer.SaveWriter) gzips and writes them in submission order with the same stream stack and the same temporary-file replace; waits (@WrapOperation before File.exists/isFile/Files.isRegularFile in the loaders, @Inject HEAD of NbtIo's file readers, DimensionDataStorage.readTagFromDisk and LevelStorageAccess close/deleteLevel/makeWorldBackup/renameLevel, after level.dat in saveAllChunks with flush, RETURN of ServerLevel.save with flush); synchronous (after a wait) off the thread of a running server, for SavedData classes declaring their own save(File), and for player .dat files while PlayerEvent.SaveToFile has a listener",
+      "license": "Minecraft (Mojang): no-copy; the mixins and helpers carry only our own logic (helpers in bons.furious.patch.save_writer)"
+    },
+    "vanilla_background_level_dat": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.save_writer.LevelDatWriteMixin",
+        "bons.furious.mixin.save_writer.LevelDatFlushMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess",
+          "method": "m_78290_",
+          "desc": "(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/level/storage/WorldData;Lnet/minecraft/nbt/CompoundTag;)V",
+          "sha256": "3601c31717370182f0df68b4a6390077e6ba005e3f59c9651db61e30557dcb13"
+        },
+        {
+          "class": "net/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess",
+          "method": "close",
+          "desc": "()V",
+          "sha256": "87ff6e4e4293684569af9bd7de0fda41a5bf7ed0eae7e857a2b22289dacd346e"
+        },
+        {
+          "class": "net/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess",
+          "method": "m_78311_",
+          "desc": "()V",
+          "sha256": "a380ad9d0c38b6c742518e3389d6d56f9fe77b058b5d6700c9a0bbe94c011cc6"
+        },
+        {
+          "class": "net/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess",
+          "method": "m_78312_",
+          "desc": "()J",
+          "sha256": "ac406389cbe310e12757ef8193e5e0556971d8e4a8315c8a96c919941e8feb31"
+        },
+        {
+          "class": "net/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess",
+          "method": "m_78297_",
+          "desc": "(Ljava/lang/String;)V",
+          "sha256": "63352cf9ec115b995b47aedd570d6594a4ab290d061379e06a36a3f8d7d7d5a6"
+        },
+        {
+          "class": "net/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess",
+          "method": "readAdditionalLevelSaveData",
+          "desc": "()V",
+          "sha256": "71d6851fd0dc3bb6920c842776f92b55248f86d57f3d392207f93261dbb16828"
+        },
+        {
+          "class": "net/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess",
+          "method": "m_78308_",
+          "desc": "()Lnet/minecraft/world/level/storage/LevelSummary;",
+          "sha256": "9972d7dbf2e1312520e23ae668c83f76b093585bcd46a2bd206e9dc3d69579b5"
+        },
+        {
+          "class": "net/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess",
+          "method": "m_246049_",
+          "desc": "(Lcom/mojang/serialization/DynamicOps;Lnet/minecraft/world/level/WorldDataConfiguration;Lnet/minecraft/core/Registry;Lcom/mojang/serialization/Lifecycle;)Lcom/mojang/datafixers/util/Pair;",
+          "sha256": "af253861ffaded90e5daf3d363e0cff3085730e347e90fb34e6cf2a64118e763"
+        },
+        {
+          "class": "net/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess",
+          "method": "m_247706_",
+          "desc": "()Lnet/minecraft/world/level/WorldDataConfiguration;",
+          "sha256": "ae2d25e21eae795ffecef2501a341a055bf4434d795540cb57598d96fc613c0c"
+        },
+        {
+          "class": "net/minecraft/nbt/NbtIo",
+          "method": "m_128944_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Ljava/io/File;)V",
+          "sha256": "938911d9442bb6ebf2dc1fafd0566004144f14a2b2a1e32ae2489910c9bea1c1"
+        },
+        {
+          "class": "net/minecraft/nbt/NbtIo",
+          "method": "m_128947_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Ljava/io/OutputStream;)V",
+          "sha256": "78db8cab1a3c6783e3db4019efa0712d7eedfed1de8e906f397a21ca528c6b25"
+        },
+        {
+          "class": "net/minecraft/nbt/NbtIo",
+          "method": "m_128941_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Ljava/io/DataOutput;)V",
+          "sha256": "b8d1e8fef970b0c0511772536876774ef57987739e20644e41e7626578fcecfa"
+        },
+        {
+          "class": "net/minecraft/server/MinecraftServer",
+          "method": "m_129885_",
+          "desc": "(ZZZ)Z",
+          "sha256": "470c2971fd983670d9836657fdf52f47b669d1a1dd7f782320076a32a3548779"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on File.createTempFile, NbtIo.writeCompressed and Util.safeReplaceFile inside LevelStorageAccess.saveDataTag (level.dat's tag is still built on the server thread and serialized there; the shared background writer of vanilla_background_saves creates the temporary file, gzips the recorded bytes into it and replaces level.dat, keeping level.dat_old); waits at HEAD of the level.dat readers and close/deleteLevel/makeWorldBackup/renameLevel, and after level.dat in saveAllChunks with flush; synchronous (after a wait) off the thread of a running server",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helpers in bons.furious.patch.save_writer)"
+    }
+  }
+}

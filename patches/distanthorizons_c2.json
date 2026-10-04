@@ -1,0 +1,55 @@
+{
+  "group": "distanthorizons_c2",
+  "keys": {
+    "distanthorizons_world_change_biome_reset": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.distanthorizons_c2.SharedApiWorldChangeMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/core/api/internal/SharedApi",
+          "method": "setDhWorld",
+          "desc": "(Lcom/seibel/distanthorizons/core/world/AbstractDhWorld;)V",
+          "sha256": "f60f1a7dcaf9c8e56685d9b2d4472047764fc6d57dfc8b1af36941b00da6c73e"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/block/BiomeWrapper_forge",
+          "method": "getBiomeWrapper",
+          "desc": "(Lnet/minecraft/core/Holder;Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/ILevelWrapper;)Lcom/seibel/distanthorizons/common/wrappers/block/BiomeWrapper_forge;",
+          "sha256": "3b163e08f9ead63ac11d1ae1bc96d74e6349c7893d05fe6ae5fd644c99b12b36"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/block/BiomeWrapper_forge",
+          "method": "deserialize",
+          "desc": "(Ljava/lang/String;Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/ILevelWrapper;)Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/IBiomeWrapper;",
+          "sha256": "e39d176e6ab985fd37419bb2abf28a28e7461e9fefa95c9e7acbac05d97f10eb"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/dataObjects/BlockBiomeWrapperPair",
+          "method": "get",
+          "desc": "(Lcom/seibel/distanthorizons/core/wrapperInterfaces/block/IBlockStateWrapper;Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/IBiomeWrapper;)Lcom/seibel/distanthorizons/core/dataObjects/BlockBiomeWrapperPair;",
+          "sha256": "775b286ff97fbc4ba006468f612953ad80fa17eb6bf74ab79e81245bc62d96aa"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/block/AbstractDhTintGetter_forge",
+          "method": "getClientBiome",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/core/Holder;",
+          "sha256": "e2ee15829d71d331cc5732e8589991ad92d95ece0fb710312603483d9cac6965"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/block/AbstractDhTintGetter_forge",
+          "method": "tryGetClientBiomeColor",
+          "desc": "(Lnet/minecraft/world/level/ColorResolver;Lcom/seibel/distanthorizons/common/wrappers/block/BiomeWrapper_forge;)I",
+          "sha256": "afc504b9592e590cf45b9afcaf0e365feacef003c84887c66900a0f62915b7f9"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject into SharedApi.setDhWorld after BlockTextureRegistry.clear() (unload) and before ThreadPoolUtil.setupThreadPools() (load): the five static biome caches are emptied",
+      "license": "LGPL-3.0: no Distant Horizons code is carried; the mixin only empties DH's own static caches at world change (helper bons.furious.patch.distanthorizons_c2.BiomeCacheReset)",
+      "kind": "fix"
+    }
+  }
+}

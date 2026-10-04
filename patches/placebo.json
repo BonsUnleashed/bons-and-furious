@@ -1,0 +1,36 @@
+{
+  "group": "placebo",
+  "keys": {
+    "placebo_enchantment_event_skip": {
+      "mod": "placebo",
+      "scripts": [],
+      "since": "1.0.28",
+      "mixins": [
+        "bons.furious.mixin.placebo.PlaceboEventFactoryMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/shadowsoffire/placebo/events/PlaceboEventFactory",
+          "method": "getEnchantmentLevelSpecific",
+          "desc": "(ILnet/minecraftforge/common/extensions/IForgeItemStack;Lnet/minecraft/world/item/enchantment/Enchantment;)I",
+          "sha256": "9fcd3bfbad83be9f3beb2ebc5e5ef596679655e922f18175fc2aacf4d2b52373"
+        },
+        {
+          "class": "dev/shadowsoffire/placebo/events/PlaceboEventFactory",
+          "method": "getEnchantmentLevel",
+          "desc": "(Ljava/util/Map;Lnet/minecraftforge/common/extensions/IForgeItemStack;)Ljava/util/Map;",
+          "sha256": "6b428136ea4b19d0e68f1305b9f9a1696fb381f3a7096f67d012a6f5b4af3dd5"
+        },
+        {
+          "class": "dev/shadowsoffire/placebo/events/GetEnchantmentLevelEvent",
+          "method": "*",
+          "desc": "",
+          "sha256": "7bbecc35d4dffd1f0a2be9c86e657eb420ef65bb512f736ab01e647c3771132a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Overwrite of PlaceboEventFactory.getEnchantmentLevelSpecific and getEnchantmentLevel (Placebo's bodies after a no-listener check)",
+      "license": "MIT (Placebo): the overwrites carry Placebo's two method bodies (helper bons.furious.patch.placebo.EnchantmentEventListeners)"
+    }
+  }
+}

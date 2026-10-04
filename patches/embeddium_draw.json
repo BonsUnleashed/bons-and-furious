@@ -1,0 +1,402 @@
+{
+  "group": "embeddium_draw",
+  "keys": {
+    "embeddium_draw_batch_cache": {
+      "mod": "embeddium",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.embeddium_draw.DefaultChunkRendererBatchCacheMixin",
+        "bons.furious.mixin.embeddium_draw.SectionRenderDataStorageVersionMixin",
+        "bons.furious.mixin.embeddium_draw.ChunkRenderListAccessMixin"
+      ],
+      "guard": [
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/DefaultChunkRenderer",
+          "method": "render",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/ChunkRenderMatrices;Lme/jellysquid/mods/sodium/client/gl/device/CommandList;Lme/jellysquid/mods/sodium/client/render/chunk/lists/ChunkRenderListIterable;Lme/jellysquid/mods/sodium/client/render/chunk/terrain/TerrainRenderPass;Lme/jellysquid/mods/sodium/client/render/viewport/CameraTransform;)V",
+          "sha256": "c9bbe022227e6d853d980084644d8751406fbf74b4b92f91a0961a09c8765441"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/DefaultChunkRenderer",
+          "method": "fillCommandBuffer",
+          "desc": "(Lme/jellysquid/mods/sodium/client/gl/device/MultiDrawBatch;Lme/jellysquid/mods/sodium/client/render/chunk/region/RenderRegion;Lme/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataStorage;Lme/jellysquid/mods/sodium/client/render/chunk/lists/ChunkRenderList;Lme/jellysquid/mods/sodium/client/render/viewport/CameraTransform;Lme/jellysquid/mods/sodium/client/render/chunk/terrain/TerrainRenderPass;Z)V",
+          "sha256": "cb5194df6b6b5bd94ee37e0d725fd77f5d1dc6cd55eb1a0809dcf4408aae75c8"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/DefaultChunkRenderer",
+          "method": "addDrawCommands",
+          "desc": "(Lme/jellysquid/mods/sodium/client/gl/device/MultiDrawBatch;JII)V",
+          "sha256": "6f59a41d0d6ba7c910add68d53e1cb96b9ea44be7a7a0621da61e2adfb25376f"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/DefaultChunkRenderer",
+          "method": "getVisibleFaces",
+          "desc": "(IIIIII)I",
+          "sha256": "34df38de58270596f5589caef7d37ac076a21a743d4f71182b8ed1bc8c246dd3"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/DefaultChunkRenderer",
+          "method": "executeDrawBatch",
+          "desc": "(Lme/jellysquid/mods/sodium/client/gl/device/CommandList;Lme/jellysquid/mods/sodium/client/gl/tessellation/GlTessellation;Lme/jellysquid/mods/sodium/client/gl/device/MultiDrawBatch;)V",
+          "sha256": "8fa2b2e720b3dede4de50a93120a819f7eac2eba1b7b6c4e580bffba678ac0de"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/gl/device/MultiDrawBatch",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "159d79d6f59248a23dbfe817218ef15ffec72b5bb08e69ca429d4985a35e7eb6"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/gl/device/MultiDrawBatch",
+          "method": "getIndexBufferSize",
+          "desc": "()I",
+          "sha256": "f781c725e664bc8a1063eb3634c680aeaa83c07fb433d53d17794a7ac156991c"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/gl/device/MultiDrawBatch",
+          "method": "clear",
+          "desc": "()V",
+          "sha256": "e2c8ab11edfa074e23fcd79fa44368a2f2041bde4a5c4a4ac32b206f5a36230e"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/gl/device/MultiDrawBatch",
+          "method": "isEmpty",
+          "desc": "()Z",
+          "sha256": "86a8bc7929fe985518fbb782443203d1047aae6f6d4f0fbc3f873148cb6b2300"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataStorage",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "85ad0f990ba0306165cc28094026da3a19ba44b54d47f9620edc6b386faa5352"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataStorage",
+          "method": "setMeshes",
+          "desc": "(ILme/jellysquid/mods/sodium/client/gl/arena/GlBufferSegment;Lme/jellysquid/mods/sodium/client/gl/arena/GlBufferSegment;[Lme/jellysquid/mods/sodium/client/gl/util/VertexRange;)V",
+          "sha256": "a4ff09c9ce0de44387ad4364892a4e448c3518b523b573c1f9e6f9d5a0ed3f7c"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataStorage",
+          "method": "updateMeshes",
+          "desc": "(I)V",
+          "sha256": "25f2b751e6494afc7d2407e0d5659fc6ed40884967936da353382624d760b475"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataStorage",
+          "method": "getDataPointer",
+          "desc": "(I)J",
+          "sha256": "82d0cded3c1419084596c60ee03e49f19497754d3d66b3f5f7446ae1ea9a146f"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataUnsafe",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "88502a206d4faadf8423cb5e93f53d6c4c35c8d8643851950dcd865f07f190a3"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/DefaultChunkRenderer",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "6b1cecb93ef7d5e6bcff8a2036dc85e1c963424ef562d5f4f083622d24376f1e"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataStorage",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "355b4e8433f36866935c5b8f89d2f5aed6febdc961d37fbf4fafe024bee1a522"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataStorage",
+          "method": "removeMeshes",
+          "desc": "(I)V",
+          "sha256": "fe8e135f0e5824941e07a28c00d67651c7ea972d641cfd4621a305c6bdcb59a8"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataStorage",
+          "method": "removeIndexBuffer",
+          "desc": "(I)V",
+          "sha256": "d451a0238a008e50f5e03a63a0629c882748b4493cb625063d2be4afa233755a"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataStorage",
+          "method": "replaceIndexBuffer",
+          "desc": "(ILme/jellysquid/mods/sodium/client/gl/arena/GlBufferSegment;)V",
+          "sha256": "8de4383cb36bcd0f4fd042230c1f2eabcaa49ee1ddc03afa3d1e4c869c100246"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataStorage",
+          "method": "onBufferResized",
+          "desc": "()V",
+          "sha256": "7dc4dda7f984e5044a2fb3d5a3208755be03af1f6ca40f2e314b5d95a3ca3700"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataStorage",
+          "method": "delete",
+          "desc": "()V",
+          "sha256": "1aaf6bf9a52ae764747a5400cf2fb88e9da1d155b9d2cb5c86f3be3eaf047059"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/lists/ChunkRenderList",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "5c46b514ac2d94cacb910fe36f6928191a1da6c97ffdc012372df0ec8d1a2189"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/lists/ChunkRenderList",
+          "method": "reset",
+          "desc": "(I)V",
+          "sha256": "d3bf348781968ce853b07be96c9ba79b3372ce657f932aa62f3721f46429b60d"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/lists/ChunkRenderList",
+          "method": "add",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/RenderSection;)V",
+          "sha256": "0e69939dbe4d3cc81bddec7e3ba8b3c0a276aea508d06966a682fafb0392df46"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/lists/ChunkRenderList",
+          "method": "sectionsWithGeometryIterator",
+          "desc": "(Z)Lme/jellysquid/mods/sodium/client/util/iterator/ByteIterator;",
+          "sha256": "900ee4abf14f4d3aa655fea1ff784bf8244e9b3e036125b5095b2772d67986c4"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/lists/ChunkRenderList",
+          "method": "getSectionsWithGeometryCount",
+          "desc": "()I",
+          "sha256": "a13fe4b8953b3fa0cc0f4380583141008275a2bfc9869fdcb07eec438c7df6d8"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/util/iterator/ReversibleByteArrayIterator",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "71a97795aba00fc66c5f5aac8eca7a4960104a343fe6d6fe404996cb69ffa714"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/util/iterator/ReversibleByteArrayIterator",
+          "method": "nextByteAsInt",
+          "desc": "()I",
+          "sha256": "ebf8bc1fcb4979b8721af162a3d25d03d4c07821f775c211a9e1dcd7d8ff79be"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/util/BitwiseMath",
+          "method": "greaterThan",
+          "desc": "(II)I",
+          "sha256": "d3dfcc556b94eb310d70058f118c991fd674334f02160e355d8546d868ba523e"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/util/BitwiseMath",
+          "method": "lessThan",
+          "desc": "(II)I",
+          "sha256": "2b3a61855c9d88dbe3fa4affcb87e65810aa0f3b66b470c37715a82196b3ff2d"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/LocalSectionIndex",
+          "method": "unpackX",
+          "desc": "(I)I",
+          "sha256": "f77cf157c91b71c51db6af300be8d64b6ad6da54faf728092f0465974db57482"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/LocalSectionIndex",
+          "method": "unpackY",
+          "desc": "(I)I",
+          "sha256": "4e8e7ad85157984237fd8da766911282ad843bbf6d2b28e48b066667874d74ff"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/LocalSectionIndex",
+          "method": "unpackZ",
+          "desc": "(I)I",
+          "sha256": "53b1055ba7f53a268078bd9714ffde6cb22f5c558cdcf7c28753a2f5c3a8aaae"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/region/RenderRegion",
+          "method": "getChunkX",
+          "desc": "()I",
+          "sha256": "b6ae9e63262d75227d3448c316851ee12cdd2b88cc6dc8ebab108306b0fbcc53"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/region/RenderRegion",
+          "method": "getChunkY",
+          "desc": "()I",
+          "sha256": "d09e87034175f748185817afa821984f665e62eab237ffd3ed25c103fe1334eb"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/region/RenderRegion",
+          "method": "getChunkZ",
+          "desc": "()I",
+          "sha256": "d54dc7d46e6192c28fbcdce0344c753bb9b3304da9bcc1f12a7a70bc6f915828"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/region/RenderRegion",
+          "method": "getStorage",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/terrain/TerrainRenderPass;)Lme/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataStorage;",
+          "sha256": "f3f098a7cc1765c04386710eb8558f5473911f1ef77ab5468cd76fdc568bbcf4"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/region/RenderRegion",
+          "method": "createStorage",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/terrain/TerrainRenderPass;)Lme/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataStorage;",
+          "sha256": "66934406cfb791fea0f49e202fcd28e126804fbd8228d8df54682ee837d3de85"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/region/RenderRegion",
+          "method": "refresh",
+          "desc": "(Lme/jellysquid/mods/sodium/client/gl/device/CommandList;)V",
+          "sha256": "330545910506c31b28678a7dd2cab96ee38e6cd0a87f7ac1e7e713eeaeb971cd"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/terrain/TerrainRenderPass",
+          "method": "isReverseOrder",
+          "desc": "()Z",
+          "sha256": "248bc3c579e1e9ab7804d9c80e2ffdd404147801390b110311edc75587532aad"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/terrain/TerrainRenderPass",
+          "method": "isSorted",
+          "desc": "()Z",
+          "sha256": "4b35be2b4f1ad36d86de85110ab82ee7fa044fb1b0795b40c72be6d704c4e9ec"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation of the fillCommandBuffer call in DefaultChunkRenderer.render, priority 1100; @Inject at the head of six SectionRenderDataStorage methods; an @Accessor for ChunkRenderList.sectionsWithGeometry)",
+      "license": "Embeddium is LGPL-3.0-only: no Embeddium code is carried (the face-test bits call Embeddium's BitwiseMath; helper bons.furious.patch.embeddium_draw.DrawBatchCache)"
+    },
+    "embeddium_merged_draws": {
+      "mod": "embeddium",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.embeddium_draw.DefaultChunkRendererMergeMixin"
+      ],
+      "guard": [
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/DefaultChunkRenderer",
+          "method": "render",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/ChunkRenderMatrices;Lme/jellysquid/mods/sodium/client/gl/device/CommandList;Lme/jellysquid/mods/sodium/client/render/chunk/lists/ChunkRenderListIterable;Lme/jellysquid/mods/sodium/client/render/chunk/terrain/TerrainRenderPass;Lme/jellysquid/mods/sodium/client/render/viewport/CameraTransform;)V",
+          "sha256": "c9bbe022227e6d853d980084644d8751406fbf74b4b92f91a0961a09c8765441"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/DefaultChunkRenderer",
+          "method": "fillCommandBuffer",
+          "desc": "(Lme/jellysquid/mods/sodium/client/gl/device/MultiDrawBatch;Lme/jellysquid/mods/sodium/client/render/chunk/region/RenderRegion;Lme/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataStorage;Lme/jellysquid/mods/sodium/client/render/chunk/lists/ChunkRenderList;Lme/jellysquid/mods/sodium/client/render/viewport/CameraTransform;Lme/jellysquid/mods/sodium/client/render/chunk/terrain/TerrainRenderPass;Z)V",
+          "sha256": "cb5194df6b6b5bd94ee37e0d725fd77f5d1dc6cd55eb1a0809dcf4408aae75c8"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/DefaultChunkRenderer",
+          "method": "addDrawCommands",
+          "desc": "(Lme/jellysquid/mods/sodium/client/gl/device/MultiDrawBatch;JII)V",
+          "sha256": "6f59a41d0d6ba7c910add68d53e1cb96b9ea44be7a7a0621da61e2adfb25376f"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/DefaultChunkRenderer",
+          "method": "getVisibleFaces",
+          "desc": "(IIIIII)I",
+          "sha256": "34df38de58270596f5589caef7d37ac076a21a743d4f71182b8ed1bc8c246dd3"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/DefaultChunkRenderer",
+          "method": "executeDrawBatch",
+          "desc": "(Lme/jellysquid/mods/sodium/client/gl/device/CommandList;Lme/jellysquid/mods/sodium/client/gl/tessellation/GlTessellation;Lme/jellysquid/mods/sodium/client/gl/device/MultiDrawBatch;)V",
+          "sha256": "8fa2b2e720b3dede4de50a93120a819f7eac2eba1b7b6c4e580bffba678ac0de"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/gl/device/MultiDrawBatch",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "159d79d6f59248a23dbfe817218ef15ffec72b5bb08e69ca429d4985a35e7eb6"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/gl/device/MultiDrawBatch",
+          "method": "getIndexBufferSize",
+          "desc": "()I",
+          "sha256": "f781c725e664bc8a1063eb3634c680aeaa83c07fb433d53d17794a7ac156991c"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/gl/device/MultiDrawBatch",
+          "method": "clear",
+          "desc": "()V",
+          "sha256": "e2c8ab11edfa074e23fcd79fa44368a2f2041bde4a5c4a4ac32b206f5a36230e"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/gl/device/MultiDrawBatch",
+          "method": "isEmpty",
+          "desc": "()Z",
+          "sha256": "86a8bc7929fe985518fbb782443203d1047aae6f6d4f0fbc3f873148cb6b2300"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataStorage",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "85ad0f990ba0306165cc28094026da3a19ba44b54d47f9620edc6b386faa5352"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataStorage",
+          "method": "setMeshes",
+          "desc": "(ILme/jellysquid/mods/sodium/client/gl/arena/GlBufferSegment;Lme/jellysquid/mods/sodium/client/gl/arena/GlBufferSegment;[Lme/jellysquid/mods/sodium/client/gl/util/VertexRange;)V",
+          "sha256": "a4ff09c9ce0de44387ad4364892a4e448c3518b523b573c1f9e6f9d5a0ed3f7c"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataStorage",
+          "method": "updateMeshes",
+          "desc": "(I)V",
+          "sha256": "25f2b751e6494afc7d2407e0d5659fc6ed40884967936da353382624d760b475"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataStorage",
+          "method": "getDataPointer",
+          "desc": "(I)J",
+          "sha256": "82d0cded3c1419084596c60ee03e49f19497754d3d66b3f5f7446ae1ea9a146f"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataUnsafe",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set",
+          "sha256": "88502a206d4faadf8423cb5e93f53d6c4c35c8d8643851950dcd865f07f190a3"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/SharedQuadIndexBuffer",
+          "method": "ensureCapacity",
+          "desc": "(Lme/jellysquid/mods/sodium/client/gl/device/CommandList;I)V",
+          "sha256": "540c2b7a7bc6a56a83dfc115fb3093bcb95dd1ca91e0a4e7f6004bfbf0ddfc88"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/SharedQuadIndexBuffer",
+          "method": "grow",
+          "desc": "(Lme/jellysquid/mods/sodium/client/gl/device/CommandList;I)V",
+          "sha256": "8722a1fb58f5da8c943a45b46dfa698f6eca3ea2d83f22e8dd13f5cdfc332fa0"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/SharedQuadIndexBuffer$IndexType$2",
+          "method": "createIndexBuffer",
+          "desc": "(Ljava/nio/ByteBuffer;I)V",
+          "sha256": "b509fca94972f6fe1bba4b3a74a13065f152c651ce364895ec7171660bdc4de2"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/gl/device/GLRenderDevice$ImmediateDrawCommandList",
+          "method": "multiDrawElementsBaseVertex",
+          "desc": "(Lme/jellysquid/mods/sodium/client/gl/device/MultiDrawBatch;Lme/jellysquid/mods/sodium/client/gl/tessellation/GlIndexType;)V",
+          "sha256": "a2fbf326e94deca6f19b339fca35ab5e766686b8f3b9dbaa033d4078e925c27a"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/terrain/TerrainRenderPass",
+          "method": "isSorted",
+          "desc": "()Z",
+          "sha256": "4b35be2b4f1ad36d86de85110ab82ee7fa044fb1b0795b40c72be6d704c4e9ec"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapOperation of the fillCommandBuffer call in DefaultChunkRenderer.render, priority 1000)",
+      "license": "Embeddium is LGPL-3.0-only: no Embeddium code is carried; the merge pass is ours (helper bons.furious.patch.embeddium_draw.MergedDraws); Oculus is read only (its current shader pack, by reflection)"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "group": "emf_vertices",
+  "keys": {
+    "emf_cube_vertex_vector": {
+      "mod": "entity_model_features",
+      "scripts": [],
+      "since": "1.0.29",
+      "mixins": [
+        "bons.furious.mixin.emf_vertices.EmfCubeVertexVectorMixin"
+      ],
+      "guard": [
+        {
+          "class": "traben/entity_model_features/models/parts/EMFModelPartCustom$EMFCube",
+          "method": "m_171332_",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V",
+          "sha256": "2200ab5cc95c63d1b136df4b07985b63c254fd48525db40ccb2f989664adf990"
+        },
+        {
+          "class": "traben/entity_model_features/models/parts/EMFModelPartCustom$EMFCube",
+          "method": "*",
+          "desc": "",
+          "sha256": "6b2a4386713e252915944b37d0726ce84f5915a8e4df16a732bc8251701e5114"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Redirect of the NEW org/joml/Vector4f(FFFF) in EMFModelPartCustom$EMFCube.compile)",
+      "license": "LGPL-3.0 (Entity Model Features): no EMF code is carried; the redirect returns a reused vector holding the constructor's four floats (helper bons.furious.patch.emf_vertices.CubeVertexVector)"
+    }
+  }
+}

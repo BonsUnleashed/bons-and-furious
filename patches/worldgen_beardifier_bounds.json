@@ -1,0 +1,88 @@
+{
+  "group": "worldgen_beardifier_bounds",
+  "keys": {
+    "vanilla_beardifier_influence_bounds": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.worldgen_beardifier_bounds.BeardifierBoundsMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/Beardifier",
+          "method": "m_207386_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "note": "compute: the two loops (sum order, term arguments) the views feed",
+          "sha256": "03dd32a5e7b1cc0dee947b2832ef33b1f881a97745e0714929c9cdcf314b29cf"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Beardifier",
+          "method": "m_223925_",
+          "desc": "(IIII)D",
+          "note": "getBeardContribution: literal 0.0 outside -12..11 per axis",
+          "sha256": "06989dc91e7f2f8d1aa379de89e05a875a8341607a210603dc67d644e162952c"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Beardifier",
+          "method": "m_158083_",
+          "desc": "(III)D",
+          "note": "getBuryContribution: clampedMap of the distance, 0.0 from 6 on",
+          "sha256": "82b3cc8d372ce3c37885ec94f4d47253ecdf8f70fc26ed8267e7f62bc5192c80"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Beardifier",
+          "method": "m_223919_",
+          "desc": "(I)Z",
+          "note": "isInKernelRange: 0 <= i < 24",
+          "sha256": "c3bd236c1f2a0b8b536510bf7fb12d25cc683fca1a3f96fd72cfb58e8ad57bca"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Beardifier",
+          "method": "<init>",
+          "desc": "(Lit/unimi/dsi/fastutil/objects/ObjectListIterator;Lit/unimi/dsi/fastutil/objects/ObjectListIterator;)V",
+          "note": "the two iterators the snapshot reads",
+          "sha256": "0d5263abcb33b56f1f3b06c38c58962672cf21e80e900c2d7fb79d40642f79fa"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Beardifier",
+          "method": "m_223937_",
+          "desc": "(Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/ChunkPos;)Lnet/minecraft/world/level/levelgen/Beardifier;",
+          "note": "forStructuresInChunk: lists built once, then only iterated",
+          "sha256": "8a1b34d0ac33602f3b7e7f8f6f9721ece716adb369d533e3e5bda922217819e1"
+        },
+        {
+          "class": "net/minecraft/util/Mth",
+          "method": "m_144851_",
+          "desc": "(DDDDD)D",
+          "note": "clampedMap",
+          "sha256": "5c7ce3af80ffa43543a7aa67e24ef3f5cc82a50b4ded65d66a14f2de5aa3ad95"
+        },
+        {
+          "class": "net/minecraft/util/Mth",
+          "method": "m_14085_",
+          "desc": "(DDD)D",
+          "note": "clampedLerp: the upper clamp returns the end value 0.0",
+          "sha256": "3d6158d1eb4f7f5a0241e26ff4a4c2a50e0a1fe94ed54ea466fbabfcc9049309"
+        },
+        {
+          "class": "net/minecraft/util/Mth",
+          "method": "m_14139_",
+          "desc": "(DDD)D",
+          "note": "lerp",
+          "sha256": "330111ec8c90da62ddc82ed774203b7d9ff0273327fed673061bc776e77ca6f1"
+        },
+        {
+          "class": "net/minecraft/util/Mth",
+          "method": "m_184648_",
+          "desc": "(DDD)D",
+          "note": "length: sqrt of the sum of squares (at least each component)",
+          "sha256": "4611983499105ef95adc2d87aaf5e70fddb8095f1450b53522a4ad185f29d522"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on the reads of Beardifier's two iterator fields inside compute (a filtered view per block position, built from a per-Beardifier snapshot); no cancel, the loops and every other mod's handler run",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.worldgen_beardifier_bounds.BeardifierBounds); it reads the 1.0.28 census bons.furious.patch.beardifier.EmptyBeardifiers.census(); other mods' Beardifier code is only checked by SHA-256 there"
+    }
+  }
+}

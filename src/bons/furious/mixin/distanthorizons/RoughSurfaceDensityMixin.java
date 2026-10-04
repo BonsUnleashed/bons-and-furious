@@ -13,9 +13,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * distanthorizons_rough_surface_xz_cache (Distant Horizons 3.3.2).
  *
  * The rough-surface generator's parameters keep the level's final density for its surface probes. At the end of their
- * constructor the density is replaced by RoughSurfaceDensity's exact copy with per-thread caches on the x/z-only parts
- * (or left as it is when that copy cannot be proven exact). GenParams_forge is a private nested class, hence the string
- * target and the coerced constructor parameters.
+ * constructor the density is replaced by a RoughSurfaceDensity.Deferred, which on the first probe becomes the exact copy
+ * with per-thread caches on the x/z-only parts (or the density as it is when that copy cannot be proven exact): a level
+ * whose surface is never generated (every level of a dedicated server) never builds the copy. GenParams_forge is a
+ * private nested class, hence the string target and the coerced constructor parameters.
  */
 @Mixin(targets = "com.seibel.distanthorizons.common.wrappers.worldGeneration.DhRoughSurfaceGenerator$GenParams_forge", remap = false)
 public abstract class RoughSurfaceDensityMixin {
@@ -24,6 +25,6 @@ public abstract class RoughSurfaceDensityMixin {
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void bons$cacheTwoDimensionalParts(@Coerce Object chunkGenerator, @Coerce Object serverLevelWrapper, CallbackInfo ci) {
-        this.density = RoughSurfaceDensity.prepare(this.density);
+        this.density = RoughSurfaceDensity.deferred(this.density);
     }
 }
