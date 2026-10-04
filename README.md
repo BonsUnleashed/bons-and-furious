@@ -15,14 +15,6 @@ Bons and Furious reduces repeated work in Minecraft and optional mods. Each opti
 
 Both builds use one JAR for client and server, with no required target mods.
 
-## New: Minecraft 1.21.1 / NeoForge
-
-The 1.0.27 port brings terrain, rendering, animation and library optimizations to NeoForge. Iris takes over the shader patches from Oculus. Dedicated-server, Iris with shaders and Embeddium checks passed, with matching sampled terrain and animation output when the relevant controls were switched on and off.
-
-[Download the NeoForge build](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.27%2Bmc1.21.1) · [Installation, compatibility and all 82 controls](https://github.com/BonsUnleashed/bons-and-furious/wiki/Minecraft-1.21.1-NeoForge)
-
-Thirteen original controls were retired after upstream changes; 32 depend on mods without a compatible release. The performance figures and detailed mod list below describe **Minecraft 1.20.1 / Forge**. The NeoForge port has no published speed benchmark.
-
 ## Minecraft 1.20.1 / Forge: measured on an already optimized modpack
 
 **5.6× faster world generation. 4.8× faster spawn preparation. Previously measured: +10% average FPS with 64 animated mobs and +29% 1% lows in a GPU-bound scene.**
