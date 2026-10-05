@@ -1,0 +1,166 @@
+{
+  "group": "jei_startup",
+  "keys": {
+    "jei_brewing_lookup": {
+      "mod": "jei",
+      "scripts": [],
+      "since": "1.0.31",
+      "mixins": [
+        "bons.furious.mixin.jei_startup.BrewingLookupMixin"
+      ],
+      "guard": [
+        {
+          "class": "mezz/jei/library/util/BrewingRecipeMakerCommon",
+          "method": "getVanillaBrewingRecipes",
+          "desc": "(Lmezz/jei/api/recipe/vanilla/IVanillaRecipeFactory;Lmezz/jei/api/runtime/IIngredientManager;Lmezz/jei/library/util/BrewingRecipeMakerCommon$IVanillaPotionOutputSupplier;)Ljava/util/Set;",
+          "sha256": "ed7ff56fd6f1df4613e6fb7145e526a6919fbdea4d87b81d6b801866556cece3"
+        },
+        {
+          "class": "mezz/jei/library/util/BrewingRecipeMakerCommon",
+          "method": "getNewPotions",
+          "desc": "(Lmezz/jei/api/recipe/vanilla/IVanillaRecipeFactory;Lmezz/jei/api/ingredients/IIngredientHelper;Ljava/util/Collection;Ljava/util/Collection;Lmezz/jei/library/util/BrewingRecipeMakerCommon$IVanillaPotionOutputSupplier;Ljava/util/Collection;)Ljava/util/List;",
+          "sha256": "15015e3d0397fd9e88365927054787fb6ffdd272f1999a158fabce6f183a4fce"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/brewing/JeiBrewingRecipe",
+          "method": "getUid",
+          "desc": "()Lnet/minecraft/resources/ResourceLocation;",
+          "sha256": "073b8e9534f6fa73996dc92473010fcb63662a89e73738d9cc38504731870b0d"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/brewing/JeiBrewingRecipe",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "sha256": "c04f41b996fbe42713482d6c9ae2c8a9c801785a76309b60e0f17faa14eb1090"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/brewing/JeiBrewingRecipe",
+          "method": "hashCode",
+          "desc": "()I",
+          "sha256": "08d66df5ba70bd3dfbea325b34400bcbdff8f5481164007e03efba45f8ed4bcf"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/brewing/JeiBrewingRecipe",
+          "method": "<init>",
+          "desc": "(Ljava/util/List;Ljava/util/List;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceLocation;Lmezz/jei/library/plugins/vanilla/brewing/BrewingRecipeUtil;)V",
+          "sha256": "3f1033712c066c2d4da97cee28f0f980b7a5e7b0df315888598a48d0f14bd9a6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Wrap the private recipe-set allocation and candidate stream; preserve membership, iteration order and every recipe factory call.",
+      "license": "MIT (JEI); independently written Bons helpers; no JEF code used"
+    },
+    "jei_tooltip_words": {
+      "mod": "jei",
+      "scripts": [],
+      "since": "1.0.31",
+      "mixins": [
+        "bons.furious.mixin.jei_startup.TooltipWordsMixin"
+      ],
+      "guard": [
+        {
+          "class": "mezz/jei/gui/ingredients/ListElementInfo",
+          "method": "getStrings",
+          "desc": "(Ljava/util/List;)Ljava/util/Set;",
+          "sha256": "f544bab9824c9104bbeafe424f015df834e6e29bc992443cd6a3842b71282866"
+        },
+        {
+          "class": "mezz/jei/common/util/StringUtil",
+          "method": "removeChatFormatting",
+          "desc": "(Ljava/lang/String;)Ljava/lang/String;",
+          "sha256": "beb308fdea5efa59458ceac7371b368421a1452b81af0914dec6d4780de6f2b4"
+        },
+        {
+          "class": "net/minecraft/ChatFormatting",
+          "method": "m_126649_",
+          "desc": "(Ljava/lang/String;)Ljava/lang/String;",
+          "sha256": "d3f196172612d20b9d493f0752589b956f008f359ad35f837370eb429c9cf464"
+        },
+        {
+          "class": "net/minecraft/ChatFormatting",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "1bebf3e3180b665bb7f31db28c7e2ab077939ca91e3d35e1d56c4bab983dc284"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Wrap getStrings; plain string scans avoid regex and split-array allocation while callbacks and JEI locale conversion stay on the calling thread.",
+      "license": "MIT (JEI); independently written Bons helpers; no JEF code used"
+    },
+    "jei_hidden_menu_sync": {
+      "mod": "jei",
+      "scripts": [],
+      "since": "1.0.31",
+      "mixins": [
+        "bons.furious.mixin.jei_startup.AnvilSimulationMixin",
+        "bons.furious.mixin.jei_startup.GrindstoneSimulationMixin",
+        "bons.furious.mixin.jei_startup.HiddenMenuSyncMixin"
+      ],
+      "guard": [
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilHelper",
+          "method": "getFakeAnvilMenu",
+          "desc": "()Lnet/minecraft/world/inventory/AnvilMenu;",
+          "sha256": "0afc48988d94da80b7f5f9934cdeea05c7fd325b7972f2af6302af13d81419c5"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneHelper",
+          "method": "getFakeGrindstoneMenu",
+          "desc": "()Lnet/minecraft/world/inventory/GrindstoneMenu;",
+          "sha256": "2fc6c282c5cb8b620dd94097da35db0e58d3c15f1b987fbf603a82510c0c1ad9"
+        },
+        {
+          "class": "net/minecraft/world/inventory/AbstractContainerMenu",
+          "method": "m_38946_",
+          "desc": "()V",
+          "sha256": "545f15992686a6b6b45dff159813492b286bc77014850fd2a52fa9fe66ed9a10"
+        },
+        {
+          "class": "net/minecraft/world/inventory/AbstractContainerMenu",
+          "method": "m_38893_",
+          "desc": "(Lnet/minecraft/world/inventory/ContainerListener;)V",
+          "sha256": "eb08be8afe486041f4297a16a7566e9a9ef3ea4e1ed7b8e02831b95c7f4702db"
+        },
+        {
+          "class": "net/minecraft/world/inventory/AbstractContainerMenu",
+          "method": "m_150416_",
+          "desc": "(Lnet/minecraft/world/inventory/ContainerSynchronizer;)V",
+          "sha256": "6fdc9fd430b7945a7dbf5ffba625d9b2113464c28d7b9b69f2858049208dedc3"
+        },
+        {
+          "class": "net/minecraft/world/inventory/AbstractContainerMenu",
+          "method": "m_150407_",
+          "desc": "(ILnet/minecraft/world/item/ItemStack;Ljava/util/function/Supplier;)V",
+          "sha256": "edccda19a20870bbd40280f3676a580fe50247be1816b891a7774635bc3a51e4"
+        },
+        {
+          "class": "net/minecraft/world/inventory/AbstractContainerMenu",
+          "method": "m_150435_",
+          "desc": "(ILnet/minecraft/world/item/ItemStack;Ljava/util/function/Supplier;)V",
+          "sha256": "a2e32783ef45ddbbbb12a5dfd687f7826e5b3e31e496be0adc5b144d0525f5b1"
+        },
+        {
+          "class": "net/minecraft/world/inventory/AbstractContainerMenu",
+          "method": "m_150445_",
+          "desc": "()V",
+          "sha256": "842f4d7700a83b9c9e1bf9568faf9819aa4182c99c31ff9c360285390f8fd03d"
+        },
+        {
+          "class": "net/minecraft/world/inventory/AbstractContainerMenu",
+          "method": "m_150440_",
+          "desc": "(II)V",
+          "sha256": "af400c2608b70ae7e3d634aa9e1c6085e08d1f33bc9174e30b725e36843569d1"
+        },
+        {
+          "class": "net/minecraft/world/inventory/AbstractContainerMenu",
+          "method": "m_182420_",
+          "desc": "(II)V",
+          "sha256": "b61573b5b8ed4368adb19b58c372461e4d6aa606b7724e6cf1227997aabde085"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Mark only JEI simulation menus; skip unobserved broadcast scans, flush before listener attachment. Every recipe simulation and Forge event still runs.",
+      "license": "MIT (JEI); independently written Bons helpers; no JEF code used"
+    }
+  }
+}

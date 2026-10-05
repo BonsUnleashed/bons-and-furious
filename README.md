@@ -4,13 +4,13 @@
 
 **Your CPU lives its life one tick at a time.**
 
-[**Forge 1.20.1: 1.0.30**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.30) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
+[**Forge 1.20.1: 1.0.33**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.33) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
 
 Bons and Furious reduces repeated work in Minecraft and optional mods. Each optimization or fix has its own switch in one config file. Choose the build for your Minecraft version and loader.
 
 | Minecraft | Loader | Controls | Requirements |
 | --- | --- | ---: | --- |
-| 1.20.1 | Forge | 248 | Forge 47.3.22 or newer |
+| 1.20.1 | Forge | 253 | Forge 47.3.22 or newer |
 | 1.21.1 | NeoForge | 165 | Java 21; NeoForge 21.1.252 or newer |
 
 Both builds use one JAR for client and server, with no required target mods.
@@ -54,11 +54,11 @@ Every run, the retained earlier results, the baseline mod versions and the metho
 
 ## What the Forge 1.20.1 build does
 
-- **215 optimizations** reduce repeated work: fewer allocations, no repeated lookups, no state rebuilt only to come out identical. Terrain preparation, ground-height estimates, climate lookups, Distant Horizons' rough-surface generation, chunk render layers, ship chunk bookkeeping, shader graph resets, animation easing and event dispatch are the largest. Eight controls restore or provide compatible versions of performance paths disabled in the tested setup, including Radium, ModernFix, ImmediatelyFast and Distant Horizons integrations. Each checks the relevant mod builds and configuration.
-- **29 fixes** repair reproduced server freezes, worker-thread crashes, generation exceptions and defects in the target mods themselves: large mobs whose solid body parts could be walked through with Radium, caches that two threads could corrupt, data that piled up on every world join.
+- **219 optimizations** reduce repeated work: fewer allocations, no repeated lookups, no state rebuilt only to come out identical. Terrain preparation, ground-height estimates, climate lookups, Distant Horizons' rough-surface generation, chunk render layers, ship chunk bookkeeping, shader graph resets, animation easing and event dispatch are the largest. Eight controls restore or provide compatible versions of performance paths disabled in the tested setup, including Radium, ModernFix, ImmediatelyFast and Distant Horizons integrations. Each checks the relevant mod builds and configuration.
+- **30 fixes** repair reproduced server freezes, worker-thread crashes, generation exceptions and defects in the target mods themselves: large mobs whose solid body parts could be walked through with Radium, caches that two threads could corrupt, data that piled up on every world join.
 - **4 deliberate changes** (frame pacing, the Occult bed scan, Fowl Play flight targets, Scorched sandcrab processing) trade a documented behaviour difference for a large saving.
 
-All 248 are listed in `config/bons_and_furious.properties` with their target mod, tested build, side and measurement. Set any key to `false` and restart. Every control is explained in the [wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki).
+All 253 are listed in `config/bons_and_furious.properties` with their target mod, tested build, side and measurement. Set any key to `false` and restart. Every control is explained in the [wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki).
 
 ## Forge 1.20.1 results, per patch
 
@@ -109,7 +109,7 @@ For Minecraft 1.21.1, use `bons_and_furious-neoforge-1.0.30.1+mc1.21.1.jar`, Jav
 
 For Minecraft 1.20.1 / Forge:
 
-1. Download `bons_and_furious-1.0.30.jar` from the [1.0.30 release](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.30) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load. The two small mixin libraries it uses, MixinExtras and MixinSquared, are bundled inside it.
+1. Download `bons_and_furious-1.0.33.jar` from the [1.0.33 release](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.33) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load. The two small mixin libraries it uses, MixinExtras and MixinSquared, are bundled inside it.
 2. Start once. The mod writes its config file with its defaults (every switch on except `vanilla_background_level_dat`) and logs how many controls are enabled.
 3. To turn one off, set its key to `false` and restart. Client-only patches (renderer, shaders, ambience) never load on a dedicated server.
 
@@ -149,11 +149,11 @@ switch's mixins and guarded methods are listed in `patches/<mod>.json`.
 
 Licensed GPL-3.0-only ([LICENSE](LICENSE)). Upstream attribution is in [NOTICE.md](NOTICE.md); the tested dependency builds are listed in [upstream-credits.json](upstream-credits.json).
 
-The 1.0.30 release JAR was tested in client and dedicated-server copies of the reference pack before release. The whole-pack benchmark above was measured with 1.0.26; its snapshot had 510 client and 471 server mod JARs.
+The 1.0.33 release JAR was tested in client and dedicated-server copies of the reference pack before release. The whole-pack benchmark above was measured with 1.0.26; its snapshot had 510 client and 471 server mod JARs.
 
 ### Upstream pull requests
 
-Pull requests sent to the projects this mod patches: 10 merged, 86 open, 14 closed without merge (status checked 5 October 2026).
+Pull requests sent to the projects this mod patches: 10 merged, 86 open, 14 closed without merge (status checked 6 October 2026).
 
 | Project | Pull requests | Status |
 | --- | --- | --- |

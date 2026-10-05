@@ -1,0 +1,25 @@
+{
+  "group": "forge_payload",
+  "keys": {
+    "forge_custom_payload_heap_copy": {
+      "mod": "forge",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.32",
+      "mixins": [
+        "bons.furious.mixin.forge_payload.CustomPayloadHeapCopyMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/network/protocol/game/ClientboundCustomPayloadPacket",
+          "method": "m_132045_",
+          "desc": "()Lnet/minecraft/network/FriendlyByteBuf;",
+          "sha256": "aa4a5e025b2eb0486e3a19fd2fa0d2897dc4896c89b5172dac7ef050c5466fe9"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injector (@Redirect of the FriendlyByteBuf.copy() call in ClientboundCustomPayloadPacket.getData)",
+      "license": "Forge (LGPL-2.1) / Minecraft: no Forge or Minecraft code is carried; helper bons.furious.patch.forge_payload.PayloadCopies"
+    }
+  }
+}

@@ -24,7 +24,8 @@ public abstract class NoiseChunkFinalDensityMixin {
     @Shadow @Final private Map<DensityFunction, DensityFunction> f_209161_;
 
     @ModifyArg(method = "<init>", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/world/level/levelgen/DensityFunction;m_207456_(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;"))
+            target = "Lnet/minecraft/world/level/levelgen/DensityFunction;m_207456_(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;"),
+            require = 0)   // never refused; bons.furious.guard.CallSites decides whether the pass-2 visitor is used
     private DensityFunction.Visitor bons$secondPassVisitor(DensityFunction.Visitor visitor) {
         return FinalDensityReuse.pass2(visitor, this.f_209161_);
     }

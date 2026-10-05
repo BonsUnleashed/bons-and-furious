@@ -17,7 +17,7 @@ from pathlib import Path
 import argparse, hashlib, json, os, subprocess, time, urllib.request, zipfile
 
 ROOT = Path(__file__).resolve().parent
-VERSION = '1.0.30'
+VERSION = '1.0.31'
 FORGE = '1.20.1-47.4.16'
 DEPS = [
     dict(file='mixinextras-forge-0.5.0.jar', group='io.github.llamalad7', artifact='mixinextras-forge', version='0.5.0',

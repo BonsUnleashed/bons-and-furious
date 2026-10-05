@@ -84,5 +84,14 @@
       "conversion": "MixinExtras @ModifyExpressionValue on the reads of Beardifier's two iterator fields inside compute (a filtered view per block position, built from a per-Beardifier snapshot); no cancel, the loops and every other mod's handler run",
       "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.worldgen_beardifier_bounds.BeardifierBounds); it reads the 1.0.28 census bons.furious.patch.beardifier.EmptyBeardifiers.census(); other mods' Beardifier code is only checked by SHA-256 there"
     }
-  }
+  },
+  "yields": [
+    {
+      "key": "vanilla_beardifier_influence_bounds",
+      "mod": "generator_accelerator",
+      "name": "Generator Accelerator",
+      "mixin": "dev.sixik.generator_accelerator.mixins.common_mixin.beardifier.MixinBeardifier",
+      "why": "Since 1.0.32. Generator Accelerator (tested 1.20.1-1.4.10-3.1) replaces Beardifier.compute (m_207386_) with its own @Overwrite (mixin priority 900, applied before ours). Our @ModifyExpressionValue on the two iterator-field reads inside compute then finds no target and its require = 1 stops the server at the first world load ('Critical injection failure ... bons$rigids'). Our switch therefore stands down whenever that mixin is listed (names from Generator Accelerator's mixin config only; none of its code was read). Found by a minimal-pack rig with Bons and Furious 1.0.30, 2026-10-05."
+    }
+  ]
 }

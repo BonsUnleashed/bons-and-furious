@@ -54,6 +54,16 @@ public final class Guards {
     private static final Map<String, Decision> DECISIONS = new ConcurrentHashMap<>();
     private static final Set<String> LOGGED = ConcurrentHashMap.newKeySet();
     /**
+     * Since 1.0.32: what the guards need from one class, taken from a single read for every switch that guards it (big
+     * classes such as Level, ServerLevel or Entity are guarded by up to nine switches, and each read runs Forge's class
+     * transformers). WANTED = class -> name+desc of every guarded method in the table ("*" = the declared-method shape);
+     * PRINTS = class -> its fingerprints, or empty when the class does not exist.
+     */
+    private static final Map<String, Set<String>> WANTED = new LinkedHashMap<>();
+    private static final Map<String, java.util.Optional<ClassPrints>> PRINTS = new ConcurrentHashMap<>();
+
+    private record ClassPrints(Map<String, String> methods, String shape) {}
+    /**
      * Since 1.0.28: methods a switch's fast path needs exactly as shipped, also after every other mod's mixins (its probe
      * mixin -> owner, name, desc). The probe is the switch's highest-priority mixin on that class, so Mixin applies it after
      * the others; postApply then compares the method with its guard fingerprint (afterApply / untouched).
@@ -98,7 +108,10 @@ public final class Guards {
                 switch (f[0]) {
                     case "mixin" -> MIXIN_KEY.put(f[1], f[2]);
                     case "mod" -> MOD.put(f[1], f[2]);
-                    case "guard" -> GUARD.computeIfAbsent(f[1], k -> new ArrayList<>()).add(new String[] {f[2], f[3], f[4], f[5]});
+                    case "guard" -> {
+                        GUARD.computeIfAbsent(f[1], k -> new ArrayList<>()).add(new String[] {f[2], f[3], f[4], f[5]});
+                        WANTED.computeIfAbsent(f[2], k -> new java.util.LinkedHashSet<>()).add(f[3].equals("*") ? "*" : f[3] + f[4]);
+                    }
                     case "cancel" -> CANCEL.put(f[1], f[2]);
                     case "yield" -> {
                         ForeignPatches.Yield y = ForeignPatches.parse(f);
@@ -112,6 +125,7 @@ public final class Guards {
             LOGGER.error("Bons and Furious could not read {}; no patch will be applied", RESOURCE, e);
             MIXIN_KEY.clear();
             GUARD.clear();
+            WANTED.clear();
             CANCEL.clear();
             YIELDS.clear();
             YIELD_MIXIN.clear();
@@ -298,22 +312,29 @@ public final class Guards {
             Decision y = ForeignPatches.yieldDecision(YIELDS.get(key));
             return y != null ? y : new Decision(State.APPLY, "switched on");
         }
+        // since 1.0.32: the target mod's own classes first; when all of them are missing the switch is ABSENT exactly as in
+        // the full pass below (modded > 0 && moddedAbsent == modded), so the Minecraft classes it also guards are not read
+        int moddedFirst = 0, moddedFirstAbsent = 0;
+        for (String[] g : guard) {
+            if (isGameClass(g[0])) continue;
+            moddedFirst++;
+            if (prints(g[0]) == null) moddedFirstAbsent++;
+        }
+        if (moddedFirst > 0 && moddedFirstAbsent == moddedFirst)
+            return new Decision(State.ABSENT, "target mod " + MOD.getOrDefault(key, "?") + " is not installed");
         int absent = 0, modded = 0, moddedAbsent = 0;
         List<String> problems = new ArrayList<>();
-        Map<String, ClassNode> nodes = new LinkedHashMap<>();
         for (String[] g : guard) {
             boolean game = isGameClass(g[0]);
             if (!game) modded++;
-            ClassNode node = nodes.computeIfAbsent(g[0], Guards::read);
-            if (node == null) { absent++; if (!game) moddedAbsent++; problems.add(g[0].replace('/', '.') + " not found"); continue; }
+            ClassPrints prints = prints(g[0]);
+            if (prints == null) { absent++; if (!game) moddedAbsent++; problems.add(g[0].replace('/', '.') + " not found"); continue; }
             if (g[1].equals("*")) {   // the class's set of declared methods (see Fingerprint.shape)
-                if (!Fingerprint.shape(node).equals(g[3])) problems.add(g[0].replace('/', '.') + " declares other methods");
+                if (!g[3].equals(prints.shape())) problems.add(g[0].replace('/', '.') + " declares other methods");
                 continue;
             }
-            MethodNode m = null;
-            for (MethodNode x : node.methods) if (x.name.equals(g[1]) && x.desc.equals(g[2])) { m = x; break; }
-            if (m == null) { problems.add(g[0].replace('/', '.') + "." + g[1] + " missing"); continue; }
-            String fp = Fingerprint.of(m);
+            String fp = prints.methods().get(g[1] + g[2]);
+            if (fp == null) { problems.add(g[0].replace('/', '.') + "." + g[1] + " missing"); continue; }
             if (!fp.equals(g[3])) problems.add(g[0].replace('/', '.') + "." + g[1] + " differs");
         }
         // since 1.0.28: a switch that also guards Minecraft or Forge methods it relies on is ABSENT, not MISMATCH, when every
@@ -333,6 +354,73 @@ public final class Guards {
     private static boolean isGameClass(String internalName) {
         return internalName.startsWith("net/minecraft/") || internalName.startsWith("com/mojang/")
                 || internalName.startsWith("net/minecraftforge/") || internalName.startsWith("java/");
+    }
+
+    /**
+     * The fingerprints every switch's guards need from this class, from one read (null when the class does not exist).
+     * The same method node gives the same Fingerprint.of value, so a decision is exactly what a read per switch gave. A
+     * race between two threads only reads the class twice; the first stored result wins.
+     */
+    private static ClassPrints prints(String internalName) {
+        java.util.Optional<ClassPrints> known = PRINTS.get(internalName);
+        if (known != null) return known.orElse(null);
+        ClassNode node = mayExist(internalName) ? read(internalName) : null;
+        ClassPrints p = null;
+        if (node != null) {
+            Map<String, String> methods = new java.util.HashMap<>();
+            String shape = null;
+            for (String want : WANTED.getOrDefault(internalName, Set.of())) {
+                if (want.equals("*")) { shape = Fingerprint.shape(node); continue; }
+                for (MethodNode x : node.methods) {
+                    if ((x.name + x.desc).equals(want)) { methods.put(want, Fingerprint.of(x)); break; }
+                }
+            }
+            p = new ClassPrints(methods, shape);
+        }
+        PRINTS.putIfAbsent(internalName, java.util.Optional.ofNullable(p));
+        return PRINTS.get(internalName).orElse(null);
+    }
+
+    private static volatile Set<String> layerPackages;   // packages of our module's layer and all its parents; empty = unknown
+
+    /**
+     * Since 1.0.32: false only when the class cannot exist, so reading it is skipped. Mixin's bytecode provider
+     * (MixinLaunchPluginLegacy.getClassNode) first asks the game layer's class loader, which serves a class only from the
+     * module that owns its package (or from a parent layer that owns it), and on a miss falls back to
+     * contextClassLoader.getResource(name + ".class"). For a package that no module owns, that class loader asks every jar
+     * of the layer for the file (about two milliseconds per class in a 500-mod pack, ~28 ms per switch of a mod that is
+     * not installed) and finds nothing, because a jar's module owns the package of every class file it holds. So a class
+     * whose package is in no module of this layer or its parents is not found either way. Unknown layer -> always read.
+     */
+    private static boolean mayExist(String internalName) {
+        Set<String> packages = layerPackages;
+        if (packages == null) packages = loadLayerPackages();
+        if (packages.isEmpty()) return true;
+        int slash = internalName.lastIndexOf('/');
+        return packages.contains(slash < 0 ? "" : internalName.substring(0, slash).replace('/', '.'));
+    }
+
+    private static synchronized Set<String> loadLayerPackages() {
+        if (layerPackages != null) return layerPackages;
+        Set<String> out = new java.util.HashSet<>();
+        try {
+            ModuleLayer layer = Guards.class.getModule().getLayer();
+            if (layer != null && Guards.class.getModule().isNamed() && net.minecraftforge.fml.loading.FMLLoader.isProduction()) {
+                java.util.ArrayDeque<ModuleLayer> todo = new java.util.ArrayDeque<>(List.of(layer));
+                Set<ModuleLayer> seen = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
+                while (!todo.isEmpty()) {
+                    ModuleLayer l = todo.pop();
+                    if (!seen.add(l)) continue;
+                    for (Module m : l.modules()) out.addAll(m.getPackages());
+                    todo.addAll(l.parents());
+                }
+            }
+        } catch (Throwable t) {
+            out.clear();
+            LOGGER.debug("Bons and Furious: module layer packages unavailable ({}); every guarded class is read", t.toString());
+        }
+        layerPackages = Set.copyOf(out);
+        return layerPackages;
     }
 
     private static ClassNode read(String internalName) {

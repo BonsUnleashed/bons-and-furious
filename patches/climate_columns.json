@@ -1,0 +1,31 @@
+{
+  "group": "climate_columns",
+  "keys": {
+    "vanilla_climate_sample_xz_parts": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.32",
+      "mixins": [
+        "bons.furious.mixin.climate_columns.ClimateSamplerPartsMixin",
+        "bons.furious.mixin.climate_columns.RandomStatePartsMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/biome/Climate$Sampler",
+          "method": "m_183445_",
+          "desc": "(III)Lnet/minecraft/world/level/biome/Climate$TargetPoint;",
+          "sha256": "ee533c4f9adea70a033a945ca5716952eb4ea7661613b711a5ec785d50f281aa"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/RandomState",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/core/HolderGetter;J)V",
+          "sha256": "27f14bb0ec830c97b3daa9efa4d1790deb308c433e3330b8b4c4083334762284"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (@Redirect of the six DensityFunction.compute calls in Climate.Sampler.sample; @Inject at the RETURN of RandomState.<init>); the constructor is guarded because the copies are mapped from the router exactly as it builds the sampler",
+      "license": "Minecraft: no Minecraft code is carried; helper bons.furious.patch.climate_columns.ClimateParts maps the router with our own visitor and the existing bons.pure.terrain.XzCache / DensityAudit"
+    }
+  }
+}
