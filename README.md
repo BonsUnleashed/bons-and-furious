@@ -105,7 +105,7 @@ Coverage means the tested build and the specific code paths of each mod, not eve
 
 ## Install the matching build
 
-For Minecraft 1.21.1, use `bons_and_furious-neoforge-1.0.30+mc1.21.1.jar`, Java 21 and NeoForge 21.1.252 or newer. MixinSquared is bundled; NeoForge supplies MixinExtras. [NeoForge setup and compatibility](https://github.com/BonsUnleashed/bons-and-furious/wiki/Minecraft-1.21.1-NeoForge).
+For Minecraft 1.21.1, use `bons_and_furious-neoforge-1.0.30.1+mc1.21.1.jar`, Java 21 and NeoForge 21.1.252 or newer. MixinSquared is bundled; NeoForge supplies MixinExtras. [NeoForge setup and compatibility](https://github.com/BonsUnleashed/bons-and-furious/wiki/Minecraft-1.21.1-NeoForge).
 
 For Minecraft 1.20.1 / Forge:
 
@@ -153,14 +153,14 @@ The 1.0.30 release JAR was tested in client and dedicated-server copies of the r
 
 ### Upstream pull requests
 
-Pull requests sent to the projects this mod patches: 9 merged, 95 open, 6 closed without merge (status checked 4 October 2026).
+Pull requests sent to the projects this mod patches: 10 merged, 86 open, 14 closed without merge (status checked 5 October 2026).
 
 | Project | Pull requests | Status |
 | --- | --- | --- |
 | Ad Astra | [#825](https://github.com/terrarium-earth/Ad-Astra/pull/825) | Open |
 | Alex's Caves | [#1759](https://github.com/AlexModGuy/AlexsCaves/pull/1759), [#1760](https://github.com/AlexModGuy/AlexsCaves/pull/1760), [#1762](https://github.com/AlexModGuy/AlexsCaves/pull/1762) | Open |
 | Alex's Mobs | [#2385](https://github.com/AlexModGuy/AlexsMobs/pull/2385), [#2386](https://github.com/AlexModGuy/AlexsMobs/pull/2386) | Open |
-| Almost Unified | [#144](https://github.com/AlmostReliable/almostunified/pull/144) | Open |
+| Almost Unified | [#144](https://github.com/AlmostReliable/almostunified/pull/144) | Closed without merge |
 | AmbientSounds | [#348](https://github.com/CreativeMD/AmbientSounds/pull/348), [#349](https://github.com/CreativeMD/AmbientSounds/pull/349) | Merged |
 | Architectury API | [#747](https://github.com/architectury/architectury-api/pull/747) | Open |
 | Ars Nouveau | [#2258](https://github.com/baileyholl/Ars-Nouveau/pull/2258) | Open |
@@ -185,21 +185,23 @@ Pull requests sent to the projects this mod patches: 9 merged, 95 open, 6 closed
 | Farmer's Delight | [#1397](https://github.com/vectorwing/FarmersDelight/pull/1397), [#1398](https://github.com/vectorwing/FarmersDelight/pull/1398) | Open |
 | FDBosses | [#42](https://github.com/FINDERFEED/FDBosses/pull/42) | Open |
 | Forge | [#10893](https://github.com/MinecraftForge/MinecraftForge/pull/10893), [#10894](https://github.com/MinecraftForge/MinecraftForge/pull/10894) | Merged |
-| Forge | [#10895](https://github.com/MinecraftForge/MinecraftForge/pull/10895), [#10896](https://github.com/MinecraftForge/MinecraftForge/pull/10896) | Open |
+| Forge | [#10895](https://github.com/MinecraftForge/MinecraftForge/pull/10895) | Open |
+| Forge | [#10896](https://github.com/MinecraftForge/MinecraftForge/pull/10896) | Closed without merge. Withdrawn: too little left to gain after #10893. |
 | Fowl Play | [#242](https://github.com/aqariio/Fowl-Play/pull/242), [#243](https://github.com/aqariio/Fowl-Play/pull/243) | Open |
 | Fusion | [#316](https://github.com/SuperMartijn642/Fusion/pull/316), [#317](https://github.com/SuperMartijn642/Fusion/pull/317), [#318](https://github.com/SuperMartijn642/Fusion/pull/318) | Open |
 | Hostile Villages | [#37](https://github.com/someaddons/HostileVillages/pull/37), [#38](https://github.com/someaddons/HostileVillages/pull/38) | Open |
 | Ice and Fire | [#5641](https://github.com/AlexModGuy/Ice_and_Fire/pull/5641), [#5642](https://github.com/AlexModGuy/Ice_and_Fire/pull/5642), [#5643](https://github.com/AlexModGuy/Ice_and_Fire/pull/5643), [#5644](https://github.com/AlexModGuy/Ice_and_Fire/pull/5644), [#5645](https://github.com/AlexModGuy/Ice_and_Fire/pull/5645) | Open |
-| ImmediatelyFast | [#586](https://github.com/RaphiMC/ImmediatelyFast/pull/586) | Closed without merge |
-| ImmediatelyFast | [#588](https://github.com/RaphiMC/ImmediatelyFast/pull/588), [#589](https://github.com/RaphiMC/ImmediatelyFast/pull/589) | Open |
+| ImmediatelyFast | [#586](https://github.com/RaphiMC/ImmediatelyFast/pull/586), [#588](https://github.com/RaphiMC/ImmediatelyFast/pull/588), [#589](https://github.com/RaphiMC/ImmediatelyFast/pull/589) | Closed without merge |
 | Immersive Engineering | [#6448](https://github.com/BluSunrize/ImmersiveEngineering/pull/6448) | Open |
-| Jaden's Nether Expansion | [#353](https://github.com/ThatJadenXgamer/Jadens-Nether-Expansion/pull/353) | Open |
-| Just Enough Items | [#4525](https://github.com/mezz/JustEnoughItems/pull/4525), [#4527](https://github.com/mezz/JustEnoughItems/pull/4527) | Open |
+| Jaden's Nether Expansion | [#353](https://github.com/ThatJadenXgamer/Jadens-Nether-Expansion/pull/353) | Closed without merge. Withdrawn: the 1.20.1 branch is no longer maintained and the 1.21.1 rework already covers it. |
+| Just Enough Items | [#4525](https://github.com/mezz/JustEnoughItems/pull/4525) | Merged. Released in JEI 15.62.0.218. |
+| Just Enough Items | [#4527](https://github.com/mezz/JustEnoughItems/pull/4527) | Closed without merge. Withdrawn: it did not fit what that cache is for. |
 | L2 Library | [#34](https://github.com/Minecraft-LightLand/L2Library/pull/34), [#35](https://github.com/Minecraft-LightLand/L2Library/pull/35) | Open |
 | Legendary Monsters | [#13](https://github.com/Miauczel/Legendary-Monsters-1.20.1/pull/13) | Open |
 | Lionfish API | [#5](https://github.com/lender544/Lionfish-API/pull/5), [#6](https://github.com/lender544/Lionfish-API/pull/6) | Open |
 | ModernFix | [#696](https://github.com/embeddedt/ModernFix/pull/696) | Merged |
-| ModernFix | [#697](https://github.com/embeddedt/ModernFix/pull/697), [#698](https://github.com/embeddedt/ModernFix/pull/698), [#699](https://github.com/embeddedt/ModernFix/pull/699) | Open |
+| ModernFix | [#697](https://github.com/embeddedt/ModernFix/pull/697), [#698](https://github.com/embeddedt/ModernFix/pull/698) | Closed without merge |
+| ModernFix | [#699](https://github.com/embeddedt/ModernFix/pull/699) | Open |
 | Mowzie's Mobs | [#65](https://github.com/BobMowzie/MowziesMobs-Public/pull/65) | Open |
 | Mutant Monsters | [#139](https://github.com/Fuzss/mutant-monsters/pull/139) | Open |
 | Nether Depths Upgrade | [#67](https://github.com/Scouter456/Nether_Depths_Upgrade/pull/67) | Closed without merge. The 1.20 branch is no longer maintained. |
