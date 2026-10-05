@@ -1,3 +1,24 @@
+# Hotfix 1.0.30.1+mc1.21.1 — 2026-10-05
+
+**PASS** for `bons_and_furious-neoforge-1.0.30.1+mc1.21.1.jar`, SHA-256
+`ebcd2416c3451e9063f04ecea3f40e434445f632ebde4bf339b5f288ee866304`.
+
+One change: `vanilla_climate_rtree_flat_bounds` declares its overwrite of `Climate.RTree.Node.distance` public instead of
+protected. Biolith (bundled in Quark 4.1 and other mods) makes that method public with an access transformer and calls
+it; an overwrite keeps its own access, so 1.0.30+mc1.21.1 made the method protected again and world generation crashed
+with an IllegalAccessError. Evidence is in `../evidence/hotfix-1.0.30.1/`.
+
+| Check | Result |
+| --- | --- |
+| Build | The unchanged 1.0.30+mc1.21.1 source rebuilds to the published JAR byte for byte; the hotfix JAR differs from it only in that method's access flag (javap: same instructions, line numbers shifted by the added comment) and the version text |
+| Reproduced | 1.0.30+mc1.21.1 and 1.0.27+mc1.21.1 with Quark 4.1-486 (Biolith 3.0.14) crash during spawn preparation; also with TerraBlender 4.1.0.8 (Biolith's TerraBlender path) |
+| Fixed | Hotfix with Quark, and with Quark plus TerraBlender: worlds generate, the switch applies, and 3,670,016 sampled blocks and their biomes in the Overworld, Nether and End equal a run with the switch off |
+| Without Biolith | Hotfix and 1.0.30+mc1.21.1 give identical terrain and identical decisions for all 98 probed switches |
+| Static checks | Guards (161 switches, 1,296 fingerprints), name audit, crash-class sweep over 472 jars (same result as 1.0.30+mc1.21.1, no crashing kind), access audit of every overwrite against the access transformers of 473 jars (no conflict left) |
+
+These are dedicated-server runs; a singleplayer world runs the same server code. The rest of this file is the
+qualification of 1.0.30+mc1.21.1, which this hotfix otherwise equals.
+
 # Qualification — 2026-10-04
 
 **PASS** for `bons_and_furious-neoforge-1.0.30+mc1.21.1.jar`.

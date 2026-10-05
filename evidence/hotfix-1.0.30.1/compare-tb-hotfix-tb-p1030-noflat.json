@@ -1,0 +1,91 @@
+{
+ "a": "tb-hotfix",
+ "b": "tb-p1030-noflat",
+ "tb-hotfix": {
+  "exit": 0,
+  "stopped_cleanly": true,
+  "crash_reports": 0,
+  "hs_err": [],
+  "probe_passed": true,
+  "illegal_access": 0,
+  "climate": {
+   "vanilla_climate_rtree_flat_bounds": "Decision[state=APPLY, detail=all 3 fingerprints match]",
+   "vanilla_climate_sample_repeat": "Decision[state=APPLY, detail=all 1 fingerprints match]",
+   "vanilla_climate_search_repeat": "Decision[state=APPLY, detail=all 3 fingerprints match]",
+   "vanilla_climate_tree_sort_keys": "Decision[state=APPLY, detail=all 5 fingerprints match]",
+   "vanilla_climate_tree_span_bounds": "Decision[state=APPLY, detail=all 5 fingerprints match]"
+  },
+  "mods": [
+   "Quark-4.1-486.jar",
+   "TerraBlender-neoforge-1.21.1-4.1.0.8.jar",
+   "Zeta-1.1-40.jar",
+   "bons-port-probe-1.jar",
+   "bons_and_furious-neoforge-1.0.30.1+mc1.21.1.jar"
+  ]
+ },
+ "tb-p1030-noflat": {
+  "exit": 0,
+  "stopped_cleanly": true,
+  "crash_reports": 0,
+  "hs_err": [],
+  "probe_passed": true,
+  "illegal_access": 0,
+  "climate": {
+   "vanilla_climate_rtree_flat_bounds": "Decision[state=DISABLED, detail=disabled by config]",
+   "vanilla_climate_sample_repeat": "Decision[state=APPLY, detail=all 1 fingerprints match]",
+   "vanilla_climate_search_repeat": "Decision[state=APPLY, detail=all 3 fingerprints match]",
+   "vanilla_climate_tree_sort_keys": "Decision[state=APPLY, detail=all 5 fingerprints match]",
+   "vanilla_climate_tree_span_bounds": "Decision[state=APPLY, detail=all 5 fingerprints match]"
+  },
+  "mods": [
+   "Quark-4.1-486.jar",
+   "TerraBlender-neoforge-1.21.1-4.1.0.8.jar",
+   "Zeta-1.1-40.jar",
+   "bons-port-probe-1.jar",
+   "bons_and_furious-neoforge-1.0.30+mc1.21.1.jar"
+  ]
+ },
+ "terrain_identical": true,
+ "dimensions": {
+  "tb-hotfix": {
+   "minecraft:overworld": {
+    "blocks": 1572864,
+    "biome_sha256": "50e6dc9cbd3c851c624712b8d5d2bcc28c63356385b175a9ee998c957940319c",
+    "block_sha256": "ba7aa8da1840a3d5dc643f26da11272caaf9c9895cd8d6b2b114dc6468457229"
+   },
+   "minecraft:the_nether": {
+    "blocks": 1048576,
+    "biome_sha256": "84aa2bb086016c6e429b19c4de4c583b9e689850f9c4ba4b873bdf0255974671",
+    "block_sha256": "11001d55725ced154d167dfc706178bd1a33baa7b9f8043c9ecfbc1a2e665eac"
+   },
+   "minecraft:the_end": {
+    "blocks": 1048576,
+    "biome_sha256": "eae83cb8cb5b7d97099ec4d466253b58734967dc5b4ebe7bbad9ad671f7ad498",
+    "block_sha256": "d0654dfd0a7fafe21ee39e795c2992d1914c4d7ea25a306aa65b7217601e4988"
+   }
+  },
+  "tb-p1030-noflat": {
+   "minecraft:overworld": {
+    "blocks": 1572864,
+    "block_sha256": "ba7aa8da1840a3d5dc643f26da11272caaf9c9895cd8d6b2b114dc6468457229",
+    "biome_sha256": "50e6dc9cbd3c851c624712b8d5d2bcc28c63356385b175a9ee998c957940319c"
+   },
+   "minecraft:the_nether": {
+    "blocks": 1048576,
+    "block_sha256": "11001d55725ced154d167dfc706178bd1a33baa7b9f8043c9ecfbc1a2e665eac",
+    "biome_sha256": "84aa2bb086016c6e429b19c4de4c583b9e689850f9c4ba4b873bdf0255974671"
+   },
+   "minecraft:the_end": {
+    "blocks": 1048576,
+    "block_sha256": "d0654dfd0a7fafe21ee39e795c2992d1914c4d7ea25a306aa65b7217601e4988",
+    "biome_sha256": "eae83cb8cb5b7d97099ec4d466253b58734967dc5b4ebe7bbad9ad671f7ad498"
+   }
+  }
+ },
+ "decision_differences": {
+  "vanilla_climate_rtree_flat_bounds": [
+   "Decision[state=APPLY, detail=all 3 fingerprints match]",
+   "Decision[state=DISABLED, detail=disabled by config]"
+  ]
+ }
+}

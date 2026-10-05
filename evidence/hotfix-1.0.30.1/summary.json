@@ -1,0 +1,59 @@
+{
+ "jar": "bons_and_furious-neoforge-1.0.30.1+mc1.21.1.jar",
+ "sha256": "ebcd2416c3451e9063f04ecea3f40e434445f632ebde4bf339b5f288ee866304",
+ "base": {
+  "jar": "bons_and_furious-neoforge-1.0.30+mc1.21.1.jar",
+  "sha256": "351cd7f41311348c307cf6c05c6020dcbc2d25f50d42b4b6672f1320468267d9",
+  "unchanged_source_rebuilds_to_it": true
+ },
+ "change": "vanilla_climate_rtree_flat_bounds: the overwrite of Climate$RTree$Node.distance([J)J is declared public (was protected); same instructions",
+ "jar_diff": {
+  "changed_entries": [
+   "META-INF/neoforge.mods.toml",
+   "bons/furious/mixin/terrain/ClimateNodeBoundsMixin.class",
+   "bons_and_furious.default.properties"
+  ],
+  "changed_members": [
+   "method distance ([J)J"
+  ],
+  "access_flags": [
+   {
+    "old": "0x4",
+    "new": "0x1"
+   }
+  ]
+ },
+ "tested_with": {
+  "minecraft": "1.21.1",
+  "neoforge": "21.1.252",
+  "java": "Temurin 21.0.12.1",
+  "quark": "4.1-486",
+  "zeta": "1.1-40",
+  "biolith": "3.0.14 (bundled in Quark 4.1-486)",
+  "terrablender": "4.1.0.8"
+ },
+ "reproduced_with_published_jars": {
+  "published_1_0_30_with_quark": true,
+  "published_1_0_27_with_quark": true,
+  "published_1_0_30_with_quark_and_terrablender": true,
+  "quark_without_bons_runs": true,
+  "published_1_0_30_all_switches_off_runs": true,
+  "published_1_0_30_only_this_switch_off_runs": true
+ },
+ "fixed": {
+  "hotfix_with_quark_runs_and_applies_the_switch": true,
+  "terrain_equals_switch_off": true,
+  "terrablender_path_runs_and_terrain_equals_switch_off": true,
+  "without_biolith_identical_terrain_and_decisions": true,
+  "blocks_compared_per_pair": 3670016
+ },
+ "static": {
+  "crash_class_sweep_same_as_1_0_30": true,
+  "access_audit_hits_1_0_30": [
+   "net/minecraft/world/level/biome/Climate$RTree$Node.distance"
+  ],
+  "access_audit_hits_hotfix": []
+ },
+ "workaround_for_older_builds": "set vanilla_climate_rtree_flat_bounds=false in config/bons_and_furious.properties",
+ "scope": "dedicated-server runs (a singleplayer world runs the same server code); no client screen test"
+}

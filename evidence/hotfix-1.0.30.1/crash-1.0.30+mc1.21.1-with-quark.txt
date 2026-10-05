@@ -1,0 +1,45 @@
+---- Minecraft Crash Report ----
+// Hi. I'm Minecraft, and I'm a crashaholic.
+
+Time: 2026-10-05 03:06:44
+Description: Exception generating new chunk
+
+java.lang.IllegalAccessError: class com.terraformersmc.biolith.impl.compat.VanillaCompat tried to access protected method 'long net.minecraft.world.level.biome.Climate$RTree$Node.distance(long[])' (com.terraformersmc.biolith.impl.compat.VanillaCompat is in module biolith@3.0.14 of loader 'TRANSFORMER' @736f3e9e; net.minecraft.world.level.biome.Climate$RTree$Node is in module minecraft@1.21.1 of loader 'TRANSFORMER' @736f3e9e)
+	at TRANSFORMER/biolith@3.0.14/com.terraformersmc.biolith.impl.compat.VanillaCompat.getBiome(VanillaCompat.java:21) ~[biolith-neoforge-3.0.14.jar%23134!/:?] {re:mixin,re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.world.level.biome.MultiNoiseBiomeSource.handler$zzc000$biolith$getBiome(MultiNoiseBiomeSource.java:600) ~[server-1.21.1-20240808.144430-srg.jar%23120!/:?] {re:mixin,re:classloading,pl:mixin:APP:biolith.mixins.json:MixinMultiNoiseBiomeSource from mod biolith,pl:mixin:A}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.world.level.biome.MultiNoiseBiomeSource.getNoiseBiome(MultiNoiseBiomeSource.java) ~[server-1.21.1-20240808.144430-srg.jar%23120!/:?] {re:mixin,re:classloading,pl:mixin:APP:biolith.mixins.json:MixinMultiNoiseBiomeSource from mod biolith,pl:mixin:A}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.world.level.biome.BiomeSource.findBiomeHorizontal(BiomeSource.java:141) ~[server-1.21.1-20240808.144430-srg.jar%23120!/:?] {re:mixin,re:classloading,pl:mixin:APP:biolith.mixins.json:MixinBiomeSource from mod biolith,pl:mixin:A}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.world.level.biome.BiomeSource.findBiomeHorizontal(BiomeSource.java:75) ~[server-1.21.1-20240808.144430-srg.jar%23120!/:?] {re:mixin,re:classloading,pl:mixin:APP:biolith.mixins.json:MixinBiomeSource from mod biolith,pl:mixin:A}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.world.level.chunk.ChunkGeneratorStructureState.lambda$generateRingPositions$5(ChunkGeneratorStructureState.java:145) ~[server-1.21.1-20240808.144430-srg.jar%23120!/:?] {re:mixin,re:classloading}
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1768) ~[?:?] {}
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1760) ~[?:?] {}
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:387) [?:?] {}
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1312) [?:?] {}
+	at java.base/java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1843) [?:?] {}
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1808) [?:?] {}
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:188) [?:?] {}
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Worker-Main-6
+Stacktrace:
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.level.ChunkMap.applyStep(ChunkMap.java:636) ~[server-1.21.1-20240808.144430-srg.jar%23120!/:?] {re:classloading,pl:accesstransformer:B}
+-- Chunk to be generated --
+Details:
+	Status being generated: minecraft:structure_starts
+	Location: -34,-21
+	Position hash: -85899345954
+	Generator: net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator@48565d01
+Stacktrace:
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.level.ChunkMap.applyStep(ChunkMap.java:636) ~[server-1.21.1-20240808.144430-srg.jar%23120!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.level.GenerationChunkHolder.applyStep(GenerationChunkHolder.java:64) ~[server-1.21.1-20240808.144430-srg.jar%23120!/:?] {re:classloading,re:mixin}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.level.ChunkGenerationTask.scheduleChunkInLayer(ChunkGenerationTask.java:143) ~[server-1.21.1-20240808.144430-srg.jar%23120!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.level.ChunkGenerationTask.scheduleLayer(ChunkGenerationTask.java:121) ~[server-1.21.1-20240808.144430-srg.jar%23120!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.level.ChunkGenerationTask.scheduleNextLayer(ChunkGenerationTask.java:74) ~[server-1.21.1-20240808.144430-srg.jar%23120!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.level.ChunkGenerationTask.runUntilWait(ChunkGenerationTask.java:59) ~[server-1.21.1-20240808.144430-srg.jar%23120!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.level.ChunkMap.lambda$runGenerationTask$21(ChunkMap.java:658) ~[server-1.21.1-20240808.144430-srg.jar%23120!/:?] {re:classloading,pl:accesstransformer:B}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.server.level.ChunkTaskPriorityQueueSorter.lambda$message$1(ChunkTaskPriorityQueueSorter.java:62) ~[server-1.21.1-20240808.144430-srg.jar%23120!/:?] {re:classloading}
+	at TRANSFORMER/minecraft@1.21.1/net.minecraft.util.thread.ProcessorMailbox.pollTask(ProcessorMailbox.java:91) ~[server-1.21.1-20240808.144430-srg.jar%23120!/:?] {re:classloading}

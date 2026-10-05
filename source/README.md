@@ -1,7 +1,7 @@
 # Bons and Furious — Minecraft 1.21.1 / NeoForge
 
 This is the Minecraft 1.21.1 port of Bons and Furious 1.0.30. It uses mod ID `bons_and_furious`, version
-`1.0.30+mc1.21.1`, and requires Java 21 and NeoForge 21.1.252 or newer. Minecraft is restricted to exactly 1.21.1.
+`1.0.30.1+mc1.21.1`, and requires Java 21 and NeoForge 21.1.252 or newer. Minecraft is restricted to exactly 1.21.1.
 The tested loader is 21.1.252; later loaders are not automatically qualified.
 
 It builds on the qualified 1.0.27 port (`1.0.27+mc1.21.1`, SHA-256
@@ -12,7 +12,7 @@ Forge 1.20.1: the final 1.0.29 (SHA-256 `859a8387340acc2d3f166b3235c074597dca869
 
 ## Install
 
-Put `bons_and_furious-neoforge-1.0.30+mc1.21.1.jar` in the `mods` folder of a Minecraft 1.21.1 NeoForge instance.
+Put `bons_and_furious-neoforge-1.0.30.1+mc1.21.1.jar` in the `mods` folder of a Minecraft 1.21.1 NeoForge instance.
 Optional target mods are not required; their patches only apply when the relevant targets and method fingerprints
 match. MixinSquared is bundled; NeoForge supplies MixinExtras.
 
@@ -31,11 +31,14 @@ Of the 121 switches that 1.0.28 to 1.0.30 added, 83 are ported, 28 are retired (
 target already does it: Create 6.0.10, NeoForge's background SavedData writes, Minecraft 1.21.1's own network flush
 batching, and others) and 10 have no 1.21.1 target.
 
-Four crash fixes are included. `oculus_entity_vertex_reuse` (Iris) runs at priority 999 so Accelerated Rendering's
+Five crash fixes are included. `oculus_entity_vertex_reuse` (Iris) runs at priority 999 so Accelerated Rendering's
 offset changes apply to it (1.0.27+mc1.21.1 crashes with Accelerated Rendering and Iris). `vanilla_model_bone_lookup`
 stands down inside a mod's own overwrite of that method (Embeddium without Iris). A switch that replaces another mod's
 mixin steps aside while a third mod refines that mixin through MixinSquared. `terrain_final_density_reuse` overwrites
 `MarkerOrMarked.mapAll` at priority 499, so Bye Pregen's injector into that method is accepted and both run.
+New in 1.0.30.1+mc1.21.1: `vanilla_climate_rtree_flat_bounds` declares its overwrite of `Climate.RTree.Node.distance`
+public. Biolith (also bundled in Quark) makes that method public and calls it; the protected copy in 1.0.30+mc1.21.1 and
+earlier undid that and crashed world generation with an IllegalAccessError.
 
 The Oculus-prefixed switches target Iris. The tested Iris pairing is Iris 1.8.12 with Sodium 0.6.13. Embeddium 1.0.15
 is tested separately; do not combine Embeddium with Sodium/Iris. Embeddium owns model bone lookup when installed.

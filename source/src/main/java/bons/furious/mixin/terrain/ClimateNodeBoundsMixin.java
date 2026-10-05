@@ -53,9 +53,13 @@ public abstract class ClimateNodeBoundsMixin {
     /**
      * @author Bons and Furious (vanilla_climate_rtree_flat_bounds)
      * @reason the same squared range-distance sum, read from one flat array instead of seven Parameter objects
+     *
+     * <p>Public, not protected as in Minecraft (1.0.30.1): an @Overwrite keeps the access of this declaration, so a
+     * protected copy undid the access transformer with which Biolith (also bundled in Quark) makes the method public,
+     * and Biolith's biome search then failed with IllegalAccessError during world generation.
      */
     @Overwrite
-    protected long distance(long[] target) {
+    public long distance(long[] target) {
         long[] b = this.bons$bounds;
         if (b == null) b = this.bons$bounds = bons$flatten(this.parameterSpace);   // a node built before the patch applied
         long sum = 0L;
