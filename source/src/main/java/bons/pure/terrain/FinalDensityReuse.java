@@ -143,6 +143,8 @@ public final class FinalDensityReuse {
     /** Called by NoiseChunk.&lt;init&gt; (coremod) with the pass-2 wrap visitor and the wrap table. */
     public static DensityFunction.Visitor pass2(DensityFunction.Visitor visitor, Map<DensityFunction, DensityFunction> table) {
         if (!READY || !enabled || visitor == null || visitor instanceof Pass2) return visitor;
+        // Another mod also changes the visitor of this call: hand it through untouched (bons.furious.guard.CallSites).
+        if (bons.furious.guard.CallSites.finalDensityForeign) return visitor;
         if (!(table instanceof Object2ObjectOpenHashMap || table instanceof HashMap)) return visitor;   // structural tables only
         try {
             if (!PLAIN_NOISE.get(visitor.getClass())) return visitor;

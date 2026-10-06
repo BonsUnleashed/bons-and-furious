@@ -1,59 +1,70 @@
-# Hotfix 1.0.30.1+mc1.21.1 — 2026-10-05
+# Qualification — 2026-10-06
 
-**PASS** for `bons_and_furious-neoforge-1.0.30.1+mc1.21.1.jar`, SHA-256
-`ebcd2416c3451e9063f04ecea3f40e434445f632ebde4bf339b5f288ee866304`.
+**PASS** for `bons_and_furious-neoforge-1.0.33+mc1.21.1.jar`.
 
-One change: `vanilla_climate_rtree_flat_bounds` declares its overwrite of `Climate.RTree.Node.distance` public instead of
-protected. Biolith (bundled in Quark 4.1 and other mods) makes that method public with an access transformer and calls
-it; an overwrite keeps its own access, so 1.0.30+mc1.21.1 made the method protected again and world generation crashed
-with an IllegalAccessError. Evidence is in `../evidence/hotfix-1.0.30.1/`.
-
-| Check | Result |
-| --- | --- |
-| Build | The unchanged 1.0.30+mc1.21.1 source rebuilds to the published JAR byte for byte; the hotfix JAR differs from it only in that method's access flag (javap: same instructions, line numbers shifted by the added comment) and the version text |
-| Reproduced | 1.0.30+mc1.21.1 and 1.0.27+mc1.21.1 with Quark 4.1-486 (Biolith 3.0.14) crash during spawn preparation; also with TerraBlender 4.1.0.8 (Biolith's TerraBlender path) |
-| Fixed | Hotfix with Quark, and with Quark plus TerraBlender: worlds generate, the switch applies, and 3,670,016 sampled blocks and their biomes in the Overworld, Nether and End equal a run with the switch off |
-| Without Biolith | Hotfix and 1.0.30+mc1.21.1 give identical terrain and identical decisions for all 98 probed switches |
-| Static checks | Guards (161 switches, 1,296 fingerprints), name audit, crash-class sweep over 472 jars (same result as 1.0.30+mc1.21.1, no crashing kind), access audit of every overwrite against the access transformers of 473 jars (no conflict left) |
-
-These are dedicated-server runs; a singleplayer world runs the same server code. The rest of this file is the
-qualification of 1.0.30+mc1.21.1, which this hotfix otherwise equals.
-
-# Qualification — 2026-10-04
-
-**PASS** for `bons_and_furious-neoforge-1.0.30+mc1.21.1.jar`.
-
-SHA-256: `351cd7f41311348c307cf6c05c6020dcbc2d25f50d42b4b6672f1320468267d9` (1,312,881 bytes)
+SHA-256: `ff5e8bf07015e91b6cb55da17db6ed77610b8e5df55b5f73e6b08ae84ac8aad3` (1,347,485 bytes)
 
 Tested with Minecraft 1.21.1, NeoForge 21.1.252 and Temurin Java 21.0.12.1. The same packaged JAR was used in all
-15 production runs below. The development probe is a separate mod and is absent from the release JAR.
+18 production runs below. The development probe is a separate mod and is absent from the release JAR.
 Evidence is in `../evidence/qualification.json` in the source bundle.
 
-The JAR was built on a test PC (Intel Core Ultra 9 285K, RTX 4090); the runs took place on two test PCs (AMD Ryzen 9 5900X, RTX 3080; Intel Core Ultra 9 285K, RTX 4090). Each stage receipt in the qualification receipt names its PC. Compared with an earlier build of this port (SHA-256 `2fabf321936fd4ae…`), the JAR differs only in
-`PureConfig.class` and `bons_and_furious.guards.tsv`: the configuration fix and the ServerCore step-aside below (`evidence/jar-diff-1030.json`).
+The JAR was built and every run took place on one test PC (AMD Ryzen 9 3900X, RTX 3080); each stage receipt in the qualification
+receipt names it. This version brings the port to Bons and Furious 1.0.33. Compared with the published
+1.0.30.1+mc1.21.1 (SHA-256 `ebcd2416c3451e90…`), the JAR adds 20 entries, changes
+18 and removes none (`../evidence/jar-diff-1033.json`); the changes are listed under "New in this
+version" below.
 
-It was reconciled with the frozen Forge 1.0.30 release (SHA-256 `3b32a46648a917e085f7fa8b21c749c869a409444008ddfbe790a10dd02d1a50`): every Forge
-control is accounted for in PORT-COVERAGE.md, and every switch this port ships has the Forge release's default value.
+It was reconciled with the frozen Forge 1.0.33 release (SHA-256 `dbb479dd0151538c904bec668413b3e71ccc989d9caf33522243ecf3eb2a4683`): every one of
+its 253 controls is accounted for in PORT-COVERAGE.md, and every
+switch this port ships has the Forge release's default value.
 
 | Check | Result |
 | --- | --- |
-| Gradle build and pinned guard verification | Pass: 161 guarded switches, 1,296 method/class-shape checks, 239 guarded mixins (243 mixin classes in all) |
+| Gradle build and pinned guard verification | Pass: 165 guarded switches, 1,320 method/class-shape checks, 246 guarded mixins (250 mixin classes in all), 33 foreign mixins cancelled where a switch replaces them, 32 foreign patches stepped aside for |
 | Original Forge and NeoForge name audits | Both pass; a deliberately wrong mod ID is rejected |
-| Static mixin signature audit | 439 checks; the three known raw-class gaps are Embeddium's runtime-added methods, verified in its client run |
-| Production fingerprints (installed 21.1.252 server and client jars) | No guard differs; 19 methods with reviewed layout variants (below) |
-| Mixin crash-class sweep over 469 mod jars | No crash class: 23 overlaps, all allowed (lower-priority overwrites, stand-downs) or overwrite warnings |
+| Static mixin signature audit | 451 checks over 250 mixin classes; the 3 known raw-class gaps are Embeddium's runtime-added methods, verified in its client run |
+| Production fingerprints (installed 21.1.252 server and client jars) | No guard differs; 21 guard entries with reviewed layout variants (below) |
+| Mixin crash-class sweep over 472 mod jars | No crash class: 24 overlaps, all allowed (lower-priority overwrites, stand-downs) or overwrite warnings |
+| Overwrite access audit over 472 mod jars (the Biolith crash class) | 87 overwrites; none is narrower than another mod's access transformer |
 | Production dedicated server, base game, switches on vs off | Identical blocks and biome hashes across 3,670,016 blocks in the Overworld, Nether and End |
 | Production server, 56 target mods without C2ME and Dynamic Trees (TerraBlender, Oh The Biomes We've Gone and others), on vs off | Identical blocks and biome hashes in all three dimensions |
-| The same with Dynamic Trees (57 mods) | Overworld and End identical. The Nether varies between two runs with the same settings (13,370 and 11,839 blocks, all in Dynamic Trees' fungus trees) as much as between on and off (12,445), so this fixture cannot show equality there |
 | Base-game server, shadow mode, 1,200-tick scripted soak | Pass; 0 shadow mismatches |
-| Server with 60 optional target mods incl. C2ME, shadow, 1,200-tick soak | Pass; 0 shadow mismatches; the C2ME stand-downs logged as designed |
+| Server with 60 optional target mods incl. C2ME, shadow, 1,200-tick soak | Pass; 0 shadow mismatches; the C2ME step-asides logged as designed, now including the three NoiseChunk switches |
 | Server with 57 target mods without C2ME, shadow, 2,400-tick soak | Pass; 0 shadow mismatches |
-| Production server with ServerCore 1.5.19 | Starts and runs; `vanilla_spawn_gate_visibility_memo` steps aside because ServerCore redirects the same call. A build without that step-aside does not start (below) |
-| Production Iris client, 76 mods, Complementary Reimagined r5.9.3, shadow, 600 world ticks with scripted entities, drawers and block entities | World loaded and rendered (screenshot inspected); 0 shadow mismatches |
-| Production Embeddium client without Iris or Sodium, 74 mods, shadow, 600 world ticks | World loaded and rendered, drawer count labels drawn (screenshot inspected); 0 shadow mismatches |
-| Production Iris client with Accelerated Rendering 1.0.14 and shaders, 77 mods, shadow, 600 world ticks | World, chat and toast text rendered with shaders (screenshot inspected); 0 shadow mismatches. The published 1.0.27+mc1.21.1 crashes in this same run (below) |
-| GeckoLib easing and Iris vertex outputs | 33,924 easing samples and 4,096 Iris vertices: hashes identical to the qualified 1.0.27 port |
+| Production server with ServerCore 1.5.19 | Starts and runs; `vanilla_spawn_gate_visibility_memo` steps aside because ServerCore redirects the same call |
+| Production server with Generator Accelerator 1.6.2 | Starts and runs; `vanilla_beardifier_influence_bounds` and `vanilla_climate_sample_xz_parts` step aside because Generator Accelerator overwrites both methods; terrain identical with the switches on and off. The published 1.0.30.1+mc1.21.1 stops in the same run (below) |
+| Production server with Bye Pregen 1.1.3.0 | Starts and runs; the terrain switches keep working next to it; terrain identical with the switches on and off |
+| Production Iris client, 76 mods, Complementary Reimagined r5.9.3, shadow, 600 world ticks with scripted entities, drawers and block entities | World loaded and rendered with shaders (screenshot inspected); 0 shadow mismatches |
+| Production Embeddium client without Iris or Sodium, 74 mods, shadow, 600 world ticks | World loaded and rendered (screenshot inspected); 0 shadow mismatches |
+| Production Iris client with Accelerated Rendering 1.0.14 and shaders, 77 mods, shadow, 600 world ticks | World, death-screen and toast text rendered with shaders (screenshot inspected); 0 shadow mismatches |
+| GeckoLib easing and Iris vertex outputs | Hashes identical to the qualified 1.0.27 port |
+| JEI tooltip words (differential test) | 200,000 random strings: the helper gives the same words in the same order as JEI 19.51's own split, and the same text as Minecraft's formatting removal |
 | Target coverage | Every guarded switch obtains an APPLY decision in at least one production run |
+
+## New in this version
+
+- Four switches from Bons and Furious 1.0.31 to 1.0.33: `jei_brewing_lookup`, `jei_hidden_menu_sync`, `jei_tooltip_words`, `vanilla_climate_sample_xz_parts`. The JEI switches are
+  adapted to JEI 19.51 (its tooltip word split differs from JEI 15's; the helper follows 19.51, proven by the
+  differential test above). The climate switch remembered 8 and 9
+  two-dimensional parts per column in the base game and keeps the original evaluation for samplers it does not know
+  (such as C2ME's compiled density functions, met in every run with C2ME); its built-in
+  comparison of the first samples with the original evaluation never disagreed.
+- Retired: `forge_custom_payload_heap_copy` (a Forge 1.20.1 payload copy; Minecraft 1.21.1 decodes custom payloads
+  before they reach that code, so there is nothing to copy).
+- Call-site stand-down (the Forge 1.0.33 crash fix): `terrain_density_memo`, `terrain_final_density_reuse` and
+  `vanilla_noise_wrap_presize` check, once every mod's mixins are applied, that no other mod hooks the NoiseChunk calls
+  they prepare. Next to C2ME 0.4's density-function compiler all three stand down (one log line each); with nothing else
+  on those calls they work as before. Next to Generator Accelerator: the NoiseChunk switch `terrain_final_density_reuse` stood down at its hook on the same call.
+- Generator Accelerator 1.6.2 (NeoForge 1.21.1): it overwrites `Beardifier.compute` and `Climate.Sampler.sample` at the
+  default priority. The published 1.0.30.1+mc1.21.1 does not get through the first world load next to it; Mixin
+  refuses our handler with `InvalidInjectionException: @At("FIELD") on Beardifier::bons$rigids with priority 1000 cannot inject into Beardifier::compute ... merged by MixinBeardifier`. Both switches now step aside when Generator Accelerator lists those mixins.
+- Game-layer resource index (`distanthorizons_sql_script_lookup_index`): the version check that the Forge 1.0.33
+  release fixed also kept this switch off in 1.0.30+mc1.21.1 and 1.0.30.1+mc1.21.1, because the installed loader
+  libraries carry a build suffix ("3.0.8+main…"). It is on now: no client run logged it off, and its helper made
+  4,446 lookups with 0 mismatches in shadow mode.
+- Guard start-up work from Forge 1.0.32/1.0.33: each target class is read once for all of its fingerprints, and the
+  MixinSquared refinement scan searches faster, skips mods that are not loaded and logs a mod file it cannot read
+  instead of failing.
 
 ## In-game shadow comparisons
 
@@ -62,54 +73,55 @@ for every call and counts disagreements. Totals over the shadow runs (all mismat
 
 | Helper (package) | Comparisons |
 | --- | ---: |
-| BlockStateAirFlag (mesh_air) | 1,394,869,695 |
-| AdjacentFaceSkip (dh_loader) | 566,122,408 |
-| BiomeBlendMemo (distanthorizons) | 515,416,282 |
-| WrapperAirFlag (dh_loader) | 263,858,758 |
-| NamespaceRuleMemo (terrablender) | 218,394,279 |
-| LodBiomeMemo (distanthorizons) | 119,686,851 |
-| AquiferCandidates (worldgen_aquifer) | 114,733,021 |
-| TagIds (tag_ids) | 65,549,513 |
+| BlockStateAirFlag (mesh_air) | 2,230,624,169 |
+| AdjacentFaceSkip (dh_loader) | 861,592,247 |
+| BiomeBlendMemo (distanthorizons) | 697,215,468 |
+| WrapperAirFlag (dh_loader) | 389,922,810 |
+| NamespaceRuleMemo (terrablender) | 323,602,817 |
+| LodBiomeMemo (distanthorizons) | 220,299,532 |
+| AquiferCandidates (worldgen_aquifer) | 115,078,544 |
+| TagIds (tag_ids) | 101,654,327 |
 | BeardifierBounds (worldgen_beardifier_bounds) | 39,026,688 |
-| LazyNamespaceRules (terrablender) | 28,867,081 |
-| TickingChunkMemo (chunk_tick) | 12,966,731 |
-| PooledStringIndex (dh_loader) | 7,420,852 |
-| SpawnGate (spawn_gate) | 1,779,483 |
-| GoalFlags (vanilla_goal_flags) | 1,577,572 |
-| TickerGate (ticker_gate) | 1,470,540 |
-| SeaLifeWaterlogged (state_memo) | 680,525 |
-| BlockScans (vanilla_entity) | 604,896 |
-| CuriosTagKeys (curios_tooltip) | 453,168 |
-| ArtifactsTickOrder (artifacts) | 397,830 |
+| LazyNamespaceRules (terrablender) | 29,021,677 |
+| TickingChunkMemo (chunk_tick) | 12,968,569 |
+| PooledStringIndex (dh_loader) | 10,880,271 |
+| SpawnGate (spawn_gate) | 1,891,865 |
+| GoalFlags (vanilla_goal_flags) | 1,706,349 |
+| TickerGate (ticker_gate) | 1,668,730 |
+| CuriosTagKeys (curios_tooltip) | 906,336 |
+| SeaLifeWaterlogged (state_memo) | 696,869 |
+| BlockScans (vanilla_entity) | 641,935 |
+| ArtifactsTickOrder (artifacts) | 428,005 |
+| SpriteFrameTimes (embeddium_sprites) | 283,775 |
 | EmptyBeardifiers (beardifier) | 283,392 |
-| LionfishFluidWalk (fluidwalk_c2) | 252,177 |
-| PartEntityCollisions (radium_fixes) | 206,930 |
-| GameEventRegistries (vanilla_game_events) | 169,965 |
-| SpriteFrameTimes (embeddium_sprites) | 141,366 |
-| QuadSortKeys (dh_loader) | 64,229 |
-| StripFormatting (vanilla_text) | 62,018 |
-| DrawBatchCache (embeddium_draw) | 29,545 |
-| MergedDraws (embeddium_draw) | 22,785 |
-| CountLabels (storagedrawers) | 9,700 |
-| EntityClassCounts (crittersandcompanions_c2) | 8,458 |
-| EmptyShoulderSkip (mutantmonsters_c2) | 7,664 |
-| ClipFast (vanilla_raycast) | 3,406 |
-| QuadKeySort (embeddium_sorting) | 3,002 |
-| LongJumpPicks (vanilla_long_jump) | 2,753 |
-| DuplicateGroups (almostunified) | 2,043 |
-| MergeCandidates (vanilla_item_merge) | 1,174 |
-| SelectorPrefilter (datapack_selectors) | 1,046 |
-| CheckMemo (structurify_c2) | 594 |
-| SunBurnOrder (mob_sunburn) | 468 |
-| TurtleEggSearch (vanilla_search) | 104 |
-| RepellentSearch (vanilla_search) | 22 |
-| BackgroundGrams (jei_search) | 3 |
-| SortKeys (jei_search) | 3 |
+| LionfishFluidWalk (fluidwalk_c2) | 268,209 |
+| PartEntityCollisions (radium_fixes) | 244,005 |
+| GameEventRegistries (vanilla_game_events) | 191,538 |
+| QuadSortKeys (dh_loader) | 81,486 |
+| DrawBatchCache (embeddium_draw) | 56,623 |
+| MergedDraws (embeddium_draw) | 44,000 |
+| StripFormatting (vanilla_text) | 43,886 |
+| CountLabels (storagedrawers) | 16,583 |
+| EmptyShoulderSkip (mutantmonsters_c2) | 12,582 |
+| QuadKeySort (embeddium_sorting) | 6,922 |
+| EntityClassCounts (crittersandcompanions_c2) | 6,100 |
+| ClipFast (vanilla_raycast) | 4,508 |
+| DhSqlScriptLookup (module_resources) | 4,446 |
+| LongJumpPicks (vanilla_long_jump) | 3,653 |
+| DuplicateGroups (almostunified) | 3,282 |
+| SelectorPrefilter (datapack_selectors) | 1,483 |
+| MergeCandidates (vanilla_item_merge) | 1,382 |
+| CheckMemo (structurify_c2) | 774 |
+| SunBurnOrder (mob_sunburn) | 449 |
+| TurtleEggSearch (vanilla_search) | 90 |
+| RepellentSearch (vanilla_search) | 11 |
+| BackgroundGrams (jei_search) | 6 |
+| SortKeys (jei_search) | 6 |
 
-Total: 3,355,149,020 comparisons, 0 mismatches.
+Total: 5,041,386,399 comparisons, 0 mismatches.
 
-10 helpers had no work in any run, although their mods were installed: nothing in the scripted scenes reached
-their code. They are BakeLocations, CubeBakeMemo, CucumberTileDispatch, DhSqlScriptLookup, EmptyFilters, FramedMaps, RedPandaGate, SearchReplay, SortedConnections, SpawnerPresence. Their switches are guarded and applied where installed, and rest on static and
+9 helpers had no work in any run, although their mods were installed: nothing in the scripted scenes reached
+their code. They are BakeLocations, CubeBakeMemo, CucumberTileDispatch, EmptyFilters, FramedMaps, RedPandaGate, SearchReplay, SortedConnections, SpawnerPresence. Their switches are guarded and applied where installed, and rest on static and
 code-comparison evidence.
 
 ## Reviewed fingerprint variants
@@ -121,61 +133,57 @@ each: `Climate.Parameter.distance`, `CubicSampler.gaussianSampleVec3`, `NoiseChu
 `EuclideanGameEventListenerRegistry.visitInRangeListeners`, `LongJumpToRandomPos.pickCandidate`,
 `LongJumpToPreferredBlock.getJumpCandidate`, `SingleValuePalette.idFor`, `PiglinSpecificSensor.isValidRepellent`,
 `BlockPos$3.computeNext`, `Aquifer$NoiseBasedAquifer.computeSubstance` and `calculatePressure`, `Mth.clampedLerp`,
-`Shapes.create`, `VertexBuffer.upload` and `ByteBufferBuilder$Result.close` (21 guard entries in all). The bytecode
-comparisons are in `../evidence/variant-review/` and `../evidence/*-bytecode-diff.txt`; the first two methods were
-reviewed for the 1.0.27 port and are in its source archive.
+`Shapes.create`, `VertexBuffer.upload` and `ByteBufferBuilder$Result.close` (21 guard entries in all). The
+methods the new switches guard needed no variant. The bytecode comparisons (made for 1.0.30+mc1.21.1, unchanged) are in
+`../evidence/variant-review/` and `../evidence/*-bytecode-diff.txt`; the first two methods were reviewed for the 1.0.27
+port and are in its source archive.
 
 ## Crash fixes checked in production
 
-- Accelerated Rendering with Iris: the published 1.0.27+mc1.21.1 crashes while Minecraft starts in the Accelerated
-  Rendering run above, with `InvalidInjectionException: @At("CONSTANT") on ModelToEntityVertexSerializer::modifyMidU
-  with priority 1000 cannot inject into ... serialize(JJI)V merged by bons.furious.mixin.oculus...`. This port's
-  overwrite runs at priority 999, so Accelerated Rendering's constant changes apply to it and the run passes.
-- Embeddium without Iris: `vanilla_model_bone_lookup` stands down inside Embeddium's own overwrite; the Embeddium run
-  starts and plays.
-- Bye Pregen: `terrain_final_density_reuse` overwrites `DensityFunctions.MarkerOrMarked.mapAll` at priority 499, so
-  Bye Pregen's priority 500 injector into that method is accepted and both run. That fix was reproduced and tested on
-  the 1.0.27 port; here it is part of the build, with terrain identical on vs off as above.
-- ServerCore: `vanilla_spawn_gate_visibility_memo` (new in 1.0.30) and ServerCore 1.5.19 both redirect
-  `ServerLevel.isNaturalSpawningAllowed` in `ServerChunkCache.tickChunks`; two redirects of one call cannot both apply.
-  The switch steps aside whenever ServerCore lists that mixin. A build without the step-aside stops at server start:
-  Mixin skips ServerCore's redirect ("@Redirect conflict") and then fails with "Critical injection failure: Redirector
-  servercore$skipUnloadedChunks" (`../evidence/production-p30-servercore-control.log`).
-- Switches the bundled defaults ship `=false` now stay off for new installs and for players who update, until set to
-  `true` (the same configuration fix as the Forge release).
+- Generator Accelerator 1.6.2: see above. The fixture with this JAR starts, generates and passes; the same fixture
+  with the published 1.0.30.1+mc1.21.1 does not (`../evidence/production-p33-ga-control-10301.log`).
+- Accelerated Rendering with Iris, Embeddium without Iris, Bye Pregen and ServerCore: the fixes of 1.0.30+mc1.21.1 stay
+  in place, and their runs above pass again with this JAR. The negative controls for those fixes were run for
+  1.0.30+mc1.21.1 and are in its source archive.
+- Biolith: `vanilla_climate_rtree_flat_bounds` keeps the public overwrite of 1.0.30.1+mc1.21.1; the overwrite access
+  audit above finds no other overwrite of that kind.
 
 ## Integration decisions
 
-- The 1.0.27 port is the starting point. The 1.0.28 to 1.0.30 additions came from the Forge source of the final 1.0.29
-  and of 1.0.30, translated to Mojang names and adapted per target. The Forge sources were not changed.
-- Of the 121 switches that 1.0.28 to 1.0.30 added, 83 are ported, 28 retired (most because the 1.21.1 target already
-  does the work) and 10 have no 1.21.1 target mod. PORT-COVERAGE.md gives each reason.
-- Five switches step aside while C2ME is installed (it replaces the same code); they were qualified in fixtures
-  without C2ME. Two step-asides were added after a static crash-class sweep: `vanilla_beardifier_influence_bounds`
-  (C2ME overwrites `Beardifier.compute`) and `vanilla_game_event_registry_lookup` (Lithium's game-event dispatch).
-- The empty-beardifier switch also steps aside for Qliphoth Awakening, which adds code to `Beardifier`; the
-  production logs show each step-aside with its reason.
+- The published 1.0.30.1+mc1.21.1 is the starting point. The 1.0.31 to 1.0.33 changes came from the Forge source of the
+  frozen 1.0.33 release, translated to Mojang names and adapted per target. The Forge sources were not changed.
+- Of the 5 switches that 1.0.31 to 1.0.33 added, 4 are ported and 1 retired.
+  PORT-COVERAGE.md gives each reason. In all: 169 controls ported, 42
+  retired on 1.21.1, 42 without a 1.21.1 NeoForge build of their mod.
+- Two step-asides were added after a static crash-class sweep of this version: `vanilla_beardifier_influence_bounds`
+  and `vanilla_climate_sample_xz_parts` for Generator Accelerator. The Forge line steps aside for Generator
+  Accelerator's 1.20.1 build in the beardifier only; that build does not overwrite the climate sampler.
+- The Forge release keeps Bye Pregen 1.1.2.4 (Forge 1.20.1) working next to the NoiseChunk switches with a reviewed
+  pass-through entry. Bye Pregen 1.1.3.0 on 1.21.1 changes the result after the call instead, so this port needs none.
 
 ## Limits and unrelated upstream messages
 
 These are smoke tests, deterministic on/off comparisons and in-game shadow comparisons. They do not establish every
 gameplay path, every option combination, long-session stability or a speed improvement.
 
-- Two attempts on the Core Ultra 9 285K test PC ended in crashes of the Java runtime itself, not of the game: the JIT
-  compiler (C2, `ShouldNotReachHere`, while compiling `NoiseBasedChunkGenerator.doFill`; none of the 174 methods in
-  that compilation belongs to Bons and Furious, it held code from C2ME, YUNG's API, Radium and ModernFix), and a
-  garbage-collector thread (access violation 13 seconds into a server start). The identical reruns passed. Evidence:
-  `../evidence/c2-crash-p30-iris-shadow-attempt1.json`, `../evidence/jvm-crash-p30-tb-on-attempt1.json`.
 - Citadel 2.7.1 has no 1.21.1 NeoForge consumer to render through; its switch is guarded and applies, but its model
-  path did not run on a real model. LionfishAPI's ran through L_Ender's Cataclysm 3.33.
+  path did not run on a real model. LionfishAPI's ran through L_Ender's Cataclysm.
 - Switches without a shadow mode (GeckoLib bone queues and quad vectors, Citadel/LionfishAPI vertices, FancyMenu,
-  Pehkui, climate tree keys and spans, Distant Horizons byte stream) rest on the 1.20.1 proofs, the 1.21.1 code
-  comparisons made for this port and clean in-game rendering.
+  Pehkui, climate tree keys and spans, climate column parts, Distant Horizons byte stream, the JEI start-up switches)
+  rest on the 1.20.1 proofs, the 1.21.1 code comparisons made for this port, the terrain comparisons, the differential
+  test and clean in-game behaviour.
 - The Collections Of Optimizations step-aside rules are kept; no build of that mod exists for 1.21.1 NeoForge to test
   them against.
-- The optional fixtures show upstream warnings that also appear with the switches off: Spawn's missing `roly_poly`
-  loot item, Scorched's old function, client classes named by other mods' mixin configs on a dedicated server, and
-  overwrite conflicts between other mods (Radium and ModernFix, CorgiLib and Oh The Trees You'll Grow).
+- Generator Accelerator 1.6.2 sometimes stopped generating chunks during these tests: spawn preparation or a chunk load
+  never finished, every thread was idle and nothing was logged. It happened with Generator Accelerator alone
+  (2 of 4 runs stopped), with every Bons and Furious switch off (3 of 4 runs stopped) and with them on (2 of 3 runs stopped); details in
+  `../evidence/ga-hang-diagnostics.json`. The Generator Accelerator results above come from the runs that completed.
+- The scripted client scene summons hostile mobs next to a survival player. On this test PC they killed the probe
+  player in 5 of 6 client runs, and also with the published 1.0.30.1+mc1.21.1 (2 of 2) and with
+  every switch off (1 of 2); the 1.0.30+mc1.21.1 runs on the other test PC never died. Other test servers shared this PC during the client runs
+  (not during the server runs). The probe, its checks and the
+  shadow comparisons ran to the end in every run.
+- The optional fixtures show upstream warnings that also appear with the switches off, as in 1.0.30+mc1.21.1.
 
 ## Test environment
 

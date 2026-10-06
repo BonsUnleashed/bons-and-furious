@@ -14,6 +14,8 @@ public final class MemoizingVisitor implements DensityFunction.Visitor {
     public static final LongAdder LOOKUPS = new LongAdder(), HITS = new LongAdder(), MISSES = new LongAdder();
     public MemoizingVisitor(DensityFunction.Visitor delegate) { this.delegate=delegate; }
     public static DensityFunction.Visitor wrap(DensityFunction.Visitor delegate) {
+        // Another mod also changes the visitor of this call: hand it through untouched (bons.furious.guard.CallSites).
+        if (bons.furious.guard.CallSites.densityMemoForeign) return delegate;
         return Boolean.parseBoolean(System.getProperty("ac.terrain.enabled","true")) ? new MemoizingVisitor(delegate) : delegate;
     }
     public DensityFunction map(DensityFunctions.HolderHolder source) {

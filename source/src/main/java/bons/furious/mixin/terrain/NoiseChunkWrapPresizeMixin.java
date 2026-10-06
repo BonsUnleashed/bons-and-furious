@@ -34,7 +34,8 @@ public abstract class NoiseChunkWrapPresizeMixin {
     // Mixin 0.8.5 accepts no @Inject in the middle of a constructor; @ModifyArg on the router's mapAll call runs at the
     // same point and hands the visitor through unchanged.
     @ModifyArg(method = "<init>", at = @At(value = "INVOKE", ordinal = 0,
-            target = "Lnet/minecraft/world/level/levelgen/NoiseRouter;mapAll(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/NoiseRouter;"))
+            target = "Lnet/minecraft/world/level/levelgen/NoiseRouter;mapAll(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/NoiseRouter;"),
+            require = 0)   // never refused; bons.furious.guard.CallSites decides whether the table is presized
     private DensityFunction.Visitor bons$presizeWrapTable(DensityFunction.Visitor visitor, @Local(argsOnly = true) RandomState random) {
         this.wrapped = WrapPresize.presized(this.wrapped, random);
         return visitor;

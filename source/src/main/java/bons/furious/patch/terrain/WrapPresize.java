@@ -38,6 +38,8 @@ public final class WrapPresize {
      * Object2ObjectOpenHashMap (vanilla's or ModernFix's) is replaced, and only once a size has been learned.
      */
     public static Map<DensityFunction, DensityFunction> presized(Map<DensityFunction, DensityFunction> current, Object randomState) {
+        // Another mod also changes the call this hook sits on: leave the table as the constructor made it (CallSites).
+        if (bons.furious.guard.CallSites.wrapPresizeForeign) return current;
         if (!enabled || !(randomState instanceof Holder holder) || current == null || !current.isEmpty()) return current;
         int expected = holder.bons$wrapSize();
         if (expected <= 16) return current;

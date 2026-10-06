@@ -32,6 +32,8 @@ mixin	bons.furious.mixin.climate_build.ClimateNodeSpaceAccessor	vanilla_climate_
 mixin	bons.furious.mixin.climate_build.ClimateNodeSpanAccessor	vanilla_climate_tree_span_bounds
 mixin	bons.furious.mixin.climate_build.ClimateTreeSortMixin	vanilla_climate_tree_sort_keys
 mixin	bons.furious.mixin.climate_build.ClimateTreeSpanMixin	vanilla_climate_tree_span_bounds
+mixin	bons.furious.mixin.climate_columns.ClimateSamplerPartsMixin	vanilla_climate_sample_xz_parts
+mixin	bons.furious.mixin.climate_columns.RandomStatePartsMixin	vanilla_climate_sample_xz_parts
 mixin	bons.furious.mixin.colorwheel.PhaseLabelMixin	colorwheel_phase_labels
 mixin	bons.furious.mixin.crittersandcompanions_c2.AvoidEntityGoalRedPandaMixin	crittersandcompanions_red_panda_gate
 mixin	bons.furious.mixin.crittersandcompanions_c2.EntityClassCountSectionMixin	vanilla_entity_class_count_layer
@@ -130,6 +132,11 @@ mixin	bons.furious.mixin.jei_search.IngredientSorterMixin	jei_sort_index_keys
 mixin	bons.furious.mixin.jei_search.MappedSortingConfigAccessor	jei_sort_index_keys
 mixin	bons.furious.mixin.jei_search.SorterComparatorsAccessor	jei_sort_index_keys
 mixin	bons.furious.mixin.jei_search.SortingConfigAccessor	jei_sort_index_keys
+mixin	bons.furious.mixin.jei_startup.AnvilSimulationMixin	jei_hidden_menu_sync
+mixin	bons.furious.mixin.jei_startup.BrewingLookupMixin	jei_brewing_lookup
+mixin	bons.furious.mixin.jei_startup.GrindstoneSimulationMixin	jei_hidden_menu_sync
+mixin	bons.furious.mixin.jei_startup.HiddenMenuSyncMixin	jei_hidden_menu_sync
+mixin	bons.furious.mixin.jei_startup.TooltipWordsMixin	jei_tooltip_words
 mixin	bons.furious.mixin.l2library_fix_c2.StopTrackingNoopMixin	l2library_stop_tracking_noop
 mixin	bons.furious.mixin.legendarymonsters_c2.CameraSetupNullGuardMixin	legendary_monsters_camera_null_guard
 mixin	bons.furious.mixin.mesh_air.BlockBehaviourAirInvoker	vanilla_block_state_air_flag
@@ -313,7 +320,10 @@ mod	hostilevillages_pending_chunk_queue	hostilevillages
 mod	immediatelyfast_known_core_shaders	immediatelyfast
 mod	immediatelyfast_offset_layer_prefixes	immediatelyfast
 mod	jei_baked_index_background_grams	jei
+mod	jei_brewing_lookup	jei
+mod	jei_hidden_menu_sync	jei
 mod	jei_sort_index_keys	jei
+mod	jei_tooltip_words	jei
 mod	jei_typed_stack_cache	jei
 mod	l2library_stop_tracking_noop	l2core
 mod	legendary_monsters_camera_null_guard	legendary_monsters
@@ -369,6 +379,7 @@ mod	vanilla_camera_fluid_memo	minecraft
 mod	vanilla_chunk_status_name_memo	minecraft
 mod	vanilla_climate_rtree_flat_bounds	minecraft
 mod	vanilla_climate_sample_repeat	minecraft
+mod	vanilla_climate_sample_xz_parts	minecraft
 mod	vanilla_climate_search_repeat	minecraft
 mod	vanilla_climate_tree_sort_keys	minecraft
 mod	vanilla_climate_tree_span_bounds	minecraft
@@ -1094,6 +1105,22 @@ guard	jei_baked_index_background_grams	mezz/jei/modshade/net/mezzdev/bakedsubstr
 guard	jei_baked_index_background_grams	mezz/jei/modshade/net/mezzdev/bakedsubstring/BakedSubstringIndex$Builder	<init>	()V	555a1acb7178b7c570d042fb935724749ce11abb2694349810edbcd18aec8aeb
 guard	jei_baked_index_background_grams	mezz/jei/modshade/net/mezzdev/bakedsubstring/BakedSubstringIndex	<init>	([Ljava/lang/String;[Ljava/lang/Object;Lit/unimi/dsi/fastutil/longs/Long2ObjectOpenHashMap;Z)V	0b70fb67890677f1fce5d671ce7684eb91f51b18b9aacb38b076be50cf23a41c
 guard	jei_baked_index_background_grams	mezz/jei/modshade/net/mezzdev/bakedsubstring/BakedSubstringIndex	encodeGram	(Ljava/lang/String;II)J	7029c247785ce76bc625ded7ac76474d02274f660f2d39df5abc9356972a52b4
+guard	jei_brewing_lookup	mezz/jei/library/util/BrewingRecipeMakerCommon	getVanillaBrewingRecipes	(Lmezz/jei/api/recipe/vanilla/IVanillaRecipeFactory;Lmezz/jei/api/runtime/IIngredientManager;Lnet/minecraft/world/item/alchemy/PotionBrewing;)Ljava/util/Set;	a95791e3780f3adb46e21f57049b066f44c3fbdc33ac416f2b6c6d9c93cc9655
+guard	jei_brewing_lookup	mezz/jei/library/util/BrewingRecipeMakerCommon	getNewPotions	(Lnet/minecraft/world/item/alchemy/PotionBrewing;Lmezz/jei/api/recipe/vanilla/IVanillaRecipeFactory;Lmezz/jei/api/ingredients/IIngredientHelper;Ljava/util/Collection;Ljava/util/Collection;Ljava/util/Collection;)Ljava/util/List;	903c60921794cc5719f34a599885861c6f750a45b1d9228dcc0c2b4d0217add5
+guard	jei_brewing_lookup	mezz/jei/library/plugins/vanilla/brewing/JeiBrewingRecipe	getUid	()Lnet/minecraft/resources/ResourceLocation;	073b8e9534f6fa73996dc92473010fcb63662a89e73738d9cc38504731870b0d
+guard	jei_brewing_lookup	mezz/jei/library/plugins/vanilla/brewing/JeiBrewingRecipe	equals	(Ljava/lang/Object;)Z	eecc27779bc538276af2ebb62446c7ee138b5f04c4ff4d1618a58016c537d9ed
+guard	jei_brewing_lookup	mezz/jei/library/plugins/vanilla/brewing/JeiBrewingRecipe	hashCode	()I	08d66df5ba70bd3dfbea325b34400bcbdff8f5481164007e03efba45f8ed4bcf
+guard	jei_brewing_lookup	mezz/jei/library/plugins/vanilla/brewing/JeiBrewingRecipe	<init>	(Ljava/util/List;Ljava/util/List;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceLocation;Lmezz/jei/library/plugins/vanilla/brewing/BrewingRecipeUtil;)V	c7e59b934b65ebc54d1d29692ad76e95f9a8bc9d9e7e98cf2422ea3861723a7b
+guard	jei_hidden_menu_sync	mezz/jei/library/plugins/vanilla/anvil/AnvilHelper	getFakeAnvilMenu	()Lnet/minecraft/world/inventory/AnvilMenu;	983033f5e071a5eb34fccb4be183fa3f2a241db2be18f6facc9122540c1c79fa
+guard	jei_hidden_menu_sync	mezz/jei/library/plugins/vanilla/grindstone/GrindstoneHelper	getFakeGrindstoneMenu	()Lnet/minecraft/world/inventory/GrindstoneMenu;	fda8d49229411b55a19e0c1a4dfe5e8ac0335b3fe6b3f19e688a79bc38b94e6f
+guard	jei_hidden_menu_sync	net/minecraft/world/inventory/AbstractContainerMenu	broadcastChanges	()V	657e6ee845343b6bc6053e0928980b3b16ab65aa9eaa94791f0b98ccb1d1b332
+guard	jei_hidden_menu_sync	net/minecraft/world/inventory/AbstractContainerMenu	addSlotListener	(Lnet/minecraft/world/inventory/ContainerListener;)V	2b5250d6a99cfbfc1e8c14574c43ae81d6ea1f0031fe55748d5220e38f6d2d09
+guard	jei_hidden_menu_sync	net/minecraft/world/inventory/AbstractContainerMenu	setSynchronizer	(Lnet/minecraft/world/inventory/ContainerSynchronizer;)V	2b6ddfb463731152b2fcd0884aa84ecb872f5488dbfa67ad9cbf728a0d686c07
+guard	jei_hidden_menu_sync	net/minecraft/world/inventory/AbstractContainerMenu	triggerSlotListeners	(ILnet/minecraft/world/item/ItemStack;Ljava/util/function/Supplier;)V	8a803fb7c5d4b6de11979b2c4c657b25bb016cbf60043d439f10c282d1cf3b6c
+guard	jei_hidden_menu_sync	net/minecraft/world/inventory/AbstractContainerMenu	synchronizeSlotToRemote	(ILnet/minecraft/world/item/ItemStack;Ljava/util/function/Supplier;)V	3a5b737b98d38b5e62d45e75e62d3d9c8154c90b1bbe0c1b1c345124b2be425c
+guard	jei_hidden_menu_sync	net/minecraft/world/inventory/AbstractContainerMenu	synchronizeCarriedToRemote	()V	5ab9c09caf9972b3ebee6a67ddfaee1160c1eccc4c953f40a4885da64fb34fa5
+guard	jei_hidden_menu_sync	net/minecraft/world/inventory/AbstractContainerMenu	synchronizeDataSlotToRemote	(II)V	f9b2c16c19d7454af5a200b0ab50126ecfa1a82c7533434bceb0da5c0f6c66c2
+guard	jei_hidden_menu_sync	net/minecraft/world/inventory/AbstractContainerMenu	updateDataSlotListeners	(II)V	e8cdcda1bb562ea1fb08f4e87e3dd969cf49164a3ba843a842a9cf649641b80c
 guard	jei_sort_index_keys	mezz/jei/gui/ingredients/IngredientSorter	sortIngredients	(Lmezz/jei/common/config/IClientConfig;Lmezz/jei/gui/config/ModNameSortingConfig;Lmezz/jei/gui/config/IngredientTypeSortingConfig;Lmezz/jei/api/runtime/IIngredientManager;Ljava/util/List;)Ljava/util/Comparator;	ea1c6ce93f73ad696297484fec3576fe87c069a03d0e33128c352a79b02bedc0
 guard	jei_sort_index_keys	mezz/jei/gui/ingredients/IngredientSorterComparators	<init>	(Lmezz/jei/api/runtime/IIngredientManager;Lmezz/jei/gui/config/ModNameSortingConfig;Lmezz/jei/gui/config/IngredientTypeSortingConfig;Ljava/util/Set;)V	fba0de74026bd3266e81e0231810ecfd23aae13c880d13914c7326bbfbd4113e
 guard	jei_sort_index_keys	mezz/jei/gui/ingredients/IngredientSorterComparators	getComparator	(Ljava/util/List;)Ljava/util/Comparator;	b09f0b4c486bf1ab0fd47b3251ba6f61632151c3b5e60e530c06feef7d1fea82
@@ -1117,6 +1144,12 @@ guard	jei_sort_index_keys	mezz/jei/gui/config/IngredientTypeSortingConfig	getIng
 guard	jei_sort_index_keys	mezz/jei/gui/ingredients/ListElementInfo	getModNameForSorting	()Ljava/lang/String;	280bf04ba4ce58da43883083e2888064a650d7d1b5bfa9b376400ebff0a54ff1
 guard	jei_sort_index_keys	mezz/jei/gui/ingredients/ListElementInfo	getCreatedIndex	()I	7bd9268f2d78c33d7910cdcbca4cbcd1264ea88660267b50c8c618d42ab562f5
 guard	jei_sort_index_keys	mezz/jei/gui/ingredients/ListElementInfo	getNames	()Ljava/util/List;	6e273b5f577e269ce86b2663869076bfec394ee82d59dca077683b4d19e7006c
+guard	jei_tooltip_words	mezz/jei/gui/ingredients/ListElementInfo	getStrings	(Ljava/util/List;)Ljava/util/Set;	be029915c023ccf0702fbd6d8583f079cdb722b250432570fbc78edd555065df
+guard	jei_tooltip_words	mezz/jei/common/util/StringUtil	removeChatFormatting	(Ljava/lang/String;)Ljava/lang/String;	1112ad29448b80b6d7d442b8ef96a2bc9e90d72d9d59989114177757fef020a2
+guard	jei_tooltip_words	net/minecraft/ChatFormatting	stripFormatting	(Ljava/lang/String;)Ljava/lang/String;	3a2154488cfe217baa3feffa279797f243f4234ed93b05481103b0a7dc48e721
+guard	jei_tooltip_words	net/minecraft/ChatFormatting	<clinit>	()V	f3aaff7aefc3b2914ee6edfb72fbe64e9c19e550668fc801dbfd45b08828b1c4
+guard	jei_tooltip_words	mezz/jei/gui/ingredients/ListElementInfo	addSplitStrings	(Ljava/util/Set;Ljava/lang/String;)V	ed4559afa715bb287d944e39e8f520f0e798a0906c8f242d642179151a7309c3
+guard	jei_tooltip_words	mezz/jei/gui/ingredients/ListElementInfo	<clinit>	()V	0e01db79dfb9882abcab68af6fa676ba81e039e5c1aafece9fbca660320788fd
 guard	jei_typed_stack_cache	mezz/jei/common/ingredients/itemStacks/TypedItemStack	getIngredient	()Lnet/minecraft/world/item/ItemStack;	b92f60e8cf592a0b43743bbdf3fc73a0ab227f1b1031e85c000f8709ee37ea37
 guard	jei_typed_stack_cache	mezz/jei/common/ingredients/itemStacks/TypedItemStack	<clinit>	()V	b0d05f0d1a534adf162660431692560bb6a1f33070df87bd96bdff379404b66d
 guard	jei_typed_stack_cache	mezz/jei/common/ingredients/itemStacks/TypedItemStack$1	load	(Lmezz/jei/common/ingredients/itemStacks/TypedItemStack;)Lnet/minecraft/world/item/ItemStack;	ebe613185ae6f0bcab2470f77528b7373517ecec5fea645f4cc3c365ed41ce1b
@@ -1462,6 +1495,8 @@ guard	vanilla_climate_rtree_flat_bounds	net/minecraft/world/level/biome/Climate$
 guard	vanilla_climate_rtree_flat_bounds	net/minecraft/world/level/biome/Climate$RTree$Node	<init>	(Ljava/util/List;)V	f5036376c36fe34cc3f9884d2f09fce1152f392d180305c99d65f7009fc067e0
 guard	vanilla_climate_rtree_flat_bounds	net/minecraft/world/level/biome/Climate$Parameter	distance	(J)J	2c6e80f586c16f478f6cc89ca9ceb28f688f161b61e99ac81b4813d1fa1cab85|cdd88c15ef9e7fe8e6b2679c04f61f331af05454aca0727389ace1d489813a55
 guard	vanilla_climate_sample_repeat	net/minecraft/world/level/biome/Climate$Sampler	sample	(III)Lnet/minecraft/world/level/biome/Climate$TargetPoint;	69f37f936fb8871280298ac474bcec5199023f8faf67edd8e1d60081b6f3b34a
+guard	vanilla_climate_sample_xz_parts	net/minecraft/world/level/biome/Climate$Sampler	sample	(III)Lnet/minecraft/world/level/biome/Climate$TargetPoint;	69f37f936fb8871280298ac474bcec5199023f8faf67edd8e1d60081b6f3b34a
+guard	vanilla_climate_sample_xz_parts	net/minecraft/world/level/levelgen/RandomState	<init>	(Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/core/HolderGetter;J)V	70526a194ac9f35d11d1122d095b36692317cc77517a55d963ebc95cb1ce2c22
 guard	vanilla_climate_search_repeat	net/minecraft/world/level/biome/Climate$RTree	search	(Lnet/minecraft/world/level/biome/Climate$TargetPoint;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Ljava/lang/Object;	2be3eed9844c1770613db2cc85e9d0ace6fc087b882133d2321da873dd76f60d
 guard	vanilla_climate_search_repeat	net/minecraft/world/level/biome/Climate$RTree$SubTree	search	([JLnet/minecraft/world/level/biome/Climate$RTree$Leaf;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Lnet/minecraft/world/level/biome/Climate$RTree$Leaf;	4f811b9c474e7056a98215e3c44b1b075b1b693a679ca4a2044f7b6dcc570ca8
 guard	vanilla_climate_search_repeat	net/minecraft/world/level/biome/Climate$RTree$Leaf	search	([JLnet/minecraft/world/level/biome/Climate$RTree$Leaf;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Lnet/minecraft/world/level/biome/Climate$RTree$Leaf;	d6ee11652b8fc4b605d91bac434ba2b5574e707e7f1d329704c05f8c39a592e8
@@ -1715,6 +1750,8 @@ cancel	com.misanthropy.collections_of_optimizations.mixin.vanilla.MixinMinecraft
 cancel	com.misanthropy.collections_of_optimizations.mixin.vanilla.MixinNoiseBasedChunkGeneratorBeardifier	worldgen_empty_beardifier_marker
 cancel	com.moepus.gbf.mixin.AnimationControllerMixin	geckolib_bone_queue_reuse
 cancel	com.moepus.gbf.mixin.GeoRendererMixin	geckolib_quad_vectors
+cancel	dev.sixik.generator_accelerator.common.beardifier.mixin.MixinBeardifier	vanilla_beardifier_influence_bounds
+cancel	dev.sixik.generator_accelerator.common.biome.mixin.MixinClimate$Sampler$raw_sample	vanilla_climate_sample_xz_parts
 cancel	me.jellysquid.mods.lithium.mixin.ai.task.run.long_jump_weighted_choice.LongJumpTaskMixin	vanilla_long_jump_weighted_pick
 cancel	me.jellysquid.mods.lithium.mixin.experimental.entity.item_entity_merging.ItemEntityMixin	vanilla_item_merge_candidates
 cancel	me.jellysquid.mods.lithium.mixin.world.block_entity_ticking.support_cache.BlockEntityMixin	vanilla_block_entity_tick_state
@@ -1726,6 +1763,7 @@ cancel	me.wesley1808.servercore.mixin.optimizations.ticking.chunk.cache.ServerCh
 cancel	net.caffeinemc.mods.lithium.mixin.world.game_events.dispatch.GameEventDispatcherMixin	vanilla_game_event_registry_lookup
 cancel	org.valkyrienskies.mod.mixin.feature.clip_replace.MixinLevel	vanilla_raycast_fluid_none
 cancel	traben.entity_texture_features.mixin.mixins.MixinSpriteIdentifier	etf_sprite_texture_id_memo
+yield	vanilla_climate_sample_xz_parts	generator_accelerator	Generator Accelerator	dev.sixik.generator_accelerator.common.biome.mixin.MixinClimate$Sampler$raw_sample	-	-	-	false	-
 yield	frame_pacing	collections_of_optimizations	Collections Of Optimizations	com.misanthropy.collections_of_optimizations.mixin.vanilla.MixinMinecraftFramePacing	collections_of_optimizations-common.toml	general.enabled	vanilla.paceFramesBeforeSwap	false	-
 yield	architectury_event_dispatch	collections_of_optimizations	Collections Of Optimizations	com.misanthropy.collections_of_optimizations.mixin.architectury.MixinEventFactoryDispatch	collections_of_optimizations-common.toml	general.enabled	architectury.directEventDispatch	true	-
 yield	geckolib_primitive_easing	collections_of_optimizations	Collections Of Optimizations	com.misanthropy.collections_of_optimizations.mixin.geckolib.MixinEasingTypePrimitive	collections_of_optimizations-common.toml	general.enabled	geckolib.primitiveEasing	true	gbf,geckolib_animation_optimizer
@@ -1756,3 +1794,4 @@ yield	vanilla_long_jump_weighted_pick	radium	Radium	me.jellysquid.mods.lithium.m
 yield	vanilla_raycast_fluid_none	valkyrienskies	Valkyrien Skies	org.valkyrienskies.mod.mixin.feature.clip_replace.MixinLevel	-	-	-	false	-
 yield	vanilla_raycast_fluid_none	radium	Radium	me.jellysquid.mods.lithium.mixin.world.raycast.BlockViewMixin	lithium.properties	-	mixin.world.raycast	true	-
 yield	vanilla_beardifier_influence_bounds	c2me_opts_worldgen_vanilla	C2ME (vanilla worldgen optimizations)	com.ishland.c2me.opts.worldgen.vanilla.mixin.structure_weight_sampler.MixinStructureWeightSampler	-	-	-	false	-
+yield	vanilla_beardifier_influence_bounds	generator_accelerator	Generator Accelerator	dev.sixik.generator_accelerator.common.beardifier.mixin.MixinBeardifier	-	-	-	false	-

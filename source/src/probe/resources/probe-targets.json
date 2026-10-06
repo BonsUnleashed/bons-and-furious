@@ -1050,5 +1050,32 @@
       "net.minecraft.world.entity.ai.goal.MoveToBlockGoal",
       "net.minecraft.world.entity.ai.goal.RemoveBlockGoal"
     ]
+  },
+  "jei_brewing_lookup": {
+    "client": true,
+    "targets": [
+      "mezz.jei.library.util.BrewingRecipeMakerCommon"
+    ]
+  },
+  "jei_hidden_menu_sync": {
+    "client": true,
+    "targets": [
+      "mezz.jei.library.plugins.vanilla.anvil.AnvilHelper",
+      "mezz.jei.library.plugins.vanilla.grindstone.GrindstoneHelper",
+      "net.minecraft.world.inventory.AbstractContainerMenu"
+    ]
+  },
+  "jei_tooltip_words": {
+    "client": true,
+    "targets": [
+      "mezz.jei.gui.ingredients.ListElementInfo"
+    ]
+  },
+  "vanilla_climate_sample_xz_parts": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.biome.Climate$Sampler",
+      "net.minecraft.world.level.levelgen.RandomState"
+    ]
   }
 }

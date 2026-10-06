@@ -1,0 +1,78 @@
+{
+ "hits": [
+  {
+   "rule": "R3-CRASH",
+   "key": "vanilla_beardifier_influence_bounds",
+   "ours": {
+    "owner": "bons_and_furious",
+    "mixin": "bons.furious.mixin.worldgen_beardifier_bounds.BeardifierBoundsMixin",
+    "prio": 1000,
+    "kind": "ModifyExpressionValue",
+    "cls": "net.minecraft.world.level.levelgen.Beardifier",
+    "method": "compute",
+    "points": [
+     "FIELD"
+    ],
+    "targets": [
+     "Lnet/minecraft/world/level/levelgen/Beardifier;pieceIterator:Lit/unimi/dsi/fastutil/objects/ObjectListIterator;"
+    ],
+    "require": null,
+    "handler_of": null,
+    "key": "vanilla_beardifier_influence_bounds"
+   },
+   "foreign": {
+    "owner": "generator-accelerator-1.6.2.jar",
+    "mixin": "dev.sixik.generator_accelerator.common.beardifier.mixin.MixinBeardifier",
+    "prio": 1000,
+    "kind": "Overwrite",
+    "cls": "net.minecraft.world.level.levelgen.Beardifier",
+    "method": "compute",
+    "points": [
+     "?"
+    ],
+    "targets": [],
+    "require": null,
+    "handler_of": null
+   }
+  },
+  {
+   "rule": "R3-CRASH",
+   "key": "vanilla_beardifier_influence_bounds",
+   "ours": {
+    "owner": "bons_and_furious",
+    "mixin": "bons.furious.mixin.worldgen_beardifier_bounds.BeardifierBoundsMixin",
+    "prio": 1000,
+    "kind": "ModifyExpressionValue",
+    "cls": "net.minecraft.world.level.levelgen.Beardifier",
+    "method": "compute",
+    "points": [
+     "FIELD"
+    ],
+    "targets": [
+     "Lnet/minecraft/world/level/levelgen/Beardifier;junctionIterator:Lit/unimi/dsi/fastutil/objects/ObjectListIterator;"
+    ],
+    "require": null,
+    "handler_of": null,
+    "key": "vanilla_beardifier_influence_bounds"
+   },
+   "foreign": {
+    "owner": "generator-accelerator-1.6.2.jar",
+    "mixin": "dev.sixik.generator_accelerator.common.beardifier.mixin.MixinBeardifier",
+    "prio": 1000,
+    "kind": "Overwrite",
+    "cls": "net.minecraft.world.level.levelgen.Beardifier",
+    "method": "compute",
+    "points": [
+     "?"
+    ],
+    "targets": [],
+    "require": null,
+    "handler_of": null
+   }
+  }
+ ],
+ "errors": [],
+ "jars": [
+  "work\\ga\\generator-accelerator-1.6.2.jar"
+ ]
+}

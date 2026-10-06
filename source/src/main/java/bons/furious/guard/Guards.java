@@ -53,6 +53,18 @@ public final class Guards {
     private static final Map<String, Decision> DECISIONS = new ConcurrentHashMap<>();
     private static final Set<String> LOGGED = ConcurrentHashMap.newKeySet();
     private static volatile boolean loaded;
+    /**
+     * Since 1.0.33: what the guards need from one class, taken from a single read for every switch that guards it (big
+     * classes such as Level, ServerLevel or Entity are guarded by up to nine switches, and each read runs the loader's
+     * class transformers). WANTED = class -> name+desc of every guarded method in the table ("*" = the declared-method
+     * shape); PRINTS = class -> its fingerprints, or empty when the class does not exist. The Forge line also skips
+     * reading classes whose package no module owns; this port does not need that: a switch whose target mod is not
+     * installed is decided ABSENT from NeoForge's mod list before any class is read (compute below).
+     */
+    private static final Map<String, Set<String>> WANTED = new LinkedHashMap<>();
+    private static final Map<String, java.util.Optional<ClassPrints>> PRINTS = new ConcurrentHashMap<>();
+
+    private record ClassPrints(Map<String, String> methods, String shape) {}
 
     public enum State { APPLY, DISABLED, ABSENT, MISMATCH, YIELD }
 
@@ -76,7 +88,10 @@ public final class Guards {
                 switch (f[0]) {
                     case "mixin" -> MIXIN_KEY.put(f[1], f[2]);
                     case "mod" -> MOD.put(f[1], f[2]);
-                    case "guard" -> GUARD.computeIfAbsent(f[1], k -> new ArrayList<>()).add(new String[] {f[2], f[3], f[4], f[5]});
+                    case "guard" -> {
+                        GUARD.computeIfAbsent(f[1], k -> new ArrayList<>()).add(new String[] {f[2], f[3], f[4], f[5]});
+                        WANTED.computeIfAbsent(f[2], k -> new java.util.LinkedHashSet<>()).add(f[3].equals("*") ? "*" : f[3] + f[4]);
+                    }
                     case "cancel" -> CANCEL.put(f[1], f[2]);
                     case "yield" -> {
                         ForeignPatches.Yield y = ForeignPatches.parse(f);
@@ -90,6 +105,7 @@ public final class Guards {
             LOGGER.error("Bons and Furious could not read {}; no patch will be applied", RESOURCE, e);
             MIXIN_KEY.clear();
             GUARD.clear();
+            WANTED.clear();
             CANCEL.clear();
             YIELDS.clear();
             YIELD_MIXIN.clear();
@@ -234,18 +250,15 @@ public final class Guards {
         }
         int absent = 0;
         List<String> problems = new ArrayList<>();
-        Map<String, ClassNode> nodes = new LinkedHashMap<>();
         for (String[] g : guard) {
-            ClassNode node = nodes.computeIfAbsent(g[0], Guards::read);
-            if (node == null) { absent++; problems.add(g[0].replace('/', '.') + " not found"); continue; }
+            ClassPrints prints = prints(g[0]);
+            if (prints == null) { absent++; problems.add(g[0].replace('/', '.') + " not found"); continue; }
             if (g[1].equals("*")) {   // the class's set of declared methods (see Fingerprint.shape)
-                if (!Fingerprint.matches(g[3], Fingerprint.shape(node))) problems.add(g[0].replace('/', '.') + " declares other methods");
+                if (prints.shape() == null || !Fingerprint.matches(g[3], prints.shape())) problems.add(g[0].replace('/', '.') + " declares other methods");
                 continue;
             }
-            MethodNode m = null;
-            for (MethodNode x : node.methods) if (x.name.equals(g[1]) && x.desc.equals(g[2])) { m = x; break; }
-            if (m == null) { problems.add(g[0].replace('/', '.') + "." + g[1] + " missing"); continue; }
-            String fp = Fingerprint.of(m);
+            String fp = prints.methods().get(g[1] + g[2]);
+            if (fp == null) { problems.add(g[0].replace('/', '.') + "." + g[1] + " missing"); continue; }
             if (!Fingerprint.matches(g[3], fp)) problems.add(g[0].replace('/', '.') + "." + g[1] + " differs");
         }
         if (absent == guard.size()) return new Decision(State.ABSENT, "target mod " + MOD.getOrDefault(key, "?") + " is not installed");
@@ -256,6 +269,31 @@ public final class Guards {
         Decision y = ForeignPatches.yieldDecision(YIELDS.get(key));
         if (y != null) return y;
         return new Decision(State.APPLY, "all " + guard.size() + " fingerprints match");
+    }
+
+    /**
+     * The fingerprints every switch's guards need from this class, from one read (null when the class does not exist).
+     * The same method node gives the same Fingerprint.of value, so a decision is exactly what a read per switch gave. A
+     * race between two threads only reads the class twice; the first stored result wins.
+     */
+    private static ClassPrints prints(String internalName) {
+        java.util.Optional<ClassPrints> known = PRINTS.get(internalName);
+        if (known != null) return known.orElse(null);
+        ClassNode node = read(internalName);
+        ClassPrints p = null;
+        if (node != null) {
+            Map<String, String> methods = new java.util.HashMap<>();
+            String shape = null;
+            for (String want : WANTED.getOrDefault(internalName, Set.of())) {
+                if (want.equals("*")) { shape = Fingerprint.shape(node); continue; }
+                for (MethodNode x : node.methods) {
+                    if ((x.name + x.desc).equals(want)) { methods.put(want, Fingerprint.of(x)); break; }
+                }
+            }
+            p = new ClassPrints(methods, shape);
+        }
+        PRINTS.putIfAbsent(internalName, java.util.Optional.ofNullable(p));
+        return PRINTS.get(internalName).orElse(null);
     }
 
     private static ClassNode read(String internalName) {

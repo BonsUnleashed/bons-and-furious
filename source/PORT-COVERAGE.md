@@ -1,6 +1,6 @@
 # Minecraft 1.21.1 port coverage
 
-All 248 controls of Bons and Furious 1.0.30 (127 from 1.0.27, 121 added in 1.0.28 and later) are accounted for: 165 ported, 41 retired because the 1.21.1 target changed or was fixed upstream, 42 target mods unavailable for Minecraft 1.21.1 / NeoForge.
+All 253 controls of Bons and Furious 1.0.33 (127 from 1.0.27, 126 added in 1.0.28 and later) are accounted for: 169 ported, 42 retired because the 1.21.1 target changed or was fixed upstream, 42 target mods unavailable for Minecraft 1.21.1 / NeoForge.
 
 | Control | Added | Status | Explanation |
 | --- | --- | --- | --- |
@@ -86,6 +86,7 @@ All 248 controls of Bons and Furious 1.0.30 (127 from 1.0.27, 121 added in 1.0.2
 | `farmersdelight_tool_action_items` | 1.0.27 or earlier | retired on 1.21.1 | Farmer's Delight 1.3.4 for 1.21.1 replaces ToolActionIngredient and its eager constructor/packet decoder with a codec and lazy ItemAbilityIngredient.getItems(). The old repeated constructor/decoder scan no longer exists; no eager scan is added by this port. |
 | `fdbosses_phase_sphere_local_only` | 1.0.30 | ported | [FIX] The use counter's reader moved to BossClientModEvents and a client-only death reset was added; both are still local-player state, so the fix is the same. |
 | `fdbosses_spawner_presence_gate` | 1.0.30 | ported | Qliphoth Awakening 3.1.0.3 for 1.21.1 makes the same six calls with the same owners and descriptors. |
+| `forge_custom_payload_heap_copy` | 1.0.32 | retired on 1.21.1 | Forge-only fix: on 1.21.1 ClientboundCustomPayloadPacket is a record carrying an already decoded CustomPacketPayload, with no FriendlyByteBuf getData() whose copy could leak (the leak, Forge issue #10861, is in Forge 1.20.1's own payload path). |
 | `forge_object_holder_pass_index` | 1.0.29 | retired on 1.21.1 | NeoForge 21.1.252 has no ObjectHolderRegistry or RegistryObject; GameData.postRegisterEvents runs no holder pass and DeferredHolder binds once, lazily. |
 | `forge_plain_translation_format` | 1.0.27 or earlier | retired on 1.21.1 | ForgeI18n moved to FMLTranslations in the separate early loader module; NeoForge mod mixins cannot transform classes already loaded by that module. |
 | `forge_render_layer_memo` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
@@ -116,8 +117,11 @@ All 248 controls of Bons and Furious 1.0.30 (127 from 1.0.27, 121 added in 1.0.2
 | `immediatelyfast_known_core_shaders` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `immediatelyfast_offset_layer_prefixes` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `jei_baked_index_background_grams` | 1.0.30 | ported | JEI 19.51.0.418's BakedSubstringIndex and builder decompile identical; ElementSearch still puts and builds on one thread. |
+| `jei_brewing_lookup` | 1.0.31 | ported | JEI 19.51.0.418: getVanillaBrewingRecipes still collects into a new HashSet and getNewPotions still looks for an existing recipe with recipes.stream().filter(recipe::equals); JeiBrewingRecipe still equals and hashes by its UID whenever it has one. Fingerprints refilled for 19.51. |
+| `jei_hidden_menu_sync` | 1.0.31 | ported | JEI 19.51's fake anvil and grindstone menus and 1.21.1's AbstractContainerMenu sync methods (broadcastChanges and the listener/synchronizer paths) are unchanged; NeoForge 21.1.252 patches only click handling in that class. |
 | `jei_server_item_registry` | 1.0.27 or earlier | retired on 1.21.1 | JEI 19 uses RegistryUtil.getRegistry returning the Minecraft Registry directly; the per-ingredient IPlatformRegistry wrapper allocation removed by this patch no longer exists. |
 | `jei_sort_index_keys` | 1.0.30 | ported | JEI 19.51's comparator chain, sorting configs and stage enum are identical; the alphabetical key now follows getNames().getFirst() as JEI does. |
+| `jei_tooltip_words` | 1.0.31 | ported | JEI 19.51 splits tooltip words differently from JEI 15 (trim, then runs of whitespace, empty words dropped, instead of split(" ")), so the helper follows 19.51; its guards also pin ListElementInfo.addSplitStrings and the pattern its static initializer makes. Formatting removal (ChatFormatting.stripFormatting) is unchanged on 1.21.1. |
 | `jei_typed_stack_cache` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `kiwi_manifest_lookup_index` | 1.0.30 | retired on 1.21.1 | Kiwi 15.8.7 loads each mod's metadata through that mod's own file (IModFile.findResource), so the class-loader scan of every jar the switch indexed is gone. |
 | `l2library_effect_icon_fast_path` | 1.0.30 | retired on 1.21.1 | In L2 Core 3.0.8 the effect data is one NeoForge attachment read; the repeated capability-provider walk the switch removed no longer exists. |
@@ -220,6 +224,7 @@ All 248 controls of Bons and Furious 1.0.30 (127 from 1.0.27, 121 added in 1.0.2
 | `vanilla_chunk_status_name_memo` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `vanilla_climate_rtree_flat_bounds` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `vanilla_climate_sample_repeat` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
+| `vanilla_climate_sample_xz_parts` | 1.0.32 | ported | Climate.Sampler.sample is identical on 1.21.1 and RandomState's constructor differs only in how it builds its ResourceLocations; the helper reuses the port's DensityAudit and XzCache. Steps aside for Generator Accelerator (1.21.1-1.6.2 @Overwrites Climate.Sampler.sample; its 1.20.1 builds up to 1.4.10-3.1 do not), found by the crash-class sweep of the first 1.0.33+mc1.21.1 build. |
 | `vanilla_climate_search_repeat` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `vanilla_climate_tree_sort_keys` | 1.0.29 | ported | Climate.RTree sort and comparator read the same in 1.21.1. |
 | `vanilla_climate_tree_span_bounds` | 1.0.29 | ported | Climate.RTree buildParameterSpace and Parameter.span read the same in 1.21.1. |

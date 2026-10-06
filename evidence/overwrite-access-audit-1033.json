@@ -1,799 +1,1245 @@
 {
- "hits": [
+ "rows": [
   {
-   "rule": "R2-ALLOWED",
-   "key": "oculus_entity_vertex_reuse",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.oculus.EntityVertexSerializerMixin",
-    "prio": 999,
-    "kind": "Overwrite",
-    "cls": "net.irisshaders.iris.vertices.sodium.ModelToEntityVertexSerializer",
-    "method": "serialize",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null,
-    "key": "oculus_entity_vertex_reuse"
-   },
-   "foreign": {
-    "owner": "acceleratedrendering-1.0.14-1.21.1-alpha.jar",
-    "mixin": "com.github.argon4w.acceleratedrendering.compat.iris.mixins.iris.ModelToEntityVertexSerializerMixin",
-    "prio": 1000,
-    "kind": "ModifyConstant",
-    "cls": "net.irisshaders.iris.vertices.sodium.ModelToEntityVertexSerializer",
-    "method": "serialize",
-    "points": [
-     "CONSTANT"
-    ],
-    "targets": [],
-    "require": 0,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.fowlplay.GuidedFlockingMixin",
+   "target": "aqario/fowlplay/common/entity/ai/brain/behaviour/GuidedFlocking",
+   "name": "getHeading",
+   "desc": "(Laqario/fowlplay/common/entity/bird/FlyingBirdEntity;)Lnet/minecraft/world/phys/Vec3;",
+   "ours": 2,
+   "ours_access": "private",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R2-ALLOWED",
-   "key": "oculus_entity_vertex_reuse",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.oculus.EntityVertexSerializerMixin",
-    "prio": 999,
-    "kind": "Overwrite",
-    "cls": "net.irisshaders.iris.vertices.sodium.ModelToEntityVertexSerializer",
-    "method": "serialize",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null,
-    "key": "oculus_entity_vertex_reuse"
-   },
-   "foreign": {
-    "owner": "acceleratedrendering-1.0.14-1.21.1-alpha.jar",
-    "mixin": "com.github.argon4w.acceleratedrendering.compat.iris.mixins.iris.ModelToEntityVertexSerializerMixin",
-    "prio": 1000,
-    "kind": "ModifyConstant",
-    "cls": "net.irisshaders.iris.vertices.sodium.ModelToEntityVertexSerializer",
-    "method": "serialize",
-    "points": [
-     "CONSTANT"
-    ],
-    "targets": [],
-    "require": 0,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.fowlplay.LeaderlessFlockingMixin",
+   "target": "aqario/fowlplay/common/entity/ai/brain/behaviour/LeaderlessFlocking",
+   "name": "getHeading",
+   "desc": "(Laqario/fowlplay/common/entity/bird/FlyingBirdEntity;)Lnet/minecraft/world/phys/Vec3;",
+   "ours": 2,
+   "ours_access": "private",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R2-ALLOWED",
-   "key": "oculus_entity_vertex_reuse",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.oculus.EntityVertexSerializerMixin",
-    "prio": 999,
-    "kind": "Overwrite",
-    "cls": "net.irisshaders.iris.vertices.sodium.ModelToEntityVertexSerializer",
-    "method": "serialize",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null,
-    "key": "oculus_entity_vertex_reuse"
-   },
-   "foreign": {
-    "owner": "acceleratedrendering-1.0.14-1.21.1-alpha.jar",
-    "mixin": "com.github.argon4w.acceleratedrendering.compat.iris.mixins.iris.ModelToEntityVertexSerializerMixin",
-    "prio": 1000,
-    "kind": "ModifyConstant",
-    "cls": "net.irisshaders.iris.vertices.sodium.ModelToEntityVertexSerializer",
-    "method": "serialize",
-    "points": [
-     "CONSTANT"
-    ],
-    "targets": [],
-    "require": 0,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.fowlplay.TargetingUtilMixin",
+   "target": "aqario/fowlplay/common/util/TargetingUtils",
+   "name": "tryFindAir",
+   "desc": "(Laqario/fowlplay/common/entity/bird/FlyingBirdEntity;Laqario/fowlplay/common/util/CylindricalRadius;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/BlockPos;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R3-ALLOWED",
-   "key": "embeddium_weighted_pick_table",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.embeddium_meshing.WeightedPickTableMixin",
-    "prio": 1100,
-    "kind": "WrapOperation",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getQuads",
-    "points": [
-     "INVOKE"
-    ],
-    "targets": [
-     "Lnet/minecraft/client/resources/model/WeightedBakedModel;getAt(Ljava/util/List;I)Lnet/minecraft/util/random/WeightedEntry;"
-    ],
-    "require": 3,
-    "handler_of": null,
-    "key": "embeddium_weighted_pick_table"
-   },
-   "foreign": {
-    "owner": "d71acbffaf-net.caffeinemc.sodium-neoforge-0.8.13+mc1.21.1-mod.jar",
-    "mixin": "net.caffeinemc.mods.sodium.mixin.features.model.WeightedBakedModelMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getQuads",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.artifacts.UmbrellaItemGlideOrderMixin",
+   "target": "artifacts/item/UmbrellaItem",
+   "name": "shouldGlide",
+   "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R3-ALLOWED",
-   "key": "embeddium_weighted_pick_table",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.embeddium_meshing.WeightedPickTableMixin",
-    "prio": 1100,
-    "kind": "WrapOperation",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getRenderTypes",
-    "points": [
-     "INVOKE"
-    ],
-    "targets": [
-     "Lnet/minecraft/client/resources/model/WeightedBakedModel;getAt(Ljava/util/List;I)Lnet/minecraft/util/random/WeightedEntry;"
-    ],
-    "require": 3,
-    "handler_of": null,
-    "key": "embeddium_weighted_pick_table"
-   },
-   "foreign": {
-    "owner": "d71acbffaf-net.caffeinemc.sodium-neoforge-0.8.13+mc1.21.1-mod.jar",
-    "mixin": "net.caffeinemc.mods.sodium.mixin.features.model.WeightedBakedModelMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getRenderTypes",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.artifacts.ArtifactHooksNeoForgeTickOrderMixin",
+   "target": "artifacts/neoforge/event/ArtifactHooksNeoForge",
+   "name": "onKittySlippersLivingUpdate",
+   "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+   "ours": 10,
+   "ours_access": "private",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R3-ALLOWED",
-   "key": "embeddium_weighted_pick_table",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.embeddium_meshing.WeightedPickTableMixin",
-    "prio": 1100,
-    "kind": "WrapOperation",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getQuads",
-    "points": [
-     "INVOKE"
-    ],
-    "targets": [
-     "Lnet/minecraft/client/resources/model/WeightedBakedModel;getAt(Ljava/util/List;I)Lnet/minecraft/util/random/WeightedEntry;"
-    ],
-    "require": 3,
-    "handler_of": null,
-    "key": "embeddium_weighted_pick_table"
-   },
-   "foreign": {
-    "owner": "d71acbffaf-net.caffeinemc.sodium-neoforge-0.8.13+mc1.21.1-mod.jar",
-    "mixin": "net.caffeinemc.mods.sodium.mixin.features.model.WeightedBakedModelMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getQuads",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.cucumber.TileEntityHelperDispatchMixin",
+   "target": "com/blakebr0/cucumber/helper/TileEntityHelper",
+   "name": "dispatchToNearbyPlayers",
+   "desc": "(Lnet/minecraft/world/level/block/entity/BlockEntity;)V",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R3-ALLOWED",
-   "key": "embeddium_weighted_pick_table",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.embeddium_meshing.WeightedPickTableMixin",
-    "prio": 1100,
-    "kind": "WrapOperation",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getRenderTypes",
-    "points": [
-     "INVOKE"
-    ],
-    "targets": [
-     "Lnet/minecraft/client/resources/model/WeightedBakedModel;getAt(Ljava/util/List;I)Lnet/minecraft/util/random/WeightedEntry;"
-    ],
-    "require": 3,
-    "handler_of": null,
-    "key": "embeddium_weighted_pick_table"
-   },
-   "foreign": {
-    "owner": "d71acbffaf-net.caffeinemc.sodium-neoforge-0.8.13+mc1.21.1-mod.jar",
-    "mixin": "net.caffeinemc.mods.sodium.mixin.features.model.WeightedBakedModelMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getRenderTypes",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.butterflies.LandingRulesMixin",
+   "target": "com/bokmcdok/butterflies/butterfly_data/LandingRules",
+   "name": "isValidLandingBlock",
+   "desc": "(Lnet/minecraft/world/level/block/state/BlockState;)Z",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R3-ALLOWED",
-   "key": "embeddium_weighted_pick_table",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.embeddium_meshing.WeightedPickTableMixin",
-    "prio": 1100,
-    "kind": "WrapOperation",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getQuads",
-    "points": [
-     "INVOKE"
-    ],
-    "targets": [
-     "Lnet/minecraft/client/resources/model/WeightedBakedModel;getAt(Ljava/util/List;I)Lnet/minecraft/util/random/WeightedEntry;"
-    ],
-    "require": 3,
-    "handler_of": null,
-    "key": "embeddium_weighted_pick_table"
-   },
-   "foreign": {
-    "owner": "embeddium-1.0.15+mc1.21.1.jar",
-    "mixin": "org.embeddedt.embeddium.impl.mixin.features.model.WeightedBakedModelMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getQuads",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.ars_nouveau.ManaUtilMixin",
+   "target": "com/hollingsworth/arsnouveau/api/util/ManaUtil",
+   "name": "getPlayerDiscounts",
+   "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lcom/hollingsworth/arsnouveau/api/spell/Spell;Lnet/minecraft/world/item/ItemStack;)I",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R3-ALLOWED",
-   "key": "embeddium_weighted_pick_table",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.embeddium_meshing.WeightedPickTableMixin",
-    "prio": 1100,
-    "kind": "WrapOperation",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getRenderTypes",
-    "points": [
-     "INVOKE"
-    ],
-    "targets": [
-     "Lnet/minecraft/client/resources/model/WeightedBakedModel;getAt(Ljava/util/List;I)Lnet/minecraft/util/random/WeightedEntry;"
-    ],
-    "require": 3,
-    "handler_of": null,
-    "key": "embeddium_weighted_pick_table"
-   },
-   "foreign": {
-    "owner": "embeddium-1.0.15+mc1.21.1.jar",
-    "mixin": "org.embeddedt.embeddium.impl.mixin.features.model.WeightedBakedModelMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getRenderTypes",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.ars_nouveau.PerkUtilMixin",
+   "target": "com/hollingsworth/arsnouveau/api/util/PerkUtil",
+   "name": "getPerksFromLiving",
+   "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/List;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R3-ALLOWED",
-   "key": "embeddium_weighted_pick_table",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.embeddium_meshing.WeightedPickTableMixin",
-    "prio": 1100,
-    "kind": "WrapOperation",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getQuads",
-    "points": [
-     "INVOKE"
-    ],
-    "targets": [
-     "Lnet/minecraft/client/resources/model/WeightedBakedModel;getAt(Ljava/util/List;I)Lnet/minecraft/util/random/WeightedEntry;"
-    ],
-    "require": 3,
-    "handler_of": null,
-    "key": "embeddium_weighted_pick_table"
-   },
-   "foreign": {
-    "owner": "embeddium-1.0.15+mc1.21.1.jar",
-    "mixin": "org.embeddedt.embeddium.impl.mixin.features.model.WeightedBakedModelMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getQuads",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.entityculling.DirtyCacheResetMixin",
+   "target": "com/logisticscraft/occlusionculling/cache/ArrayOcclusionCache",
+   "name": "resetCache",
+   "desc": "()V",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R3-ALLOWED",
-   "key": "embeddium_weighted_pick_table",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.embeddium_meshing.WeightedPickTableMixin",
-    "prio": 1100,
-    "kind": "WrapOperation",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getRenderTypes",
-    "points": [
-     "INVOKE"
-    ],
-    "targets": [
-     "Lnet/minecraft/client/resources/model/WeightedBakedModel;getAt(Ljava/util/List;I)Lnet/minecraft/util/random/WeightedEntry;"
-    ],
-    "require": 3,
-    "handler_of": null,
-    "key": "embeddium_weighted_pick_table"
-   },
-   "foreign": {
-    "owner": "embeddium-1.0.15+mc1.21.1.jar",
-    "mixin": "org.embeddedt.embeddium.impl.mixin.features.model.WeightedBakedModelMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getRenderTypes",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.entityculling.DirtyCacheResetMixin",
+   "target": "com/logisticscraft/occlusionculling/cache/ArrayOcclusionCache",
+   "name": "setHidden",
+   "desc": "(III)V",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R3-ALLOWED",
-   "key": "embeddium_weighted_pick_table",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.embeddium_meshing.WeightedPickTableMixin",
-    "prio": 1100,
-    "kind": "WrapOperation",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getQuads",
-    "points": [
-     "INVOKE"
-    ],
-    "targets": [
-     "Lnet/minecraft/client/resources/model/WeightedBakedModel;getAt(Ljava/util/List;I)Lnet/minecraft/util/random/WeightedEntry;"
-    ],
-    "require": 3,
-    "handler_of": null,
-    "key": "embeddium_weighted_pick_table"
-   },
-   "foreign": {
-    "owner": "sodium-neoforge-0.6.13+mc1.21.1.jar",
-    "mixin": "net.caffeinemc.mods.sodium.mixin.features.model.WeightedBakedModelMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getQuads",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.entityculling.DirtyCacheResetMixin",
+   "target": "com/logisticscraft/occlusionculling/cache/ArrayOcclusionCache",
+   "name": "setLastHidden",
+   "desc": "()V",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R3-ALLOWED",
-   "key": "embeddium_weighted_pick_table",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.embeddium_meshing.WeightedPickTableMixin",
-    "prio": 1100,
-    "kind": "WrapOperation",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getRenderTypes",
-    "points": [
-     "INVOKE"
-    ],
-    "targets": [
-     "Lnet/minecraft/client/resources/model/WeightedBakedModel;getAt(Ljava/util/List;I)Lnet/minecraft/util/random/WeightedEntry;"
-    ],
-    "require": 3,
-    "handler_of": null,
-    "key": "embeddium_weighted_pick_table"
-   },
-   "foreign": {
-    "owner": "sodium-neoforge-0.6.13+mc1.21.1.jar",
-    "mixin": "net.caffeinemc.mods.sodium.mixin.features.model.WeightedBakedModelMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getRenderTypes",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.entityculling.DirtyCacheResetMixin",
+   "target": "com/logisticscraft/occlusionculling/cache/ArrayOcclusionCache",
+   "name": "setLastVisible",
+   "desc": "()V",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R3-ALLOWED",
-   "key": "embeddium_weighted_pick_table",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.embeddium_meshing.WeightedPickTableMixin",
-    "prio": 1100,
-    "kind": "WrapOperation",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getQuads",
-    "points": [
-     "INVOKE"
-    ],
-    "targets": [
-     "Lnet/minecraft/client/resources/model/WeightedBakedModel;getAt(Ljava/util/List;I)Lnet/minecraft/util/random/WeightedEntry;"
-    ],
-    "require": 3,
-    "handler_of": null,
-    "key": "embeddium_weighted_pick_table"
-   },
-   "foreign": {
-    "owner": "sodium-neoforge-0.6.13+mc1.21.1.jar",
-    "mixin": "net.caffeinemc.mods.sodium.mixin.features.model.WeightedBakedModelMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getQuads",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.entityculling.DirtyCacheResetMixin",
+   "target": "com/logisticscraft/occlusionculling/cache/ArrayOcclusionCache",
+   "name": "setVisible",
+   "desc": "(III)V",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R3-ALLOWED",
-   "key": "embeddium_weighted_pick_table",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.embeddium_meshing.WeightedPickTableMixin",
-    "prio": 1100,
-    "kind": "WrapOperation",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getRenderTypes",
-    "points": [
-     "INVOKE"
-    ],
-    "targets": [
-     "Lnet/minecraft/client/resources/model/WeightedBakedModel;getAt(Ljava/util/List;I)Lnet/minecraft/util/random/WeightedEntry;"
-    ],
-    "require": 3,
-    "handler_of": null,
-    "key": "embeddium_weighted_pick_table"
-   },
-   "foreign": {
-    "owner": "sodium-neoforge-0.6.13+mc1.21.1.jar",
-    "mixin": "net.caffeinemc.mods.sodium.mixin.features.model.WeightedBakedModelMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.client.resources.model.WeightedBakedModel",
-    "method": "getRenderTypes",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.dh_loader.WrapperAirFlagMixin",
+   "target": "com/seibel/distanthorizons/common/wrappers/block/BlockStateWrapper_neoforge",
+   "name": "isAir",
+   "desc": "()Z",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R3-ALLOWED",
-   "key": "vanilla_animate_tick_uniform_biome",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.vanilla.AnimateTickBiomeMixin",
-    "prio": 1000,
-    "kind": "Redirect",
-    "cls": "net.minecraft.client.multiplayer.ClientLevel",
-    "method": "doAnimateTick",
-    "points": [
-     "INVOKE"
-    ],
-    "targets": [
-     "Lnet/minecraft/client/multiplayer/ClientLevel;getBiome(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/Holder;"
-    ],
-    "require": null,
-    "handler_of": null,
-    "key": "vanilla_animate_tick_uniform_biome"
-   },
-   "foreign": {
-    "owner": "embeddium-1.0.15+mc1.21.1.jar",
-    "mixin": "org.embeddedt.embeddium.impl.mixin.features.render.world.ClientLevelMixin",
-    "prio": 500,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.client.multiplayer.ClientLevel",
-    "method": "doAnimateTick",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.distanthorizons.UpdateQueueWaitMixin",
+   "target": "com/seibel/distanthorizons/core/api/internal/chunkUpdating/ChunkUpdateQueueManager",
+   "name": "runQueueingLoop",
+   "desc": "()V",
+   "ours": 2,
+   "ours_access": "private",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R3-ALLOWED",
-   "key": "vanilla_animate_tick_uniform_biome",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.vanilla.AnimateTickBiomeMixin",
-    "prio": 1000,
-    "kind": "Redirect",
-    "cls": "net.minecraft.client.multiplayer.ClientLevel",
-    "method": "doAnimateTick",
-    "points": [
-     "INVOKE"
-    ],
-    "targets": [
-     "Lnet/minecraft/client/multiplayer/ClientLevel;getBiome(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/Holder;"
-    ],
-    "require": null,
-    "handler_of": null,
-    "key": "vanilla_animate_tick_uniform_biome"
-   },
-   "foreign": {
-    "owner": "embeddium-1.0.15+mc1.21.1.jar",
-    "mixin": "org.embeddedt.embeddium.impl.mixin.features.render.world.ClientLevelMixin",
-    "prio": 500,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.client.multiplayer.ClientLevel",
-    "method": "doAnimateTick",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.distanthorizons.IgnoredDimensionCsvHandlerMixin",
+   "target": "com/seibel/distanthorizons/core/config/eventHandlers/IgnoredDimensionCsvHandler",
+   "name": "dimensionNameShouldBeIgnored",
+   "desc": "(Ljava/lang/String;)Z",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R3-ALLOWED-STANDDOWN",
-   "key": "vanilla_model_bone_lookup",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.models.BoneLookupMixin",
-    "prio": 1001,
-    "kind": "Redirect",
-    "cls": "net.minecraft.client.model.HierarchicalModel",
-    "method": "getAnyDescendantWithName",
-    "points": [
-     "INVOKE"
-    ],
-    "targets": [
-     "Lnet/minecraft/client/model/geom/ModelPart;getAllParts()Ljava/util/stream/Stream;"
-    ],
-    "require": 0,
-    "handler_of": null,
-    "key": "vanilla_model_bone_lookup"
-   },
-   "foreign": {
-    "owner": "embeddium-1.0.15+mc1.21.1.jar",
-    "mixin": "org.embeddedt.embeddium.impl.mixin.features.render.entity.remove_streams.HierarchicalModelMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.client.model.HierarchicalModel",
-    "method": "getAnyDescendantWithName",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.fusion.ConnectionKeyHashMixin",
+   "target": "com/supermartijn642/fusion/texture/types/connecting/ConnectingTextureType$QuadPredicatesKey",
+   "name": "hashCode",
+   "desc": "()I",
+   "ours": 17,
+   "ours_access": "public",
+   "ours_final": true,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R3-ALLOWED-STANDDOWN",
-   "key": "vanilla_model_bone_lookup",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.models.BoneLookupMixin",
-    "prio": 1001,
-    "kind": "Redirect",
-    "cls": "net.minecraft.client.model.HierarchicalModel",
-    "method": "getAnyDescendantWithName",
-    "points": [
-     "INVOKE"
-    ],
-    "targets": [
-     "Lnet/minecraft/client/model/geom/ModelPart;getAllParts()Ljava/util/stream/Stream;"
-    ],
-    "require": 0,
-    "handler_of": null,
-    "key": "vanilla_model_bone_lookup"
-   },
-   "foreign": {
-    "owner": "embeddium-1.0.15+mc1.21.1.jar",
-    "mixin": "org.embeddedt.embeddium.impl.mixin.features.render.entity.remove_streams.HierarchicalModelMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.client.model.HierarchicalModel",
-    "method": "getAnyDescendantWithName",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.architectury.EventFactoryMixin",
+   "target": "dev/architectury/event/EventFactory",
+   "name": "invokeMethod",
+   "desc": "(Ljava/lang/Object;Ljava/lang/reflect/Method;[Ljava/lang/Object;)Ljava/lang/Object;",
+   "ours": 10,
+   "ours_access": "private",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R4",
-   "key": "vanilla_poi_chunk_sections",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.radium_compat.PoiChunkSectionsMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.world.entity.ai.village.poi.PoiManager",
-    "method": "getInChunk",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null,
-    "key": "vanilla_poi_chunk_sections"
-   },
-   "foreign": {
-    "owner": "lithium-neoforge-0.15.4+mc1.21.1.jar",
-    "mixin": "net.caffeinemc.mods.lithium.mixin.ai.poi.PoiManagerMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.world.entity.ai.village.poi.PoiManager",
-    "method": "getInChunk",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.colorwheel.PhaseLabelMixin",
+   "target": "dev/djefrey/colorwheel/engine/ClrwlDrawManager",
+   "name": "setPhase",
+   "desc": "(Ldev/djefrey/colorwheel/engine/ClrwlRenderingPhase;Z)V",
+   "ours": 4,
+   "ours_access": "protected",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R4",
-   "key": "vanilla_poi_chunk_sections",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.radium_compat.PoiChunkSectionsMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.world.entity.ai.village.poi.PoiManager",
-    "method": "getInChunk",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null,
-    "key": "vanilla_poi_chunk_sections"
-   },
-   "foreign": {
-    "owner": "lithium-neoforge-0.15.4+mc1.21.1.jar",
-    "mixin": "net.caffeinemc.mods.lithium.mixin.ai.poi.PoiManagerMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.world.entity.ai.village.poi.PoiManager",
-    "method": "getInChunk",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.adastra.GravityApiImplMixin",
+   "target": "earth/terrarium/adastra/common/systems/GravityApiImpl",
+   "name": "getGravity",
+   "desc": "(Lnet/minecraft/resources/ResourceKey;)F",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R4",
-   "key": "vanilla_poi_chunk_sections",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.radium_compat.PoiChunkSectionsMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.world.entity.ai.village.poi.PoiManager",
-    "method": "getInChunk",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null,
-    "key": "vanilla_poi_chunk_sections"
-   },
-   "foreign": {
-    "owner": "radium-mc1.21.1-0.13.1+git.4994e83.jar",
-    "mixin": "me.jellysquid.mods.lithium.mixin.ai.poi.PointOfInterestStorageMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.world.entity.ai.village.poi.PoiManager",
-    "method": "getInChunk",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.presencefootsteps.SoundEngineMixin",
+   "target": "eu/ha3/presencefootsteps/sound/SoundEngine",
+   "name": "getTargets",
+   "desc": "(Lnet/minecraft/world/entity/Entity;)Ljava/util/stream/Stream;",
+   "ours": 2,
+   "ours_access": "private",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   },
   {
-   "rule": "R4",
-   "key": "vanilla_poi_chunk_sections",
-   "ours": {
-    "owner": "bons_and_furious",
-    "mixin": "bons.furious.mixin.radium_compat.PoiChunkSectionsMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.world.entity.ai.village.poi.PoiManager",
-    "method": "getInChunk",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null,
-    "key": "vanilla_poi_chunk_sections"
-   },
-   "foreign": {
-    "owner": "radium-mc1.21.1-0.13.1+git.4994e83.jar",
-    "mixin": "me.jellysquid.mods.lithium.mixin.ai.poi.PointOfInterestStorageMixin",
-    "prio": 1000,
-    "kind": "Overwrite",
-    "cls": "net.minecraft.world.entity.ai.village.poi.PoiManager",
-    "method": "getInChunk",
-    "points": [
-     "?"
-    ],
-    "targets": [],
-    "require": null,
-    "handler_of": null
-   }
+   "mixin": "bons.furious.mixin.presencefootsteps.SoundEngineMixin",
+   "target": "eu/ha3/presencefootsteps/sound/SoundEngine",
+   "name": "keepTarget",
+   "desc": "(Lnet/minecraft/world/entity/Entity;Ljava/util/Set;Lnet/minecraft/world/entity/Entity;)Z",
+   "ours": 2,
+   "ours_access": "private",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.oculus.BufferAffinitiesMixin",
+   "target": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+   "name": "getBuffer",
+   "desc": "(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.oculus.BufferAffinitiesMixin",
+   "target": "net/irisshaders/batchedentityrendering/impl/FullyBufferedMultiBufferSource",
+   "name": "readyUp",
+   "desc": "()V",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.oculus.TransparencyGraphOrderMixin",
+   "target": "net/irisshaders/batchedentityrendering/impl/ordering/GraphTranslucencyRenderOrderManager",
+   "name": "getRenderOrder",
+   "desc": "()Ljava/util/List;",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.oculus.TransparencyGraphResetMixin",
+   "target": "net/irisshaders/batchedentityrendering/impl/ordering/GraphTranslucencyRenderOrderManager",
+   "name": "reset",
+   "desc": "()V",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.oculus.DhInstanceLookupMixin",
+   "target": "net/irisshaders/iris/compat/dh/LodRendererEvents",
+   "name": "getInstance",
+   "desc": "()Lnet/irisshaders/iris/compat/dh/DHCompatInternal;",
+   "ours": 10,
+   "ours_access": "private",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.oculus.SamplerCleanupMixin",
+   "target": "net/irisshaders/iris/gl/IrisRenderSystem",
+   "name": "bindSamplerToUnit",
+   "desc": "(II)V",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.oculus.SamplerCleanupMixin",
+   "target": "net/irisshaders/iris/gl/IrisRenderSystem",
+   "name": "initRenderer",
+   "desc": "()V",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.oculus.SamplerCleanupMixin",
+   "target": "net/irisshaders/iris/gl/IrisRenderSystem",
+   "name": "unbindAllSamplers",
+   "desc": "()V",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.oculus.ProgramSamplersTraversalMixin",
+   "target": "net/irisshaders/iris/gl/program/ProgramSamplers",
+   "name": "removeListeners",
+   "desc": "()V",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.oculus.ProgramSamplersTraversalMixin",
+   "target": "net/irisshaders/iris/gl/program/ProgramSamplers",
+   "name": "update",
+   "desc": "()V",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.oculus.ProgramUniformsTraversalMixin",
+   "target": "net/irisshaders/iris/gl/program/ProgramUniforms",
+   "name": "removeListeners",
+   "desc": "()V",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.oculus.ProgramUniformsTraversalMixin",
+   "target": "net/irisshaders/iris/gl/program/ProgramUniforms",
+   "name": "updateStage",
+   "desc": "(Lcom/google/common/collect/ImmutableList;)V",
+   "ours": 2,
+   "ours_access": "private",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.oculus.PhaseLabelMixin",
+   "target": "net/irisshaders/iris/pipeline/IrisRenderingPipeline",
+   "name": "setPhase",
+   "desc": "(Lnet/irisshaders/iris/pipeline/WorldRenderingPhase;)V",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.oculus.ShadowEdgePlaneMixin",
+   "target": "net/irisshaders/iris/shadows/frustum/advanced/AdvancedShadowCullingFrustum",
+   "name": "addEdgePlane",
+   "desc": "(Lorg/joml/Vector4f;Lorg/joml/Vector4f;)V",
+   "ours": 2,
+   "ours_access": "private",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.oculus.CustomUniformsPushMixin",
+   "target": "net/irisshaders/iris/uniforms/custom/CustomUniforms",
+   "name": "push",
+   "desc": "(Ljava/lang/Object;)V",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.oculus.EntityVertexSerializerMixin",
+   "target": "net/irisshaders/iris/vertices/sodium/ModelToEntityVertexSerializer",
+   "name": "serialize",
+   "desc": "(JJI)V",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.armorbake_c2.LayerBakeStreamlessMixin",
+   "target": "net/minecraft/client/model/geom/builders/PartDefinition",
+   "name": "bake",
+   "desc": "(II)Lnet/minecraft/client/model/geom/ModelPart;",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.radium_compat.PoiChunkSectionsMixin",
+   "target": "net/minecraft/world/entity/ai/village/poi/PoiManager",
+   "name": "getInChunk",
+   "desc": "(Ljava/util/function/Predicate;Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/entity/ai/village/poi/PoiManager$Occupancy;)Ljava/util/stream/Stream;",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": "public",
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.terrain.ClimateNodeBoundsMixin",
+   "target": "net/minecraft/world/level/biome/Climate$RTree$Node",
+   "name": "distance",
+   "desc": "([J)J",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": "protected",
+   "at_hits": [
+    {
+     "origin": "Jadens-Nether-Expansion-2.4.1.jar!META-INF/jarjar/biolith-neoforge-3.0.10.jar",
+     "file": "META-INF/accesstransformer.cfg",
+     "access": "public",
+     "final": null,
+     "cls": "net/minecraft/world/level/biome/Climate$RTree$Node",
+     "name": "distance",
+     "desc": "([J)J"
+    },
+    {
+     "origin": "7f5c86757c-biolith-neoforge-3.0.10.jar",
+     "file": "META-INF/accesstransformer.cfg",
+     "access": "public",
+     "final": null,
+     "cls": "net/minecraft/world/level/biome/Climate$RTree$Node",
+     "name": "distance",
+     "desc": "([J)J"
+    }
+   ],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.terrain.MarkerOrMarkedReuseMixin",
+   "target": "net/minecraft/world/level/levelgen/DensityFunctions$MarkerOrMarked",
+   "name": "mapAll",
+   "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": "public",
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.embeddium.GlBufferArenaPendingSumMixin",
+   "target": "org/embeddedt/embeddium/impl/gl/arena/GlBufferArena",
+   "name": "upload",
+   "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;Ljava/util/stream/Stream;)Z",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.embeddium.RenderSectionManagerMixin",
+   "target": "org/embeddedt/embeddium/impl/render/chunk/RenderSectionManager",
+   "name": "uploadChunks",
+   "desc": "()V",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.embeddium.RenderRegionManagerClassifyMixin",
+   "target": "org/embeddedt/embeddium/impl/render/chunk/region/RenderRegionManager",
+   "name": "uploadMeshes",
+   "desc": "(Lorg/embeddedt/embeddium/impl/gl/device/CommandList;Ljava/util/Collection;)V",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.embeddium.SerializerLookupSnapshotMixin",
+   "target": "org/embeddedt/embeddium/impl/render/vertex/serializers/VertexSerializerRegistryImpl",
+   "name": "find",
+   "desc": "(J)Lorg/embeddedt/embeddium/api/vertex/serializer/VertexSerializer;",
+   "ours": 2,
+   "ours_access": "private",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.ryoamiclights.BlockEntityLockSkipMixin",
+   "target": "org/thinkingstudio/ryoamiclights/RyoamicLights",
+   "name": "addLightSource",
+   "desc": "(Lorg/thinkingstudio/ryoamiclights/DynamicLightSource;)V",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.ryoamiclights.BlockEntityLockSkipMixin",
+   "target": "org/thinkingstudio/ryoamiclights/RyoamicLights",
+   "name": "containsLightSource",
+   "desc": "(Lorg/thinkingstudio/ryoamiclights/DynamicLightSource;)Z",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.AnimationControllerQueueMixin",
+   "target": "software/bernie/geckolib/animation/AnimationController",
+   "name": "createInitialQueues",
+   "desc": "(Ljava/util/Collection;)V",
+   "ours": 2,
+   "ours_access": "private",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.AnimationControllerMixin",
+   "target": "software/bernie/geckolib/animation/AnimationController",
+   "name": "getAnimationPointAtTick",
+   "desc": "(Ljava/util/List;DZLnet/minecraft/core/Direction$Axis;)Lsoftware/bernie/geckolib/animation/keyframe/AnimationPoint;",
+   "ours": 2,
+   "ours_access": "private",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "apply",
+   "desc": "(Lsoftware/bernie/geckolib/animation/keyframe/AnimationPoint;Ljava/lang/Double;D)D",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "back",
+   "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "bounce",
+   "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "buildEaseInCirc",
+   "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "buildEaseInCubic",
+   "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "buildEaseInExpo",
+   "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "buildEaseInOutCirc",
+   "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "buildEaseInOutCubic",
+   "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "buildEaseInOutExpo",
+   "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "buildEaseInOutQuad",
+   "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "buildEaseInOutSine",
+   "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "buildEaseInQuad",
+   "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "buildEaseInSine",
+   "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "buildEaseOutCirc",
+   "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "buildEaseOutCubic",
+   "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "buildEaseOutExpo",
+   "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "buildEaseOutQuad",
+   "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "buildEaseOutSine",
+   "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "buildLinear",
+   "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "easeInOut",
+   "desc": "(Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "easeOut",
+   "desc": "(Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "elastic",
+   "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "pow",
+   "desc": "(D)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "step",
+   "desc": "(Ljava/lang/Double;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "stepNonNegative",
+   "desc": "(Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.EasingTypeMixin",
+   "target": "software/bernie/geckolib/animation/EasingType",
+   "name": "stepPositive",
+   "desc": "(Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;)Lit/unimi/dsi/fastutil/doubles/Double2DoubleFunction;",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.RawAnimationMixin",
+   "target": "software/bernie/geckolib/animation/RawAnimation",
+   "name": "hashCode",
+   "desc": "()I",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.KeyframeMixin",
+   "target": "software/bernie/geckolib/animation/keyframe/Keyframe",
+   "name": "hashCode",
+   "desc": "()I",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.geckolib.GeoRendererQuadMixin",
+   "target": "software/bernie/geckolib/renderer/GeoRenderer",
+   "name": "createVerticesOfQuad",
+   "desc": "(Lsoftware/bernie/geckolib/cache/object/GeoQuad;Lorg/joml/Matrix4f;Lorg/joml/Vector3f;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.ambientsounds.BiomeAreaMixin",
+   "target": "team/creative/ambientsounds/environment/BiomeEnvironment$BiomeArea",
+   "name": "checkBiome",
+   "desc": "([Lteam/creative/ambientsounds/condition/BiomeCondition;)Z",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.ambientsounds.BiomeAreaMixin",
+   "target": "team/creative/ambientsounds/environment/BiomeEnvironment$BiomeArea",
+   "name": "tagMatches",
+   "desc": "(Lteam/creative/ambientsounds/condition/BiomeCondition;Lnet/minecraft/tags/TagKey;)Z",
+   "ours": 10,
+   "ours_access": "private",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.ambientsounds.TerrainEnvironmentMixin",
+   "target": "team/creative/ambientsounds/environment/TerrainEnvironment",
+   "name": "getHeightBlock",
+   "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos$MutableBlockPos;)I",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.terrablender.NamespacedRuleMemoMixin",
+   "target": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource$NamespacedRule",
+   "name": "tryApply",
+   "desc": "(III)Lnet/minecraft/world/level/block/state/BlockState;",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.curios.CurioInventoryWrapperMixin",
+   "target": "top/theillusivec4/curios/common/capability/CurioInventoryCapability",
+   "name": "clearCachedSlotModifiers",
+   "desc": "()V",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.curios.CuriosEntityManagerMixin",
+   "target": "top/theillusivec4/curios/common/data/CuriosEntityManager",
+   "name": "getEntitySlots",
+   "desc": "(Lnet/minecraft/world/entity/EntityType;)Ljava/util/Map;",
+   "ours": 1,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
+  },
+  {
+   "mixin": "bons.furious.mixin.pehkui.ScaleUtilsTickMixin",
+   "target": "virtuoel/pehkui/util/ScaleUtils",
+   "name": "tickScale",
+   "desc": "(Lvirtuoel/pehkui/api/ScaleData;)V",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "vanilla_access": null,
+   "at_hits": [],
+   "verdict": [
+    "ok"
+   ]
   }
  ],
- "errors": [],
  "jars": [
+  "sweep\\[1.21.1-1.6.2] Generator Accelerator-neoforge.jar",
   "sweep\\acceleratedrendering-1.0.14-1.21.1-alpha.jar",
   "sweep\\tacz-neoforge-1.21.1-1.1.8-hotfix-r7.jar",
   "sweep\\tacz-tweaks-3.0.0-alpha.10+1.21.1-neoforge.jar",
@@ -1262,6 +1708,8 @@
   "sweep-extra\\sodiumoptionsapi-neoforge-1.0.10-1.21.1.jar",
   "sweep-extra\\sodiumoptionsmodcompat-neoforge-1.0.0-1.21.1.jar",
   "sweep-extra\\structure_layout_optimizer-neoforge-1.0.12.jar",
-  "sweep-extra\\zfastnoise-1.0.13+1.21.1+neoforge.jar"
+  "sweep-extra\\zfastnoise-1.0.13+1.21.1+neoforge.jar",
+  "extra\\byepregen-1.21.1-1.1.3.0.jar",
+  "extra\\generator-accelerator-1.6.2.jar"
  ]
 }

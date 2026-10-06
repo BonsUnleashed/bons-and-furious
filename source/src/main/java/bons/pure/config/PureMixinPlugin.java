@@ -1,5 +1,6 @@
 package bons.pure.config;
 
+import bons.furious.guard.CallSites;
 import bons.furious.guard.Guards;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +66,7 @@ public final class PureMixinPlugin implements IMixinConfigPlugin {
 
     @Override
     public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+        CallSites.afterApply(mixinClassName, targetClass);
         String key = Guards.keyOf(mixinClassName);
         if (key != null) {
             LOGGER.debug("Bons and Furious: {} applied to {}", key, targetClassName);

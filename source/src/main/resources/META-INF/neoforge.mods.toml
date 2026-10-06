@@ -4,7 +4,7 @@ license="GPL-3.0-only"
 issueTrackerURL="https://github.com/BonsUnleashed/bons-and-furious/issues"
 [[mods]]
 modId="bons_and_furious"
-version="1.0.30.1+mc1.21.1"
+version="1.0.33+mc1.21.1"
 displayName="Bons and Furious"
 authors="BonsUnleashed"
 description="Targeted performance patches and compatibility fixes for Minecraft 1.21.1 and NeoForge."
@@ -68,6 +68,9 @@ config="bons_and_furious.citadel.mixins.json"
 
 [[mixins]]
 config="bons_and_furious.climate_build.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.climate_columns.mixins.json"
 
 [[mixins]]
 config="bons_and_furious.colorwheel.mixins.json"
@@ -173,6 +176,9 @@ config="bons_and_furious.jei.mixins.json"
 
 [[mixins]]
 config="bons_and_furious.jei_search.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.jei_startup.mixins.json"
 
 [[mixins]]
 config="bons_and_furious.l2library_fix_c2.mixins.json"

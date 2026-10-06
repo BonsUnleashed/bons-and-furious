@@ -103,6 +103,13 @@
       "name": "C2ME (vanilla worldgen optimizations)",
       "mixin": "com.ishland.c2me.opts.worldgen.vanilla.mixin.structure_weight_sampler.MixinStructureWeightSampler",
       "why": "C2ME 0.4.0-alpha.0.122's opts-worldgen-vanilla module @Overwrites Beardifier.compute at the default priority; Mixin refuses our @ModifyExpressionValue into a method overwritten at equal priority (the class would fail to load), so this switch steps aside whenever that module lists its mixin. Found by the crash-class sweep of the 1.21.1 port."
+    },
+    {
+      "key": "vanilla_beardifier_influence_bounds",
+      "mod": "generator_accelerator",
+      "name": "Generator Accelerator",
+      "mixin": "dev.sixik.generator_accelerator.common.beardifier.mixin.MixinBeardifier",
+      "why": "Generator Accelerator (tested 1.21.1-1.6.2) replaces Beardifier.compute with its own @Overwrite at the default priority. Mixin refuses our @ModifyExpressionValue into a method another mixin overwrote at equal priority (the class fails to load and the game stops at the first world load), so this switch steps aside whenever that mixin is listed. Found by the crash-class sweep of the 1.21.1 port; the Forge release steps aside for the 1.20.1 build the same way."
     }
   ]
 }

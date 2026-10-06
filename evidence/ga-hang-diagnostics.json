@@ -1,0 +1,212 @@
+{
+  "generator_accelerator": "1.21.1-1.6.2 (generator-accelerator-1.6.2.jar, sha1 f2c64a633180ff5dbc435c3db92e5961228c20ed)",
+  "summary": {
+    "Bons and Furious 1.0.33+mc1.21.1, switches on": {
+      "runs": 3,
+      "passed": 1,
+      "stopped": 2
+    },
+    "Bons and Furious 1.0.33+mc1.21.1, every switch off": {
+      "runs": 4,
+      "passed": 1,
+      "stopped": 3
+    },
+    "Generator Accelerator alone": {
+      "runs": 4,
+      "passed": 2,
+      "stopped": 2
+    }
+  },
+  "runs": {
+    "p33-ga": {
+      "kind": "Bons and Furious 1.0.33+mc1.21.1, switches on",
+      "passed": false,
+      "exit_code": null,
+      "timed_out": null,
+      "last_progress": "Preparing spawn area: 30%",
+      "stopped_in": [
+        "jdk.internal.misc.Unsafe.park",
+        "java.util.concurrent.locks.LockSupport.parkNanos",
+        "net.minecraft.util.thread.BlockableEventLoop.waitForTasks",
+        "net.minecraft.server.MinecraftServer.waitForTasks",
+        "net.minecraft.util.thread.BlockableEventLoop.managedBlock",
+        "net.minecraft.server.MinecraftServer.managedBlock",
+        "net.minecraft.server.MinecraftServer.waitUntilNextTick",
+        "net.minecraft.server.MinecraftServer.prepareLevels",
+        "net.minecraft.server.MinecraftServer.loadLevel"
+      ],
+      "pools": {
+        "pool_threads": 30,
+        "not_idle": []
+      },
+      "dump": "p33-ga-threads.txt",
+      "note": "killed by hand after 6 minutes without progress; thread dump taken first"
+    },
+    "p33-ga2": {
+      "kind": "Bons and Furious 1.0.33+mc1.21.1, switches on",
+      "passed": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "last_progress": "BONS_PORT_PROBE_PASS"
+    },
+    "p33-ga3": {
+      "kind": "Bons and Furious 1.0.33+mc1.21.1, switches on",
+      "passed": false,
+      "exit_code": "timeout",
+      "timed_out": true,
+      "last_progress": "Preparing spawn area: 20%",
+      "stopped_in": [
+        "jdk.internal.misc.Unsafe.park",
+        "java.util.concurrent.locks.LockSupport.parkNanos",
+        "net.minecraft.util.thread.BlockableEventLoop.waitForTasks",
+        "net.minecraft.server.MinecraftServer.waitForTasks",
+        "net.minecraft.util.thread.BlockableEventLoop.managedBlock",
+        "net.minecraft.server.MinecraftServer.managedBlock",
+        "net.minecraft.server.MinecraftServer.waitUntilNextTick",
+        "net.minecraft.server.MinecraftServer.prepareLevels",
+        "net.minecraft.server.MinecraftServer.loadLevel"
+      ],
+      "pools": {
+        "pool_threads": 30,
+        "not_idle": []
+      },
+      "dump": "thread-dump-timeout.txt"
+    },
+    "p33-ga-off": {
+      "kind": "Bons and Furious 1.0.33+mc1.21.1, every switch off",
+      "passed": false,
+      "exit_code": 1,
+      "timed_out": false,
+      "last_progress": "ServerHangWatchdog",
+      "stopped_in": [
+        "jdk.internal.misc.Unsafe.park",
+        "java.util.concurrent.locks.LockSupport.parkNanos",
+        "net.minecraft.util.thread.BlockableEventLoop.waitForTasks",
+        "net.minecraft.util.thread.BlockableEventLoop.managedBlock",
+        "net.minecraft.server.level.ServerChunkCache$MainThreadExecutor.managedBlock",
+        "net.minecraft.server.level.ServerChunkCache.getChunk",
+        "net.minecraft.world.level.Level.getChunk",
+        "net.minecraft.world.level.LevelReader.getChunk",
+        "net.minecraft.world.level.Level.getChunk"
+      ],
+      "pools": {
+        "pool_threads": 37,
+        "not_idle": []
+      },
+      "dump": "crash-2026-10-06_04.22.57-server.txt"
+    },
+    "p33-ga-off2": {
+      "kind": "Bons and Furious 1.0.33+mc1.21.1, every switch off",
+      "passed": false,
+      "exit_code": "timeout",
+      "timed_out": true,
+      "last_progress": "Preparing spawn area: 26%",
+      "stopped_in": [
+        "jdk.internal.misc.Unsafe.park",
+        "java.util.concurrent.locks.LockSupport.parkNanos",
+        "net.minecraft.util.thread.BlockableEventLoop.waitForTasks",
+        "net.minecraft.server.MinecraftServer.waitForTasks",
+        "net.minecraft.util.thread.BlockableEventLoop.managedBlock",
+        "net.minecraft.server.MinecraftServer.managedBlock",
+        "net.minecraft.server.MinecraftServer.waitUntilNextTick",
+        "net.minecraft.server.MinecraftServer.prepareLevels",
+        "net.minecraft.server.MinecraftServer.loadLevel"
+      ],
+      "pools": {
+        "pool_threads": 30,
+        "not_idle": []
+      },
+      "dump": "thread-dump-timeout.txt"
+    },
+    "p33-ga-off3": {
+      "kind": "Bons and Furious 1.0.33+mc1.21.1, every switch off",
+      "passed": false,
+      "exit_code": "timeout",
+      "timed_out": true,
+      "last_progress": "Preparing spawn area: 46%",
+      "stopped_in": [
+        "jdk.internal.misc.Unsafe.park",
+        "java.util.concurrent.locks.LockSupport.parkNanos",
+        "net.minecraft.util.thread.BlockableEventLoop.waitForTasks",
+        "net.minecraft.server.MinecraftServer.waitForTasks",
+        "net.minecraft.util.thread.BlockableEventLoop.managedBlock",
+        "net.minecraft.server.MinecraftServer.managedBlock",
+        "net.minecraft.server.MinecraftServer.waitUntilNextTick",
+        "net.minecraft.server.MinecraftServer.prepareLevels",
+        "net.minecraft.server.MinecraftServer.loadLevel"
+      ],
+      "pools": {
+        "pool_threads": 30,
+        "not_idle": []
+      },
+      "dump": "thread-dump-timeout.txt"
+    },
+    "p33-ga-off4": {
+      "kind": "Bons and Furious 1.0.33+mc1.21.1, every switch off",
+      "passed": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "last_progress": "BONS_PORT_PROBE_PASS"
+    },
+    "p33-gaonly-1": {
+      "kind": "Generator Accelerator alone",
+      "passed": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "last_progress": "Done (3.951s)"
+    },
+    "p33-gaonly-2": {
+      "kind": "Generator Accelerator alone",
+      "passed": false,
+      "exit_code": 1,
+      "timed_out": true,
+      "last_progress": "Preparing spawn area: 42%",
+      "stopped_in": [
+        "jdk.internal.misc.Unsafe.park",
+        "java.util.concurrent.locks.LockSupport.parkNanos",
+        "net.minecraft.util.thread.BlockableEventLoop.waitForTasks",
+        "net.minecraft.server.MinecraftServer.waitForTasks",
+        "net.minecraft.util.thread.BlockableEventLoop.managedBlock",
+        "net.minecraft.server.MinecraftServer.managedBlock",
+        "net.minecraft.server.MinecraftServer.waitUntilNextTick",
+        "net.minecraft.server.MinecraftServer.prepareLevels",
+        "net.minecraft.server.MinecraftServer.loadLevel"
+      ],
+      "pools": {
+        "pool_threads": 30,
+        "not_idle": []
+      },
+      "dump": "thread-dump-timeout.txt"
+    },
+    "p33-gaonly-3": {
+      "kind": "Generator Accelerator alone",
+      "passed": false,
+      "exit_code": 1,
+      "timed_out": true,
+      "last_progress": "Preparing spawn area: 44%",
+      "stopped_in": [
+        "jdk.internal.misc.Unsafe.park",
+        "java.util.concurrent.locks.LockSupport.parkNanos",
+        "net.minecraft.util.thread.BlockableEventLoop.waitForTasks",
+        "net.minecraft.server.MinecraftServer.waitForTasks",
+        "net.minecraft.util.thread.BlockableEventLoop.managedBlock",
+        "net.minecraft.server.MinecraftServer.managedBlock",
+        "net.minecraft.server.MinecraftServer.waitUntilNextTick",
+        "net.minecraft.server.MinecraftServer.prepareLevels",
+        "net.minecraft.server.MinecraftServer.loadLevel"
+      ],
+      "pools": {
+        "pool_threads": 30,
+        "not_idle": []
+      },
+      "dump": "thread-dump-timeout.txt"
+    },
+    "p33-gaonly-4": {
+      "kind": "Generator Accelerator alone",
+      "passed": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "last_progress": "Done (4.139s)"
+    }
+  }
+}

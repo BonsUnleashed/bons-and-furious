@@ -1,0 +1,60 @@
+{
+  "release": {
+    "old": {
+      "file": "<workspace>/projects/furious_biolith_20261005\\final-neoforge\\bons_and_furious-neoforge-1.0.30.1+mc1.21.1.jar",
+      "sha256": "ebcd2416c3451e9063f04ecea3f40e434445f632ebde4bf339b5f288ee866304",
+      "entries": 709
+    },
+    "new": {
+      "file": "source\\build\\libs\\bons_and_furious-neoforge-1.0.33+mc1.21.1.jar",
+      "sha256": "ff5e8bf07015e91b6cb55da17db6ed77610b8e5df55b5f73e6b08ae84ac8aad3",
+      "entries": 729
+    },
+    "added": [
+      "bons/furious/guard/CallSites.class",
+      "bons/furious/guard/Guards$ClassPrints.class",
+      "bons/furious/mixin/climate_columns/ClimateSamplerPartsMixin.class",
+      "bons/furious/mixin/climate_columns/RandomStatePartsMixin.class",
+      "bons/furious/mixin/jei_startup/AnvilSimulationMixin.class",
+      "bons/furious/mixin/jei_startup/BrewingLookupMixin.class",
+      "bons/furious/mixin/jei_startup/GrindstoneSimulationMixin.class",
+      "bons/furious/mixin/jei_startup/HiddenMenuSyncMixin.class",
+      "bons/furious/mixin/jei_startup/TooltipWordsMixin.class",
+      "bons/furious/patch/climate_columns/ClimateParts$PartsSampler.class",
+      "bons/furious/patch/climate_columns/ClimateParts$Prepared.class",
+      "bons/furious/patch/climate_columns/ClimateParts.class",
+      "bons/furious/patch/jei_startup/BrewingLookup$Recipes$1.class",
+      "bons/furious/patch/jei_startup/BrewingLookup$Recipes.class",
+      "bons/furious/patch/jei_startup/BrewingLookup.class",
+      "bons/furious/patch/jei_startup/HiddenMenuSync$Menu.class",
+      "bons/furious/patch/jei_startup/HiddenMenuSync.class",
+      "bons/furious/patch/jei_startup/TooltipWords.class",
+      "bons_and_furious.climate_columns.mixins.json",
+      "bons_and_furious.jei_startup.mixins.json"
+    ],
+    "removed": [],
+    "changed": [
+      "META-INF/neoforge.mods.toml",
+      "agentcraft/terrain/MemoizingVisitor.class",
+      "agentcraft/terrain/mixin/NoiseChunkMixin.class",
+      "bons/furious/guard/ForeignPatches.class",
+      "bons/furious/guard/Guards$Decision.class",
+      "bons/furious/guard/Guards$State.class",
+      "bons/furious/guard/Guards.class",
+      "bons/furious/mixin/terrain/NoiseChunkFinalDensityMixin.class",
+      "bons/furious/mixin/terrain/NoiseChunkWrapPresizeMixin.class",
+      "bons/furious/patch/module_resources/GameLayerResources$Index.class",
+      "bons/furious/patch/module_resources/GameLayerResources.class",
+      "bons/furious/patch/terrain/WrapPresize.class",
+      "bons/pure/config/PureMixinPlugin.class",
+      "bons/pure/terrain/FinalDensityReuse$Pass2.class",
+      "bons/pure/terrain/FinalDensityReuse$Sim.class",
+      "bons/pure/terrain/FinalDensityReuse.class",
+      "bons_and_furious.default.properties",
+      "bons_and_furious.guards.tsv"
+    ],
+    "metadata_changed": [],
+    "same_order": true
+  },
+  "guard_table_identical": false
+}

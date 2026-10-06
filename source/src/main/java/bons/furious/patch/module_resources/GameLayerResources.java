@@ -132,7 +132,8 @@ public final class GameLayerResources {
         // the equivalence is argued from securejarhandler 3.0.8 and modlauncher 11.0.5 (NeoForge 21.1.252's); library
         // classes cannot carry fingerprint guards, so their versions are checked here instead
         if (!version(cpw.mods.cl.ModuleClassLoader.class, "3.0.8") || !version(cpw.mods.modlauncher.api.ITransformationService.class, "11.0.5")) {
-            LOGGER.info("Bons and Furious: game-layer resource index off (securejarhandler / modlauncher are not the tested 3.0.8 / 11.0.5)");
+            LOGGER.info("Bons and Furious: game-layer resource index off (securejarhandler / modlauncher are not the tested 3.0.8 / 11.0.5: {} / {})",
+                    versions(cpw.mods.cl.ModuleClassLoader.class), versions(cpw.mods.modlauncher.api.ITransformationService.class));
             return NONE;
         }
         if (!net.neoforged.fml.loading.FMLLoader.isProduction()) return NONE;
@@ -143,12 +144,43 @@ public final class GameLayerResources {
         return Index.build(layer.configuration(), loader, fallback);
     }
 
-    /** The class's module version or package implementation version starts with v (e.g. "3.0.8+main.8382e570"). */
+    /**
+     * Every version the class carries (its module's version, its package's implementation version, the
+     * Implementation-Version of its own module's manifest) is v or starts with v + "+" (e.g. "3.0.8+main.8382e570"), and
+     * it carries at least one. securejarhandler 3.0.8 has only the manifest one: its module-info has no version and,
+     * loaded from the JVM's module path, its packages carry no manifest attributes (before 1.0.33 only the first two were
+     * read, so the index never switched on in a real launch; modlauncher 11.0.5 carries its module version).
+     */
     static boolean version(Class<?> c, String v) {
+        boolean any = false;
+        for (String f : found(c)) {
+            if (f == null) continue;
+            if (!f.equals(v) && !f.startsWith(v + "+")) return false;
+            any = true;
+        }
+        return any;
+    }
+
+    private static String[] found(Class<?> c) {
         java.lang.module.ModuleDescriptor d = c.getModule().getDescriptor();
         String raw = d == null ? null : d.rawVersion().orElse(null);
         String impl = c.getPackage() == null ? null : c.getPackage().getImplementationVersion();
-        return raw != null && (raw.equals(v) || raw.startsWith(v + "+")) || impl != null && (impl.equals(v) || impl.startsWith(v + "+"));
+        return new String[]{raw, impl, manifestVersion(c.getModule())};
+    }
+
+    /** For the log line: module / package / manifest versions found. */
+    static String versions(Class<?> c) {
+        return String.join(" / ", java.util.Arrays.stream(found(c)).map(String::valueOf).toArray(String[]::new));
+    }
+
+    /** Implementation-Version of the main section of a named module's own META-INF/MANIFEST.MF, or null. */
+    private static String manifestVersion(Module m) {
+        if (!m.isNamed()) return null;
+        try (InputStream in = m.getResourceAsStream("META-INF/MANIFEST.MF")) {
+            return in == null ? null : new java.util.jar.Manifest(in).getMainAttributes().getValue("Implementation-Version");
+        } catch (IOException | RuntimeException e) {
+            return null;
+        }
     }
 
     /** For offline equivalence harnesses: an index over the given configuration, class loader and fallback. */
