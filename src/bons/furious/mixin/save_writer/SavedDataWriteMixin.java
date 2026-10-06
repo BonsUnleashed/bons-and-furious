@@ -17,9 +17,9 @@ import org.spongepowered.asm.mixin.injection.At;
  * SavedData.save(File) (m_77757_) builds the file's tag as before and, instead of NbtIo.writeCompressed(tag, file)
  * (m_128944_), records the tag's uncompressed bytes now and lets SaveWriter's writer thread gzip and write them with the
  * same stream stack. The rest of the method (setDirty(false)) runs as before. Classes that declare their own save(File)
- * (custom file handling around this call), calls off the server thread, and calls while the server is not running write
- * here and now, after waiting for the writer. Write failures are logged by the writer with this class's logger and
- * Minecraft's message. No Minecraft code is carried.
+ * (custom file handling) or, since 1.0.34, their own toString/hashCode, calls off the server thread, and calls while the
+ * server is not running write here and now, after waiting for the writer. Write failures are logged by the writer with
+ * this class's logger and Minecraft's message. No Minecraft code is carried.
  */
 @Mixin(value = SavedData.class, remap = false)
 public abstract class SavedDataWriteMixin {

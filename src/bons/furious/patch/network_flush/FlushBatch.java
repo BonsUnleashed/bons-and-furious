@@ -36,6 +36,8 @@ import org.slf4j.Logger;
  * writeAndFlush, which also flushes the batched packets queued before them, so per connection the bytes are identical.
  * To keep Netty's unflushed bytes small, a batched write first flushes when the connection is within 32 KB of Netty's
  * high-water mark (64 KB) - a flush earlier than the burst end, never a different byte.
+ * 1.0.34: a connection disconnected during a burst (Connection.disconnect, e.g. a login kick sent without a listener) is
+ * flushed before its channel closes (beforeDisconnect), since a close drops writes that were never flushed.
  *
  * -Dbons_and_furious.connectionFlushBatching=false: Minecraft's path for every packet.
  */
@@ -44,6 +46,8 @@ public final class FlushBatch {
     public static volatile boolean enabled = !"false".equalsIgnoreCase(System.getProperty("bons_and_furious.connectionFlushBatching", "true"));
     /** Counters for rigs: packets handed over without a wakeup, end-of-burst flushes, early flushes near the water mark. */
     public static final AtomicLong BATCHED = new AtomicLong(), FLUSHES = new AtomicLong(), GUARD_FLUSHES = new AtomicLong();
+    /** 1.0.34, counter for rigs: flushes made because a connection with batched packets was disconnected (beforeDisconnect). */
+    public static final AtomicLong DISCONNECT_FLUSHES = new AtomicLong();
     /** Before a batched write: flush first when fewer than this many bytes are left before Netty marks the channel unwritable. */
     public static final int GUARD_BYTES = 32 * 1024;
 
@@ -159,6 +163,36 @@ public final class FlushBatch {
     /** Connection.tick's own flush (the end of that connection's burst): nothing left to flush for it. */
     public static void flushedByMinecraft(Connection connection) {
         if (owner == Thread.currentThread()) ((Member) connection).bons$unflushed(false);
+    }
+
+    /**
+     * 1.0.34: Connection.disconnect, before it closes the channel. Netty drops every write that was not flushed when a
+     * channel closes, and Minecraft sends a kick reason without a send listener right before closing (the login listener's
+     * disconnect from its tick: ban, whitelist, full server, slow login). On the batch thread, a connection with batched
+     * packets is flushed here: the flush is queued behind their writes and ahead of the close, so they leave before it, as
+     * each of Minecraft's writeAndFlush calls made them leave. Another thread closing a connection while the batch thread
+     * has a batch open gets one plain flush first (its writes may be queued; an earlier flush never changes a byte); with
+     * no batch open, or for connections without batched packets, nothing happens.
+     */
+    public static void beforeDisconnect(Connection connection) {
+        if (owner != Thread.currentThread()) {
+            if (owner != null) {
+                Channel ch = connection.channel();
+                if (ch != null) {
+                    ch.flush();
+                    DISCONNECT_FLUSHES.incrementAndGet();
+                }
+            }
+            return;
+        }
+        Member m = (Member) connection;
+        if (!m.bons$unflushed()) return;
+        m.bons$unflushed(false);
+        Channel ch = connection.channel();
+        if (ch != null) {
+            ch.flush();
+            DISCONNECT_FLUSHES.incrementAndGet();
+        }
     }
 
     /** Runs Minecraft's send task on the event loop, with that packet's write not flushed. */

@@ -8,7 +8,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 /**
  * embeddium_search_replay (Embeddium 0.3.31+mc1.20.1; client only): read access to the Viewport's frustum, so the replay
  * can tell which kind of search it is (main view or Oculus's shadow pass) and whether that frustum's test is a tested,
- * pure implementation (SearchReplay.frustumOk). Read only; nothing in Viewport changes.
+ * pure implementation (SearchReplay.frustumPlan; 1.0.34: this named SearchReplay.frustumOk, which does not exist). Read
+ * only; nothing in Viewport changes.
  */
 @Mixin(value = Viewport.class, remap = false)
 public interface ViewportAccessMixin {

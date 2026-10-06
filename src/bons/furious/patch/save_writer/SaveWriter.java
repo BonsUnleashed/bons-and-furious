@@ -48,8 +48,9 @@ import org.slf4j.Logger;
  * Synchronous (Minecraft's code, after a wait) whenever: the switch is off; the call is not on the thread of a running
  * server (server stop runs after the server stopped running, so everything it saves is written at once); a SavedData
  * class declares its own save(File) (Mekanism, Create, Refined Storage, Structure Gel in this pack: custom file
- * handling around the write); PlayerEvent.SaveToFile has a listener (Forge fires it after the player file is written;
- * none in this pack).
+ * handling around the write); a SavedData class has its own toString or hashCode (1.0.34: Minecraft formats the object
+ * only when its write fails, on the server thread; none in this pack); PlayerEvent.SaveToFile has a listener (Forge
+ * fires it after the player file is written; none in this pack).
  *
  * Failures: the writer catches what Minecraft's method catches and logs it with Minecraft's logger, level, message and
  * exception (from the writer thread). Where Minecraft would let an unchecked exception escape a save (an I/O error in the
@@ -137,9 +138,14 @@ public final class SaveWriter {
         return levelDatEnabled && onRunningServerThread();
     }
 
-    /** SavedData.save(File): deferred unless its class declares its own save(File) (custom file handling). */
+    /**
+     * SavedData.save(File): deferred unless its class declares its own save(File) (custom file handling) or, since 1.0.34,
+     * its own toString or hashCode. Minecraft formats the object only for its "Could not save data {}" error, on the server
+     * thread; a deferred save logs that error from the writer thread, where only Object's toString (class name and identity
+     * hash) is safe to call and gives the same text. 1.0.33 formatted such objects up front on every save instead.
+     */
     public static boolean deferSavedData(SavedData data) {
-        return deferSaves() && !OWN_SAVE_FILE.get(data.getClass());
+        return deferSaves() && !OWN_SAVE_FILE.get(data.getClass()) && PLAIN_TO_STRING.get(data.getClass());
     }
 
     /**
@@ -163,7 +169,8 @@ public final class SaveWriter {
             return;
         }
         shadow(tag, rec, file);
-        Object label = PLAIN_TO_STRING.get(data.getClass()) ? data : String.valueOf(data);
+        // 1.0.34: no up-front String.valueOf(data); deferSavedData admits only classes with Object's toString and hashCode,
+        // so the object itself is formatted, only if the write fails, to the text Minecraft's own error line would carry
         submit(new Job() {
             @Override
             void write() throws Exception {
@@ -172,7 +179,7 @@ public final class SaveWriter {
 
             @Override
             void failed(Throwable t) {
-                if (t instanceof IOException) savedDataLogger.error("Could not save data {}", label, t);
+                if (t instanceof IOException) savedDataLogger.error("Could not save data {}", data, t);
                 else unexpected(file, t);
             }
         }, rec.size());

@@ -15,6 +15,7 @@
     "RadiumChunkSchedulingMixin",
     "RadiumUntrackHookMixin",
     "DistantHorizonsDirectReadsMixin",
-    "RadiumExperimentalOptionTrigger"
+    "RadiumExperimentalOptionTrigger",
+    "RadiumExpiringTicketNullGuardMixin"
   ]
 }

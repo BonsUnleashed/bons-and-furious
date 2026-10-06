@@ -37,6 +37,8 @@ import org.spongepowered.asm.service.MixinService;
  *                                on); CLASS is left unchanged by this switch"   (see ForeignPatches)
  *   another mod refines a mixin "Bons and Furious: KEY steps aside: MOD VERSION (MIXIN) changes FOREIGN_MIXIN, which this
  *   this switch would replace    switch would replace; CLASS is left unchanged by this switch"   (since 1.0.30)
+ *   a class one mixin names is   "Bons and Furious: KEY: MIXIN is left out because CLASS is not installed; TARGET is left
+ *   not installed                unchanged by it"   (since 1.0.34, REQUIRED_CLASS; the switch's other mixins apply)
  *
  * The decision is all or nothing per switch, so a patch spread over several classes never applies halfway.
  */
@@ -72,6 +74,18 @@ public final class Guards {
             "bons.furious.mixin.cofh.DispatcherRenderersAccessor", new String[] {"net/minecraft/client/renderer/entity/EntityRenderDispatcher",
                     "m_114382_", "(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/client/renderer/entity/EntityRenderer;"});
     private static final Map<String, String> UNTOUCHED = new ConcurrentHashMap<>();   // key -> "" (untouched) or why not
+    /**
+     * Since 1.0.34: a mixin that names a class of a mod other than its target's (here a handler argument) -> that class.
+     * When another mod also patches the target's superclass, Mixin resolves every class the mixin's members and calls
+     * name while it merges them (MixinTargetContext.transformDescriptor -> ClassInfo.forName) and stops the game with
+     * ClassMetadataNotFoundException if one does not exist, although the target class itself loads without that mod:
+     * Pipez's GasPipeType without Mekanism next to Pipez Optimizer, which patches PipeType and loads GasPipeType from its
+     * constructor. Such a mixin is left out when its class is missing; the code it changes cannot run without that class
+     * either, so nothing else changes. Every other mixin that names another mod's class has a guard on that mod
+     * (tools/foreign_types_gate.py in the build project checks a built jar).
+     */
+    private static final Map<String, String> REQUIRED_CLASS = Map.of(
+            "bons.furious.mixin.pipez_logistics.GasPipeTypeFilterMixin", "mekanism/api/chemical/ChemicalStack");
     /**
      * Since 1.0.28: one call a switch redirects inside a static interface method, where Mixin 0.8.5 has no injectors
      * (carrier mixin -> method, desc, call owner, call name, call desc, new owner, new name). The carrier is an empty
@@ -150,7 +164,14 @@ public final class Guards {
         Decision d = decide(key);
         String target = targetClass.replace('/', '.');
         switch (d.state()) {
-            case APPLY -> { return true; }
+            case APPLY -> {
+                String needed = REQUIRED_CLASS.get(mixinClass);
+                if (needed == null || prints(needed) != null) return true;
+                if (LOGGED.add("required|" + mixinClass))
+                    LOGGER.info("Bons and Furious: {}: {} is left out because {} is not installed; {} is left unchanged by it",
+                            key, mixinClass.substring(mixinClass.lastIndexOf('.') + 1), needed.replace('/', '.'), target);
+                return false;
+            }
             case DISABLED -> {
                 if (LOGGED.add(key + "|" + target))
                     LOGGER.info("Bons and Furious: {} is disabled by config; {} is left unchanged", key, target);
@@ -324,11 +345,22 @@ public final class Guards {
             return new Decision(State.ABSENT, "target mod " + MOD.getOrDefault(key, "?") + " is not installed");
         int absent = 0, modded = 0, moddedAbsent = 0;
         List<String> problems = new ArrayList<>();
+        // since 1.0.34: modded classes missing because their whole package is in no module of the game (that mod is not
+        // installed), as opposed to a missing class of an installed mod (another build of it). A switch that also guards
+        // a second, optional mod (Fusion next to Embeddium, the camera mixins of six mods, ...) was MISMATCH with a WARN
+        // that called the absent mod "another version"; it is ABSENT now, still off, with a debug line naming the package.
+        List<String> uninstalled = new ArrayList<>();
         for (String[] g : guard) {
             boolean game = isGameClass(g[0]);
             if (!game) modded++;
             ClassPrints prints = prints(g[0]);
-            if (prints == null) { absent++; if (!game) moddedAbsent++; problems.add(g[0].replace('/', '.') + " not found"); continue; }
+            if (prints == null) {
+                absent++;
+                if (!game) moddedAbsent++;
+                if (!game && packageAbsent(g[0])) uninstalled.add(g[0]);
+                problems.add(g[0].replace('/', '.') + " not found");
+                continue;
+            }
             if (g[1].equals("*")) {   // the class's set of declared methods (see Fingerprint.shape)
                 if (!g[3].equals(prints.shape())) problems.add(g[0].replace('/', '.') + " declares other methods");
                 continue;
@@ -341,6 +373,10 @@ public final class Guards {
         // class of the target mod is missing (the mod is not installed; nothing about its version is wrong)
         if (absent == guard.size() || modded > 0 && moddedAbsent == modded)
             return new Decision(State.ABSENT, "target mod " + MOD.getOrDefault(key, "?") + " is not installed");
+        if (!uninstalled.isEmpty() && problems.size() == uninstalled.size()) {
+            String pkg = uninstalled.get(0).substring(0, Math.max(0, uninstalled.get(0).lastIndexOf('/'))).replace('/', '.');
+            return new Decision(State.ABSENT, "a mod it also needs is not installed (package " + pkg + ")");
+        }
         if (!problems.isEmpty()) return new Decision(State.MISMATCH, String.join(", ", problems.subList(0, Math.min(3, problems.size())))
                 + (problems.size() > 3 ? " and " + (problems.size() - 3) + " more" : ""));
         Decision h = handlerDecision(key);
@@ -398,6 +434,15 @@ public final class Guards {
         if (packages.isEmpty()) return true;
         int slash = internalName.lastIndexOf('/');
         return packages.contains(slash < 0 ? "" : internalName.substring(0, slash).replace('/', '.'));
+    }
+
+    /** Since 1.0.34: true only when the layer's packages are known and none of them is this class's package. */
+    private static boolean packageAbsent(String internalName) {
+        Set<String> packages = layerPackages;
+        if (packages == null) packages = loadLayerPackages();
+        if (packages.isEmpty()) return false;   // unknown (offline tools, development): never assume a mod is missing
+        int slash = internalName.lastIndexOf('/');
+        return !packages.contains(slash < 0 ? "" : internalName.substring(0, slash).replace('/', '.'));
     }
 
     private static synchronized Set<String> loadLayerPackages() {

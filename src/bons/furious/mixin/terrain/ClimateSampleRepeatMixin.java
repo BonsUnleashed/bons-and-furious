@@ -19,8 +19,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 @Mixin(value = Climate.Sampler.class, remap = false)
 public abstract class ClimateSampleRepeatMixin implements ClimateRepeat.AuditedSampler {
-    @Unique
-    private byte bons$audit;
+    @Unique   // 1.0.34: transient: Gson reads a record's non-transient fields as components and fails without an accessor
+    private transient byte bons$audit;
 
     @Override
     public byte bons$auditState() {

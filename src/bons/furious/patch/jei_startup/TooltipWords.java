@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.LongAdder;
 import mezz.jei.common.util.Translator;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 
 /** Tooltip callbacks, component flattening and JEI's locale supplier all stay on the calling thread.
  * After that, two small scans replace a regex matcher and a temporary split array. HashSet insertion
@@ -17,9 +17,11 @@ public final class TooltipWords {
     public static final LongAdder CALLS = new LongAdder(), LINES = new LongAdder();
     private TooltipWords() {}
 
-    public static Set<String> read(List<Component> components) {
+    // 1.0.34: each line is read as FormattedText, the type JEI's getStrings casts it to (checkcast FormattedText, then
+    // FormattedText.getString); a Component cast refused a plain FormattedText line that JEI itself accepts
+    public static Set<String> read(List<? extends FormattedText> components) {
         Set<String> words = new HashSet<>();
-        for (Component component : components) {
+        for (FormattedText component : components) {
             addWords(words, Translator.toLowercaseWithLocale(strip(component.getString())));
             LINES.increment();
         }

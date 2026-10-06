@@ -23,11 +23,11 @@ import org.apache.logging.log4j.Logger;
  *
  * toBuf: the ping's mods and channels are read in iteration order (mod id, version; channel id, its data's id, version,
  * required); when that sequence equals the one of the last successful toBuf, a new buffer with the same bytes is returned
- * (same type, reader index 0, writer index = length). toBuf's output is a function of exactly that sequence: it writes the
- * mods in order, for each the channels of its namespace in channel order, then the channels whose namespace is no mod, and
- * stops at 60,000 bytes. encodeOptimized: when the readable bytes equal the last input, the buffer is consumed and released
- * exactly as Forge's method does and the same text is returned. Anything else runs Forge's code. Nothing is remembered
- * when Forge's code throws.
+ * (same type, reader index 0, writer index = length; since 1.0.34 also the same capacity and maximum capacity). toBuf's
+ * output is a function of exactly that sequence: it writes the mods in order, for each the channels of its namespace in
+ * channel order, then the channels whose namespace is no mod, and stops at 60,000 bytes. encodeOptimized: when the
+ * readable bytes equal the last input, the buffer is consumed and released exactly as Forge's method does and the same
+ * text is returned. Anything else runs Forge's code. Nothing is remembered when Forge's code throws.
  */
 public final class StatusPingMemo {
     /** Runtime switch (the config switch acts when classes are transformed). -Dbons_and_furious.forgeStatusPingMemo=false also turns it off. */
@@ -40,7 +40,7 @@ public final class StatusPingMemo {
     private static final Logger LOGGER = LogManager.getLogger("Bons and Furious");
     private static volatile boolean announced;
 
-    private record Built(Object[] snapshot, byte[] bytes) {}
+    private record Built(Object[] snapshot, byte[] bytes, int capacity, int maxCapacity) {}
 
     private record Packed(byte[] in, String out) {}
 
@@ -75,11 +75,13 @@ public final class StatusPingMemo {
         Built b = built;
         if (b == null || !Arrays.equals(b.snapshot, snapshot)) return null;
         BUF_HITS.incrementAndGet();
-        return new FriendlyByteBuf(Unpooled.copiedBuffer(b.bytes));
+        // 1.0.34: the buffer toBuf itself makes (Unpooled.buffer: unpooled heap) with its capacity and maximum capacity
+        // (Integer.MAX_VALUE); Unpooled.copiedBuffer gave a buffer whose maximum capacity was its length
+        return new FriendlyByteBuf(Unpooled.buffer(b.capacity, b.maxCapacity).writeBytes(b.bytes));
     }
 
     public static void rememberBuf(Object[] snapshot, ByteBuf result) {
-        built = new Built(snapshot, readable(result));
+        built = new Built(snapshot, readable(result), result.capacity(), result.maxCapacity());
         if (!announced) {
             announced = true;
             LOGGER.info("Bons and Furious: forge_status_ping_memo reuses Forge's server-list mod data while the mod list is unchanged");

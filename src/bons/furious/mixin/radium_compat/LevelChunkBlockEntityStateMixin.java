@@ -23,7 +23,9 @@ import org.spongepowered.asm.mixin.injection.At;
  * cannot apply on Forge, whose setBlockState has two more locals):
  *  - a new block entity is created with the state now in the world when that is a state of the same block (when onPlace put
  *    another block there, the vanilla state is kept: that block entity is never added to the chunk);
- *  - after an existing block entity received the requested state, it receives the world's state as well when they differ.
+ *  - after an existing block entity received the requested state, it receives the world's state as well when they differ
+ *    and the world's state is a state of the same block (1.0.34: when onPlace put another block there, the block entity
+ *    keeps the requested state as in vanilla, and so does the ticker setBlockState then chooses from it).
  */
 @Mixin(value = LevelChunk.class, remap = false)
 public abstract class LevelChunkBlockEntityStateMixin {
@@ -42,7 +44,7 @@ public abstract class LevelChunkBlockEntityStateMixin {
     private void bons$keepWorldState(BlockEntity blockEntity, BlockState state, Operation<Void> original, @Local(argsOnly = true) BlockPos pos) {
         original.call(blockEntity, state);
         BlockState now = this.m_8055_(pos);
-        if (now != state) {
+        if (now != state && now.m_60734_() == state.m_60734_()) {   // 1.0.34: same block only, as in bons$createWithWorldState
             original.call(blockEntity, now);
         }
     }

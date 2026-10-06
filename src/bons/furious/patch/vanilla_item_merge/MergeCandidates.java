@@ -83,7 +83,11 @@ public final class MergeCandidates {
         protected Boolean computeValue(Class<?> type) {
             try {
                 return type.getMethod("getMaxStackSize", ItemStack.class).getDeclaringClass() == IForgeItem.class;
-            } catch (NoSuchMethodException | SecurityException e) {
+            } catch (Throwable t) {
+                // 1.0.34: not only NoSuchMethodException. getMethod resolves the parameter types of every public method it
+                // walks, and on a dedicated server an item class with a public method naming a client-only class (Create's
+                // Potato Cannon getArmPose(..., AbstractClientPlayer, ...), Supplementaries' Flute) throws Forge's invalid-dist
+                // RuntimeException (or NoClassDefFoundError): such an item is never filtered and vanilla's predicate decides
                 return false;
             }
         }

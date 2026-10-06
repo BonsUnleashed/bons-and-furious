@@ -4,6 +4,7 @@ import bons.furious.guard.Guards;
 import bons.furious.mixin.cofh.DispatcherRenderersAccessor;
 import cofh.lib.client.renderer.entity.ITranslucentRenderer;
 import com.google.common.collect.ImmutableMap;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +51,14 @@ public final class TranslucentRenderers {
     public static final AtomicLong SHADOW_CHECKS = new AtomicLong(), SHADOW_MISMATCHES = new AtomicLong();
     private static final EntityType<?>[] NONE = new EntityType<?>[0];
     private static int state;                     // 0 = not decided, 1 = fast path, 2 = getRenderer for everything
-    private static Object typeMap, playerMap;     // the maps the table below was built from
+    /**
+     * The maps the table below was built from. 1.0.34: weakly held. A resource reload replaces both maps, and the strong
+     * references kept the replaced ones (every old EntityRenderer with its models) reachable from here until the next
+     * translucent pass in a world. While the dispatcher holds a map, its reference cannot be cleared, so the identity
+     * checks decide as before; a cleared reference reads null, which no dispatcher map is (they start as ImmutableMap.of()
+     * and are replaced by built maps), so it counts as "not the current map", as the replaced map did.
+     */
+    private static WeakReference<Map<?, ?>> typeMap = new WeakReference<>(null), playerMap = new WeakReference<>(null);
     private static EntityType<?>[] translucentTypes = NONE;
     private static boolean translucentPlayer;
 
@@ -63,7 +71,7 @@ public final class TranslucentRenderers {
         if (state != 1 && !SHADOW && (state == 2 || !decide())) return dispatcher.m_114382_(entity);
         Map<?, ?> types = dispatcher.f_114362_;
         Map<?, ?> players = ((DispatcherRenderersAccessor) dispatcher).bons$playerRenderers();
-        if (types != typeMap || players != playerMap) {
+        if (types != typeMap.get() || players != playerMap.get()) {   // 1.0.34: weak references (see the fields)
             if (!(types instanceof ImmutableMap) || !(players instanceof ImmutableMap)) return dispatcher.m_114382_(entity);
             rebuild(types, players);
         }
@@ -116,8 +124,8 @@ public final class TranslucentRenderers {
         for (Object r : players.values()) player |= r instanceof ITranslucentRenderer;
         translucentTypes = found.toArray(NONE);
         translucentPlayer = player;
-        typeMap = types;
-        playerMap = players;
+        typeMap = new WeakReference<>(types);     // 1.0.34: weakly held (see the fields)
+        playerMap = new WeakReference<>(players);
         LOGGER.debug("Bons and Furious: cofh_translucent_renderer_memo: {} translucent entity types {}, translucent player renderer: {}",
                 found.size(), found, player);
     }

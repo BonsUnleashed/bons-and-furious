@@ -58,7 +58,11 @@ public final class IdleLayers {
         protected Boolean computeValue(Class<?> type) {
             try {
                 return type.getMethod("m_276775_", BufferBuilder.class, VertexSorting.class).getDeclaringClass() == RenderType.class;
-            } catch (NoSuchMethodException e) {
+            } catch (Throwable t) {
+                // 1.0.34: not only NoSuchMethodException. getMethod resolves the parameter types of every public method it
+                // walks, and a render type class with a public method naming a class that is not installed throws
+                // NoClassDefFoundError, which escaped ImmediatelyFast's endBatch() on the render thread: such a layer is
+                // never left out and gets ImmediatelyFast's own endBatch(layer), as before
                 return false;
             }
         }

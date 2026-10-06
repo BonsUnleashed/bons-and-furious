@@ -27,9 +27,9 @@ import org.valkyrienskies.mod.common.util.VectorConversionsMCKt;
  * ship inside the shipyard's claim range, so the chunk lookups first make VS's own range test with plain arithmetic
  * (AcVsSweep6.inShipyardRange) and skip the ship-world queries outside it. getShipsIntersecting scans the ship list
  * once without building the query box (AcVsSweep6.shipsIntersecting, null when VS's own query must run),
- * transformToNearbyShipsAndWorld returns when no ship is near the point, toWorldCoordinates now writes into the
- * caller's dest vector as documented instead of a new one, and toDenseVoxelUpdate reads a section's block ids in bulk
- * (AcVsSweep7.denseVoxelUpdate).
+ * transformToNearbyShipsAndWorld returns when no ship is near the point, and toDenseVoxelUpdate reads a section's block
+ * ids in bulk (AcVsSweep7.denseVoxelUpdate). toWorldCoordinates returns what VS returns (1.0.34: for a point on a ship a
+ * new vector again, the caller's dest untouched; 1.0.15-1.0.33 wrote that result into dest).
  */
 @Mixin(value = VSGameUtilsKt.class, remap = false)
 public abstract class VSGameUtilsKtMixin {
@@ -96,14 +96,16 @@ public abstract class VSGameUtilsKtMixin {
 
     /**
      * @author BonsUnleashed
-     * @reason Transform into the caller's dest vector (VS passed a new vector through the default-argument bridge).
+     * @reason VS's body. 1.0.34: on a ship the result is a new vector and dest is left untouched, exactly as VS's
+     * default-argument bridge (toWorldCoordinates$default(ship, x, y, z, null, 8, null)) does; 1.0.15-1.0.33 wrote it into
+     * dest, which a caller reusing dest could observe.
      */
     @Overwrite
     public static final Vector3d toWorldCoordinates(Level level, double x, double y, double z, Vector3d dest) {
         Intrinsics.checkNotNullParameter(dest, "dest");
         Ship ship = VSGameUtilsKt.getShipManagingPos(level, x, y, z);
         if (ship != null) {
-            Vector3d inWorld = VSGameUtilsKt.toWorldCoordinates(ship, x, y, z, dest);
+            Vector3d inWorld = VSGameUtilsKt.toWorldCoordinates(ship, x, y, z, new Vector3d());   // 1.0.34: not dest
             if (inWorld != null) {
                 return inWorld;
             }

@@ -1,5 +1,6 @@
 package bons.furious.patch.create_logistics;
 
+import bons.furious.guard.Guards;
 import bons.furious.mixin.create_logistics.CompoundContainerAccessor;
 import bons.furious.mixin.create_logistics.SidedInvWrapperAccessor;
 import java.lang.reflect.Method;
@@ -56,6 +57,14 @@ import net.minecraftforge.items.wrapper.SidedInvWrapper;
 public final class PureHandlers {
     private static final int NO = 0, STACK_HANDLER = 1, INV_WRAPPER = 2, SIDED_WRAPPER = 3, EMPTY_HANDLER = 4;
     private static final int CONTAINER_NO = 0, CONTAINER_PURE = 1, CONTAINER_COMPOUND = 2;
+    /**
+     * 1.0.34: SidedInvWrapperAccessor and CompoundContainerAccessor are mixins of create_item_helper_empty_slots. When that
+     * switch does not apply (off in the config, or its guard does not match) they are not applied, and Mixin refuses to load
+     * their interfaces: the instanceof below then threw IllegalClassLoadError out of a funnel's tick whenever
+     * create_single_pass_extraction met a sided inventory or a double chest. The decision is final once the mixins are
+     * prepared, so it is read once; without the accessors those handlers do not qualify (Create's original code runs).
+     */
+    private static final boolean ACCESSORS = Guards.decide("create_item_helper_empty_slots").state() == Guards.State.APPLY;
 
     private static final ClassValue<Integer> HANDLER_KIND = new ClassValue<>() {
         @Override
@@ -135,8 +144,9 @@ public final class PureHandlers {
                 return container(((InvWrapper) h).getInv(), false, 0);
             }
             case SIDED_WRAPPER -> {
-                // the accessors belong to create_item_helper_empty_slots: without them (that switch off) nothing qualifies here
-                if (!((Object) h instanceof SidedInvWrapperAccessor a)) return false;
+                // the accessors belong to create_item_helper_empty_slots: without them nothing qualifies here. 1.0.34: that is
+                // ACCESSORS, tested first; the instanceof alone loads the accessor interface, which Mixin refuses when unapplied
+                if (!ACCESSORS || !((Object) h instanceof SidedInvWrapperAccessor a)) return false;
                 WorldlyContainer inv = a.bons$inv();
                 return inv != null && SIDED_OK.get(inv.getClass()) && container(inv, true, 0);
             }
@@ -153,7 +163,8 @@ public final class PureHandlers {
                 return true;
             }
             case CONTAINER_COMPOUND -> {
-                if (sided || !((Object) c instanceof CompoundContainerAccessor cc)) return false;
+                // 1.0.34: !ACCESSORS before the instanceof, for the same reason as in audited
+                if (sided || !ACCESSORS || !((Object) c instanceof CompoundContainerAccessor cc)) return false;
                 return container(cc.bons$first(), false, depth + 1) && container(cc.bons$second(), false, depth + 1);
             }
             default -> {

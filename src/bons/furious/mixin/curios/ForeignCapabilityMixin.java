@@ -21,6 +21,9 @@ import top.theillusivec4.curios.common.capability.CurioInventoryCapability;
  * Curios inventory at all, so every other mod's capability query paid a slot lookup. A query for any other capability
  * now returns LazyOptional.empty() at once: the original returns that same empty singleton on both of its paths for
  * such a query, and the slot lookup has no side effects. Curios inventory queries run the original code unchanged.
+ * 1.0.34: only while the wearer has a level. For a living entity built without one, Curios' slot lookup throws
+ * (CuriosApi.getEntitySlots reads level().isClientSide()) whatever the capability, so there the original code runs and
+ * throws as before.
  */
 @Mixin(value = CurioInventoryCapability.Provider.class, remap = false)
 public abstract class ForeignCapabilityMixin {
@@ -38,7 +41,9 @@ public abstract class ForeignCapabilityMixin {
      */
     @Overwrite
     public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing) {
-        if (capability != CuriosCapability.INVENTORY) {
+        // 1.0.34: the early answer only where the slot lookup cannot throw (a wearer with a level); a null wearer and a
+        // wearer without a level take Curios' own lines below (empty map, resp. its NullPointerException), as before
+        if (capability != CuriosCapability.INVENTORY && this.wearer != null && this.wearer.m_9236_() != null) {
             return LazyOptional.empty();
         }
         if (CuriosApi.getEntitySlots(this.wearer).isEmpty()) {

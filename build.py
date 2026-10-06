@@ -14,10 +14,12 @@ check every guard fingerprint in patches/*.json against the local target jars an
 then package the jar with a generated manifest listing every mixin config. The script writes only build/ and dist/.
 """
 from pathlib import Path
-import argparse, hashlib, json, os, subprocess, time, urllib.request, zipfile
+import argparse, hashlib, json, os, re, subprocess, time, urllib.request, zipfile
 
 ROOT = Path(__file__).resolve().parent
-VERSION = '1.0.31'
+# Since 1.0.34 the version is read from mods.toml (it was a literal here, and stayed '1.0.31' in the 1.0.32 and 1.0.33
+# sources, so a source build named its jar and manifest 1.0.31).
+VERSION = re.search(r'^version\s*=\s*"([^"]+)"', (ROOT / 'resources/META-INF/mods.toml').read_text(encoding='utf-8'), re.M).group(1)
 FORGE = '1.20.1-47.4.16'
 DEPS = [
     dict(file='mixinextras-forge-0.5.0.jar', group='io.github.llamalad7', artifact='mixinextras-forge', version='0.5.0',

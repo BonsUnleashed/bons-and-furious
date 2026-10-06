@@ -50,10 +50,10 @@ public abstract class NamespacedRuleMemoMixin {
         }
     }
 
+    @Unique   // 1.0.34: transient (both): Gson reads a record's non-transient fields as components and fails without an accessor
+    private transient Holder<Biome> bons$biome;
     @Unique
-    private Holder<Biome> bons$biome;
-    @Unique
-    private Object bons$selected;
+    private transient Object bons$selected;
 
     /**
      * @author BonsUnleashed

@@ -316,7 +316,8 @@
       "scripts": [],
       "since": "1.0.25",
       "mixins": [
-        "bons.furious.mixin.c2me_compat.RadiumExperimentalOptionTrigger"
+        "bons.furious.mixin.c2me_compat.RadiumExperimentalOptionTrigger",
+        "bons.furious.mixin.c2me_compat.RadiumExpiringTicketNullGuardMixin"
       ],
       "guard": [
         {

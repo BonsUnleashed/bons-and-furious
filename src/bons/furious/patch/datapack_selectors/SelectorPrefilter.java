@@ -81,7 +81,11 @@ public final class SelectorPrefilter {
                     vanilla = type.getMethod("m_21223_").getDeclaringClass() == LivingEntity.class;
                 }
                 return !vanilla;
-            } catch (NoSuchMethodException | SecurityException e) {
+            } catch (Throwable t) {
+                // 1.0.34: not only NoSuchMethodException. getMethod resolves the parameter types of every public method it
+                // walks, and on a dedicated server a type that names a client-only class throws NoClassDefFoundError
+                // (Small Ships' Paddleable.animatePaddle(..., ModelPart, ...)) or Forge's invalid-dist RuntimeException:
+                // such a class is always visited, exactly as vanilla, instead of the error stopping the server
                 return true;
             }
         }

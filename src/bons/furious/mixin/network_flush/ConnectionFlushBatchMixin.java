@@ -10,10 +10,13 @@ import io.netty.channel.EventLoop;
 import net.minecraft.network.Connection;
 import net.minecraft.network.ConnectionProtocol;
 import net.minecraft.network.PacketSendListener;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
  * vanilla_connection_flush_batching (Minecraft 1.20.1 on Forge 47.4.16, Netty 4.1.82, both sides; acts on the server
@@ -23,7 +26,8 @@ import org.spongepowered.asm.mixin.injection.At;
  * the packet with Channel.write instead of writeAndFlush unless it switches the protocol. Everything else in these
  * methods, including other mods' hooks (ModernFix's smart_ingredient_sync wrapper and Bad Packets' listener on the write
  * future), runs unchanged. tick (m_129483_) opens a batch for this connection's own tick; its closing Channel.flush is the
- * batch's flush. Four fields; no Minecraft code is carried.
+ * batch's flush. 1.0.34: disconnect (m_129507_) first flushes the packets the batch wrote for this connection, so a kick
+ * reason sent right before the close still leaves (FlushBatch.beforeDisconnect). Four fields; no Minecraft code is carried.
  */
 @Mixin(value = Connection.class, remap = false)
 public abstract class ConnectionFlushBatchMixin implements FlushBatch.Member {
@@ -108,5 +112,11 @@ public abstract class ConnectionFlushBatchMixin implements FlushBatch.Member {
         } finally {
             if (mine) FlushBatch.end();
         }
+    }
+
+    /** 1.0.34: before disconnect closes the channel, the batched packets of this connection are flushed (see FlushBatch). */
+    @Inject(method = "m_129507_", at = @At("HEAD"))
+    private void bons$flushBeforeClose(Component reason, CallbackInfo ci) {
+        FlushBatch.beforeDisconnect((Connection) (Object) this);
     }
 }

@@ -2,12 +2,19 @@ package bons.furious.compat;
 
 import bons.furious.guard.Guards;
 import bons.pure.config.PureConfig;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import org.apache.commons.lang3.SystemUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.tree.ClassNode;
@@ -39,14 +46,18 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
  * Radium and ModernFix read these options live while Mixin prepares their configs. This config has priority 900, so
  * Mixin prepares it after every config plugin has loaded (Radium and ModernFix build their options while loading) and
  * before theirs (default priority 1000). The trigger mixins only exist to get that call; they are never applied. The
- * two mixins listed after them are decided with the options as they are after the triggers:
+ * mixins listed after them are decided with the options as they are after the triggers:
  *
  *  - RadiumChunkSchedulingMixin goes with a restored mixin.world.chunk_access (radium_c2me_chunk_access);
  *  - RadiumUntrackHookMixin (radium_untrack_chunk_hooks) goes with Radium's player-chunk-tick mixin whenever that one
- *    applies, restored or not.
+ *    applies, restored or not;
+ *  - 1.0.34: RadiumExpiringTicketNullGuardMixin (radium_experimental_tickets_spawning), listed after
+ *    RadiumExperimentalOptionTrigger, goes with Radium's experimental chunk_tickets mixin whenever that one applies.
  *
  * Nothing changes when the C2ME part is on, when C2ME or the other mod is absent, when the user's own config sets the
  * option, when another mod also disabled it, when a switch is off, or when a guarded method differs from the tested build.
+ * 1.0.34: for ModernFix the user's own setting is read from the sources ModernFix reads (modernFixUserSetting), because
+ * ModernFix ignores a user setting of an option a mod already switched off and does not mark the option as user-set.
  */
 public final class C2meCompatPlugin implements IMixinConfigPlugin {
     private static final Logger LOGGER = LogManager.getLogger("Bons and Furious");
@@ -71,6 +82,8 @@ public final class C2meCompatPlugin implements IMixinConfigPlugin {
     static final String STRONGHOLD_TRIGGER = PACKAGE + "StrongholdCacheOptionTrigger";
     static final String EXPERIMENTAL_TRIGGER = PACKAGE + "RadiumExperimentalOptionTrigger";
     static final String EXPERIMENTAL_KEY = "radium_experimental_tickets_spawning";
+    /** 1.0.34: the null check in Radium's experimental chunk_tickets handler (radium_experimental_tickets_spawning). */
+    static final String NULL_GUARD_MIXIN = PACKAGE + "RadiumExpiringTicketNullGuardMixin";
     static final String DH_MIXIN = PACKAGE + "DistantHorizonsDirectReadsMixin";
     static final String DH_KEY = "distanthorizons_c2me_direct_reads";
     /** C2ME's chunk-IO modules (entry point, c2me.toml key): any one of them on keeps Distant Horizons on the IO thread. */
@@ -133,6 +146,7 @@ public final class C2meCompatPlugin implements IMixinConfigPlugin {
         if (mixinClassName.equals(SCHEDULING_MIXIN)) return RESTORED.contains("radium_c2me_chunk_access");
         if (mixinClassName.equals(UNTRACK_MIXIN)) return APPLY.computeIfAbsent(UNTRACK_KEY, k -> untrackHook());
         if (mixinClassName.equals(DH_MIXIN)) return APPLY.computeIfAbsent(DH_KEY, k -> dhDirectReads());
+        if (mixinClassName.equals(NULL_GUARD_MIXIN)) return APPLY.computeIfAbsent(NULL_GUARD_MIXIN, k -> expiringTicketNullGuard());   // 1.0.34
         return false;
     }
 
@@ -300,6 +314,29 @@ public final class C2meCompatPlugin implements IMixinConfigPlugin {
         return true;
     }
 
+    /**
+     * 1.0.34: the null guard goes with Radium's experimental chunk_tickets mixin whenever that one applies, decided exactly
+     * as Radium's plugin will decide it (after RadiumExperimentalOptionTrigger, listed before it, set the options), while
+     * the switch applies.
+     */
+    static boolean expiringTicketNullGuard() {
+        try {
+            Object config = radiumConfig(C2meCompatPlugin.class.getClassLoader());
+            if (config == null) return false;
+            Object option = config.getClass().getMethod("getEffectiveOptionForMixin", String.class)
+                    .invoke(config, "experimental.chunk_tickets.ChunkTicketManagerMixin");
+            if (option == null || !(Boolean) option.getClass().getMethod("isEnabled").invoke(option)) {
+                LOGGER.debug("Bons and Furious: {} has no ticket handler to guard: Radium's experimental chunk_tickets mixin is not applied", EXPERIMENTAL_KEY);
+                return false;
+            }
+        } catch (Throwable t) {
+            LOGGER.warn("Bons and Furious: {} could not check Radium's experimental chunk_tickets option ({}); Radium's ticket handler is left as Radium makes it",
+                    EXPERIMENTAL_KEY, t.toString());
+            return false;
+        }
+        return guarded(EXPERIMENTAL_KEY, "Radium's ticket handler is left as Radium makes it");
+    }
+
     /** Radium's live CaffeineConfig (the options its mixin plugin reads), or null when Radium is absent or not loaded. */
     private static Object radiumConfig(ClassLoader loader) throws ReflectiveOperationException {
         Object plugin = staticField(loader, "me.jellysquid.mods.lithium.common.LithiumMod", "CONFIG");
@@ -335,6 +372,12 @@ public final class C2meCompatPlugin implements IMixinConfigPlugin {
             LOGGER.info("Bons and Furious: {} leaves ModernFix's mixin.perf.cache_strongholds off because ModernFix's own config sets it", STRONGHOLD_KEY);
             return false;
         }
+        String userSetting = modernFixUserSetting("mixin.perf.cache_strongholds");   // 1.0.34
+        if (userSetting != null) {
+            LOGGER.info("Bons and Furious: {} leaves ModernFix's mixin.perf.cache_strongholds off because the user sets it ({}); ModernFix ignores "
+                    + "a user setting of an option a mod switched off", STRONGHOLD_KEY, userSetting);
+            return false;
+        }
         Collection<?> definers = (Collection<?>) o.getMethod("getDefiningMods").invoke(option);
         if (!onlyBy(definers, Set.of("c2me"), STRONGHOLD_KEY, "ModernFix's mixin.perf.cache_strongholds")) return false;
         String c2me = modVersion("c2me");
@@ -348,6 +391,42 @@ public final class C2meCompatPlugin implements IMixinConfigPlugin {
         LOGGER.info("Bons and Furious: {} switched ModernFix's mixin.perf.cache_strongholds back on: C2ME {} does not touch stronghold placement",
                 STRONGHOLD_KEY, c2me);
         return true;
+    }
+
+    /**
+     * 1.0.34: where the user sets a ModernFix option, or null. ModernFixEarlyConfig.load reads ./config/modernfix-mixins.properties,
+     * then the global file <minecraft folder>/global/modernfix-global-mixins.properties, then -Dmodernfix.config.<option> (none
+     * of them under -Dmodernfix.ignoreConfigForTesting=true). For an option a mod already switched off it skips the files'
+     * lines, and a JVM value equal to the current one changes nothing, so Option.isUserDefined stays false although the user
+     * set the option; the same sources are read here instead. ModernFix rewrites its own file while it loads, before this
+     * check, keeping only the options it took as user-set, so a line it skipped there is normally gone by now; the global
+     * file and the JVM property stay as the user wrote them.
+     */
+    static String modernFixUserSetting(String option) {
+        if (Boolean.getBoolean("modernfix.ignoreConfigForTesting")) return null;
+        if (propertiesSet(Paths.get("config", "modernfix-mixins.properties"), option)) return "config/modernfix-mixins.properties";
+        try {
+            Path minecraft = SystemUtils.IS_OS_MAC ? Paths.get(System.getProperty("user.home"), "Library", "Application Support", "minecraft")
+                    : SystemUtils.IS_OS_WINDOWS ? Paths.get(System.getenv("APPDATA"), ".minecraft") : Paths.get(System.getProperty("user.home"), ".minecraft");
+            Path global = minecraft.resolve("global").resolve("modernfix-global-mixins.properties");
+            if (propertiesSet(global, option)) return global.toString();
+        } catch (RuntimeException e) {
+            // no global folder to resolve: ModernFix reads no global file either (it logs that and goes on)
+        }
+        String jvm = System.getProperty("modernfix.config." + option);
+        return jvm == null || jvm.isEmpty() ? null : "-Dmodernfix.config." + option + "=" + jvm;
+    }
+
+    /** True when the properties file exists, can be read and has the key (java.util.Properties, as ModernFix reads it). */
+    private static boolean propertiesSet(Path file, String key) {
+        if (!Files.isRegularFile(file)) return false;
+        Properties p = new Properties();
+        try (InputStream in = Files.newInputStream(file)) {
+            p.load(in);
+        } catch (IOException | RuntimeException e) {
+            return false;
+        }
+        return p.containsKey(key);
     }
 
     private static String modVersion(String modId) {
@@ -407,5 +486,6 @@ public final class C2meCompatPlugin implements IMixinConfigPlugin {
         if (mixinClassName.equals(SCHEDULING_MIXIN)) LOGGER.debug("Bons and Furious: radium_c2me_chunk_access applied to {}", targetClassName);
         if (mixinClassName.equals(UNTRACK_MIXIN)) LOGGER.debug("Bons and Furious: {} applied to {}", UNTRACK_KEY, targetClassName);
         if (mixinClassName.equals(DH_MIXIN)) LOGGER.debug("Bons and Furious: {} applied to {}", DH_KEY, targetClassName);
+        if (mixinClassName.equals(NULL_GUARD_MIXIN)) LOGGER.debug("Bons and Furious: {} (null guard) applied to {}", EXPERIMENTAL_KEY, targetClassName);   // 1.0.34
     }
 }

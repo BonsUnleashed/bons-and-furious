@@ -2,6 +2,7 @@ package bons.furious.patch.vanilla_entity;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.mojang.logging.LogUtils;
+import java.lang.reflect.Field;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -31,7 +32,8 @@ import org.slf4j.Logger;
  * LevelReader.getBlockStatesIfLoaded does, and reads every block through the level's own getBlockState. The predicate
  * is the call site's own lambda, so whatever another mod changed in it still runs. The scan stands down (the original
  * call runs) for a level class that overrides getBlockStatesIfLoaded or getBlockStates, and any other use of the
- * returned stream gets the vanilla stream.
+ * returned stream gets the vanilla stream. 1.0.34: the fire check also stands down while Radium applies its experimental
+ * fire and lava cache to the same call (see RadiumFireLava).
  *
  * -Dbons_and_furious.entityBlockScans.shadow=true (verification runs only) also evaluates every scan the vanilla way and
  * counts disagreements (SHADOW_CHECKS / SHADOW_MISMATCHES); the loop's answer is the one returned.
@@ -57,11 +59,28 @@ public final class BlockScans {
                     LOGGER.info("Bons and Furious: vanilla_fire_scan_loop leaves the fire check of {} to its own block-state stream", type.getName());
                 }
                 return plain;
-            } catch (NoSuchMethodException e) {
+            } catch (Throwable t) {
+                // 1.0.34: not only NoSuchMethodException. getMethod resolves the types of every public method it walks (the
+                // level class, its superclasses and interfaces, with what other mods' mixins add to them); one naming a class
+                // that is missing on this side, e.g. a client-only class on a dedicated server, throws NoClassDefFoundError:
+                // that level keeps its original stream
                 return false;
             }
         }
     };
+
+    /**
+     * 1.0.34: whether Radium applies its experimental fire and lava cache to Entity.move
+     * (experimental.entity.block_caching.fire_lava_touching.EntityMixin). That mixin redirects the same
+     * getBlockStatesIfLoaded call (its null means "nothing to check") and the noneMatch after it ("stream == null"). The
+     * switch's wrapper would run instead of Radium's redirect and hand noneMatch a stream that is never null, so the "not
+     * touching fire or lava" branch would never run. While Radium applies that mixin the fire check steps aside: the wrapped
+     * call, Radium's redirect, runs as without the switch. Decided once, on the first fire check, from Radium's live options
+     * as Radium's own mixin plugin decided them (final once Mixin has prepared Radium's config, long before an entity moves).
+     */
+    private static final class RadiumFireLava {
+        static final boolean APPLIED = radiumFireLavaApplied();
+    }
 
     private BlockScans() {
     }
@@ -81,7 +100,7 @@ public final class BlockScans {
 
     /** Entity.move: level.getBlockStatesIfLoaded(box). */
     public static Stream<BlockState> statesIfLoaded(Level level, AABB box, Operation<Stream<BlockState>> original) {
-        if (!fireEnabled || !DEFAULT_STATE_STREAMS.get(level.getClass())) {
+        if (!fireEnabled || RadiumFireLava.APPLIED || !DEFAULT_STATE_STREAMS.get(level.getClass())) {   // 1.0.34: RadiumFireLava
             return original.call(level, box);
         }
         if (!fireAnnounced) {
@@ -90,6 +109,37 @@ public final class BlockScans {
                     SHADOW ? " - shadow verification on" : "");
         }
         return new StateScan(level, box, original);
+    }
+
+    /**
+     * 1.0.34: RadiumFireLava.APPLIED, read the way Bons' Radium compat reads Radium's options (LithiumMod.CONFIG, its
+     * CaffeineConfig, getEffectiveOptionForMixin(...).isEnabled(), the test Radium's mixin plugin applies). Radium not
+     * installed: false (the switch works as before). Radium installed but its option unreadable: true (steps aside).
+     */
+    private static boolean radiumFireLavaApplied() {
+        String mixin = "experimental.entity.block_caching.fire_lava_touching.EntityMixin";
+        try {
+            ClassLoader loader = BlockScans.class.getClassLoader();
+            Class<?> lithium;
+            try {
+                lithium = Class.forName("me.jellysquid.mods.lithium.common.LithiumMod", true, loader);
+            } catch (ClassNotFoundException e) {
+                return false;
+            }
+            Object plugin = lithium.getField("CONFIG").get(null);
+            Field f = Class.forName("net.caffeinemc.caffeineconfig.AbstractCaffeineConfigMixinPlugin", false, loader).getDeclaredField("config");
+            f.setAccessible(true);
+            Object config = f.get(plugin);
+            Object option = config.getClass().getMethod("getEffectiveOptionForMixin", String.class).invoke(config, mixin);
+            if (option == null || !(Boolean) option.getClass().getMethod("isEnabled").invoke(option)) return false;
+            LOGGER.info("Bons and Furious: vanilla_fire_scan_loop steps aside: Radium applies its experimental fire and lava cache ({}) "
+                    + "to the same call; the fire check of moving entities is left to Radium", mixin);
+            return true;
+        } catch (Throwable t) {
+            LOGGER.warn("Bons and Furious: vanilla_fire_scan_loop steps aside: Radium is installed but its option for {} could not be read ({}); "
+                    + "the fire check of moving entities is left as Radium makes it", mixin, t.toString());
+            return true;
+        }
     }
 
     private static boolean shadow(boolean ours, boolean vanilla) {

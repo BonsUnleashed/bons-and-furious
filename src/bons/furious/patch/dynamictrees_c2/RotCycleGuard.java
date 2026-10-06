@@ -209,29 +209,44 @@ public final class RotCycleGuard {
     private static final ClassValue<Boolean> BLOCK_OK = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> c) {
-            Class<?> check = declarer(c, "checkForRot", LevelAccessor.class, BlockPos.class, Species.class, int.class, int.class,
-                    RandomSource.class, float.class, boolean.class);
-            return (check == BasicBranchBlock.class || check == BasicRootsBlock.class)
-                    && declarer(c, "rot", LevelAccessor.class, BlockPos.class) == BranchBlock.class
-                    && declarer(c, "breakDeliberate", LevelAccessor.class, BlockPos.class,
-                    com.ferreusveritas.dynamictrees.DynamicTrees.DestroyMode.class) == BranchBlock.class;
+            try {
+                Class<?> check = declarer(c, "checkForRot", LevelAccessor.class, BlockPos.class, Species.class, int.class, int.class,
+                        RandomSource.class, float.class, boolean.class);
+                return (check == BasicBranchBlock.class || check == BasicRootsBlock.class)
+                        && declarer(c, "rot", LevelAccessor.class, BlockPos.class) == BranchBlock.class
+                        && declarer(c, "breakDeliberate", LevelAccessor.class, BlockPos.class,
+                        com.ferreusveritas.dynamictrees.DynamicTrees.DestroyMode.class) == BranchBlock.class;
+            } catch (Throwable t) {
+                // 1.0.34: getDeclaredMethod resolves the types of every method the class declares; one that names a class
+                // missing on this side (NoClassDefFoundError on a dedicated server) would have escaped from the rot path.
+                // Such a class is not proven to be Dynamic Trees' own code: the original runs.
+                return false;
+            }
         }
     };
     private static final ClassValue<Boolean> SPECIES_OK = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> c) {
-            return declarer(c, "rot", LevelAccessor.class, BlockPos.class, int.class, int.class, int.class, RandomSource.class,
-                    boolean.class, boolean.class) == Species.class
-                    && declarer(c, "postRot", PostRotContext.class) == Species.class
-                    && declarer(c, "getGenFeatures") == Species.class;
+            try {
+                return declarer(c, "rot", LevelAccessor.class, BlockPos.class, int.class, int.class, int.class, RandomSource.class,
+                        boolean.class, boolean.class) == Species.class
+                        && declarer(c, "postRot", PostRotContext.class) == Species.class
+                        && declarer(c, "getGenFeatures") == Species.class;
+            } catch (Throwable t) {
+                return false;   // 1.0.34: see BLOCK_OK
+            }
         }
     };
     private static final Set<Class<?>> OWN_POST_ROT = Set.of(GenFeature.class, MushroomRotGenFeature.class, RotSoilGenFeature.class);
     private static final ClassValue<Boolean> FEATURE_OK = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> c) {
-            return declarer(c, "generate", GenFeatureConfiguration.class, GenFeature.Type.class, GenerationContext.class) == GenFeature.class
-                    && OWN_POST_ROT.contains(declarer(c, "postRot", GenFeatureConfiguration.class, PostRotContext.class));
+            try {
+                return declarer(c, "generate", GenFeatureConfiguration.class, GenFeature.Type.class, GenerationContext.class) == GenFeature.class
+                        && OWN_POST_ROT.contains(declarer(c, "postRot", GenFeatureConfiguration.class, PostRotContext.class));
+            } catch (Throwable t) {
+                return false;   // 1.0.34: see BLOCK_OK (also a null declarer, which Set.contains refuses)
+            }
         }
     };
 
