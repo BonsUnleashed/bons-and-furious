@@ -1,5 +1,6 @@
 package bons.furious.patch.terrablender;
 
+import com.google.common.collect.MapMaker;
 import com.mojang.logging.LogUtils;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -11,6 +12,7 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.world.level.block.state.BlockState;
@@ -86,7 +88,11 @@ public final class LazyNamespaceRules extends SurfaceRules {
             "org.embeddedt.modernfix.common.mixin.perf.worldgen_allocation.SequenceRuleMixin", "4a02116a63d1e4839d2d3642a05a57e8dd524122019603ea6a02494da30da3af");
 
     private static volatile Boolean classesPure;
-    private static final Map<Object, Boolean> VERDICTS = new IdentityHashMap<>();
+    /**
+     * 1.0.34: weak keys compared by identity (MapMaker.weakKeys), concurrent. TerraBlender builds a new "minecraft" source
+     * tree for every world load (TBSurfaceRuleData per NoiseGeneratorSettings), and a strong map kept every one of them.
+     */
+    private static final ConcurrentMap<Object, Boolean> VERDICTS = new MapMaker().weakKeys().makeMap();
 
     private LazyNamespaceRules() {
     }
@@ -115,19 +121,15 @@ public final class LazyNamespaceRules extends SurfaceRules {
     /** True when the source tree is made only of vanilla sources and no unverified mixin changes them. Public for the proof. */
     public static boolean deferrable(SurfaceRules.RuleSource source) {
         if (!classesPure()) return false;
-        synchronized (VERDICTS) {
-            Boolean known = VERDICTS.get(source);
-            if (known != null) return known;
-        }
+        Boolean known = VERDICTS.get(source);   // 1.0.34: concurrent map, no lock (was synchronized on an IdentityHashMap)
+        if (known != null) return known;
         boolean verdict;
         try {
             verdict = walk(source, new IdentityHashMap<>(), 0);
         } catch (Throwable t) {
             verdict = false;
         }
-        synchronized (VERDICTS) {
-            VERDICTS.put(source, verdict);
-        }
+        VERDICTS.put(source, verdict);
         return verdict;
     }
 

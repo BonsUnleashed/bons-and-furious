@@ -250,9 +250,17 @@ public final class Guards {
         }
         int absent = 0;
         List<String> problems = new ArrayList<>();
+        // since 1.0.34 (as Forge 1.0.34): another mod's classes that are missing because their whole package is in no module
+        // of the game (that mod is not installed); a switch that also needs such a mod is ABSENT, not MISMATCH
+        List<String> uninstalled = new ArrayList<>();
         for (String[] g : guard) {
             ClassPrints prints = prints(g[0]);
-            if (prints == null) { absent++; problems.add(g[0].replace('/', '.') + " not found"); continue; }
+            if (prints == null) {
+                absent++;
+                if (!isGameClass(g[0]) && packageAbsent(g[0])) uninstalled.add(g[0]);
+                problems.add(g[0].replace('/', '.') + " not found");
+                continue;
+            }
             if (g[1].equals("*")) {   // the class's set of declared methods (see Fingerprint.shape)
                 if (prints.shape() == null || !Fingerprint.matches(g[3], prints.shape())) problems.add(g[0].replace('/', '.') + " declares other methods");
                 continue;
@@ -262,6 +270,10 @@ public final class Guards {
             if (!Fingerprint.matches(g[3], fp)) problems.add(g[0].replace('/', '.') + "." + g[1] + " differs");
         }
         if (absent == guard.size()) return new Decision(State.ABSENT, "target mod " + MOD.getOrDefault(key, "?") + " is not installed");
+        if (!uninstalled.isEmpty() && problems.size() == uninstalled.size()) {
+            String pkg = uninstalled.get(0).substring(0, Math.max(0, uninstalled.get(0).lastIndexOf('/'))).replace('/', '.');
+            return new Decision(State.ABSENT, "a mod it also needs is not installed (package " + pkg + ")");
+        }
         if (!problems.isEmpty()) return new Decision(State.MISMATCH, String.join(", ", problems.subList(0, Math.min(3, problems.size())))
                 + (problems.size() > 3 ? " and " + (problems.size() - 3) + " more" : ""));
         Decision h = handlerDecision(key);
@@ -269,6 +281,45 @@ public final class Guards {
         Decision y = ForeignPatches.yieldDecision(YIELDS.get(key));
         if (y != null) return y;
         return new Decision(State.APPLY, "all " + guard.size() + " fingerprints match");
+    }
+
+    private static boolean isGameClass(String internalName) {
+        return internalName.startsWith("net/minecraft/") || internalName.startsWith("com/mojang/")
+                || internalName.startsWith("net/neoforged/") || internalName.startsWith("java/");
+    }
+
+    private static volatile Set<String> layerPackages;   // packages of our module's layer and all its parents; empty = unknown
+
+    /** Since 1.0.34: true only when the layer's packages are known and none of them is this class's package. */
+    private static boolean packageAbsent(String internalName) {
+        Set<String> packages = layerPackages;
+        if (packages == null) packages = loadLayerPackages();
+        if (packages.isEmpty()) return false;   // unknown (offline tools, development): never assume a mod is missing
+        int slash = internalName.lastIndexOf('/');
+        return !packages.contains(slash < 0 ? "" : internalName.substring(0, slash).replace('/', '.'));
+    }
+
+    private static synchronized Set<String> loadLayerPackages() {
+        if (layerPackages != null) return layerPackages;
+        Set<String> out = new java.util.HashSet<>();
+        try {
+            ModuleLayer layer = Guards.class.getModule().getLayer();
+            if (layer != null && Guards.class.getModule().isNamed() && net.neoforged.fml.loading.FMLLoader.isProduction()) {
+                java.util.ArrayDeque<ModuleLayer> todo = new java.util.ArrayDeque<>(List.of(layer));
+                Set<ModuleLayer> seen = java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>());
+                while (!todo.isEmpty()) {
+                    ModuleLayer l = todo.pop();
+                    if (!seen.add(l)) continue;
+                    for (Module m : l.modules()) out.addAll(m.getPackages());
+                    todo.addAll(l.parents());
+                }
+            }
+        } catch (Throwable t) {
+            out.clear();
+            LOGGER.debug("Bons and Furious: module layer packages unavailable ({}); every missing class counts as a mismatch", t.toString());
+        }
+        layerPackages = Set.copyOf(out);
+        return layerPackages;
     }
 
     /**

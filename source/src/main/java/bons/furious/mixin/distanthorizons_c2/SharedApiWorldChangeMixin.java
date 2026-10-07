@@ -13,8 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * DistantHorizons-3.3.3-1.21.1-fabric-neoforge; both sides; a fix).
  *
  * Two injections into SharedApi.setDhWorld, both inside its world lock (see {@link BiomeCacheReset}): after Distant
- * Horizons' own BlockTextureRegistry.clear() in the unload branch (before its System.gc(), so the old registries can be
- * collected at once), and right before ThreadPoolUtil.setupThreadPools() in the load branch (after the previous world, if
+ * Horizons' own BlockTextureRegistry.clear() in the unload branch (before its System.gc(); 1.0.34: the maps keyed by name
+ * wait for the load), and right before ThreadPoolUtil.setupThreadPools() in the load branch (after the previous world, if
  * any, was closed). setDhWorld runs once per world change, so the CallbackInfo of @Inject costs nothing measurable.
  *
  * Ported to 1.21.1: DH 3.3.3's setDhWorld has the same two branches and both anchors (decompiled side by side).

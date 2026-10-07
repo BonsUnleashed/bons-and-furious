@@ -110,8 +110,8 @@ public final class FinalDensityReuse {
         protected Boolean computeValue(Class<?> c) {
             try {
                 return c.getMethod("visitNoise", DensityFunction.NoiseHolder.class).getDeclaringClass() == DensityFunction.Visitor.class;
-            } catch (NoSuchMethodException e) {
-                return Boolean.FALSE;
+            } catch (Throwable t) {
+                return Boolean.FALSE;   // 1.0.34: also a public method naming a class missing on this side (NoClassDefFoundError)
             }
         }
     };
@@ -134,8 +134,8 @@ public final class FinalDensityReuse {
             Class<?> declaring = c.getMethod("mapAll", DensityFunction.Visitor.class).getDeclaringClass();
             if (declaring == DensityFunctions.MarkerOrMarked.class && c != MARKER) return CACHE;
             if (declaring == DensityFunction.SimpleFunction.class) return LEAF;
-        } catch (NoSuchMethodException e) {
-            return OTHER;
+        } catch (Throwable t) {
+            return OTHER;   // 1.0.34: also a public method naming a class missing on this side (NoClassDefFoundError)
         }
         return OTHER;
     }

@@ -18,12 +18,12 @@ import org.spongepowered.asm.mixin.injection.Redirect;
  */
 @Mixin(value = Climate.Sampler.class, remap = false)
 public abstract class ClimateSamplerPartsMixin implements ClimateParts.PartsSampler {
+    @Unique   // 1.0.34: transient (all three): Gson reads a record's non-transient fields as components and fails without an accessor
+    private transient Object bons$router;
     @Unique
-    private Object bons$router;
+    private transient volatile Object bons$parts;
     @Unique
-    private volatile Object bons$parts;
-    @Unique
-    private int bons$canaryLeft;
+    private transient int bons$canaryLeft;
 
     @Override
     public Object bons$partsRouter() {
@@ -60,35 +60,39 @@ public abstract class ClimateSamplerPartsMixin implements ClimateParts.PartsSamp
      * continentalness, erosion, depth, weirdness; the guard fingerprints the method). Each returns the same value, from
      * the cached copy of that function when the sampler qualified. The index comes from the call's position, not from
      * the function object: several of a sampler's functions can be one shared object (the Nether's zero functions).
+     * 1.0.34: require = 0, each redirect is exact on its own. One whose call another mod redirects first (Mixin's
+     * "conflict. Skipping" warning) or whose call an @Overwrite of sample() no longer makes is left out, so that call
+     * runs as the other mod made it; one that still finds its call evaluates the cached copy only when the call
+     * evaluates the sampler's own function of that position (ClimateParts.compute), the original otherwise.
      */
     private static final String COMPUTE = "Lnet/minecraft/world/level/levelgen/DensityFunction;compute(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D";
 
-    @Redirect(method = "sample", at = @At(value = "INVOKE", target = COMPUTE, ordinal = 0))
+    @Redirect(method = "sample", at = @At(value = "INVOKE", target = COMPUTE, ordinal = 0), require = 0)
     private double bons$temperature(DensityFunction function, DensityFunction.FunctionContext context) {
         return ClimateParts.compute(this, 0, function, context);
     }
 
-    @Redirect(method = "sample", at = @At(value = "INVOKE", target = COMPUTE, ordinal = 1))
+    @Redirect(method = "sample", at = @At(value = "INVOKE", target = COMPUTE, ordinal = 1), require = 0)
     private double bons$humidity(DensityFunction function, DensityFunction.FunctionContext context) {
         return ClimateParts.compute(this, 1, function, context);
     }
 
-    @Redirect(method = "sample", at = @At(value = "INVOKE", target = COMPUTE, ordinal = 2))
+    @Redirect(method = "sample", at = @At(value = "INVOKE", target = COMPUTE, ordinal = 2), require = 0)
     private double bons$continentalness(DensityFunction function, DensityFunction.FunctionContext context) {
         return ClimateParts.compute(this, 2, function, context);
     }
 
-    @Redirect(method = "sample", at = @At(value = "INVOKE", target = COMPUTE, ordinal = 3))
+    @Redirect(method = "sample", at = @At(value = "INVOKE", target = COMPUTE, ordinal = 3), require = 0)
     private double bons$erosion(DensityFunction function, DensityFunction.FunctionContext context) {
         return ClimateParts.compute(this, 3, function, context);
     }
 
-    @Redirect(method = "sample", at = @At(value = "INVOKE", target = COMPUTE, ordinal = 4))
+    @Redirect(method = "sample", at = @At(value = "INVOKE", target = COMPUTE, ordinal = 4), require = 0)
     private double bons$depth(DensityFunction function, DensityFunction.FunctionContext context) {
         return ClimateParts.compute(this, 4, function, context);
     }
 
-    @Redirect(method = "sample", at = @At(value = "INVOKE", target = COMPUTE, ordinal = 5))
+    @Redirect(method = "sample", at = @At(value = "INVOKE", target = COMPUTE, ordinal = 5), require = 0)
     private double bons$weirdness(DensityFunction function, DensityFunction.FunctionContext context) {
         return ClimateParts.compute(this, 5, function, context);
     }

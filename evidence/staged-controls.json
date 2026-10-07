@@ -2553,7 +2553,10 @@
       "scripts": [],
       "since": "1.0.30",
       "mixins": [
-        "bons.furious.mixin.distanthorizons_c2.SharedApiWorldChangeMixin"
+        "bons.furious.mixin.distanthorizons_c2.SharedApiWorldChangeMixin",
+        "bons.furious.mixin.distanthorizons_c2.BiomeWrapperCachesReadyMixin",
+        "bons.furious.mixin.distanthorizons_c2.BlockBiomePairCachesReadyMixin",
+        "bons.furious.mixin.distanthorizons_c2.TintCachesReadyMixin"
       ],
       "guard": [
         {
@@ -2596,6 +2599,53 @@
       "cancel": [],
       "conversion": "@Inject into SharedApi.setDhWorld after BlockTextureRegistry.clear() (unload) and before ThreadPoolUtil.setupThreadPools() (load): the five static biome caches are emptied",
       "license": "LGPL-3.0: no Distant Horizons code is carried; the mixin only empties DH's own static caches at world change (helper bons.furious.patch.distanthorizons_c2.BiomeCacheReset)",
+      "kind": "fix",
+      "group": "distanthorizons_c2"
+    },
+    "distanthorizons_join_config_resend": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.34",
+      "mixins": [
+        "bons.furious.mixin.distanthorizons_c2.SharedApiJoinConfigResendMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/core/api/internal/SharedApi",
+          "method": "setDhWorld",
+          "desc": "(Lcom/seibel/distanthorizons/core/world/AbstractDhWorld;)V",
+          "note": "sends nothing before ThreadPoolUtil.setupThreadPools(); the hook runs right after it",
+          "sha256": "f60f1a7dcaf9c8e56685d9b2d4472047764fc6d57dfc8b1af36941b00da6c73e"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/world/DhClientWorld",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "the constructor sends the client's session config before setDhWorld creates the message pool",
+          "sha256": "66220a25c2224bd83e00d8b81ec1510b9b9fc9db3755ca2c3c6bfa84252b9d58"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/multiplayer/client/ClientNetworkState",
+          "method": "isReady",
+          "desc": "()Z",
+          "sha256": "93f3fb86ade03c2874a381f3eef82003f9afa9dc47b8fcc5bb4508c222b8d7ea"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/multiplayer/client/ClientNetworkState",
+          "method": "sendConfigMessage",
+          "desc": "()V",
+          "sha256": "fb0955108dd2b4218c6340e0840779d7215b137bf1b03103ab69023dd6cffbc8"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/multiplayer/client/ClientNetworkState",
+          "method": "sendConfigMessage",
+          "desc": "(Z)V",
+          "sha256": "8d04dac7caa0aa085e129c84daf93192f9ac510c4bc3c45138279fd710c7f02c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject into SharedApi.setDhWorld right after ThreadPoolUtil.setupThreadPools() (load): a DhClientWorld whose ClientNetworkState is not ready sends its session config again",
+      "license": "LGPL-3.0: no Distant Horizons code is carried; the mixin only calls DH's own public ClientNetworkState.sendConfigMessage() (helper bons.furious.patch.distanthorizons_c2.JoinConfigResend).",
       "kind": "fix",
       "group": "distanthorizons_c2"
     },
@@ -10690,6 +10740,10 @@
     "bons.furious.mixin.distanthorizons.GenericRenderPassMixin": "client",
     "bons.furious.mixin.distanthorizons.BiomeBlendMemoMixin": "client",
     "bons.furious.mixin.distanthorizons_c2.SharedApiWorldChangeMixin": "mixins",
+    "bons.furious.mixin.distanthorizons_c2.BiomeWrapperCachesReadyMixin": "mixins",
+    "bons.furious.mixin.distanthorizons_c2.BlockBiomePairCachesReadyMixin": "mixins",
+    "bons.furious.mixin.distanthorizons_c2.TintCachesReadyMixin": "client",
+    "bons.furious.mixin.distanthorizons_c2.SharedApiJoinConfigResendMixin": "client",
     "bons.furious.mixin.dungeonsdelight_c2.YamSingleAddMixin": "mixins",
     "bons.furious.mixin.dynamictrees_c2.RotCycleBranchMixin": "mixins",
     "bons.furious.mixin.dynamictrees_c2.RotCycleRootsMixin": "mixins",

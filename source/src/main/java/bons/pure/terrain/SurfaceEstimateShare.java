@@ -40,7 +40,8 @@ import org.slf4j.Logger;
  *   2. every flat_cache / cache_2d subtree of its initial density reads only x and z: inside a NoiseChunk those are
  *      read from values computed at y = 0, outside it at the real y, and the two agree only for x/z-only functions;
  *   3. the graph contains only the vanilla density function types below: other types (mod functions) may carry
- *      per-chunk state, e.g. Bumblezone's biome noise bound to each NoiseChunk.
+ *      per-chunk state, e.g. Bumblezone's biome noise bound to each NoiseChunk. 1.0.34: and no beardifier, which is
+ *      the NoiseChunk's own (the structure pieces near its chunk; in a height query's NoiseChunk the marker, 0).
  * Conditions 2 and 3 are audited once per RandomState on its first NoiseChunk; a failure is logged and keeps that
  * RandomState on the original code.
  *
@@ -219,8 +220,11 @@ public final class SurfaceEstimateShare {
                 NC + "CacheOnce", NC + "CacheAllInCell", "net.minecraft.util.CubicSpline$Multipoint");
         private static final Set<String> XZ_LEAF = Set.of(DFS + "ShiftA", DFS + "ShiftB", DFS + "EndIslandDensityFunction", DFS + "Constant", DFS + "BlendAlpha",
                 DFS + "BlendOffset", NC + "BlendAlpha", NC + "BlendOffset", "net.minecraft.util.CubicSpline$Constant");
-        private static final Set<String> Y_LEAF = Set.of(DFS + "YClampedGradient", DFS + "WeirdScaledSampler", DFS + "Shift", DFS + "BeardifierMarker",
-                "net.minecraft.world.level.levelgen.synth.BlendedNoise", "net.minecraft.world.level.levelgen.Beardifier");
+        /** Types that read y; 1.0.34: their inputs are audited too (WeirdScaledSampler has one). */
+        private static final Set<String> Y_LEAF = Set.of(DFS + "YClampedGradient", DFS + "WeirdScaledSampler", DFS + "Shift",
+                "net.minecraft.world.level.levelgen.synth.BlendedNoise");
+        /** 1.0.34: the beardifier marker and the beardifier it resolves to in each NoiseChunk; never shared (refused). */
+        private static final Set<String> BEARDIFIER = Set.of(DFS + "BeardifierMarker", "net.minecraft.world.level.levelgen.Beardifier");
         private final Map<Object, Integer> memo = new IdentityHashMap<>();
         private String refusal;
 
@@ -242,7 +246,14 @@ public final class SurfaceEstimateShare {
         private int compute(Object o) throws Exception {
             String cn = o.getClass().getName();
             if (XZ_LEAF.contains(cn)) return XZ;
-            if (Y_LEAF.contains(cn)) return Y;
+            if (BEARDIFIER.contains(cn)) {                         // 1.0.34: was accepted as a Y leaf
+                if (refusal == null) refusal = "the initial density reads the chunk's beardifier";
+                return Y;
+            }
+            if (Y_LEAF.contains(cn)) {
+                childrenMax(o);                                    // 1.0.34: the input of a WeirdScaledSampler was not audited
+                return Y;
+            }
             if (cn.equals(DFS + "Noise")) {
                 double[] d = doubles(o);                           // xzScale, yScale
                 return d.length == 2 && d[1] == 0.0 ? XZ : Y;

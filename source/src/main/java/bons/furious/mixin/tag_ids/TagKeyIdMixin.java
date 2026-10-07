@@ -13,8 +13,8 @@ import org.spongepowered.asm.mixin.Unique;
  */
 @Mixin(value = TagKey.class, remap = false)
 public abstract class TagKeyIdMixin implements TagIdCarrier {
-    @Unique
-    private int bons$id;
+    @Unique   // 1.0.34: transient: Gson reads a record's non-transient fields as components and fails without an accessor
+    private transient int bons$id;
 
     @Override
     public int bons$tagId() {

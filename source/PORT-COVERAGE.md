@@ -1,6 +1,6 @@
 # Minecraft 1.21.1 port coverage
 
-All 253 controls of Bons and Furious 1.0.33 (127 from 1.0.27, 126 added in 1.0.28 and later) are accounted for: 169 ported, 42 retired because the 1.21.1 target changed or was fixed upstream, 42 target mods unavailable for Minecraft 1.21.1 / NeoForge.
+All 254 controls of Bons and Furious 1.0.34 (127 from 1.0.27, 127 added in 1.0.28 and later) are accounted for: 170 ported, 42 retired because the 1.21.1 target changed or was fixed upstream, 42 target mods unavailable for Minecraft 1.21.1 / NeoForge.
 
 | Control | Added | Status | Explanation |
 | --- | --- | --- | --- |
@@ -49,6 +49,7 @@ All 253 controls of Bons and Furious 1.0.33 (127 from 1.0.27, 126 added in 1.0.2
 | `distanthorizons_cloud_pass_invariants` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `distanthorizons_cloud_scalars` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `distanthorizons_ignored_dimension_match` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
+| `distanthorizons_join_config_resend` | 1.0.34 | ported | [FIX] Distant Horizons 3.3.3 has the same join race as 3.3.2: DhClientWorld's constructor sends the session config before SharedApi.setDhWorld creates the network handler pool (setupThreadPools), and ClientApi.pluginMessageReceived drops a message while that pool is missing (a bare "warn"); ClientNetworkState.isReady and sendConfigMessage() / (Z) are unchanged. |
 | `distanthorizons_lod_biome_memo` | 1.0.28 | ported | Distant Horizons 3.3.3 LodDataBuilder identical; ChunkWrapper getBiome differs only by Mojang names. |
 | `distanthorizons_pooled_string_index` | 1.0.29 | ported | Distant Horizons 3.3.3: FullDataPointIdMap/StringPool byte-identical to 3.3.2. |
 | `distanthorizons_quad_sort_keys` | 1.0.29 | ported | Distant Horizons 3.3.3 LodQuadBuilder/BufferQuad byte-identical to 3.3.2. |
@@ -57,7 +58,7 @@ All 253 controls of Bons and Furious 1.0.33 (127 from 1.0.27, 126 added in 1.0.2
 | `distanthorizons_sql_script_lookup_index` | 1.0.30 | ported | Distant Horizons 3.3.3 DatabaseUpdater.getAutoUpdateScripts is byte-identical to 3.3.2; the lookup index was re-derived for NeoForge 21.1's securejarhandler 3.0.8 / modlauncher 11.0.5 and checks those versions at runtime. |
 | `distanthorizons_unlocked_byte_stream` | 1.0.29 | ported | Distant Horizons 3.3.3 DhDataInputStream byte-identical to 3.3.2. |
 | `distanthorizons_update_queue_wait` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
-| `distanthorizons_world_change_biome_reset` | 1.0.30 | ported | [FIX] Distant Horizons 3.3.3 setDhWorld has the same branches and anchors; the five maps keep their names. |
+| `distanthorizons_world_change_biome_reset` | 1.0.30 | ported | [FIX] Distant Horizons 3.3.3 setDhWorld has the same branches and anchors; the five maps keep their names. 1.0.34: the reset loads no Distant Horizons class; BiomeWrapper_neoforge, BlockBiomeWrapperPair and AbstractDhTintGetter_neoforge report from the end of their static initializers (all three have one in 3.3.3). |
 | `distanthorizons_wrapper_air_flag` | 1.0.29 | ported | Distant Horizons 3.3.3 wrapper isAir unchanged; NeoForge 21.1 BlockStateBase.isAir is the same final-field read as Forge 47. |
 | `dungeonsdelight_yam_single_add` | 1.0.30 | ported | [FIX] Dungeon's Delight 1.5.1 still adds each summoned zombie twice on Hard; NeoForge 21.1 still posts EntityJoinLevelEvent before the duplicate-UUID refusal. |
 | `dynamictrees_rot_cycle_guard` | 1.0.30 | ported | [FIX] Dynamic Trees 1.7.2 (package com.dtteam.dynamictrees) keeps the rot code of 1.4.11 and 1.21.1's WorldGenRegion still refuses far writes, so the endless rapid-rot loop is still reachable. |
@@ -235,7 +236,7 @@ All 253 controls of Bons and Furious 1.0.33 (127 from 1.0.27, 126 added in 1.0.2
 | `vanilla_entity_section_x_overflow` | 1.0.30 | ported | [FIX] EntitySectionStorage and the SectionPos packing are unchanged on 1.21.1. |
 | `vanilla_fire_scan_loop` | 1.0.28 | ported | The fire/lava check in Entity.move and Level.getBlockStatesIfLoaded are the same code on 1.21.1. |
 | `vanilla_fog_color_sample_memo` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
-| `vanilla_framed_map_holder_scan` | 1.0.30 | ported | Adapted: 1.21.1's tickCarriedBy uses Inventory.contains(Predicate); the wrap targets that call with the same contains || isFramed() result. |
+| `vanilla_framed_map_holder_scan` | 1.0.30 | ported | Adapted: 1.21.1's tickCarriedBy uses Inventory.contains(Predicate); the wrap targets that call with the same `contains \|\| isFramed()` result. |
 | `vanilla_game_event_registry_lookup` | 1.0.30 | ported | Only descriptors changed (Holder<GameEvent>); bodies identical. Steps aside for Radium's game-event dispatch mixin. |
 | `vanilla_goal_flags_none_disabled` | 1.0.30 | ported | GoalSelector.goalContainsAnyFlags is identical on 1.21.1. |
 | `vanilla_item_merge_candidates` | 1.0.30 | ported | Adapted to 1.21.1's areMergable order (count test, then isSameItemSameComponents) and NeoForge's IItemExtension; steps aside for Radium's item-merging mixin. |

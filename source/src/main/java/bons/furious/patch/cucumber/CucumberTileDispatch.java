@@ -67,7 +67,9 @@ public final class CucumberTileDispatch {
                 if (!plain) LOGGER.info("Bons and Furious: cucumber_tile_dispatch_range_first leaves {} to its own getUpdatePacket and builds its packet first, as before",
                         type.getName());
                 return plain;
-            } catch (NoSuchMethodException e) {
+            } catch (Throwable t) {
+                // 1.0.34: also a class whose public methods name a class that is missing on this side (getMethod resolves
+                // them all; NoClassDefFoundError on a dedicated server): its own getUpdatePacket keeps running first
                 return false;
             }
         }

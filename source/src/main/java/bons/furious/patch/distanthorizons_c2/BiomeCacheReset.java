@@ -39,6 +39,21 @@ import org.apache.logging.log4j.Logger;
  *
  * Ported to 1.21.1: DH 3.3.3 keeps the same five maps under the same names (WRAPPER_BY_BIOME is now declared as a
  * ConcurrentMap), filled by the same guarded methods, and setDhWorld resets its other world state at the same places.
+ *
+ * 1.0.34: the three maps keyed by name (WRAPPER_BY_RESOURCE_LOCATION and the two client maps) are emptied only before a new
+ * world's thread pools start, no longer at unload. Distant Horizons stops the old world's pools without waiting for their
+ * tasks, and it reads WRAPPER_BY_RESOURCE_LOCATION with containsKey then get (an emptied map hands such a task null, which
+ * ends in a NullPointerException in FullDataPointIdMap) and resolves a missing client biome only while a client level
+ * exists (otherwise an IllegalStateException). Before the next world's pools start no task of the old world is left. The
+ * maps keyed by holder and by wrapper (get, then put or computeIfAbsent) are still emptied at unload as well.
+ *
+ * 1.0.34: the reset never loads or initializes a class. Before, it read BiomeWrapper_neoforge's maps directly and the other
+ * owners with Class.forName(owner, true): on a session's first world that loaded all three classes (applying their
+ * mixins) inside setDhWorld, between the client's own config message and setupThreadPools(). A server's config reply
+ * arriving in that gap (a server on the same PC answers in about 15 ms) found no network pool and was dropped, so Distant
+ * Horizons never learnt the server's full support and streamed no LODs from it. Each owner class now reports from the end
+ * of its own static initializer (the *CachesReadyMixin classes), and only reported owners are touched: an owner that has
+ * not initialized yet holds nothing to clear.
  */
 public final class BiomeCacheReset {
     /** Runtime switch (the config switch acts when the class is transformed). */
@@ -47,22 +62,42 @@ public final class BiomeCacheReset {
     private static final String PAIR = "com.seibel.distanthorizons.core.dataObjects.BlockBiomeWrapperPair";
     private static final String TINT = "com.seibel.distanthorizons.common.wrappers.block.AbstractDhTintGetter_neoforge";
     private static volatile boolean announced, warned;
+    /** 1.0.34: set at the end of the owner's static initializer (*CachesReadyMixin); only then may reset touch it. */
+    private static volatile boolean wrapperReady, pairReady, tintReady;
     /** Resets done and entries removed (for probes and the harness). */
     public static volatile long resets, removed;
 
     private BiomeCacheReset() {
     }
 
+    /** End of BiomeWrapper_neoforge's static initializer. */
+    public static void wrapperReady() {
+        wrapperReady = true;
+    }
+
+    /** End of BlockBiomeWrapperPair's static initializer. */
+    public static void pairReady() {
+        pairReady = true;
+    }
+
+    /** End of AbstractDhTintGetter_neoforge's static initializer (client only). */
+    public static void tintReady() {
+        tintReady = true;
+    }
+
     /** Called from SharedApi.setDhWorld at world unload ("unload") and before a new world's thread pools ("load"). */
     public static void reset(String when) {
         if (!enabled) return;
+        boolean load = "load".equals(when);   // 1.0.34: the name-keyed maps only at load (see above)
         long n = 0;
-        n += clear(BiomeWrapper_neoforge.WRAPPER_BY_BIOME);
-        n += clear(BiomeWrapper_neoforge.WRAPPER_BY_RESOURCE_LOCATION);
-        n += clear(staticMap(PAIR, "CACHED_PAIR_BY_BIOME_BY_BLOCK", false));
-        if (clientSide()) {
-            n += clear(staticMap(TINT, "BIOME_BY_RESOURCE_STRING", true));
-            n += clear(staticMap(TINT, "COLOR_BY_BLOCK_BIOME_PAIR", true));
+        if (wrapperReady) {                    // 1.0.34: no getstatic (which would initialize the class) before it reported
+            n += clear(BiomeWrapper_neoforge.WRAPPER_BY_BIOME);
+            if (load) n += clear(BiomeWrapper_neoforge.WRAPPER_BY_RESOURCE_LOCATION);
+        }
+        if (pairReady) n += clear(staticMap(PAIR, "CACHED_PAIR_BY_BIOME_BY_BLOCK"));
+        if (load && tintReady && clientSide()) {
+            n += clear(staticMap(TINT, "BIOME_BY_RESOURCE_STRING"));
+            n += clear(staticMap(TINT, "COLOR_BY_BLOCK_BIOME_PAIR"));
         }
         resets++;
         removed += n;
@@ -81,10 +116,13 @@ public final class BiomeCacheReset {
         return n;
     }
 
-    /** Distant Horizons' private static map, or null (with one WARN) when it cannot be read. */
-    private static Map<?, ?> staticMap(String owner, String field, boolean clientClass) {
+    /**
+     * Distant Horizons' private static map, or null (with one WARN) when it cannot be read. Only called for an owner that
+     * reported its static initializer done, so forName finds the loaded class and initializes nothing (1.0.34).
+     */
+    private static Map<?, ?> staticMap(String owner, String field) {
         try {
-            Class<?> c = Class.forName(owner, true, BiomeCacheReset.class.getClassLoader());
+            Class<?> c = Class.forName(owner, false, BiomeCacheReset.class.getClassLoader());
             Field f = c.getDeclaredField(field);
             f.setAccessible(true);
             return (Map<?, ?>) f.get(null);

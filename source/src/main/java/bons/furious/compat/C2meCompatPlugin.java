@@ -2,12 +2,19 @@ package bons.furious.compat;
 
 import bons.furious.guard.Guards;
 import bons.pure.config.PureConfig;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import org.apache.commons.lang3.SystemUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.tree.ClassNode;
@@ -47,6 +54,8 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
  *
  * Nothing changes when the C2ME part is on, when C2ME or the other mod is absent, when the user's own config sets the
  * option, when another mod also disabled it, when a switch is off, or when a guarded method differs from the tested build.
+ * 1.0.34: for ModernFix the user's own setting is read from the sources ModernFix reads (modernFixUserSetting), because
+ * ModernFix ignores a user setting of an option a mod already switched off and does not mark the option as user-set.
  */
 public final class C2meCompatPlugin implements IMixinConfigPlugin {
     private static final Logger LOGGER = LogManager.getLogger("Bons and Furious");
@@ -333,6 +342,12 @@ public final class C2meCompatPlugin implements IMixinConfigPlugin {
             LOGGER.info("Bons and Furious: {} leaves ModernFix's mixin.perf.cache_strongholds off because ModernFix's own config sets it", STRONGHOLD_KEY);
             return false;
         }
+        String userSetting = modernFixUserSetting("mixin.perf.cache_strongholds");   // 1.0.34
+        if (userSetting != null) {
+            LOGGER.info("Bons and Furious: {} leaves ModernFix's mixin.perf.cache_strongholds off because the user sets it ({}); ModernFix ignores "
+                    + "a user setting of an option a mod switched off", STRONGHOLD_KEY, userSetting);
+            return false;
+        }
         Collection<?> definers = (Collection<?>) o.getMethod("getDefiningMods").invoke(option);
         if (!onlyBy(definers, Set.of("c2me"), STRONGHOLD_KEY, "ModernFix's mixin.perf.cache_strongholds")) return false;
         String c2me = modVersion("c2me");
@@ -346,6 +361,42 @@ public final class C2meCompatPlugin implements IMixinConfigPlugin {
         LOGGER.info("Bons and Furious: {} switched ModernFix's mixin.perf.cache_strongholds back on: C2ME {} does not touch stronghold placement",
                 STRONGHOLD_KEY, c2me);
         return true;
+    }
+
+    /**
+     * 1.0.34: where the user sets a ModernFix option, or null. ModernFixEarlyConfig.load reads ./config/modernfix-mixins.properties,
+     * then the global file <minecraft folder>/global/modernfix-global-mixins.properties, then -Dmodernfix.config.<option> (none
+     * of them under -Dmodernfix.ignoreConfigForTesting=true). For an option a mod already switched off it skips the files'
+     * lines, and a JVM value equal to the current one changes nothing, so Option.isUserDefined stays false although the user
+     * set the option; the same sources are read here instead. ModernFix rewrites its own file while it loads, before this
+     * check, keeping only the options it took as user-set, so a line it skipped there is normally gone by now; the global
+     * file and the JVM property stay as the user wrote them.
+     */
+    static String modernFixUserSetting(String option) {
+        if (Boolean.getBoolean("modernfix.ignoreConfigForTesting")) return null;
+        if (propertiesSet(Paths.get("config", "modernfix-mixins.properties"), option)) return "config/modernfix-mixins.properties";
+        try {
+            Path minecraft = SystemUtils.IS_OS_MAC ? Paths.get(System.getProperty("user.home"), "Library", "Application Support", "minecraft")
+                    : SystemUtils.IS_OS_WINDOWS ? Paths.get(System.getenv("APPDATA"), ".minecraft") : Paths.get(System.getProperty("user.home"), ".minecraft");
+            Path global = minecraft.resolve("global").resolve("modernfix-global-mixins.properties");
+            if (propertiesSet(global, option)) return global.toString();
+        } catch (RuntimeException e) {
+            // no global folder to resolve: ModernFix reads no global file either (it logs that and goes on)
+        }
+        String jvm = System.getProperty("modernfix.config." + option);
+        return jvm == null || jvm.isEmpty() ? null : "-Dmodernfix.config." + option + "=" + jvm;
+    }
+
+    /** True when the properties file exists, can be read and has the key (java.util.Properties, as ModernFix reads it). */
+    private static boolean propertiesSet(Path file, String key) {
+        if (!Files.isRegularFile(file)) return false;
+        Properties p = new Properties();
+        try (InputStream in = Files.newInputStream(file)) {
+            p.load(in);
+        } catch (IOException | RuntimeException e) {
+            return false;
+        }
+        return p.containsKey(key);
     }
 
     private static String modVersion(String modId) {

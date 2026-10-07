@@ -1,0 +1,145 @@
+{
+ "p34-dmr-template": {
+  "exit_code": 0,
+  "timed_out": null,
+  "seconds": 17.4,
+  "world_loaded": null,
+  "world_ticks": null,
+  "probe_passed": null,
+  "done_at": 11.4,
+  "crash_reports": [],
+  "hs_err": [],
+  "argv": [
+   "bons=none",
+   "dmr"
+  ],
+  "bons_sha256": null,
+  "gson_record_failure_lines": []
+ },
+ "p34-dmr-pub": {
+  "exit_code": 0,
+  "timed_out": false,
+  "seconds": 133.9,
+  "world_loaded": false,
+  "world_ticks": 0,
+  "probe_passed": false,
+  "done_at": null,
+  "crash_reports": [],
+  "hs_err": [],
+  "argv": [
+   "bons=pub",
+   "dmr",
+   "breedpack",
+   "export",
+   "template=p34-dmr-template"
+  ],
+  "bons_sha256": "ff5e8bf07015e91b6cb55da17db6ed77610b8e5df55b5f73e6b08ae84ac8aad3",
+  "gson_record_failure_lines": [
+   "Caused by: java.lang.NoSuchMethodException: net.minecraft.tags.TagKey.bons$id()"
+  ],
+  "record_check": {
+   "gson_verdict": "FAIL",
+   "exported": {
+    "net.minecraft.tags.TagKey": true,
+    "net.minecraft.world.level.biome.Climate$Sampler": true,
+    "terrablender.worldgen.surface.NamespacedSurfaceRuleSource$NamespacedRule": false,
+    "com.supermartijn642.fusion.texture.types.connecting.ConnectingTextureType$QuadPredicatesKey": false
+   },
+   "field_flags": {
+    "net.minecraft.tags.TagKey": {
+     "bons$id": {
+      "transient": false,
+      "static": false,
+      "access": "0x2"
+     }
+    },
+    "net.minecraft.world.level.biome.Climate$Sampler": {
+     "bons$router": {
+      "transient": false,
+      "static": false,
+      "access": "0x2"
+     },
+     "bons$parts": {
+      "transient": false,
+      "static": false,
+      "access": "0x42"
+     },
+     "bons$canaryLeft": {
+      "transient": false,
+      "static": false,
+      "access": "0x2"
+     },
+     "bons$audit": {
+      "transient": false,
+      "static": false,
+      "access": "0x2"
+     }
+    },
+    "terrablender.worldgen.surface.NamespacedSurfaceRuleSource$NamespacedRule": null,
+    "com.supermartijn642.fusion.texture.types.connecting.ConnectingTextureType$QuadPredicatesKey": null
+   }
+  }
+ },
+ "p34-dmr-port": {
+  "exit_code": 0,
+  "timed_out": false,
+  "seconds": 20.7,
+  "world_loaded": true,
+  "world_ticks": 120,
+  "probe_passed": true,
+  "done_at": null,
+  "crash_reports": [],
+  "hs_err": [],
+  "argv": [
+   "bons=port",
+   "dmr",
+   "breedpack",
+   "export",
+   "template=p34-dmr-template"
+  ],
+  "bons_sha256": "28ce16731f1ef4192b5d25c5e6e6cb02b2d1d838b6b30d94d2fd423e6ec81895",
+  "gson_record_failure_lines": [],
+  "record_check": {
+   "gson_verdict": "PASS",
+   "exported": {
+    "net.minecraft.tags.TagKey": true,
+    "net.minecraft.world.level.biome.Climate$Sampler": true,
+    "terrablender.worldgen.surface.NamespacedSurfaceRuleSource$NamespacedRule": false,
+    "com.supermartijn642.fusion.texture.types.connecting.ConnectingTextureType$QuadPredicatesKey": false
+   },
+   "field_flags": {
+    "net.minecraft.tags.TagKey": {
+     "bons$id": {
+      "transient": true,
+      "static": false,
+      "access": "0x82"
+     }
+    },
+    "net.minecraft.world.level.biome.Climate$Sampler": {
+     "bons$router": {
+      "transient": true,
+      "static": false,
+      "access": "0x82"
+     },
+     "bons$parts": {
+      "transient": true,
+      "static": false,
+      "access": "0xc2"
+     },
+     "bons$canaryLeft": {
+      "transient": true,
+      "static": false,
+      "access": "0x82"
+     },
+     "bons$audit": {
+      "transient": true,
+      "static": false,
+      "access": "0x82"
+     }
+    },
+    "terrablender.worldgen.surface.NamespacedSurfaceRuleSource$NamespacedRule": null,
+    "com.supermartijn642.fusion.texture.types.connecting.ConnectingTextureType$QuadPredicatesKey": null
+   }
+  }
+ }
+}

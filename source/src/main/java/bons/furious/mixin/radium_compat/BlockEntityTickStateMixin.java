@@ -29,6 +29,12 @@ import org.spongepowered.asm.mixin.injection.At;
  * by this ticker. In vanilla it is a set lookup; the five mods that extend it decide from the type and the block, and
  * DeltaBox Lib from block tags, so the answer is asked again when the state or the type changes and after every tag reload
  * (TagEpoch).
+ *
+ * 1.0.34: the field is trusted only after this ticker once saw it equal to the chunk's state; until then every tick looks
+ * the state up in the chunk as vanilla does and uses that. A block entity can enter a chunk with another state than the
+ * block in the world (made during world generation, where ProtoChunk.setBlockState never updates it: a structure's block
+ * entity is created before the template waterlogs or reshapes its block; or installed with Level.setBlockEntity), and
+ * LevelChunk.setBlockState binds a new ticker for every state change, so one equal look per ticker is enough.
  */
 @Mixin(targets = "net.minecraft.world.level.chunk.LevelChunk$BoundTickingBlockEntity", remap = false)
 public abstract class BlockEntityTickStateMixin {
@@ -44,11 +50,17 @@ public abstract class BlockEntityTickStateMixin {
     private boolean bons$checkedValid;
     @Unique
     private int bons$checkedEpoch;
+    /** 1.0.34: the block entity's field equalled the chunk's state on a tick of this ticker. */
+    @Unique
+    private boolean bons$fieldVerified;
 
     @WrapOperation(method = "tick", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/world/level/chunk/LevelChunk;getBlockState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;"))
     private BlockState bons$ownState(LevelChunk chunk, BlockPos pos, Operation<BlockState> original) {
-        return ((BlockEntityStateAccessor) this.blockEntity).bons$blockStateField();
+        if (this.bons$fieldVerified) return ((BlockEntityStateAccessor) this.blockEntity).bons$blockStateField();
+        BlockState world = original.call(chunk, pos);   // 1.0.34: vanilla's lookup until the field is seen equal to it
+        if (world == ((BlockEntityStateAccessor) this.blockEntity).bons$blockStateField()) this.bons$fieldVerified = true;
+        return world;
     }
 
     @WrapOperation(method = "tick", at = @At(value = "INVOKE",

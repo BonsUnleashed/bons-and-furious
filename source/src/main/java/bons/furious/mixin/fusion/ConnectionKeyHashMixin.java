@@ -30,10 +30,10 @@ public abstract class ConnectionKeyHashMixin {
     @Unique
     private static final MethodHandle bons$RECORD_HASH = ConnectionLookups.recordHash(MethodHandles.lookup());
 
+    @Unique   // 1.0.34: transient (both): Gson reads a record's non-transient fields as components and fails without an accessor
+    private transient int bons$hash;
     @Unique
-    private int bons$hash;
-    @Unique
-    private boolean bons$hashIsZero;
+    private transient boolean bons$hashIsZero;
 
     /**
      * @author BonsUnleashed

@@ -47,7 +47,10 @@ public final class ConnectionLookups {
             try {
                 return type.getMethod("equals", Object.class).getDeclaringClass() == Object.class
                         && type.getMethod("hashCode").getDeclaringClass() == Object.class;
-            } catch (NoSuchMethodException e) {
+            } catch (Throwable e) {
+                // 1.0.34: was NoSuchMethodException only. getMethod resolves the types of every public method of the class,
+                // so a block class whose method signature names a missing class (an optional dependency) throws
+                // NoClassDefFoundError: cannot tell, so not plain (Fusion's set is kept, as for an overriding class)
                 return false;
             }
         }
@@ -90,7 +93,8 @@ public final class ConnectionLookups {
             }
             registryPlain = state;
             if (offender != null)
-                LOGGER.warn("Bons and Furious: fusion_connection_lookups keeps Fusion's block sets: {} overrides equals or hashCode", offender.getName());
+                LOGGER.warn("Bons and Furious: fusion_connection_lookups keeps Fusion's block sets: {} overrides equals or hashCode, or its methods "
+                        + "cannot be listed", offender.getName());   // 1.0.34: the second case since PLAIN_IDENTITY catches every error
             else
                 LOGGER.info("Bons and Furious: fusion_connection_lookups compares Fusion's connection blocks by identity");
         }

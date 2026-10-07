@@ -105,10 +105,13 @@ public abstract class OcclusionCullerReplayMixin {
         SearchReplay.Recording slot = this.bons$slot(frustum.getClass(), useOcclusionCulling);
         int graph = SearchReplay.graphEpoch, info = useOcclusionCulling ? SearchReplay.infoEpoch : 0;
         if (!slot.valid()) {
+            // 1.0.34: the classes are checked before the first recording (was: after it), so the recording visitor never
+            // runs in a search that carries untested mixins; not ready: this and every later search run unchanged
+            if (!SearchReplay.coreReady()) return false;
             // first search of this kind: record it, then read its key (only after a real search ran: the distance filter's
-            // holder is initialised by the search itself, exactly as without the switch)
+            // holder is initialised by the search's first distance test, exactly as without the switch; until then no key)
             this.bons$record(slot, visitor, viewport, searchDistance, useOcclusionCulling, frame, original, start, ox, oy, oz, graph, info);
-            if (!slot.valid() || !SearchReplay.coreReady() || !SearchReplay.key(this.bons$key, frustum, plan, viewport.getTransform(), searchDistance)) {
+            if (!slot.valid() || !SearchReplay.key(this.bons$key, frustum, plan, viewport.getTransform(), searchDistance)) {
                 slot.invalidate();
                 return true;
             }

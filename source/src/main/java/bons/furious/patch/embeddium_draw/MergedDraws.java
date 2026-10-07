@@ -163,7 +163,10 @@ public final class MergedDraws {
         } catch (Throwable t) {
             return false;
         }
-        if (pack == null) return true;   // no pack in use: Embeddium's (Oculus's passthrough) chunk shaders
+        if (pack == null) {              // no pack in use: Embeddium's (Oculus's passthrough) chunk shaders
+            lastPack = null;             // 1.0.34: do not keep the last pack (sources, texture data) alive once shaders are off
+            return true;
+        }
         if (pack != lastPack) {
             lastPack = pack;
             lastPackOk = scanPack();

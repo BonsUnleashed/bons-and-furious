@@ -8,6 +8,12 @@
     "defaultRequire": 1
   },
   "mixins": [
-    "SharedApiWorldChangeMixin"
+    "SharedApiWorldChangeMixin",
+    "BiomeWrapperCachesReadyMixin",
+    "BlockBiomePairCachesReadyMixin"
+  ],
+  "client": [
+    "TintCachesReadyMixin",
+    "SharedApiJoinConfigResendMixin"
   ]
 }

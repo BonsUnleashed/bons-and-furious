@@ -25,6 +25,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * value, including zero weights, the negative Math.abs(Integer.MIN_VALUE) case and values past the total). The random
  * draw stays in Embeddium's code. With the runtime flag off, without a table, or for a list other than the model's own,
  * Embeddium's getAt runs. Minecraft is Mojang's, Embeddium LGPL-3.0: only its call is wrapped, none of its code copied.
+ * 1.0.34: require = 0, expect = 0 (was require = 3): Embeddium's WeightedBakedModelMixin can be switched off
+ * (mixin.features.model in embeddium-mixins.properties, or a mod's sodium:options override); the model then keeps vanilla's
+ * getQuads and getRenderTypes, which have no getAt call, and this wrap finds nothing to change instead of failing the class
+ * at load. Each wrapped call is exact on its own, so any number of them may apply.
  */
 @Mixin(value = WeightedBakedModel.class, priority = 1100, remap = false)
 public abstract class WeightedPickTableMixin {
@@ -44,7 +48,7 @@ public abstract class WeightedPickTableMixin {
         this.bons$pickTable = WeightedPickTable.build(this.list, this.totalWeight);
     }
 
-    @WrapOperation(method = {"getQuads", "getRenderTypes", "embeddium$getInnerModel"}, require = 3,
+    @WrapOperation(method = {"getQuads", "getRenderTypes", "embeddium$getInnerModel"}, require = 0, expect = 0,
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/resources/model/WeightedBakedModel;getAt(Ljava/util/List;I)Lnet/minecraft/util/random/WeightedEntry;"))
     private WeightedEntry bons$tablePick(List<?> pool, int value, Operation<WeightedEntry> original) {
         WeightedPickTable table = this.bons$pickTable;

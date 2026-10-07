@@ -28,16 +28,19 @@ import org.slf4j.Logger;
  * For such a sampler the six functions are mapped once from the same router into copies that are identical except that
  * each flat_cache / cache_2d marker whose input reads only x and z (DensityAudit) becomes an {@link XzCache}: the same
  * value at the same x and z, remembered per thread, shared by every function that reads it. sample() then evaluates the
- * copies. Used only when every node of the router's six functions and of the sampler's own six functions is a known
- * pure type, when the copies differ from the plain mapping only by those caches, and after 256 positions (64 columns
- * at four heights) returned the same bits from the copies and the sampler's own functions; a sampler that fails any of
- * this keeps its original evaluation. The first 64 real samples of every sampler are also computed both ways and
- * compared: a difference switches that sampler back to the original for good.
+ * copies. 1.0.34: a marker around a bare constant stays that constant, as in the original: add and mul fold a constant
+ * argument into MulOrAdd (TwoArgumentSimpleFunction.create), and around an XzCache they built an Ap2, whose mul treats
+ * 0 and NaN otherwise. Used only when every node of the router's six functions and of the sampler's own six functions
+ * is a known pure type, when the copies differ from the plain mapping only by those caches, and after 256 positions
+ * (64 columns at four heights) returned the same bits from the copies and the sampler's own functions; a sampler that
+ * fails any of this keeps its original evaluation. The first 64 real samples of every sampler are also computed both
+ * ways and compared: a difference switches that sampler back to the original for good.
  */
 public final class ClimateParts {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final String MARKER = "net.minecraft.world.level.levelgen.DensityFunctions$Marker";
     private static final String HOLDER = "net.minecraft.world.level.levelgen.DensityFunctions$HolderHolder";
+    private static final String CONSTANT = "net.minecraft.world.level.levelgen.DensityFunctions$Constant";
     /** Runtime switch (the config switch acts when classes are transformed). -Dbons_and_furious.climateParts=false also turns it off. */
     public static volatile boolean enabled = !"false".equalsIgnoreCase(System.getProperty("bons_and_furious.climateParts", "true"));
     static final boolean METRICS = Boolean.getBoolean("bons_and_furious.climateParts.metrics");
@@ -104,8 +107,9 @@ public final class ClimateParts {
             parts = prepare(s, sampler);
         }
         if (!(parts instanceof Prepared p)) return fn.compute(context);
-        // the call at this position must evaluate the function sample() evaluates there in the guarded method; another
-        // mod that rewrote the method body (an @Overwrite with other calls) gets the original evaluation
+        // the call at this position must evaluate the function sample() evaluates there in the guarded method. 1.0.34:
+        // when another mod replaced sample() (@Overwrite), each redirect that still finds its call lands in that body
+        // (require = 0: the others are left out); a call there that evaluates another function runs as before
         if (p.own[index] != fn) return fn.compute(context);
         double v = p.copies[index].compute(context);
         if (s.bons$canary() > 0) {
@@ -206,6 +210,7 @@ public final class ClimateParts {
                 else if (v instanceof Enum<?> e) type = e.name();
             }
             if (wrapped == null) throw new IllegalStateException("marker without a density function");
+            if (wrapped.getClass().getName().equals(CONSTANT)) return wrapped;   // 1.0.34: as the original sees it (class comment)
             if (mapped != null && ("FlatCache".equals(type) || "Cache2D".equals(type)) && mapped.dependency(wrapped) == DensityAudit.XZ
                     && mapped.clean(wrapped)) {
                 cached[0]++;

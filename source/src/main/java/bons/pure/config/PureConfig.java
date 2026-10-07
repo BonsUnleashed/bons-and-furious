@@ -169,7 +169,7 @@ public final class PureConfig {
                 String v = raw.trim().toLowerCase(java.util.Locale.ROOT);
                 if (v.equals("true")) enabled = true;
                 else if (v.equals("false")) enabled = false;
-                else LOGGER.warn("Bons and Furious: '{}' has invalid value '{}'; using true", key, raw);
+                else LOGGER.warn("Bons and Furious: '{}' has invalid value '{}'; using {}", key, raw, byDefault);   // 1.0.34: the bundled default, not always true
             }
             // Name the flag as it was given; the second load also sees the property the first load published.
             String flag = Boolean.getBoolean(LEGACY_DISABLED_PREFIX + key) ? LEGACY_DISABLED_PREFIX

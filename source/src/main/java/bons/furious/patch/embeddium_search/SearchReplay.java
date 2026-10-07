@@ -152,9 +152,10 @@ public final class SearchReplay {
 
     /**
      * True when the search's own classes carry only tested mixins and, with betterfpsdist installed, its hook is the tested
-     * one (checked once; otherwise the switch stands down). Initialises no class: the distance-filter holder and
-     * betterfpsdist's classes are looked up without initialisation and their statics read through Unsafe, so their static
-     * initialisers still run when the search first needs them, exactly as without the switch.
+     * one (checked once; otherwise the switch stands down). Initialises one class only, Embeddium's API interface
+     * RenderSectionDistanceFilter, whose static initialiser just builds its DEFAULT lambda (1.0.34, see initDistanceFilter):
+     * the distance-filter holder and betterfpsdist's classes are looked up without initialisation and their statics read
+     * through Unsafe, so their static initialisers still run when the search first needs them, exactly as without the switch.
      */
     public static boolean coreReady() {
         Boolean r = coreReady;
@@ -184,10 +185,13 @@ public final class SearchReplay {
             Field inst = holder.getDeclaredField("INSTANCE");
             filterHolderBase = U.staticFieldBase(inst);
             filterOffset = U.staticFieldOffset(inst);
-            Class<?> api = Class.forName("org.embeddedt.embeddium.api.render.chunk.RenderSectionDistanceFilter", false, cl);
+            // 1.0.34: the interface is initialised (its static initialiser only builds the DEFAULT lambda). Read uninitialised,
+            // DEFAULT was null whenever no search had run a distance test yet (e.g. a camera section not yet built at world
+            // join), and every key after the holder's first use failed for the rest of the session: no replay at all
+            Class<?> api = Class.forName("org.embeddedt.embeddium.api.render.chunk.RenderSectionDistanceFilter", true, cl);
             Field def = api.getField("DEFAULT");
             filterDefault = U.getObject(U.staticFieldBase(def), U.staticFieldOffset(def));
-            return true;
+            return filterDefault != null;
         } catch (Throwable t) {
             return false;
         }
@@ -401,16 +405,15 @@ public final class SearchReplay {
         }
     }
 
-    private static void snapshot(Object o, Plan p, Key k) {
+    /** Appends o's state to the key; false when o, or an object it holds, is of another class than its plan. */
+    private static boolean snapshot(Object o, Plan p, Key k) {
         if (o == null) {
             k.put(0x6e756c6cL);
-            return;
+            return true;
         }
-        if (o.getClass() != p.type) {
-            k.put(System.identityHashCode(o.getClass()) | 0x7700000000L);   // another class than planned: the plan does not fit
-            k.put(Long.MIN_VALUE);
-            return;
-        }
+        // 1.0.34: another class than planned: the plan does not list its fields, so two of its states could give equal keys
+        // (this wrote a class marker and went on); now no key, and the search runs unchanged
+        if (o.getClass() != p.type) return false;
         for (int i = 0; i < p.prim.length; i++) {
             long off = p.prim[i];
             switch (p.kind[i]) {
@@ -424,7 +427,9 @@ public final class SearchReplay {
                 default -> k.put(U.getChar(o, off));
             }
         }
-        for (int i = 0; i < p.obj.length; i++) snapshot(U.getObject(o, p.obj[i]), p.objPlan[i], k);
+        for (int i = 0; i < p.obj.length; i++) {
+            if (!snapshot(U.getObject(o, p.obj[i]), p.objPlan[i], k)) return false;
+        }
         for (int i = 0; i < p.arr.length; i++) {
             Object[] a = (Object[]) U.getObject(o, p.arr[i]);
             if (a == null) {
@@ -432,19 +437,23 @@ public final class SearchReplay {
                 continue;
             }
             k.put(a.length);
-            for (Object e : a) snapshot(e, p.arrPlan[i], k);
+            for (Object e : a) {
+                if (!snapshot(e, p.arrPlan[i], k)) return false;
+            }
         }
+        return true;
     }
 
     /**
      * Fills the key with everything the two per-section tests read: the frustum's state, the camera transform, the search
      * distance, and betterfpsdist's inputs when its hook is installed. False when an input cannot be keyed (betterfpsdist
-     * debug mode, which records sections as a side effect): then the search runs unchanged.
+     * debug mode, which records sections as a side effect; since 1.0.34 also a frustum object of a class its plan does not
+     * cover): then the search runs unchanged.
      */
     public static boolean key(Key k, Object frustum, Plan plan, CameraTransform t, float searchDistance) {
         k.n = 0;
         k.put(System.identityHashCode(frustum.getClass()));
-        snapshot(frustum, plan, k);
+        if (!snapshot(frustum, plan, k)) return false;
         k.put(t.intX);
         k.put(t.intY);
         k.put(t.intZ);
@@ -664,8 +673,9 @@ public final class SearchReplay {
             for (int i = 0; i < o.size; i++) this.add(o.sections[i], o.visible[i]);
             if (old > this.size) Arrays.fill(this.sections, this.size, old, null);
             this.valid = o.valid;
-            this.frustumClass = o.frustumClass;
-            this.occlusion = o.occlusion;
+            // 1.0.34: the slot keeps its own kind (frustum class, occlusion flag; o recorded a search of that same kind).
+            // Copying them from the SHADOW-mode check recording, which is never assign()ed a kind, left the slot with no
+            // frustum class, so the next search of that kind evicted a slot and only every other search was checked
             this.graph = o.graph;
             this.info = o.info;
             this.start = o.start;
