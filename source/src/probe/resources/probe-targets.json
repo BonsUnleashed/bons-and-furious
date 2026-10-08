@@ -1085,5 +1085,11 @@
       "net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator",
       "net.minecraft.world.level.levelgen.NoiseChunk"
     ]
+  },
+  "vanilla_mob_class_warmup": {
+    "client": false,
+    "targets": [
+      "net.neoforged.neoforge.server.ServerLifecycleHooks"
+    ]
   }
 }

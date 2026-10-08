@@ -10095,6 +10095,27 @@
       "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_long_jump.LongJumpPicks)",
       "group": "vanilla_long_jump"
     },
+    "vanilla_mob_class_warmup": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.35",
+      "mixins": [
+        "bons.furious.mixin.vanilla_mob_warmup.ServerStartedWarmupMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/neoforged/neoforge/server/ServerLifecycleHooks",
+          "method": "handleServerStarted",
+          "desc": "(Lnet/minecraft/server/MinecraftServer;)V",
+          "note": "the hook: posts ServerStartedEvent, then opens logins",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at RETURN of NeoForge's ServerLifecycleHooks.handleServerStarted: starts the once-per-JVM background warm-up (helper bons.furious.patch.vanilla_mob_warmup.MobClassWarmup); the method itself runs unchanged",
+      "license": "Minecraft (Mojang) and NeoForge: no code of either is carried; the helper is our own and only loads and links classes (ASM reads class headers and factory lambdas from the class loader's resources)",
+      "group": "vanilla_mob_warmup"
+    },
     "vanilla_raycast_fluid_none": {
       "mod": "minecraft",
       "scripts": [],
@@ -10912,6 +10933,7 @@
     "bons.furious.mixin.vanilla_goal_flags.GoalSelectorFlagsMixin": "mixins",
     "bons.furious.mixin.vanilla_item_merge.ItemEntityMergeMixin": "mixins",
     "bons.furious.mixin.vanilla_long_jump.LongJumpToRandomPosMixin": "mixins",
+    "bons.furious.mixin.vanilla_mob_warmup.ServerStartedWarmupMixin": "mixins",
     "bons.furious.mixin.vanilla_raycast.LevelClipMixin": "mixins",
     "bons.furious.mixin.vanilla_raycast.ClipContextAccessor": "mixins",
     "bons.furious.mixin.vanilla_search.MoveToBlockGoalSearchMixin": "mixins",

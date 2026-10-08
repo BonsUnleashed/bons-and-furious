@@ -1,20 +1,21 @@
 # Bons and Furious — Minecraft 1.21.1 / NeoForge
 
-This is the Minecraft 1.21.1 port of Bons and Furious 1.0.34. It uses mod ID `bons_and_furious`, version
-`1.0.34+mc1.21.1`, and requires Java 21 and NeoForge 21.1.252 or newer. Minecraft is restricted to exactly 1.21.1.
+This is the Minecraft 1.21.1 port of Bons and Furious 1.0.35. It uses mod ID `bons_and_furious`, version
+`1.0.35+mc1.21.1`, and requires Java 21 and NeoForge 21.1.252 or newer. Minecraft is restricted to exactly 1.21.1.
 The tested loader is 21.1.252; later loaders are not automatically qualified.
 
-It builds on the published 1.0.33+mc1.21.1 (SHA-256
-`ff5e8bf07015e91b6cb55da17db6ed77610b8e5df55b5f73e6b08ae84ac8aad3`) and adds what 1.0.34 changed on Forge 1.20.1,
-taken from the Forge 1.0.34 release (SHA-256
-`39caa1e5ad4753bde60807318617c2905c3334c1008e63ea948791155f3c4b66`). The earlier ports are the qualified 1.0.27 port
+It builds on the published 1.0.34+mc1.21.1 (SHA-256
+`28ce16731f1ef4192b5d25c5e6e6cb02b2d1d838b6b30d94d2fd423e6ec81895`) and adds what 1.0.35 changed on Forge 1.20.1,
+taken from the Forge 1.0.35 release (SHA-256
+`a424ab941346ac4709b1664f781739621d3ca83bc2d817aa92a2b6f8860f847d`). The earlier ports are the qualified 1.0.27 port
 (`1.0.27+mc1.21.1`, SHA-256 `04d25a1bbed6f8d3eb40e8c5de71195f0847d886db37b48459c4d6818147ab82`), 1.0.30+mc1.21.1,
-which added what 1.0.28 to 1.0.30 added, and 1.0.33+mc1.21.1, which added what 1.0.31 to 1.0.33 added. This port has
-its own artifact name and does not replace the Forge 1.20.1 release.
+which added what 1.0.28 to 1.0.30 added, 1.0.33+mc1.21.1, which added what 1.0.31 to 1.0.33 added, and
+1.0.34+mc1.21.1, which added what 1.0.34 changed. This port has its own artifact name and does not replace the Forge
+1.20.1 release.
 
 ## Install
 
-Put `bons_and_furious-neoforge-1.0.34+mc1.21.1.jar` in the `mods` folder of a Minecraft 1.21.1 NeoForge instance.
+Put `bons_and_furious-neoforge-1.0.35+mc1.21.1.jar` in the `mods` folder of a Minecraft 1.21.1 NeoForge instance.
 Optional target mods are not required; their patches only apply when the relevant targets and method fingerprints
 match. MixinSquared is bundled; NeoForge supplies MixinExtras.
 
@@ -24,8 +25,8 @@ dedicated servers, where client-only target mods should not be installed.
 
 ## Coverage and compatibility
 
-The port ships **170 controls**: 166 switches guarded by 1,325 method or class-shape checks, three legacy mixin
-controls and the Scorched function fix. Bons and Furious 1.0.34 has 254 controls in all; 42 are retired because the
+The port ships **171 controls**: 167 switches guarded by 1,326 method or class-shape checks, three legacy mixin
+controls and the Scorched function fix. Bons and Furious 1.0.35 has 255 controls in all; 42 are retired because the
 1.21.1 target changed or already does the work, and 42 depend on target mods with no 1.21.1 NeoForge build.
 [PORT-COVERAGE.md](PORT-COVERAGE.md) accounts for every one of them.
 
@@ -35,7 +36,7 @@ batching, and others) and 10 have no 1.21.1 target. Of the five that 1.0.31 to 1
 three JEI start-up switches (`jei_brewing_lookup`, `jei_tooltip_words`, `jei_hidden_menu_sync`, adapted to JEI 19.51)
 and `vanilla_climate_sample_xz_parts`. `forge_custom_payload_heap_copy` is retired: Minecraft 1.21.1 decodes custom
 payloads before that code, so there is nothing to copy. The one control that 1.0.34 added,
-`distanthorizons_join_config_resend`, is ported.
+`distanthorizons_join_config_resend`, is ported, and so is the one that 1.0.35 added, `vanilla_mob_class_warmup`.
 
 Six crash fixes are included. `oculus_entity_vertex_reuse` (Iris) runs at priority 999 so Accelerated Rendering's
 offset changes apply to it (1.0.27+mc1.21.1 crashes with Accelerated Rendering and Iris). `vanilla_model_bone_lookup`
@@ -66,6 +67,16 @@ New in 1.0.34+mc1.21.1, from the Forge 1.0.34 release:
 - `embeddium_weighted_pick_table` skips its change, instead of failing, where another mod has replaced those methods.
 - Hostile Villages' pending chunk queue is emptied when the server stops, and checks that read another mod's classes
   now catch every error, so a class that cannot load on a dedicated server can no longer stop it.
+
+New in 1.0.35+mc1.21.1, from the Forge 1.0.35 release:
+- `vanilla_mob_class_warmup` (both sides; it acts wherever a server runs, including the singleplayer world's own
+  server): the first time each kind of mob spawns in a session, the server thread loads and checks that mob's classes
+  and the classes of its behaviour, and when night falls many kinds spawn for the first time within seconds. Once a
+  server has started, a background thread now loads and links those classes ahead of time: the entity classes the
+  registered entity types create, mod classes built on Minecraft's goal, behaviour, sensor, navigation and control
+  types, and Minecraft's own entity and path-finding classes. Nothing is created and no static initializer runs.
+  The effect on the first night's lag spikes was measured on Forge 1.20.1; this port was checked for correctness, and
+  the timing was not repeated on 1.21.1.
 
 The Oculus-prefixed switches target Iris. The tested Iris pairing is Iris 1.8.12 with Sodium 0.6.13. Embeddium 1.0.15
 is tested separately; do not combine Embeddium with Sodium/Iris. Embeddium owns model bone lookup when installed.

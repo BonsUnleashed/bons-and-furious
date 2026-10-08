@@ -1,0 +1,48 @@
+{
+  "release": {
+    "old": {
+      "file": "<port>\\inputs\\published-1.0.34+mc1.21.1\\bons_and_furious-neoforge-1.0.34+mc1.21.1.jar",
+      "sha256": "28ce16731f1ef4192b5d25c5e6e6cb02b2d1d838b6b30d94d2fd423e6ec81895",
+      "entries": 735
+    },
+    "new": {
+      "file": "<port>\\source\\build\\libs\\bons_and_furious-neoforge-1.0.35+mc1.21.1.jar",
+      "sha256": "9c846abbf874ee01a7df2500b13363737afa4faa81f1800c6f0ca23275ce481a",
+      "entries": 738
+    },
+    "added": [
+      "bons/furious/mixin/vanilla_mob_warmup/ServerStartedWarmupMixin.class",
+      "bons/furious/patch/vanilla_mob_warmup/MobClassWarmup.class",
+      "bons_and_furious.vanilla_mob_warmup.mixins.json"
+    ],
+    "removed": [],
+    "changed": [
+      "META-INF/neoforge.mods.toml",
+      "bons_and_furious.default.properties",
+      "bons_and_furious.guards.tsv"
+    ],
+    "metadata_changed": [],
+    "same_order": true
+  },
+  "probe": {
+    "old": {
+      "file": "<port-1.0.34>\\source\\build\\libs\\bons-port-probe-1.jar",
+      "sha256": "9c11f849d035b42e8672513b76f9b758c13474d32599782e5a745cf44dc7dd2f",
+      "entries": 13
+    },
+    "new": {
+      "file": "<port>\\source\\build\\libs\\bons-port-probe-1.jar",
+      "sha256": "e372c5fdab481ec16bcbfdf5eb2b64127ce7429d3995610eddb61282c7695193",
+      "entries": 13
+    },
+    "added": [],
+    "removed": [],
+    "changed": [
+      "probe-server-keys.txt",
+      "probe-targets.json"
+    ],
+    "metadata_changed": [],
+    "same_order": true
+  },
+  "guard_table_identical": false
+}

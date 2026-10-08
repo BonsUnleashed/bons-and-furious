@@ -4,7 +4,7 @@ license="GPL-3.0-only"
 issueTrackerURL="https://github.com/BonsUnleashed/bons-and-furious/issues"
 [[mods]]
 modId="bons_and_furious"
-version="1.0.34+mc1.21.1"
+version="1.0.35+mc1.21.1"
 displayName="Bons and Furious"
 authors="BonsUnleashed"
 description="Targeted performance patches and compatibility fixes for Minecraft 1.21.1 and NeoForge."
@@ -302,6 +302,9 @@ config="bons_and_furious.vanilla_item_merge.mixins.json"
 
 [[mixins]]
 config="bons_and_furious.vanilla_long_jump.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.vanilla_mob_warmup.mixins.json"
 
 [[mixins]]
 config="bons_and_furious.vanilla_raycast.mixins.json"

@@ -237,6 +237,7 @@ mixin	bons.furious.mixin.vanilla_game_events.LevelChunkRegistriesAccessor	vanill
 mixin	bons.furious.mixin.vanilla_goal_flags.GoalSelectorFlagsMixin	vanilla_goal_flags_none_disabled
 mixin	bons.furious.mixin.vanilla_item_merge.ItemEntityMergeMixin	vanilla_item_merge_candidates
 mixin	bons.furious.mixin.vanilla_long_jump.LongJumpToRandomPosMixin	vanilla_long_jump_weighted_pick
+mixin	bons.furious.mixin.vanilla_mob_warmup.ServerStartedWarmupMixin	vanilla_mob_class_warmup
 mixin	bons.furious.mixin.vanilla_raycast.ClipContextAccessor	vanilla_raycast_fluid_none
 mixin	bons.furious.mixin.vanilla_raycast.LevelClipMixin	vanilla_raycast_fluid_none
 mixin	bons.furious.mixin.vanilla_search.HoglinRepellentSearchMixin	vanilla_repellent_search_sections
@@ -399,6 +400,7 @@ mod	vanilla_goal_flags_none_disabled	minecraft
 mod	vanilla_item_merge_candidates	minecraft
 mod	vanilla_layer_bake_streamless	minecraft
 mod	vanilla_long_jump_weighted_pick	minecraft
+mod	vanilla_mob_class_warmup	minecraft
 mod	vanilla_model_bone_lookup	minecraft
 mod	vanilla_noise_column_cache	minecraft
 mod	vanilla_noise_wrap_presize	minecraft
@@ -1612,6 +1614,7 @@ guard	vanilla_long_jump_weighted_pick	net/minecraft/util/random/WeightedRandom	g
 guard	vanilla_long_jump_weighted_pick	net/minecraft/util/random/WeightedRandom	getRandomItem	(Lnet/minecraft/util/RandomSource;Ljava/util/List;I)Ljava/util/Optional;	607442d6bd62d02cb04742105187fa8b2ff34332dc31dbc635d21d7460682169
 guard	vanilla_long_jump_weighted_pick	net/minecraft/util/random/WeightedRandom	getTotalWeight	(Ljava/util/List;)I	aacf2fb2dd646af021b0e15886295fbc23d08965c748a0bb7c226d0cbf2197c3
 guard	vanilla_long_jump_weighted_pick	net/minecraft/util/random/WeightedRandom	getWeightedItem	(Ljava/util/List;I)Ljava/util/Optional;	a51d1a1324a97db3b7b8c4e3139f8098ca77e4babccfd9b3e66a3683f368ce0d
+guard	vanilla_mob_class_warmup	net/neoforged/neoforge/server/ServerLifecycleHooks	handleServerStarted	(Lnet/minecraft/server/MinecraftServer;)V	fc758e47b8a2e218aab25734e7aa86a4e22afb5b3eeccaf31aaacc33fc82b999
 guard	vanilla_model_bone_lookup	net/minecraft/client/model/HierarchicalModel	getAnyDescendantWithName	(Ljava/lang/String;)Ljava/util/Optional;	6e46e52d6aeafebf133c561e4f4246a1d48d428084777edf29a2f063ae70ee86
 guard	vanilla_model_bone_lookup	net/minecraft/client/model/geom/ModelPart	getAllParts	()Ljava/util/stream/Stream;	f16cd99637b15f2e778634bb7541d512c170ee58cafee3aefa2686fd8cffc92e
 guard	vanilla_model_bone_lookup	net/minecraft/client/model/geom/ModelPart	hasChild	(Ljava/lang/String;)Z	8f6f941f1316e6aa005cf3fd00bf4cf398edb9c4bbfa7810c95c2b1feefb8f56

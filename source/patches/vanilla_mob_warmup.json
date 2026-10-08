@@ -1,0 +1,25 @@
+{
+  "group": "vanilla_mob_warmup",
+  "keys": {
+    "vanilla_mob_class_warmup": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.35",
+      "mixins": [
+        "bons.furious.mixin.vanilla_mob_warmup.ServerStartedWarmupMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/neoforged/neoforge/server/ServerLifecycleHooks",
+          "method": "handleServerStarted",
+          "desc": "(Lnet/minecraft/server/MinecraftServer;)V",
+          "note": "the hook: posts ServerStartedEvent, then opens logins",
+          "sha256": "fc758e47b8a2e218aab25734e7aa86a4e22afb5b3eeccaf31aaacc33fc82b999"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at RETURN of NeoForge's ServerLifecycleHooks.handleServerStarted: starts the once-per-JVM background warm-up (helper bons.furious.patch.vanilla_mob_warmup.MobClassWarmup); the method itself runs unchanged",
+      "license": "Minecraft (Mojang) and NeoForge: no code of either is carried; the helper is our own and only loads and links classes (ASM reads class headers and factory lambdas from the class loader's resources)"
+    }
+  }
+}

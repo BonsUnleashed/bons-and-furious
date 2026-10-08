@@ -1,5 +1,5 @@
 {
-  "jar": "<port>\\source\\build\\libs\\bons_and_furious-neoforge-1.0.34+mc1.21.1.jar",
+  "jar": "<port>\\source\\build\\libs\\bons_and_furious-neoforge-1.0.35+mc1.21.1.jar",
   "record_sources": [
     "<port>\\runtime\\production-client\\libraries\\net\\minecraft\\client\\1.21.1-20240808.144430\\client-1.21.1-20240808.144430-srg.jar",
     "<port>\\runtime\\production-client\\libraries\\net\\neoforged\\neoforge\\21.1.252\\neoforge-21.1.252-universal.jar",
@@ -11,7 +11,7 @@
     "<port>\\sweep-extra"
   ],
   "records_known": 4160,
-  "mixin_classes": 254,
+  "mixin_classes": 255,
   "findings": [
     {
       "mixin": "bons/furious/mixin/climate_columns/ClimateSamplerPartsMixin",

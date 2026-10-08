@@ -1,0 +1,36 @@
+{
+  "final": {
+    "sha256": "a424ab941346ac4709b1664f781739621d3ca83bc2d817aa92a2b6f8860f847d",
+    "jar": "bons_and_furious-1.0.35.jar",
+    "frozen": "2026-10-08 19:52",
+    "final_dir": "<workspace>/projects/furious_1035_mobwarmup_20261008\\final",
+    "source": "<port>\\inputs\\forge-1.0.35-a424ab94\\source"
+  },
+  "copy_vs_final": {
+    "only_in_copy": [],
+    "only_in_final": [],
+    "changed": []
+  },
+  "files_compared": 975,
+  "accounted": {
+    "forge_controls": 255,
+    "inventory": 255,
+    "missing_from_inventory": [],
+    "not_in_forge": [],
+    "patch_keys_not_in_forge": [],
+    "port_defaults_not_in_forge": [],
+    "port_defaults_differ": {},
+    "ported_without_default": []
+  },
+  "forge_1034_to_1035": {
+    "keys_added": [
+      "vanilla_mob_class_warmup"
+    ],
+    "keys_removed": [],
+    "keys_changed": {},
+    "defaults_changed": {}
+  },
+  "decisions_for_added_keys": {
+    "vanilla_mob_class_warmup": "ported"
+  }
+}

@@ -1,6 +1,6 @@
 # Minecraft 1.21.1 port coverage
 
-All 254 controls of Bons and Furious 1.0.34 (127 from 1.0.27, 127 added in 1.0.28 and later) are accounted for: 170 ported, 42 retired because the 1.21.1 target changed or was fixed upstream, 42 target mods unavailable for Minecraft 1.21.1 / NeoForge.
+All 255 controls of Bons and Furious 1.0.35 (127 from 1.0.27, 128 added in 1.0.28 and later) are accounted for: 171 ported, 42 retired because the 1.21.1 target changed or was fixed upstream, 42 target mods unavailable for Minecraft 1.21.1 / NeoForge.
 
 | Control | Added | Status | Explanation |
 | --- | --- | --- | --- |
@@ -242,6 +242,7 @@ All 254 controls of Bons and Furious 1.0.34 (127 from 1.0.27, 127 added in 1.0.2
 | `vanilla_item_merge_candidates` | 1.0.30 | ported | Adapted to 1.21.1's areMergable order (count test, then isSameItemSameComponents) and NeoForge's IItemExtension; steps aside for Radium's item-merging mixin. |
 | `vanilla_layer_bake_streamless` | 1.0.30 | ported | PartDefinition.bake is unchanged on 1.21.1 and Guava 32.1.2's toImmutableList is still builder/add/build. |
 | `vanilla_long_jump_weighted_pick` | 1.0.30 | ported | Targets identical on 1.21.1; steps aside for Radium 0.13.1's long_jump_weighted_choice mixin (on by default, so with default Radium this switch yields). |
+| `vanilla_mob_class_warmup` | 1.0.35 | ported | NeoForge 21.1.252 calls ServerLifecycleHooks.handleServerStarted once a server has started, as Forge 47 does, and its scan data, mod list and game jar have the same shape; the entity types come from the game registry instead of ForgeRegistries. The warm-up only loads and links classes, on a background thread, after the server has started. |
 | `vanilla_model_bone_lookup` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `vanilla_noise_column_cache` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `vanilla_noise_wrap_presize` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
