@@ -4,13 +4,13 @@
 
 **Your CPU lives its life one tick at a time.**
 
-[**Forge 1.20.1: 1.0.34**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.34) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
+[**Forge 1.20.1: 1.0.35**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.35) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
 
 Bons and Furious reduces repeated work in Minecraft and optional mods. Each optimization or fix has its own switch in one config file. Choose the build for your Minecraft version and loader.
 
 | Minecraft | Loader | Controls | Requirements |
 | --- | --- | ---: | --- |
-| 1.20.1 | Forge | 254 | Forge 47.3.22 or newer |
+| 1.20.1 | Forge | 255 | Forge 47.3.22 or newer |
 | 1.21.1 | NeoForge | 170 | Java 21; NeoForge 21.1.252 or newer |
 
 Both builds use one JAR for client and server, with no required target mods.
@@ -54,11 +54,11 @@ Every run, the retained earlier results, the baseline mod versions and the metho
 
 ## What the Forge 1.20.1 build does
 
-- **219 optimizations** reduce repeated work: fewer allocations, no repeated lookups, no state rebuilt only to come out identical. Terrain preparation, ground-height estimates, climate lookups, Distant Horizons' rough-surface generation, chunk render layers, ship chunk bookkeeping, shader graph resets, animation easing and event dispatch are the largest. Eight controls restore or provide compatible versions of performance paths disabled in the tested setup, including Radium, ModernFix, ImmediatelyFast and Distant Horizons integrations. Each checks the relevant mod builds and configuration.
+- **220 optimizations** reduce repeated work: fewer allocations, no repeated lookups, no state rebuilt only to come out identical. Terrain preparation, ground-height estimates, climate lookups, Distant Horizons' rough-surface generation, chunk render layers, ship chunk bookkeeping, shader graph resets, animation easing and event dispatch are the largest. Eight controls restore or provide compatible versions of performance paths disabled in the tested setup, including Radium, ModernFix, ImmediatelyFast and Distant Horizons integrations. Each checks the relevant mod builds and configuration.
 - **31 fixes** repair reproduced server freezes, worker-thread crashes, generation exceptions and defects in the target mods themselves: large mobs whose solid body parts could be walked through with Radium, caches that two threads could corrupt, data that piled up on every world join.
 - **4 deliberate changes** (frame pacing, the Occult bed scan, Fowl Play flight targets, Scorched sandcrab processing) trade a documented behaviour difference for a large saving.
 
-All 254 are listed in `config/bons_and_furious.properties` with their target mod, tested build, side and measurement. Set any key to `false` and restart. Every control is explained in the [wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki).
+All 255 are listed in `config/bons_and_furious.properties` with their target mod, tested build, side and measurement. Set any key to `false` and restart. Every control is explained in the [wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki).
 
 ## Forge 1.20.1 results, per patch
 
@@ -109,7 +109,7 @@ For Minecraft 1.21.1, use `bons_and_furious-neoforge-1.0.34+mc1.21.1.jar`, Java 
 
 For Minecraft 1.20.1 / Forge:
 
-1. Download `bons_and_furious-1.0.34.jar` from the [1.0.34 release](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.34) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load. The two small mixin libraries it uses, MixinExtras and MixinSquared, are bundled inside it.
+1. Download `bons_and_furious-1.0.35.jar` from the [1.0.35 release](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.35) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load. The two small mixin libraries it uses, MixinExtras and MixinSquared, are bundled inside it.
 2. Start once. The mod writes its config file with its defaults (every switch on except `vanilla_background_level_dat`) and logs how many controls are enabled.
 3. To turn one off, set its key to `false` and restart. Client-only patches (renderer, shaders, ambience) never load on a dedicated server.
 
@@ -149,11 +149,11 @@ switch's mixins and guarded methods are listed in `patches/<mod>.json`.
 
 Licensed GPL-3.0-only ([LICENSE](LICENSE)). Upstream attribution is in [NOTICE.md](NOTICE.md); the tested dependency builds are listed in [upstream-credits.json](upstream-credits.json).
 
-The 1.0.34 release JAR was tested in client and dedicated-server copies of the reference pack before release. The whole-pack benchmark above was measured with 1.0.26; its snapshot had 510 client and 471 server mod JARs.
+The 1.0.35 release JAR was tested in client and dedicated-server copies of the reference pack before release. The whole-pack benchmark above was measured with 1.0.26; its snapshot had 510 client and 471 server mod JARs.
 
 ### Upstream pull requests
 
-Pull requests sent to the projects this mod patches: 10 merged, 86 open, 14 closed without merge (status checked 6 October 2026).
+Pull requests sent to the projects this mod patches: 10 merged, 86 open, 15 closed without merge (status checked 9 October 2026).
 
 | Project | Pull requests | Status |
 | --- | --- | --- |
@@ -185,8 +185,9 @@ Pull requests sent to the projects this mod patches: 10 merged, 86 open, 14 clos
 | Farmer's Delight | [#1397](https://github.com/vectorwing/FarmersDelight/pull/1397), [#1398](https://github.com/vectorwing/FarmersDelight/pull/1398) | Open |
 | FDBosses | [#42](https://github.com/FINDERFEED/FDBosses/pull/42) | Open |
 | Forge | [#10893](https://github.com/MinecraftForge/MinecraftForge/pull/10893), [#10894](https://github.com/MinecraftForge/MinecraftForge/pull/10894) | Merged |
-| Forge | [#10895](https://github.com/MinecraftForge/MinecraftForge/pull/10895) | Open |
+| Forge | [#10895](https://github.com/MinecraftForge/MinecraftForge/pull/10895) | Closed without merge. Withdrawn in favour of #10899 on the 26.3 branch, with the design the maintainer asked for. |
 | Forge | [#10896](https://github.com/MinecraftForge/MinecraftForge/pull/10896) | Closed without merge. Withdrawn: too little left to gain after #10893. |
+| Forge | [#10899](https://github.com/MinecraftForge/MinecraftForge/pull/10899) | Open |
 | Fowl Play | [#242](https://github.com/aqariio/Fowl-Play/pull/242), [#243](https://github.com/aqariio/Fowl-Play/pull/243) | Open |
 | Fusion | [#316](https://github.com/SuperMartijn642/Fusion/pull/316), [#317](https://github.com/SuperMartijn642/Fusion/pull/317), [#318](https://github.com/SuperMartijn642/Fusion/pull/318) | Open |
 | Hostile Villages | [#37](https://github.com/someaddons/HostileVillages/pull/37), [#38](https://github.com/someaddons/HostileVillages/pull/38) | Open |
