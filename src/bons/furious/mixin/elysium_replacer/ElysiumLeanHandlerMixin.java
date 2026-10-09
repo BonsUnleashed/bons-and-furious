@@ -28,6 +28,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * modified version of its handler (see ElysiumLean for what changed and why the result is the same). In shadow mode the
  * body runs as shipped; the call to its getCurrentBiome is wrapped to remember the biome it computed, and at its RETURN
  * the lean decision is compared with what it did. Priority 1500: applied after ElysiumAPI's mixin (priority 996).
+ *
+ * Since 1.0.38 the HEAD injection is optional like the other two (require = 0): Collections Of Optimizations 4.6 cancels
+ * ElysiumAPI's mixin through MixinSquared, so its handler never reaches the class and a required injection stopped the
+ * game at start. The switch's guard steps aside first when it sees such a canceller (Guards.cancelledDecision); if a
+ * handler is missing anyway, nothing here is injected and postApply logs it (Guards.HANDLER_HOST).
  */
 @Mixin(value = MultiNoiseBiomeSource.class, priority = 1500, remap = false)
 public abstract class ElysiumLeanHandlerMixin {
@@ -35,7 +40,7 @@ public abstract class ElysiumLeanHandlerMixin {
     private static final ThreadLocal<Holder<Biome>> bons$elShadowCurrent = new ThreadLocal<>();
 
     @TargetHandler(mixin = "net.jadenxgamer.elysium_api.impl.mixin.biome.MultiNoiseBiomeSourceMixin", name = "elysium$getNoiseBiome")
-    @Inject(method = "@MixinSquared:Handler", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "@MixinSquared:Handler", at = @At("HEAD"), cancellable = true, require = 0, expect = 0)
     private void bons$elLean(int x, int y, int z, Climate.Sampler sampler, CallbackInfoReturnable<Holder<Biome>> theirs, CallbackInfo ci) {
         if (!ElysiumLean.enabled || ElysiumLean.SHADOW) return;
         Holder<Biome> current = ElysiumLean.terraBlender()

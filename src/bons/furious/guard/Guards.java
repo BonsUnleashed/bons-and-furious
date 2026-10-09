@@ -39,6 +39,8 @@ import org.spongepowered.asm.service.MixinService;
  *   this switch would replace    switch would replace; CLASS is left unchanged by this switch"   (since 1.0.30)
  *   a class one mixin names is   "Bons and Furious: KEY: MIXIN is left out because CLASS is not installed; TARGET is left
  *   not installed                unchanged by it"   (since 1.0.34, REQUIRED_CLASS; the switch's other mixins apply)
+ *   another mod cancels the mixin "Bons and Furious: KEY steps aside: MOD VERSION (CANCELLER) cancels OWNER's MIXIN, the mixin
+ *   the switch changes           this switch changes; CLASS is left unchanged by this switch"   (since 1.0.38)
  *
  * The decision is all or nothing per switch, so a patch spread over several classes never applies halfway.
  */
@@ -64,7 +66,8 @@ public final class Guards {
     private static final Map<String, Set<String>> WANTED = new LinkedHashMap<>();
     private static final Map<String, java.util.Optional<ClassPrints>> PRINTS = new ConcurrentHashMap<>();
 
-    private record ClassPrints(Map<String, String> methods, String shape) {}
+    /** mixinTargets (since 1.0.38): the classes a mixin class targets (its @Mixin value and targets), null for any other class. */
+    private record ClassPrints(Map<String, String> methods, String shape, List<String> mixinTargets) {}
     /**
      * Since 1.0.28: methods a switch's fast path needs exactly as shipped, also after every other mod's mixins (its probe
      * mixin -> owner, name, desc). The probe is the switch's highest-priority mixin on that class, so Mixin applies it after
@@ -304,8 +307,23 @@ public final class Guards {
      */
     public static volatile boolean countSyncBroadcastForeign;
 
+    /**
+     * Since 1.0.38: a mixin of ours whose injectors all work inside one handler of another mod's mixin (MixinSquared
+     * @TargetHandler, require = 0) -> {that mixin, the handler's name}. When the handler is not in the class (another mod
+     * removed that mixin and cancelledDecision could not tell in advance), the injectors found nothing to change and the
+     * class is exactly as the other mods left it; postApply then logs one line instead of the game stopping at start.
+     */
+    private static final Map<String, String[]> HANDLER_HOST = Map.of(
+            "bons.furious.mixin.elysium_replacer.ElysiumLeanHandlerMixin", new String[] {
+                    "net.jadenxgamer.elysium_api.impl.mixin.biome.MultiNoiseBiomeSourceMixin", "elysium$getNoiseBiome"});
+
     /** IMixinConfigPlugin.postApply: one line when a STAND_DOWN injector found the method replaced by another mod. */
     public static void checkStandDown(String mixinClass, ClassNode target) {
+        String[] host = HANDLER_HOST.get(mixinClass);
+        if (host != null) {
+            checkHandlerHost(mixinClass, target, host);
+            return;
+        }
         String[] f = FOREIGN_OVERWRITE.get(mixinClass);
         if (f != null) {
             checkForeignOverwrite(mixinClass, target, f);
@@ -327,6 +345,19 @@ public final class Guards {
                 LOGGER.info("Bons and Furious: {} steps aside: {} already replaces {}.{}; that method is left to it",
                         key, by, target.name.replace('/', '.'), s[0]);
             return;
+        }
+    }
+
+    /** IMixinConfigPlugin.postApply for a HANDLER_HOST mixin (since 1.0.38): one line when the other mod's handler is not in the class. */
+    private static void checkHandlerHost(String mixinClass, ClassNode target, String[] host) {
+        String key = keyOf(mixinClass);
+        if (key == null) return;
+        for (MethodNode m : target.methods)
+            if (m.name.endsWith("$" + host[1]) && host[0].equals(CallSites.mergedBy(m))) return;   // the handler is there
+        if (LOGGED.add("host|" + key + "|" + target.name)) {
+            String owner = CallSites.modOf(host[0]);
+            LOGGER.info("Bons and Furious: {} steps aside: {}{} is not in {} (another mod removed it), so this switch has nothing to change there",
+                    key, owner == null ? "" : owner + "'s ", simpleName(host[0]), target.name.replace('/', '.'));
         }
     }
 
@@ -426,11 +457,78 @@ public final class Guards {
         }
         if (!problems.isEmpty()) return new Decision(State.MISMATCH, String.join(", ", problems.subList(0, Math.min(3, problems.size())))
                 + (problems.size() > 3 ? " and " + (problems.size() - 3) + " more" : ""));
+        Decision c = cancelledDecision(guard);
+        if (c != null) return c;
         Decision h = handlerDecision(key);
         if (h != null) return h;
         Decision y = ForeignPatches.yieldDecision(YIELDS.get(key));
         if (y != null) return y;
         return new Decision(State.APPLY, "all " + guard.size() + " fingerprints match");
+    }
+
+    /**
+     * Since 1.0.38: a switch that changes another mod's mixin (it guards that mixin class, and its MixinSquared
+     * @TargetHandler injectors work inside the handlers that mixin merges into its target) steps aside when another mod's
+     * MixinSquared canceller removes that mixin. The handlers then never reach the target class while the fingerprints of
+     * the mixin's class file still match, and a required injector stops the game at start ("Critical injection failure
+     * ... @MixinSquared:Handler"). Reported with Collections Of Optimizations 4.6, whose ElysiumBiomeReplacerHookCanceller
+     * removes ElysiumAPI's MultiNoiseBiomeSourceMixin, which elysium_lean_replacer (1.0.36) changes. MixinSquared registers
+     * every canceller in its config plugin's onLoad, which Mixin runs for every config before it prepares any config's
+     * mixins (where this decision is made), so the answer here is the one MixinSquared applies to the target later. A mixin
+     * in our own cancel lines is never asked about: our canceller would decide its switch, possibly the one decided here.
+     */
+    private static Decision cancelledDecision(List<String[]> guard) {
+        Set<String> asked = new java.util.HashSet<>();
+        for (String[] g : guard) {
+            if (isGameClass(g[0]) || !asked.add(g[0])) continue;
+            ClassPrints p = prints(g[0]);
+            String mixin = g[0].replace('/', '.');
+            if (p == null || p.mixinTargets() == null || CANCEL.containsKey(mixin)) continue;
+            String canceller = cancelledBy(p.mixinTargets(), mixin);
+            if (canceller == null) continue;
+            String mod = CallSites.modOf(canceller), owner = CallSites.modOf(mixin);
+            return new Decision(State.YIELD, (mod == null ? "" : mod + " ") + "(" + simpleName(canceller) + ") cancels "
+                    + (owner == null ? "" : owner + "'s ") + simpleName(mixin) + ", the mixin this switch changes");
+        }
+        return null;
+    }
+
+    /** The class name of a MixinSquared canceller that removes the mixin from these targets; null when none does or MixinSquared cannot be asked. */
+    private static String cancelledBy(List<String> targets, String mixin) {
+        try {
+            String[] by = new String[1];
+            boolean cancelled = com.bawnorton.mixinsquared.canceller.MixinCancellerRegistrar.shouldCancel(targets, mixin, c -> {
+                if (by[0] == null) by[0] = c;
+            });
+            return !cancelled ? null : by[0] != null ? by[0] : "MixinCanceller";
+        } catch (Throwable t) {
+            LOGGER.debug("Bons and Furious: could not ask MixinSquared whether {} is cancelled ({})", mixin, t.toString());
+            return null;
+        }
+    }
+
+    /** The classes a mixin class targets (dotted, as MixinSquared passes them to a canceller), or null when the class has no @Mixin. */
+    private static List<String> mixinTargets(ClassNode node) {
+        List<AnnotationNode> all = new ArrayList<>();
+        if (node.invisibleAnnotations != null) all.addAll(node.invisibleAnnotations);
+        if (node.visibleAnnotations != null) all.addAll(node.visibleAnnotations);
+        for (AnnotationNode a : all) {
+            if (!a.desc.equals("Lorg/spongepowered/asm/mixin/Mixin;")) continue;
+            List<String> out = new ArrayList<>();
+            for (int i = 0; a.values != null && i + 1 < a.values.size(); i += 2) {
+                if (!(a.values.get(i + 1) instanceof List<?> list)) continue;   // value / targets; priority and remap are not lists
+                for (Object o : list) {
+                    if (o instanceof org.objectweb.asm.Type t) out.add(t.getClassName());
+                    else if (o instanceof String s) out.add(s.replace('/', '.'));
+                }
+            }
+            return out;
+        }
+        return null;
+    }
+
+    private static String simpleName(String className) {
+        return className.substring(className.lastIndexOf('.') + 1);
     }
 
     /** Minecraft, Mojang and Forge classes: present in every pack, so their absence says nothing about the target mod. */
@@ -458,7 +556,7 @@ public final class Guards {
                     if ((x.name + x.desc).equals(want)) { methods.put(want, Fingerprint.of(x)); break; }
                 }
             }
-            p = new ClassPrints(methods, shape);
+            p = new ClassPrints(methods, shape, mixinTargets(node));
         }
         PRINTS.putIfAbsent(internalName, java.util.Optional.ofNullable(p));
         return PRINTS.get(internalName).orElse(null);
