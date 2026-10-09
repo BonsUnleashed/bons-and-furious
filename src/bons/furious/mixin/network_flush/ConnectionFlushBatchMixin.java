@@ -25,9 +25,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * (same queue, same order, no wakeup) wrapped in a BatchedWrite, and doSendPacket (m_243087_), run by that task, writes
  * the packet with Channel.write instead of writeAndFlush unless it switches the protocol. Everything else in these
  * methods, including other mods' hooks (ModernFix's smart_ingredient_sync wrapper and Bad Packets' listener on the write
- * future), runs unchanged. tick (m_129483_) opens a batch for this connection's own tick; its closing Channel.flush is the
- * batch's flush. 1.0.34: disconnect (m_129507_) first flushes the packets the batch wrote for this connection, so a kick
- * reason sent right before the close still leaves (FlushBatch.beforeDisconnect). Four fields; no Minecraft code is carried.
+ * future), runs unchanged. tick (m_129483_) opens a batch for this connection's own tick, and the batch's end flushes the
+ * packets it handed over. 1.0.36: tick's own Channel.flush is no longer taken as that flush (1.0.30-1.0.35 wrapped it and
+ * then skipped the connection at the batch's end). Other mods may remove that flush - VMP's networking.no_flush, carried by
+ * HariPlayer 2.0, redirects it to nothing - and then the batched login packets were never written nor the event loop
+ * woken: every login stalled until "Took too long to log in" (an endless loading screen with Connectivity's longer login
+ * timeout). 1.0.34: disconnect (m_129507_) first flushes the packets the batch wrote for this connection, so a kick reason
+ * sent right before the close still leaves (FlushBatch.beforeDisconnect). Four fields; no Minecraft code is carried.
  */
 @Mixin(value = Connection.class, remap = false)
 public abstract class ConnectionFlushBatchMixin implements FlushBatch.Member {
@@ -95,13 +99,6 @@ public abstract class ConnectionFlushBatchMixin implements FlushBatch.Member {
         if (!this.bons$writeOnly) return original.call(channel, message);
         this.bons$writeOnly = false;
         return channel.write(message);
-    }
-
-    @WrapOperation(method = "m_129483_", at = @At(value = "INVOKE", target = "Lio/netty/channel/Channel;flush()Lio/netty/channel/Channel;"))
-    private Channel bons$tickFlush(Channel channel, Operation<Channel> original) {
-        Channel result = original.call(channel);
-        FlushBatch.flushedByMinecraft((Connection) (Object) this);
-        return result;
     }
 
     @WrapMethod(method = "m_129483_")

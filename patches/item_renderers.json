@@ -1,0 +1,688 @@
+{
+  "group": "item_renderers",
+  "keys": {
+    "aquaculture_item_renderer_reuse": {
+      "mod": "aquaculture",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.item_renderers.AquacultureRendererMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/teammetallurgy/aquaculture/item/BlockItemWithoutLevelRenderer$1",
+          "method": "getCustomRenderer",
+          "desc": "()Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;",
+          "sha256": "c2ba7c989b7a0f503859b8e09442d412bfd58236f708a8d17641d638f853e9b9"
+        },
+        {
+          "class": "com/teammetallurgy/aquaculture/client/renderer/AquaItemRenderer",
+          "method": "*",
+          "desc": "",
+          "sha256": "24d90996cdab375c3751eefbe0706312b6415be9acb17984ffe6306b3fab1840"
+        },
+        {
+          "class": "com/teammetallurgy/aquaculture/client/renderer/AquaItemRenderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/model/geom/EntityModelSet;)V",
+          "sha256": "a9ced57ba86e0051263cde676c29064c31434822ecd52b3ed2b7acba42ade2c0"
+        },
+        {
+          "class": "com/teammetallurgy/aquaculture/client/renderer/AquaItemRenderer",
+          "method": "m_108829_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "fe715a9a76f2b521e19e281807ec9d89adab8d73539dd25a82f7acb852195d09"
+        },
+        {
+          "class": "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/model/geom/EntityModelSet;)V",
+          "sha256": "68199b9ee299d6851d836f33cb03ac4911ab09dcac7ac36ed8ceffc9adea74b8"
+        },
+        {
+          "class": "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer",
+          "method": "m_108829_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "cd0de3d5db77c84ac38e7de0c22c149700987bfd8421a2080c1fdee2cc88167b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on getCustomRenderer() of 1 site class(es) (a NEW AquaItemRenderer per call in the original): on the render thread, while no client resource reload is in flight and item_renderer_reload_tracker has seen the start-up reload, the site hands out one instance per extensions object, built by the original call and dropped at the start and end of every reload; any other thread, an in-flight reload, the switch off or a renderer of another class -> the original call",
+      "license": "Aquaculture (All Rights Reserved per mods.toml): no Aquaculture code carried; the mixin only wraps getCustomRenderer with our own logic; helper bons.furious.patch.item_renderers.ItemRendererReuse"
+    },
+    "netherexp_item_renderer_reuse": {
+      "mod": "netherexp",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.item_renderers.NetherExpRendererMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/jadenxgamer/netherexp/registry/item/custom/JackhammerFistItem$1",
+          "method": "getCustomRenderer",
+          "desc": "()Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;",
+          "sha256": "923089a5d26720508394b48f36d3c2e98350e58a72f99516943f3d6ebf92a7ea"
+        },
+        {
+          "class": "net/jadenxgamer/netherexp/registry/item/custom/PumpChargeShotgunItem$1",
+          "method": "getCustomRenderer",
+          "desc": "()Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;",
+          "sha256": "923089a5d26720508394b48f36d3c2e98350e58a72f99516943f3d6ebf92a7ea"
+        },
+        {
+          "class": "net/jadenxgamer/netherexp/registry/item/custom/ShotgunFistItem$1",
+          "method": "getCustomRenderer",
+          "desc": "()Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;",
+          "sha256": "923089a5d26720508394b48f36d3c2e98350e58a72f99516943f3d6ebf92a7ea"
+        },
+        {
+          "class": "net/jadenxgamer/netherexp/registry/item/JNEItemRenderer",
+          "method": "*",
+          "desc": "",
+          "sha256": "a2971b3d6ffcebeb14779540d81dff1d8246696774ab4b3151aea2fa608b46ca"
+        },
+        {
+          "class": "net/jadenxgamer/netherexp/registry/item/JNEItemRenderer",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "540da34abc8406d16a49203776e4b94a13657dc63b2afe086a0c163b4bc2576b"
+        },
+        {
+          "class": "net/jadenxgamer/netherexp/registry/item/JNEItemRenderer",
+          "method": "m_108829_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "1395e0cde90489823436b87b39f5ae814c43451ee220d7c7e6a4529504424fc8"
+        },
+        {
+          "class": "net/jadenxgamer/netherexp/registry/item/JNEItemRenderer",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "b9dc43ddc3b8afd6b9678431c73339ccf39cccce65cd47c3d64a436b0d61b0ea"
+        },
+        {
+          "class": "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/model/geom/EntityModelSet;)V",
+          "sha256": "68199b9ee299d6851d836f33cb03ac4911ab09dcac7ac36ed8ceffc9adea74b8"
+        },
+        {
+          "class": "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer",
+          "method": "m_108829_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "cd0de3d5db77c84ac38e7de0c22c149700987bfd8421a2080c1fdee2cc88167b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on getCustomRenderer() of 3 site class(es) (a NEW JNEItemRenderer per call in the original): on the render thread, while no client resource reload is in flight and item_renderer_reload_tracker has seen the start-up reload, the site hands out one instance per extensions object, built by the original call and dropped at the start and end of every reload; any other thread, an in-flight reload, the switch off or a renderer of another class -> the original call",
+      "license": "Jaden's Nether Expansion (CC-BY-NC-SA-4.0): no Nether Expansion code carried; the mixin only wraps getCustomRenderer with our own logic; helper bons.furious.patch.item_renderers.ItemRendererReuse"
+    },
+    "cataclysm_item_renderer_reuse": {
+      "mod": "cataclysm",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.item_renderers.CataclysmRendererMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/item/CMItemRenderProperties",
+          "method": "getCustomRenderer",
+          "desc": "()Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;",
+          "sha256": "5845857da61e85f19e0b294abc5bd87a8eb934fc46432c77424a21f11acd83cc"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/CMItemstackRenderer",
+          "method": "*",
+          "desc": "",
+          "sha256": "5f202ffb9d8cba27e0196020bd934403b44643bf12acff1c55fd2d29a8975005"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/CMItemstackRenderer",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "eb344d6cfce10c3ff1289beb88c998521eadb55701f6bf7c5e3a3ed594c1c256"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/CMItemstackRenderer",
+          "method": "m_6213_",
+          "desc": "(Lnet/minecraft/server/packs/resources/ResourceManager;)V",
+          "sha256": "3abd777b76709b449ab01e71cb645540b428d2a09b3d66b39ae5cfde8a43f763"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/CMItemstackRenderer",
+          "method": "incrementTick",
+          "desc": "()V",
+          "sha256": "15d66c32c377bf6728a8ca6c520b8488d3de290f9c9e99bd503719cae1cebaae"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/CMItemstackRenderer",
+          "method": "m_108829_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "b9f001b9ce3f2c0c0be173dd3925909e4e828fb38a7269bb1d9f970cf596f759"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/CMItemstackRenderer",
+          "method": "renderMapHand",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/HumanoidArm;)V",
+          "sha256": "d8bb3421683f8fa0b52486c2a89e4b2d4bda68cff036e14926ea379a62977ca6"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/CMItemstackRenderer",
+          "method": "getIdleTexture",
+          "desc": "(I)Lnet/minecraft/resources/ResourceLocation;",
+          "sha256": "db46de47b85fc0a9e0fede59e9a886d2a34ceff697eb83c8345506c67705ca34"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/CMItemstackRenderer",
+          "method": "lambda$static$0",
+          "desc": "(Ljava/util/HashMap;)V",
+          "sha256": "0c5c5dc703664d8bd84f96b190b125b9e95fcbe66aec1ca2ada1c06311713cb9"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/CMItemstackRenderer",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "317f568536c6eb39756f72fa51170514a4a4be406dd9c136ed6ea2b7310bf6fd"
+        },
+        {
+          "class": "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/model/geom/EntityModelSet;)V",
+          "sha256": "68199b9ee299d6851d836f33cb03ac4911ab09dcac7ac36ed8ceffc9adea74b8"
+        },
+        {
+          "class": "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer",
+          "method": "m_108829_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "cd0de3d5db77c84ac38e7de0c22c149700987bfd8421a2080c1fdee2cc88167b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on getCustomRenderer() of 1 site class(es) (a NEW CMItemstackRenderer per call in the original): on the render thread, while no client resource reload is in flight and item_renderer_reload_tracker has seen the start-up reload, the site hands out one instance per extensions object, built by the original call and dropped at the start and end of every reload; any other thread, an in-flight reload, the switch off or a renderer of another class -> the original call",
+      "license": "L_Ender's Cataclysm (CC-BY-NC-ND-4.0): no Cataclysm code carried; the mixin only wraps getCustomRenderer with our own logic; helper bons.furious.patch.item_renderers.ItemRendererReuse"
+    },
+    "rats_item_renderer_reuse": {
+      "mod": "rats",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.item_renderers.RatsRendererMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/rats/server/items/RatsBlockItem$1",
+          "method": "getCustomRenderer",
+          "desc": "()Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;",
+          "sha256": "ad40283ba1dbeb7b96846f3fa9eeeb05b218e28efca3c649e741c3e16f9891e1"
+        },
+        {
+          "class": "com/github/alexthe666/rats/client/render/RatsBEWLR",
+          "method": "*",
+          "desc": "",
+          "sha256": "83836be74dfb40dcc000b2e5aad22e31d47307a55ea3bd20d5ad582f842514c3"
+        },
+        {
+          "class": "com/github/alexthe666/rats/client/render/RatsBEWLR",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "540da34abc8406d16a49203776e4b94a13657dc63b2afe086a0c163b4bc2576b"
+        },
+        {
+          "class": "com/github/alexthe666/rats/client/render/RatsBEWLR",
+          "method": "m_108829_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "ef577cc3df9a81d9e9759013d67146f5077fd7f4964a032a5f4f50794d69e76d"
+        },
+        {
+          "class": "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/model/geom/EntityModelSet;)V",
+          "sha256": "68199b9ee299d6851d836f33cb03ac4911ab09dcac7ac36ed8ceffc9adea74b8"
+        },
+        {
+          "class": "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer",
+          "method": "m_108829_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "cd0de3d5db77c84ac38e7de0c22c149700987bfd8421a2080c1fdee2cc88167b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on getCustomRenderer() of 1 site class(es) (a NEW RatsBEWLR per call in the original): on the render thread, while no client resource reload is in flight and item_renderer_reload_tracker has seen the start-up reload, the site hands out one instance per extensions object, built by the original call and dropped at the start and end of every reload; any other thread, an in-flight reload, the switch off or a renderer of another class -> the original call",
+      "license": "Rats (LGPL): the mixin carries only our own logic; helper bons.furious.patch.item_renderers.ItemRendererReuse"
+    },
+    "alexscaves_item_renderer_reuse": {
+      "mod": "alexscaves",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.item_renderers.AlexsCavesRendererMixin",
+        "bons.furious.mixin.item_renderers.AlexsCavesStackRendererMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexmodguy/alexscaves/client/render/item/ACItemRenderProperties",
+          "method": "getCustomRenderer",
+          "desc": "()Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;",
+          "sha256": "b9be45151580441c1b68991f6b8cc735073efed1a21d95da0bf079001260021d"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer",
+          "method": "*",
+          "desc": "",
+          "sha256": "7dcdf592dbb2791a649e5e06306b2a30ba357ce24d4231731bb39781e3c31810"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "e77da1e3a1a2fda133080699453fc607d1a458f39d2e37b4fc05ab8c5820b87d"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer",
+          "method": "m_108829_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "85d50b352a3be5a068c14fc3ca5d07f0ac6cc99ceca3210cf541e6f7311b4790"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer",
+          "method": "renderStaticItemSprite",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;IILcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/multiplayer/ClientLevel;)V",
+          "sha256": "9434b576fa60c1aa6c771b83d5f15757ed8c9282dde598898fece95730e45e22"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer",
+          "method": "renderStaticItemSpriteWithLighting",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;IILcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/multiplayer/ClientLevel;)V",
+          "sha256": "e88450b9e61ee735ef4a281184b55031427511443ecefcee3cc1ee705c76ad30"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer",
+          "method": "getVertexConsumerFoil",
+          "desc": "(Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/renderer/RenderType;Lnet/minecraft/resources/ResourceLocation;Z)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "sha256": "b2462e2399f1719cf4f54397c93f23d5a4bb113fd61dd7a138629037a5a38315"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer",
+          "method": "getVertexConsumer",
+          "desc": "(Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/renderer/RenderType;Lnet/minecraft/resources/ResourceLocation;)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "sha256": "ab803659fc4b30237a832de8ed5b09485c4ade4bf2172c10ec0e2c535312dcb3"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/client/render/item/ACItemstackRenderer",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "520e1926f90433d378cec11f88237e8fb2167731f43f06c42ac2660d926b0bbc"
+        },
+        {
+          "class": "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/model/geom/EntityModelSet;)V",
+          "sha256": "68199b9ee299d6851d836f33cb03ac4911ab09dcac7ac36ed8ceffc9adea74b8"
+        },
+        {
+          "class": "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer",
+          "method": "m_108829_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "cd0de3d5db77c84ac38e7de0c22c149700987bfd8421a2080c1fdee2cc88167b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on getCustomRenderer() of 1 site class(es) (a NEW ACItemstackRenderer per call in the original): on the render thread, while no client resource reload is in flight and item_renderer_reload_tracker has seen the start-up reload, the site hands out one instance per extensions object, built by the original call and dropped at the start and end of every reload; any other thread, an in-flight reload, the switch off or a renderer of another class -> the original call; Alex's Caves: renderedDreadbowArrow (null in a new instance) is set back to null before each hand-out (duck interface on ACItemstackRenderer)",
+      "license": "Alex's Caves (LGPL): the mixins carry only our own logic (wrapper + a reset of one field); helper bons.furious.patch.item_renderers.ItemRendererReuse"
+    },
+    "alexsmobs_item_renderer_reuse": {
+      "mod": "alexsmobs",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.item_renderers.AlexsMobsRendererMixin",
+        "bons.furious.mixin.item_renderers.AlexsMobsStackRendererMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/alexsmobs/client/render/item/AMItemRenderProperties",
+          "method": "getCustomRenderer",
+          "desc": "()Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;",
+          "sha256": "90dfc2ea0d7d459c260d29749a26e88b51bc86b41bfe68a673bad753e6d72b81"
+        },
+        {
+          "class": "com/github/alexthe666/alexsmobs/client/render/AMItemstackRenderer",
+          "method": "*",
+          "desc": "",
+          "sha256": "d5b0ad757db6aefc08036fcb6dd315eba558e7d98492ebab7c0fc9f14c9b9f50"
+        },
+        {
+          "class": "com/github/alexthe666/alexsmobs/client/render/AMItemstackRenderer",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "2b7cdaf1db52e1d35712949f2facb9b63422ec93788bfc3e6f50b2775504ef9c"
+        },
+        {
+          "class": "com/github/alexthe666/alexsmobs/client/render/AMItemstackRenderer",
+          "method": "incrementTick",
+          "desc": "()V",
+          "sha256": "e5834c9f968236cfae66cf3bbf0e9f7f5d550023682c5a66826823e0ebfcbc31"
+        },
+        {
+          "class": "com/github/alexthe666/alexsmobs/client/render/AMItemstackRenderer",
+          "method": "getScaleFor",
+          "desc": "(Lnet/minecraft/world/entity/EntityType;Ljava/util/List;)F",
+          "sha256": "49e3628524fce03a2707efd769a9d8a5ebaa2d476bc24b54ae4e5ae37c63a483"
+        },
+        {
+          "class": "com/github/alexthe666/alexsmobs/client/render/AMItemstackRenderer",
+          "method": "getDimensionalCarverShards",
+          "desc": "()Ljava/util/List;",
+          "sha256": "a16a6ff0343b85e34f48c4b442d6e7f9b4242db1d87e5cb38de5290d71a6b80e"
+        },
+        {
+          "class": "com/github/alexthe666/alexsmobs/client/render/AMItemstackRenderer",
+          "method": "drawEntityOnScreen",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;IIFZDDDFFLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "4b8284e52f8be78358f2dc0971f7c45da9bf7ffb832a4abb50efc7e19e491de0"
+        },
+        {
+          "class": "com/github/alexthe666/alexsmobs/client/render/AMItemstackRenderer",
+          "method": "m_108829_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "f681b6edbe07759538446cd0a8e7e0a0ee21f0d6dfdb52faa95b7a28e06322bd"
+        },
+        {
+          "class": "com/github/alexthe666/alexsmobs/client/render/AMItemstackRenderer",
+          "method": "lambda$drawEntityOnScreen$1",
+          "desc": "(Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;Lnet/minecraft/world/entity/Entity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;)V",
+          "sha256": "957524e7f80a963dc80519973b121450a9e7b9644753cf5634f6315241101fff"
+        },
+        {
+          "class": "com/github/alexthe666/alexsmobs/client/render/AMItemstackRenderer",
+          "method": "lambda$getDimensionalCarverShards$0",
+          "desc": "(Ljava/util/ArrayList;)V",
+          "sha256": "c444dab4ebe189490ec2151af378ba42b771dbbbffbd4f510cbe806f8c7c479e"
+        },
+        {
+          "class": "com/github/alexthe666/alexsmobs/client/render/AMItemstackRenderer",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "934e05d54e701395e12b3cc9015bb38de12a08a89b692fef694cdb0774c5c8d4"
+        },
+        {
+          "class": "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/model/geom/EntityModelSet;)V",
+          "sha256": "68199b9ee299d6851d836f33cb03ac4911ab09dcac7ac36ed8ceffc9adea74b8"
+        },
+        {
+          "class": "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer",
+          "method": "m_108829_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "cd0de3d5db77c84ac38e7de0c22c149700987bfd8421a2080c1fdee2cc88167b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on getCustomRenderer() of 1 site class(es) (a NEW AMItemstackRenderer per call in the original): on the render thread, while no client resource reload is in flight and item_renderer_reload_tracker has seen the start-up reload, the site hands out one instance per extensions object, built by the original call and dropped at the start and end of every reload; any other thread, an in-flight reload, the switch off or a renderer of another class -> the original call; Alex's Mobs: renderedEntites and blockedRenderEntities (empty in a new instance) are cleared before each hand-out (duck interface on AMItemstackRenderer)",
+      "license": "Alex's Mobs (LGPL per mods.toml): the mixins carry only our own logic (wrapper + clearing two collections); helper bons.furious.patch.item_renderers.ItemRendererReuse"
+    },
+    "tacz_item_renderer_reuse": {
+      "mod": "tacz",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.item_renderers.TaczRendererMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/tacz/guns/item/AmmoItem$1",
+          "method": "getCustomRenderer",
+          "desc": "()Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;",
+          "sha256": "5860a12748e7eb3067a96c324ac8046b40bd8fc28866298d8fce2e0fca268d10"
+        },
+        {
+          "class": "com/tacz/guns/item/AttachmentItem$1",
+          "method": "getCustomRenderer",
+          "desc": "()Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;",
+          "sha256": "8e117cd85c37b824a488cb916f3a59dbe5b07936ead60ed5dcf8d0c49d2d7965"
+        },
+        {
+          "class": "com/tacz/guns/item/GunSmithTableItem$1",
+          "method": "getCustomRenderer",
+          "desc": "()Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;",
+          "sha256": "e5739c3567eae648623d74fd68ed38a9cda4b7bb373856282635c8e570a0f12f"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/AmmoItemRenderer",
+          "method": "*",
+          "desc": "",
+          "sha256": "2691d6dcdb4b00eaeb8ecb6905345900b80d9c4a54411cb585252b10a38036d6"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/AmmoItemRenderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/model/geom/EntityModelSet;)V",
+          "sha256": "a9ced57ba86e0051263cde676c29064c31434822ecd52b3ed2b7acba42ade2c0"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/AmmoItemRenderer",
+          "method": "applyPositioningNodeTransform",
+          "desc": "(Ljava/util/List;Lcom/mojang/blaze3d/vertex/PoseStack;Lorg/joml/Vector3f;)V",
+          "sha256": "16defa0dc58d9a814da0f81cb0c3be9453e4953e79c90a9ccf5a5c63b673160e"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/AmmoItemRenderer",
+          "method": "m_108829_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "e3c22929748e9682ed086af2cfe95e8251f53a999a033b860746199ad0aef42e"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/AmmoItemRenderer",
+          "method": "applyPositioningTransform",
+          "desc": "(Lnet/minecraft/world/item/ItemDisplayContext;Lcom/tacz/guns/client/resource/pojo/TransformScale;Lcom/tacz/guns/client/model/BedrockAmmoModel;Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+          "sha256": "7c69b42d2b71a7abb8db36e61dd47c49bdacf63926a03e04cd7b73e1dba1fbb0"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/AmmoItemRenderer",
+          "method": "applyScaleTransform",
+          "desc": "(Lnet/minecraft/world/item/ItemDisplayContext;Lcom/tacz/guns/client/resource/pojo/TransformScale;Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+          "sha256": "59abf680ffede3da8d3be8c7261fbd44fbc2e65864e6a6b0b76e5caeba0af1f1"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/AmmoItemRenderer",
+          "method": "lambda$renderByItem$1",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "974490a846b9215c3470b07d5c26c8b1754e61349bbbe0c67d999a58f364057c"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/AmmoItemRenderer",
+          "method": "lambda$renderByItem$0",
+          "desc": "(Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IILcom/tacz/guns/client/resource/index/ClientAmmoIndex;)V",
+          "sha256": "2f463dbd6f7fde37e000b94cfcd6a2665d340246dd5a906b0a06818211916099"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/AmmoItemRenderer",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "97888f851094c6830a900698c37a3dfc3871da51223f7147bb98530f7c717131"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/AttachmentItemRenderer",
+          "method": "*",
+          "desc": "",
+          "sha256": "4d172d817889b0d369d20ea10e498a4f0069a44c11d0caaab30e89f20e9064ef"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/AttachmentItemRenderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/model/geom/EntityModelSet;)V",
+          "sha256": "a9ced57ba86e0051263cde676c29064c31434822ecd52b3ed2b7acba42ade2c0"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/AttachmentItemRenderer",
+          "method": "m_108829_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "87ea2c56e7303e6809f39d0ecd4f0aa78f3c450f204e27f3317da342901047a0"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/AttachmentItemRenderer",
+          "method": "renderDefaultAttachment",
+          "desc": "(Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IILcom/tacz/guns/client/resource/index/ClientAttachmentIndex;)V",
+          "sha256": "b1e0966ef493c08116582a980c2c9eb2d13ec3ebb02bb1474cbe1f1da2d6ebf8"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/AttachmentItemRenderer",
+          "method": "lambda$renderByItem$1",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "8b6df1510016f0d55014c2f70f41bf96aa43bf3374ac20df2db229983d6bbb3c"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/AttachmentItemRenderer",
+          "method": "lambda$renderByItem$0",
+          "desc": "(Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IILcom/tacz/guns/client/resource/index/ClientAttachmentIndex;)V",
+          "sha256": "c20f7517ffc25a1ddf2d64c125e157fba08bd0535a3dd8e3f785802f3d5b8462"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/AttachmentItemRenderer",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "03c8996c3ba0cd37532d71278c8d11a7a802f3441737db2ce0dd94f2d4399061"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/GunSmithTableItemRenderer",
+          "method": "*",
+          "desc": "",
+          "sha256": "59a61d19d1553dba2b757bdf24cc60975c7dcd470e4d234cdd6152c6007597e9"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/GunSmithTableItemRenderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/model/geom/EntityModelSet;)V",
+          "sha256": "a9ced57ba86e0051263cde676c29064c31434822ecd52b3ed2b7acba42ade2c0"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/GunSmithTableItemRenderer",
+          "method": "m_108829_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "01a58ec0fa847352c0f7f4e133921534900f70ef9af45e58dfd3dcd34d47131c"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/GunSmithTableItemRenderer",
+          "method": "lambda$renderByItem$1",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "ac5cacefa06f0fcc698c07aea517ddae0e2afa3e5d9baf0df334080b59f119cf"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/GunSmithTableItemRenderer",
+          "method": "lambda$renderByItem$0",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/item/ItemDisplayContext;IILcom/tacz/guns/client/resource/index/ClientBlockIndex;)V",
+          "sha256": "dddf6b45032dfb51022ba8bfb8de106d04625e291e1cc5961956ecd96b7e3cd9"
+        },
+        {
+          "class": "com/tacz/guns/client/renderer/item/GunSmithTableItemRenderer",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "840872b3a31953e0b76209634f3325a6f3f3bdaf6233f6170c05e72f1ce19187"
+        },
+        {
+          "class": "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/model/geom/EntityModelSet;)V",
+          "sha256": "68199b9ee299d6851d836f33cb03ac4911ab09dcac7ac36ed8ceffc9adea74b8"
+        },
+        {
+          "class": "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer",
+          "method": "m_108829_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "cd0de3d5db77c84ac38e7de0c22c149700987bfd8421a2080c1fdee2cc88167b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on getCustomRenderer() of 3 site class(es) (a NEW AmmoItemRenderer, AttachmentItemRenderer, GunSmithTableItemRenderer per call in the original): on the render thread, while no client resource reload is in flight and item_renderer_reload_tracker has seen the start-up reload, the site hands out one instance per extensions object, built by the original call and dropped at the start and end of every reload; any other thread, an in-flight reload, the switch off or a renderer of another class -> the original call",
+      "license": "TACZ (code GPL-3.0, assets CC-BY-NC-ND-4.0): the mixin carries only our own logic; helper bons.furious.patch.item_renderers.ItemRendererReuse"
+    },
+    "xercapaint_item_renderer_reuse": {
+      "mod": "xercapaint",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.item_renderers.XercaPaintRendererMixin"
+      ],
+      "guard": [
+        {
+          "class": "xerca/xercapaint/common/item/RenderProp",
+          "method": "getCustomRenderer",
+          "desc": "()Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;",
+          "sha256": "85669a010ddead53b23010e59a06075a50ad22a255d9e4679493c353272c4a3e"
+        },
+        {
+          "class": "xerca/xercapaint/client/CanvasItemRenderer",
+          "method": "*",
+          "desc": "",
+          "sha256": "e73860a2a26fa2691d3b0ed3c9a40b4813c9dbe1a814e1263ca7858511e663b8"
+        },
+        {
+          "class": "xerca/xercapaint/client/CanvasItemRenderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/model/geom/EntityModelSet;)V",
+          "sha256": "a9ced57ba86e0051263cde676c29064c31434822ecd52b3ed2b7acba42ade2c0"
+        },
+        {
+          "class": "xerca/xercapaint/client/CanvasItemRenderer",
+          "method": "m_108829_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "c1ec2a75aebb81b2d0375af76beaa82dc95a49634901a3a5384a5da1d5d48bf7"
+        },
+        {
+          "class": "xerca/xercapaint/client/CanvasItemRenderer",
+          "method": "addVertex",
+          "desc": "(Lcom/mojang/blaze3d/vertex/VertexConsumer;Lorg/joml/Matrix4f;Lorg/joml/Matrix3f;DDDFFIFFF)V",
+          "sha256": "be746fa1c0800684530fcc8438cdddd26c4de1ebd9349bb1273ecc722d20260c"
+        },
+        {
+          "class": "xerca/xercapaint/client/CanvasItemRenderer",
+          "method": "renderEmptyCanvas",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;FFI)V",
+          "sha256": "913ea8bc569a6ae6a68ffbda2b3fa44ace8e9da8f0f8b50b86c6c0c07f593037"
+        },
+        {
+          "class": "xerca/xercapaint/client/CanvasItemRenderer",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "a5cc155fdf54abe8b9512b16d10aee752d7aaaa1e4a28c1f59e706e2b89d695f"
+        },
+        {
+          "class": "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/model/geom/EntityModelSet;)V",
+          "sha256": "68199b9ee299d6851d836f33cb03ac4911ab09dcac7ac36ed8ceffc9adea74b8"
+        },
+        {
+          "class": "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer",
+          "method": "m_108829_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "cd0de3d5db77c84ac38e7de0c22c149700987bfd8421a2080c1fdee2cc88167b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on getCustomRenderer() of 1 site class(es) (a NEW CanvasItemRenderer per call in the original): on the render thread, while no client resource reload is in flight and item_renderer_reload_tracker has seen the start-up reload, the site hands out one instance per extensions object, built by the original call and dropped at the start and end of every reload; any other thread, an in-flight reload, the switch off or a renderer of another class -> the original call",
+      "license": "XercaPaint (GPL-3.0): the mixin carries only our own logic; helper bons.furious.patch.item_renderers.ItemRendererReuse"
+    },
+    "item_renderer_reload_tracker": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.item_renderers.ReloadTrackerMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/server/packs/resources/ReloadableResourceManager",
+          "method": "m_142463_",
+          "desc": "(Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;Ljava/util/concurrent/CompletableFuture;Ljava/util/List;)Lnet/minecraft/server/packs/resources/ReloadInstance;",
+          "sha256": "c2d7a92e66276cc28db6dc5a3370cdd54b248853bc8b975cff676fb337b1728e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyReturnValue at RETURN of ReloadableResourceManager.createReload (m_142463_): counts the reload as in flight and bumps the item renderer generation, and again when its done() future completes; returns the same ReloadInstance; the *_item_renderer_reuse switches use their memo only after this has seen the start-up reload",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.item_renderers.ItemRendererReuse)"
+    }
+  }
+}

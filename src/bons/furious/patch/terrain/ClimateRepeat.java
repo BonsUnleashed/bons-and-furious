@@ -34,6 +34,16 @@ import org.slf4j.Logger;
  * best leaf only when strictly closer) and stores it again. So a repeat of the same tree, metric and an equal target
  * returns the remembered value and leaves the thread-local exactly as the search would. Any other search of the thread
  * replaces the slot, so a remembered value always belongs to the thread's latest search.
+ *
+ * Since 1.0.36 the slot holds nothing strongly that belongs to a world: the result (a biome Holder, whose registry reaches
+ * the world's whole worldgen registry set) and the tree and metric of a search in progress are weak references too, as
+ * the tree and metric already were. The slot of a worker thread that searches no more (a closed singleplayer world, back
+ * on the title screen) used to keep the last world's registries in memory until that thread's next climate search. A
+ * repeat is served only for the very tree of the remembered search, which is alive (it is searching), and a live tree
+ * holds every one of its leaves and their values strongly, so the weak result is never cleared while it can be served:
+ * every answer and every decision is the one the strong slot gave. (Should another mod make search return an object the
+ * tree does not hold, a result that was collected is not served: that search simply runs.) A reference is reused while it
+ * already points at the same object, so repeated answers and searches of the same tree allocate nothing.
  */
 public final class ClimateRepeat {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -62,9 +72,15 @@ public final class ClimateRepeat {
 
     private static final class SearchSlot {
         WeakReference<Object> tree, metric;
-        Object target, value;
-        /** The search in progress on this thread (set by a miss at its start, consumed at its return). */
-        Object pendingTree, pendingTarget, pendingMetric;
+        /** A Climate.TargetPoint: six longs, nothing of a world. */
+        Object target;
+        /** Since 1.0.36 weak: the result, a value of a leaf of {@code tree} (see the class comment). */
+        WeakReference<Object> value;
+        /** The remembered result is null (a cleared reference is not served: that search runs again). */
+        boolean valueNull;
+        /** The search in progress on this thread (set by a miss at its start, consumed at its return); since 1.0.36 weak. */
+        WeakReference<Object> pendingTree, pendingMetric;
+        Object pendingTarget;
     }
 
     private static final ThreadLocal<SampleSlot> SAMPLE = ThreadLocal.withInitial(SampleSlot::new);
@@ -104,14 +120,20 @@ public final class ClimateRepeat {
         if (!searchEnabled) return NONE;
         SearchSlot s = SEARCH.get();
         WeakReference<Object> t = s.tree, m = s.metric;
-        if (t != null && t.get() == tree && m.get() == metric && target != null && target.equals(s.target)) {
-            s.pendingTree = null;
-            if (METRICS) SEARCH_REPEATS.increment();
-            return s.value;
+        boolean sameTree = t != null && t.get() == tree, sameMetric = m != null && m.get() == metric;
+        if (sameTree && sameMetric && target != null && target.equals(s.target)) {
+            Object v = s.value.get();   // a value of a leaf of this live tree: never cleared while the tree can be searched
+            if (v != null || s.valueNull) {
+                s.pendingTree = null;
+                if (METRICS) SEARCH_REPEATS.increment();
+                return v;
+            }
+            // cleared: possible only for a result that is not a value of the tree (another mod changing what search
+            // returns); the search runs again, as for any other search
         }
-        s.pendingTree = tree;
+        s.pendingTree = sameTree ? t : new WeakReference<>(tree);
         s.pendingTarget = target;
-        s.pendingMetric = metric;
+        s.pendingMetric = sameMetric ? m : new WeakReference<>(metric);
         return NONE;
     }
 
@@ -119,12 +141,16 @@ public final class ClimateRepeat {
     public static Object rememberSearch(Object tree, Object value) {
         if (!searchEnabled) return value;
         SearchSlot s = SEARCH.get();
-        if (s.pendingTree != tree) return value;            // a served repeat (nothing noted), or not this search
-        if (s.tree == null || s.tree.get() != tree) s.tree = new WeakReference<>(tree);
-        if (s.metric == null || s.metric.get() != s.pendingMetric) s.metric = new WeakReference<>(s.pendingMetric);
+        WeakReference<Object> p = s.pendingTree;
+        if (p == null || p.get() != tree) return value;     // a served repeat (nothing noted), or not this search
+        s.tree = p;
+        s.metric = s.pendingMetric;
         s.target = s.pendingTarget;
-        s.value = value;
-        s.pendingTree = s.pendingTarget = s.pendingMetric = null;
+        WeakReference<Object> v = s.value;
+        s.value = v != null && v.get() == value && value != null ? v : new WeakReference<>(value);
+        s.valueNull = value == null;
+        s.pendingTree = s.pendingMetric = null;
+        s.pendingTarget = null;
         return value;
     }
 

@@ -109,14 +109,35 @@ public final class SaveWriter {
     private SaveWriter() {
     }
 
-    /** A unit of work for the writer thread. */
-    abstract static class Job {
+    /**
+     * A unit of work for the writer thread: what to write (Minecraft's own calls) and Minecraft's handling of what its own
+     * method catches (logging; anything else is passed on).
+     *
+     * Since 1.0.36 one named final class whose superclass is Object, with the two actions as lambdas, instead of an abstract
+     * class with an anonymous subclass per kind of save. Forge's EventSubclassTransformer looks at every class the game
+     * loads and loads its superclass through the loading thread's context class loader. A ForkJoinPool common-pool thread
+     * has the JVM's application class loader there, which cannot see our classes, so when such a thread was the first to
+     * use SaveWriter (an NbtIo file read waits on it), linking SaveWriter loaded the four anonymous subclasses for the
+     * verifier and each logged "Could not find parent ...SaveWriter$Job for class ...SaveWriter$N" plus "An error occurred
+     * building event handler" at ERROR (the classes still loaded unchanged). Object and the JDK's own types are found by
+     * every class loader, and lambdas are defined as hidden classes, which no transformer sees. What a job does, when, on
+     * which thread and in which order is exactly as before: the same statements, now in the lambda bodies.
+     */
+    static final class Job {
+        final Write write;
+        final Consumer<Throwable> failed;
         long bytes;
 
-        abstract void write() throws Exception;
+        Job(Write write, Consumer<Throwable> failed) {
+            this.write = write;
+            this.failed = failed;
+        }
+    }
 
-        /** Minecraft's handling of what its own method catches (logging); anything else is passed on. */
-        abstract void failed(Throwable t);
+    /** The writing part of a job: may throw what Minecraft's calls in it throw. */
+    @FunctionalInterface
+    interface Write {
+        void run() throws Exception;
     }
 
     // ------------------------------------------------------------------------------------------------ eligibility
@@ -171,18 +192,10 @@ public final class SaveWriter {
         shadow(tag, rec, file);
         // 1.0.34: no up-front String.valueOf(data); deferSavedData admits only classes with Object's toString and hashCode,
         // so the object itself is formatted, only if the write fails, to the text Minecraft's own error line would carry
-        submit(new Job() {
-            @Override
-            void write() throws Exception {
-                rec.writeTo(file);
-            }
-
-            @Override
-            void failed(Throwable t) {
-                if (t instanceof IOException) savedDataLogger.error("Could not save data {}", data, t);
-                else unexpected(file, t);
-            }
-        }, rec.size());
+        submit(new Job(() -> rec.writeTo(file), t -> {
+            if (t instanceof IOException) savedDataLogger.error("Could not save data {}", data, t);
+            else unexpected(file, t);
+        }), rec.size());
     }
 
     /** NbtIo.writeCompressed(tag, temp) where temp is a DeferredFile: record now, write with the replace job. */
@@ -210,56 +223,36 @@ public final class SaveWriter {
      */
     public static void submitReplace(DeferredFile temp, File current, File old, Consumer<Exception> onFailure) {
         NbtRecording rec = temp.recording;
-        submit(new Job() {
-            @Override
-            void write() throws Exception {
-                File real = File.createTempFile(temp.prefix, temp.suffix, temp.folder);
-                rec.writeTo(real);
-                Util.m_137462_(current, real, old);
-            }
-
-            @Override
-            void failed(Throwable t) {
-                if (t instanceof Exception e) onFailure.accept(e);
-                else unexpected(current, t);
-            }
-        }, rec == null ? 0 : rec.size());
+        submit(new Job(() -> {
+            File real = File.createTempFile(temp.prefix, temp.suffix, temp.folder);
+            rec.writeTo(real);
+            Util.m_137462_(current, real, old);
+        }, t -> {
+            if (t instanceof Exception e) onFailure.accept(e);
+            else unexpected(current, t);
+        }), rec == null ? 0 : rec.size());
     }
 
     /** PlayerAdvancements.save: the writer for the captured JSON text (FileUtil.createDirectoriesSafe(dir) first). */
     public static BufferedWriter captureText(Path dir, Path path, Charset charset, OpenOption[] options, Logger advancementsLogger) {
-        return new BufferedWriter(new TextCapture(text -> submit(new Job() {
-            @Override
-            void write() throws Exception {
-                FileUtil.m_257659_(dir);
-                try (BufferedWriter writer = Files.newBufferedWriter(path, charset, options)) {
-                    writer.write(text);
-                }
+        return new BufferedWriter(new TextCapture(text -> submit(new Job(() -> {
+            FileUtil.m_257659_(dir);
+            try (BufferedWriter writer = Files.newBufferedWriter(path, charset, options)) {
+                writer.write(text);
             }
-
-            @Override
-            void failed(Throwable t) {
-                if (t instanceof IOException) advancementsLogger.error("Couldn't save player advancements to {}", path, t);
-                else unexpected(path.toFile(), t);
-            }
-        }, text.length())));
+        }, t -> {
+            if (t instanceof IOException) advancementsLogger.error("Couldn't save player advancements to {}", path, t);
+            else unexpected(path.toFile(), t);
+        }), text.length())));
     }
 
     /** ServerStatsCounter.save: FileUtils.writeStringToFile(file, text) on the writer. */
     @SuppressWarnings("deprecation")
     public static void submitStats(File file, String text, Logger statsLogger) {
-        submit(new Job() {
-            @Override
-            void write() throws Exception {
-                org.apache.commons.io.FileUtils.writeStringToFile(file, text);
-            }
-
-            @Override
-            void failed(Throwable t) {
-                if (t instanceof IOException) statsLogger.error("Couldn't save stats", t);
-                else unexpected(file, t);
-            }
-        }, text.length());
+        submit(new Job(() -> org.apache.commons.io.FileUtils.writeStringToFile(file, text), t -> {
+            if (t instanceof IOException) statsLogger.error("Couldn't save stats", t);
+            else unexpected(file, t);
+        }), text.length());
     }
 
     private static void writeNow(NbtRecording rec, File file) {
@@ -343,11 +336,11 @@ public final class SaveWriter {
                 job = QUEUE.pollFirst();
             }
             try {
-                job.write();
+                job.write.run();
                 JOBS.incrementAndGet();
             } catch (Throwable t) {
                 try {
-                    job.failed(t);
+                    job.failed.accept(t);
                 } catch (Throwable ignored) {
                     // logging must not stop the writer
                 }

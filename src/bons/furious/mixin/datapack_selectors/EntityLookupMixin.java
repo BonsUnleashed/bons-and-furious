@@ -2,6 +2,8 @@ package bons.furious.mixin.datapack_selectors;
 
 import bons.furious.patch.datapack_selectors.IndexedLookup;
 import bons.furious.patch.datapack_selectors.SelectorPrefilter;
+import bons.furious.patch.datapack_selectors.SingleTypeTest;
+import bons.furious.patch.datapack_selectors.TagIndex;
 import bons.furious.patch.datapack_selectors.TypeIndex;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -19,8 +21,10 @@ import org.spongepowered.asm.mixin.Unique;
  * vanilla_selector_type_index (Minecraft 1.20.1, both sides; the index only exists for a lookup a type-first selector
  * scans): getEntities (m_260822_) called with a TypeFirstOption walks the lookup's TypeIndex (built from byId on that
  * first scan, refreshed when it lost step) instead of every entity; add (m_156814_) and remove (m_156822_) keep an
- * existing index in step by reading byId before and after the vanilla call (see TypeIndex). Every other call, and every
- * call while no index exists, runs the original method unchanged. No Minecraft code is carried.
+ * existing index in step by reading byId before and after the vanilla call (see TypeIndex). Since 1.0.36 a SingleTypeTest
+ * (vanilla_selector_single_type) is answered from the same index (TypeIndex.forEachSingle), and a TagScanTest
+ * (vanilla_selector_tag_index) from its tag lists (TypeIndex.forEachTagged) or, when none can be used, through the inner
+ * test's own path. Every other call runs the original method unchanged. No Minecraft code is carried.
  */
 @Mixin(value = EntityLookup.class, remap = false)
 public abstract class EntityLookupMixin implements IndexedLookup {
@@ -32,8 +36,19 @@ public abstract class EntityLookupMixin implements IndexedLookup {
 
     @WrapMethod(method = "m_260822_")
     private void bons$indexedScan(EntityTypeTest<?, ?> test, AbortableIterationConsumer<?> consumer, Operation<Void> original) {
+        // since 1.0.36 (vanilla_selector_tag_index, whose EntitySelector mixin alone creates TagScanTests): the tag lists,
+        // or the inner test's own path below when no tag list can be used or a type list is smaller
+        if (test instanceof TagIndex.TagScanTest tags) {
+            if (TagIndex.enabled && this.bons$index().forEachTagged(tags, consumer, this.f_156807_)) return;
+            test = tags.inner();
+        }
         if (test instanceof SelectorPrefilter.TypeFirstOption type && SelectorPrefilter.typeIndexEnabled) {
             this.bons$index().forEach(type, consumer);
+            return;
+        }
+        // since 1.0.36 (vanilla_selector_single_type, whose EntitySelector mixin alone creates SingleTypeTests)
+        if (test instanceof SingleTypeTest single && SingleTypeTest.enabled && SelectorPrefilter.typeIndexEnabled) {
+            this.bons$index().forEachSingle(single, consumer);
             return;
         }
         original.call(test, consumer);

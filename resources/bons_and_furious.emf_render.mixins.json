@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.emf_render",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "bons.pure.config.PureMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "EmfArmWalkGateMixin",
+    "EmfPartAttachmentsAccessor",
+    "EmfModelPartChildrenAccessor",
+    "EmfPoseCacheAccessor",
+    "EmfVariableDefaultMixin",
+    "EmfAngerMapMixin"
+  ]
+}

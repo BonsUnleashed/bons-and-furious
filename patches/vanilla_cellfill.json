@@ -1,0 +1,109 @@
+{
+  "group": "vanilla_cellfill",
+  "keys": {
+    "vanilla_noise_column_cell_fill": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.vanilla_cellfill.ColumnCellFillMarkMixin",
+        "bons.furious.mixin.vanilla_cellfill.NoiseChunkColumnFillMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator",
+          "method": "m_224239_",
+          "desc": "(Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;IILorg/apache/commons/lang3/mutable/MutableObject;Ljava/util/function/Predicate;)Ljava/util/OptionalInt;",
+          "sha256": "0a7b8dbb394f4661a860d4e74fcc876e87a54e686ad719d685f26d52ba7fbc2e"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_188810_",
+          "desc": "(II)V",
+          "sha256": "3ab974a0128f1ee76dd985aaa8cb8d4953935398a982f7022b5a4f39d599e688"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_207263_",
+          "desc": "(I)Lnet/minecraft/world/level/levelgen/NoiseChunk;",
+          "sha256": "a796a4b125de386328e8e192acbfac1ca5fe9d3f8683f493749dafb587a37849"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_207207_",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction;)V",
+          "sha256": "09a364603696c726df468edd99520d83242f3579b4d2f0ae27e5263d02d845e3"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "<init>",
+          "desc": "(ILnet/minecraft/world/level/levelgen/RandomState;IILnet/minecraft/world/level/levelgen/NoiseSettings;Lnet/minecraft/world/level/levelgen/DensityFunctions$BeardifierOrMarker;Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;Lnet/minecraft/world/level/levelgen/blending/Blender;)V",
+          "sha256": "4002da1eb3f5636a83ab187a1b58722401c681cc36856a9637687cf471c4f136"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_209191_",
+          "desc": "(ID)V",
+          "sha256": "996e8cfc8b097e27f877a1c3a76d191966bec22e3bf5f25df82aaa06968298cc"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_209230_",
+          "desc": "(ID)V",
+          "sha256": "18524ff70ac05b22bea59f229e656b4425daa67a1422865ea269841caf9758e2"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_209241_",
+          "desc": "(ID)V",
+          "sha256": "efbbef075adb9c2f0bf8b79bbf1548a9c7a6832954941b10a9a5606d9c87cfd9"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$CacheAllInCell",
+          "method": "m_207386_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "sha256": "faa1246af2621a65b9e00261141184b39b45371d94fe3bbfb03d8f6eea5fae94"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$NoiseInterpolator",
+          "method": "m_207386_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "sha256": "40b88aaa798bce8224265041004b22f9488a21ddceee7176043b0bb1f0b75536"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$NoiseInterpolator",
+          "method": "m_207362_",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V",
+          "sha256": "f29da1c4249aa3781de96a07aef47eb097bded8c306137d377115abbd7efcbbf"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$FlatCache",
+          "method": "m_207386_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "sha256": "0e054d5519ad328deb84f518e811a3a59aada24cd4523618620faff3f5987b57"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$FlatCache",
+          "method": "m_207362_",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V",
+          "sha256": "88d5a86dc92bc6d0193853ba2db0b62625a0e0df2f502865718c5c3f449d408c"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$Cache2D",
+          "method": "m_207386_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "sha256": "615dcddb9636f3cb142575f85856e9c4b6743780af66d0e10970e50a5dafdd4f"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$Cache2D",
+          "method": "m_207362_",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V",
+          "sha256": "35746e38aac9e10457d10a8296f0269a1ddf2c35b791413e9fabc165c7da8754"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on the NoiseChunk NEW in NoiseBasedChunkGenerator.iterateNoiseColumn (m_224239_; the target method's arguments arrive as trailing handler parameters, no @Local) to mark the one-cell column NoiseChunk, and @WrapOperation on the cell-cache DensityFunction.fillArray call (m_207362_) in NoiseChunk.selectCellYZ (m_188810_), which fills only the queried column's cellHeight slots when the provider is that marked NoiseChunk; a duck interface on NoiseChunk (bons$cf* names) sets its in-cell position; per-world density audit, canary and runtime flag in the helper",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.vanilla_cellfill.ColumnCellFill)"
+    }
+  }
+}

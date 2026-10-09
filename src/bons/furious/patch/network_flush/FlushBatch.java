@@ -3,12 +3,18 @@ package bons.furious.patch.network_flush;
 import com.mojang.logging.LogUtils;
 import io.netty.channel.Channel;
 import io.netty.util.concurrent.AbstractEventExecutor;
+import java.io.InputStream;
+import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicLong;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundKeepAlivePacket;
 import org.slf4j.Logger;
+import org.spongepowered.asm.mixin.transformer.meta.MixinMerged;
 
 /**
  * Bons and Furious switch vanilla_connection_flush_batching (Minecraft 1.20.1 on Forge 47.4.16 with Netty 4.1.82, both
@@ -26,8 +32,17 @@ import org.slf4j.Logger;
  * event loop; when the task runs, it writes the packet without flushing (BatchedWrite + the Connection mixin). At the end
  * of the burst every connection that got such packets is flushed once (Channel.flush, which also wakes the event loop):
  * the tasks run in their original order, the encoders produce the same bytes in the same order (compression and the
- * stream cipher see the same sequence), and the bytes leave in fewer socket writes before the tick ends. Connection.tick
- * ends with Minecraft's own flush, which serves as that connection's end of burst.
+ * stream cipher see the same sequence), and the bytes leave in fewer socket writes before the tick ends. A connection's own
+ * tick (Connection.tick) is ended the same way, whatever happens to Minecraft's own flush at the end of tick (1.0.36: it is
+ * no longer counted as the burst's flush, since another mod may remove it - VMP's networking.no_flush in HariPlayer 2.0 -
+ * which left the batched login packets unwritten; with that flush intact the cost is one empty flush task per connection
+ * tick that sent batched packets).
+ *
+ * 1.0.36: the burst's flush is queued on the connection's current event loop, behind the writes handed to that loop. A mod
+ * that moves connections to another event loop (VMP's networking.eventloops, also in HariPlayer 2.0, re-registers a
+ * channel when its protocol changes) could let that flush run before writes still queued on the old loop, which would
+ * then wait for a later flush. When another mod's mixin on Connection does that (a known mover, or a Connection mixin
+ * that calls Channel.deregister), the switch stands down once (one INFO line) and every packet takes Minecraft's path.
  *
  * Unchanged (Minecraft's path): packets with a send listener (disconnects, ...), keep-alive packets, packets that switch
  * the protocol (doSendPacket writes and flushes them), packets sent from any other thread or outside a burst, packets to
@@ -84,7 +99,7 @@ public final class FlushBatch {
      * the batch is not this call's to close (switch off, or another batch is open, on this or another thread).
      */
     public static boolean begin(Connection connection) {
-        if (!enabled) return false;
+        if (!enabled || !channelMover().isEmpty()) return false;
         Thread self = Thread.currentThread();
         synchronized (FlushBatch.class) {
             if (owner != null) {
@@ -95,6 +110,66 @@ public final class FlushBatch {
             depth = 1;
             only = connection;
             return true;
+        }
+    }
+
+    /**
+     * 1.0.36: other mods' mixins known to move a Connection's channel to another event loop. Only applied mixins count:
+     * Mixin leaves @MixinMerged on every member it merges into Connection, so a mixin a mod's plugin skipped is not seen.
+     */
+    static final Set<String> CHANNEL_MOVERS = Set.of("com.ishland.vmp.mixins.networking.eventloops.MixinClientConnection");
+    /** null = not checked yet; "" = no other mod moves connections between event loops; else why this switch stands down. */
+    private static volatile String moverCheck;
+
+    /** "" when the batches may run, else why the switch stands down (checked once, on the first batch; one INFO line). */
+    public static String channelMover() {
+        String r = moverCheck;
+        if (r == null) {
+            synchronized (FlushBatch.class) {
+                r = moverCheck;
+                if (r == null) {
+                    r = findChannelMover(Connection.class);
+                    moverCheck = r;
+                    if (!r.isEmpty())
+                        LOGGER.info("Bons and Furious: vanilla_connection_flush_batching stands down: {}; every packet is sent as Minecraft sends it", r);
+                }
+            }
+        }
+        return r;
+    }
+
+    /**
+     * Public for the offline proof: "" when no other mod's mixin merged into the given (Connection) class moves its channel
+     * between event loops, else why not. A mover is a known one (CHANNEL_MOVERS) or a mixin whose class file, without
+     * debug information, names Netty's deregister (a channel must be deregistered from one loop to be registered with
+     * another). A mixin class file that cannot be read, or a failing check, counts as a mover (stand down).
+     */
+    public static String findChannelMover(Class<?> connection) {
+        try {
+            TreeSet<String> foreign = new TreeSet<>();
+            for (Method m : connection.getDeclaredMethods()) {
+                MixinMerged merged = m.getAnnotation(MixinMerged.class);
+                if (merged != null && !merged.mixin().startsWith("bons.furious.") && !merged.mixin().startsWith("bons.pure.")
+                        && !merged.mixin().startsWith("agentcraft.")) foreign.add(merged.mixin());
+            }
+            ClassLoader loader = connection.getClassLoader() != null ? connection.getClassLoader() : ClassLoader.getSystemClassLoader();
+            for (String mixin : foreign) {
+                if (CHANNEL_MOVERS.contains(mixin))
+                    return mixin + " moves connections to other network threads when their protocol changes, and a burst's flush could then run before writes still queued on the old thread";
+                byte[] bytes;
+                try (InputStream in = loader.getResourceAsStream(mixin.replace('.', '/') + ".class")) {
+                    bytes = in == null ? null : in.readAllBytes();
+                }
+                if (bytes == null) return "the class file of Connection mixin " + mixin + " could not be read";
+                org.objectweb.asm.ClassReader reader = new org.objectweb.asm.ClassReader(bytes);
+                org.objectweb.asm.ClassWriter writer = new org.objectweb.asm.ClassWriter(0);
+                reader.accept(writer, org.objectweb.asm.ClassReader.SKIP_DEBUG);
+                if (new String(writer.toByteArray(), StandardCharsets.ISO_8859_1).contains("deregister"))
+                    return "Connection mixin " + mixin + " deregisters channels (moves connections between network threads), and a burst's flush could then run before writes still queued on the old thread";
+            }
+            return "";
+        } catch (Throwable t) {
+            return "the check of other mods' Connection mixins failed (" + t + ")";
         }
     }
 
@@ -158,11 +233,6 @@ public final class FlushBatch {
             LOGGER.info("Bons and Furious: vanilla_connection_flush_batching applies (packet bursts of the entity tracker, chunk broadcast and a player's own tick are written without waking the network thread per packet and flushed once per burst)");
         }
         return true;
-    }
-
-    /** Connection.tick's own flush (the end of that connection's burst): nothing left to flush for it. */
-    public static void flushedByMinecraft(Connection connection) {
-        if (owner == Thread.currentThread()) ((Member) connection).bons$unflushed(false);
     }
 
     /**

@@ -178,8 +178,8 @@ public final class CallSites {
         return (mod == null ? "" : mod + " ") + "(" + mixin.substring(mixin.lastIndexOf('.') + 1) + ")";
     }
 
-    /** The mixin class a merged method came from (Mixin's @MixinMerged), or null. */
-    private static String mergedBy(MethodNode m) {
+    /** The mixin class a merged method came from (Mixin's @MixinMerged), or null. Also used by Guards (since 1.0.36). */
+    static String mergedBy(MethodNode m) {
         if (m == null || m.visibleAnnotations == null) return null;
         for (AnnotationNode a : m.visibleAnnotations) {
             if (!a.desc.equals("Lorg/spongepowered/asm/mixin/transformer/meta/MixinMerged;") || a.values == null) continue;
@@ -188,8 +188,8 @@ public final class CallSites {
         return null;
     }
 
-    /** "NAME VERSION" of the installed mod whose jar holds the mixin class, or null. */
-    private static String modOf(String mixinClass) {
+    /** "NAME VERSION" of the installed mod whose jar holds the mixin class, or null. Also used by Guards (since 1.0.36). */
+    static String modOf(String mixinClass) {
         try {
             var loading = net.minecraftforge.fml.loading.LoadingModList.get();
             if (loading == null) return null;

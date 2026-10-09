@@ -1,0 +1,162 @@
+{
+  "group": "mekanism_transport",
+  "keys": {
+    "mekanism_transporter_path_index": {
+      "mod": "mekanism",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.mekanism_transport.TransporterStackPathIndexMixin"
+      ],
+      "guard": [
+        {
+          "class": "mekanism/common/content/transporter/TransporterStack",
+          "method": "write",
+          "desc": "(Lmekanism/common/content/network/transmitter/LogisticalTransporterBase;Lnet/minecraft/network/FriendlyByteBuf;)V",
+          "sha256": "09c5b79180913496b9df8ced30affed4bf7724852fa38a558fb308cacae81eab"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterStack",
+          "method": "writeToUpdateTag",
+          "desc": "(Lmekanism/common/content/network/transmitter/LogisticalTransporterBase;Lnet/minecraft/nbt/CompoundTag;)V",
+          "sha256": "69e83df6e12ac637440189dd6202c3ba91238493a369feaa2975b30ac7f058c1"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterStack",
+          "method": "isFinal",
+          "desc": "(Lmekanism/common/content/network/transmitter/LogisticalTransporterBase;)Z",
+          "sha256": "3ee6b8f8371764e89ca50ef5d5bd613fd7bb4d57ccbba5a336fac4fd8645ff69"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterStack",
+          "method": "getNext",
+          "desc": "(Lmekanism/common/content/network/transmitter/LogisticalTransporterBase;)Lnet/minecraft/core/BlockPos;",
+          "sha256": "a01268fe547b523ea30a998425c4946b3a9c2f1901dd1d0499c0bd732b8eb58c"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterStack",
+          "method": "getPrev",
+          "desc": "(Lmekanism/common/content/network/transmitter/LogisticalTransporterBase;)Lnet/minecraft/core/BlockPos;",
+          "sha256": "df357fe17a1c69cc4350c61cf963f1ae116d6c9d133b7e5f21af86d59de28b61"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterStack",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "1658096a52ed8687e871fb56d9c09937ecbddee6a8daad3a5e39b9829c818621"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterStack",
+          "method": "setPath",
+          "desc": "(Lnet/minecraft/world/level/Level;Ljava/util/List;Lmekanism/common/content/transporter/TransporterStack$Path;Z)V",
+          "sha256": "8fb663550887a03b210a83f859accfc5a0d0f21fe681db1c921442049d948ee1"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterStack",
+          "method": "getPath",
+          "desc": "()Ljava/util/List;",
+          "sha256": "0127629b1466895341dd9cc022a487176b73125b2641171a106f7fd38a551a20"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterStack",
+          "method": "hasPath",
+          "desc": "()Z",
+          "sha256": "168a0ae51013daa02c50a816b46ca59553fd957f6af8cc2b08861748de50e05f"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterStack",
+          "method": "getDest",
+          "desc": "()Lnet/minecraft/core/BlockPos;",
+          "sha256": "6232603c9acf2eb304b1fe0d800591ac547df0574a2e3c6b6f8f0a249cbd90e5"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterStack",
+          "method": "getSideOfDest",
+          "desc": "()Lnet/minecraft/core/Direction;",
+          "sha256": "b7925b6bdee276e2fbfdb5ba7902866ccd253e86430774a5be61b13fa65817ae"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterStack",
+          "method": "recalculatePath",
+          "desc": "(Lmekanism/common/lib/inventory/TransitRequest;Lmekanism/common/content/network/transmitter/LogisticalTransporterBase;IZLjava/util/Map;)Lmekanism/common/lib/inventory/TransitRequest$TransitResponse;",
+          "sha256": "85311f4d3409a1436001a57e5348758bba37a43772bf8bf239ea92db237cb5fa"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterStack",
+          "method": "recalculateRRPath",
+          "desc": "(Lmekanism/common/lib/inventory/TransitRequest;Lmekanism/common/tile/TileEntityLogisticalSorter;Lmekanism/common/content/network/transmitter/LogisticalTransporterBase;IZ)Lmekanism/common/lib/inventory/TransitRequest$TransitResponse;",
+          "sha256": "8a2838112a17878e38c08465bbcd419e816797cbdab28786c736db77313805e4"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterStack",
+          "method": "calculateIdle",
+          "desc": "(Lmekanism/common/content/network/transmitter/LogisticalTransporterBase;)Z",
+          "sha256": "9bcfd883c2236040bcd8c9a9588e63ad9ecde5922db313d6b78bf2454e71500d"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterStack",
+          "method": "*",
+          "desc": "",
+          "sha256": "c3023a58d09cb97dddf19e37172360c29d4b755a3f15bb4f6d7bda7a894a1adf"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterPathfinder$Destination",
+          "method": "<init>",
+          "desc": "(Ljava/util/List;ZLmekanism/common/lib/inventory/TransitRequest$TransitResponse;D)V",
+          "sha256": "ab36a9e3c721bf5dc4e3f5d0ec3d2fe6f2e3de17d35c3cd4b21b116c24cdeb85"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterPathfinder$Destination",
+          "method": "getPath",
+          "desc": "()Ljava/util/List;",
+          "sha256": "046789a6f22a48cafce2263862c1f5f36df29143b578950d782966f2fa792e55"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterPathfinder$Destination",
+          "method": "*",
+          "desc": "",
+          "sha256": "48394e1e991ce2613ba7a6556ba30a539697e01f2806e5900df46df206ee5307"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterPathfinder$Pathfinder",
+          "method": "getPath",
+          "desc": "()Ljava/util/List;",
+          "sha256": "29921c185f6737880bdc840e92ea4384e33f554c9d8863e243bd660d5581dfe9"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterPathfinder",
+          "method": "getIdlePath",
+          "desc": "(Lmekanism/common/content/network/transmitter/LogisticalTransporterBase;Lmekanism/common/content/transporter/TransporterStack;)Lmekanism/common/content/transporter/TransporterPathfinder$IdlePathData;",
+          "sha256": "2249adb9a80e5cc8de9b729150070b0b5fbd4e7ddc0f9ef465504da8de344f39"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterPathfinder",
+          "method": "getNewRRPath",
+          "desc": "(Lmekanism/common/content/network/transmitter/LogisticalTransporterBase;Lmekanism/common/content/transporter/TransporterStack;Lmekanism/common/lib/inventory/TransitRequest;Lmekanism/common/tile/TileEntityLogisticalSorter;I)Lmekanism/common/content/transporter/TransporterPathfinder$Destination;",
+          "sha256": "a553d51facfb712a517c7cba4e9bb50e3a0936d78cfd2ab588fc819548cfda8d"
+        },
+        {
+          "class": "mekanism/common/content/transporter/TransporterPathfinder",
+          "method": "getNewBasePath",
+          "desc": "(Lmekanism/common/content/network/transmitter/LogisticalTransporterBase;Lmekanism/common/content/transporter/TransporterStack;Lmekanism/common/lib/inventory/TransitRequest;ILjava/util/Map;)Lmekanism/common/content/transporter/TransporterPathfinder$Destination;",
+          "sha256": "ba97bc8e1f69189de9e5d4fbaf2569f709c01d9b263dc5c7b56836e5355d209e"
+        },
+        {
+          "class": "mekanism/common/lib/SidedBlockPos",
+          "method": "get",
+          "desc": "(Lmekanism/common/content/transporter/TransporterPathfinder$Destination;)Lmekanism/common/lib/SidedBlockPos;",
+          "sha256": "acfa17f8c3bd223bf0324a712f27f5d395768009700ed24064619bf6a19e257c"
+        },
+        {
+          "class": "mekanism/common/content/network/transmitter/LogisticalTransporterBase",
+          "method": "onUpdateServer",
+          "desc": "()V",
+          "sha256": "1cc2fc0fca53c63bd1a86ebf7d785fa949c4acc8accd66fea7d11f3185c1474b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the List.indexOf(Object) call in TransporterStack.write(LogisticalTransporterBase, FriendlyByteBuf), writeToUpdateTag, isFinal, getNext and getPrev: a first-occurrence position index (fastutil Object2IntOpenHashMap, putIfAbsent in list order) per TransporterStack for the current pathToTarget list, rebuilt when the list object or size changes; served only for ArrayList routes of >= 12 entries whose elements are null or exactly BlockPos and an argument that is exactly BlockPos or MutableBlockPos; else the original indexOf. Exact because Mekanism never changes a route list in place (audit in notes/mekanism_transport.md; every method involved is guarded); require = 0",
+      "license": "Mekanism (MIT): the mixin carries only our own logic (helper bons.furious.patch.mekanism_transport.PathIndex)"
+    }
+  }
+}

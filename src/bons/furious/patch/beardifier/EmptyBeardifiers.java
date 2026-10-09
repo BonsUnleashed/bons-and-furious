@@ -25,7 +25,8 @@ import org.spongepowered.asm.mixin.transformer.meta.MixinMerged;
 
 /**
  * Bons and Furious switch worldgen_empty_beardifier_marker (Minecraft 1.20.1 world generation, server side; tested with
- * Forge 47.4.16 and the Beardifier mixins of Integrated API 1.5.1, YUNG's API 4.0.6, Moog's Structure Lib 3.3.1, Qliphoth
+ * Forge 47.4.16 and the Beardifier mixins of Integrated API 1.5.1 and 1.8.2 (since 1.0.36; also next to Integrated Patches
+ * 1.2.0, which patches none of these classes), YUNG's API 4.0.6, Moog's Structure Lib 3.3.1, Qliphoth
  * Awakening (fdbosses) 3.1.0.3, Lithostitched 1.4.11, Valhelsia Structures 1.1.2, L_Ender's Cataclysm 3.16, C2ME 0.2.0
  * alpha.12). SRG member names.
  *
@@ -67,29 +68,46 @@ public final class EmptyBeardifiers {
     /** Chunks whose beardifier was flagged / checked (diagnostics; the proof reads them). */
     public static final AtomicLong MARKED = new AtomicLong(), CHECKED = new AtomicLong();
 
-    /** Other mods' Beardifier mixins whose code was read (research-worldgen.md, beardifier.md), by SHA-256 of the class file. */
-    static final Map<String, String> VERIFIED = Map.ofEntries(
-            Map.entry("com.craisinlord.integrated_api.mixins.structures.BeardifierMixin", "0fc710e9d13a5e9a322fef904bfae9dbbbbc1d611004cb9ad4f7d9fa55709000"),
-            Map.entry("com.craisinlord.integrated_api.mixins.structures.BeardifierAccessor", "d85014fd3e7d5d0f9dafec383fe535ef3425376fc1fdb02b5a4a860b9d16b3ba"),
-            Map.entry("com.yungnickyoung.minecraft.yungsapi.mixin.BeardifierMixin", "9a2dc9298662748b26ea2a5a42407ccfb70196e1d06953acabace4a73e5f505b"),
-            Map.entry("com.yungnickyoung.minecraft.yungsapi.mixin.accessor.BeardifierAccessor", "aadd6b78f7ab50d1b7282f941c5e93e2a2b86ca354e15a905c002a1801e3a813"),
-            Map.entry("com.finndog.moogs_structures.mixins.terrainadaptation.BeardifierMixin", "82b0df328e0b508cdeb6a0b819c6ff051826627bddaa5773d338f2373279eac2"),
-            Map.entry("com.finndog.moogs_structures.mixins.terrainadaptation.BeardifierAccessor", "cf533d0a4738be877fca34ce914dcf609a1d186f7893e9347ba03281d7e1d0d4"),
-            Map.entry("com.finderfeed.fdbosses.mixin.BeardifierMixin", "a73925f4e3d6877e3c825d43ca57f40fc136b2edd1dd716632008d22702d9a15"),
-            Map.entry("dev.worldgen.lithostitched.mixin.common.BeardifierMixin", "e1ce84f67c9071b8d95ce09d68051a78b1e94790f8c81bcd35e84fe582e03a91"),
-            Map.entry("com.stal111.valhelsia_structures.core.mixin.BeardifierMixin", "a79fb30ed4cc04863bd0acd55185eaea256ecbd12c0217563a4124b7119d05f3"),
-            Map.entry("com.github.L_Ender.cataclysm.mixin.accessor.BeardifierAccessor", "b353ab3c21f00f7c4ba1f4302c5279d58c8362b63c6e34a2410f47ef0b9c889b"),
-            Map.entry("com.ishland.c2me.base.mixin.access.IStructureWeightSampler", "184f5f578ed1dcc6e1d6a44b28c48fca074754b30e88583afee5ee538b4c2c1d"));
+    /**
+     * Other mods' Beardifier mixins whose code was read (research-worldgen.md, beardifier.md), by SHA-256 of the class file.
+     * Since 1.0.36 a mixin may have several verified builds, listed in release order: Integrated API 1.8.2 next to 1.5.1
+     * (1.8.2's BeardifierMixin gives its two adaptation slots an empty iterator at construction instead of null, uses SRG
+     * method names in its @Inject targets, and its helper adds an inverted beard direction for its new ceiling structures;
+     * the RETURN handlers, their priority and what they return for empty slots are unchanged; checked 2026-10-09).
+     */
+    static final Map<String, List<String>> VERIFIED = Map.ofEntries(
+            Map.entry("com.craisinlord.integrated_api.mixins.structures.BeardifierMixin", List.of(
+                    "0fc710e9d13a5e9a322fef904bfae9dbbbbc1d611004cb9ad4f7d9fa55709000",       // Integrated API 1.5.1
+                    "806bfad06ee158714139bb31f46f94f047081201ece1b04dace5cae2ae726689")),     // Integrated API 1.8.2
+            Map.entry("com.craisinlord.integrated_api.mixins.structures.BeardifierAccessor", List.of(
+                    "d85014fd3e7d5d0f9dafec383fe535ef3425376fc1fdb02b5a4a860b9d16b3ba",       // Integrated API 1.5.1
+                    "9bd74aff4b8293f9625959f81009efdb9eeed3f4ee82533455591d9360ebd419")),     // Integrated API 1.8.2
+            Map.entry("com.yungnickyoung.minecraft.yungsapi.mixin.BeardifierMixin", List.of("9a2dc9298662748b26ea2a5a42407ccfb70196e1d06953acabace4a73e5f505b")),
+            Map.entry("com.yungnickyoung.minecraft.yungsapi.mixin.accessor.BeardifierAccessor", List.of("aadd6b78f7ab50d1b7282f941c5e93e2a2b86ca354e15a905c002a1801e3a813")),
+            Map.entry("com.finndog.moogs_structures.mixins.terrainadaptation.BeardifierMixin", List.of("82b0df328e0b508cdeb6a0b819c6ff051826627bddaa5773d338f2373279eac2")),
+            Map.entry("com.finndog.moogs_structures.mixins.terrainadaptation.BeardifierAccessor", List.of("cf533d0a4738be877fca34ce914dcf609a1d186f7893e9347ba03281d7e1d0d4")),
+            Map.entry("com.finderfeed.fdbosses.mixin.BeardifierMixin", List.of("a73925f4e3d6877e3c825d43ca57f40fc136b2edd1dd716632008d22702d9a15")),
+            Map.entry("dev.worldgen.lithostitched.mixin.common.BeardifierMixin", List.of("e1ce84f67c9071b8d95ce09d68051a78b1e94790f8c81bcd35e84fe582e03a91")),
+            Map.entry("com.stal111.valhelsia_structures.core.mixin.BeardifierMixin", List.of("a79fb30ed4cc04863bd0acd55185eaea256ecbd12c0217563a4124b7119d05f3")),
+            Map.entry("com.github.L_Ender.cataclysm.mixin.accessor.BeardifierAccessor", List.of("b353ab3c21f00f7c4ba1f4302c5279d58c8362b63c6e34a2410f47ef0b9c889b")),
+            Map.entry("com.ishland.c2me.base.mixin.access.IStructureWeightSampler", List.of("184f5f578ed1dcc6e1d6a44b28c48fca074754b30e88583afee5ee538b4c2c1d")));
 
-    /** The enhanced-adaptation helper each compute-handling mixin calls, with the SHA-256 of that helper's class file. */
+    /**
+     * The enhanced-adaptation helper each compute-handling mixin build calls: that mixin build's SHA-256 -> the helper class
+     * and the SHA-256 of the helper's class file from the same release (since 1.0.36 keyed by build, so a 1.5.1 mixin is
+     * only accepted with 1.5.1's helper and a 1.8.2 mixin with 1.8.2's).
+     */
     static final Map<String, String[]> HELPERS = Map.of(
-            "com.craisinlord.integrated_api.mixins.structures.BeardifierMixin", new String[] {
+            "0fc710e9d13a5e9a322fef904bfae9dbbbbc1d611004cb9ad4f7d9fa55709000", new String[] {        // Integrated API 1.5.1
                     "com.craisinlord.integrated_api.world.terrainadaptation.beardifier.EnhancedBeardifierHelper",
                     "7b08ae488ae6b964d3d48a94bed6bed8a5aea4dec4d823945c875d0511628fc8"},
-            "com.yungnickyoung.minecraft.yungsapi.mixin.BeardifierMixin", new String[] {
+            "806bfad06ee158714139bb31f46f94f047081201ece1b04dace5cae2ae726689", new String[] {        // Integrated API 1.8.2
+                    "com.craisinlord.integrated_api.world.terrainadaptation.beardifier.EnhancedBeardifierHelper",
+                    "f09ecf3a6a6256139f104e3b427b220435564a0f2f777db01706e14b9a74dfc2"},
+            "9a2dc9298662748b26ea2a5a42407ccfb70196e1d06953acabace4a73e5f505b", new String[] {        // YUNG's API 4.0.6
                     "com.yungnickyoung.minecraft.yungsapi.world.structure.terrainadaptation.beardifier.EnhancedBeardifierHelper",
                     "73d01dffc67a1dbc2b579130a6464100eeea525a674a9a1dd5fa9b1feb231248"},
-            "com.finndog.moogs_structures.mixins.terrainadaptation.BeardifierMixin", new String[] {
+            "82b0df328e0b508cdeb6a0b819c6ff051826627bddaa5773d338f2373279eac2", new String[] {        // Moog's Structure Lib 3.3.1
                     "com.finndog.moogs_structures.world.structures.terrainadaptation.beardifier.EnhancedBeardifierHelper",
                     "57164c706635b0377badd281fb34b096b03b0eb048b4485596f7b0039fa201e7"});
 
@@ -197,11 +215,11 @@ public final class EmptyBeardifiers {
             TreeSet<String> verified = new TreeSet<>();
             for (String mixin : mergedMixins(beardifier)) {
                 if (mixin.startsWith("bons.furious.mixin.")) continue;
-                String want = VERIFIED.get(mixin);
+                List<String> want = VERIFIED.get(mixin);
                 if (want == null) return new Census(false, "Beardifier carries code from " + mixin + ", which this switch has not verified", new MethodHandle[0]);
                 String got = sha256(loader, mixin);
-                if (!want.equals(got)) return new Census(false, mixin + " is not the verified build", new MethodHandle[0]);
-                String[] helper = HELPERS.get(mixin);
+                if (!want.contains(got)) return new Census(false, mixin + " is not the verified build", new MethodHandle[0]);
+                String[] helper = HELPERS.get(got);
                 if (helper != null && !helper[1].equals(sha256(loader, helper[0])))
                     return new Census(false, helper[0] + " is not the verified build", new MethodHandle[0]);
                 verified.add(mixin);

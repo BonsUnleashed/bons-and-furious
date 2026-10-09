@@ -1,0 +1,170 @@
+{
+  "group": "oculus_entity_vertex",
+  "keys": {
+    "oculus_entity_vertex_direct": {
+      "mod": "oculus",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.oculus_entity_vertex.EntityVertexDirectMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferBuilder",
+          "method": "m_5954_",
+          "desc": "(FFFFFFFFFIIFFF)V",
+          "note": "the redirected element-path super call (after the default-colour check and the two vanilla fast formats)",
+          "sha256": "2b06dac76fd6922ae097ae4ad558f4286116fc7f5f36d804c1adc5d27693167e"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferBuilder",
+          "method": "m_5832_",
+          "desc": "(IF)V",
+          "sha256": "450f17e4c2fbe50c8848801a9c5c884d48c5aff33eeb5c2960ef241d4e78b2ff"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferBuilder",
+          "method": "m_5672_",
+          "desc": "(IB)V",
+          "sha256": "a90b7aaa10232a358b87f7877984ea6ae52541121eb495c1c29c5651ebecf431"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferBuilder",
+          "method": "m_5586_",
+          "desc": "(IS)V",
+          "sha256": "3c5b6879d983d3e1d949dc37027cc1ba51d81bed534ac473135005626d8f89cd"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferBuilder",
+          "method": "m_6122_",
+          "desc": "(IIII)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "note": "colour(int x4): the default-colour check, then BufferVertexConsumer's write",
+          "sha256": "af10c01aba7197b7b506d3886ceb2a4ef71b5d0636a0d22481f717d4e204dbba"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferBuilder",
+          "method": "m_6297_",
+          "desc": "()Lcom/mojang/blaze3d/vertex/VertexFormatElement;",
+          "sha256": "915a796d85f8ecfad41dc6ecf9a3b8d4e6a5c814fe700f9e97030f67acbabc32"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/VertexConsumer",
+          "method": "m_5954_",
+          "desc": "(FFFFFFFFFIIFFF)V",
+          "note": "the element path the switch performs itself",
+          "sha256": "3d15130d48f30bba6e0d52b24a0028813c23f0cc1b3e13259f765f72892b9ec1"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/VertexConsumer",
+          "method": "m_85950_",
+          "desc": "(FFFF)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "sha256": "5ad806f590b4efe9e0a192784ac985c5a10be0fc53d4dcf2fb278618d1cdecc9"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/VertexConsumer",
+          "method": "m_86008_",
+          "desc": "(I)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "sha256": "7511a3a73cfe73e699731159be7059b639ed7547f5df8807831db2fb79e37ac6"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/VertexConsumer",
+          "method": "m_85969_",
+          "desc": "(I)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "sha256": "6d1e48c80da079d153ced8b0a911f45a3963dea72d70d61362a05c528c40c0bd"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferVertexConsumer",
+          "method": "m_5483_",
+          "desc": "(DDD)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "sha256": "2be3e839f34eb81c4223fe9fe37dc29edb68b2626f24c2b31a2d5a07d0fa19bf"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferVertexConsumer",
+          "method": "m_6122_",
+          "desc": "(IIII)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "sha256": "53196b6cc7d2cc25a7bb839ca953688db26cb634693cfb29de05bf8fe6a9d2aa"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferVertexConsumer",
+          "method": "m_7421_",
+          "desc": "(FF)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "sha256": "196463715c77f6e349d15565e323cd19aa014eafd8fc2df1ffa9bf73c5b2ef32"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferVertexConsumer",
+          "method": "m_7122_",
+          "desc": "(II)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "sha256": "5920a2321692476cc52159c79627251f1bd5f403473e828f8662acc90181002a"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferVertexConsumer",
+          "method": "m_7120_",
+          "desc": "(II)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "sha256": "a06327ad2782ea432d043c5a5b214128f6dbc35ee1142acd0d528602745bcb86"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferVertexConsumer",
+          "method": "m_85793_",
+          "desc": "(SSI)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "sha256": "13a4a3b68dcf2c115c70a2f508a19817fe4c3dca35d4d92b730d818894656b03"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferVertexConsumer",
+          "method": "m_5601_",
+          "desc": "(FFF)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "sha256": "bac3b75ab64825cb52422b252695de57359d4c8399bdf4f947ce0104d9f1dd9c"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferVertexConsumer",
+          "method": "m_85774_",
+          "desc": "(F)B",
+          "sha256": "ea3b85f66885a39417f392a81369199fd41d885f3c9ed0c0a1b7bbf293219a64"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/DefaultVertexFormat",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "the element types the per-step identity checks stand for",
+          "sha256": "5c29b4ce5719f5608939b7136435ddaad0a51fbc6df1287bfc7ddd84ba9501d1"
+        },
+        {
+          "class": "net/irisshaders/iris/vertices/IrisVertexFormats",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "Oculus's ENTITY layout",
+          "sha256": "941e2d06ca9b16975cf2b930762c366c8297aae8f59825c1e5088ed1b0788912"
+        },
+        {
+          "class": "net/irisshaders/iris/mixin/vertices/MixinBufferBuilder",
+          "method": "m_7120_",
+          "desc": "(II)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "note": "Oculus's uv2(int, int) override in BufferBuilder (calls super): the element path's uv2",
+          "sha256": "4f96adc6b2441543fc7444c7a2bc9c2a075c24b94d866b13efd8dc0fa88841c4"
+        },
+        {
+          "class": "net/irisshaders/iris/mixin/vertices/MixinBufferBuilder",
+          "method": "iris$extendFormat",
+          "desc": "(Lcom/mojang/blaze3d/vertex/VertexFormat;)Lcom/mojang/blaze3d/vertex/VertexFormat;",
+          "sha256": "e1e41a620f28251ae7f4bbb4ef941b4d4fb3a8f1df62de070496f456d66e55fa"
+        },
+        {
+          "class": "net/irisshaders/iris/mixin/vertices/block_rendering/MixinBufferBuilder_SeparateAo",
+          "method": "vertex",
+          "desc": "(F)F",
+          "note": "SeparateAo's alpha @ModifyVariable at HEAD of m_5954_ (runs before the redirected call)",
+          "sha256": "31b52179e9bcb6884d2b234ef97ca89e9bd525cb25a7de3687665f69e94b3a05"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/mixin/features/render/immediate/buffer_builder/BufferBuilderMixin",
+          "method": "m_5751_",
+          "desc": "()V",
+          "note": "Embeddium's nextElement overwrite, which the switch calls as the element path does",
+          "sha256": "e3134ca6d0920da5495225ec06158c42b5006fce012151b8a97b66d4c6c5821b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the element-path super call (DefaultedVertexConsumer.m_5954_) inside BufferBuilder.m_5954_, priority 1100; the handler performs the element path's steps for a plain BufferBuilder in IrisVertexFormats.ENTITY (helper bons.furious.patch.oculus_entity_vertex.EntityVertexDirect: runtime flag, SHADOW probe) and calls the original otherwise",
+      "license": "Minecraft (Mojang): no vanilla code is carried; the handler writes each element through BufferBuilder's own put methods and calls its own nextElement()/endVertex(). Oculus is LGPL-3.0 and Embeddium LGPL-3.0: nothing of their code is carried"
+    }
+  }
+}

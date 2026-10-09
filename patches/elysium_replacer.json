@@ -1,0 +1,61 @@
+{
+  "group": "elysium_replacer",
+  "keys": {
+    "elysium_lean_replacer": {
+      "mod": "elysium_api",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.elysium_replacer.ElysiumLeanHandlerMixin",
+        "bons.furious.mixin.elysium_replacer.MultiNoiseParametersInvoker"
+      ],
+      "guard": [
+        {
+          "class": "net/jadenxgamer/elysium_api/impl/mixin/biome/MultiNoiseBiomeSourceMixin",
+          "method": "elysium$getNoiseBiome",
+          "desc": "(IIILnet/minecraft/world/level/biome/Climate$Sampler;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "sha256": "5a62c68f85515cc9b7a74844bd816c986dea361061ac54e0b6d02e7e435836ee"
+        },
+        {
+          "class": "net/jadenxgamer/elysium_api/impl/mixin/biome/MultiNoiseBiomeSourceMixin",
+          "method": "getCurrentBiome",
+          "desc": "(IIILnet/minecraft/world/level/biome/Climate$Sampler;)Lnet/minecraft/core/Holder;",
+          "sha256": "f6f92cf07c5afc5edd270386ba95dc5c4c3ae755fe57a62248203702cfa129a5"
+        },
+        {
+          "class": "net/jadenxgamer/elysium_api/impl/mixin/biome/MultiNoiseBiomeSourceMixin",
+          "method": "replaceBiomeIfNeeded",
+          "desc": "(IILnet/minecraft/core/Holder;Ljava/util/List;Ljava/util/List;J)Lnet/minecraft/core/Holder;",
+          "sha256": "4a691a865dfcbcb1b643816897568c6953742782fdb49c6de9c89d045e8d5800"
+        },
+        {
+          "class": "net/jadenxgamer/elysium_api/impl/mixin/biome/MultiNoiseBiomeSourceMixin",
+          "method": "makeCoordinatesIntoSeed",
+          "desc": "(IIJ)J",
+          "sha256": "626d02be9393ae09c996d0c7540f6f0d403215bbd87f66fdeec1669edf3c0b61"
+        },
+        {
+          "class": "net/jadenxgamer/elysium_api/impl/compat/ElysiumTerrablenderHelper",
+          "method": "getCurrentBiome",
+          "desc": "(Lnet/minecraft/world/level/biome/MultiNoiseBiomeSource;IIILnet/minecraft/world/level/biome/Climate$Sampler;)Lnet/minecraft/core/Holder;",
+          "sha256": "e26cf26d579c84be8f2961179d500612cd464f53b136fbbddc6ce1536fef56b2"
+        },
+        {
+          "class": "net/jadenxgamer/elysium_api/impl/biome/ElysiumBiomeHelper",
+          "method": "biomesForDimension",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;)Ljava/util/List;",
+          "sha256": "32195b14a865aeb99b9bd86ee078c85b77c737e0fca6d5b3ada55566d1c0ed5a"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/MultiNoiseBiomeSource",
+          "method": "m_274409_",
+          "desc": "()Lnet/minecraft/world/level/biome/Climate$ParameterList;",
+          "sha256": "2cbdf4031eeb0716b28d7072c01383b0863cd2b843c1e6b80f20aaf4e8f72a40"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinSquared @TargetHandler on ElysiumAPI's MultiNoiseBiomeSourceMixin.elysium$getNoiseBiome (merged into MultiNoiseBiomeSource.getNoiseBiome): a cancellable HEAD @Inject running a modified version of the handler (same decisions; TerraBlender check once, replacer list once per RegistryAccess, no HashSet, Random.setSeed+nextDouble computed directly); shadow mode: a @WrapOperation capturing its getCurrentBiome result and a RETURN @Inject comparing; an @Invoker for MultiNoiseBiomeSource.parameters()",
+      "license": "ElysiumAPI is GPL-2.0 (Modrinth) / LGPL-2.1 (GitHub): the HEAD injection is a modified version of its handler logic (helper bons.furious.patch.elysium_replacer.ElysiumLean); Minecraft (Mojang): no-copy"
+    }
+  }
+}

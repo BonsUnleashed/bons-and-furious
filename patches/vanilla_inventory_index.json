@@ -1,0 +1,81 @@
+{
+  "group": "vanilla_inventory_index",
+  "keys": {
+    "vanilla_inventory_trigger_index": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.vanilla_inventory_index.InventoryChangeTriggerContextMixin",
+        "bons.furious.mixin.vanilla_inventory_index.ItemPredicateFieldsAccessor",
+        "bons.furious.mixin.vanilla_inventory_index.SimpleCriterionTriggerIndexMixin",
+        "bons.furious.mixin.vanilla_inventory_index.TriggerInstancePredicatesAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/advancements/critereon/SimpleCriterionTrigger",
+          "method": "m_66234_",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;Ljava/util/function/Predicate;)V",
+          "sha256": "1a4bb82957d1eac360cef0722486faccc5492de78400c58f58cec7b43898b66a"
+        },
+        {
+          "class": "net/minecraft/advancements/critereon/SimpleCriterionTrigger",
+          "method": "m_6467_",
+          "desc": "(Lnet/minecraft/server/PlayerAdvancements;Lnet/minecraft/advancements/CriterionTrigger$Listener;)V",
+          "sha256": "829ef16f7c7ab957e5a08c2c29cee1d68f8bd61f75dd2f7632bb2a557f5d2fd4"
+        },
+        {
+          "class": "net/minecraft/advancements/critereon/SimpleCriterionTrigger",
+          "method": "m_6468_",
+          "desc": "(Lnet/minecraft/server/PlayerAdvancements;Lnet/minecraft/advancements/CriterionTrigger$Listener;)V",
+          "sha256": "c9bcce5751f6d11a38602d26ebf21e921c6c5de4544c57d81a88bef82d28a8e3"
+        },
+        {
+          "class": "net/minecraft/advancements/critereon/SimpleCriterionTrigger",
+          "method": "m_5656_",
+          "desc": "(Lnet/minecraft/server/PlayerAdvancements;)V",
+          "sha256": "4733f6b9f2e0b3d454c72b63137168ebe999d59e33ce32ec0e9be7c7b8aab92f"
+        },
+        {
+          "class": "net/minecraft/advancements/critereon/SimpleCriterionTrigger",
+          "method": "*",
+          "desc": "",
+          "sha256": "92dccccdcce01f0a89104e833b26af352f507d19e39b4c27507b09f053f47db3"
+        },
+        {
+          "class": "net/minecraft/advancements/critereon/InventoryChangeTrigger",
+          "method": "m_43153_",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/item/ItemStack;III)V",
+          "sha256": "0c9b10c9927572f77ca167b7a0f625b9c1611aae5ede50e90aa98e06bd591108"
+        },
+        {
+          "class": "net/minecraft/advancements/critereon/InventoryChangeTrigger",
+          "method": "m_43149_",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/item/ItemStack;)V",
+          "sha256": "012d44f8a9fa4b6d59b7360d0dbec1925f9e9625d3ec95433b681bb19c96ca54"
+        },
+        {
+          "class": "net/minecraft/advancements/critereon/InventoryChangeTrigger$TriggerInstance",
+          "method": "m_43186_",
+          "desc": "(Lnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/item/ItemStack;III)Z",
+          "sha256": "f0e2ce1d037f400873bc65eb21fa7f3d968dcdb7b6e3a334f66788f096a84d84"
+        },
+        {
+          "class": "net/minecraft/advancements/critereon/ItemPredicate",
+          "method": "m_45049_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "sha256": "15b28233587270e2463994886ede15f73100a4cd3f1c64c0e561274679ef8db0"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerPlayer",
+          "method": "m_8960_",
+          "desc": "()Lnet/minecraft/server/PlayerAdvancements;",
+          "sha256": "ee2c69c42e381d7875712d4372b232085fd1ba5a0c571a0da0576aee53caec36"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on InventoryChangeTrigger.m_43153_ (notes the changed stack and the player's PlayerAdvancements for this thread), @WrapOperation on the Set.iterator() call in SimpleCriterionTrigger.m_66234_ (for an InventoryChangeTrigger during an inventory change: an iterator over the other listeners plus the simple listeners indexed under the stack's item, in the set's own order), @Inject HEAD of m_6467_/m_6468_/m_5656_ (listener-map version), @Accessor on TriggerInstance.f_43179_ and ItemPredicate.f_45029_/f_151427_; stands down when another mixin than BCLib's and Tinkers' Jewelry's vetted ones is merged into the four classes",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.vanilla_inventory_index.ListenerIndex); vanilla's own loop evaluates and grants"
+    }
+  }
+}

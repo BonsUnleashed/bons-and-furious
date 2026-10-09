@@ -1,0 +1,42 @@
+{
+  "group": "mekanism_radiation",
+  "keys": {
+    "mekanism_radiation_source_range": {
+      "mod": "mekanism",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.mekanism_radiation.RadiationManagerSourceRangeMixin"
+      ],
+      "guard": [
+        {
+          "class": "mekanism/common/lib/radiation/RadiationManager",
+          "method": "getRadiationLevelAndMaxMagnitude",
+          "desc": "(Lmekanism/api/Coord4D;)Lmekanism/common/lib/radiation/RadiationManager$LevelAndMaxMagnitude;",
+          "sha256": "46ffdf31e9928d044a146330b0561b67318f5b96a858c72de293c90866aa0a03"
+        },
+        {
+          "class": "mekanism/api/Chunk3D",
+          "method": "expand",
+          "desc": "(I)Ljava/util/Set;",
+          "sha256": "057f4350a62f5dc2c6c94fb715d53ae01292ae90881799e856c8b05e9ce42f41"
+        },
+        {
+          "class": "mekanism/api/Chunk3D",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "sha256": "130f87a6af4e33efe80157241af8259c8de9f0b4b431a1a3a40a8ff7b9fc6427"
+        },
+        {
+          "class": "mekanism/api/Chunk3D",
+          "method": "hashCode",
+          "desc": "()I",
+          "sha256": "caf88daee1d07847b62ba666cdceb448c1e1b3c1849abb395fb23eeffd2ba18d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the one Chunk3D.expand(I) call in RadiationManager.getRadiationLevelAndMaxMagnitude(Coord4D): the chunks of expand's set that hold a radiationTable row when there are none (empty set) or exactly one (that row key), the original expand otherwise (2+ rows in range, > 768 rows (> 128 when Guava's row map cannot be read directly), non-HashBasedTable table, Chunk3D subclass in range, negative radius, int-overflow coordinates, null dimension, concurrent change); the method's loop and result construction run unchanged; expand(1)'s centre-only quirk reproduced; require = 0, degrades to Mekanism's own code",
+      "license": "Mekanism (MIT): the mixin carries only our own logic (helper bons.furious.patch.mekanism_radiation.RadiationSourceRange); no Mekanism code copied"
+    }
+  }
+}

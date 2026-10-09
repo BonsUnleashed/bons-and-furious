@@ -54,7 +54,7 @@
         }
       ],
       "cancel": [],
-      "conversion": "MixinExtras @WrapOperation on Connection.send's call of sendPacket (marks packets without listener while a batch is open on this thread), on sendPacket's EventLoop.execute (lazyExecute of Minecraft's own task wrapped in a BatchedWrite: same queue order, no wakeup), on doSendPacket's setProtocol (protocol switches keep writeAndFlush) and writeAndFlush (Channel.write for batched packets), on tick's Channel.flush; @WrapMethod on Connection.tick (batch for that connection only) and ServerChunkCache.tickChunks (batch for all connections, flushed once at its end); helper bons.furious.patch.network_flush.FlushBatch",
+      "conversion": "MixinExtras @WrapOperation on Connection.send's call of sendPacket (marks packets without listener while a batch is open on this thread), on sendPacket's EventLoop.execute (lazyExecute of Minecraft's own task wrapped in a BatchedWrite: same queue order, no wakeup), on doSendPacket's setProtocol (protocol switches keep writeAndFlush) and writeAndFlush (Channel.write for batched packets); @WrapMethod on Connection.tick (batch for that connection only, flushed at its end) and ServerChunkCache.tickChunks (batch for all connections, flushed once at its end); helper bons.furious.patch.network_flush.FlushBatch (since 1.0.36 no batch opens when another mod's Connection mixin moves channels between event loops: FlushBatch.findChannelMover)",
       "license": "Minecraft (Mojang): no-copy; the mixins and helper carry only our own logic; Netty (Apache-2.0) is called, not copied"
     }
   }

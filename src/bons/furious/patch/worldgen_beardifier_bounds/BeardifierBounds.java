@@ -14,7 +14,8 @@ import org.slf4j.Logger;
 
 /**
  * Bons and Furious switch vanilla_beardifier_influence_bounds (Minecraft 1.20.1 world generation, server side; Forge
- * 47.4.16; tested with the Beardifier mixins of Integrated API 1.5.1, YUNG's API 4.0.6, Moog's Structure Lib 3.3.1,
+ * 47.4.16; tested with the Beardifier mixins of Integrated API 1.5.1 and 1.8.2 (since 1.0.36, also with Integrated Patches
+ * 1.2.0), YUNG's API 4.0.6, Moog's Structure Lib 3.3.1,
  * Qliphoth Awakening (fdbosses) 3.1.0.3, Lithostitched 1.4.11, Valhelsia Structures 1.1.2 and the Cataclysm and C2ME
  * accessors). SRG member names. Idea: C2ME pull request 552 (vanilla 26.1.2 has the same idea), idea text only.
  *

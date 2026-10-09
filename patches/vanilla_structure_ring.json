@@ -1,0 +1,36 @@
+{
+  "group": "vanilla_structure_ring",
+  "keys": {
+    "vanilla_structure_ring_search": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.vanilla_structure_ring.StructureRingSearchMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/chunk/ChunkGenerator",
+          "method": "m_223188_",
+          "desc": "(Ljava/util/Set;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/world/level/StructureManager;IIIZJLnet/minecraft/world/level/levelgen/structure/placement/RandomSpreadStructurePlacement;)Lcom/mojang/datafixers/util/Pair;",
+          "sha256": "3a07d5eb647054110577220d5f0c1ffb8e0dbe96d368863d0d2594c8e518170b"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/ChunkGenerator",
+          "method": "m_223198_",
+          "desc": "(Ljava/util/Set;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/world/level/StructureManager;ZLnet/minecraft/world/level/levelgen/structure/placement/StructurePlacement;Lnet/minecraft/world/level/ChunkPos;)Lcom/mojang/datafixers/util/Pair;",
+          "sha256": "b1b978006ce5355891475ab87d43dfb76c7f692d44953964b2a87c9e161c45bd"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/placement/RandomSpreadStructurePlacement",
+          "method": "m_227008_",
+          "desc": "(JII)Lnet/minecraft/world/level/ChunkPos;",
+          "sha256": "87523ff43bb115738ce363b3ee18d19f6f3fab067d29734fb0975be1dec3956b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "cancellable @Inject at the HEAD of the static ChunkGenerator.getNearestGeneratedStructure for random-spread placements (m_223188_): the same border cells in the same order, the same getPotentialStructureChunk and getStructureGeneratingAt (@Shadow) calls, the first hit returned; the interior cells are not walked",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_structure_ring.StructureRing)"
+    }
+  }
+}

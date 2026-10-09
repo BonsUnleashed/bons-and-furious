@@ -1,0 +1,692 @@
+{
+  "group": "lionfish_models",
+  "keys": {
+    "lionfish_model_parts": {
+      "mod": "lionfishapi",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.lionfish_models.AdvancedEntityModelPartsMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/tools/AdvancedEntityModel",
+          "method": "resetToDefaultPose",
+          "desc": "()V",
+          "note": "getAllParts().forEach(AdvancedModelBox::resetToDefaultPose)",
+          "sha256": "447ee8590a4979d588654c577b864b96daa8bc1fc0b82f8db2848190b0b25c19"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/tools/AdvancedEntityModel",
+          "method": "getAnyDescendantWithName",
+          "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+          "note": "stream(getAllParts()).filter(boxName equals key).findFirst()",
+          "sha256": "1274394aceea3010bd56c44eacf51e7394a6ef3a8cebda1009b01eab5fee79a3"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/tools/AdvancedEntityModel",
+          "method": "*",
+          "desc": "",
+          "note": "no new method (e.g. one that renames parts) since the tested build",
+          "sha256": "fe1e3182b51707cde97758bc6840f38ede421df139bb602ef57e1433bb2ce3aa"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/tools/AdvancedModelBox",
+          "method": "<init>",
+          "desc": "(Lcom/github/L_Ender/lionfishapi/client/model/tools/AdvancedEntityModel;Ljava/lang/String;)V",
+          "note": "the only boxName write in the pack",
+          "sha256": "8f824367d9d244a62b023bab309244f97c43ac21c768c2d2f1e038524608fd71"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/tools/AdvancedModelBox",
+          "method": "*",
+          "desc": "",
+          "note": "no new method since the tested build",
+          "sha256": "bf6128cb3007506331cc8af253bf61208e8c762e6ab367ea38344c344ecf8f68"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/AdvancedAnimations/AdvancedKeyframeAnimations",
+          "method": "animate",
+          "desc": "(Lcom/github/L_Ender/lionfishapi/client/model/tools/AdvancedEntityModel;Lcom/github/L_Ender/lionfishapi/client/model/AdvancedAnimations/AdvancedAnimationDefinition;JFLorg/joml/Vector3f;)V",
+          "note": "the only caller of getAnyDescendantWithName: optional.ifPresent(...)",
+          "sha256": "940048a3f53dd2fe4488af58d49491f9df1f2c9300dac4fe4163ef4e1e417fd1"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/block/Abyssal_Egg_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "626f5096aefbab559e0b4339a039b9db6b409851514411e8e9f364854be8d1f3"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/block/Altar_of_Abyss_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "525c1a4db9a4c1fc6f0762413be2f1130b353c407e670937b88049c4569f8b5b"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/block/Altar_of_Amethyst_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "94c519e559c49ce252ba8704527777a044f2ec151e04fddc643901985b24323e"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/block/Altar_of_Fire_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "d77d03ec74e7bcf7bee2cb8d5cbe234235d35233bf1a2d675493440f7c2eccee"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/block/Altar_of_Void_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "e2551fae0ef530e91a5bc665bebce62c4abd19e757f22c24fd3d5e716d6cb151"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/block/Boss_Respawn_Spawner_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "adcf8ca3e3fe13b2727adf246264c602267ed0c7db35967ae3af9377617dc833"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/block/Cursed_Tombstone_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "f8616edcf16357e34e50dba11ad0eef87b1bd3f2167cbf0e91da8956456df8b8"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/block/Door_Of_Seal_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "d1ca8cc4ac3ccad34585c14910bdcb42415fe25be4d463d3a347c14c972d8f5e"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/block/EMP_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "8e68bc7c73f3b5c164008e9fe858bd6a321319007ea6de77c177510bb1e775ef"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/block/Goddess_Statue_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "e95219a61ee17b67ecf168f09467beca53107914c7cd0b8218d8666624069682"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/block/Mechanical_Anvil_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "e8b341cfade983bcd7f2cb749f3a28bea6da44e95a7adc3f83fc8fd3e68d4863"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Abyss_Blast_Portal_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "e749e592e562afb651e67c231fe7e844fcd00c26a6cca430e083ae2724753ecc"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Abyss_Mine_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "38079337d63d9d74d4fc165561c4c2ff844de98bde0816d63e3e174fef034f36"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Amethyst_Cluster_Projectile_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "833f2eeb6ed75aea11d9e165ac25d3593ac5d551ef94bb904bb779d89ec2fb7d"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Amethyst_Crab_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "23f05cbc346427432f245d21005b54ac0b9c28a44dc14f7c473cd33f23b010de"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ancient_Desert_Stele_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "424c43e594ec1743d330f59b154d156cf5f6c9b80f47544f054dd0d38f147ba0"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ancient_Remnant_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "47bd6380d969888f1327b1f295b11ea74d336aeb77f578d85b001399b1eac798"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Axe_Blade_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "90ed2ff701cf1bd20771b6316f35bfe08f5104f2f3dc6f9807e5d17154e0703c"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Coral_Bardiche_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "38d410cb8a3b0f1314bc76f9432e51a001cb11711fc6d2c5c96508f19fb40208"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Coral_Golem_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "4f5cdaf44f3b67ba9233a4c16c01f4ad6003e4a917f290f42345bf9c1bef5b57"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Coral_Spear_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "e670c3e5213cd86d3089f3df70c16a9b1c846b8fdba13f1515bfb4f96d16a527"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Coralssus_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "c8afe15c3a9e4d708fb75579d2d42e3105d1ad751b5e0f65e064d423fc146e4d"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Cursed_Sandstorm_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "1071743ae46407c5063288afaf37b0da156367c2ba8078d3c6c33d1272e492c1"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Deepling_Angler_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "7341e6954028ee76e3cc618719dab179371072b103ece85cf7cf9bca6dd125fa"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Deepling_Brute_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "86e0c960cb38c8c7eb75649e74dfb8997cf29c4487d489053ca328a674096edf"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Deepling_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "bcda3f42d1118b3d8a05fe72996e41b3a79598c799444292a5a4cd3443bf4a20"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Deepling_Priest_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "57ad07df87b9bc9d20927b56185865f9e0cd1e1ead4ce1af373f3aabd9751c3e"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Deepling_Warlock_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "067c163fa10d13f42c1508b72890e1991dff3a2ede0699f1c468bfbef2659044"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ender_Golem_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "90306e990648faa4d45046ab618ac7da4268240c4142c4301cf63d982241f88f"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ender_Guardian_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "b304cfda20901f9c5c17a28bbc879dc5d2815ef2241854c36c666486d3a86184"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Endermaptera_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "6c78fc80f03297f63f206d7e1f87f82a89df34099e4fbffd85fcd5287cf5a08d"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ignis_Fireball_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "14f056447578557dc8169140393f62644c82589255d2886ada739609710e7cc7"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ignis_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "bc3a10cc89f98abe601ae9626e154926bd6638e65b1cc531d47b7b8c6c829f63"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ignited_Revenant_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "a46d952d4d343a13d6a14af4626f20ce540554b64d48fbebdad421453c448608"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Koboleton_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "315dc288d9006be06137ce506788b3f8652c46ca7c22fab045dad8baddfdc441"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Lava_Bomb_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "54df1b88d4b9964aa5c6bff2741915426c5a698846e0a58fb01d289af0e4d0f2"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Lionfish_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "123f8772b32f849dfbbc489ec58a7503a333111e1bc517ae29866d1d7f5d5334"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Modern_Remnant_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "a167ed610dc2a42a9238fd4f9c48c42d0cb6962455f307bf2c84749257fca36f"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Nameless_Sorcerer_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "6a5726d804217aed6e52021fec63e9faf4260043ebbee3d8d05153fb6e3f5f66"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Old_Netherite_Monstrosity_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "d33368e7e3e7146b3d90d76a3bcaba29abd6368c2383eb4a978fd1019ae0850e"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Phantom_Halberd_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "ff7bbbd551f05b0b41763e12e729c2db3448fba211fe2b471b82199ac2e35d93"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/PlayerSandstorm_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "ea72850c6f65a0fc6e438468090cab78c90f180866bb5098a13443ae0a904eab"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Sandstorm_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "ef97c3a519df0d3ab5edcecbd2fa09f88a409bc9bbc6d8b116a386ebdd9a2511"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Sandstorm_Projectile_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "b2b4cb6237e30d1557832647b3c1fec9ea86a091dfdd395bdfa7882389c0bfbc"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/The_Baby_Leviathan_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "f5f2e368afadf8df43c8dc5992c586dffe93778b4960e37d4cad61eadd8db3dd"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/The_Harbinger_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "d60069779857b88b1c9f4681fc4b08239d8101ed2cea1a4285040676db824b3d"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/The_Leviathan_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "ef43117eb8533b5998bebda424e1d236fe674054d0eb46e83f4518ffb6aee96a"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/The_Leviathan_Tongue_End_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "10f09a8bff294af5f468c6194a7c59f8384b28e1ec7fec026a45b863b57d2bc7"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/The_Leviathan_Tongue_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "135547e2907620af20b173b9f9c2085745f36109b9a8fe22919f92a54bca8ca2"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/The_Watcher_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "b1bafb70d3e7bda23b6913c3ba30d3ee199209482891a480000b746a850529ed"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Tidal_Hook_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "485827f40d0b064caec97adc4d83812df96a417118506cf99fe01ed4feaf7edf"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Tidal_Tentacle_Claws_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "713282dab702c722404a4d9c3898fbf04ae442283dae41263fafe15e1207885d"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Tidal_Tentacle_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "125a01b643e24d16402d784144dc186c0e1c59c31456f7d49be36c21e32718a9"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Void_Howitzer_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "a0a49c7a31274db3921b008c6b12bd75025fc3af8c433ba96069a62299d11662"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Void_Rune_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "cb92820a00f38322051bd04ff655957661c0ec900cb4f17e47ac22a3188745ce"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Wadjet_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "47e569ef43dd0712394f37e2c75c262edacc838eb67f9b368fb473163486f068"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Wither_Homing_Missile_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "4cfda3d58aca1d976fe6e2551ba1f16cbe0fee55d11d579671162fd73d335fec"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Wither_Howitzer_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "b66fe51c8409323db148fbf335c83167f0f53f5a0fb569079afb29e9aa0a52ac"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Wither_Missile_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "5e71c31d69d5126439fad8f748d1cdec27870c147e52d202a213fbaea5d85199"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/item/Ancient_Spear_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "24d28c27cfeb907d806dfd3a0403630f7ae5c1d80bbe1055a8dc46bec489d785"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/item/Astrape_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "76d6838b3f628aa3583dc83d5298c56d5073c893949c34b84394a4211f631c33"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/item/Azure_Sea_Shield_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "a280f46085149a403537c7b4f00611a65ed966538375e2b33f0ca050d2146287"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/item/Black_Steel_Targe_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "f15e2bdb3997a922cecca4212be7c7b46a3260dd5ecdcdb9ee8eb5464e59cb66"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/item/Bulwark_of_the_flame_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "9c106fde28b3318ccf5c667bf69aec253e7b193714d9fe84b3e8eb6fc6f4e478"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/item/Ceraunus_Item_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "fb50cae2bc2efb318054a5f6af7760024d5fb7cdd6ee446e0fe643311e178472"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/item/Cursed_Bow_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "bcd161742991689a1c492200023c4bf5ef637f83edfab9e54467b8529086acc2"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/item/Gauntlet_of_Bulwark_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "f6d91c5b14d286328cae4b4c4a1dff08024b2d47dc362e462af685274ded359e"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/item/Gauntlet_of_Guard_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "7d2d2b023d433c5d7b637f1e2d6d7ace1bc5cf9db4c9bbdd0670326c43ba8752"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/item/Gauntlet_of_Maelstrom_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "f982a605f78b473aef88b62849703d078fc9144a665dfc0ebda9548714b1320d"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/item/Incinerator_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "07176f05b4524390ac45644b0936def7ed1e4503fb2633b9c977c05182618b6a"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/item/Laser_Gatling_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "37133d47c4dbf54e225d59767230969674c3e003bfd6d11ddbbea233f5ddf739"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/item/Meat_Shredder_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "0c1ff6f0c1e6dbfff22fc047c498091ad4bd9aac4a05177875c1f712d600aefa"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/item/Soul_render_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "c7c3c29b0cedb689e9534df11bc809328e6bfc71daa6be2e658ce09b0fbfff6a"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/item/The_Annihilator_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "12cad2b923c1f58c44c6327808a664f4d60c3fb510988699ea0bb09b964757ad"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/item/The_Immolator_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "cefbfd247e2ceab85ac101632ca44bfb5cb668599b2d9eb8c4431b4faad6bfd1"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/item/Tidal_Claws_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "7a29cad982270e9bbceb929942c2131ebd1f942dba2e1b38c53d5a9f4b4ce27d"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/item/Void_Forge_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "84628dc00e66b664a76cbd6c88ffa5c49fdfd49366ec5b99fa7cb7c4aa08985a"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/item/Wither_Assault_SHoulder_Weapon_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "9171f1ae30c3ea926dcb39b03f500f98feee5181585aced8935f8464b8a960e1"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/item/Wrath_of_Desert_Model",
+          "method": "getAllParts",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "ImmutableList.of(final fields of this)",
+          "sha256": "2b36c34ecfa1578a4b5854824d685ba13064df3845ef37ae3e3b023815d7a3de"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on AdvancedEntityModel.getAllParts() in resetToDefaultPose and getAnyDescendantWithName (kept immutable list for the 79 proven Cataclysm model classes) + @WrapMethod on getAnyDescendantWithName (kept positive answers, validated by name); two @Unique fields (helper bons.furious.patch.lionfish_models.LionfishModelParts)",
+      "license": "LGPL-3.0-only (Lionfish API): no Lionfish code is carried, both bodies stay Lionfish's; CC-BY-NC-ND-4.0 (Cataclysm models): only named in the whitelist and guards, no code"
+    },
+    "lionfish_model_animator": {
+      "mod": "lionfishapi",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.lionfish_models.ModelAnimatorReuseMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/Animations/ModelAnimator",
+          "method": "endKeyframe",
+          "desc": "(Z)V",
+          "note": "apply prev/current transforms to their boxes; then prevTransformMap.clear(); putAll(transformMap); transformMap.clear()",
+          "sha256": "5ab3ad7efdcf63bb5652fda24ed530720126cd60c1319ef1a98e660985e77194"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/Animations/ModelAnimator",
+          "method": "update",
+          "desc": "(Lcom/github/L_Ender/lionfishapi/server/animation/IAnimatedEntity;)V",
+          "note": "clears both maps",
+          "sha256": "8f1b607729364c2e75f00f6d6c6911e2eba7f555e3a57c91ad3baad38e494092"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/Animations/ModelAnimator",
+          "method": "getTransform",
+          "desc": "(Lcom/github/L_Ender/lionfishapi/client/model/tools/AdvancedModelBox;)Lcom/github/L_Ender/lionfishapi/client/model/Transform;",
+          "note": "transformMap.computeIfAbsent(box, b -> new Transform())",
+          "sha256": "17e8055088350084e603715a1effc4f4169ab152b1976a6712d3978c549c67d5"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/Animations/ModelAnimator",
+          "method": "rotate",
+          "desc": "(Lcom/github/L_Ender/lionfishapi/client/model/tools/AdvancedModelBox;FFF)V",
+          "sha256": "abcade545f392beb3e6d67f25cdf4c1c8d916d0fb114eee1bdf84076d2e7b712"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/Animations/ModelAnimator",
+          "method": "move",
+          "desc": "(Lcom/github/L_Ender/lionfishapi/client/model/tools/AdvancedModelBox;FFF)V",
+          "sha256": "b5d6e9640caa30a052715b9bdd26ec443761e408115361ec570dd997d05a3655"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/Animations/ModelAnimator",
+          "method": "*",
+          "desc": "",
+          "note": "no new method that could read the two private maps",
+          "sha256": "8aa02aa6c3ce79b482465aa906f3dd82c5ef2e2ea9c51b5ece2cc6b91d71e84b"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/Transform",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "all six floats start at 0",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/Transform",
+          "method": "resetRotation",
+          "desc": "()V",
+          "sha256": "af8429654996f3ffc6448edebf7938f0a3226a992258d6cba7be37b8d28cb03e"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/Transform",
+          "method": "resetOffset",
+          "desc": "()V",
+          "sha256": "e7610bd914e9c3c0e94f631bfaa6103e858bd9f038f030f49b68fab36a2126e2"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/Transform",
+          "method": "*",
+          "desc": "",
+          "note": "no new state since the tested build",
+          "sha256": "39ae0aebda092530960e1418fa5a480147162091694492d6d7940a84b79b5934"
+        }
+      ],
+      "cancel": [],
+      "conversion": "four MixinExtras @WrapOperations in ModelAnimator: putAll in endKeyframe(Z) (the two maps trade places), clear() of the previous map in endKeyframe and both clear() calls in update (dropped Transforms kept as spares), computeIfAbsent in getTransform (a spare Transform reset to zero); one @Unique spare list (helper bons.furious.patch.lionfish_models.LionfishAnimatorReuse)",
+      "license": "LGPL-3.0-only (Lionfish API): no Lionfish code is carried; the wraps keep ModelAnimator's bodies and change only where map entries and Transforms come from"
+    }
+  }
+}

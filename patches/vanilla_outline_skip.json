@@ -1,0 +1,108 @@
+{
+  "group": "vanilla_outline_skip",
+  "keys": {
+    "vanilla_entity_outline_composite_skip": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.vanilla_outline_skip.LevelRendererOutlineMixin",
+        "bons.furious.mixin.vanilla_outline_skip.GlStateOutlineTripwireMixin",
+        "bons.furious.mixin.vanilla_outline_skip.BufferUploaderOutlineMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/renderer/LevelRenderer",
+          "method": "m_109769_",
+          "desc": "()V",
+          "note": "doEntityOutline: blend state, entityTarget.blitToScreen(w, h, false), default blend",
+          "sha256": "6770571233f3c24936c3a814c211153cb41b0e1a22ff9b5c8d6cc0c1ff81f9c4"
+        },
+        {
+          "class": "net/minecraft/client/renderer/LevelRenderer",
+          "method": "m_109599_",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;FJZLnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/renderer/LightTexture;Lorg/joml/Matrix4f;)V",
+          "note": "renderLevel: the entityTarget clear before the entities",
+          "sha256": "1b0476ce4324f88f476ff5cc106fb1e5b33ca719a769f84e41d9b1bd6556f120"
+        },
+        {
+          "class": "net/minecraft/client/renderer/LevelRenderer",
+          "method": "m_109482_",
+          "desc": "()V",
+          "note": "initOutline: entityTarget = the entity_outline PostChain's 'final' target",
+          "sha256": "b7bcf86ecc8e11b27162a311b200fbb9a8b065c57f17e3beb6d916b6e1a712e0"
+        },
+        {
+          "class": "com/mojang/blaze3d/pipeline/RenderTarget",
+          "method": "m_83971_",
+          "desc": "(IIZ)V",
+          "note": "_blitToScreen: state changes, then BufferUploader.draw",
+          "sha256": "57c720c1e1207405b29a8ab223bc087d5c01d841b9824830ac9a1d40d066e344"
+        },
+        {
+          "class": "com/mojang/blaze3d/pipeline/RenderTarget",
+          "method": "m_83957_",
+          "desc": "(IIZ)V",
+          "sha256": "84d8fd3bc6719e8be1d0702813369d6fa1046207235a7a5beb7f5626ce2d0b3e"
+        },
+        {
+          "class": "com/mojang/blaze3d/pipeline/RenderTarget",
+          "method": "m_83954_",
+          "desc": "(Z)V",
+          "note": "clear: bindWrite, clearColor, clear, unbind",
+          "sha256": "6f14292a9343d375cb53876ddfeb7c695b924ef0b00cd8fa7597941594eee945"
+        },
+        {
+          "class": "com/mojang/blaze3d/pipeline/RenderTarget",
+          "method": "m_83961_",
+          "desc": "(Z)V",
+          "note": "_bindWrite: GlStateManager._glBindFramebuffer (the tripwire)",
+          "sha256": "25d529a5cb34024ec3cc1287a94c606cb74da219759808dc9870efb9d7fdde41"
+        },
+        {
+          "class": "net/minecraft/client/renderer/PostChain",
+          "method": "m_110038_",
+          "desc": "(Ljava/lang/String;II)V",
+          "note": "addTempTarget: the outline targets' clear colour (0, 0, 0, 0)",
+          "sha256": "abc9767351d7309667d95fd2499dd367790e13a19fed14c80f07bd2d310084c1"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferUploader",
+          "method": "m_231209_",
+          "desc": "(Lcom/mojang/blaze3d/vertex/BufferBuilder$RenderedBuffer;)V",
+          "note": "draw: upload, then VertexBuffer.draw (the one call left out)",
+          "sha256": "9136ca641376f4782aa13414c10c90510b3eec1ca44e4d16955bdcc8bf68f2b4"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/VertexBuffer",
+          "method": "m_166882_",
+          "desc": "()V",
+          "note": "draw: RenderSystem.drawElements only",
+          "sha256": "c7b45d3438f6b8dc4eda03f6936e22f8afcfc432dc970954deb0511b1715469c"
+        },
+        {
+          "class": "com/mojang/blaze3d/platform/GlStateManager",
+          "method": "_glBindFramebuffer",
+          "desc": "(II)V",
+          "sha256": "7438957a64ba6fb66c228bec84c1ecb4f0609f0d650fca76f43166ac452510d5"
+        },
+        {
+          "class": "com/mojang/blaze3d/platform/GlStateManager",
+          "method": "_bindTexture",
+          "desc": "(I)V",
+          "sha256": "7efa5c06d93be7ad764c55932b70e7c8acf4d7f64a6cae8e3e4b9fafc8582762"
+        },
+        {
+          "class": "net/minecraft/client/renderer/GameRenderer",
+          "method": "m_109093_",
+          "desc": "(FJZ)V",
+          "note": "render: renderLevel, then doEntityOutline",
+          "sha256": "b3d30ea94475a46c894be4fe1ae26574612e278c409632414625d31a0f0ecfc2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on LevelRenderer.renderLevel's RenderTarget.clear calls (records the entity-outline target's clear) and on doEntityOutline's blitToScreen call; @ModifyVariable tripwires at HEAD of GlStateManager._glBindFramebuffer (framebuffer id) and _bindTexture; @Redirect of BufferUploader.draw's VertexBuffer.draw (left out only inside the skipped composite); helper bons.furious.patch.vanilla_outline_skip.OutlineSkip (runtime flag, SHADOW read-back probe, TIMING GPU queries)",
+      "license": "Minecraft (Mojang) and Forge: no code of either is carried; the handlers call the original methods"
+    }
+  }
+}

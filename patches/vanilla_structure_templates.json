@@ -1,0 +1,60 @@
+{
+  "group": "vanilla_structure_templates",
+  "keys": {
+    "vanilla_structure_template_hits": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.vanilla_structure_templates.StructureTemplateManagerHitsMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager",
+          "method": "m_230407_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Ljava/util/Optional;",
+          "sha256": "9c2707fd2d0d0347b11931d1633b78c6e9f4eeeb554f6719bb5ca3522502c0dc"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager",
+          "method": "m_230425_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Ljava/util/Optional;",
+          "sha256": "9fb34d871d8c59a604e0b81596b372dae1915b52542cd02224be6152a71393e7"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager",
+          "method": "m_230359_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate;",
+          "sha256": "31bb9582ede47b1e7b1dcd309a5a72ddf7bbd14c1b7dc0adfec23564a0b881d4"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager",
+          "method": "m_230370_",
+          "desc": "(Lnet/minecraft/server/packs/resources/ResourceManager;)V",
+          "sha256": "cf8207dce55d3d868228a6b2e4e8d5f32ca469ba1e6374b0b3cc80977b4bf614"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager",
+          "method": "m_230416_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Z",
+          "sha256": "ebad46d23828280f8018105df42597f401d252ea8a720e9f82c8f25a0225eed3"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager",
+          "method": "m_230421_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)V",
+          "sha256": "d81a15165cf1131cab7531aba3f665546af84712932a7f57ae7e3e1f397c21b5"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager",
+          "method": "*",
+          "desc": "",
+          "sha256": "237213bd1fd876c44ff6d228786563481f4fd1a5190fb1473478f9da30e06451"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Map.computeIfAbsent call in StructureTemplateManager.get (m_230407_): for a ConcurrentHashMap or Guava LocalCache map (ModernFix dynamic_structure_manager's softValues cache), a non-null Map.get answer is returned without the cache lock; null (absent, collected, loading) and every other map class run the original call",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_structure_templates.StructureTemplateHits)"
+    }
+  }
+}

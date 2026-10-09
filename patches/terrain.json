@@ -117,6 +117,55 @@
       "conversion": "injectors (@Inject HEAD + @ModifyReturnValue)",
       "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.terrain.ColumnHeightShare)"
     },
+    "vanilla_noise_column_summary": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.terrain.ColumnSummaryMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator",
+          "method": "m_224239_",
+          "desc": "(Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;IILorg/apache/commons/lang3/mutable/MutableObject;Ljava/util/function/Predicate;)Ljava/util/OptionalInt;",
+          "sha256": "0a7b8dbb394f4661a860d4e74fcc876e87a54e686ad719d685f26d52ba7fbc2e"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator",
+          "method": "m_214096_",
+          "desc": "(IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)I",
+          "sha256": "2e286f29b51675e1bb6336c850b7188264d92620601ea86b287334de3f58baa5"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator",
+          "method": "m_214184_",
+          "desc": "(IILnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)Lnet/minecraft/world/level/NoiseColumn;",
+          "sha256": "7bf713627eb5e7e03fdcdbccf02c263b358cd0f70d688c8916f729587b6ba64c"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseSettings",
+          "method": "m_224530_",
+          "desc": "(Lnet/minecraft/world/level/LevelHeightAccessor;)Lnet/minecraft/world/level/levelgen/NoiseSettings;",
+          "sha256": "b045326c0049837158155fbe0c0a4282f272b80f15d5911fc469fab179511243"
+        },
+        {
+          "class": "net/minecraft/world/level/NoiseColumn",
+          "method": "<init>",
+          "desc": "(I[Lnet/minecraft/world/level/block/state/BlockState;)V",
+          "sha256": "3f23276db9979901da77728f100e9f1315f500a3af37c1c934729f84327082ea"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Heightmap$Types",
+          "method": "m_64299_",
+          "desc": "()Ljava/util/function/Predicate;",
+          "sha256": "0258b38343b01fb0d95a09a29618baf7d5543b640313137b4143bddb3f9935e8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on NoiseBasedChunkGenerator.iterateNoiseColumn (m_224239_): a getBaseHeight walk is given a recording predicate that answers as its original heightmap predicate (same walk, states and result), a getBaseColumn walk runs unchanged and its column is summarized; answers are served in vanilla_noise_column_cache's getBaseHeight lookup (helper bons.furious.patch.terrain.ColumnSummary, needs vanilla_noise_column_cache); own canary, refusal, runtime flag and shadow mode",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.terrain.ColumnSummary)"
+    },
     "vanilla_climate_sample_repeat": {
       "mod": "minecraft",
       "scripts": [],

@@ -1,0 +1,29 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.cataclysm_client",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "bons.pure.config.PureMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "AmethystCrabIdleAnimateMixin",
+    "AncientRemnantIdleAnimateMixin",
+    "CataclysmPoseHandSkipMixin",
+    "CitadelPoseHandSkipMixin",
+    "ClientProxyLeakHooksMixin",
+    "EnderGuardianIdleAnimateMixin",
+    "HarbingerModelPoseMixin",
+    "HarbingerShieldLayerPoseMixin",
+    "IgnisIdleAnimateMixin",
+    "IgnisModelPoseMixin",
+    "IgnisShieldLayerPoseMixin",
+    "ItemTickableSoundAccessor",
+    "LeviathanIdleAnimateMixin",
+    "LightningRenderMapsMixin",
+    "RevenantLayerPoseMixin",
+    "RevenantModelPoseMixin",
+    "SandstormSoundAccessor"
+  ]
+}

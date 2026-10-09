@@ -1,5 +1,6 @@
 package bons.furious.patch.storagedrawers_sync_c2;
 
+import bons.furious.guard.Guards;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.mojang.logging.LogUtils;
 import com.texelsaurus.minecraft.chameleon.network.ChameleonPacket;
@@ -37,6 +38,10 @@ import org.slf4j.Logger;
  * test, the 500-block sphere, other mods' changes to broadcast, the encoded bytes, the order, the tick. Recipients = original
  * recipients that can hold the chunk; every skipped packet was one the client would have discarded. Nothing is cached.
  * When the drawer's dimension has at most one player the send is not touched at all (see send).
+ *
+ * Since 1.0.36: when another mod replaces PlayerList.broadcast with an @Overwrite (Guards.countSyncBroadcastForeign, set
+ * while PlayerList is transformed; see PlayerListCountSyncMixin), every count send also runs exactly as stock: the
+ * recipients are whatever that mod's broadcast picks, and the wrap inside its broadcast, if any, hands every call on.
  */
 public final class CountSyncHolders {
     /** Runtime switch. -Dbons_and_furious.storagedrawersCountSyncHolders=false turns it off. */
@@ -72,11 +77,12 @@ public final class CountSyncHolders {
      * with at most one player (singleplayer, a lone player there, one player online) has at most one recipient, so there is
      * nothing worth checking: the send runs exactly as stock, without the scope. Sending to a player who cannot hold the
      * chunk is what stock does and the client discards it, so either path gives the result the switch promises; the
-     * player count only decides whether the check is worth its cost.
+     * player count only decides whether the check is worth its cost. Next to another mod's replacement of broadcast
+     * (Guards.countSyncBroadcastForeign, since 1.0.36) the send also runs as stock: that method is left to that mod.
      */
     public static void send(ChameleonNetworking network, ChameleonPacket<?> packet, ServerLevel level, double x, double y, double z,
                             double radius, Operation<Void> original) {
-        if (!enabled || level == null || current != null || level.m_6907_().size() <= 1) {
+        if (!enabled || Guards.countSyncBroadcastForeign || level == null || current != null || level.m_6907_().size() <= 1) {
             original.call(network, packet, level, x, y, z, radius);
             return;
         }

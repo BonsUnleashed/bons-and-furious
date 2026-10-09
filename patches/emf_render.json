@@ -1,0 +1,198 @@
+{
+  "group": "emf_render",
+  "keys": {
+    "emf_arm_walk_gate": {
+      "mod": "entity_model_features",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.emf_render.EmfArmWalkGateMixin",
+        "bons.furious.mixin.emf_render.EmfPartAttachmentsAccessor",
+        "bons.furious.mixin.emf_render.EmfModelPartChildrenAccessor",
+        "bons.furious.mixin.emf_render.EmfPoseCacheAccessor"
+      ],
+      "guard": [
+        {
+          "class": "traben/entity_model_features/models/parts/EMFModelPartCustom",
+          "method": "m_104306_",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V",
+          "note": "the redirected processArmItemOverrides call",
+          "sha256": "e1c16dc5f042e7a1a780f4beebc1918d65c588b41acff30e7731496cc31d06c9"
+        },
+        {
+          "class": "traben/entity_model_features/models/parts/EMFModelPartCustom",
+          "method": "processArmItemOverrides",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+          "note": "attachments null -> EMFModelPart's walk",
+          "sha256": "b7e41539d68e126c2e1c1542b4a34d345cf3ddaef1f9b915ae9819e090472a6b"
+        },
+        {
+          "class": "traben/entity_model_features/models/parts/EMFModelPartCustom",
+          "method": "<init>",
+          "desc": "(Ltraben/entity_model_features/models/jem_objects/EMFPartData;ILjava/lang/String;Ljava/lang/String;Ltraben/entity_model_features/models/parts/EMFModelPartRoot;)V",
+          "note": "attachments set once (null when the part has no hand point)",
+          "sha256": "a366ca74fbd57b25acd892ae35f1dbf207500f7247223953880796f32e929edd"
+        },
+        {
+          "class": "traben/entity_model_features/models/parts/EMFModelPart",
+          "method": "processArmItemOverrides",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+          "note": "the walk: push, translateAndRotate, children, pop",
+          "sha256": "a3f4aa6495def1930e728c9f4c42f13e8fc9866d9b70fd7ca33ccde3d3b3fc17"
+        },
+        {
+          "class": "traben/entity_model_features/models/parts/EMFModelPart",
+          "method": "lambda$processArmItemOverrides$0",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/model/geom/ModelPart;)V",
+          "sha256": "d5d7788e4a545713f1397d44849e4b47dd115be36b68a8330c531bfa7282feb1"
+        },
+        {
+          "class": "traben/entity_model_features/models/parts/EMFModelPartVanilla",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: no walk or translateAndRotate override",
+          "sha256": "1853cba6cb133e3000fc7ff7e3732b697efc3c196caace882c8de8ddace8eca8"
+        },
+        {
+          "class": "traben/entity_model_features/models/parts/EMFModelPartWithState",
+          "method": "*",
+          "desc": "",
+          "sha256": "1f125a94c2552177ac4b87c3a4765c3482e0be73cc037cd72fa86c86c5579ea7"
+        },
+        {
+          "class": "traben/entity_model_features/models/parts/EMFModelPartRoot",
+          "method": "*",
+          "desc": "",
+          "sha256": "7370d35ec9f5c0e4728c1f83b9c5022a10c23ec7433ea3e467fd463110425c04"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/ModelPart",
+          "method": "m_104299_",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+          "sha256": "f0c7bc6e2dfb7112863f1a705ea5929b146ba4499a1ae2e65cfdeca198bb898c"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/mixin/features/render/entity/fast_render/ModelPartMixin",
+          "method": "m_104299_",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+          "note": "Embeddium's translateAndRotate overwrite (changes only the top pose)",
+          "sha256": "3798fb5910bb7f64ac222915d0ac723d3850aad4b90a02628aeaf22a9c8867a9"
+        },
+        {
+          "class": "net/irisshaders/iris/compat/sodium/mixin/copyEntity/ModelPartMixin",
+          "method": "m_104299_",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+          "note": "Oculus's translateAndRotate overwrite (changes only the top pose)",
+          "sha256": "358130e367e7359eeee77de31648702f42c13d3e88686bb597b4c25cc9158aab"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/PoseStack",
+          "method": "m_85836_",
+          "desc": "()V",
+          "sha256": "e5fdd9f898521d9ba5fb8aa72ecdf76d8c055725c3b0d233cd21cf75b37f7c56"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/PoseStack",
+          "method": "m_85849_",
+          "desc": "()V",
+          "sha256": "a3d29bc63ac0a35cd6b0be1a5fb2cf09e7865d607e0b0e6ebaa52c054c8c5684"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/mixin/core/render/MatrixStackMixin",
+          "method": "m_85836_",
+          "desc": "()V",
+          "note": "Embeddium's push: a new Pose unless its cache is on",
+          "sha256": "d0bb107db7eafe5965ad48d15764e311b2a9d75286799e4f6edae89732556752"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/mixin/core/render/MatrixStackMixin",
+          "method": "m_85849_",
+          "desc": "()V",
+          "sha256": "a725080ae21ea71d0e78f1992dda7d4454b28cd9a14aa4ea5a900c05522ecbf8"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/mixin/core/render/MatrixStackMixin",
+          "method": "embeddium$setCachingEnabled",
+          "desc": "(Z)V",
+          "note": "cacheEnabled: the depth the accessor reads",
+          "sha256": "6c4bdaad277fea5dfc42f6c8d159ca637ee964f4fccaaece0687473dbde861ea"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of EMFModelPartCustom.m_104306_'s processArmItemOverrides call (skipped when EmfRender.walkIsInert proves the walk changes nothing; helper bons.furious.patch.emf_render.EmfRender, SHADOW probe); @Accessor interfaces on EMFModelPartCustom (attachments), ModelPart (children) and PoseStack (Embeddium's cacheEnabled, the pose deque)",
+      "license": "EMF is LGPL-3.0 and Embeddium LGPL-3.0-only: no code of theirs is carried; Minecraft (Mojang): accessors only"
+    },
+    "emf_variable_default_unboxed": {
+      "mod": "entity_model_features",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.emf_render.EmfVariableDefaultMixin"
+      ],
+      "guard": [
+        {
+          "class": "traben/entity_model_features/models/animation/EMFAnimationEntityContext",
+          "method": "getEntityVariable",
+          "desc": "(Ljava/lang/String;F)F",
+          "sha256": "368d218ab9d9b6420627c6e7c5cbae9d2e25527ff5be57241e7476e9e8ed584b"
+        },
+        {
+          "class": "traben/entity_model_features/mixin/mixins/MixinEntity",
+          "method": "emf$getVariableMap",
+          "desc": "()Ljava/util/Map;",
+          "note": "the per-entity HashMap and its GUI copy",
+          "sha256": "bfeb45b71be78500f43cb6b35347e1041e24616924d63902f6827ebe4d40a49a"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/state/EMFEntityRenderStateViaReference",
+          "method": "variableMap",
+          "desc": "()Ljava/util/Map;",
+          "sha256": "4ce829d4b8be5c34a0b5a7b95f3567342e4b8afe5c7a9b87ba60f48e9b7c7dd2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Overwrite of EMFAnimationEntityContext.getEntityVariable(String, float): sentinel default for EMF's HashMap, the original expression otherwise (helper bons.furious.patch.emf_render.EmfRender)",
+      "license": "EMF is LGPL-3.0: the method body may be carried in our GPL-3.0 source (the original expression is kept as the fallback)"
+    },
+    "emf_anger_map_prune": {
+      "mod": "entity_model_features",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.emf_render.EmfAngerMapMixin"
+      ],
+      "guard": [
+        {
+          "class": "traben/entity_model_features/models/animation/EMFAnimationEntityContext",
+          "method": "getAngerTime",
+          "desc": "()F",
+          "note": "the redirected put(uuid, 0) (ordinal 0)",
+          "sha256": "ee9b5e77250dcae622f31d52b2bc8184f7cc695911bc60ea03faf0abda2111d2"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/EMFAnimationEntityContext",
+          "method": "getAngerTimeStart",
+          "desc": "()F",
+          "note": "the other reader: getOrDefault(uuid, 0)",
+          "sha256": "437fbecf385bba5c2c1ae8ef0364c1cef047fe0815a6667f7e58daf02cfce8a0"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/EMFAnimationEntityContext",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "ede87cd25da0dd9955a733be4104ff8c0f4963710ece466d3b0e23906ae9a211"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/EMFAnimationEntityContext$1",
+          "method": "get",
+          "desc": "(Ljava/lang/Object;)Ljava/lang/Integer;",
+          "note": "the map's get override (getOrDefault(key, 0)); no other override",
+          "sha256": "899951360486dcd4fc7ee02e3d5dd8f9291d71f5a92992a626580317f7b0aa0d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the first Map.put in EMFAnimationEntityContext.getAngerTime() to Map.remove (helper bons.furious.patch.emf_render.EmfRender: runtime flag)",
+      "license": "EMF is LGPL-3.0: no code of it is carried (the handler calls the map's own remove/put)"
+    }
+  }
+}

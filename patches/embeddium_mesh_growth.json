@@ -1,0 +1,51 @@
+{
+  "group": "embeddium_mesh_growth",
+  "keys": {
+    "embeddium_mesh_buffer_growth_fix": {
+      "mod": "embeddium",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.embeddium_mesh_growth.ChunkMeshGrowthMixin"
+      ],
+      "guard": [
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/vertex/builder/ChunkMeshBufferBuilder",
+          "method": "grow",
+          "desc": "(I)V",
+          "note": "the setBufferSize(cap * stride) call whose argument is divided again",
+          "sha256": "c930fb3f8b26bfb2eedd9a74346ffad3da11cae0570c182a6cf3b808731e5c2e"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/vertex/builder/ChunkMeshBufferBuilder",
+          "method": "setBufferSize",
+          "desc": "(I)V",
+          "note": "memRealloc(buffer, capacity * stride); capacity in vertices",
+          "sha256": "5b224ac2164b59bbc4d24ebfe0bb50ba3716088b6f1dea9c7848099588953f8f"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/vertex/builder/ChunkMeshBufferBuilder",
+          "method": "push",
+          "desc": "([Lme/jellysquid/mods/sodium/client/render/chunk/vertex/format/ChunkVertexEncoder$Vertex;Lme/jellysquid/mods/sodium/client/render/chunk/terrain/material/Material;)V",
+          "note": "grows when count + vertexCount >= capacity, then writes at count * stride",
+          "sha256": "9903c6122c586d7ea86e4ad6bba021976cc70128342055c0732bf998c5092c90"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/vertex/builder/ChunkMeshBufferBuilder",
+          "method": "start",
+          "desc": "(I)V",
+          "sha256": "566b186b216200c76f62a49b4d09b59ad3f57b9b9a2958bd8eef4a618f6c8b1f"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/vertex/builder/ChunkMeshBufferBuilder",
+          "method": "slice",
+          "desc": "()Ljava/nio/ByteBuffer;",
+          "sha256": "1d39c48f5d3b7e2feb423696a46c6371099772ff9dabf2c10d1509e9c2e3f4c9"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@ModifyArg on the setBufferSize call in ChunkMeshBufferBuilder.grow (argument divided by the stride it was multiplied with); helper bons.furious.patch.embeddium_mesh_growth.MeshGrowth (runtime flag, growth counter)",
+      "license": "Embeddium is LGPL-3.0-only: no code of it is carried"
+    }
+  }
+}

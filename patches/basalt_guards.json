@@ -1,0 +1,42 @@
+{
+  "group": "basalt_guards",
+  "keys": {
+    "basalt_guards_vanilla_first": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.basalt_guards.BasaltColumnsFeatureVanillaFirstMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/feature/BasaltColumnsFeature",
+          "method": "m_65154_",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;ILnet/minecraft/core/BlockPos$MutableBlockPos;)Z",
+          "sha256": "1b288f418df7fbd7a7afccd42a1d30134d11e656a617ef7576d59b54c6b569aa"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/feature/BasaltColumnsFeature",
+          "method": "m_65163_",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;ILnet/minecraft/core/BlockPos;)Z",
+          "sha256": "1cab88d399c37c60ec6b2812b5d84768289305cfd55ee0b6835866e0fc7c9c82"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/feature/BasaltColumnsFeature",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "4beee31b8fe4e31fa9977490a689f306f9553f971c5a288f8e6cbca66af13222"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/feature/BasaltColumnsFeature",
+          "method": "*",
+          "desc": "",
+          "sha256": "a2bbf3831bdb42dc2eb1c6b7f8d0bcd706b0d1385661db8196dd79133653a0d5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on BasaltColumnsFeature.canPlaceAt (m_65154_, static): vanilla's two-read test (isAirOrLavaOcean m_65163_ via @Shadow, block below not air and not in CANNOT_PLACE_ON f_65150_, position restored) first; false -> false without the original (the HEAD structure guards of Cataclysm, Repurposed Structures, YUNG's Better Dungeons, YUNG's Better Nether Fortresses, Bygone Nether, Moog's Structure Lib and Nether Expansion only ever answer false); true -> the original unchanged. Run-time check once: every @MixinMerged method of another mod in the class must be one of those seven handlers (mixin, name, descriptor, fingerprint of the handler in its mixin class file), else the switch steps aside",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries our own two-read predicate built on vanilla's helper m_65163_ and list f_65150_ (helper bons.furious.patch.basalt_guards.BasaltGuards); the seven guard mods' handlers are only read and fingerprinted"
+    }
+  }
+}

@@ -9,8 +9,14 @@
   },
   "mixins": [
     "EntityLookupMixin",
+    "EntitySelectorFindMixin",
     "EntitySelectorMixin",
     "EntitySelectorParserMixin",
-    "EntitySelectorTypeOptionMixin"
+    "EntitySelectorParserTagMixin",
+    "EntitySelectorSingleTypeMixin",
+    "EntitySelectorTagOptionMixin",
+    "EntitySelectorTagScanMixin",
+    "EntitySelectorTypeOptionMixin",
+    "EntityTagsMixin"
   ]
 }

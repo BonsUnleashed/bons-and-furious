@@ -2,6 +2,7 @@ package bons.furious.mixin.datapack_selectors;
 
 import bons.furious.patch.datapack_selectors.SelectorParserState;
 import bons.furious.patch.datapack_selectors.SelectorPrefilter;
+import bons.furious.patch.datapack_selectors.TagParserState;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -21,7 +22,8 @@ import org.spongepowered.asm.mixin.injection.At;
  * negation flag from shouldInvertValue, the TagKey from TagKey.create, the EntityType from the registry lookup's
  * orElseThrow; each returned unchanged), and before each of its two addPredicate calls (tag branch, id branch) the parser
  * is offered a TypeFirstOption with those values around the predicate being added. The predicate object and the
- * addPredicate call are vanilla's, unchanged.
+ * addPredicate call are vanilla's, unchanged. Since 1.0.36 the call is also marked pure for vanilla_selector_tag_index's
+ * parse state (TagParserState, present only with that key's parser mixin).
  */
 @Mixin(value = EntitySelectorOptions.class, remap = false)
 public abstract class EntitySelectorTypeOptionMixin {
@@ -55,6 +57,8 @@ public abstract class EntitySelectorTypeOptionMixin {
             state.bons$offerFirstOption(new SelectorPrefilter.TypeFirstOption(predicate, state.bons$typeTag(), state.bons$typeSingle(),
                     state.bons$typeNegated()));
         }
+        // since 1.0.36: a type predicate is a pure one for vanilla_selector_tag_index's parse state (its mixin present only)
+        if ((Object) parser instanceof TagParserState tags) tags.bons$markPure();
         original.call(parser, predicate);
     }
 }

@@ -1,0 +1,121 @@
+{
+  "group": "vanilla_corner_table",
+  "keys": {
+    "vanilla_noise_corner_share": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.vanilla_corner_table.NoiseChunkCornerShareMixin",
+        "bons.furious.mixin.vanilla_corner_table.NoiseInterpolatorSlicesAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_209220_",
+          "desc": "(ZI)V",
+          "sha256": "356be53c1a26f0ef842f6035c28f2de05d4cd32801bb5c29c62c943f577b1872"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "<init>",
+          "desc": "(ILnet/minecraft/world/level/levelgen/RandomState;IILnet/minecraft/world/level/levelgen/NoiseSettings;Lnet/minecraft/world/level/levelgen/DensityFunctions$BeardifierOrMarker;Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;Lnet/minecraft/world/level/levelgen/blending/Blender;)V",
+          "sha256": "4002da1eb3f5636a83ab187a1b58722401c681cc36856a9637687cf471c4f136"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_188791_",
+          "desc": "()V",
+          "sha256": "a7973e9c61a56864967fbb21f79bd2e3292cfb42d6f1e398145a5e9caf345370"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_188749_",
+          "desc": "(I)V",
+          "sha256": "9731332908493ac0cb435f89611bfb2109d15c102b422331ae5ce524309422f1"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_188810_",
+          "desc": "(II)V",
+          "sha256": "3ab974a0128f1ee76dd985aaa8cb8d4953935398a982f7022b5a4f39d599e688"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_209241_",
+          "desc": "(ID)V",
+          "sha256": "efbbef075adb9c2f0bf8b79bbf1548a9c7a6832954941b10a9a5606d9c87cfd9"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$1",
+          "method": "m_207263_",
+          "desc": "(I)Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;",
+          "sha256": "b43e6efacd9362f725ff9db1a223f16290351924a861daa879587540032d11e3"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$1",
+          "method": "m_207207_",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction;)V",
+          "sha256": "42f61765e6c206b05bfd7c907ac56dae5a6f8bcec6736f23fcdf6e156be3511b"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$NoiseInterpolator",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/levelgen/NoiseChunk;Lnet/minecraft/world/level/levelgen/DensityFunction;)V",
+          "sha256": "7c802590324346361b622dd1734bf7c96902d0f54ad77fcbb7df1f0fd2d99f74"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$NoiseInterpolator",
+          "method": "m_207362_",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V",
+          "sha256": "f29da1c4249aa3781de96a07aef47eb097bded8c306137d377115abbd7efcbbf"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$NoiseInterpolator",
+          "method": "m_207386_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "sha256": "40b88aaa798bce8224265041004b22f9488a21ddceee7176043b0bb1f0b75536"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$CacheOnce",
+          "method": "m_207386_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "sha256": "0ec51759f2145e8fe532d1dbb9d0a547494c5f864c5a6579df13f8641665880c"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$CacheOnce",
+          "method": "m_207362_",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V",
+          "sha256": "72fb4b10ea1a2e07ef902ff1ef35a74f37d865a5e1f7695a6c7f310fdc92e7d0"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$Cache2D",
+          "method": "m_207386_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "sha256": "615dcddb9636f3cb142575f85856e9c4b6743780af66d0e10970e50a5dafdd4f"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$Cache2D",
+          "method": "m_207362_",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V",
+          "sha256": "35746e38aac9e10457d10a8296f0269a1ddf2c35b791413e9fabc165c7da8754"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$FlatCache",
+          "method": "m_207386_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "sha256": "0e054d5519ad328deb84f518e811a3a59aada24cd4523618620faff3f5987b57"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$FlatCache",
+          "method": "m_207362_",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V",
+          "sha256": "88d5a86dc92bc6d0193853ba2db0b62625a0e0df2f502865718c5c3f449d408c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at the RETURN of NoiseChunk.<init> (remembers the world generator of one-cell NoiseChunks without a blender) and a cancellable @Inject at the HEAD of NoiseChunk.fillSlice (m_209220_) that runs the slice walk through the shared corner-column table for qualifying NoiseChunks (body written from the behaviour: the same field updates, counters and fillArray calls); an @Accessor interface for NoiseInterpolator.slice0/slice1; per-world audit, canary and runtime flag in the helper",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.vanilla_corner_table.CornerShare)"
+    }
+  }
+}

@@ -1,0 +1,230 @@
+{
+  "group": "vanilla_chunk_codecs",
+  "keys": {
+    "vanilla_state_codec_dispatch_memo": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.vanilla_chunk_codecs.StateHolderDispatchMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/block/state/StateHolder",
+          "method": "m_61127_",
+          "desc": "(Lcom/mojang/serialization/Codec;Ljava/util/function/Function;)Lcom/mojang/serialization/Codec;",
+          "sha256": "6e9b03bc91af79276240e21207c49ce3c2320c5948b94126a56b535d90e6ddae"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/StateHolder",
+          "method": "m_187545_",
+          "desc": "(Ljava/util/function/Function;Ljava/lang/Object;)Lcom/mojang/serialization/Codec;",
+          "sha256": "164767f53aefd204d9d01d5929830a9d41eecfff0ca0617433bb9ff6a6e1e14f"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/StateHolder",
+          "method": "m_187542_",
+          "desc": "(Lnet/minecraft/world/level/block/state/StateHolder;Ljava/util/Optional;)Lnet/minecraft/world/level/block/state/StateHolder;",
+          "sha256": "9fb82eef87ca7c71dd0c24d2ff9e0543514e11e5d5fd434036502dd70557a3af"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/StateHolder",
+          "method": "m_61148_",
+          "desc": "()Lcom/google/common/collect/ImmutableMap;",
+          "sha256": "76fc503a0c29e26609fe8a4a6751b3573c58c82cf1014552c94a802140ee9765"
+        },
+        {
+          "class": "net/minecraft/world/level/block/Block",
+          "method": "m_49966_",
+          "desc": "()Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "25fd3ed53109ed3caf5b4687d059bad31dd17204e80e232b871cae98064d5044"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockState",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "bef62b162b9cff4a0b34651792902c0d5966371a6dbcd84dce15626081116ab4"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Codec.dispatch(String, Function, Function) call in StateHolder.codec (m_61127_): when the caller is BlockState.<clinit> (StackWalker, twice per JVM) the codec function is wrapped (StateCodecMemo.Dispatch): per Block (a ConcurrentHashMap of the wrapper, only for block classes that keep Object.equals/hashCode) the codec the original function built is handed back while Block.defaultBlockState() returns the same state object; any other caller, owner or state runs the original function",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_chunk_codecs.StateCodecMemo)"
+    },
+    "vanilla_chunk_biome_codec_memo": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.vanilla_chunk_codecs.ChunkSerializerBiomeCodecMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/chunk/storage/ChunkSerializer",
+          "method": "m_188260_",
+          "desc": "(Lnet/minecraft/core/Registry;)Lcom/mojang/serialization/Codec;",
+          "sha256": "e377ddf1ed535aafb87f7d1783f4058a517525193bf3510f0b4489ebe2022b36"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/PalettedContainer",
+          "method": "m_238418_",
+          "desc": "(Lnet/minecraft/core/IdMap;Lcom/mojang/serialization/Codec;Lnet/minecraft/world/level/chunk/PalettedContainer$Strategy;Ljava/lang/Object;)Lcom/mojang/serialization/Codec;",
+          "sha256": "1d5240735032d90ececdd2741426eef94daabe2d06ab07841372f4db37067ec3"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/PalettedContainer",
+          "method": "m_238427_",
+          "desc": "(Lnet/minecraft/core/IdMap;Lcom/mojang/serialization/Codec;Lnet/minecraft/world/level/chunk/PalettedContainer$Strategy;Ljava/lang/Object;Lnet/minecraft/world/level/chunk/PalettedContainerRO$Unpacker;)Lcom/mojang/serialization/Codec;",
+          "sha256": "f4173f5e534eabeef84ab9e643af6ac3db95453e8d2b0cc9fc46f4bf7af69da3"
+        },
+        {
+          "class": "net/minecraft/core/Registry",
+          "method": "m_206115_",
+          "desc": "()Lnet/minecraft/core/IdMap;",
+          "sha256": "3419b977a5c4ab71d9e6b14496e0f6e9da8077f2019187b0986a89a66d631c0e"
+        },
+        {
+          "class": "net/minecraft/core/Registry",
+          "method": "m_206110_",
+          "desc": "()Lcom/mojang/serialization/Codec;",
+          "sha256": "d4f2597654428032a5d891fb2a2577216ee7a5e1280d33cb883aea3ebcf3f6d0"
+        },
+        {
+          "class": "net/minecraft/core/Registry",
+          "method": "m_246971_",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/core/Holder$Reference;",
+          "sha256": "16a8fa313508473ff8006f33f732874ddff9da914eebaa1d917b3030af9a2527"
+        },
+        {
+          "class": "net/minecraft/core/MappedRegistry",
+          "method": "m_203636_",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;)Ljava/util/Optional;",
+          "sha256": "fcd411601674c4fc72690d13b2d28050127f56add420bfd2a833c326f9d2523b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on ChunkSerializer.makeBiomeCodec (m_188260_, private static): the last codec built is handed back for the same registry object while getHolderOrThrow(PLAINS) returns the same holder, for registry classes that keep Registry's own asHolderIdMap / holderByNameCodec / getHolderOrThrow",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_chunk_codecs.BiomeCodecMemo)"
+    },
+    "vanilla_chunk_palette_direct_nbt": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.vanilla_chunk_codecs.ChunkSerializerPaletteMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/chunk/storage/ChunkSerializer",
+          "method": "m_63454_",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/chunk/ChunkAccess;)Lnet/minecraft/nbt/CompoundTag;",
+          "sha256": "8763d591fc5293e336f7532c1159585ead261de40ed56dcc1bb16ea8ff54e5e3"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/storage/ChunkSerializer",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "5f701008b0740cbd112308ef0802ebb4f5f653b5773d74d52173392516ffe061"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/storage/ChunkSerializer",
+          "method": "m_188260_",
+          "desc": "(Lnet/minecraft/core/Registry;)Lcom/mojang/serialization/Codec;",
+          "sha256": "e377ddf1ed535aafb87f7d1783f4058a517525193bf3510f0b4489ebe2022b36"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/PalettedContainer",
+          "method": "m_238371_",
+          "desc": "(Lnet/minecraft/core/IdMap;Lcom/mojang/serialization/Codec;Lnet/minecraft/world/level/chunk/PalettedContainer$Strategy;Ljava/lang/Object;)Lcom/mojang/serialization/Codec;",
+          "sha256": "b80c4ff2eb62d71e9230588584e21f8df0ae2d0bcf5e28af7f512ba1ec2f1dd7"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/PalettedContainer",
+          "method": "m_238418_",
+          "desc": "(Lnet/minecraft/core/IdMap;Lcom/mojang/serialization/Codec;Lnet/minecraft/world/level/chunk/PalettedContainer$Strategy;Ljava/lang/Object;)Lcom/mojang/serialization/Codec;",
+          "sha256": "1d5240735032d90ececdd2741426eef94daabe2d06ab07841372f4db37067ec3"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/PalettedContainer",
+          "method": "m_238427_",
+          "desc": "(Lnet/minecraft/core/IdMap;Lcom/mojang/serialization/Codec;Lnet/minecraft/world/level/chunk/PalettedContainer$Strategy;Ljava/lang/Object;Lnet/minecraft/world/level/chunk/PalettedContainerRO$Unpacker;)Lcom/mojang/serialization/Codec;",
+          "sha256": "f4173f5e534eabeef84ab9e643af6ac3db95453e8d2b0cc9fc46f4bf7af69da3"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/StateHolder",
+          "method": "m_61127_",
+          "desc": "(Lcom/mojang/serialization/Codec;Ljava/util/function/Function;)Lcom/mojang/serialization/Codec;",
+          "sha256": "6e9b03bc91af79276240e21207c49ce3c2320c5948b94126a56b535d90e6ddae"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/StateHolder",
+          "method": "m_187545_",
+          "desc": "(Ljava/util/function/Function;Ljava/lang/Object;)Lcom/mojang/serialization/Codec;",
+          "sha256": "164767f53aefd204d9d01d5929830a9d41eecfff0ca0617433bb9ff6a6e1e14f"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/StateDefinition",
+          "method": "<init>",
+          "desc": "(Ljava/util/function/Function;Ljava/lang/Object;Lnet/minecraft/world/level/block/state/StateDefinition$Factory;Ljava/util/Map;)V",
+          "sha256": "ad2fef693223a93c6d148edf6015b3af797228181ad1284b3227f5ef7b439b98"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/StateDefinition",
+          "method": "m_61076_",
+          "desc": "(Lcom/mojang/serialization/MapCodec;Ljava/util/function/Supplier;Ljava/lang/String;Lnet/minecraft/world/level/block/state/properties/Property;)Lcom/mojang/serialization/MapCodec;",
+          "sha256": "bebb1c01370340a499505ad17a6de1da385a3d70d559498f2b7b458c290a97e4"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/properties/Property",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;Ljava/lang/Class;)V",
+          "sha256": "79fd386f20e440149dfe8d25712cf38497d4a247724910940e88d5d91f75ecba"
+        },
+        {
+          "class": "net/minecraft/core/Registry",
+          "method": "m_206110_",
+          "desc": "()Lcom/mojang/serialization/Codec;",
+          "sha256": "d4f2597654428032a5d891fb2a2577216ee7a5e1280d33cb883aea3ebcf3f6d0"
+        },
+        {
+          "class": "net/minecraft/nbt/NbtOps$NbtRecordBuilder",
+          "method": "initBuilder",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "sha256": "d5a80d186f2e8a295c269122d915be69a093a5cc5eab5bf4c39ea8b97ea1273e"
+        },
+        {
+          "class": "net/minecraft/nbt/NbtOps$NbtRecordBuilder",
+          "method": "append",
+          "desc": "(Ljava/lang/String;Lnet/minecraft/nbt/Tag;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;",
+          "sha256": "178cdd2ddbee012b04e1581040dc371ea57bb8bd43c73d3c7b30da04fca72c8d"
+        },
+        {
+          "class": "net/minecraft/nbt/NbtOps$NbtRecordBuilder",
+          "method": "build",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/nbt/Tag;)Lcom/mojang/serialization/DataResult;",
+          "sha256": "460fd1426cb6526eb972d99b178232a9c1a3087b7aa84a673854a7432a70aaad"
+        },
+        {
+          "class": "net/minecraft/nbt/NbtOps",
+          "method": "mergeToList",
+          "desc": "(Lnet/minecraft/nbt/Tag;Ljava/util/List;)Lcom/mojang/serialization/DataResult;",
+          "sha256": "88a66b0c6593d4fdcd64f11ab17224fbceabc67855cbdffb9ed5266d051dfd28"
+        },
+        {
+          "class": "net/minecraft/nbt/NbtOps",
+          "method": "createLongList",
+          "desc": "(Ljava/util/stream/LongStream;)Lnet/minecraft/nbt/Tag;",
+          "sha256": "e479e322f57ea24d13f4940d17358fd11e473ee4620bfdddab71a9bdda871674"
+        },
+        {
+          "class": "net/minecraft/nbt/NbtOps",
+          "method": "createString",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/nbt/Tag;",
+          "sha256": "d392808a42662ec2e6e8ad02128649553344741ba798b51e48578a3d17093234"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on every Codec.encodeStart call in ChunkSerializer.write (m_63454_): block-states and biomes section tags are built directly (PaletteDirectNbt) for palettes whose every entry and outer shape were verified against the real codec output (same tag classes, key iteration order and values), the original call otherwise; the biomes part needs vanilla_chunk_biome_codec_memo (it knows the registry of the kept codec)",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helpers bons.furious.patch.vanilla_chunk_codecs.PaletteDirectNbt, IdentityTable)"
+    }
+  }
+}

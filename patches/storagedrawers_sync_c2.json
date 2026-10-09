@@ -49,8 +49,8 @@
         }
       ],
       "cancel": [],
-      "note": "PlayerList.broadcast (m_11241_) and ChunkMap.getPlayers (m_183262_) are deliberately not fingerprinted: PlayerListCountSyncMixin targets a vanilla class, so a vanilla entry would make Guards log a 'does not match' warning in every pack without Storage Drawers (mixed guard, mod absent). The wrap uses require = 0 and only acts inside Storage Drawers' count send.",
-      "conversion": "MixinExtras @WrapOperation on Storage Drawers' two sendToPlayersNear calls (scope) and on the per-player send in PlayerList.broadcast (filter)",
+      "note": "PlayerList.broadcast (m_11241_) and ChunkMap.getPlayers (m_183262_) are deliberately not fingerprinted: PlayerListCountSyncMixin targets a vanilla class, so a vanilla entry would make Guards log a 'does not match' warning in every pack without Storage Drawers (mixed guard, mod absent). The wrap uses require = 0 and only acts inside Storage Drawers' count send. Since 1.0.36 PlayerListCountSyncMixin has priority 1500 and is listed in Guards.FOREIGN_OVERWRITE: next to another mod's @Overwrite of broadcast (priority below 1500) Mixin no longer refuses the wrap, and postApply turns the filter off (Guards.countSyncBroadcastForeign) with one log line.",
+      "conversion": "MixinExtras @WrapOperation on Storage Drawers' two sendToPlayersNear calls (scope) and on the per-player send in PlayerList.broadcast (filter; priority 1500, steps aside when another mod replaces broadcast)",
       "license": "MIT (Storage Drawers, Chameleon); Minecraft (Mojang): no-copy. The mixins carry only our own logic (helper bons.furious.patch.storagedrawers_sync_c2.CountSyncHolders); no Storage Drawers code is carried"
     }
   }

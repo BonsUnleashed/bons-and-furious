@@ -1,0 +1,30 @@
+{
+  "group": "climate_last_result",
+  "keys": {
+    "vanilla_climate_last_result_weak": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.climate_last_result.ClimateLastResultMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/biome/Climate$RTree$Node;)V",
+          "sha256": "dc728a324f5b67bbd1f213978773d70b44bffc18b5445ab3f94493ddd9e87358"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree",
+          "method": "m_186930_",
+          "desc": "(Lnet/minecraft/world/level/biome/Climate$TargetPoint;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Ljava/lang/Object;",
+          "sha256": "0821658daf94ec1dd48339b1da7fdbc7d49d3aaa0d1d15c56f4a1b0d4c865ed7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on the NEW ThreadLocal in Climate$RTree.<init>(Node): the tree's last-leaf slot (field f_186911_) becomes a bons.furious.patch.climate_last_result.WeakLastResult, a ThreadLocal subclass whose get/set keep the leaf through a WeakReference; RTree.search (m_186930_, guarded: the slot's only user) is unchanged. Fix: a closed world's climate trees no longer pin its worldgen registries through the worker threads' ThreadLocal maps.",
+      "license": "Minecraft (Mojang): no-copy; the mixin and helper carry only our own logic"
+    }
+  }
+}

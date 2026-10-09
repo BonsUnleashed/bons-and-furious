@@ -1,0 +1,67 @@
+{
+  "group": "forge_registry_snapshot",
+  "keys": {
+    "forge_registry_snapshot_reuse": {
+      "mod": "forge",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.forge_registry_snapshot.ForgeHooksSnapshotMixin",
+        "bons.furious.mixin.forge_registry_snapshot.ForgeRegistrySnapshotMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraftforge/common/ForgeHooks",
+          "method": "writeAdditionalLevelSaveData",
+          "desc": "(Lnet/minecraft/world/level/storage/WorldData;Lnet/minecraft/nbt/CompoundTag;)V",
+          "sha256": "c5c34551854e852c997df96e47dfd1a07cea98e022ac4479b729a32f8cff597e"
+        },
+        {
+          "class": "net/minecraftforge/registries/RegistryManager",
+          "method": "takeSnapshot",
+          "desc": "(Z)Ljava/util/Map;",
+          "sha256": "68f792aff1f93de84da7e0628dde686609e283d51c9e0c02acf43949751299cb"
+        },
+        {
+          "class": "net/minecraftforge/registries/ForgeRegistry",
+          "method": "makeSnapshot",
+          "desc": "()Lnet/minecraftforge/registries/ForgeRegistry$Snapshot;",
+          "sha256": "2fb7c4acc0e1281320686f98125c71dd37be8b64f260d2dd9967355a93ff61d6"
+        },
+        {
+          "class": "net/minecraftforge/registries/ForgeRegistry",
+          "method": "lambda$makeSnapshot$13",
+          "desc": "(Lnet/minecraftforge/registries/ForgeRegistry$Snapshot;Ljava/lang/Integer;Ljava/lang/Object;)V",
+          "sha256": "5ed995c5c53a406e807107095c0926d4124654467ba04902fe1f97858a46a3b8"
+        },
+        {
+          "class": "net/minecraftforge/registries/ForgeRegistry",
+          "method": "getOverrideOwners",
+          "desc": "()Ljava/util/Map;",
+          "sha256": "52b6f646df8d46bb7771fcdf7416aecaf6ce70592543025a071327b1f5d4985d"
+        },
+        {
+          "class": "net/minecraftforge/registries/ForgeRegistry",
+          "method": "getKey",
+          "desc": "(Ljava/lang/Object;)Lnet/minecraft/resources/ResourceLocation;",
+          "sha256": "a4628020f561245bb8987e147cf3db2d50e39c563814294fda6c219cac432ac6"
+        },
+        {
+          "class": "net/minecraftforge/registries/ForgeRegistry",
+          "method": "getResourceKey",
+          "desc": "(Ljava/lang/Object;)Ljava/util/Optional;",
+          "sha256": "137d3dc58f4efeefe44c7ea42c06b388e8324cb6c51d4f07ce3c4e433e17602a"
+        },
+        {
+          "class": "net/minecraftforge/registries/ForgeRegistry$Snapshot",
+          "method": "write",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "sha256": "0f4d2cc7ad637de0d0b9249ce07760ff11d024eaf14ad85c91aa61ac22f8d037"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on RegistryManager.takeSnapshot(Z) in ForgeHooks.writeAdditionalLevelSaveData (a thread-local save mark around the original call) and @WrapMethod on ForgeRegistry.makeSnapshot (during a save mark: the Snapshot built at the last save is handed back while the ids.forEach sequence of (id, getKey(value)), aliases, blocked and getOverrideOwners() are equal; otherwise the original runs and its result is kept); one @Unique slot per ForgeRegistry",
+      "license": "Forge (LGPL-2.1): no Forge code is carried; Forge's own makeSnapshot and Snapshot.write run (helper bons.furious.patch.forge_registry_snapshot.RegistrySnapshots)"
+    }
+  }
+}

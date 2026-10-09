@@ -1,0 +1,42 @@
+{
+  "group": "vanilla_ticking_prune",
+  "keys": {
+    "vanilla_ticking_tracker_prune": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.vanilla_ticking_prune.TickingTrackerPruneMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/server/level/TickingTracker",
+          "method": "m_7351_",
+          "desc": "(JI)V",
+          "sha256": "4cfea170c81f993e90a53d5960c22922021f94400685c1daf691884b6169d89f"
+        },
+        {
+          "class": "net/minecraft/server/level/TickingTracker",
+          "method": "m_6172_",
+          "desc": "(J)I",
+          "sha256": "9b155e0cc0829b3b48cc625935adeebe2d11f05254b768a9846aab081dbe8de0"
+        },
+        {
+          "class": "net/minecraft/server/level/TickingTracker",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d9daf450161ef2b33d24a07063e192d61a4ed87e4bb449b76cdc8b0029c2ae16"
+        },
+        {
+          "class": "net/minecraft/server/level/TickingTracker",
+          "method": "*",
+          "desc": "",
+          "sha256": "a5617140bcd97804b85c2e466fd31607912015e100f916f55711714436cb3452"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Long2ByteMap.put(long, byte) call in TickingTracker.setLevel (m_7351_): a put of the map's default value (33) becomes a remove (same previous-value result, which setLevel drops); everything else runs the original put",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_ticking_prune.TickingPrune)"
+    }
+  }
+}

@@ -67,3 +67,24 @@ exact tested JAR digests are in upstream-credits.json; targets our test pack
 does not install were tested against the listed JARs. No target JAR or asset is
 redistributed. Targets under restricted or custom licences get only our own
 code, as described above.
+
+Targets added in 1.0.36: Aquaculture 2 (Shadowclaimer, Girafi, All Rights
+Reserved); ElysiumAPI (ThatJadenXgamer, GNU-LESSER-GENERAL-PUBLIC-LICENSE);
+L_Ender's Cataclysm (L_Ender, CC-BY-NC-ND-4.0); Mekanism (Aidancbrady,
+Thommy101, Thiakil, pupnewfster, dizzyd, MIT); Rats (AlexThe666,
+GizmoTheMoonPig, GNU LESSER GENERAL PUBLIC LICENSE); Joy of Painting (xerca,
+GPL-3.0). Their exact tested JAR digests are in upstream-credits.json. No target
+JAR or asset is redistributed. Targets under restricted or custom licences get
+only our own code, as described above. ElysiumAPI's biome replacer handler
+(GPL-2.0 / LGPL-2.1) and Entity Model Features' getEntityVariable (LGPL-3.0) are
+carried as modified copies, distributed with their source.
+
+Ideas credited in 1.0.36. Several 1.0.36 switches follow an idea another project
+described; we worked from those descriptions only (changelogs, documentation,
+option names, issue and pull request text), never from their code: Collections
+Of Optimizations, C2ME, Paper, Gale, Leaves, Bellows, Lithium (documentation),
+TickMender, Saturn, Shinoyuki-BetterAutoSave, InventoryAdvancementAccelerator,
+Sodium, Oculus (pull request #760), AzureLib, Mekanism (its 1.20.4+ commit
+messages) and Mekanism: Overclocked. The "Idea:" line of each switch in
+bons_and_furious.properties says which idea it follows; "ours" marks our own
+designs.

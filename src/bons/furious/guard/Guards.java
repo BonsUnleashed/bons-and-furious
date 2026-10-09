@@ -283,8 +283,34 @@ public final class Guards {
     private static final Map<String, String[]> STAND_DOWN = Map.of(
             "bons.furious.mixin.models.BoneLookupMixin", new String[] {"m_233393_", "(Ljava/lang/String;)Ljava/util/Optional;", "bons$partsWithBone"});
 
+    /**
+     * Since 1.0.36: an injector of ours into a Minecraft method that another mod may replace with an @Overwrite (mixin ->
+     * method, desc, readable name). Mixin refuses an injector into a method that another mod's mixin of the same or a
+     * higher priority has replaced ("cannot inject into ... merged by ... with priority 1000"), before it looks at require,
+     * and that stops the game at start. Such an injector therefore has a priority above the default (1500): Mixin lets it
+     * into the replacement, and postApply finds the method merged by the other mod's mixin, turns the switch's own logic off
+     * (the flag below) and logs one line. Unlike STAND_DOWN, the injector may still find its call in the replacement; with
+     * its switch's logic off it hands that call on unchanged. Reported with Sable 2.0.6, which replaces PlayerList.broadcast
+     * (NeoForge 1.21.1); a replacement of the same or a higher priority than ours is still refused, as before.
+     */
+    private static final Map<String, String[]> FOREIGN_OVERWRITE = Map.of(
+            "bons.furious.mixin.storagedrawers_sync_c2.PlayerListCountSyncMixin", new String[] {"m_11241_",
+                    "(Lnet/minecraft/world/entity/player/Player;DDDDLnet/minecraft/resources/ResourceKey;Lnet/minecraft/network/protocol/Packet;)V",
+                    "broadcast"});
+
+    /**
+     * storagedrawers_count_sync_holders (since 1.0.36): true when another mod replaces PlayerList.broadcast; CountSyncHolders
+     * then leaves Storage Drawers' count sends exactly as they are. Set once, while PlayerList is transformed.
+     */
+    public static volatile boolean countSyncBroadcastForeign;
+
     /** IMixinConfigPlugin.postApply: one line when a STAND_DOWN injector found the method replaced by another mod. */
     public static void checkStandDown(String mixinClass, ClassNode target) {
+        String[] f = FOREIGN_OVERWRITE.get(mixinClass);
+        if (f != null) {
+            checkForeignOverwrite(mixinClass, target, f);
+            return;
+        }
         String[] s = STAND_DOWN.get(mixinClass);
         String key = s == null ? null : keyOf(mixinClass);
         if (key == null) return;
@@ -300,6 +326,27 @@ public final class Guards {
             if (LOGGED.add("standdown|" + key + "|" + target.name))
                 LOGGER.info("Bons and Furious: {} steps aside: {} already replaces {}.{}; that method is left to it",
                         key, by, target.name.replace('/', '.'), s[0]);
+            return;
+        }
+    }
+
+    /**
+     * IMixinConfigPlugin.postApply for a FOREIGN_OVERWRITE injector (since 1.0.36): when the method carries another mod's
+     * @MixinMerged (its @Overwrite), the switch's logic is turned off and one line names that mod; otherwise nothing happens.
+     */
+    private static void checkForeignOverwrite(String mixinClass, ClassNode target, String[] f) {
+        String key = keyOf(mixinClass);
+        if (key == null) return;
+        for (MethodNode m : target.methods) {
+            if (!m.name.equals(f[0]) || !m.desc.equals(f[1])) continue;
+            String by = CallSites.mergedBy(m);
+            if (by == null || by.startsWith("bons.furious.") || by.startsWith("bons.pure.") || by.startsWith("agentcraft.")) return;
+            if (key.equals("storagedrawers_count_sync_holders")) countSyncBroadcastForeign = true;
+            if (LOGGED.add("foreign|" + key + "|" + target.name)) {
+                String mod = CallSites.modOf(by);
+                LOGGER.info("Bons and Furious: {} steps aside: {}({}) replaces {}.{} ({}); that method is left to it", key,
+                        mod == null ? "" : mod + " ", by.substring(by.lastIndexOf('.') + 1), target.name.replace('/', '.'), f[2], f[0]);
+            }
             return;
         }
     }

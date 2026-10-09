@@ -1,0 +1,58 @@
+{
+  "group": "oculus_glyph_fix",
+  "keys": {
+    "oculus_glyph_extended_vertex_fix": {
+      "mod": "oculus",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.oculus_glyph_fix.GlyphExtSerializerFixMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/irisshaders/iris/compat/sodium/impl/vertex_format/GlyphExtVertexSerializer",
+          "method": "serialize",
+          "desc": "(JJI)V",
+          "note": "the endQuad call with end-of-data pointers",
+          "sha256": "9c7beffe080f114f58a562883a92146af07cb48f7eda0bfb011c9cc62dc34823"
+        },
+        {
+          "class": "net/irisshaders/iris/compat/sodium/impl/vertex_format/GlyphExtVertexSerializer",
+          "method": "endQuad",
+          "desc": "(FFJJ)V",
+          "note": "reads through QuadViewEntity (vertex i at p - stride*(3-i)), writes vertex k at p - stride*k",
+          "sha256": "69c2696a8230aab717ae9d854cb63facf7a653fdd0b56f3a74191e5d744046de"
+        },
+        {
+          "class": "net/irisshaders/iris/compat/sodium/impl/vertex_format/entity_xhfp/QuadViewEntity",
+          "method": "x",
+          "desc": "(I)F",
+          "sha256": "5f47831ddea713e464ee9008f114d0eaac679b563666bdb6c40924f19f499d69"
+        },
+        {
+          "class": "net/irisshaders/iris/compat/sodium/impl/vertex_format/entity_xhfp/QuadViewEntity",
+          "method": "u",
+          "desc": "(I)F",
+          "sha256": "1db3c32f11968db2d63be3b86100740943ad6dc263ab6e34b1b2a48be5070212"
+        },
+        {
+          "class": "net/irisshaders/iris/vertices/IrisVertexFormats",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "GLYPH = 52 bytes",
+          "sha256": "941e2d06ca9b16975cf2b930762c366c8297aae8f59825c1e5088ed1b0788912"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/mixin/features/render/gui/font/GlyphRendererMixin",
+          "method": "drawFast",
+          "desc": "(ZFFLorg/joml/Matrix4f;Lcom/mojang/blaze3d/vertex/VertexConsumer;FFFFI)Z",
+          "note": "Embeddium pushes one 4-vertex quad per glyph",
+          "sha256": "a55e4beee0f0820ef85e4172bc6a0f267b3f0f58abca18a74883c00dd720e1c6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of GlyphExtVertexSerializer.serialize's endQuad call (with serialize's vertexCount captured): for a 4-vertex call, endQuad reads and writes at the start of the quad's last written GLYPH vertex; helper bons.furious.patch.oculus_glyph_fix.GlyphFix (runtime flag)",
+      "license": "Oculus is LGPL-3.0-only: no code of it is carried (Oculus's own endQuad is called with other pointers)"
+    }
+  }
+}

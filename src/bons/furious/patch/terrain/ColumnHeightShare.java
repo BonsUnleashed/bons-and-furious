@@ -48,6 +48,10 @@ import org.slf4j.Logger;
  * recomputed value is the one returned, so a world that fails the check never received a stored value that differed.
  * The one non-vanilla density function a column NoiseChunk carries in this pack (YUNG's Cave Biomes marble-caves wrapper)
  * returns 0 there, because only chunk NoiseChunks are given a biome source.
+ *
+ * 1.0.36: a per-type miss is also answered from the column's summary when the separate switch vanilla_noise_column_summary
+ * recorded one ({@link ColumnSummary}: its own canary, refusal and runtime flag; with that switch off nothing is recorded
+ * and this class behaves exactly as before).
  */
 public final class ColumnHeightShare {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -66,6 +70,8 @@ public final class ColumnHeightShare {
     private static final ConcurrentMap<RandomState, World> WORLDS = new MapMaker().weakKeys().concurrencyLevel(16).makeMap();
     private static final ThreadLocal<Pending> PENDING = ThreadLocal.withInitial(Pending::new);
     private static final java.util.Set<String> LOGGED = java.util.concurrent.ConcurrentHashMap.newKeySet();
+    /** 1.0.36: set by the first lookup (this switch's mixin is applied); vanilla_noise_column_summary records only then. */
+    static volatile boolean lookupsSeen;
 
     static {
         MethodHandle h = null;
@@ -88,6 +94,7 @@ public final class ColumnHeightShare {
 
     /** Start of getBaseHeight: the shared height for this query, or {@link #MISSING} to run the original code. */
     public static int lookup(NoiseBasedChunkGenerator generator, int x, int z, Heightmap.Types type, LevelHeightAccessor level, RandomState random) {
+        if (!lookupsSeen) lookupsSeen = true;
         Table t = table(generator, level, random);
         if (t == null) {
             if (METRICS) BYPASSED.increment();
@@ -95,6 +102,10 @@ public final class ColumnHeightShare {
         }
         Entry e = t.get(x, z, type.ordinal());
         if (e == null) {
+            if (ColumnSummary.recorded) {                      // 1.0.36: vanilla_noise_column_summary (off: never recorded)
+                int s = ColumnSummary.answer(t, x, z, type);
+                if (s != MISSING) return ColumnSummary.serve(t, x, z, type.ordinal(), s, PENDING.get());
+            }
             if (METRICS) MISSES.increment();
             return MISSING;
         }
@@ -114,7 +125,8 @@ public final class ColumnHeightShare {
         Table armed = p.table;
         if (armed != null && p.x == x && p.z == z && p.type == type.ordinal()) {
             p.table = null;
-            if (p.expected != value) {
+            if (p.kind != Pending.ENTRY) ColumnSummary.check(armed, p.kind, x, z, type, p.expected, value);   // 1.0.36
+            else if (p.expected != value) {
                 armed.world.refuse("a stored height differed from a fresh computation (column " + x + "," + z + " " + type + ": stored "
                         + p.expected + ", computed " + value + ")", true);
                 return value;
@@ -125,7 +137,7 @@ public final class ColumnHeightShare {
         return value;
     }
 
-    private static Table table(NoiseBasedChunkGenerator generator, LevelHeightAccessor level, RandomState random) {
+    static Table table(NoiseBasedChunkGenerator generator, LevelHeightAccessor level, RandomState random) {
         if (!READY || !enabled || random == null || generator.getClass() != NoiseBasedChunkGenerator.class) return null;
         try {
             World w = WORLDS.get(random);
@@ -144,6 +156,9 @@ public final class ColumnHeightShare {
     static final class World {
         final AtomicLong hits = new AtomicLong();
         volatile String refusal;
+        /** 1.0.36, vanilla_noise_column_summary: its own canary counter and refusal (the per-type table is not affected). */
+        final AtomicLong summaryHits = new AtomicLong();
+        volatile String summaryRefusal;
         private volatile Table[] tables = new Table[0];
 
         World(RandomState random) {
@@ -217,12 +232,25 @@ public final class ColumnHeightShare {
         final NoiseGeneratorSettings settings;
         final int minY, height;
         private final AtomicReferenceArray<Entry> slots = new AtomicReferenceArray<>(1 << BITS);
+        /** 1.0.36, vanilla_noise_column_summary: per-column summaries, created on first use. */
+        volatile AtomicReferenceArray<ColumnSummary.Summary> summaries;
 
         Table(World world, NoiseGeneratorSettings settings, int minY, int height) {
             this.world = world;
             this.settings = settings;
             this.minY = minY;
             this.height = height;
+        }
+
+        AtomicReferenceArray<ColumnSummary.Summary> summaries() {
+            AtomicReferenceArray<ColumnSummary.Summary> s = summaries;
+            if (s == null) {
+                synchronized (this) {
+                    s = summaries;
+                    if (s == null) summaries = s = new AtomicReferenceArray<>(1 << ColumnSummary.BITS);
+                }
+            }
+            return s;
         }
 
         private static int index(int x, int z, int type) {
@@ -244,15 +272,22 @@ public final class ColumnHeightShare {
 
     /** A hit this thread is recomputing instead of serving (only one at a time: getBaseHeight does not nest). */
     static final class Pending {
+        /** What is being compared: a per-type entry, a summary answer (canary) or a summary answer in shadow mode (1.0.36). */
+        static final int ENTRY = 0, SUMMARY = 1, SUMMARY_SHADOW = 2;
         Table table;
-        int x, z, type, expected;
+        int x, z, type, expected, kind;
 
         void arm(Table t, int x, int z, int type, int expected) {
+            arm(t, x, z, type, expected, ENTRY);
+        }
+
+        void arm(Table t, int x, int z, int type, int expected, int kind) {
             this.table = t;
             this.x = x;
             this.z = z;
             this.type = type;
             this.expected = expected;
+            this.kind = kind;
         }
     }
 }
