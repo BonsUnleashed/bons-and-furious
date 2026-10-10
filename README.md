@@ -6,90 +6,86 @@
 
 [**Forge 1.20.1: 1.0.39**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.39) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
 
-Bons and Furious reduces repeated work in Minecraft and optional mods. Each optimization or fix has its own switch in one config file. Choose the build for your Minecraft version and loader.
+## Faster worlds. Smoother busy scenes.
+
+Bons and Furious reduces the repeated work behind terrain generation, loading, rendering and server ticks. It also fixes specific freezes and crashes in the mods it supports. Add it alongside your existing performance mods, with a separate switch for every optimization and fix.
+
+**In our tested Forge pack: about 9× world-generation throughput, 5½ minutes less waiting to enter a new world, and 17% higher average FPS with 64 animated mobs.**
+
+Those results were measured with **Bons and Furious 1.0.31 on Minecraft 1.20.1**, on 5 October 2026. They are not measurements of the current 1.0.39 release or the NeoForge build.
+
+## What you get
+
+- **Less waiting for terrain.** Reuse terrain calculations and ground-height estimates instead of repeating them for neighbouring chunks. In the flight test, an average of 504 of 529 nearby chunks were loaded with Bons, compared with 354 without it.
+- **Smoother crowded scenes.** Reduce repeated animation, model and rendering work across Minecraft, Embeddium, Oculus, Entity Model Features, Entity Texture Features and other supported mods. The matched 64-mob scene gained 17% average FPS and 34% in 1% lows.
+- **Less work during loading and saves.** Speed up recipe processing, model rebuilds and chunk serialization, and move supported saved-data and player-file writes off the server thread.
+- **Fewer first-spawn spikes and specific mod freezes.** Prepare mob classes before their first spawn, and repair reproduced threading and world-generation bugs. The first-night improvement was measured separately with 1.0.35; details are below.
+
+## Measured on an already optimized pack
+
+Both sides kept **ModernFix, FerriteCore, Radium and C2ME**. The client also kept **Embeddium, ImmediatelyFast and EntityCulling**, plus Oculus, Distant Horizons, Complementary shaders and Fresh Animations. These gains come from adding Bons and Furious to that stack.
+
+**5 October 2026 · Forge 1.20.1 · Bons and Furious 1.0.31 · four measured runs per arm.** Each comparison used the same machine and matched settings, with and without Bons. The server and client results below came from different machines.
+
+| Workload | Without Bons | With Bons 1.0.31 | Result |
+| --- | ---: | ---: | --- |
+| Generate 512 chunks, dedicated server | 436 s | 48 s | **9.2× throughput** |
+| Launch the game and enter a new world | 588 s | 257 s | **56% less waiting** |
+| 64 animated mobs, average FPS | 54.6 | 64.0 | **17% higher** |
+| Same mob scene, 1% low FPS | 31.4 | 42.1 | **34% higher** |
+
+Server: Core Ultra 9 285K. Client: Ryzen 9 3900X / RTX 3080, 1080p with shaders. C2ME's `reduceLockRadius` was enabled. The FPS test used the same saved world, with Distant Horizons generation off and JEI's background work finished.
+
+Generation also used **83% less CPU time** and approximately **90% less memory allocation per chunk**. That is less temporary garbage, not 90% less RAM: live server heap after startup was about 30 MiB higher with Bons.
+
+Results depend on the pack, settings and hardware. CPU savings may give little extra FPS when the GPU is the limit. This test does not establish how much faster 1.0.31 is than 1.0.26: the machines and settings changed. The same-run 1.0.30 comparison showed similar generation and steady mob-scene FPS.
+
+[Full results, test method and earlier benchmarks](https://github.com/BonsUnleashed/bons-and-furious/wiki/Whole-modpack-benchmark).
+
+## A closer look at the improvements
+
+These Forge 1.20.1 examples explain where the savings come from. **They measure individual tasks, not an extra FPS or TPS gain to add to the whole-pack results.**
+
+| Where | What changed | Measured |
+| --- | --- | --- |
+| **First-night mob spawning** | Prepares mob and AI classes on a background thread before their first spawn | About **a quarter less time in ticks over 50 ms** in the first-night tests on two CPUs with 1.0.35. Spawn rates stay the same. |
+| **Minecraft** chunk generation | Neighbouring chunk work areas share their ground-height estimates instead of re-scanning the same columns | **95% of surface scans skipped** (349,843 → 16,494 in a 144-chunk run) and **about half the wall time** for that run (mean 162 → 75 s, shared machine) |
+| **Minecraft** terrain preparation | The second density-graph pass reuses what the first pass built instead of rebuilding it | **91% less CPU** per NoiseChunk (10.35 → 0.89 ms) and **53% less** per structure-placement height query (17.7 → 8.3 ms) |
+| **Embeddium + Fusion** | Hidden connected-texture faces are skipped before their quads are built | **25% less chunk-meshing time** (5.2 → 3.9 s for 733 sections), **41% less allocation**, byte-identical vertices and indices |
+| **Farmer's Delight** | Tool-action ingredients share their registry scan during a recipe load | Client recipe-packet decoding **8.8 → 0.4 s**; recipe rebuild **5.5–6.4 → 1.4 s** on the client and **3.6 → 1.2 s** on the server, same ingredients |
+| **Create** | Contraption collision boxes are built in one pass | A 400-block carriage **369 → 1.3 ms** and 108 → 0.25 MB, identical boxes |
+| **Minecraft** saving | Saved data and player files are compressed and written by a background writer | Server thread **4.9 → 0.9 s** for 500 data files at once, byte-identical files |
+| **Minecraft** networking | Packet bursts are flushed once instead of once per packet | 300 socket flushes → 1; network-thread CPU **8.7 → 2.6 µs per packet**, identical bytes |
+| **Embeddium** | A section search whose inputs are all unchanged replays the previous one | **58–68% less time** per search with a still camera; the search was 14.3% of the render thread there |
+| **Forge** | The mod and channel part of the server-list status is reused while it is unchanged | **4.5 → 0.15 ms** per status update with 440 mods; it was 16.6% of the server thread during a pregeneration |
+| **Entity Model Features + Fresh Animations** | Variable indexes and model-part lookups are reused during animation compilation | Entity-renderer rebuild **15.1–16.6 → 8.8 s**, with 5.1 million variable answers and 692,000 part lookups checked in game |
+| **Distant Horizons** | The rough-surface generator keeps the parts of the terrain density that depend only on x and z instead of recomputing them at every probe height | **85% less time** per LOD column (3,351 → 494 µs) |
+| **Valkyrien Skies** | Ship chunk bookkeeping, after seven rounds of ship work | **94% less time** (329 → 21 µs, full-pack fixture); physics terrain conversion 65–69% less |
+| **Oculus** | Empty shader render-order graphs are reused instead of rebuilt | **90% less time** per reset (166 → 16 ns), 808 → 0 bytes |
+| **JEI** | Each ingredient keeps its display stack with the same expiry semantics | **84% less time** per indexing lookup (830 → 130 ns in the cache harness); the in-game index retained the same categories, recipes and stack content |
+| **GeckoLib** | Mixed animation easing without boxed doubles | **50% less time** per evaluation (67 → 34 ns) |
+| **Architectury API** | Event dispatch without re-resolving method handles | **19× faster** (649 → 34 ns per listener call) |
+| **Forge** + Oculus | Each block remembers its chunk render layers while the shader pack's layer map is unchanged | **59% less time** per lookup (122 → 50 ns), 12-14% of chunk meshing |
+| **Radium** with C2ME | Radium's fast chunk access runs again while C2ME's replacement for it is switched off | **43% less time** per loaded-chunk lookup (81 → 46 ns), `getBlockState` 133 → 73 ns |
+| **Entity Texture Features** | Each sprite's texture id is worked out once instead of on every draw of a chest, sign, bed or banner | **95% less time** per draw (134 → 7 ns) |
+| **AmbientSounds** | Bounded terrain scan | **88% lower p95** (5.45 → 0.65 ms per analysis) |
+| **Frame pacing** (client) | The FPS-limiter wait moves before the display update | **84% less frame-interval variation** at p95 (7.63 → 1.25 ms) at the same 120 FPS cap |
+| **ImmediatelyFast** | Horse-layer ordering without substrings | **46% less time** (28.9 → 15.5 ns), 64 → 0 bytes |
+
+The mob warm-up uses about 7 MB more class memory and adds roughly half a second to a singleplayer join. Other newer controls reduce chunk-save allocation, inventory advancement checks and repeated work in mods such as Cataclysm and Mekanism. Their individual measurements are in the wiki; they have not yet had a new whole-pack benchmark.
+
+[Measurements and caveats](https://github.com/BonsUnleashed/bons-and-furious/wiki/Measurements-and-caveats) · [Every control and its evidence](https://github.com/BonsUnleashed/bons-and-furious/wiki/All-controls)
+
+## Choose your build
 
 | Minecraft | Loader | Controls | Requirements |
 | --- | --- | ---: | --- |
 | 1.20.1 | Forge | 306 | Forge 47.3.22 or newer |
 | 1.21.1 | NeoForge | 205 | Java 21; NeoForge 21.1.252 or newer |
 
-Both builds use one JAR for client and server, with no required target mods.
+Each build uses one JAR for client and server, with no required target mods. Coverage differs between builds; the figures above are Forge 1.20.1 measurements.
 
-## Minecraft 1.20.1 / Forge: measured on an already optimized modpack
-
-**5.6× faster world generation. 4.8× faster spawn preparation. Previously measured: +10% average FPS with 64 animated mobs and +29% 1% lows in a GPU-bound scene.**
-
-**These gains are ON TOP of the major performance mods already running in the test pack.** Both sides of the comparison keep **ModernFix, FerriteCore, Radium and C2ME**; the client also keeps **Embeddium, ImmediatelyFast and EntityCulling**, along with **Oculus, Distant Horizons, Complementary shaders and Fresh Animations**. The comparison adds or removes Bons and Furious from that existing setup. The figures below separate the latest 1.0.26 benchmark from the earlier clean FPS test.
-
-### Latest whole-pack results — 1.0.26, 2 October 2026
-
-Four matched runs per arm, ABBA-ABBA order, same PC and seed; the reference pack had 471 server / 510 client mod JARs at the snapshot. C2ME was enabled on both sides, with `reduceLockRadius=false` throughout this test.
-
-| Workload | With Bons and Furious 1.0.26 | Same stack without Bons | Result |
-| --- | ---: | ---: | --- |
-| Dedicated server, 512 new chunks | 102 s | 567 s | **5.6× throughput** |
-| First 4 chunks of a new world | 23.5 s | 238 s | **90% less time** |
-| New singleplayer world, spawn preparation | 58 s | 277 s | **4.8× faster** |
-| Game launch to standing in a new world | 242 s | 482 s | **50% less time** |
-| CPU time per generated chunk | 0.56 s | 2.91 s | **81% less CPU** |
-| Memory allocated per generated chunk | 308 MB | 2,460 MB | **87% less allocation** |
-| Distant Horizons LOD records, same 4-minute session | 8,259 | 1,960 | **4.2× as many records built** |
-
-Client start-up before loading a world was 128 vs 136 s (6% faster). Server start-up was unchanged; live heap after server start-up was **70 MB higher** (2.30 vs 2.23 GB). Allocation saved while generating is separate from memory retained. These are whole-modpack results for this PC, pack and seed, not promises for every setup.
-
-### Measured FPS gains — earlier 1.0.21 benchmark, 30 September 2026
-
-The same saved scenes were drawn with the client optimization stack above enabled in both arms, shaders and resource packs on, Distant Horizons generation off, four runs each. These are **measured 1.0.21 results**, retained as historical evidence; they are not a new 1.0.26 FPS measurement.
-
-| Same-scene rendering workload | With Bons 1.0.21 | Same stack without Bons | Result |
-| --- | ---: | ---: | --- |
-| 64 animated mobs, average FPS | 72.6 | 66.1 | **+10%** |
-| 64 animated mobs, 1% low FPS | 40 | 35 | **+16%** (from unrounded data) |
-| GPU-bound overlook, 1% low FPS | 89 | 69 | **+29%** |
-| GPU-bound overlook, average FPS | 172 | 171 | No significant change |
-
-The 1.0.26 saved-world baseline froze its integrated server in all four runs, while the Bons runs kept 20 TPS. That is documented as a stability result, not used to inflate the FPS comparison. New-world sessions also draw more terrain with Bons, so their frame rates are not a like-for-like comparison.
-
-Every run, the retained earlier results, the baseline mod versions and the method: [Whole-modpack benchmark](https://github.com/BonsUnleashed/bons-and-furious/wiki/Whole-modpack-benchmark).
-
-## What the Forge 1.20.1 build does
-
-- **264 optimizations** reduce repeated work: fewer allocations, no repeated lookups, no state rebuilt only to come out identical. Terrain preparation, ground-height estimates, climate lookups, Distant Horizons' rough-surface generation, chunk render layers, ship chunk bookkeeping, shader graph resets, animation easing and event dispatch are the largest. Eight controls restore or provide compatible versions of performance paths disabled in the tested setup, including Radium, ModernFix, ImmediatelyFast and Distant Horizons integrations. Each checks the relevant mod builds and configuration.
-- **37 fixes** repair reproduced server freezes, worker-thread crashes, generation exceptions and defects in the target mods themselves: large mobs whose solid body parts could be walked through with Radium, caches that two threads could corrupt, data that piled up on every world join.
-- **5 deliberate changes** (frame pacing, the Occult bed scan, Fowl Play flight targets, Scorched sandcrab processing, two experimental Radium options) trade a documented behaviour difference for a saving.
-
-All 306 are listed in `config/bons_and_furious.properties` with their target mod, tested build, side and measurement. Set any key to `false` and restart. Every control is explained in the [wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki).
-
-## Forge 1.20.1 results, per patch
-
-| Where | What changed | Measured |
-| --- | --- | --- |
-| **Minecraft** chunk generation (new in 1.0.18) | Neighbouring chunk work areas share their ground-height estimates instead of re-scanning the same columns | **95% of surface scans skipped** (349,843 → 16,494 in a 144-chunk run) and **about half the wall time** for that run (mean 162 → 75 s, shared machine) |
-| **Minecraft** terrain preparation (new in 1.0.16) | The second density-graph pass reuses what the first pass built instead of rebuilding it | **91% less CPU** per NoiseChunk (10.35 → 0.89 ms) and **53% less** per structure-placement height query (17.7 → 8.3 ms) |
-| **Embeddium + Fusion** (new in 1.0.26) | Hidden connected-texture faces are skipped before their quads are built | **25% less chunk-meshing time** (5.2 → 3.9 s for 733 sections), **41% less allocation**, byte-identical vertices and indices |
-| **Farmer's Delight** (new in 1.0.26) | Tool-action ingredients share their registry scan during a recipe load | Client recipe-packet decoding **8.8 → 0.4 s**; recipe rebuild **5.5–6.4 → 1.4 s** on the client and **3.6 → 1.2 s** on the server, same ingredients |
-| **Create** (new in 1.0.30) | Contraption collision boxes are built in one pass | A 400-block carriage **369 → 1.3 ms** and 108 → 0.25 MB, identical boxes |
-| **Minecraft** saving (new in 1.0.30) | Saved data and player files are compressed and written by a background writer | Server thread **4.9 → 0.9 s** for 500 data files at once, byte-identical files |
-| **Minecraft** networking (new in 1.0.30) | Packet bursts are flushed once instead of once per packet | 300 socket flushes → 1; network-thread CPU **8.7 → 2.6 µs per packet**, identical bytes |
-| **Embeddium** (new in 1.0.30) | A section search whose inputs are all unchanged replays the previous one | **58–68% less time** per search with a still camera; the search was 14.3% of the render thread there |
-| **Forge** (new in 1.0.30) | The mod and channel part of the server-list status is reused while it is unchanged | **4.5 → 0.15 ms** per status update with 440 mods; it was 16.6% of the server thread during a pregeneration |
-| **Entity Model Features + Fresh Animations** (new in 1.0.26) | Variable indexes and model-part lookups are reused during animation compilation | Entity-renderer rebuild **15.1–16.6 → 8.8 s**, with 5.1 million variable answers and 692,000 part lookups checked in game |
-| **Distant Horizons** (new in 1.0.23) | The rough-surface generator keeps the parts of the terrain density that depend only on x and z instead of recomputing them at every probe height | **85% less time** per LOD column (3,351 → 494 µs) |
-| **Valkyrien Skies** | Ship chunk bookkeeping, after seven rounds of ship work | **94% less time** (329 → 21 µs, full-pack fixture); physics terrain conversion 65–69% less |
-| **Oculus** | Empty shader render-order graphs are reused instead of rebuilt | **90% less time** per reset (166 → 16 ns), 808 → 0 bytes |
-| **JEI** (new in 1.0.26) | Each ingredient keeps its display stack with the same expiry semantics | **84% less time** per indexing lookup (830 → 130 ns in the cache harness); the in-game index retained the same categories, recipes and stack content |
-| **GeckoLib** | Mixed animation easing without boxed doubles | **50% less time** per evaluation (67 → 34 ns) |
-| **Architectury API** | Event dispatch without re-resolving method handles | **19× faster** (649 → 34 ns per listener call) |
-| **Forge** + Oculus (new in 1.0.23) | Each block remembers its chunk render layers while the shader pack's layer map is unchanged | **59% less time** per lookup (122 → 50 ns), 12-14% of chunk meshing |
-| **Radium** with C2ME (new in 1.0.23) | Radium's fast chunk access runs again while C2ME's replacement for it is switched off | **43% less time** per loaded-chunk lookup (81 → 46 ns), `getBlockState` 133 → 73 ns |
-| **Entity Texture Features** (new in 1.0.21) | Each sprite's texture id is worked out once instead of on every draw of a chest, sign, bed or banner | **95% less time** per draw (134 → 7 ns) |
-| **AmbientSounds** | Bounded terrain scan | **88% lower p95** (5.45 → 0.65 ms per analysis) |
-| **Frame pacing** (client) | The FPS-limiter wait moves before the display update | **84% less frame-interval variation** at p95 (7.63 → 1.25 ms) at the same 120 FPS cap |
-| **ImmediatelyFast** | Horse-layer ordering without substrings | **46% less time** (28.9 → 15.5 ns), 64 → 0 bytes |
-
-Smaller allocation and lookup savings in Ars Nouveau, Curios API, Alex's Caves, Ice and Fire, TaCZ and others are on the wiki.
-
-> **How to read the per-patch numbers.** Each figure measures the named method, phase or reproduction in a fixture, on the build it was measured on. The figures are not additive; the whole-modpack comparison above is the aggregate measurement. Method, fixture settings and the result for every control: [Measurements and caveats](https://github.com/BonsUnleashed/bons-and-furious/wiki/Measurements-and-caveats).
+The Forge build contains **264 optimizations, 37 fixes and 5 deliberate behaviour changes**. Those five controls include frame pacing and experimental Radium options; their trade-offs are documented individually. All 306 controls are listed in `config/bons_and_furious.properties`. To disable one, set its key to `false` and restart.
 
 ## Forge 1.20.1 covered mods (all optional)
 
