@@ -1,0 +1,136 @@
+{
+  "group": "item_renderers",
+  "keys": {
+    "aquaculture_item_renderer_reuse": {
+      "mod": "aquaculture",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.item_renderers.AquacultureRendererMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/teammetallurgy/aquaculture/item/BlockItemWithoutLevelRenderer$1",
+          "method": "getCustomRenderer",
+          "desc": "()Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;",
+          "sha256": "b94244566ced10df2b137366916a3387aab44257a67ecf2bc7ada39f28a5474e"
+        },
+        {
+          "class": "com/teammetallurgy/aquaculture/client/renderer/AquaItemRenderer",
+          "method": "*",
+          "desc": "",
+          "sha256": "13fbd7890f9a09262ad16b33ba53155f2500c762e9ca756f31dc09b77123224e"
+        },
+        {
+          "class": "com/teammetallurgy/aquaculture/client/renderer/AquaItemRenderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/model/geom/EntityModelSet;)V",
+          "sha256": "a9ced57ba86e0051263cde676c29064c31434822ecd52b3ed2b7acba42ade2c0"
+        },
+        {
+          "class": "com/teammetallurgy/aquaculture/client/renderer/AquaItemRenderer",
+          "method": "renderByItem",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "c119744b62aa768a31649a6bb5334bc7b80579b0bc879b615e921898ed6ae770"
+        },
+        {
+          "class": "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/model/geom/EntityModelSet;)V",
+          "sha256": "a4830bccda1daa30a2cef35e83a31720d29bcf52a793ff802896889b1ae2b1cf"
+        },
+        {
+          "class": "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer",
+          "method": "renderByItem",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "8642d3a2a1f0bf450b9941a62856c8e4c4b4995bd936cde39849e69de2563677",
+          "sha256_variants": [
+            "820fed2cbe2f650884a5a5b76821809bda17bfd00071b5eef462965b949992fd"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (client srg jar with NeoForge patches): the shulker-box instanceof test branches the other way (ifeq to a final return instead of ifne around an early return), the skull branch returns directly where the NeoForm recompilation jumps to the shared return, local slot numbers differ and 180.0f is loaded with ldc_w instead of ldc; the same calls, fields, types and constants otherwise. See evidence/variant-review/net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer.renderByItem.diff.txt."
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on getCustomRenderer() of 1 site class(es) (a NEW AquaItemRenderer per call in the original): on the render thread, while no client resource reload is in flight and item_renderer_reload_tracker has seen the start-up reload, the site hands out one instance per extensions object, built by the original call and dropped at the start and end of every reload; any other thread, an in-flight reload, the switch off or a renderer of another class -> the original call",
+      "license": "Aquaculture (All Rights Reserved per mods.toml): no Aquaculture code carried; the mixin only wraps getCustomRenderer with our own logic; helper bons.furious.patch.item_renderers.ItemRendererReuse"
+    },
+    "netherexp_item_renderer_reuse": {
+      "mod": "netherexp",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.item_renderers.NetherExpRendererMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/jadenxgamer/netherexp/client/rendering/extensions/JNEItemExtensions$1",
+          "method": "getCustomRenderer",
+          "desc": "()Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;",
+          "sha256": "013eb766e09fb202c4746997face4c1ccd32b7764af040edbac805f6363c7ff8"
+        },
+        {
+          "class": "net/jadenxgamer/netherexp/client/JNEItemRenderer",
+          "method": "*",
+          "desc": "",
+          "sha256": "657cae9937c326852d2c929f5da314e38e5d6a86695755fcd31ae35871bdce7f"
+        },
+        {
+          "class": "net/jadenxgamer/netherexp/client/JNEItemRenderer",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "97f0676eba89bf7fbbe216a4cc447cab0e903600331f228b9695279ff55e01f8"
+        },
+        {
+          "class": "net/jadenxgamer/netherexp/client/JNEItemRenderer",
+          "method": "renderByItem",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "c2e2174423884857ee6b27b29589a6eb2c7e830e5c499e76526628590b56a72b"
+        },
+        {
+          "class": "net/jadenxgamer/netherexp/client/JNEItemRenderer",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "027d848416793c194ed379a413548aa98b85768712ebe4ab1ee87f450eb575e2"
+        },
+        {
+          "class": "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/model/geom/EntityModelSet;)V",
+          "sha256": "a4830bccda1daa30a2cef35e83a31720d29bcf52a793ff802896889b1ae2b1cf"
+        },
+        {
+          "class": "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer",
+          "method": "renderByItem",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "sha256": "8642d3a2a1f0bf450b9941a62856c8e4c4b4995bd936cde39849e69de2563677",
+          "sha256_variants": [
+            "820fed2cbe2f650884a5a5b76821809bda17bfd00071b5eef462965b949992fd"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (client srg jar with NeoForge patches): the shulker-box instanceof test branches the other way (ifeq to a final return instead of ifne around an early return), the skull branch returns directly where the NeoForm recompilation jumps to the shared return, local slot numbers differ and 180.0f is loaded with ldc_w instead of ldc; the same calls, fields, types and constants otherwise. See evidence/variant-review/net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer.renderByItem.diff.txt."
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on getCustomRenderer() of 1 site class(es) (JNEItemExtensions$1, the one extensions object of the Will-o'-Wisp, Shotgun Fist and Pump-Charge Shotgun; a NEW JNEItemRenderer per call in the original): on the render thread, while no client resource reload is in flight and item_renderer_reload_tracker has seen the start-up reload, the site hands out one instance per extensions object, built by the original call and dropped at the start and end of every reload; any other thread, an in-flight reload, the switch off or a renderer of another class -> the original call",
+      "license": "Jaden's Nether Expansion (CC-BY-NC-ND-4.0 per its 1.21.1 mods.toml): no Nether Expansion code carried; the mixin only wraps getCustomRenderer with our own logic; helper bons.furious.patch.item_renderers.ItemRendererReuse"
+    },
+    "item_renderer_reload_tracker": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.item_renderers.ReloadTrackerMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/server/packs/resources/ReloadableResourceManager",
+          "method": "createReload",
+          "desc": "(Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;Ljava/util/concurrent/CompletableFuture;Ljava/util/List;)Lnet/minecraft/server/packs/resources/ReloadInstance;",
+          "sha256": "d8455db703d41340a77c7fa343948b405d145530aa7af39e7eb78504fd56bfe0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyReturnValue at RETURN of ReloadableResourceManager.createReload: counts the reload as in flight and bumps the item renderer generation, and again when its done() future completes; returns the same ReloadInstance; the *_item_renderer_reuse switches use their memo only after this has seen the start-up reload",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.item_renderers.ItemRendererReuse)"
+    }
+  }
+}

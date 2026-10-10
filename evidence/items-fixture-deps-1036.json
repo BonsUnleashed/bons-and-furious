@@ -1,0 +1,100 @@
+{
+  "lodestone": {
+    "project": "lodestonelib",
+    "version_id": "CohX6yP1",
+    "version_number": "1.8.2",
+    "date": "2026-01-12T01:39:43.145782Z",
+    "version_type": "release",
+    "filename": "lodestone-1.21.1-1.8.2.jar",
+    "url": "https://cdn.modrinth.com/data/bN3xUWdo/versions/CohX6yP1/lodestone-1.21.1-1.8.2.jar",
+    "sha1": "d1f7c638fac5192e01b1873f27e694a3c262ad11",
+    "sha1_verified": true,
+    "path": "extra/lodestone-1.21.1-1.8.2.jar"
+  },
+  "fixture_jars": [
+    "targets/Jadens-Nether-Expansion-2.4.1.jar",
+    "targets/Aquaculture-1.21.1-2.7.21.jar",
+    "targets/ElysiumAPI-1.21.1-2.0.1.jar",
+    "extra/lodestone-1.21.1-1.8.2.jar"
+  ],
+  "mods_provided": {
+    "aquaculture": {
+      "version": "2.7.21",
+      "origin": "targets/Aquaculture-1.21.1-2.7.21.jar"
+    },
+    "biolith": {
+      "version": "3.0.10",
+      "origin": "targets/Jadens-Nether-Expansion-2.4.1.jar!META-INF/jarjar/biolith-neoforge-3.0.10.jar"
+    },
+    "elysium_api": {
+      "version": "2.0.1",
+      "origin": "targets/ElysiumAPI-1.21.1-2.0.1.jar"
+    },
+    "lodestone": {
+      "version": "1.8.2",
+      "origin": "extra/lodestone-1.21.1-1.8.2.jar"
+    },
+    "netherexp": {
+      "version": "2.4.1",
+      "origin": "targets/Jadens-Nether-Expansion-2.4.1.jar"
+    }
+  },
+  "required": [
+    [
+      "aquaculture",
+      "neoforge",
+      "[21.0.75-beta,)"
+    ],
+    [
+      "biolith",
+      "minecraft",
+      "[1.21.1,1.21.2)"
+    ],
+    [
+      "biolith",
+      "neoforge",
+      "[21.1.22,)"
+    ],
+    [
+      "elysium_api",
+      "minecraft",
+      "[1.21.1]"
+    ],
+    [
+      "elysium_api",
+      "neoforge",
+      "[21.1.230,)"
+    ],
+    [
+      "lodestone",
+      "minecraft",
+      "[1.21,1.21.1)"
+    ],
+    [
+      "lodestone",
+      "neoforge",
+      "[21.0.0-beta,)"
+    ],
+    [
+      "netherexp",
+      "elysium_api",
+      "[2.0.1,)"
+    ],
+    [
+      "netherexp",
+      "lodestone",
+      "[1.8.2,)"
+    ],
+    [
+      "netherexp",
+      "minecraft",
+      "[1.21.1]"
+    ],
+    [
+      "netherexp",
+      "neoforge",
+      "[21.1.230,)"
+    ]
+  ],
+  "missing": []
+}

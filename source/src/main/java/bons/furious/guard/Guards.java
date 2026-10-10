@@ -36,6 +36,9 @@ import org.spongepowered.asm.service.MixinService;
  *                                on); CLASS is left unchanged by this switch"   (see ForeignPatches)
  *   another mod refines a mixin "Bons and Furious: KEY steps aside: MOD VERSION (MIXIN) changes FOREIGN_MIXIN, which this
  *   this switch would replace    switch would replace; CLASS is left unchanged by this switch"   (since 1.0.30)
+ *   another mod cancels the mixin "Bons and Furious: KEY steps aside: MOD VERSION (CANCELLER) cancels OWNER's MIXIN, the mixin
+ *   the switch changes           this switch changes; CLASS is left unchanged by this switch"   (since 1.0.38+mc1.21.1,
+ *                                as in Forge 1.0.38)
  *
  * The decision is all or nothing per switch, so a patch spread over several classes never applies halfway.
  */
@@ -64,7 +67,8 @@ public final class Guards {
     private static final Map<String, Set<String>> WANTED = new LinkedHashMap<>();
     private static final Map<String, java.util.Optional<ClassPrints>> PRINTS = new ConcurrentHashMap<>();
 
-    private record ClassPrints(Map<String, String> methods, String shape) {}
+    /** mixinTargets (since 1.0.38+mc1.21.1): the classes a mixin class targets (its @Mixin value and targets), null for any other class. */
+    private record ClassPrints(Map<String, String> methods, String shape, List<String> mixinTargets) {}
 
     public enum State { APPLY, DISABLED, ABSENT, MISMATCH, YIELD }
 
@@ -188,8 +192,31 @@ public final class Guards {
     private static final Map<String, String[]> STAND_DOWN = Map.of(
             "bons.furious.mixin.models.BoneLookupMixin", new String[] {"getAnyDescendantWithName", "(Ljava/lang/String;)Ljava/util/Optional;", "bons$partsWithBone"});
 
+    /**
+     * Since 1.0.38+mc1.21.1: an injector of ours inside a vanilla method that another mod may replace whole with an
+     * @Overwrite, and whose switch must then leave that mod's method alone (mixin -> method, desc; Mojang names). Mixin
+     * refuses an injector into another mixin's @Overwrite unless the injector's priority is higher ("... with priority
+     * 1000 cannot inject into ... merged by ... with priority 1000", thrown before require is looked at, so the server
+     * stops while it starts), so such a mixin has a priority above the default and require = 0. Let in, the injector also
+     * finds its call in the other mod's method; postApply therefore checks who merged the method, and when it is another
+     * mod the switch's own code turns itself off at run time (the flag below) and one line names that mod. First case:
+     * Sable 2.0.6 (the physics library of Create Aeronautics) replaces PlayerList.broadcast with its own loop at priority
+     * 1000, which made every pack with Sable and Storage Drawers stop at the server start.
+     */
+    private static final Map<String, String[]> FOREIGN_OVERWRITE = Map.of(
+            "bons.furious.mixin.storagedrawers_sync_c2.PlayerListCountSyncMixin", new String[] {"broadcast",
+                    "(Lnet/minecraft/world/entity/player/Player;DDDDLnet/minecraft/resources/ResourceKey;Lnet/minecraft/network/protocol/Packet;)V"});
+
+    /** True when another mod replaced PlayerList.broadcast (FOREIGN_OVERWRITE): storagedrawers_count_sync_holders sends as stock. */
+    public static volatile boolean countSyncBroadcastForeign;
+
     /** IMixinConfigPlugin.postApply: one line when a STAND_DOWN injector found the method replaced by another mod. */
     public static void checkStandDown(String mixinClass, ClassNode target) {
+        String[] f = FOREIGN_OVERWRITE.get(mixinClass);
+        if (f != null) {
+            checkForeignOverwrite(mixinClass, target, f);
+            return;
+        }
         String[] s = STAND_DOWN.get(mixinClass);
         String key = s == null ? null : keyOf(mixinClass);
         if (key == null) return;
@@ -205,6 +232,27 @@ public final class Guards {
             if (LOGGED.add("standdown|" + key + "|" + target.name))
                 LOGGER.info("Bons and Furious: {} steps aside: {} already replaces {}.{}; that method is left to it",
                         key, by, target.name.replace('/', '.'), s[0]);
+            return;
+        }
+    }
+
+    /**
+     * FOREIGN_OVERWRITE: postApply runs once every mod's mixins are in the class, so a method another mod replaced carries
+     * that mod's @MixinMerged here. Vanilla's method (no @MixinMerged) or one of ours leaves the switch as it is.
+     */
+    private static void checkForeignOverwrite(String mixinClass, ClassNode target, String[] f) {
+        String key = keyOf(mixinClass);
+        if (key == null) return;
+        for (MethodNode m : target.methods) {
+            if (!m.name.equals(f[0]) || !m.desc.equals(f[1])) continue;
+            String by = CallSites.mergedBy(m);
+            if (by == null || by.startsWith("bons.furious.") || by.startsWith("bons.pure.") || by.startsWith("agentcraft.")) return;
+            if (key.equals("storagedrawers_count_sync_holders")) countSyncBroadcastForeign = true;
+            if (LOGGED.add("foreign|" + key + "|" + target.name)) {
+                String mod = CallSites.modOf(by);
+                LOGGER.info("Bons and Furious: {} steps aside: {}({}) replaces {}.{}; that method is left to it", key,
+                        mod == null ? "" : mod + " ", by.substring(by.lastIndexOf('.') + 1), target.name.replace('/', '.'), f[0]);
+            }
             return;
         }
     }
@@ -276,11 +324,78 @@ public final class Guards {
         }
         if (!problems.isEmpty()) return new Decision(State.MISMATCH, String.join(", ", problems.subList(0, Math.min(3, problems.size())))
                 + (problems.size() > 3 ? " and " + (problems.size() - 3) + " more" : ""));
+        Decision c = cancelledDecision(guard);
+        if (c != null) return c;
         Decision h = handlerDecision(key);
         if (h != null) return h;
         Decision y = ForeignPatches.yieldDecision(YIELDS.get(key));
         if (y != null) return y;
         return new Decision(State.APPLY, "all " + guard.size() + " fingerprints match");
+    }
+
+    /**
+     * Since 1.0.38+mc1.21.1 (as in Forge 1.0.38): a switch that changes another mod's mixin
+     * (it guards that mixin class, and its MixinSquared @TargetHandler injectors work inside the handlers that mixin merges
+     * into its target) steps aside when another mod's MixinSquared canceller removes that mixin. The handlers then never
+     * reach the target class while the fingerprints of the mixin's class file still match, and a required injector stops the
+     * game at start ("Critical injection failure ... @MixinSquared:Handler"; reported on Forge with Collections Of
+     * Optimizations 4.6 cancelling ElysiumAPI's MultiNoiseBiomeSourceMixin). MixinSquared registers every canceller in its
+     * config plugin's onLoad, which Mixin runs for every config before it prepares any config's mixins (where this decision
+     * is made), so the answer here is the one MixinSquared applies to the target later. A mixin in our own cancel lines is
+     * never asked about: our canceller would decide its switch, possibly the one decided here.
+     */
+    private static Decision cancelledDecision(List<String[]> guard) {
+        Set<String> asked = new java.util.HashSet<>();
+        for (String[] g : guard) {
+            if (isGameClass(g[0]) || !asked.add(g[0])) continue;
+            ClassPrints p = prints(g[0]);
+            String mixin = g[0].replace('/', '.');
+            if (p == null || p.mixinTargets() == null || CANCEL.containsKey(mixin)) continue;
+            String canceller = cancelledBy(p.mixinTargets(), mixin);
+            if (canceller == null) continue;
+            String mod = CallSites.modOf(canceller), owner = CallSites.modOf(mixin);
+            return new Decision(State.YIELD, (mod == null ? "" : mod + " ") + "(" + simpleName(canceller) + ") cancels "
+                    + (owner == null ? "" : owner + "'s ") + simpleName(mixin) + ", the mixin this switch changes");
+        }
+        return null;
+    }
+
+    /** The class name of a MixinSquared canceller that removes the mixin from these targets; null when none does or MixinSquared cannot be asked. */
+    private static String cancelledBy(List<String> targets, String mixin) {
+        try {
+            String[] by = new String[1];
+            boolean cancelled = com.bawnorton.mixinsquared.canceller.MixinCancellerRegistrar.shouldCancel(targets, mixin, c -> {
+                if (by[0] == null) by[0] = c;
+            });
+            return !cancelled ? null : by[0] != null ? by[0] : "MixinCanceller";
+        } catch (Throwable t) {
+            LOGGER.debug("Bons and Furious: could not ask MixinSquared whether {} is cancelled ({})", mixin, t.toString());
+            return null;
+        }
+    }
+
+    /** The classes a mixin class targets (dotted, as MixinSquared passes them to a canceller), or null when the class has no @Mixin. */
+    private static List<String> mixinTargets(ClassNode node) {
+        List<AnnotationNode> all = new ArrayList<>();
+        if (node.invisibleAnnotations != null) all.addAll(node.invisibleAnnotations);
+        if (node.visibleAnnotations != null) all.addAll(node.visibleAnnotations);
+        for (AnnotationNode a : all) {
+            if (!a.desc.equals("Lorg/spongepowered/asm/mixin/Mixin;")) continue;
+            List<String> out = new ArrayList<>();
+            for (int i = 0; a.values != null && i + 1 < a.values.size(); i += 2) {
+                if (!(a.values.get(i + 1) instanceof List<?> list)) continue;   // value / targets; priority and remap are not lists
+                for (Object o : list) {
+                    if (o instanceof org.objectweb.asm.Type t) out.add(t.getClassName());
+                    else if (o instanceof String s) out.add(s.replace('/', '.'));
+                }
+            }
+            return out;
+        }
+        return null;
+    }
+
+    private static String simpleName(String className) {
+        return className.substring(className.lastIndexOf('.') + 1);
     }
 
     private static boolean isGameClass(String internalName) {
@@ -341,7 +456,7 @@ public final class Guards {
                     if ((x.name + x.desc).equals(want)) { methods.put(want, Fingerprint.of(x)); break; }
                 }
             }
-            p = new ClassPrints(methods, shape);
+            p = new ClassPrints(methods, shape, mixinTargets(node));
         }
         PRINTS.putIfAbsent(internalName, java.util.Optional.ofNullable(p));
         return PRINTS.get(internalName).orElse(null);

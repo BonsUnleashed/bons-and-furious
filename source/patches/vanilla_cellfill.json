@@ -1,0 +1,141 @@
+{
+  "group": "vanilla_cellfill",
+  "keys": {
+    "vanilla_noise_column_cell_fill": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.vanilla_cellfill.ColumnCellFillMarkMixin",
+        "bons.furious.mixin.vanilla_cellfill.NoiseChunkColumnFillMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator",
+          "method": "iterateNoiseColumn",
+          "desc": "(Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;IILorg/apache/commons/lang3/mutable/MutableObject;Ljava/util/function/Predicate;)Ljava/util/OptionalInt;",
+          "sha256": "a69a28279d47b93006b67b02bf69d6c1c89dffd32b7815f22ac63a6372a41814"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "selectCellYZ",
+          "desc": "(II)V",
+          "sha256": "be80f804d4ca9a7ee84ad85829153efcb6537f3b38299f4ed41dc0adeacd4b52"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "forIndex",
+          "desc": "(I)Lnet/minecraft/world/level/levelgen/NoiseChunk;",
+          "sha256": "2642bf57491225dad5724fa1d3ffa148adfbfbf0f2038b31dac5ec8872b70b09"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "fillAllDirectly",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction;)V",
+          "sha256": "20f42e104a6dc4590e823741f6e07beb8a7b659d910dac74b79abecbfcddb456"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "<init>",
+          "desc": "(ILnet/minecraft/world/level/levelgen/RandomState;IILnet/minecraft/world/level/levelgen/NoiseSettings;Lnet/minecraft/world/level/levelgen/DensityFunctions$BeardifierOrMarker;Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;Lnet/minecraft/world/level/levelgen/blending/Blender;)V",
+          "sha256": "7c893acb24204775a4ea648eda27bf73e2a8c4834cb13b16deb5cd20f30c490b"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "updateForY",
+          "desc": "(ID)V",
+          "sha256": "c58427b18a1afd163f4b3d811a660e67da4db12c9781e82e50d75d0fa160631b"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "updateForX",
+          "desc": "(ID)V",
+          "sha256": "0811cb95279a79879255e8e5f3e0b9cffb07965afd2f4d66ecfb8840a85ee1d5"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "updateForZ",
+          "desc": "(ID)V",
+          "sha256": "09091ec11f00408ebe105bbecf7a6dd3c62109679d13ef657f44566d200ac844"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$CacheAllInCell",
+          "method": "compute",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "sha256": "d5fb3b6ba053fae1ce169133dcd0c35b4ccc1cbbff3167ae95a248122781dd7c",
+          "sha256_variants": [
+            "bdda3c59d08572687045504427868403aa9c36f1d17721e6461e4fb9f43e56f9"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): ternary returns directly in both branches instead of a goto to one dreturn; same calls, fields and comparisons. See work/lanes/W6/prod/review/net.minecraft.world.level.levelgen.NoiseChunk$CacheAllInCell.compute.server.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$NoiseInterpolator",
+          "method": "compute",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "sha256": "812affa155f71e68effc0ed41b1344bd518fc2322a3fa9397c4c5b89e073d07f",
+          "sha256_variants": [
+            "31481f54c9a90f99de482f912ca9765dd99e70f0535c11bfeccded378dfdb73b"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): ternary returns directly in both branches instead of a goto to one dreturn; same calls, fields and comparisons. See work/lanes/W6/prod/review/net.minecraft.world.level.levelgen.NoiseChunk$NoiseInterpolator.compute.server.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$NoiseInterpolator",
+          "method": "fillArray",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V",
+          "sha256": "fcbed8bd06c02173ffdf31ae76d9fe285a80d6110798bf784e110c30cec3d376",
+          "sha256_variants": [
+            "5e381d2097e87c4c9d989b197255f12e5839e1cb70e1f43704aef6243fb47d38"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): if/else returns directly in both branches instead of a goto to one return; same calls. See work/lanes/W6/prod/review/net.minecraft.world.level.levelgen.NoiseChunk$NoiseInterpolator.fillArray.server.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$FlatCache",
+          "method": "compute",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "sha256": "cb64082db54ecbd0704a6e5856db67e6f7e862b7805a4becb5e664427b76cd7c",
+          "sha256_variants": [
+            "73c1136b8c428551a63bacdda9a47fd1bd1c36f9204dc298ede42345fa104baf"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): ternary returns directly in both branches instead of a goto to one dreturn; same calls, fields and comparisons. See work/lanes/W6/prod/review/net.minecraft.world.level.levelgen.NoiseChunk$FlatCache.compute.server.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$FlatCache",
+          "method": "fillArray",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V",
+          "sha256": "b5417488aacb67448f1314e8e4d2ee0de3e5e1a53eff794fe01373ac22d0fcf8"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$Cache2D",
+          "method": "compute",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "sha256": "6f0fa5f129b7bc8f90e3c960e63227c87a96a76d859db1c761aa510f47c0cd62"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$Cache2D",
+          "method": "fillArray",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V",
+          "sha256": "fface19424b13fd84949f39a7716185e617faef328e72cb3c961f7b31607e0b1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on the NoiseChunk NEW in NoiseBasedChunkGenerator.iterateNoiseColumn (the target method's arguments arrive as trailing handler parameters, no @Local) to mark the one-cell column NoiseChunk, and @WrapOperation on the cell-cache DensityFunction.fillArray call in NoiseChunk.selectCellYZ, which fills only the queried column's cellHeight slots when the provider is that marked NoiseChunk; a duck interface on NoiseChunk (bons$cf* names) sets its in-cell position; per-world density audit, canary and runtime flag in the helper. 1.21.1: NoiseChunk and iterateNoiseColumn unchanged; steps aside next to Generator Accelerator's and C2ME dfc's NoiseChunk rewrites (yields)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.vanilla_cellfill.ColumnCellFill)"
+    }
+  },
+  "yields": [
+    {
+      "key": "vanilla_noise_column_cell_fill",
+      "mod": "generator_accelerator",
+      "name": "Generator Accelerator",
+      "mixin": "dev.sixik.generator_accelerator.common.noise.mixin.MixinNoiseChunk",
+      "why": "Generator Accelerator (tested 1.21.1-1.6.2) @Overwrites NoiseChunk.selectCellYZ (and fillSlice, forIndex, updateForY/X/Z) at the default priority. Mixin refuses our @WrapOperation into a method another mixin overwrote at equal priority (the class fails to load and the game stops at the first world load), and the cell fill relies on vanilla's selectCellYZ / forIndex / updateFor*, so this switch steps aside whenever that mixin is listed. Found by a scan of the other mods' mixins on the same classes for the 1.21.1 port."
+    },
+    {
+      "key": "vanilla_noise_column_cell_fill",
+      "mod": "c2me_opts_dfc",
+      "name": "C2ME (density function compiler)",
+      "mixin": "com.ishland.c2me.opts.dfc.mixin.MixinChunkNoiseSampler",
+      "why": "C2ME 0.4.0-alpha.0.122's opts-dfc module @Overwrites NoiseChunk.updateForY/X/Z and swapSlices and rewires the NoiseChunk's density functions in its constructor. The cell fill's exactness relies on vanilla's updateForY/X/Z resetting the in-cell state the column fill leaves behind (C2ME's code is not read: clean room), so this switch steps aside whenever that module lists its mixin, as the port's other worldgen switches stand aside where C2ME rewrites the same code. Found by a scan of the other mods' mixins on the same classes for the 1.21.1 port."
+    }
+  ]
+}

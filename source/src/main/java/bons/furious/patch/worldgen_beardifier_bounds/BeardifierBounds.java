@@ -14,11 +14,12 @@ import org.slf4j.Logger;
 
 /**
  * Bons and Furious switch vanilla_beardifier_influence_bounds (Minecraft 1.21.1 world generation, server side; tested
- * build NeoForge 21.1.252; on 1.20.1 tested with the Beardifier mixins of Integrated API 1.5.1, YUNG's API 4.0.6, Moog's
- * Structure Lib 3.3.1, Qliphoth Awakening (fdbosses) 3.1.0.3, Lithostitched 1.4.11, Valhelsia Structures 1.1.2 and the
- * Cataclysm and C2ME accessors; on 1.21.1 any foreign Beardifier mixin must pass the 1.21.1 census of
- * worldgen_empty_beardifier_marker). Mojang member names. Idea: C2ME pull request 552 (vanilla 26.1.2 has the same idea),
- * idea text only.
+ * build NeoForge 21.1.252; on 1.20.1 tested with the Beardifier mixins of Integrated API 1.5.1 and 1.8.2 (since 1.0.36,
+ * also with Integrated Patches 1.2.0), YUNG's API 4.0.6, Moog's Structure Lib 3.3.1, Qliphoth Awakening (fdbosses)
+ * 3.1.0.3, Lithostitched 1.4.11, Valhelsia Structures 1.1.2 and the Cataclysm and C2ME accessors; on 1.21.1 any foreign
+ * Beardifier mixin must pass the 1.21.1 census of worldgen_empty_beardifier_marker, which since 1.0.36 accepts Integrated
+ * API 1.8.2 for NeoForge 1.21.1, with or without Integrated Patches 1.2.0). Mojang member names. Idea: C2ME pull request
+ * 552 (vanilla 26.1.2 has the same idea), idea text only.
  *
  * What it costs. Beardifier.compute runs once per block of a chunk near adapting structures (196,608 calls in a
  * 768-high chunk) and walks every rigid piece and every jigsaw junction near the chunk: box distances, a switch, a kernel

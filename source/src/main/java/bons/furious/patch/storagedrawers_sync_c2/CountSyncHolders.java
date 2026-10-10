@@ -1,5 +1,6 @@
 package bons.furious.patch.storagedrawers_sync_c2;
 
+import bons.furious.guard.Guards;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.mojang.logging.LogUtils;
 import com.texelsaurus.minecraft.chameleon.network.ChameleonPacket;
@@ -81,11 +82,13 @@ public final class CountSyncHolders {
      * with at most one player (singleplayer, a lone player there, one player online) has at most one recipient, so there is
      * nothing worth checking: the send runs exactly as stock, without the scope. Sending to a player who cannot hold the
      * chunk is what stock does and the client discards it, so either path gives the result the switch promises; the
-     * player count only decides whether the check is worth its cost.
+     * player count only decides whether the check is worth its cost. Since 1.0.38+mc1.21.1 the send also runs as stock
+     * when another mod replaced PlayerList.broadcast (Guards.countSyncBroadcastForeign, set at PlayerList's postApply):
+     * that mod's loop is left exactly as it ships.
      */
     public static void send(ChameleonNetworking network, ChameleonPacket packet, ServerLevel level, double x, double y, double z,
                             double radius, Operation<Void> original) {
-        if (!enabled || level == null || current != null || level.players().size() <= 1) {
+        if (!enabled || Guards.countSyncBroadcastForeign || level == null || current != null || level.players().size() <= 1) {
             original.call(network, packet, level, x, y, z, radius);
             return;
         }

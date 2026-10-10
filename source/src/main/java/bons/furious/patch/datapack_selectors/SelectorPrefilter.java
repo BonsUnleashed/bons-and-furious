@@ -71,7 +71,8 @@ import org.slf4j.Logger;
  * the parser collects options in a list instead of chaining Predicate.and, so "first option" now means the list holds
  * only the selector type's Entity::isAlive when the type option adds its predicate. "@n" (new in 1.21) adds the same
  * Entity::isAlive and is covered by the same argument (its sort and limit run after the scan). The scan call, the type
- * option handler and its predicates, EntityLookup and the entity methods are unchanged.
+ * option handler and its predicates, EntityLookup and the entity methods are unchanged. The 1.0.36 cached limit box
+ * (boxed) applies unchanged: MixinExtras' Operation.call(Object...) boxes the int limit on 1.21.1 exactly as on 1.20.1.
  */
 public final class SelectorPrefilter {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -117,11 +118,28 @@ public final class SelectorPrefilter {
         return selector;
     }
 
+    /**
+     * Since 1.0.36: the limit handed to Operation.call is boxed through this one-slot cache instead of Integer.valueOf on
+     * every scan (an "@e" without limit= passes Integer.MAX_VALUE, outside Integer's cache, so every whole-level selector
+     * scan allocated a new Integer: 1.8-2.1% of the server thread's allocation in the pack's recordings). The Operation
+     * unboxes it at once; the value is the same int, so nothing else changes.
+     */
+    private static volatile Integer lastLimit = Integer.MAX_VALUE;
+
+    static Integer boxed(int limit) {
+        Integer b = lastLimit;
+        if (b.intValue() != limit) {
+            b = limit;
+            lastLimit = b;
+        }
+        return b;
+    }
+
     /** EntitySelector.addEntities: the whole-level ServerLevel.getEntities call. */
     public static void scan(EntityTypeTest<Entity, Entity> filter, ServerLevel level, EntityTypeTest<?, ?> test, Predicate<?> predicate,
                             List<?> out, int limit, Operation<Void> original) {
         if (!(filter instanceof TypeFirstOption) || !typeIndexEnabled) {
-            original.call(level, test, predicate, out, limit);
+            original.call(level, test, predicate, out, boxed(limit));
             return;
         }
         if (!announced) {
@@ -133,13 +151,13 @@ public final class SelectorPrefilter {
             shadow(filter, level, test, predicate, out, limit, original);
             return;
         }
-        original.call(level, filter, predicate, out, limit);
+        original.call(level, filter, predicate, out, boxed(limit));
     }
 
     private static void shadow(EntityTypeTest<Entity, Entity> filter, ServerLevel level, EntityTypeTest<?, ?> test, Predicate<?> predicate,
                                List<?> out, int limit, Operation<Void> original) {
         int before = out.size();
-        original.call(level, test, predicate, out, limit);
+        original.call(level, test, predicate, out, boxed(limit));
         List<Object> selected = new ArrayList<>(out.subList(before, out.size()));
         for (Object o : selected) {
             SHADOW_CHECKS.incrementAndGet();

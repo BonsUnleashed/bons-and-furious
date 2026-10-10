@@ -1,0 +1,153 @@
+{
+  "group": "vanilla_corner_table",
+  "keys": {
+    "vanilla_noise_corner_share": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.vanilla_corner_table.NoiseChunkCornerShareMixin",
+        "bons.furious.mixin.vanilla_corner_table.NoiseInterpolatorSlicesAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "fillSlice",
+          "desc": "(ZI)V",
+          "sha256": "cb15ef8dd6ea02a8b066851e329f68c7adac8a04c8ae63f6c2215644c83b1ff4"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "<init>",
+          "desc": "(ILnet/minecraft/world/level/levelgen/RandomState;IILnet/minecraft/world/level/levelgen/NoiseSettings;Lnet/minecraft/world/level/levelgen/DensityFunctions$BeardifierOrMarker;Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;Lnet/minecraft/world/level/levelgen/blending/Blender;)V",
+          "sha256": "7c893acb24204775a4ea648eda27bf73e2a8c4834cb13b16deb5cd20f30c490b"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "initializeForFirstCellX",
+          "desc": "()V",
+          "sha256": "e5860280189479bf6e3af116915fa9f49a4c0b296453581f660493d24a8509a1"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "advanceCellX",
+          "desc": "(I)V",
+          "sha256": "3860c51e178d5b2a119435af21edce21e9016524debab88e78a8538c7c1c8be2"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "selectCellYZ",
+          "desc": "(II)V",
+          "sha256": "be80f804d4ca9a7ee84ad85829153efcb6537f3b38299f4ed41dc0adeacd4b52"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "updateForZ",
+          "desc": "(ID)V",
+          "sha256": "09091ec11f00408ebe105bbecf7a6dd3c62109679d13ef657f44566d200ac844"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$1",
+          "method": "forIndex",
+          "desc": "(I)Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;",
+          "sha256": "ca438dc0fcba77d533acd7a3bd3423eb9d492dfc5a8c1c92a767f9f406f7b1e4"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$1",
+          "method": "fillAllDirectly",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction;)V",
+          "sha256": "f93e10f1f9da1e5c2d6daec0947fe42b5976bbfb18a6e13d59d251c1d9124f32"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$NoiseInterpolator",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/levelgen/NoiseChunk;Lnet/minecraft/world/level/levelgen/DensityFunction;)V",
+          "sha256": "6154247968b875d4ace5887ca85192438e0a781a4782b6a76c7d4c7dfe25ca17"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$NoiseInterpolator",
+          "method": "fillArray",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V",
+          "sha256": "fcbed8bd06c02173ffdf31ae76d9fe285a80d6110798bf784e110c30cec3d376",
+          "sha256_variants": [
+            "5e381d2097e87c4c9d989b197255f12e5839e1cb70e1f43704aef6243fb47d38"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): if/else returns directly in both branches instead of a goto to one return; same calls. See work/lanes/W6/prod/review/net.minecraft.world.level.levelgen.NoiseChunk$NoiseInterpolator.fillArray.server.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$NoiseInterpolator",
+          "method": "compute",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "sha256": "812affa155f71e68effc0ed41b1344bd518fc2322a3fa9397c4c5b89e073d07f",
+          "sha256_variants": [
+            "31481f54c9a90f99de482f912ca9765dd99e70f0535c11bfeccded378dfdb73b"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): ternary returns directly in both branches instead of a goto to one dreturn; same calls, fields and comparisons. See work/lanes/W6/prod/review/net.minecraft.world.level.levelgen.NoiseChunk$NoiseInterpolator.compute.server.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$CacheOnce",
+          "method": "compute",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "sha256": "564ed1d2b7f60d7f55d5055838662631d69a1fe10fb7166f7120ebb6c2163edc"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$CacheOnce",
+          "method": "fillArray",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V",
+          "sha256": "bce415b7b4a2f4ab489848444af045f6f9f10d8332f220aebecba7d04dc874a6",
+          "sha256_variants": [
+            "a4c66f3e10c396c50f2b08cf1474362fb0a2fcffaca2df8043e707200e9a2bcb"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): the array-hit branch returns directly instead of a goto to the final return; same calls, fields and comparisons. See work/lanes/W6/prod/review/net.minecraft.world.level.levelgen.NoiseChunk$CacheOnce.fillArray.server.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$Cache2D",
+          "method": "compute",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "sha256": "6f0fa5f129b7bc8f90e3c960e63227c87a96a76d859db1c761aa510f47c0cd62"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$Cache2D",
+          "method": "fillArray",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V",
+          "sha256": "fface19424b13fd84949f39a7716185e617faef328e72cb3c961f7b31607e0b1"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$FlatCache",
+          "method": "compute",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "sha256": "cb64082db54ecbd0704a6e5856db67e6f7e862b7805a4becb5e664427b76cd7c",
+          "sha256_variants": [
+            "73c1136b8c428551a63bacdda9a47fd1bd1c36f9204dc298ede42345fa104baf"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): ternary returns directly in both branches instead of a goto to one dreturn; same calls, fields and comparisons. See work/lanes/W6/prod/review/net.minecraft.world.level.levelgen.NoiseChunk$FlatCache.compute.server.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$FlatCache",
+          "method": "fillArray",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V",
+          "sha256": "b5417488aacb67448f1314e8e4d2ee0de3e5e1a53eff794fe01373ac22d0fcf8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at the RETURN of NoiseChunk.<init> (remembers the world generator of one-cell NoiseChunks without a blender) and a cancellable @Inject at the HEAD of NoiseChunk.fillSlice that runs the slice walk through the shared corner-column table for qualifying NoiseChunks (body written from the behaviour: the same field updates, counters and fillArray calls); an @Accessor interface for NoiseInterpolator.slice0/slice1; per-world audit, canary and runtime flag in the helper. 1.21.1: NoiseChunk unchanged; steps aside next to Generator Accelerator's and C2ME dfc's NoiseInterpolator rewrites (yields)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.vanilla_corner_table.CornerShare)"
+    }
+  },
+  "yields": [
+    {
+      "key": "vanilla_noise_corner_share",
+      "mod": "generator_accelerator",
+      "name": "Generator Accelerator",
+      "mixin": "dev.sixik.generator_accelerator.common.noise.mixin.MixinNoiseInterpolator",
+      "why": "Generator Accelerator (tested 1.21.1-1.6.2) @Overwrites NoiseChunk$NoiseInterpolator.selectCellYZ / swapSlices / compute and redirects how its slices are allocated; its MixinNoiseChunk, listed in the same mixin config, @Overwrites NoiseChunk.fillSlice, where this switch replays vanilla's slice fill. The stored corner columns and the counter / provider state a hit restores are vanilla's layout, so this switch steps aside whenever that mixin is listed (MixinNoiseChunk itself is the cell fill's yield: one foreign mixin per switch). Found by a scan of the other mods' mixins on the same classes for the 1.21.1 port."
+    },
+    {
+      "key": "vanilla_noise_corner_share",
+      "mod": "c2me_opts_dfc",
+      "name": "C2ME (density function compiler)",
+      "mixin": "com.ishland.c2me.opts.dfc.mixin.MixinChunkNoiseSamplerDensityInterpolator",
+      "why": "C2ME 0.4.0-alpha.0.122's opts-dfc module wraps NoiseChunk$NoiseInterpolator.compute (and CacheOnce, CacheAllInCell) and @Overwrites NoiseChunk.swapSlices and updateForY/X/Z; the corner table replays vanilla's slice fill and its counter state (C2ME's code is not read: clean room), so this switch steps aside whenever that module lists its mixin, as the port's other worldgen switches stand aside where C2ME rewrites the same code. Found by a scan of the other mods' mixins on the same classes for the 1.21.1 port."
+    }
+  ]
+}

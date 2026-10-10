@@ -1,0 +1,78 @@
+{
+ "name": "p36-sable-sd",
+ "exit_code": 0,
+ "seconds": 37.4,
+ "done_at": 16.1,
+ "crash_report_printed_at": null,
+ "commands": [
+  [
+   36.5,
+   "stop",
+   true
+  ]
+ ],
+ "log_lines": 131,
+ "stopped_cleanly": true,
+ "crash_reports": [],
+ "hs_err": [],
+ "error_lines": [
+  "[01:19:28] [Server thread/ERROR] [de.ry.sa.Sable/]: Failed to apply tag physics properties. Unknown block: create:flywheel",
+  "[01:19:31] [Server thread/ERROR] [de.ry.sa.Sable/]: Failed to apply tag physics properties. Unknown block: create:flywheel",
+  "[01:19:31] [Server thread/ERROR] [de.ry.sa.Sable/]: Failed to apply tag physics properties. Unknown block: create:flywheel"
+ ],
+ "mixin_lines": [
+  "[01:19:28] [main/INFO] [Bons and Furious/]: Bons and Furious: storagedrawers_count_sync_holders steps aside: Sable 2.0.6 (PlayerListMixin) replaces net.minecraft.server.players.PlayerList.broadcast; that method is left to it"
+ ],
+ "bons_lines": [
+  "[01:19:18.637] [main/INFO] [loading.moddiscovery.ModDiscoverer/SCAN]: Found mod file \"bons_and_furious-neoforge-1.0.38+mc1.21.1.jar\" [locator: {mods folder locator at <sable-rig>\\runs\\p36-sable-sd\\mods}, reader: mod manifest] ",
+  "[01:19:18.873] [main/INFO] [loading.moddiscovery.ModDiscoverer/SCAN]: Found gamelibrary file \"mixinsquared-neoforge-0.3.6-beta.1.jar\" [parent: bons_and_furious-neoforge-1.0.38+mc1.21.1.jar, locator: jarinjar, reader: mod manifest] ",
+  "\t\tBons and Furious 1.0.38+mc1.21.1 (bons_and_furious)",
+  "[01:19:19.458] [main/INFO] [Bons and Furious/]: Bons and Furious wrote the default configuration to <sable-rig>\\runs\\p36-sable-sd\\config\\bons_and_furious.properties ",
+  "[01:19:19.459] [main/INFO] [Bons and Furious/]: Bons and Furious 1.0.38+mc1.21.1: 205 of 205 optimizations enabled from <sable-rig>\\runs\\p36-sable-sd\\config\\bons_and_furious.properties ",
+  "[01:19:25] [modloading-worker-0/INFO] [Bons and Furious/]: Bons and Furious 1.0.38+mc1.21.1 constructed; 0 switch(es) disabled in <sable-rig>\\runs\\p36-sable-sd\\config\\bons_and_furious.properties",
+  "[01:19:26] [main/INFO] [bo.fu.pa.va.StateCodecMemo/]: Bons and Furious: vanilla_state_codec_dispatch_memo applies (block state codecs are built once per block, not once per palette entry)",
+  "[01:19:26] [main/INFO] [Bons and Furious/]: Bons and Furious: vanilla_climate_tree_span_bounds computes climate subtree ranges without intermediate objects",
+  "[01:19:26] [main/INFO] [bo.fu.pa.cl.WeakLastResult/]: Bons and Furious: vanilla_climate_last_result_weak applies (climate search trees keep each thread's last leaf weakly, so a closed world's biomes can be freed)",
+  "[01:19:26] [main/INFO] [Bons and Furious/]: Bons and Furious: vanilla_climate_tree_sort_keys sorts climate search tree nodes by precomputed keys",
+  "[01:19:28] [main/INFO] [Bons and Furious/]: Bons and Furious: storagedrawers_count_sync_holders steps aside: Sable 2.0.6 (PlayerListMixin) replaces net.minecraft.server.players.PlayerList.broadcast; that method is left to it",
+  "[01:19:28] [Server thread/INFO] [Bons and Furious/]: Bons and Furious: vanilla_entity_class_count_layer counts 4 entity classes per level for crittersandcompanions_red_panda_gate and fdbosses_spawner_presence_gate",
+  "[01:19:28] [Worker-Main-1/INFO] [bo.fu.pa.cl.ClimateParts/]: Bons and Furious: vanilla_climate_sample_xz_parts remembers 9 two-dimensional parts of a climate sampler per column",
+  "[01:19:28] [Worker-Main-12/INFO] [Bons and Furious/]: Bons and Furious: vanilla_tag_membership_ids applies (tag tests compare tag numbers; each holder's numbers follow its current tag set)",
+  "[01:19:29] [Worker-Main-6/INFO] [bo.fu.pa.va.ColumnCellFill/]: Bons and Furious: vanilla_noise_column_cell_fill fills only the queried column of each cell in terrain height queries (8 of 128 cell-cache positions per cell)",
+  "[01:19:29] [Worker-Main-6/INFO] [bo.fu.pa.wo.AquiferCandidates/]: Bons and Furious: vanilla_aquifer_candidate_cache applies (aquifer candidates ranked from a per-cell table, with vanilla_aquifer_high_air's early air return)",
+  "[01:19:29] [Worker-Main-6/INFO] [Bons and Furious/]: Bons and Furious: vanilla_block_state_air_flag remembers isAir in each block state",
+  "[01:19:29] [Worker-Main-6/INFO] [bo.fu.pa.va.StructureTemplateHits/]: Bons and Furious: vanilla_structure_template_hits applies (loaded structure templates are answered without the cache lock; map java.util.concurrent.ConcurrentHashMap)",
+  "[01:19:29] [Worker-Main-22/INFO] [bo.fu.pa.be.EmptyBeardifiers/]: Bons and Furious: worldgen_empty_beardifier_marker applies (no other mod changes Beardifier; 0 adaptation slots checked per chunk)",
+  "[01:19:29] [Worker-Main-22/INFO] [bo.fu.pa.be.EmptyBeardifiers/]: Bons and Furious: worldgen_empty_beardifier_marker flagged its first chunk without nearby structure pieces (the empty beardifier is filled without a per-block loop)",
+  "[01:19:30] [Server thread/INFO] [bo.fu.pa.ch.TickingChunkMemo/]: Bons and Furious: vanilla_ticking_chunk_memo applies (each chunk holder remembers its ticking chunk until its future changes)",
+  "[01:19:33] [Server thread/INFO] [Bons and Furious/]: Bons and Furious: vanilla_spawn_gate_visibility_memo applies (ticking chunks remember their spawning gate until their region changes)",
+  "[01:19:33] [Server thread/INFO] [bo.fu.pa.va.BlockScans/]: Bons and Furious: vanilla_suffocation_scan_loop applies (the suffocation check scans blocks without a stream)",
+  "[01:19:33] [Server thread/INFO] [bo.fu.pa.va.GoalFlags/]: Bons and Furious: vanilla_goal_flags_none_disabled applies (goal selectors with no disabled control flag skip the per-goal flag loop)",
+  "[01:19:33] [Server thread/INFO] [bo.fu.pa.va.BlockScans/]: Bons and Furious: vanilla_fire_scan_loop applies (the fire check of moving entities scans blocks without a stream)",
+  "[01:19:33] [Server thread/INFO] [Bons and Furious/]: Bons and Furious: vanilla_ticker_range_memo applies (block-entity tickers remember their ticking-range answer until their region changes)",
+  "[01:19:33] [Server thread/INFO] [bo.fu.pa.va.BiomeCodecMemo/]: Bons and Furious: vanilla_chunk_biome_codec_memo applies (the biome section codec is built once per registry, not once per chunk)",
+  "[01:19:33] [Server thread/INFO] [bo.fu.pa.va.PaletteDirectNbt/]: Bons and Furious: vanilla_chunk_palette_direct_nbt applies (chunk palettes are written directly, each entry checked against the codec once)",
+  "[01:19:33] [Bons and Furious mob class warm-up/INFO] [Bons and Furious/]: Bons and Furious: mob class warm-up loaded and linked 1290 classes (129 entity, 332 mod AI, 829 vanilla entity/AI) in 412 ms on a background thread",
+  "[01:19:34] [Server thread/INFO] [bo.fu.pa.va.GameEventRegistries/]: Bons and Furious: vanilla_game_event_registry_lookup applies (game events skip chunk sections without listeners instead of creating empty registries)"
+ ],
+ "exported_playerlist_sha256": null,
+ "probe": null,
+ "manifest": {
+  "name": "p36-sable-sd",
+  "opts": [
+   "bons=<port>\\source\\build\\libs\\bons_and_furious-neoforge-1.0.38+mc1.21.1.jar",
+   "mods=sable,sd"
+  ],
+  "jvm": [],
+  "mods": {
+   "bons_and_furious-neoforge-1.0.38+mc1.21.1.jar": "2eae9de54b9fe27ccb6a15fa6b03b3fc932e786f",
+   "sable-neoforge-1.21.1-2.0.6.jar": "cf46f7e8c1511f170abcdbee739944f0540549bf",
+   "StorageDrawers-neoforge-1.21.1-13.11.4.jar": "b8e11e3d1fd63fd1a0d9277ec3f966c7e5cff385"
+  },
+  "bons_sha256": "e5b600a0008c1abadb81e99182873072d8fd0afddca403e4e44e8adcb3edaec9",
+  "config_written": false,
+  "port": 25826,
+  "libraries": "<port-1.0.35>\\runtime\\production-core-a\\libraries"
+ },
+ "verdict": "CLEAN"
+}

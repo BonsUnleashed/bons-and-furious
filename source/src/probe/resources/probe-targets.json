@@ -1091,5 +1091,239 @@
     "targets": [
       "net.neoforged.neoforge.server.ServerLifecycleHooks"
     ]
+  },
+  "cataclysm_area_attack_scans": {
+    "client": false,
+    "targets": [
+      "com.github.L_Ender.cataclysm.entity.effect.Sandstorm_Entity",
+      "com.github.L_Ender.cataclysm.entity.projectile.Ashen_Breath_Entity",
+      "com.github.L_Ender.cataclysm.entity.projectile.EarthQuake_Entity",
+      "com.github.L_Ender.cataclysm.entity.projectile.Void_Rune_Entity"
+    ]
+  },
+  "cataclysm_beam_client_scans": {
+    "client": false,
+    "targets": [
+      "com.github.L_Ender.cataclysm.entity.projectile.Death_Laser_Beam_Entity",
+      "com.github.L_Ender.cataclysm.entity.projectile.Mini_Abyss_Blast_Entity"
+    ]
+  },
+  "cataclysm_server_leg_solver": {
+    "client": false,
+    "targets": [
+      "com.github.L_Ender.cataclysm.entity.InternalAnimationMonster.AcropolisMonsters.Clawdian_Entity",
+      "com.github.L_Ender.cataclysm.entity.InternalAnimationMonster.IABossMonsters.Ancient_Remnant.Ancient_Remnant_Entity"
+    ]
+  },
+  "cataclysm_coral_swim_checks": {
+    "client": false,
+    "targets": [
+      "com.github.L_Ender.cataclysm.entity.Deepling.Coral_Golem_Entity",
+      "com.github.L_Ender.cataclysm.entity.InternalAnimationMonster.Coralssus_Entity"
+    ]
+  },
+  "cataclysm_helm_scan": {
+    "client": false,
+    "targets": [
+      "com.github.L_Ender.cataclysm.items.Monstrous_Helm"
+    ]
+  },
+  "cataclysm_boss_block_breaking": {
+    "client": false,
+    "targets": [
+      "com.github.L_Ender.cataclysm.entity.AnimationMonster.BossMonsters.The_Leviathan.Dimensional_Rift_Entity",
+      "com.github.L_Ender.cataclysm.entity.InternalAnimationMonster.IABossMonsters.NewNetherite_Monstrosity.Netherite_Monstrosity_Entity"
+    ]
+  },
+  "aquaculture_item_renderer_reuse": {
+    "client": true,
+    "targets": [
+      "com.teammetallurgy.aquaculture.item.BlockItemWithoutLevelRenderer$1"
+    ]
+  },
+  "netherexp_item_renderer_reuse": {
+    "client": true,
+    "targets": [
+      "net.jadenxgamer.netherexp.client.rendering.extensions.JNEItemExtensions$1"
+    ]
+  },
+  "item_renderer_reload_tracker": {
+    "client": true,
+    "targets": [
+      "net.minecraft.server.packs.resources.ReloadableResourceManager"
+    ]
+  },
+  "distanthorizons_unlocked_output_stream": {
+    "client": false,
+    "targets": [
+      "com.seibel.distanthorizons.core.util.objects.dataStreams.DhDataOutputStream"
+    ]
+  },
+  "distanthorizons_tint_neighbour_index": {
+    "client": true,
+    "targets": [
+      "com.seibel.distanthorizons.common.wrappers.block.AbstractDhTintGetter_neoforge"
+    ]
+  },
+  "vanilla_entity_outline_composite_skip": {
+    "client": true,
+    "targets": [
+      "com.mojang.blaze3d.platform.GlStateManager",
+      "com.mojang.blaze3d.vertex.BufferUploader",
+      "net.minecraft.client.renderer.LevelRenderer"
+    ]
+  },
+  "emf_variable_default_unboxed": {
+    "client": true,
+    "targets": [
+      "traben.entity_model_features.models.animation.math.EMFMath"
+    ]
+  },
+  "emf_anger_map_prune": {
+    "client": true,
+    "targets": [
+      "traben.entity_model_features.models.animation.math.EMFMath"
+    ]
+  },
+  "cataclysm_pose_hand_events": {
+    "client": true,
+    "targets": [
+      "net.minecraft.client.model.HumanoidModel"
+    ]
+  },
+  "citadel_pose_hand_events": {
+    "client": true,
+    "targets": [
+      "net.minecraft.client.model.HumanoidModel"
+    ]
+  },
+  "cataclysm_idle_animate_skip": {
+    "client": true,
+    "targets": [
+      "com.github.L_Ender.cataclysm.client.model.entity.Amethyst_Crab_Model",
+      "com.github.L_Ender.cataclysm.client.model.entity.Ender_Guardian_Model",
+      "com.github.L_Ender.cataclysm.client.model.entity.Ignis_Model",
+      "com.github.L_Ender.cataclysm.client.model.entity.The_Leviathan_Model"
+    ]
+  },
+  "cataclysm_shield_layer_pose": {
+    "client": true,
+    "targets": [
+      "com.github.L_Ender.cataclysm.client.model.entity.Ignis_Model",
+      "com.github.L_Ender.cataclysm.client.model.entity.Ignited_Revenant_Model",
+      "com.github.L_Ender.cataclysm.client.model.entity.The_Harbinger_Model",
+      "com.github.L_Ender.cataclysm.client.render.layer.Ignis_Shield_Layer",
+      "com.github.L_Ender.cataclysm.client.render.layer.Revenant_Layer",
+      "com.github.L_Ender.cataclysm.client.render.layer.The_Harbinger_Shield_Layer"
+    ]
+  },
+  "cataclysm_client_leaks": {
+    "client": true,
+    "targets": [
+      "com.github.L_Ender.cataclysm.ClientProxy",
+      "com.github.L_Ender.cataclysm.client.render.entity.Boltstrike_Renderer",
+      "com.github.L_Ender.cataclysm.client.render.entity.Death_Laser_beam_Renderer",
+      "com.github.L_Ender.cataclysm.client.render.layer.Maledictus_Cicle_Layer",
+      "com.github.L_Ender.cataclysm.client.render.layer.Scylla_Anchor_Layer",
+      "com.github.L_Ender.cataclysm.client.render.layer.Scylla_Eye_Spark_Layer",
+      "com.github.L_Ender.cataclysm.client.sound.ItemTickableSound",
+      "com.github.L_Ender.cataclysm.client.sound.SandstormSound"
+    ]
+  },
+  "lionfish_model_parts": {
+    "client": true,
+    "targets": [
+      "com.github.L_Ender.lionfishapi.client.model.tools.AdvancedEntityModel"
+    ]
+  },
+  "lionfish_model_animator": {
+    "client": true,
+    "targets": [
+      "com.github.L_Ender.lionfishapi.client.model.Animations.ModelAnimator"
+    ]
+  },
+  "vanilla_state_codec_dispatch_memo": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.block.state.StateHolder"
+    ]
+  },
+  "vanilla_chunk_biome_codec_memo": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.chunk.storage.ChunkSerializer"
+    ]
+  },
+  "vanilla_chunk_palette_direct_nbt": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.chunk.storage.ChunkSerializer"
+    ]
+  },
+  "vanilla_inventory_trigger_index": {
+    "client": false,
+    "targets": [
+      "net.minecraft.advancements.critereon.InventoryChangeTrigger",
+      "net.minecraft.advancements.critereon.SimpleCriterionTrigger"
+    ]
+  },
+  "vanilla_selector_single_type": {
+    "client": false,
+    "targets": [
+      "net.minecraft.commands.arguments.selector.EntitySelector"
+    ]
+  },
+  "vanilla_selector_tag_index": {
+    "client": false,
+    "targets": [
+      "net.minecraft.commands.arguments.selector.EntitySelector",
+      "net.minecraft.commands.arguments.selector.EntitySelectorParser",
+      "net.minecraft.commands.arguments.selector.options.EntitySelectorOptions",
+      "net.minecraft.world.entity.Entity"
+    ]
+  },
+  "vanilla_noise_column_summary": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator"
+    ]
+  },
+  "vanilla_noise_column_cell_fill": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator",
+      "net.minecraft.world.level.levelgen.NoiseChunk"
+    ]
+  },
+  "vanilla_noise_corner_share": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.levelgen.NoiseChunk",
+      "net.minecraft.world.level.levelgen.NoiseChunk$NoiseInterpolator"
+    ]
+  },
+  "vanilla_climate_last_result_weak": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.biome.Climate$RTree"
+    ]
+  },
+  "basalt_guards_vanilla_first": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.levelgen.feature.BasaltColumnsFeature"
+    ]
+  },
+  "vanilla_structure_ring_search": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.chunk.ChunkGenerator"
+    ]
+  },
+  "vanilla_structure_template_hits": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager"
+    ]
   }
 }

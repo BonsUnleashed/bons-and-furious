@@ -1,0 +1,45 @@
+{
+  "group": "vanilla_structure_ring",
+  "keys": {
+    "vanilla_structure_ring_search": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.vanilla_structure_ring.StructureRingSearchMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/chunk/ChunkGenerator",
+          "method": "getNearestGeneratedStructure",
+          "desc": "(Ljava/util/Set;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/world/level/StructureManager;IIIZJLnet/minecraft/world/level/levelgen/structure/placement/RandomSpreadStructurePlacement;)Lcom/mojang/datafixers/util/Pair;",
+          "sha256": "b9c7eb2af2b23540f4f1e05b25d216c7f261d784946939d687a8c7fd46528e2d"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/ChunkGenerator",
+          "method": "getStructureGeneratingAt",
+          "desc": "(Ljava/util/Set;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/world/level/StructureManager;ZLnet/minecraft/world/level/levelgen/structure/placement/StructurePlacement;Lnet/minecraft/world/level/ChunkPos;)Lcom/mojang/datafixers/util/Pair;",
+          "sha256": "41d97c97d929276d7bfc305a6139085bcdc89dc57b3397afb751d7525cb5b9e9"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/placement/RandomSpreadStructurePlacement",
+          "method": "getPotentialStructureChunk",
+          "desc": "(JII)Lnet/minecraft/world/level/ChunkPos;",
+          "sha256": "b460e845afb96d39cfb2134bd8a803bc82ca464934c57ca55a629b10c975cedf"
+        }
+      ],
+      "cancel": [],
+      "conversion": "cancellable @Inject at the HEAD of the static ChunkGenerator.getNearestGeneratedStructure for random-spread placements (selected by its full descriptor: in Mojang names the ConcentricRings overload has the same name): the same border cells in the same order, the same getPotentialStructureChunk and getStructureGeneratingAt (@Shadow) calls, the first hit returned; the interior cells are not walked. 1.21.1: the loop is unchanged; steps aside next to Structurify's wrapper of the getStructureGeneratingAt call (yield)",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_structure_ring.StructureRing)"
+    }
+  },
+  "yields": [
+    {
+      "key": "vanilla_structure_ring_search",
+      "mod": "structurify",
+      "name": "Structurify",
+      "mixin": "com.faboslav.structurify.common.mixin.ChunkGeneratorMixin",
+      "why": "Structurify (tested 1.21.1 2.0.42) @WrapOperation-wraps the getStructureGeneratingAt call inside ChunkGenerator.getNearestGeneratedStructure (random spread): with its placement-attempt option it re-resolves the candidate chunk before the check. This switch's HEAD replacement walks the same cells but calls getStructureGeneratingAt itself, which would bypass that wrapper and could locate a different structure, so it steps aside whenever that mixin is listed. Found by a scan of the other mods' mixins on the same classes for the 1.21.1 port (no crash class: HEAD injection)."
+    }
+  ]
+}

@@ -117,6 +117,55 @@
       "conversion": "injectors (@Inject HEAD + @ModifyReturnValue)",
       "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.terrain.ColumnHeightShare)"
     },
+    "vanilla_noise_column_summary": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.terrain.ColumnSummaryMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator",
+          "method": "iterateNoiseColumn",
+          "desc": "(Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;IILorg/apache/commons/lang3/mutable/MutableObject;Ljava/util/function/Predicate;)Ljava/util/OptionalInt;",
+          "sha256": "a69a28279d47b93006b67b02bf69d6c1c89dffd32b7815f22ac63a6372a41814"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator",
+          "method": "getBaseHeight",
+          "desc": "(IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)I",
+          "sha256": "29e7dc5a9bc9df638730d828545fdae0335f846307ed63456d5804ce116a63de"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator",
+          "method": "getBaseColumn",
+          "desc": "(IILnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)Lnet/minecraft/world/level/NoiseColumn;",
+          "sha256": "db70529f094999220183da6cdb8fbdf1db58d32c3710a2eab443a2cf9983465e"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseSettings",
+          "method": "clampToHeightAccessor",
+          "desc": "(Lnet/minecraft/world/level/LevelHeightAccessor;)Lnet/minecraft/world/level/levelgen/NoiseSettings;",
+          "sha256": "88ffab8c58922468408f672c8eca79ccdd873e958f8d90b5745c1ae2b79e0c20"
+        },
+        {
+          "class": "net/minecraft/world/level/NoiseColumn",
+          "method": "<init>",
+          "desc": "(I[Lnet/minecraft/world/level/block/state/BlockState;)V",
+          "sha256": "b9b08c05d4bc2ff79bb75d684e99a2136368a7dbdd553743451beb51f97fe409"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/Heightmap$Types",
+          "method": "isOpaque",
+          "desc": "()Ljava/util/function/Predicate;",
+          "sha256": "5d703a59bbfb9ab341611e8d88de8fcb048106a1d89498e32549e3976ef7cfa6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on NoiseBasedChunkGenerator.iterateNoiseColumn: a getBaseHeight walk is given a recording predicate that answers as its original heightmap predicate (same walk, states and result), a getBaseColumn walk runs unchanged and its column is summarized; answers are served in vanilla_noise_column_cache's getBaseHeight lookup (helper bons.furious.patch.terrain.ColumnSummary, needs vanilla_noise_column_cache); own canary, refusal, runtime flag and shadow mode",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.terrain.ColumnSummary)"
+    },
     "vanilla_climate_sample_repeat": {
       "mod": "minecraft",
       "scripts": [],
@@ -228,5 +277,14 @@
       "conversion": "injectors: @Inject before the router mapAll and at RETURN of NoiseChunk.<init>; an int field on RandomState",
       "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.terrain.WrapPresize)"
     }
-  }
+  },
+  "yields": [
+    {
+      "key": "vanilla_noise_column_summary",
+      "mod": "generator_accelerator",
+      "name": "Generator Accelerator",
+      "mixin": "dev.sixik.generator_accelerator.mixins.common_mixin.MixinNoiseBasedChunkGenerator$optimize_iterate_noise_column",
+      "why": "Generator Accelerator (tested 1.21.1-1.6.2) @Overwrites NoiseBasedChunkGenerator.getBaseHeight and getBaseColumn with its own column walk (bts$iterateNoiseColumn) and its own per-thread height cache. The summary records vanilla iterateNoiseColumn walks and answers getBaseHeight from them, which is exact only while getBaseHeight is that walk, so this switch steps aside whenever that mixin is listed (vanilla_noise_column_cache keeps its own behaviour). Found by a scan of the other mods' mixins on the same classes for the 1.21.1 port (no crash class: the summary's @WrapMethod sits on iterateNoiseColumn, which GA leaves alone)."
+    }
+  ]
 }

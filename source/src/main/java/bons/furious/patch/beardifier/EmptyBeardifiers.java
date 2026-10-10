@@ -26,7 +26,8 @@ import org.spongepowered.asm.mixin.transformer.meta.MixinMerged;
 /**
  * Bons and Furious switch worldgen_empty_beardifier_marker (Minecraft 1.21.1 world generation, server side; tested
  * build NeoForge 21.1.252; other mods' Beardifier code read for this port: the IStructureWeightSampler accessor of
- * C2ME 0.4.0-alpha.0.122+1.21.1). Mojang member names.
+ * C2ME 0.4.0-alpha.0.122+1.21.1 and, since 1.0.36, the Beardifier mixins of Integrated API 1.8.2 for NeoForge 1.21.1,
+ * also next to Integrated Patches 1.2.0, which patches none of these classes). Mojang member names.
  *
  * What it costs. NoiseChunk caches cacheAllInCell(add(finalDensity, beardifier)) per cell. Beardifier inherits
  * SimpleFunction's fillArray, so every cell is filled by NoiseChunk.fillAllDirectly calling Beardifier.compute once per
@@ -58,7 +59,9 @@ import org.spongepowered.asm.mixin.transformer.meta.MixinMerged;
  * list still adds +0.0); createNoiseChunk, SimpleFunction.fillArray, NoiseChunk.fillAllDirectly and the fill-state
  * fields are unchanged. VERIFIED / HELPERS list only builds read for 1.21.1: the 1.20.1 Forge builds the original
  * verified (Integrated API, YUNG's API, Moog's, fdbosses, Lithostitched, Valhelsia, Cataclysm) cannot load on NeoForge
- * 1.21.1, so any 1.21.1 build of them stands the switch down until it is read. C2ME 0.4's own Beardifier rewrite
+ * 1.21.1, so any 1.21.1 build of them stands the switch down until it is read. Since 1.0.36 Integrated API 1.8.2's
+ * NeoForge 1.21.1 build is read and verified (see VERIFIED), with the 1.0.36 list form (a mixin may have several verified
+ * builds; HELPERS keyed by the mixin build). C2ME 0.4's own Beardifier rewrite
  * (MixinStructureWeightSampler) and its NoiseChunk accessor (IChunkNoiseSampler names inCellX/Y/Z and beardifier) are
  * not verified, so with C2ME installed the census stands down and every chunk keeps the original fill.
  */
@@ -71,14 +74,34 @@ public final class EmptyBeardifiers {
     public static final AtomicLong MARKED = new AtomicLong(), CHECKED = new AtomicLong();
 
     /**
-     * Other mods' Beardifier mixins whose code was read for 1.21.1, by SHA-256 of the class file. C2ME's base accessor is
-     * three @Accessor getters (pieceIterator twice, the static BEARD_KERNEL) and nothing else: it changes no behaviour.
+     * Other mods' Beardifier mixins whose code was read for 1.21.1, by SHA-256 of the class file; since 1.0.36 a mixin may
+     * have several verified builds, listed in release order. C2ME's base accessor is three @Accessor getters (pieceIterator
+     * twice, the static BEARD_KERNEL) and nothing else: it changes no behaviour. Integrated API 1.8.2 for NeoForge 1.21.1
+     * (integrated_api-neoforge-1.21.1-1.8.2.jar, Modrinth sha1 e0a0e442..., read 2026-10-09; the shape the Forge line
+     * verified on its Forge 1.20.1 build): BeardifierMixin (priority 100) adds two ObjectListIterator slots initialised to
+     * empty iterators and two RETURN handlers - forStructuresInChunk returns a new Beardifier (exactly that class) built
+     * from the original's two iterators plus its own two lists; compute adds
+     * EnhancedBeardifierHelper.computeDensity(ctx, density, this), which reads only ctx and its own two slots and returns
+     * density unchanged when both are empty. BeardifierAccessor is two @Accessor getters (pieceIterator, junctionIterator).
+     * No NoiseChunk mixin.
      */
-    static final Map<String, String> VERIFIED = Map.of(
-            "com.ishland.c2me.base.mixin.access.IStructureWeightSampler", "b0b081204c2c461914ba6c9baff75ebca32621742a261a0f1c42e680305ea622");
+    static final Map<String, List<String>> VERIFIED = Map.ofEntries(
+            Map.entry("com.craisinlord.integrated_api.mixins.structures.BeardifierMixin", List.of(
+                    "5c258c353f5b13a240728e903454dc1f7a35007bbb8eadb3dbae9991548e539e")),     // Integrated API 1.8.2, NeoForge 1.21.1
+            Map.entry("com.craisinlord.integrated_api.mixins.structures.BeardifierAccessor", List.of(
+                    "49f8f3e1dce84dd8aa9a30a380f7a57cd27e79d0627cb2226fba03ca1b2786a3")),     // Integrated API 1.8.2, NeoForge 1.21.1
+            Map.entry("com.ishland.c2me.base.mixin.access.IStructureWeightSampler", List.of(
+                    "b0b081204c2c461914ba6c9baff75ebca32621742a261a0f1c42e680305ea622")));   // C2ME 0.4.0-alpha.0.122+1.21.1
 
-    /** The enhanced-adaptation helper each compute-handling mixin calls, with the SHA-256 of that helper's class file. */
-    static final Map<String, String[]> HELPERS = Map.of();
+    /**
+     * The enhanced-adaptation helper each compute-handling mixin build calls: that mixin build's SHA-256 -> the helper class
+     * and the SHA-256 of the helper's class file from the same release (since 1.0.36 keyed by build, so a mixin build is
+     * only accepted with its own release's helper).
+     */
+    static final Map<String, String[]> HELPERS = Map.of(
+            "5c258c353f5b13a240728e903454dc1f7a35007bbb8eadb3dbae9991548e539e", new String[] {        // Integrated API 1.8.2, NeoForge 1.21.1
+                    "com.craisinlord.integrated_api.world.terrainadaptation.beardifier.EnhancedBeardifierHelper",
+                    "212ae482ea9767d610ae1e9713a5e61e9d488177cf0feb55f4907568a749c300"});
 
     /** Words that would mean another NoiseChunk mixin touches the fill state this switch reproduces (Mojang names). */
     private static final String[] FILL_STATE = {"fillAllDirectly", "inCellX", "inCellY", "inCellZ", "arrayIndex", "beardifier"};
@@ -183,11 +206,11 @@ public final class EmptyBeardifiers {
             TreeSet<String> verified = new TreeSet<>();
             for (String mixin : mergedMixins(beardifier)) {
                 if (mixin.startsWith("bons.furious.mixin.")) continue;
-                String want = VERIFIED.get(mixin);
+                List<String> want = VERIFIED.get(mixin);
                 if (want == null) return new Census(false, "Beardifier carries code from " + mixin + ", which this switch has not verified", new MethodHandle[0]);
                 String got = sha256(loader, mixin);
-                if (!want.equals(got)) return new Census(false, mixin + " is not the verified build", new MethodHandle[0]);
-                String[] helper = HELPERS.get(mixin);
+                if (!want.contains(got)) return new Census(false, mixin + " is not the verified build", new MethodHandle[0]);
+                String[] helper = HELPERS.get(got);
                 if (helper != null && !helper[1].equals(sha256(loader, helper[0])))
                     return new Census(false, helper[0] + " is not the verified build", new MethodHandle[0]);
                 verified.add(mixin);

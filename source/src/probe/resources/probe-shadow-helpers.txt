@@ -65,3 +65,25 @@ both bons.furious.patch.fdbosses_c2.SpawnerPresence
 # rendering
 client bons.furious.patch.embeddium_sprites.SpriteFrameTimes
 client bons.furious.patch.storagedrawers.CountLabels
+# round 6 (1.0.36)
+client bons.furious.patch.item_renderers.ItemRendererReuse
+both bons.furious.patch.distanthorizons_streams.UnlockedOutputStream
+client bons.furious.patch.distanthorizons_tint.TintColumns
+client bons.furious.patch.vanilla_outline_skip.OutlineSkip
+client bons.furious.patch.cataclysm_client.CataclysmPoseHand
+client bons.furious.patch.cataclysm_client.CitadelPoseHand
+client bons.furious.patch.cataclysm_client.ShieldLayerPose
+client bons.furious.patch.lionfish_models.LionfishModelParts
+both bons.furious.patch.vanilla_chunk_codecs.StateCodecMemo
+both bons.furious.patch.vanilla_chunk_codecs.BiomeCodecMemo
+both bons.furious.patch.vanilla_chunk_codecs.PaletteDirectNbt
+both bons.furious.patch.vanilla_inventory_index.ListenerIndex
+both bons.furious.patch.datapack_selectors.SingleTypeTest
+both bons.furious.patch.datapack_selectors.TagIndex
+both bons.furious.patch.terrain.ColumnSummary
+both bons.furious.patch.vanilla_cellfill.ColumnCellFill
+both bons.furious.patch.vanilla_corner_table.CornerShare
+both bons.furious.patch.climate_last_result.WeakLastResult
+both bons.furious.patch.basalt_guards.BasaltGuards
+both bons.furious.patch.vanilla_structure_ring.StructureRing
+both bons.furious.patch.vanilla_structure_templates.StructureTemplateHits

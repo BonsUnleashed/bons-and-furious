@@ -5,6 +5,10 @@ GUARD PROBLEM vanilla_layer_bake_streamless net/minecraft/client/model/geom/buil
 GUARD PROBLEM vanilla_layer_bake_streamless net/minecraft/client/model/geom/builders/PartDefinition.<init>(Ljava/util/List;Lnet/minecraft/client/model/geom/PartPose;)V: not found in the local jars
 GUARD PROBLEM modernfix_cube_bake_memo net/minecraft/client/model/geom/builders/CubeDefinition.bake(II)Lnet/minecraft/client/model/geom/ModelPart$Cube;: not found in the local jars
 GUARD PROBLEM etf_sprite_texture_id_memo net/minecraft/client/resources/model/Material.buffer(Lnet/minecraft/client/renderer/MultiBufferSource;Ljava/util/function/Function;)Lcom/mojang/blaze3d/vertex/VertexConsumer;: not found in the local jars
+GUARD PROBLEM aquaculture_item_renderer_reuse net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer.<init>(Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/model/geom/EntityModelSet;)V: not found in the local jars
+GUARD PROBLEM aquaculture_item_renderer_reuse net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer.renderByItem(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V: not found in the local jars
+GUARD PROBLEM netherexp_item_renderer_reuse net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer.<init>(Lnet/minecraft/client/renderer/blockentity/BlockEntityRenderDispatcher;Lnet/minecraft/client/model/geom/EntityModelSet;)V: not found in the local jars
+GUARD PROBLEM netherexp_item_renderer_reuse net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer.renderByItem(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V: not found in the local jars
 GUARD PROBLEM vanilla_model_bone_lookup net/minecraft/client/model/geom/ModelPart.getAllParts()Ljava/util/stream/Stream;: not found in the local jars
 GUARD PROBLEM vanilla_model_bone_lookup net/minecraft/client/model/geom/ModelPart.hasChild(Ljava/lang/String;)Z: not found in the local jars
 GUARD PROBLEM vanilla_model_bone_lookup net/minecraft/client/model/geom/ModelPart.getChild(Ljava/lang/String;)Lnet/minecraft/client/model/geom/ModelPart;: not found in the local jars
@@ -27,3 +31,6 @@ GUARD PROBLEM oculus_shadow_outline_discard com/mojang/blaze3d/vertex/ByteBuffer
 GUARD PROBLEM oculus_shadow_outline_discard com/mojang/blaze3d/vertex/ByteBufferBuilder.freeResult()V: not found in the local jars
 GUARD PROBLEM oculus_shadow_outline_discard com/mojang/blaze3d/vertex/ByteBufferBuilder.discardResults()V: not found in the local jars
 GUARD PROBLEM oculus_shadow_outline_discard com/mojang/blaze3d/vertex/ByteBufferBuilder$Result.close()V: not found in the local jars
+GUARD PROBLEM vanilla_entity_outline_composite_skip com/mojang/blaze3d/vertex/BufferUploader.draw(Lcom/mojang/blaze3d/vertex/MeshData;)V: not found in the local jars
+GUARD PROBLEM vanilla_entity_outline_composite_skip com/mojang/blaze3d/vertex/VertexBuffer.draw()V: not found in the local jars
+GUARD PROBLEM vanilla_entity_outline_composite_skip com/mojang/blaze3d/vertex/VertexBuffer.getFormat()Lcom/mojang/blaze3d/vertex/VertexFormat;: not found in the local jars

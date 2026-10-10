@@ -1,0 +1,101 @@
+{
+  "group": "emf_render",
+  "keys": {
+    "emf_variable_default_unboxed": {
+      "mod": "entity_model_features",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.emf_render.EmfVariableDefaultMixin"
+      ],
+      "guard": [
+        {
+          "class": "traben/entity_model_features/models/animation/math/EMFMath",
+          "method": "getEntityVariable",
+          "desc": "(Ljava/lang/String;F)F",
+          "note": "the overwritten method: state = emfState(); state == null ? default : state.variableMap().getOrDefault(name, Float.valueOf(default)).floatValue()",
+          "sha256": "6ee96ce7a8ed371609514938cee0d357624bbb69e1d76901306d05f1a5db4525"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/EMFMath",
+          "method": "emfState",
+          "desc": "()Ltraben/entity_model_features/models/animation/state/EMFEntityRenderState;",
+          "note": "the shadowed accessor (EMFState.state()), called once as in the original",
+          "sha256": "62c7e4f55896fc8729e8459dea4d038dd9bc00d61a6792509c1ccace32345157"
+        },
+        {
+          "class": "traben/entity_model_features/mixin/mixins/MixinEntity",
+          "method": "emf$getVariableMap",
+          "desc": "()Ljava/util/Map;",
+          "note": "the per-entity HashMap and its GUI copy",
+          "sha256": "8feb301d6617dc20a886c2866c77f6a243865f382ae6a6d03735ae75e2ba7c94"
+        },
+        {
+          "class": "traben/entity_model_features/mixin/mixins/MixinBlockEntity",
+          "method": "emf$getVariableMap",
+          "desc": "()Ljava/util/Map;",
+          "note": "the per-block-entity HashMap",
+          "sha256": "aeff07d6e2b53b32c27cf56d4ae3a2b2786fd8acc86ce47b7f6bbd2b76f9d75d"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/state/EMFEntityRenderStateViaReference",
+          "method": "variableMap",
+          "desc": "()Ljava/util/Map;",
+          "note": "the render state's map: the entity's emf$getVariableMap()",
+          "sha256": "4ce829d4b8be5c34a0b5a7b95f3567342e4b8afe5c7a9b87ba60f48e9b7c7dd2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Overwrite of EMFMath.getEntityVariable(String, float) (EMF 3.3.9; EMFAnimationEntityContext in 3.2.4): sentinel default for EMF's HashMap, the original expression on the same map otherwise, the original expression itself for a null map (helper bons.furious.patch.emf_render.EmfRender)",
+      "license": "EMF is LGPL-3.0: the method body may be carried in our GPL-3.0 source (a modified copy of EMF's getEntityVariable, distributed with its source; the original expression is kept as the fallback)"
+    },
+    "emf_anger_map_prune": {
+      "mod": "entity_model_features",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.emf_render.EmfAngerMapMixin"
+      ],
+      "guard": [
+        {
+          "class": "traben/entity_model_features/models/animation/math/EMFMath",
+          "method": "getAngerTime",
+          "desc": "()F",
+          "note": "the redirected put(uuid, 0) (ordinal 0, anger ended); the second put records a new highest anger time",
+          "sha256": "766e22af3415b9cee96403bdf1dd1cb5190503bb02688286b9d85daeb3da5a64"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/EMFMath",
+          "method": "getAngerTimeStart",
+          "desc": "()F",
+          "note": "the other reader: getOrDefault(uuid, 0)",
+          "sha256": "0c38dffb7ef6cbd9b716ed91ba81f4c2fa5e8b9007b99ebedd4757dba7d13a49"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/EMFMath",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "knownHighestAngerTimeByUUID = new EMFMath$1()",
+          "sha256": "d43d1017215ccae5920217c2f36535bdbae59ba1ae58549fc25e7e30ad83f5a5"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/EMFMath$1",
+          "method": "get",
+          "desc": "(Ljava/lang/Object;)Ljava/lang/Integer;",
+          "note": "the map's get override (getOrDefault(key, 0))",
+          "sha256": "899951360486dcd4fc7ee02e3d5dd8f9291d71f5a92992a626580317f7b0aa0d"
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/EMFMath$1",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: <init>, get and its bridge; no other override (remove/put/getOrDefault stay HashMap's)",
+          "sha256": "2944ef1de9206cb8b0308ced55852d1763415d562844135e77a55d50f4c0bc4b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the first Map.put in EMFMath.getAngerTime() (EMF 3.3.9; EMFAnimationEntityContext in 3.2.4) to Map.remove (helper bons.furious.patch.emf_render.EmfRender: runtime flag)",
+      "license": "EMF is LGPL-3.0: no code of it is carried (the handler calls the map's own remove/put)"
+    }
+  }
+}

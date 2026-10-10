@@ -169,7 +169,212 @@
       ],
       "cancel": [],
       "conversion": "MixinExtras @ModifyExpressionValue on the type option handler's shouldInvertValue, TagKey.create and Optional.orElseThrow results (noted on the parser, returned unchanged) and @WrapOperation on its two EntitySelectorParser.addPredicate calls (offer a TypeFirstOption), @Inject after parseSelector's List.add of Entity::isAlive and @ModifyReturnValue on getSelector (parser state), @WrapOperation on ServerLevel.getEntities(EntityTypeTest, Predicate, List, int) in EntitySelector.addEntities (scan filter), @WrapMethod on EntityLookup.getEntities/add/remove (type index); the parser and selector injectors are require = 0 and degrade to the vanilla scan",
-      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helpers bons.furious.patch.datapack_selectors.SelectorPrefilter, TypeIndex, SelectorParserState, PrefilteredSelector, IndexedLookup)"
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helpers bons.furious.patch.datapack_selectors.SelectorPrefilter, TypeIndex, SelectorParserState, PrefilteredSelector, IndexedLookup; since 1.0.36 the limit is boxed through SelectorPrefilter.boxed and EntityLookupMixin also answers vanilla_selector_single_type's SingleTypeTest; EntityLookupMixin also answers vanilla_selector_tag_index's TagScanTest and the type option wrapper marks its predicates pure for that key's parse state)"
+    },
+    "vanilla_selector_single_type": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.datapack_selectors.EntitySelectorSingleTypeMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/commands/arguments/selector/EntitySelector",
+          "method": "addEntities",
+          "desc": "(Ljava/util/List;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)V",
+          "sha256": "ab7211b30b04923b5b37099da330e71b7e10415abb0270a104e3202ac676ee41"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "getEntities",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Ljava/util/function/Predicate;Ljava/util/List;I)V",
+          "sha256": "c0d0c3599e0b8677f1edd61e8d8c21d7b522939e511bc8293f0b4f195cbaf4dd"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/LevelEntityGetterAdapter",
+          "method": "get",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/util/AbortableIterationConsumer;)V",
+          "sha256": "52207457ed288c6f4b4c94072cbaee8c57c9ff0de54506b4d1aa956410e91de7"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntityLookup",
+          "method": "getEntities",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/util/AbortableIterationConsumer;)V",
+          "sha256": "9b823e4e585a51284a12670ce0b1541e41f757c8329bae3301964d8024e231c6"
+        },
+        {
+          "class": "net/minecraft/world/entity/EntityType",
+          "method": "tryCast",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/entity/Entity;",
+          "sha256": "78a59430dcaed9a452489e8e17bdb9714b094485a9935da0fab39d6ecc717194"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "getType",
+          "desc": "()Lnet/minecraft/world/entity/EntityType;",
+          "sha256": "6a37a73d781232736e9180f6808a434d06843c7cdba3f83ef53039233b873722"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the whole-level ServerLevel.getEntities call in EntitySelector.addEntities: an EntityType test is wrapped in a SingleTypeTest (same tryCast and base class), which vanilla_selector_type_index's EntityLookupMixin answers from the level's TypeIndex (that type's entities plus the own-check classes, tryCast still asked for those, byId order); require = 0, degrades to vanilla",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.datapack_selectors.SingleTypeTest)"
+    },
+    "vanilla_selector_tag_index": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.datapack_selectors.EntityTagsMixin",
+        "bons.furious.mixin.datapack_selectors.EntitySelectorParserTagMixin",
+        "bons.furious.mixin.datapack_selectors.EntitySelectorTagOptionMixin",
+        "bons.furious.mixin.datapack_selectors.EntitySelectorTagScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "getTags",
+          "desc": "()Ljava/util/Set;",
+          "sha256": "fd28b5355eee57d74b9fa22aa83e0c2fe1fee2b70ffdfbb21e88300f17a39908"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "addTag",
+          "desc": "(Ljava/lang/String;)Z",
+          "sha256": "a29d94ff2e3009bd661e40b426e5524167c22ae412dd0d5d6f775a74f58ee572"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "removeTag",
+          "desc": "(Ljava/lang/String;)Z",
+          "sha256": "22680b8230269b6151e35f663d6c47ddd7825c09b542bc44c5462d167525f10d"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "isAlive",
+          "desc": "()Z",
+          "sha256": "770817b40dcd8e32b955466314709ecb91a90c28a0e736a2e176736e0f29b0c3"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "getType",
+          "desc": "()Lnet/minecraft/world/entity/EntityType;",
+          "sha256": "6a37a73d781232736e9180f6808a434d06843c7cdba3f83ef53039233b873722"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "isAlive",
+          "desc": "()Z",
+          "sha256": "dcdf21068b6bd02f798a90bb51c1d09a486f4bc1171555952614ef4d1f3de893"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "getHealth",
+          "desc": "()F",
+          "sha256": "579cd5617efa9f9199b3db667f6142acf7c12563340655a15b07d55cb298512b"
+        },
+        {
+          "class": "net/minecraft/commands/arguments/selector/options/EntitySelectorOptions",
+          "method": "lambda$bootStrap$47",
+          "desc": "(Lnet/minecraft/commands/arguments/selector/EntitySelectorParser;)V",
+          "sha256": "d383a8d86c516f285bbf7afbcf7ea65529939703b85615b1c76bb407b3d67fe0"
+        },
+        {
+          "class": "net/minecraft/commands/arguments/selector/options/EntitySelectorOptions",
+          "method": "lambda$bootStrap$46",
+          "desc": "(Ljava/lang/String;ZLnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "fd38cc728db5be2a2e5059c507efd033a63406cd566a80e2a29721f31b8ea226",
+          "sha256_variants": [
+            "922dec663946cb83429733de970fafc885c835cb695d2413b59859f2df5b64e9"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (server and client srg jars): the empty-tag branch returns directly where the NeoForm recompilation jumps to a shared return; same instructions otherwise. See work/lanes/S6/evidence/prod-variants-bytecode-diff.txt."
+        },
+        {
+          "class": "net/minecraft/commands/arguments/selector/EntitySelectorParser",
+          "method": "parseSelector",
+          "desc": "()V",
+          "sha256": "b83a972e03f53b969743bc4f580dde348fbe861a7b1bdf2e35cd5160391cc1d0"
+        },
+        {
+          "class": "net/minecraft/commands/arguments/selector/EntitySelectorParser",
+          "method": "addPredicate",
+          "desc": "(Ljava/util/function/Predicate;)V",
+          "sha256": "420ae463a863a0967bf0090cca4c2b78d69e4876aa6bdca24c23dccf390240f1"
+        },
+        {
+          "class": "net/minecraft/commands/arguments/selector/EntitySelectorParser",
+          "method": "finalizePredicates",
+          "desc": "()V",
+          "sha256": "8d117e96f6b2a01f260b53da065c8353433662892585d543a145b1b16549a715"
+        },
+        {
+          "class": "net/minecraft/commands/arguments/selector/EntitySelectorParser",
+          "method": "getSelector",
+          "desc": "()Lnet/minecraft/commands/arguments/selector/EntitySelector;",
+          "sha256": "3d8fbbf6195df897b0261a56a4a30e541c849945192c059529eb366478ceb9c0"
+        },
+        {
+          "class": "net/minecraft/commands/arguments/selector/EntitySelector",
+          "method": "addEntities",
+          "desc": "(Ljava/util/List;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)V",
+          "sha256": "ab7211b30b04923b5b37099da330e71b7e10415abb0270a104e3202ac676ee41"
+        },
+        {
+          "class": "net/minecraft/commands/arguments/selector/EntitySelector",
+          "method": "getPredicate",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/AABB;Lnet/minecraft/world/flag/FeatureFlagSet;)Ljava/util/function/Predicate;",
+          "sha256": "720cf60668622117a6fa6e8b14c1b4f532167ca16fad84ef2c454ddd8f7c9bc1"
+        },
+        {
+          "class": "net/minecraft/Util",
+          "method": "allOf",
+          "desc": "(Ljava/util/List;)Ljava/util/function/Predicate;",
+          "sha256": "9d5d5ccee637e580e61f54d11b621d49464ec598a936dc5b76ddc49b5dabfc99"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "getEntities",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Ljava/util/function/Predicate;Ljava/util/List;I)V",
+          "sha256": "c0d0c3599e0b8677f1edd61e8d8c21d7b522939e511bc8293f0b4f195cbaf4dd"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/LevelEntityGetterAdapter",
+          "method": "get",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/util/AbortableIterationConsumer;)V",
+          "sha256": "52207457ed288c6f4b4c94072cbaee8c57c9ff0de54506b4d1aa956410e91de7"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntityLookup",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "96901b9793c1397e32371fa6128aad7d96547903310dd9e962afa01225e11ae5"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntityLookup",
+          "method": "getEntities",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/util/AbortableIterationConsumer;)V",
+          "sha256": "9b823e4e585a51284a12670ce0b1541e41f757c8329bae3301964d8024e231c6"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntityLookup",
+          "method": "add",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)V",
+          "sha256": "0dc62738e37efa17c8f56562fae43037244f4d690897c4aafa2845684acd397b",
+          "sha256_variants": [
+            "ec242433120a78f80445faaf38f999c044ac570aede952648b7281cd602d0f22"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (server and client srg jars): the duplicate-UUID branch returns directly where the NeoForm recompilation jumps to a shared return; same instructions otherwise. See work/lanes/entity/evidence/EntityLookup.add-bytecode-diff.txt and work/lanes/S6/evidence/prod-variants-bytecode-diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntityLookup",
+          "method": "remove",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)V",
+          "sha256": "d95efea6ee46b2729b1c068ad8cbbdea3ef981d3445733b78dff16e41da87c8d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on Sets.newHashSet() in Entity's constructor (a TrackedTags, a HashSet reporting its changes, in place of a plain empty HashSet; require = 0), @ModifyExpressionValue on the tag option handler's shouldInvertValue and readUnquotedString results and @WrapOperation on its addPredicate call (EntitySelectorOptions lambda$bootStrap$47: tag offered together with its predicate object, which is pure), @Inject after parseSelector's List.add of Entity::isAlive and at addPredicate's RETURN plus @ModifyReturnValue on getSelector (parser state: the pure prefix followed through the parser's predicate list by identity, and the usable tags), @WrapOperation (priority 500, innermost) on ServerLevel.getEntities(EntityTypeTest, Predicate, List, int) in EntitySelector.addEntities (the test wrapped in a TagScanTest); vanilla_selector_type_index's EntityLookupMixin answers it from the TypeIndex tag lists. All injectors require = 0 and degrade to the vanilla scan",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helpers bons.furious.patch.datapack_selectors.TagIndex, TrackedTags, TagScanSelector, TagParserState, TypeIndex)"
     }
   }
 }

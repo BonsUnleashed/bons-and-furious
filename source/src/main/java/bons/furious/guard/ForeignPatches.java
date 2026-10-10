@@ -28,7 +28,8 @@ import org.apache.logging.log4j.Logger;
  * "Active" is decided the way the other mod decides it itself, before any class is transformed: the mod is installed, its
  * own mixin config lists the mixin for this side, none of the mods it steps aside for is installed, and its master switch
  * and the patch's option are on in its config file (or the file does not say, and the default is on). The option is read
- * once at start, like our own switches.
+ * once at start, like our own switches. Since 1.0.38+mc1.21.1 a mod that cannot be checked at all counts as active: our
+ * switch steps aside and that mod's mixin is not cancelled.
  */
 final class ForeignPatches {
     private static final Logger LOGGER = LogManager.getLogger("Bons and Furious");
@@ -80,8 +81,11 @@ final class ForeignPatches {
             }
             return y.name() + " " + version + " makes the same change (" + y.shortMixin() + setting + ")";
         } catch (Throwable t) {
-            LOGGER.warn("Bons and Furious: could not check {}'s {} for {} ({}); {} applies as usual", y.name(), y.shortMixin(), y.key(), t.toString(), y.key());
-            return null;
+            // Since 1.0.38+mc1.21.1: a mod that cannot be checked is left as it ships and this switch steps aside. Applying
+            // would also cancel that mod's mixin (every yield has a cancel line), and a mixin may carry more than this one
+            // change (Structurify 2.0.42's ChunkGeneratorMixin, a yield of the structure ring search, also disables structures).
+            LOGGER.warn("Bons and Furious: could not check {}'s {} for {} ({}); {} steps aside", y.name(), y.shortMixin(), y.key(), t.toString(), y.key());
+            return y.name() + " could not be checked (" + t.getClass().getSimpleName() + "), so its " + y.shortMixin() + " is left as it ships";
         }
     }
 

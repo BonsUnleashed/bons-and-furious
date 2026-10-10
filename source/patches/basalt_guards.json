@@ -1,0 +1,46 @@
+{
+  "group": "basalt_guards",
+  "keys": {
+    "basalt_guards_vanilla_first": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.basalt_guards.BasaltColumnsFeatureVanillaFirstMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/feature/BasaltColumnsFeature",
+          "method": "canPlaceAt",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;ILnet/minecraft/core/BlockPos$MutableBlockPos;)Z",
+          "sha256": "7a9a1b22ebdf4bd563de98d56cc5a0789724dc7a2825cfbf4171be540030bf3a",
+          "sha256_variants": [
+            "5fc6be1146e587a790ef6d7c6e7638b89c1bf8dc101f50da6e5d088fd437407f"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): the early \"not air or lava ocean\" return moved to the end with the branch polarity swapped (ifne/ifeq) and its own iconst_0/ireturn; same calls, fields and comparisons. See work/lanes/W6/prod/review/net.minecraft.world.level.levelgen.feature.BasaltColumnsFeature.canPlaceAt.server.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/feature/BasaltColumnsFeature",
+          "method": "isAirOrLavaOcean",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;ILnet/minecraft/core/BlockPos;)Z",
+          "sha256": "64a3ff3338949794ec24d9617ea9ba15a176dbdba5f1aac2d1949a88f4fe851f"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/feature/BasaltColumnsFeature",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "2489f6ca4c771fc00913b601a9aed0808632a523ef5d6b46dceef4a87e381772"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/feature/BasaltColumnsFeature",
+          "method": "*",
+          "desc": "",
+          "sha256": "2665f45402deb55252d8c6019d289d2bf7ca63bd21af989da5ce9cc698dc1143"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on BasaltColumnsFeature.canPlaceAt (static): vanilla's two-read test (isAirOrLavaOcean via @Shadow, block below not air and not in CANNOT_PLACE_ON, position restored) first; false -> false without the original (the HEAD structure guards only ever answer false); true -> the original unchanged. Run-time check once: every @MixinMerged method of another mod in the class must be a known guard (mixin, handler name in Forge's or NeoForge's merged form, descriptor, fingerprint of the handler in its mixin class file), else the switch steps aside. 1.21.1 known guards: L_Ender's Cataclysm 1.21.1-3.33 and YUNG's API 1.21.1-NeoForge-5.1.9",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries our own two-read predicate built on vanilla's helper isAirOrLavaOcean and list CANNOT_PLACE_ON (helper bons.furious.patch.basalt_guards.BasaltGuards); the guard mods' handlers are only read and fingerprinted"
+    }
+  }
+}

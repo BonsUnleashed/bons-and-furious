@@ -1,0 +1,40 @@
+{
+ "bons": "bons_and_furious-neoforge-1.0.38+mc1.21.1.jar",
+ "jars_scanned": 488,
+ "folders": [
+  "targets",
+  "targets-nested",
+  "dependencies",
+  "consumers",
+  "sweep",
+  "sweep-extra",
+  "sweep-sable",
+  "extra"
+ ],
+ "foreign_cancellers": 1,
+ "foreign_canceller_classes": [
+  "dev.sixik.generator_accelerator.api.mixin.GAMixinCanceller"
+ ],
+ "our_canceller_registrations": 0,
+ "guarded_foreign_classes": 418,
+ "hits": [],
+ "cancel_overlap": [],
+ "detail": [
+  {
+   "jar": "sweep/[1.21.1-1.6.2] Generator Accelerator-neoforge.jar",
+   "canceller": "dev.sixik.generator_accelerator.api.mixin.GAMixinCanceller",
+   "mentions": [
+    "dev.sixik.generator_accelerator.api.mixin.GAMixinPlugin",
+    "dev.sixik.generator_accelerator.api.mixin.MixinApplier"
+   ]
+  },
+  {
+   "jar": "extra/generator-accelerator-1.6.2.jar",
+   "canceller": "dev.sixik.generator_accelerator.api.mixin.GAMixinCanceller",
+   "mentions": [
+    "dev.sixik.generator_accelerator.api.mixin.GAMixinPlugin",
+    "dev.sixik.generator_accelerator.api.mixin.MixinApplier"
+   ]
+  }
+ ]
+}

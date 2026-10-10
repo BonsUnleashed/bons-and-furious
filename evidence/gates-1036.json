@@ -1,0 +1,143 @@
+{
+ "published": {
+  "jar": "bons_and_furious-neoforge-1.0.35+mc1.21.1.jar",
+  "sha256": "9c846abbf874ee01a7df2500b13363737afa4faa81f1800c6f0ca23275ce481a",
+  "sweep_jars": 488,
+  "sweep_hits": {
+   "R2-ALLOWED": 4,
+   "R3-ALLOWED": 2,
+   "R3-ALLOWED-STANDDOWN": 14,
+   "R3-STANDDOWN-REFUSED": 1,
+   "R4": 4
+  },
+  "sweep_errors": 0,
+  "crash_classes": 1,
+  "access_jars": 489,
+  "overwrites": 87,
+  "access_crash_hits": 0
+ },
+ "candidate": {
+  "jar": "bons_and_furious-neoforge-1.0.38+mc1.21.1.jar",
+  "sha256": "e5b600a0008c1abadb81e99182873072d8fd0afddca403e4e44e8adcb3edaec9",
+  "sweep_jars": 488,
+  "sweep_hits": {
+   "R2-ALLOWED": 4,
+   "R3-ALLOWED": 2,
+   "R3-ALLOWED-STANDDOWN": 15,
+   "R4": 4
+  },
+  "sweep_errors": 0,
+  "crash_classes": 0,
+  "access_jars": 489,
+  "overwrites": 88,
+  "access_crash_hits": 0
+ },
+ "sweep_hits_only_published": [
+  {
+   "foreign": {
+    "cls": "net.minecraft.server.players.PlayerList",
+    "handler_of": null,
+    "kind": "Overwrite",
+    "method": "broadcast",
+    "mixin": "dev.ryanhcode.sable.mixin.plot.PlayerListMixin",
+    "owner": "sable-neoforge-1.21.1-2.0.6.jar",
+    "points": [
+     "?"
+    ],
+    "prio": 1000,
+    "require": null,
+    "targets": []
+   },
+   "key": "storagedrawers_count_sync_holders",
+   "ours": {
+    "cls": "net.minecraft.server.players.PlayerList",
+    "handler_of": null,
+    "key": "storagedrawers_count_sync_holders",
+    "kind": "WrapOperation",
+    "method": "broadcast",
+    "mixin": "bons.furious.mixin.storagedrawers_sync_c2.PlayerListCountSyncMixin",
+    "owner": "bons_and_furious",
+    "points": [
+     "INVOKE"
+    ],
+    "prio": 1000,
+    "require": 0,
+    "targets": [
+     "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;send(Lnet/minecraft/network/protocol/Packet;)V"
+    ]
+   },
+   "rule": "R3-STANDDOWN-REFUSED"
+  }
+ ],
+ "sweep_hits_only_candidate": [
+  {
+   "foreign": {
+    "cls": "net.minecraft.server.players.PlayerList",
+    "handler_of": null,
+    "kind": "Overwrite",
+    "method": "broadcast",
+    "mixin": "dev.ryanhcode.sable.mixin.plot.PlayerListMixin",
+    "owner": "sable-neoforge-1.21.1-2.0.6.jar",
+    "points": [
+     "?"
+    ],
+    "prio": 1000,
+    "require": null,
+    "targets": []
+   },
+   "key": "storagedrawers_count_sync_holders",
+   "ours": {
+    "cls": "net.minecraft.server.players.PlayerList",
+    "handler_of": null,
+    "key": "storagedrawers_count_sync_holders",
+    "kind": "WrapOperation",
+    "method": "broadcast",
+    "mixin": "bons.furious.mixin.storagedrawers_sync_c2.PlayerListCountSyncMixin",
+    "owner": "bons_and_furious",
+    "points": [
+     "INVOKE"
+    ],
+    "prio": 1500,
+    "require": 0,
+    "targets": [
+     "Lnet/minecraft/server/network/ServerGamePacketListenerImpl;send(Lnet/minecraft/network/protocol/Packet;)V"
+    ]
+   },
+   "rule": "R3-ALLOWED-STANDDOWN"
+  }
+ ],
+ "access_rows_only_published": [],
+ "access_rows_only_candidate": [
+  {
+   "at_hits": [],
+   "desc": "(Ljava/lang/String;F)F",
+   "mixin": "bons.furious.mixin.emf_render.EmfVariableDefaultMixin",
+   "name": "getEntityVariable",
+   "ours": 9,
+   "ours_access": "public",
+   "ours_final": false,
+   "target": "traben/entity_model_features/models/animation/math/EMFMath",
+   "vanilla_access": null,
+   "verdict": [
+    "ok"
+   ]
+  }
+ ],
+ "crash_class_sweep": {
+  "status": "PASS",
+  "jars": 488,
+  "hits": {
+   "R2-ALLOWED": 4,
+   "R3-ALLOWED": 2,
+   "R3-ALLOWED-STANDDOWN": 15,
+   "R4": 4
+  },
+  "crash_classes": 0
+ },
+ "overwrite_access_audit": {
+  "status": "PASS",
+  "jars": 489,
+  "overwrites": 88,
+  "crash_class_hits": 0
+ }
+}

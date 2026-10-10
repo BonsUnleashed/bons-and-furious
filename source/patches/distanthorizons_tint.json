@@ -1,0 +1,168 @@
+{
+  "group": "distanthorizons_tint",
+  "keys": {
+    "distanthorizons_tint_neighbour_index": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.distanthorizons_tint.TintColumnsMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/block/AbstractDhTintGetter_neoforge",
+          "method": "tryGetBlockTint",
+          "desc": "(Lcom/seibel/distanthorizons/core/pos/blockPos/DhBlockPosMutable;Lnet/minecraft/world/level/ColorResolver;)I",
+          "sha256": "13b8b3ce80d3372df5bb04c7d6a068b8cbf56d9e9145a62ba6c208eec88deae2"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/dataObjects/fullData/sources/FullDataSourceV2",
+          "method": "getDataPointAtBlockPos",
+          "desc": "(IIII)J",
+          "sha256": "7a50fafb3197ea9d500bc062f4956ad5dbd26d20991db548793263f8eca4740a"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/dataObjects/fullData/sources/FullDataSourceV2",
+          "method": "getColumnAtRelPos",
+          "desc": "(II)Lit/unimi/dsi/fastutil/longs/LongArrayList;",
+          "sha256": "bda21440c39041aff772a059700fe4677fc1403cddcdc7d9299c5b5617e8386f"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/dataObjects/fullData/sources/FullDataSourceV2",
+          "method": "getPos",
+          "desc": "()J",
+          "sha256": "a4b64f136838403ae0c011639b7c2211135eea15d07fc5dab78a8b09ba0e7af9"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/pos/DhSectionPos",
+          "method": "encode",
+          "desc": "(BII)J",
+          "sha256": "1141d3f24b2a2b6903144cf49c7e6368a8c897d11d75ce5419892b67d72ed5f0"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/pos/DhSectionPos",
+          "method": "encodeContaining",
+          "desc": "(BLcom/seibel/distanthorizons/core/pos/blockPos/DhBlockPos;)J",
+          "sha256": "ee2ca75b0817fb0b1f82a513ec53c7416053dcd9637025850427e939d0c24d2d"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/pos/DhSectionPos",
+          "method": "getXOrZSectionPosFromChunkOrBlockPos",
+          "desc": "(IZ)I",
+          "sha256": "da99a3c283645e16e1f8b20ea3b61e866a937b9e7236910792a4f1bb87ded1af"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/pos/DhSectionPos",
+          "method": "convertToDetailLevel",
+          "desc": "(JB)J",
+          "sha256": "416d830505004c05aece5229c178828e1ac9bce79f730a398f3db6769ec04c2d"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/pos/DhSectionPos",
+          "method": "getDetailLevel",
+          "desc": "(J)B",
+          "sha256": "efb19a07b5f1aa37f0cfcb2d8e79afee2a5445f6686e55920195de4f0190d529"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/pos/DhSectionPos",
+          "method": "getX",
+          "desc": "(J)I",
+          "sha256": "dca5c20c6f0d6011cf25c148ba546521c5cbe8c899d7da97740859679f244980"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/pos/DhSectionPos",
+          "method": "getZ",
+          "desc": "(J)I",
+          "sha256": "893b854dc2aafdc748af7da4f46b67a515d04745eccaa08bc31484866f525925"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/pos/DhSectionPos",
+          "method": "contains",
+          "desc": "(JJ)Z",
+          "sha256": "d13399f91f2e5c9d26bc78e07d602d581a3dac0784bef7f4a9e0245853bb292a"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/pos/DhSectionPos",
+          "method": "getMinCornerBlockX",
+          "desc": "(J)I",
+          "sha256": "ad162e87341726b72df067a40f779936c1c70fa92fedb96e8d046c2c74afa9e4"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/pos/DhSectionPos",
+          "method": "getMinCornerBlockZ",
+          "desc": "(J)I",
+          "sha256": "e828e771ec9694e28601648b4f8c6a66fafb20474279124bc0064c5bd30c536e"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/pos/DhSectionPos",
+          "method": "getBlockWidth",
+          "desc": "(J)I",
+          "sha256": "1f09aca11b9181cf324d558b8e0f97f7a4de9d17cf615423b8ec0f4892260599"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/pos/DhSectionPos",
+          "method": "getDetailLevelWidthInBlocks",
+          "desc": "(B)I",
+          "sha256": "7812f190411c3a77da6c35ff1d3bbb735d0be47c771562b3810dba65edf84f2f"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/pos/DhSectionPos",
+          "method": "getCenterBlockPosX",
+          "desc": "(J)I",
+          "sha256": "ff248d666f6efb1370ed8a16fc4f7b08228087813fa8e816f039bc826919010b"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/pos/DhSectionPos",
+          "method": "getCenterBlockPosZ",
+          "desc": "(J)I",
+          "sha256": "0d8354603e28e5ae2a25b8ed986a1cc536237f927107b625977386998ac494fa"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/pos/DhSectionPos",
+          "method": "getCenterBlockPosXOrZ",
+          "desc": "(JZ)I",
+          "sha256": "b65279edb8de2f867f6239c0dd8689bfdd5b4bd864e503a79a6e51b96941662d"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/pos/DhSectionPos",
+          "method": "getDhSectionRelativePositionForDetailLevel",
+          "desc": "(JB)J",
+          "sha256": "301ea7c076e3a6bdee32f59d72ed05ade88772ced5edf64d2eef789923ce6e71"
+        },
+        {
+          "class": "com/seibel/distanthorizons/coreapi/util/BitShiftUtil",
+          "method": "powerOfTwo",
+          "desc": "(I)I",
+          "sha256": "3099a289eba531d68e311e3925922fb221648fde6cb8927537f720906ba2779e"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/util/FullDataPointUtil",
+          "method": "getBottomY",
+          "desc": "(J)I",
+          "sha256": "89ab762221cf719371e425606ee284d88c8d4ce051ea389f7e3e2eab72017e77"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/util/FullDataPointUtil",
+          "method": "getHeight",
+          "desc": "(J)I",
+          "sha256": "828d5e8b6dbaa748421e177236b3de659e7372adf35c24377d3e90432b9a5b54"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/pos/blockPos/DhBlockPos",
+          "method": "getX",
+          "desc": "()I",
+          "sha256": "4a1c795787cda2a8033a3b1961f22e9722195aabe05c76460b3b1dbc6a118aed"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/pos/blockPos/DhBlockPos",
+          "method": "getZ",
+          "desc": "()I",
+          "sha256": "7f4700add87e43e37defd208234d449d9161ef9f4fd0b7f734f92981e1a99f86"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of FullDataSourceV2.getDataPointAtBlockPos(IIII)J (its one call) in AbstractDhTintGetter_neoforge.tryGetBlockTint(DhBlockPosMutable, ColorResolver) with a MixinExtras @Share local (one Memo per call)",
+      "license": "LGPL-3.0 (Distant Horizons): the helper restates DH's own integer arithmetic for the column index (every DhSectionPos method it mirrors is fingerprinted), which LGPL-3.0 allows in our GPL-3.0 source; it calls DH's own getColumnAtRelPos and falls back to DH's own method outside data detail 0..30 (helper bons.furious.patch.distanthorizons_tint.TintColumns)"
+    }
+  }
+}

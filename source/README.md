@@ -1,21 +1,23 @@
 # Bons and Furious — Minecraft 1.21.1 / NeoForge
 
-This is the Minecraft 1.21.1 port of Bons and Furious 1.0.35. It uses mod ID `bons_and_furious`, version
-`1.0.35+mc1.21.1`, and requires Java 21 and NeoForge 21.1.252 or newer. Minecraft is restricted to exactly 1.21.1.
+This is the Minecraft 1.21.1 port of Bons and Furious 1.0.38. It uses mod ID `bons_and_furious`, version
+`1.0.38+mc1.21.1`, and requires Java 21 and NeoForge 21.1.252 or newer. Minecraft is restricted to exactly 1.21.1.
 The tested loader is 21.1.252; later loaders are not automatically qualified.
 
-It builds on the published 1.0.34+mc1.21.1 (SHA-256
-`28ce16731f1ef4192b5d25c5e6e6cb02b2d1d838b6b30d94d2fd423e6ec81895`) and adds what 1.0.35 changed on Forge 1.20.1,
-taken from the Forge 1.0.35 release (SHA-256
-`a424ab941346ac4709b1664f781739621d3ca83bc2d817aa92a2b6f8860f847d`). The earlier ports are the qualified 1.0.27 port
-(`1.0.27+mc1.21.1`, SHA-256 `04d25a1bbed6f8d3eb40e8c5de71195f0847d886db37b48459c4d6818147ab82`), 1.0.30+mc1.21.1,
-which added what 1.0.28 to 1.0.30 added, 1.0.33+mc1.21.1, which added what 1.0.31 to 1.0.33 added, and
-1.0.34+mc1.21.1, which added what 1.0.34 changed. This port has its own artifact name and does not replace the Forge
-1.20.1 release.
+It builds on the published 1.0.35+mc1.21.1 (SHA-256
+`9c846abbf874ee01a7df2500b13363737afa4faa81f1800c6f0ca23275ce481a`) and adds what 1.0.36 changed on Forge 1.20.1,
+taken from the Forge 1.0.36 release (SHA-256
+`96ec1b62d1c109cf6e24326ca4f1f50d4ee77d4ed715751bcad204ee17adf88c`), and the one change of the Forge 1.0.38 release
+(SHA-256 `4e78bd0684f99cdbda8cf060e52e00f1196eba07057610f44e677748d5c0cba6`), which has the same switches. The earlier
+ports are the qualified 1.0.27 port (`1.0.27+mc1.21.1`, SHA-256
+`04d25a1bbed6f8d3eb40e8c5de71195f0847d886db37b48459c4d6818147ab82`), 1.0.30+mc1.21.1, which added what 1.0.28 to
+1.0.30 added, 1.0.33+mc1.21.1, which added what 1.0.31 to 1.0.33 added, 1.0.34+mc1.21.1 and 1.0.35+mc1.21.1, which
+added what 1.0.34 and 1.0.35 changed. This port has its own artifact name and does not replace the Forge 1.20.1
+release.
 
 ## Install
 
-Put `bons_and_furious-neoforge-1.0.35+mc1.21.1.jar` in the `mods` folder of a Minecraft 1.21.1 NeoForge instance.
+Put `bons_and_furious-neoforge-1.0.38+mc1.21.1.jar` in the `mods` folder of a Minecraft 1.21.1 NeoForge instance.
 Optional target mods are not required; their patches only apply when the relevant targets and method fingerprints
 match. MixinSquared is bundled; NeoForge supplies MixinExtras.
 
@@ -25,9 +27,9 @@ dedicated servers, where client-only target mods should not be installed.
 
 ## Coverage and compatibility
 
-The port ships **171 controls**: 167 switches guarded by 1,326 method or class-shape checks, three legacy mixin
-controls and the Scorched function fix. Bons and Furious 1.0.35 has 255 controls in all; 42 are retired because the
-1.21.1 target changed or already does the work, and 42 depend on target mods with no 1.21.1 NeoForge build.
+The port ships **205 controls**: 201 switches guarded by 1,726 method or class-shape checks, three legacy mixin
+controls and the Scorched function fix. Bons and Furious 1.0.38 has 306 controls in all; 55 are retired because the
+1.21.1 target changed or already does the work, and 46 depend on target mods with no 1.21.1 NeoForge build.
 [PORT-COVERAGE.md](PORT-COVERAGE.md) accounts for every one of them.
 
 Of the 121 switches that 1.0.28 to 1.0.30 added, 83 are ported, 28 are retired (most because the 1.21.1 build of the
@@ -37,8 +39,11 @@ three JEI start-up switches (`jei_brewing_lookup`, `jei_tooltip_words`, `jei_hid
 and `vanilla_climate_sample_xz_parts`. `forge_custom_payload_heap_copy` is retired: Minecraft 1.21.1 decodes custom
 payloads before that code, so there is nothing to copy. The one control that 1.0.34 added,
 `distanthorizons_join_config_resend`, is ported, and so is the one that 1.0.35 added, `vanilla_mob_class_warmup`.
+Of the 51 that 1.0.36 added, 34 are ported, 13 are retired (their 1.21.1 target changed or was fixed upstream) and
+4 have no 1.21.1 target (Rats, Alex's Caves, Alex's Mobs and Timeless and Classics Zero have no NeoForge 1.21.1
+build by their authors).
 
-Six crash fixes are included. `oculus_entity_vertex_reuse` (Iris) runs at priority 999 so Accelerated Rendering's
+Eight crash fixes are included; the two newest are described under 1.0.38+mc1.21.1 below. `oculus_entity_vertex_reuse` (Iris) runs at priority 999 so Accelerated Rendering's
 offset changes apply to it (1.0.27+mc1.21.1 crashes with Accelerated Rendering and Iris). `vanilla_model_bone_lookup`
 stands down inside a mod's own overwrite of that method (Embeddium without Iris). A switch that replaces another mod's
 mixin steps aside while a third mod refines that mixin through MixinSquared. `terrain_final_density_reuse` overwrites
@@ -78,6 +83,25 @@ New in 1.0.35+mc1.21.1, from the Forge 1.0.35 release:
   The effect on the first night's lag spikes was measured on Forge 1.20.1; this port was checked for correctness, and
   the timing was not repeated on 1.21.1.
 
+New in 1.0.38+mc1.21.1, from the Forge 1.0.36 and 1.0.38 releases:
+- 34 of the 51 switches Forge 1.0.36 added, on by default as in Forge: L_Ender's Cataclysm 3.33 (attack-area and
+  beam scans, leg solvers, coral swimming checks, the Monstrous Helm scan, boss block breaking, idle animations,
+  pose-hand events, shield layer poses and two client leaks), Lionfish API 3.1 models, item renderers built once per
+  item for Aquaculture and Jaden's Nether Expansion, Distant Horizons 3.3.3 (LOD output streams, tint lookups), Entity
+  Model Features 3.3.9, and Minecraft's entity outline pass, chunk saving, inventory advancement triggers, entity
+  selectors by type and by tag, terrain noise columns, the climate search, basalt columns, the nearest-structure
+  search and the structure template cache. Their 1.20.1 measurements are not repeated for this port.
+- Sable 2.0.6 (Create Aeronautics' physics library) with Storage Drawers: every port since 1.0.30+mc1.21.1 stopped while
+  a world started, because Mixin refused our `PlayerList.broadcast` hook inside Sable's replacement of that method.
+  `storagedrawers_count_sync_holders` now runs at a higher priority and steps aside, with one log line, when another
+  mod replaces the method; Sable's method stays as it ships.
+- From Forge 1.0.38: a switch that changes another mod's mixin steps aside, with one log line, when a third mod cancels
+  that mixin through MixinSquared, instead of stopping the game at start.
+- A mod whose own patch cannot be checked is now left as it ships: the switch that would replace that patch steps
+  aside, and nothing of that mod is cancelled.
+- `citadel_pose_hand_events` skips Citadel's pose-hand event only while nothing listens to it (the two listeners the
+  Forge version recognises, Alex's Caves and Alex's Mobs, have no NeoForge 1.21.1 build).
+
 The Oculus-prefixed switches target Iris. The tested Iris pairing is Iris 1.8.12 with Sodium 0.6.13. Embeddium 1.0.15
 is tested separately; do not combine Embeddium with Sodium/Iris. Embeddium owns model bone lookup when installed.
 Native Lithium owns block-entity state and POI indexing when installed. The Radium compatibility paths apply to
@@ -86,13 +110,18 @@ Radium 0.13.1, not native Lithium.
 Switches that step aside on purpose, because another mod replaces the same code:
 - with C2ME 0.4 (`0.4.0-alpha.0.122+1.21.1`, the reviewed build): `vanilla_ticking_chunk_memo`,
   `worldgen_empty_beardifier_marker`, `terrablender_lazy_namespace_rules`, `vanilla_aquifer_candidate_cache` and
-  `vanilla_beardifier_influence_bounds` (C2ME's vanilla worldgen module overwrites Beardifier.compute);
+  `vanilla_beardifier_influence_bounds` (C2ME's vanilla worldgen module overwrites Beardifier.compute), and
+  `vanilla_noise_column_cell_fill` and `vanilla_noise_corner_share` (its density-function compiler rewrites the
+  NoiseChunk cell and slice code);
 - with Radium 0.13.1 at its defaults: `vanilla_long_jump_weighted_pick` and `vanilla_raycast_fluid_none`; with its
   optional modules on: `vanilla_game_event_registry_lookup`, `vanilla_item_merge_candidates`;
 - with native Lithium's game-event dispatch: `vanilla_game_event_registry_lookup`;
 - with ServerCore 1.5.19, which redirects the same call in `ServerChunkCache.tickChunks`: `vanilla_spawn_gate_visibility_memo`;
-- with Generator Accelerator 1.6.2, which replaces both methods: `vanilla_beardifier_influence_bounds` and
-  `vanilla_climate_sample_xz_parts`;
+- with Generator Accelerator 1.6.2, which replaces the same methods: `vanilla_beardifier_influence_bounds`,
+  `vanilla_climate_sample_xz_parts`, `vanilla_noise_column_summary`, `vanilla_noise_column_cell_fill`,
+  `vanilla_noise_corner_share` and `vanilla_structure_template_hits`;
+- with Structurify 2.0.42, whose own mixin wraps the same search loop: `vanilla_structure_ring_search`;
+- with Bye Pregen 1.1.3.0, whose climate search keeps its own state in the same field: `vanilla_climate_last_result_weak`;
 - with any mod that hooks the same NoiseChunk calls (C2ME 0.4's density-function compiler, Generator Accelerator's
   final-density hook): `terrain_density_memo`, `terrain_final_density_reuse` and `vanilla_noise_wrap_presize`, each
   for the call that mod hooks;
@@ -133,8 +162,8 @@ On Unix, use `./gradlew build`. The wrapper pins Gradle 9.2.1 and the build pins
 directories. It does not install those mods into a game.
 
 `build` checks all fingerprints against the pinned targets and refuses a stale guard table. Do not refresh fingerprints
-merely to silence a mismatch: review the target's behavior first. Nineteen methods have explicitly reviewed alternate
-fingerprints for the equivalent NeoForm development and Mojang production instruction layouts (21 guard entries). No
+merely to silence a mismatch: review the target's behavior first. Thirty-three methods have explicitly reviewed alternate
+fingerprints for the equivalent NeoForm development and Mojang production instruction layouts (41 guard entries). No
 wildcard hashes are accepted.
 
 The output is in `build/libs/`. `src/probe` is a separate qualification mod; `gradlew.bat probeJar` builds it

@@ -1,0 +1,133 @@
+{
+  "group": "vanilla_inventory_index",
+  "keys": {
+    "vanilla_inventory_trigger_index": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.vanilla_inventory_index.InventoryChangeTriggerContextMixin",
+        "bons.furious.mixin.vanilla_inventory_index.SimpleCriterionTriggerIndexMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/advancements/critereon/SimpleCriterionTrigger",
+          "method": "trigger",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;Ljava/util/function/Predicate;)V",
+          "sha256": "4f40afad9a09149e7aff70d1c13ec4c638f444f034d8820e89732ed42d242369",
+          "sha256_variants": [
+            "960dfd53fb57e34e29abf1efdb464f233f1d44902b4b36968dbbf6cca08ee524"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (server and client srg jars): the null/empty listener-set check returns directly and the predicate test branches with ifne/goto instead of ifeq; same calls in the same order otherwise. See work/lanes/S6/evidence/prod-variants-bytecode-diff.txt."
+        },
+        {
+          "class": "net/minecraft/advancements/critereon/SimpleCriterionTrigger",
+          "method": "addPlayerListener",
+          "desc": "(Lnet/minecraft/server/PlayerAdvancements;Lnet/minecraft/advancements/CriterionTrigger$Listener;)V",
+          "sha256": "b8dbe5b422ca3d84dea19615107383af2af3223455720994cf98d6f5498dc5ba"
+        },
+        {
+          "class": "net/minecraft/advancements/critereon/SimpleCriterionTrigger",
+          "method": "removePlayerListener",
+          "desc": "(Lnet/minecraft/server/PlayerAdvancements;Lnet/minecraft/advancements/CriterionTrigger$Listener;)V",
+          "sha256": "3d63a55cb3fc448001d87f1e2ac5bef1bcff7383444de752367672337ec78405"
+        },
+        {
+          "class": "net/minecraft/advancements/critereon/SimpleCriterionTrigger",
+          "method": "removePlayerListeners",
+          "desc": "(Lnet/minecraft/server/PlayerAdvancements;)V",
+          "sha256": "ab25edb716799b60c38efddb73c7c928924071f879a362aef9be5e3de1a18c6f"
+        },
+        {
+          "class": "net/minecraft/advancements/critereon/SimpleCriterionTrigger",
+          "method": "*",
+          "desc": "",
+          "sha256": "7cda37a2aa4a966bffcfd1e9cef7e82de5b4af33f37bb1624ebb85481fa5f284"
+        },
+        {
+          "class": "net/minecraft/advancements/critereon/InventoryChangeTrigger",
+          "method": "trigger",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/item/ItemStack;III)V",
+          "sha256": "9c908433702d063d0f865e294ee91f3b446f9a853d3b1e141851ae077cf6c704"
+        },
+        {
+          "class": "net/minecraft/advancements/critereon/InventoryChangeTrigger",
+          "method": "trigger",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/item/ItemStack;)V",
+          "sha256": "4991c1cdb912d3d79ef83ded372345567b8ee7c24f97b29b5252274a8f7bc864"
+        },
+        {
+          "class": "net/minecraft/advancements/critereon/InventoryChangeTrigger",
+          "method": "lambda$trigger$0",
+          "desc": "(Lnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/item/ItemStack;IIILnet/minecraft/advancements/critereon/InventoryChangeTrigger$TriggerInstance;)Z",
+          "sha256": "0636259c722d5319f7eb1760c4d13a6b4b4c8ddeb7396fc90ef238e81e00b5b9"
+        },
+        {
+          "class": "net/minecraft/advancements/critereon/InventoryChangeTrigger$TriggerInstance",
+          "method": "matches",
+          "desc": "(Lnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/world/item/ItemStack;III)Z",
+          "sha256": "4193bb49075e2d5899018688ff9e3a5f0a8d45ad93780cfff0618d120e9a95b8",
+          "sha256_variants": [
+            "62cdb6a402af2cd47aa2d3078e7663e1f0caeea59194ad7e1ce8db863f1ddfd5"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (server and client srg jars): the one-condition branch (!stack.isEmpty() && items.get(0).test(stack)) is placed before the several-conditions inventory walk instead of after it; same instructions otherwise. See work/lanes/S6/evidence/prod-variants-bytecode-diff.txt."
+        },
+        {
+          "class": "net/minecraft/advancements/critereon/InventoryChangeTrigger$TriggerInstance$Slots",
+          "method": "matches",
+          "desc": "(III)Z",
+          "sha256": "0f20baa2f562849782fc133372d6197d183b5fde24eacc6739023cb04eebbc18",
+          "sha256_variants": [
+            "317372484080bb1b8a258f6f8d7a12864e410d8674c079e1ccfb5e011a5cd20e"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (server and client srg jars): the full/empty bound checks return false directly and the occupied check returns true/false explicitly where the NeoForm recompilation jumps to a shared return; same results. See work/lanes/S6/evidence/prod-variants-bytecode-diff.txt."
+        },
+        {
+          "class": "net/minecraft/advancements/critereon/ItemPredicate",
+          "method": "test",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "sha256": "1254943a65837dd14d9f73c8a7d52493ac654885b1e9f1113ab0ffd5cd6700e0"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "is",
+          "desc": "(Lnet/minecraft/core/HolderSet;)Z",
+          "sha256": "96d7559f4fbe4af5da32bfe10b08dd1cba80f67823bf88aafd96ae8dfde1e138"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "getItemHolder",
+          "desc": "()Lnet/minecraft/core/Holder;",
+          "sha256": "1c9b87de9ee3a1954008ec37c481ff625571afeca88bb355c59eefbffc8e287c"
+        },
+        {
+          "class": "net/minecraft/core/HolderSet$Direct",
+          "method": "contains",
+          "desc": "(Lnet/minecraft/core/Holder;)Z",
+          "sha256": "c0d8ac4e49eacda495dc931e57d497962d9d72f5fce49e596f33172b327d979e"
+        },
+        {
+          "class": "net/minecraft/core/Holder$Reference",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "sha256": "4dde0cfd0b7a94a8df97989225bf1d048b1cfea87c57d88bcd44473204ace117"
+        },
+        {
+          "class": "net/minecraft/core/Holder$Reference",
+          "method": "hashCode",
+          "desc": "()I",
+          "sha256": "3033924819b71ad811429e46386f6bf61b55c08c1c175283ce710819d6dfce05"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerPlayer",
+          "method": "getAdvancements",
+          "desc": "()Lnet/minecraft/server/PlayerAdvancements;",
+          "sha256": "5854630aee6925f0286ce86d78be813caab48cf2656b178ca314fb7eb9d21dff"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on InventoryChangeTrigger's private trigger(ServerPlayer, Inventory, ItemStack, int, int, int) (notes the changed stack and the player's PlayerAdvancements for this thread), @WrapOperation on the Set.iterator() call in SimpleCriterionTrigger.trigger (for an InventoryChangeTrigger during an inventory change: an iterator over the other listeners plus the simple listeners indexed under the stack item's registry key, in the set's own order), @Inject HEAD of addPlayerListener/removePlayerListener/removePlayerListeners (listener-map version); a simple listener's single item condition is an explicit item list (HolderSet.Direct of plain Holder.References), read through the records' public accessors; stands down when another mixin is merged into ItemPredicate, InventoryChangeTrigger, its TriggerInstance or Slots, SimpleCriterionTrigger, HolderSet.Direct or Holder.Reference",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.vanilla_inventory_index.ListenerIndex); vanilla's own loop evaluates and grants"
+    }
+  }
+}

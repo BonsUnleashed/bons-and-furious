@@ -1,4 +1,4 @@
-# Bons and Furious â€” notices
+# Bons and Furious — notices
 
 Copyright 2026 BonsUnleashed and contributors. Our code and modifications are
 provided under GNU GPL version 3. The full text is in LICENSE.
@@ -59,3 +59,20 @@ upstream-credits.json; upstream-credits-1.20.1.json preserves historical provena
 Oculus switches target Iris; unavailable mods and patches fixed upstream are
 listed in PORT-COVERAGE.md. Historical source comments and measurements refer
 to the original 1.20.1 work, not new 1.21.1 performance results.
+
+Targets added in 1.0.38+mc1.21.1, which ports the switches Forge 1.0.36 added
+together with the MixinSquared cancellation check of Forge 1.0.38: Aquaculture 2
+(Shadowclaimer, Girafi, All Rights Reserved) and L_Ender's Cataclysm (L_Ender;
+source code CC-BY-NC-ND-4.0, assets all rights reserved). Their exact tested JAR
+digests are in upstream-credits.json. No target JAR or asset is redistributed; these
+targets get only our own code, as described above. Entity Model Features'
+getEntityVariable (LGPL-3.0) is carried as a modified copy, distributed with its
+source.
+
+Ideas credited in 1.0.38+mc1.21.1. Several of the switches this release ports follow
+an idea another project described; we worked from those descriptions only
+(changelogs, documentation, option names, issue and pull request text), never from
+their code: Collections Of Optimizations, C2ME, Paper, Gale, Leaves, Bellows,
+Lithium (documentation), TickMender, InventoryAdvancementAccelerator, Sodium (pull
+request #2679) and AzureLib. The Forge release's bons_and_furious.properties names
+the idea behind each switch on its "Idea:" line; "ours" marks our own designs.

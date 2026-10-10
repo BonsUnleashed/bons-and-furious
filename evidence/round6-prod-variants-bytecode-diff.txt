@@ -1,0 +1,335 @@
+Lane S6, 2026-10-09: javap -c of each guarded method whose production fingerprint (neoforge-21.1.252-server/client.jar patched classes, then Mojang's server/client srg jar) differs from the NeoForm artifact's. Constant-pool indices dropped; server and client production fingerprints are identical (work/lanes/S6/evidence/prod-check.json).
+
+===== net.minecraft.world.level.block.state.StateHolder.lambda$codec$2 
+--- neoform
++++ production
+@@ -8,14 +8,14 @@
+ astore_2
+ aload_2
+-invokevirtual #                 // Method getValues:()Ljava/util/Map;
+-invokeinterface #           // InterfaceMethod java/util/Map.isEmpty:()Z
+-ifeq          30
++invokevirtual #                // Method getValues:()Ljava/util/Map;
++invokeinterface #          // InterfaceMethod java/util/Map.isEmpty:()Z
++ifeq          28
+ aload_2
+ invokestatic  #                // Method com/mojang/serialization/MapCodec.unit:(Ljava/lang/Object;)Lcom/mojang/serialization/MapCodec;
+-goto          59
++areturn
+ aload_2
+ getfield      #                 // Field propertiesCodec:Lcom/mojang/serialization/MapCodec;
+ invokevirtual #                // Method com/mojang/serialization/MapCodec.codec:()Lcom/mojang/serialization/Codec;
+-ldc_w         #                // String Properties
++ldc           #                 // String Properties
+ invokeinterface #          // InterfaceMethod com/mojang/serialization/Codec.lenientOptionalFieldOf:(Ljava/lang/String;)Lcom/mojang/serialization/MapCodec;
+ aload_2
+
+===== net.minecraft.nbt.NbtOps$NbtRecordBuilder.build CompoundTag;Lnet/minecraft/nbt/Tag;
+--- neoform
++++ production
+@@ -11,15 +11,9 @@
+ areturn
+ aload_2
+-instanceof    #                  // class net/minecraft/nbt/CompoundTag
+-ifeq          31
++instanceof    #                 // class net/minecraft/nbt/CompoundTag
++ifeq          102
+ aload_2
+-checkcast     #                  // class net/minecraft/nbt/CompoundTag
++checkcast     #                 // class net/minecraft/nbt/CompoundTag
+ astore_3
+-goto          42
+-aload_2
+-invokedynamic #             // InvokeDynamic #:get:(Lnet/minecraft/nbt/Tag;)Ljava/util/function/Supplier;
+-aload_2
+-invokestatic  #                 // InterfaceMethod com/mojang/serialization/DataResult.error:(Ljava/util/function/Supplier;Ljava/lang/Object;)Lcom/mojang/serialization/DataResult;
+-areturn
+ aload_3
+ invokevirtual #                 // Method net/minecraft/nbt/CompoundTag.shallowCopy:()Lnet/minecraft/nbt/CompoundTag;
+@@ -31,5 +25,5 @@
+ aload         5
+ invokeinterface #           // InterfaceMethod java/util/Iterator.hasNext:()Z
+-ifeq          110
++ifeq          96
+ aload         5
+ invokeinterface #           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+@@ -45,6 +39,11 @@
+ invokevirtual #                 // Method net/minecraft/nbt/CompoundTag.put:(Ljava/lang/String;Lnet/minecraft/nbt/Tag;)Lnet/minecraft/nbt/Tag;
+ pop
+-goto          59
++goto          45
+ aload         4
+ invokestatic  #                 // InterfaceMethod com/mojang/serialization/DataResult.success:(Ljava/lang/Object;)Lcom/mojang/serialization/DataResult;
+ areturn
++aload_2
++invokedynamic #            // InvokeDynamic #:get:(Lnet/minecraft/nbt/Tag;)Ljava/util/function/Supplier;
++aload_2
++invokestatic  #                // InterfaceMethod com/mojang/serialization/DataResult.error:(Ljava/util/function/Supplier;Ljava/lang/Object;)Lcom/mojang/serialization/DataResult;
++areturn
+
+===== net.minecraft.advancements.critereon.SimpleCriterionTrigger.trigger 
+--- neoform
++++ production
+@@ -3,5 +3,5 @@
+ Code:
+ aload_1
+-invokevirtual #                 // Method net/minecraft/server/level/ServerPlayer.getAdvancements:()Lnet/minecraft/server/PlayerAdvancements;
++invokevirtual #                // Method net/minecraft/server/level/ServerPlayer.getAdvancements:()Lnet/minecraft/server/PlayerAdvancements;
+ astore_3
+ aload_0
+@@ -12,46 +12,48 @@
+ astore        4
+ aload         4
+-ifnull        198
++ifnull        35
+ aload         4
+ invokeinterface #           // InterfaceMethod java/util/Set.isEmpty:()Z
+-ifne          198
++ifeq          36
++return
+ aload_1
+ aload_1
+-invokestatic  #                 // Method net/minecraft/advancements/critereon/EntityPredicate.createContext:(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/level/storage/loot/LootContext;
++invokestatic  #                // Method net/minecraft/advancements/critereon/EntityPredicate.createContext:(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/level/storage/loot/LootContext;
+ astore        5
+ aconst_null
+ astore        6
+ aload         4
+-invokeinterface #           // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
++invokeinterface #          // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+ astore        7
+ aload         7
+-invokeinterface #           // InterfaceMethod java/util/Iterator.hasNext:()Z
+-ifeq          153
++invokeinterface #          // InterfaceMethod java/util/Iterator.hasNext:()Z
++ifeq          157
+ aload         7
+-invokeinterface #           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
++invokeinterface #          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+ checkcast     #                 // class net/minecraft/advancements/CriterionTrigger$Listener
+ astore        8
+ aload         8
+-invokevirtual #                 // Method net/minecraft/advancements/CriterionTrigger$Listener.trigger:()Lnet/minecraft/advancements/CriterionTriggerInstance;
++invokevirtual #                // Method net/minecraft/advancements/CriterionTrigger$Listener.trigger:()Lnet/minecraft/advancements/CriterionTriggerInstance;
+ checkcast     #                 // class net/minecraft/advancements/critereon/SimpleCriterionTrigger$SimpleInstance
+ astore        9
+ aload_2
+ aload         9
+-invokeinterface #           // InterfaceMethod java/util/function/Predicate.test:(Ljava/lang/Object;)Z
+-ifeq          150
++invokeinterface #          // InterfaceMethod java/util/function/Predicate.test:(Ljava/lang/Object;)Z
++ifne          101
++goto          55
+ aload         9
+-invokeinterface #           // InterfaceMethod net/minecraft/advancements/critereon/SimpleCriterionTrigger$SimpleInstance.player:()Ljava/util/Optional;
++invokeinterface #          // InterfaceMethod net/minecraft/advancements/critereon/SimpleCriterionTrigger$SimpleInstance.player:()Ljava/util/Optional;
+ astore        10
+ aload         10
+-invokevirtual #                 // Method java/util/Optional.isEmpty:()Z
+-ifne          130
++invokevirtual #                // Method java/util/Optional.isEmpty:()Z
++ifne          134
+ aload         10
+-invokevirtual #                 // Method java/util/Optional.get:()Ljava/lang/Object;
+-checkcast     #                 // class net/minecraft/advancements/critereon/ContextAwarePredicate
++invokevirtual #                // Method java/util/Optional.get:()Ljava/lang/Object;
++checkcast     #                // class net/minecraft/advancements/critereon/ContextAwarePredicate
+ aload         5
+-invokevirtual #                 // Method net/minecraft/advancements/critereon/ContextAwarePredicate.matches:(Lnet/minecraft/world/level/storage/loot/LootContext;)Z
+-ifeq          150
++invokevirtual #                // Method net/minecraft/advancements/critereon/ContextAwarePredicate.matches:(Lnet/minecraft/world/level/storage/loot/LootContext;)Z
++ifeq          154
+ aload         6
+-ifnonnull     140
++ifnonnull     144
+ invokestatic  #                // Method com/google/common/collect/Lists.newArrayList:()Ljava/util/ArrayList;
+ astore        6
+@@ -60,15 +62,15 @@
+ invokeinterface #          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+ pop
+-goto          54
++goto          55
+ aload         6
+-ifnull        198
++ifnull        202
+ aload         6
+ invokeinterface #          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+ astore        7
+ aload         7
+-invokeinterface #           // InterfaceMethod java/util/Iterator.hasNext:()Z
+-ifeq          198
++invokeinterface #          // InterfaceMethod java/util/Iterator.hasNext:()Z
++ifeq          202
+ aload         7
+-invokeinterface #           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
++invokeinterface #          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+ checkcast     #                 // class net/minecraft/advancements/CriterionTrigger$Listener
+ astore        8
+@@ -76,4 +78,4 @@
+ aload_3
+ invokevirtual #                // Method net/minecraft/advancements/CriterionTrigger$Listener.run:(Lnet/minecraft/server/PlayerAdvancements;)V
+-goto          167
++goto          171
+ return
+
+===== net.minecraft.advancements.critereon.InventoryChangeTrigger$TriggerInstance.matches 
+--- neoform
++++ production
+@@ -21,5 +21,20 @@
+ invokeinterface #          // InterfaceMethod java/util/List.size:()I
+ iconst_1
+-if_icmpeq     130
++if_icmpne     77
++aload_2
++invokevirtual #                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z
++ifne          75
++aload_0
++getfield      #                 // Field items:Ljava/util/List;
++iconst_0
++invokeinterface #          // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
++checkcast     #                 // class net/minecraft/advancements/critereon/ItemPredicate
++aload_2
++invokevirtual #                // Method net/minecraft/advancements/critereon/ItemPredicate.test:(Lnet/minecraft/world/item/ItemStack;)Z
++ifeq          75
++iconst_1
++goto          76
++iconst_0
++ireturn
+ new           #                // class it/unimi/dsi/fastutil/objects/ObjectArrayList
+ dup
+@@ -35,8 +50,8 @@
+ iload         8
+ iload         7
+-if_icmpge     122
++if_icmpge     155
+ aload         6
+ invokeinterface #          // InterfaceMethod java/util/List.isEmpty:()Z
+-ifeq          85
++ifeq          118
+ iconst_1
+ ireturn
+@@ -47,5 +62,5 @@
+ aload         9
+ invokevirtual #                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z
+-ifne          116
++ifne          149
+ aload         6
+ aload         9
+@@ -54,21 +69,6 @@
+ pop
+ iinc          8, 1
+-goto          66
++goto          99
+ aload         6
+ invokeinterface #          // InterfaceMethod java/util/List.isEmpty:()Z
+ ireturn
+-aload_2
+-invokevirtual #                // Method net/minecraft/world/item/ItemStack.isEmpty:()Z
+-ifne          161
+-aload_0
+-getfield      #                 // Field items:Ljava/util/List;
+-iconst_0
+-invokeinterface #          // InterfaceMethod java/util/List.get:(I)Ljava/lang/Object;
+-checkcast     #                 // class net/minecraft/advancements/critereon/ItemPredicate
+-aload_2
+-invokevirtual #                // Method net/minecraft/advancements/critereon/ItemPredicate.test:(Lnet/minecraft/world/item/ItemStack;)Z
+-ifeq          161
+-iconst_1
+-goto          162
+-iconst_0
+-ireturn
+
+===== net.minecraft.advancements.critereon.InventoryChangeTrigger$TriggerInstance$Slots.matches 
+--- neoform
++++ production
+@@ -13,10 +13,14 @@
+ iload_2
+ invokevirtual #                 // Method net/minecraft/advancements/critereon/MinMaxBounds$Ints.matches:(I)Z
+-ifne          28
++ifne          26
+ iconst_0
+-goto          36
++ireturn
+ aload_0
+-getfield      #                  // Field occupied:Lnet/minecraft/advancements/critereon/MinMaxBounds$Ints;
++getfield      #                 // Field occupied:Lnet/minecraft/advancements/critereon/MinMaxBounds$Ints;
+ iload_3
+ invokevirtual #                 // Method net/minecraft/advancements/critereon/MinMaxBounds$Ints.matches:(I)Z
++ifne          39
++iconst_0
+ ireturn
++iconst_1
++ireturn
+
+===== net.minecraft.commands.arguments.selector.options.EntitySelectorOptions.lambda$bootStrap$46 
+--- neoform
++++ production
+@@ -5,5 +5,5 @@
+ aload_0
+ invokevirtual #                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+-ifeq          31
++ifeq          29
+ aload_2
+ invokevirtual #                // Method net/minecraft/world/entity/Entity.getTags:()Ljava/util/Set;
+@@ -12,7 +12,7 @@
+ if_icmpeq     27
+ iconst_1
+-goto          50
++goto          28
+ iconst_0
+-goto          50
++ireturn
+ aload_2
+ invokevirtual #                // Method net/minecraft/world/entity/Entity.getTags:()Ljava/util/Set;
+@@ -20,7 +20,7 @@
+ invokeinterface #          // InterfaceMethod java/util/Set.contains:(Ljava/lang/Object;)Z
+ iload_1
+-if_icmpeq     49
++if_icmpeq     47
+ iconst_1
+-goto          50
++goto          48
+ iconst_0
+ ireturn
+
+===== net.minecraft.world.level.entity.EntityLookup.add 
+--- neoform
++++ production
+@@ -3,27 +3,27 @@
+ Code:
+ aload_1
+-invokeinterface #           // InterfaceMethod net/minecraft/world/level/entity/EntityAccess.getUUID:()Ljava/util/UUID;
++invokeinterface #          // InterfaceMethod net/minecraft/world/level/entity/EntityAccess.getUUID:()Ljava/util/UUID;
+ astore_2
+ aload_0
+ getfield      #                 // Field byUuid:Ljava/util/Map;
+ aload_2
+-invokeinterface #           // InterfaceMethod java/util/Map.containsKey:(Ljava/lang/Object;)Z
+-ifeq          35
+-getstatic     #                 // Field LOGGER:Lorg/slf4j/Logger;
+-ldc           #                 // String Duplicate entity UUID {}: {}
++invokeinterface #          // InterfaceMethod java/util/Map.containsKey:(Ljava/lang/Object;)Z
++ifeq          33
++getstatic     #                // Field LOGGER:Lorg/slf4j/Logger;
++ldc           #                // String Duplicate entity UUID {}: {}
+ aload_2
+ aload_1
+-invokeinterface #           // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
+-goto          64
++invokeinterface #          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
++return
+ aload_0
+ getfield      #                 // Field byUuid:Ljava/util/Map;
+ aload_2
+ aload_1
+-invokeinterface #           // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
++invokeinterface #          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+ pop
+ aload_0
+ getfield      #                 // Field byId:Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;
+ aload_1
+-invokeinterface #           // InterfaceMethod net/minecraft/world/level/entity/EntityAccess.getId:()I
++invokeinterface #          // InterfaceMethod net/minecraft/world/level/entity/EntityAccess.getId:()I
+ aload_1
+ invokeinterface #          // InterfaceMethod it/unimi/dsi/fastutil/ints/Int2ObjectMap.put:(ILjava/lang/Object;)Ljava/lang/Object;
+

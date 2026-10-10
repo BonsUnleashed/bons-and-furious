@@ -1,0 +1,48 @@
+{
+  "group": "distanthorizons_streams",
+  "keys": {
+    "distanthorizons_unlocked_output_stream": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.distanthorizons_streams.UnlockedOutputStreamMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/core/util/objects/dataStreams/DhDataOutputStream",
+          "method": "create",
+          "desc": "(Lcom/seibel/distanthorizons/api/enums/config/EDhApiDataCompressionMode;Lit/unimi/dsi/fastutil/bytes/ByteArrayList;)Lcom/seibel/distanthorizons/core/util/objects/dataStreams/DhDataOutputStream;",
+          "sha256": "a6e06a4d93bf16a33e2ab652c77ceb94801b8312151317b08e42b8ccbede7ccc"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/util/objects/dataStreams/DhDataOutputStream",
+          "method": "<init>",
+          "desc": "(Ljava/io/ByteArrayOutputStream;Lcom/seibel/distanthorizons/api/enums/config/EDhApiDataCompressionMode;Lit/unimi/dsi/fastutil/bytes/ByteArrayList;)V",
+          "sha256": "700362b36c7f3cd1cc76a8fe5e4773789810743b5c4df7776b19aae0f49669d0"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/util/objects/dataStreams/DhDataOutputStream",
+          "method": "warpStream",
+          "desc": "(Ljava/io/ByteArrayOutputStream;Lcom/seibel/distanthorizons/api/enums/config/EDhApiDataCompressionMode;)Ljava/io/OutputStream;",
+          "sha256": "f295402f30eae4d60bbb655cbdd25db34b03e698c4aa18d19f884b792383311c"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/util/objects/dataStreams/DhDataOutputStream",
+          "method": "close",
+          "desc": "()V",
+          "sha256": "ea4a80e3b6ea28c986b93b43571db4be550599d090356559b2d39d7bf5c650e9"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/sql/dto/util/VarintUtil",
+          "method": "writeVarint",
+          "desc": "(Lcom/seibel/distanthorizons/core/util/objects/dataStreams/DhDataOutputStream;I)V",
+          "sha256": "7d5d80af4afbf5806a7cdd3511ab02a91dffb2c8730a9cfd0a1f3ca842176ff1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the one new ByteArrayOutputStream() (NEW) in DhDataOutputStream.create(EDhApiDataCompressionMode, ByteArrayList)",
+      "license": "LGPL-3.0 (Distant Horizons): no DH code is carried; the redirected construction builds our ByteArrayOutputStream subclass (helper bons.furious.patch.distanthorizons_streams.UnlockedOutputStream: write, toByteArray, size, reset and writeTo written for it with the JDK's semantics, every other method the JDK's own)"
+    }
+  }
+}

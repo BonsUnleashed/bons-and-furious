@@ -2,6 +2,7 @@ package bons.furious.mixin.datapack_selectors;
 
 import bons.furious.patch.datapack_selectors.SelectorParserState;
 import bons.furious.patch.datapack_selectors.SelectorPrefilter;
+import bons.furious.patch.datapack_selectors.TagParserState;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -21,10 +22,12 @@ import org.spongepowered.asm.mixin.injection.At;
  * parser as they are produced (the negation flag from shouldInvertValue, the TagKey from TagKey.create, the EntityType
  * from the registry lookup's orElseThrow; each returned unchanged), and before each of its two addPredicate calls (tag
  * branch, id branch) the parser is offered a TypeFirstOption with those values around the predicate being added. The
- * predicate object and the addPredicate call are vanilla's, unchanged.
+ * predicate object and the addPredicate call are vanilla's, unchanged. Since 1.0.36 the call is also marked pure for
+ * vanilla_selector_tag_index's parse state (TagParserState, present only with that key's parser mixin).
  *
  * Ported to 1.21.1: unchanged. The handler is lambda$bootStrap$44 in both the NeoForm and the production
- * EntitySelectorOptions (its predicates lambda$bootStrap$41 and $43), with the same calls in the same order.
+ * EntitySelectorOptions (its predicates lambda$bootStrap$41 and $43), with the same calls in the same order. The pure mark
+ * names the predicate object being added (the 1.21.1 tag parse state follows the parser's predicate list by identity).
  */
 @Mixin(value = EntitySelectorOptions.class, remap = false)
 public abstract class EntitySelectorTypeOptionMixin {
@@ -58,6 +61,8 @@ public abstract class EntitySelectorTypeOptionMixin {
             state.bons$offerFirstOption(new SelectorPrefilter.TypeFirstOption(predicate, state.bons$typeTag(), state.bons$typeSingle(),
                     state.bons$typeNegated()));
         }
+        // since 1.0.36: a type predicate is a pure one for vanilla_selector_tag_index's parse state (its mixin present only)
+        if ((Object) parser instanceof TagParserState tags) tags.bons$markPure(predicate);
         original.call(parser, predicate);
     }
 }

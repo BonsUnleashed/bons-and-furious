@@ -1,0 +1,123 @@
+{
+  "group": "vanilla_outline_skip",
+  "keys": {
+    "vanilla_entity_outline_composite_skip": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.vanilla_outline_skip.LevelRendererOutlineMixin",
+        "bons.furious.mixin.vanilla_outline_skip.GlStateOutlineTripwireMixin",
+        "bons.furious.mixin.vanilla_outline_skip.BufferUploaderOutlineMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/renderer/LevelRenderer",
+          "method": "doEntityOutline",
+          "desc": "()V",
+          "note": "doEntityOutline: blend state, entityTarget.blitToScreen(w, h, false), default blend",
+          "sha256": "7d817d020392664424605b39adfe21c8715e42927215d76eb91a167d0e5450c6"
+        },
+        {
+          "class": "net/minecraft/client/renderer/LevelRenderer",
+          "method": "renderLevel",
+          "desc": "(Lnet/minecraft/client/DeltaTracker;ZLnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/renderer/LightTexture;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V",
+          "note": "renderLevel: the entityTarget clear before the entities",
+          "sha256": "e581e66855099ac6e5b21dd8cc981106825bbf0b1b1e46b2db0b6676af07f2dd"
+        },
+        {
+          "class": "net/minecraft/client/renderer/LevelRenderer",
+          "method": "initOutline",
+          "desc": "()V",
+          "note": "initOutline: entityTarget = the entity_outline PostChain's 'final' target",
+          "sha256": "77ebf293ede894420ccf58aaca545cd014a0c999c9bb564971d12be8a35c63d7"
+        },
+        {
+          "class": "com/mojang/blaze3d/pipeline/RenderTarget",
+          "method": "_blitToScreen",
+          "desc": "(IIZ)V",
+          "note": "_blitToScreen: state changes, blit shader, BLIT_SCREEN quad, then BufferUploader.draw",
+          "sha256": "227a665a5dad2799ae59fb80cb0b660c8298ebd37b87e9d08621ee393f142d38"
+        },
+        {
+          "class": "com/mojang/blaze3d/pipeline/RenderTarget",
+          "method": "blitToScreen",
+          "desc": "(IIZ)V",
+          "note": "blitToScreen: calls _blitToScreen directly",
+          "sha256": "aacfc1d1662822da7ceac2b95895446082f8edd3fbc9cf17923418054b002438"
+        },
+        {
+          "class": "com/mojang/blaze3d/pipeline/RenderTarget",
+          "method": "clear",
+          "desc": "(Z)V",
+          "note": "clear: bindWrite, clearColor, clear, unbindWrite",
+          "sha256": "278fde64c5dbe43cda572356b6994b2525df63f14cb132d7e235f14d7f471737"
+        },
+        {
+          "class": "com/mojang/blaze3d/pipeline/RenderTarget",
+          "method": "_bindWrite",
+          "desc": "(Z)V",
+          "note": "_bindWrite: GlStateManager._glBindFramebuffer (the tripwire)",
+          "sha256": "805b6739916f5cea5797363e3443430e385390b4e321cb70fcaa0feaf3633d54"
+        },
+        {
+          "class": "net/minecraft/client/renderer/PostChain",
+          "method": "addTempTarget",
+          "desc": "(Ljava/lang/String;II)V",
+          "note": "addTempTarget: the outline targets' clear colour (0, 0, 0, 0)",
+          "sha256": "03a96ce4b6f4faa8ff665e2d4860d861988c9370298185a372d0644c17b72523"
+        },
+        {
+          "class": "net/minecraft/client/renderer/ShaderInstance",
+          "method": "apply",
+          "desc": "()V",
+          "note": "apply: binds program, samplers and uniforms; sets no blend state on 1.21.1 (doEntityOutline's blend governs the composite)",
+          "sha256": "8b29ea459671632833a1579c56f6d516dc1c7205b1b72b073cd5ce1bf59f94ad"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferUploader",
+          "method": "draw",
+          "desc": "(Lcom/mojang/blaze3d/vertex/MeshData;)V",
+          "note": "draw: upload, then VertexBuffer.draw (the one call left out)",
+          "sha256": "916a031ea3617f6a0c6d828a15a09c47a409b2819addf50c5cff1f03bcbb4c33"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/VertexBuffer",
+          "method": "draw",
+          "desc": "()V",
+          "note": "draw: RenderSystem.drawElements only",
+          "sha256": "75a4fccb76c59dc51e81c4d0d9b2aa0b49d6fbe02a545b17a8aa7dcab6a6f307"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/VertexBuffer",
+          "method": "getFormat",
+          "desc": "()Lcom/mojang/blaze3d/vertex/VertexFormat;",
+          "note": "the uploaded mesh's format (BLIT_SCREEN for the composite)",
+          "sha256": "7ef472011d4272c3af99fd489d1240ba4e2d7fac25dd6289b0e5ec9ce3f78984"
+        },
+        {
+          "class": "com/mojang/blaze3d/platform/GlStateManager",
+          "method": "_glBindFramebuffer",
+          "desc": "(II)V",
+          "sha256": "7438957a64ba6fb66c228bec84c1ecb4f0609f0d650fca76f43166ac452510d5"
+        },
+        {
+          "class": "com/mojang/blaze3d/platform/GlStateManager",
+          "method": "_bindTexture",
+          "desc": "(I)V",
+          "sha256": "cd4737da452977be068bee5e5136174500403ac482e0e21f95bbe858d5333723"
+        },
+        {
+          "class": "net/minecraft/client/renderer/GameRenderer",
+          "method": "render",
+          "desc": "(Lnet/minecraft/client/DeltaTracker;Z)V",
+          "note": "render: renderLevel, then doEntityOutline",
+          "sha256": "60fac9c75b68a44e76acb5a22efc1b3b7a8dd2499f2b030534ea7bbfe4b07afa"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on LevelRenderer.renderLevel's RenderTarget.clear calls (records the entity-outline target's clear) and on doEntityOutline's blitToScreen call; @ModifyVariable tripwires at HEAD of GlStateManager._glBindFramebuffer (framebuffer id) and _bindTexture; @Redirect of BufferUploader.draw(MeshData)'s VertexBuffer.draw (left out only inside the skipped composite, only for the BLIT_SCREEN draw, once); helper bons.furious.patch.vanilla_outline_skip.OutlineSkip (runtime flag, SHADOW read-back probe, TIMING GPU queries). 1.21.1: renderLevel/GameRenderer.render take DeltaTracker, draw takes MeshData, the composite draws a BLIT_SCREEN quad and the blit shader carries no blend state",
+      "license": "Minecraft (Mojang) and NeoForge: no code of either is carried; the handlers call the original methods"
+    }
+  }
+}

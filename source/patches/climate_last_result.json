@@ -1,0 +1,39 @@
+{
+  "group": "climate_last_result",
+  "keys": {
+    "vanilla_climate_last_result_weak": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.climate_last_result.ClimateLastResultMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/biome/Climate$RTree$Node;)V",
+          "sha256": "b82243ae63dc761e674043b785ab0c923eabf9c8abe56305fd37441a86d710e5"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree",
+          "method": "search",
+          "desc": "(Lnet/minecraft/world/level/biome/Climate$TargetPoint;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Ljava/lang/Object;",
+          "sha256": "2be3eed9844c1770613db2cc85e9d0ace6fc087b882133d2321da873dd76f60d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at the RETURN of Climate$RTree.<init>(Node) with a @Shadow @Final @Mutable of the field lastResult: the tree's last-leaf slot is replaced by a bons.furious.patch.climate_last_result.WeakLastResult, a ThreadLocal subclass whose get/set keep the leaf through a WeakReference; RTree.search (guarded: the slot's only user) is unchanged. 1.21.1: the 1.20.1 @ModifyExpressionValue on the constructor's NEW ThreadLocal would also match Biolith 3.0.10's own ThreadLocal field initialisers merged into the same constructor, so the slot is replaced in exactly that field instead. Fix: a closed world's climate trees no longer pin its worldgen registries through the worker threads' ThreadLocal maps.",
+      "license": "Minecraft (Mojang): no-copy; the mixin and helper carry only our own logic"
+    }
+  },
+  "yields": [
+    {
+      "key": "vanilla_climate_last_result_weak",
+      "mod": "byepregen",
+      "name": "Bye Pregen",
+      "mixin": "com.moepus.byepregen.mixin.climate.ClimateRTreeSearchMixin",
+      "why": "Bye Pregen (tested 1.21.1-1.1.3.0) puts its own search context into Climate.RTree's lastResult field when a tree is built and casts the field back on every search, so the weak slot this switch puts into the same field made its biome search fail at the first chunk (ClassCastException, found by the 1.21.1 port's Bye Pregen test). Bye Pregen's search keeps its own per-thread state, so this switch steps aside whenever that mixin is listed."
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "group": "vanilla_structure_templates",
+  "keys": {
+    "vanilla_structure_template_hits": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.vanilla_structure_templates.StructureTemplateManagerHitsMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager",
+          "method": "get",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Ljava/util/Optional;",
+          "sha256": "3201553cee3841e74567f383c5c248c616d8fa86e06380927493075e7f84c29d"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager",
+          "method": "tryLoad",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Ljava/util/Optional;",
+          "sha256": "4f02120b555f9131e4faff3f063dfcb3530c2aefd4d1e7331d2e506cd9060af7"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager",
+          "method": "getOrCreate",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate;",
+          "sha256": "7613f72a894f055bb1f42a5d1f5f08f3e5998270dc5fd9ce358f8694a758c5b7"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager",
+          "method": "onResourceManagerReload",
+          "desc": "(Lnet/minecraft/server/packs/resources/ResourceManager;)V",
+          "sha256": "0c348fced82c39ddf3def73f06350df5ce9f532e870699a2113ece7e5ae227f8"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager",
+          "method": "save",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Z",
+          "sha256": "8eb6cfefe0bdc36493a4a50c965b8dce9e318de8249dbf6ded6c06e9ad194711",
+          "sha256_variants": [
+            "cb0a94330bbdf1cbbdcc8f0fb47916d1ab7c5c04190631d5fe074798cdb6ee73"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): ldc instead of ldc_w for the same \".nbt\" constant (constant-pool index width) and the try-with-resources success path ends with a goto to its own iconst_1/ireturn; same calls, exception table ranges cover the same code. See work/lanes/W6/prod/review/net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager.save.server.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager",
+          "method": "remove",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)V",
+          "sha256": "0df22992cca076c5f630bca7d550be1a1e524dc2d85f6eb352ed26377a7b3dab"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager",
+          "method": "*",
+          "desc": "",
+          "sha256": "d9e556e75eae98833b3eab32eb579e48f799e5cd2810543b2dfa81be78597d75"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Map.computeIfAbsent call in StructureTemplateManager.get: for a ConcurrentHashMap or Guava LocalCache map (ModernFix dynamic_structure_manager's softValues cache), a non-null Map.get answer is returned without the cache lock; null (absent, collected, loading) and every other map class run the original call. 1.21.1: get unchanged, Guava 32.1.2's LocalCache paths the same as 31.1's; steps aside next to Generator Accelerator's size-bounded LocalCache (yield)",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_structure_templates.StructureTemplateHits)"
+    }
+  },
+  "yields": [
+    {
+      "key": "vanilla_structure_template_hits",
+      "mod": "generator_accelerator",
+      "name": "Generator Accelerator",
+      "mixin": "dev.sixik.generator_accelerator.common.structures.mixin.pools.MixinStructureTemplateManager$lru_cache",
+      "why": "Generator Accelerator (tested 1.21.1-1.6.2) replaces StructureTemplateManager's template map at the end of its constructor with CacheBuilder.newBuilder().maximumSize(256).build().asMap(). That is a Guava LocalCache like ModernFix's, so the class check would accept it, but it is size-bounded: its LRU access queue is updated differently by get and by compute, so which templates stay cached could differ. The exactness argument covers ConcurrentHashMap and the unbounded soft-values cache only, so this switch steps aside whenever that mixin is listed. Found by a scan of the other mods' mixins on the same classes for the 1.21.1 port (no crash class: the map is replaced at RETURN)."
+    }
+  ]
+}

@@ -1,0 +1,278 @@
+{
+  "group": "cataclysm",
+  "keys": {
+    "cataclysm_area_attack_scans": {
+      "mod": "cataclysm",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.cataclysm.SandstormScanMixin",
+        "bons.furious.mixin.cataclysm.AshenBreathScanMixin",
+        "bons.furious.mixin.cataclysm.EarthQuakeScanMixin",
+        "bons.furious.mixin.cataclysm.VoidRuneScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/effect/Sandstorm_Entity",
+          "method": "tick",
+          "desc": "()V",
+          "note": "getCaster() at the head; for (living : getEntitiesOfClass) damage(living)",
+          "sha256": "348cb66dcaa9d133200bd5c13de5a69b6da5afd44d9707f823f650f3bcaf8449"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/effect/Sandstorm_Entity",
+          "method": "damage",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "pure checks, then tickCount % 3 == 0",
+          "sha256": "ed1448fb74934852ef03b4386d1ffb45ae8c17f404400c4829cf65c730001f54"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/effect/Sandstorm_Entity",
+          "method": "getCaster",
+          "desc": "()Lnet/minecraft/world/entity/LivingEntity;",
+          "sha256": "f07e479c69dd155adfb7eba0fee460d8a1708f7b87306f32cf7c6003edfa7267"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Ashen_Breath_Entity",
+          "method": "hitEntities",
+          "desc": "()V",
+          "note": "tickCount % 3 == 0 before any hurt; caster field only",
+          "sha256": "4fe2d189b5c951c0d3f251bec84496602b6a69c829e8fd6c675fd2c9a978e1a2"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Ashen_Breath_Entity",
+          "method": "getEntityLivingBaseNearby",
+          "desc": "(DDDD)Ljava/util/List;",
+          "sha256": "31506d9332def3cfa24c6ede76395fb0d67a0dc2801b2920c1408a661794aa48"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Ashen_Breath_Entity",
+          "method": "getEntitiesNearby",
+          "desc": "(Ljava/lang/Class;DDDD)Ljava/util/List;",
+          "sha256": "a25ce64c69984aa9ec315a209c58f6b64f4e72fb51eee7efb41126a4ee2b5925"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/EarthQuake_Entity",
+          "method": "onUpdateInAir",
+          "desc": "()V",
+          "note": "getOwner() before the scan; getOwner() != null && tickCount % 5 == 0 && ...",
+          "sha256": "ab1e1e9547435895e82cee1e75e1523022024ce86ddf69b0ee48b0ca01efec76"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/EarthQuake_Entity",
+          "method": "tick",
+          "desc": "()V",
+          "sha256": "03d255b4d7be8991590c9c9f8e02969ae68105e0f5ce392cba9125ae51152a7b"
+        },
+        {
+          "class": "net/minecraft/world/entity/projectile/Projectile",
+          "method": "getOwner",
+          "desc": "()Lnet/minecraft/world/entity/Entity;",
+          "note": "getOwner: the same lookup within a tick",
+          "sha256": "72cda36220eb8ab40774e86333b54b96821631261118db3897423142313eebd7"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Void_Rune_Entity",
+          "method": "tick",
+          "desc": "()V",
+          "sha256": "aabfe88c7d625146471d17002762c3af5cffaaddc48423e12b89eaa54f4e524d"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Void_Rune_Entity",
+          "method": "damage",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "getCaster(), pure checks, then tickCount % 5 == 0",
+          "sha256": "974cbf40aa813f4c4bf379ec7d3d8161ddb0cadd6fa670fe2f4e6b51cbbf6c1c"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Void_Rune_Entity",
+          "method": "getCaster",
+          "desc": "()Lnet/minecraft/world/entity/LivingEntity;",
+          "sha256": "48d9696a15fcf5e7535a5cb6f98edc0746fb4174adb9903762749ea75c42e1d9"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the entity query of four Cataclysm area attacks (Level.getEntitiesOfClass / Ashen_Breath_Entity.getEntityLivingBaseNearby): an empty list on ticks where the attack cannot hurt (and, for attacks that look up their caster, while that lookup is settled); helper bons.furious.patch.cataclysm.CataclysmWorldScans. 1.21.1: the Phantom Halberd is not covered (Cataclysm 3.33 removed its tickCount % 5 gate)",
+      "license": "CC-BY-NC-ND-4.0 (L_Ender's Cataclysm): no Cataclysm code is carried; the wraps only decide whether a query inside Cataclysm's unchanged code is made"
+    },
+    "cataclysm_beam_client_scans": {
+      "mod": "cataclysm",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.cataclysm.DeathLaserScanMixin",
+        "bons.furious.mixin.cataclysm.MiniAbyssBlastScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Death_Laser_Beam_Entity",
+          "method": "raytraceEntities",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;ZZZ)Lcom/github/L_Ender/cataclysm/entity/projectile/Death_Laser_Beam_Entity$LaserbeamHitResult;",
+          "sha256": "2bc9a9682cb401bf53cf60e042db17628e55685bdde77e7582d1ba58ab34983c"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Death_Laser_Beam_Entity",
+          "method": "tick",
+          "desc": "()V",
+          "note": "the entity list is read only inside if (!level.isClientSide)",
+          "sha256": "3bbce8f7e479ca064f717914091f73834282f658e83918de1b6bb064dec48b87"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Mini_Abyss_Blast_Entity",
+          "method": "raytraceEntities",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)Lcom/github/L_Ender/cataclysm/entity/projectile/Mini_Abyss_Blast_Entity$LaserbeamHitResult;",
+          "sha256": "d580ad48ed7cb4ae2b00d3ea292c2a431e645e1a55afd9ec4461bb9c646ba902"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Mini_Abyss_Blast_Entity",
+          "method": "tick",
+          "desc": "()V",
+          "note": "the entity list is read only inside if (!level.isClientSide)",
+          "sha256": "a52cfc4d57ae6dadf053489a33aca917d859d6f76d9c4e6b71a751bccbdd0a76"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on Level.getEntitiesOfClass in raytraceEntities of the death laser and the mini abyss blast: an empty list on a client level; helper bons.furious.patch.cataclysm.CataclysmWorldScans",
+      "license": "CC-BY-NC-ND-4.0 (L_Ender's Cataclysm): no Cataclysm code is carried; the wraps only decide whether a query inside Cataclysm's unchanged code is made"
+    },
+    "cataclysm_server_leg_solver": {
+      "mod": "cataclysm",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.cataclysm.ClawdianLegsMixin",
+        "bons.furious.mixin.cataclysm.AncientRemnantLegsMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/InternalAnimationMonster/AcropolisMonsters/Clawdian_Entity",
+          "method": "tick",
+          "desc": "()V",
+          "sha256": "db58f0dd7519fd2f61427d34810eb8ec271a583753ac19a0572da988eb502b09"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/InternalAnimationMonster/IABossMonsters/Ancient_Remnant/Ancient_Remnant_Entity",
+          "method": "tick",
+          "desc": "()V",
+          "sha256": "00e16079a75100525a1d5f5069655965bbd2947baf6c59f99f95642276472d13"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/server/animation/LegSolver",
+          "method": "update",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;FF)V",
+          "note": "writes only Leg.height / prevHeight",
+          "sha256": "9ace5c236227bed6df731040a6d7a5ba5413b0151632a3d81675ab65284f8cd0"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/server/animation/LegSolver$Leg",
+          "method": "update",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;DDDDF)V",
+          "sha256": "7df9e33d0ee331a620cbeb44039d26f6aacb78bc8c19bb31edaeb07bdf5b457e"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/server/animation/LegSolver$Leg",
+          "method": "settle",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;DDDF)F",
+          "sha256": "8198f7ed636df27342a2536cc6e52514cb85efb5973985d3f980b50d2b3aa2ff"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/server/animation/LegSolver$Leg",
+          "method": "getDistance",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/Vec3;)F",
+          "note": "block reads only",
+          "sha256": "b8b60be653b8323e4072c998fd863f45b5c16c0ed7ea9dec1c13cf6af8effd15"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on legSolver.update in the tick of Clawdian_Entity and Ancient_Remnant_Entity: not called on a server level; helper bons.furious.patch.cataclysm.CataclysmWorldScans. 1.21.1: Cataclysm 3.33 has no Ancient_Ancient_Remnant_Entity",
+      "license": "CC-BY-NC-ND-4.0 (L_Ender's Cataclysm): no Cataclysm code is carried; the wraps only decide whether a query inside Cataclysm's unchanged code is made; Lionfish API (LGPL-3.0): no code"
+    },
+    "cataclysm_coral_swim_checks": {
+      "mod": "cataclysm",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.cataclysm.CoralGolemSwimMixin",
+        "bons.furious.mixin.cataclysm.CoralssusSwimMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/Deepling/Coral_Golem_Entity",
+          "method": "tick",
+          "desc": "()V",
+          "note": "noCollision && !getSwim / noCollision && getSwim",
+          "sha256": "6bc96ad0f5b26924d6feaad7ecdd159b7d26f8524e940c2d7417d625df5a49de"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/Deepling/Coral_Golem_Entity",
+          "method": "getSwim",
+          "desc": "()Z",
+          "sha256": "2d21f236d85783e87af8e39d58af7625a7904d1c06ff6bf6228919e2d456a2df"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/InternalAnimationMonster/Coralssus_Entity",
+          "method": "tick",
+          "desc": "()V",
+          "sha256": "d99654c611db8e987e413e006f0a4a3a60d1486fa9dc842fd7a592bef0685666"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/InternalAnimationMonster/Coralssus_Entity",
+          "method": "getSwim",
+          "desc": "()Z",
+          "sha256": "1d11fc3a84f46d3588f4ab503f33b6a8678f3680a41d2d039b8141eac71a3d03"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on both Level.noCollision calls in Coral_Golem_Entity / Coralssus_Entity.tick: false without the query when the swim flag already makes the && false; helper bons.furious.patch.cataclysm.CataclysmWorldScans",
+      "license": "CC-BY-NC-ND-4.0 (L_Ender's Cataclysm): no Cataclysm code is carried; the wraps only decide whether a query inside Cataclysm's unchanged code is made"
+    },
+    "cataclysm_helm_scan": {
+      "mod": "cataclysm",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.cataclysm.MonstrousHelmScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/items/Monstrous_Helm",
+          "method": "inventoryTick",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;IZ)V",
+          "note": "player wearing the helm only: berserk test, getEntities, list used only if berserk && !cooldown",
+          "sha256": "9af508c571f3975d0318f99a53b945140c7a9f4256e1564fa3faddb58ecca1c0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on Level.getEntities(Entity, AABB) in Monstrous_Helm.inventoryTick (1.20.1: onArmorTick): an empty list when the same berserk-and-no-cooldown test is false; helper bons.furious.patch.cataclysm.CataclysmWorldScans",
+      "license": "CC-BY-NC-ND-4.0 (L_Ender's Cataclysm): no Cataclysm code is carried; the wraps only decide whether a query inside Cataclysm's unchanged code is made"
+    },
+    "cataclysm_boss_block_breaking": {
+      "mod": "cataclysm",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.cataclysm.RiftBlockBreakingMixin",
+        "bons.furious.mixin.cataclysm.MonstrosityBlockBreakingMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/The_Leviathan/Dimensional_Rift_Entity",
+          "method": "berserkBlockBreaking",
+          "desc": "(III)V",
+          "note": "block, block above, block entity per position; writes only through removeBlock / setBlock / addFreshEntity",
+          "sha256": "2d3999b52bbc03aba04763de93defb645c2384181fbb739a46c5a95328ef9ef7"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/InternalAnimationMonster/IABossMonsters/NewNetherite_Monstrosity/Netherite_Monstrosity_Entity",
+          "method": "berserkBlockBreaking",
+          "desc": "(III)V",
+          "note": "block entity used only for non-air blocks",
+          "sha256": "9fb62bc70610dc62d2742be6d840c77210c086bf2c6ad8970b9e507709c6f2c7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperations on the level reads and writes inside the rift's and the Netherite Monstrosity's berserk block-breaking loops (+ an @Inject at the head of the rift's to reset): the rift's block read answered from the previous 'block above' read while nothing was written; getBlockEntity not asked at air; helper bons.furious.patch.cataclysm.BlockBreakReads. 1.21.1: the Monstrosity's BlockBreaking already checks air first in Cataclysm 3.33 and the old Netherite Monstrosity is gone",
+      "license": "CC-BY-NC-ND-4.0 (L_Ender's Cataclysm): no Cataclysm code is carried; the wraps only decide whether a query inside Cataclysm's unchanged code is made"
+    }
+  }
+}

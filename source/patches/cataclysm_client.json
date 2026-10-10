@@ -1,0 +1,609 @@
+{
+  "group": "cataclysm_client",
+  "keys": {
+    "cataclysm_pose_hand_events": {
+      "mod": "cataclysm",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.cataclysm_client.CataclysmPoseHandSkipMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/mixin/Client/HumanoidModelMixin",
+          "method": "custom_poseRightArm",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "new EventPosePlayerHand(entity, this, false); post on NeoForge.EVENT_BUS; cancel on EventPosePlayerHand.Result.ALLOW",
+          "sha256": "4039563dda5bede66e453bf517ed9c4b17a05eee4c963a30b4a78bddd0833a9d"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/mixin/Client/HumanoidModelMixin",
+          "method": "custom_poseLeftArm",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "6fa36cf48856d32e62d250060d9cd372d831a2d100f9c41188c656563e989f95"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/event/EventPosePlayerHand",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/client/model/HumanoidModel;Z)V",
+          "note": "stores its arguments; result starts at Result.DEFAULT",
+          "sha256": "6090f786d0efab1730feccc1775bf21e813505dbc44756923004135d9b9139cb"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/event/ClientEvent",
+          "method": "onPoseHand",
+          "desc": "(Lcom/github/L_Ender/cataclysm/client/event/EventPosePlayerHand;)V",
+          "note": "the only listener: writes only after isUsingItem() (both Annihilator and Immolator branches), never sets a result",
+          "sha256": "aff64d4ab6b7a0f4dc9ffd4b57cdb4f75eb21fc22d1c24b680a0dc27b8a34f45"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/event/ClientEvent",
+          "method": "ClientEvent",
+          "desc": "()V",
+          "note": "registers ClientEvent::onPoseHand twice on NeoForge.EVENT_BUS: the method-reference lambdas PoseHandEvents recognises by their nest host",
+          "sha256": "e0549d6f3f2aaa6ef144ed4b0ad64f591338eee42a612fa8f79413d5c8aecc92"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/event/ClientEvent",
+          "method": "*",
+          "desc": "",
+          "note": "no other method or lambda in ClientEvent that could make a listener for the event (onPoseHand is the only method taking it)",
+          "sha256": "254c4fe3d89ab5d40eb21a1ec658b80ede31102bbdc6b55b48ca8b018e822362"
+        },
+        {
+          "class": "net/minecraft/client/model/HumanoidModel",
+          "method": "poseRightArm",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "poseRightArm",
+          "sha256": "0580ad9b8de4e3aac87a945bdebb93382cc79d8d1a451d2b57201c560acd7aa0"
+        },
+        {
+          "class": "net/minecraft/client/model/HumanoidModel",
+          "method": "poseLeftArm",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "poseLeftArm",
+          "sha256": "42c41136a3ace3a421c794105d713ec62dd16c086c2b3b4041cb05615a97b58d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinSquared @TargetHandler: @Inject at the HEAD of Cataclysm's merged HumanoidModelMixin.custom_poseRightArm/custom_poseLeftArm handlers in HumanoidModel, cancellable, require = 0, expect = 0, priority 1500); helper bons.furious.patch.cataclysm_client.CataclysmPoseHand (+ PoseHandEvents: live check of NeoForge.EVENT_BUS's listener list for the event)",
+      "license": "CC-BY-NC-ND-4.0 (L_Ender's Cataclysm): no Cataclysm code is carried; our injector only decides whether Cataclysm's unchanged handler runs; Minecraft: no code"
+    },
+    "citadel_pose_hand_events": {
+      "mod": "citadel",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.cataclysm_client.CitadelPoseHandSkipMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/citadel/mixin/client/HumanoidModelMixin",
+          "method": "citadel_poseRightArm",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "new EventPosePlayerHand(entity, this, false); post on NeoForge.EVENT_BUS; cancel on TriState.TRUE",
+          "sha256": "3ed227d0a46282b23ae9d409593ee15f42278ba25fffa10faa9dd5f9995659e9"
+        },
+        {
+          "class": "com/github/alexthe666/citadel/mixin/client/HumanoidModelMixin",
+          "method": "citadel_poseLeftArm",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "c23e1b5cddf266b19e85fcb75699ce0f7b1e980665206d6f53b2f6fa28a7218a"
+        },
+        {
+          "class": "com/github/alexthe666/citadel/client/event/EventPosePlayerHand",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/client/model/HumanoidModel;Z)V",
+          "note": "stores its arguments; result starts at TriState.DEFAULT",
+          "sha256": "2fa2a69f42028667f19706244daef56a8a4a5d8cc929528ec6b600874dfb34b5"
+        },
+        {
+          "class": "net/minecraft/client/model/HumanoidModel",
+          "method": "poseRightArm",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "sha256": "0580ad9b8de4e3aac87a945bdebb93382cc79d8d1a451d2b57201c560acd7aa0"
+        },
+        {
+          "class": "net/minecraft/client/model/HumanoidModel",
+          "method": "poseLeftArm",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "sha256": "42c41136a3ace3a421c794105d713ec62dd16c086c2b3b4041cb05615a97b58d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinSquared @TargetHandler: @Inject at the HEAD of Citadel's merged HumanoidModelMixin.citadel_poseRightArm/citadel_poseLeftArm handlers in HumanoidModel, cancellable, require = 0, expect = 0, priority 1500); helper bons.furious.patch.cataclysm_client.CitadelPoseHand (+ PoseHandEvents); on 1.21.1 no listener is known (Alex's Caves and Alex's Mobs have no NeoForge 1.21.1 build), so the handler returns early only while Citadel's event has no listener",
+      "license": "LGPL-3.0 (Citadel): no Citadel code is carried; our injector only decides whether Citadel's unchanged handler runs"
+    },
+    "cataclysm_idle_animate_skip": {
+      "mod": "cataclysm",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.cataclysm_client.IgnisIdleAnimateMixin",
+        "bons.furious.mixin.cataclysm_client.LeviathanIdleAnimateMixin",
+        "bons.furious.mixin.cataclysm_client.EnderGuardianIdleAnimateMixin",
+        "bons.furious.mixin.cataclysm_client.AmethystCrabIdleAnimateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ignis_Model",
+          "method": "animate",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/Ignis_Entity;FFFFF)V",
+          "note": "resetToDefaultPose(); animator.update(entity); then only ModelAnimator calls, Math.toRadians and pure getters (no writes, no allocation)",
+          "sha256": "ee179bb2f4450bc17cb3551595e1bf3990dd0b805175f07dd2e5d1ffc1d1dc22"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/The_Leviathan_Model",
+          "method": "animate",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/The_Leviathan/The_Leviathan_Entity;FFFFF)V",
+          "note": "resetToDefaultPose(); animator.update(entity); then only ModelAnimator calls, Math.toRadians and pure getters (no writes, no allocation)",
+          "sha256": "325af719c98118758c69443dd1af5fa721c6b8147cdde0b7a0d53fa8a6faf531"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ender_Guardian_Model",
+          "method": "animate",
+          "desc": "(Lcom/github/L_Ender/lionfishapi/server/animation/IAnimatedEntity;FFFFF)V",
+          "note": "resetToDefaultPose(); animator.update(entity); then only ModelAnimator calls, Math.toRadians and pure getters (no writes, no allocation)",
+          "sha256": "d163b505640107b973ac092fbb3fdd061bd9d9112afa4354220581716110c9d3"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Amethyst_Crab_Model",
+          "method": "animate",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/Amethyst_Crab_Entity;FFFFF)V",
+          "note": "resetToDefaultPose(); animator.update(entity); then only ModelAnimator calls, Math.toRadians and pure getters (no writes, no allocation)",
+          "sha256": "68c4bd3e9f81ce74c31e53e2d36b16e13b077c34b928e0ca1fee47a638f678ae"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ignis_Model",
+          "method": "poke",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/Ignis_Entity;III)V",
+          "sha256": "d7ad7ca76bca978a62a3e24527c2241711990b234cc8cbc0c9521ea963de142b"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ignis_Model",
+          "method": "bodycheck",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/Ignis_Entity;III)V",
+          "sha256": "1bce2a808846802cc2f25bd4f953416fb92467d2010f785d7ad4779c22efe461"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/Animations/ModelAnimator",
+          "method": "update",
+          "desc": "(Lcom/github/L_Ender/lionfishapi/server/animation/IAnimatedEntity;)V",
+          "note": "tempTick = prevTempTick = 0; correctAnimation = false; entity = e; both maps cleared",
+          "sha256": "8f1b607729364c2e75f00f6d6c6911e2eba7f555e3a57c91ad3baad38e494092"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/Animations/ModelAnimator",
+          "method": "setAnimation",
+          "desc": "(Lcom/github/L_Ender/lionfishapi/server/animation/Animation;)Z",
+          "note": "tempTick = prevTempTick = 0; correctAnimation = entity.getAnimation() == animation",
+          "sha256": "fde16c7b41056f30ee3a9396db22284dc248b56365d9f1881dd2031e49aafabb"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/Animations/ModelAnimator",
+          "method": "startKeyframe",
+          "desc": "(I)V",
+          "note": "if (correctAnimation) ...",
+          "sha256": "cf29f1d22ef041aac5dd1ef06b733c9ee1801ead4876f8c57e3fc70572e55fd5"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/Animations/ModelAnimator",
+          "method": "setStaticKeyframe",
+          "desc": "(I)V",
+          "sha256": "9214eadfbb0cc028c555382b38ec635b5613dc0bc41a2798ddcd3258fc226a49"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/Animations/ModelAnimator",
+          "method": "resetKeyframe",
+          "desc": "(I)V",
+          "sha256": "a0e388a2077f840990e27c0645af996caf215e5677159cb19c9a28c32502ae88"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/Animations/ModelAnimator",
+          "method": "rotate",
+          "desc": "(Lcom/github/L_Ender/lionfishapi/client/model/tools/AdvancedModelBox;FFF)V",
+          "note": "if (correctAnimation) ...",
+          "sha256": "abcade545f392beb3e6d67f25cdf4c1c8d916d0fb114eee1bdf84076d2e7b712"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/Animations/ModelAnimator",
+          "method": "move",
+          "desc": "(Lcom/github/L_Ender/lionfishapi/client/model/tools/AdvancedModelBox;FFF)V",
+          "note": "if (correctAnimation) ...",
+          "sha256": "b5d6e9640caa30a052715b9bdd26ec443761e408115361ec570dd997d05a3655"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/Animations/ModelAnimator",
+          "method": "endKeyframe",
+          "desc": "()V",
+          "sha256": "5712d6c89e32e3b9cfda103326e9d2fc97af77b0742164186af4203bc415bf19"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/Animations/ModelAnimator",
+          "method": "endKeyframe",
+          "desc": "(Z)V",
+          "note": "if (correctAnimation) ...",
+          "sha256": "5a72a8d3a2671674b23bf38ed5f0928abe06eb0d2331786c70fa28e486cc9e8c"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/server/animation/IAnimatedEntity",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "NO_ANIMATION = Animation.create(0)",
+          "sha256": "d3439ea3ea78fc2ee167baf167294400101aaed27b068b46900e3846d3d281d4"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/server/animation/Animation",
+          "method": "create",
+          "desc": "(I)Lcom/github/L_Ender/lionfishapi/server/animation/Animation;",
+          "note": "a new Animation each call",
+          "sha256": "3db97952c5ba1578a6926568ac8fbc828a89ba42e62957991173ecec768c5868"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/AnimationMonster/LLibrary_Monster",
+          "method": "getAnimation",
+          "desc": "()Lcom/github/L_Ender/lionfishapi/server/animation/Animation;",
+          "note": "return currentAnimation",
+          "sha256": "6eb05fd1f0e2beaae3536c57aa74b1c7bbb384233066e11b047bf3db80e528ae"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/Ignis_Entity",
+          "method": "getIsBlocking",
+          "desc": "()Z",
+          "note": "a synced-data read",
+          "sha256": "3f8986714d0863982b9699ddfbd618062518966da645a4e24d456e94f262b50a"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/Ignis_Entity",
+          "method": "getIsShield",
+          "desc": "()Z",
+          "note": "a synced-data read",
+          "sha256": "bef0d034c98ae088486361fbf8816c272626e0cb47ba20387c097defe7b69269"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/Ignis_Entity",
+          "method": "getIsShieldBreak",
+          "desc": "()Z",
+          "note": "a synced-data read",
+          "sha256": "77f0b3adbfd47f67c37551f28f04352411bada319b62d6c8814f998b3ae9358c"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/Ignis_Entity",
+          "method": "getIsSword",
+          "desc": "()Z",
+          "note": "a synced-data read",
+          "sha256": "f3706132e72c001a1f54bb9f35e5711ccd3a8fa22db2f52bc59a5dc1938ca275"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/Ignis_Entity",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "the static final animation constants passed to setAnimation (Animation.create)",
+          "sha256": "edaba0eb8cb534795dd242f5a38e53ad0b8cc888a9a1813802d75b60cf0841f3"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/The_Leviathan/The_Leviathan_Entity",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "the static final animation constants passed to setAnimation (Animation.create)",
+          "sha256": "9eef8e91b6bc1b8416973b8601ca164e1de66dfdc21257ab23725921d7b59a30"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/Ender_Guardian_Entity",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "the static final animation constants passed to setAnimation (Animation.create)",
+          "sha256": "0ea451849473e7c29f70adbb3aec296bb52674c36f9429429b52fec9a6473046"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/Amethyst_Crab_Entity",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "the static final animation constants passed to setAnimation (Animation.create)",
+          "sha256": "513243efef07c1dcb0c79d8fb77a74a2ca365e75c2aaf01a269f6d52ac8774b5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: one @Inject per model right after the animator.update(entity) call in animate (shift AFTER, cancellable) of Ignis_Model, The_Leviathan_Model, Ender_Guardian_Model and Amethyst_Crab_Model (Cataclysm 3.33 no longer has the old Ancient_Remnant_Model); helper bons.furious.patch.cataclysm_client.IdleAnimateSkip",
+      "license": "CC-BY-NC-ND-4.0 (L_Ender's Cataclysm): no Cataclysm code is carried; the injector only returns early when the rest of the method cannot change anything; Lionfish API (LGPL-3.0): no code"
+    },
+    "cataclysm_shield_layer_pose": {
+      "mod": "cataclysm",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.cataclysm_client.IgnisModelPoseMixin",
+        "bons.furious.mixin.cataclysm_client.IgnisShieldLayerPoseMixin",
+        "bons.furious.mixin.cataclysm_client.RevenantModelPoseMixin",
+        "bons.furious.mixin.cataclysm_client.RevenantLayerPoseMixin",
+        "bons.furious.mixin.cataclysm_client.HarbingerModelPoseMixin",
+        "bons.furious.mixin.cataclysm_client.HarbingerShieldLayerPoseMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ignis_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/Ignis_Entity;FFFFF)V",
+          "note": "animate() first; then procedural code reading the entity and the frame's partial tick",
+          "sha256": "e9729190b06d91d435d94d5b7cf11e9ef99b41a420283ef3944aeb607669f229"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ignis_Model",
+          "method": "animate",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/Ignis_Entity;FFFFF)V",
+          "note": "resetToDefaultPose(); animator.update(entity); keyframes",
+          "sha256": "ee179bb2f4450bc17cb3551595e1bf3990dd0b805175f07dd2e5d1ffc1d1dc22"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/layer/Ignis_Shield_Layer",
+          "method": "render",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/Ignis_Entity;FFFFFF)V",
+          "sha256": "a8307920aa27974f5584df83a492f04331f644ea5453678069214805dc6cbfa5"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ignited_Revenant_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/Ignited_Revenant_Entity;FFFFF)V",
+          "note": "animate() first; then procedural code reading the entity and the frame's partial tick",
+          "sha256": "a5177354cedb7c1359ba9f840e8708c9a7d83dae59f32c0214a923905c16aa39"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ignited_Revenant_Model",
+          "method": "animate",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/Ignited_Revenant_Entity;FFFFF)V",
+          "note": "resetToDefaultPose(); animator.update(entity); keyframes",
+          "sha256": "e3c1c944eaba322cf8370f2a247b41f8fb41a42a82b0babeb2492ec7bf21c2e4"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/layer/Revenant_Layer",
+          "method": "render",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/Ignited_Revenant_Entity;FFFFFF)V",
+          "sha256": "c0db7ac695303f3f066eb29651718c2615c484896545f3be1dca74eb8e26b0bd"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/The_Harbinger_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/The_Harbinger_Entity;FFFFF)V",
+          "note": "animate() first; then procedural code reading the entity and the partial tick",
+          "sha256": "220416756510ec8ff70588cba1a69e937d0bf9e93ac20adc7b2c2c5e6a5574cd"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/The_Harbinger_Model",
+          "method": "animate",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/The_Harbinger_Entity;FFFFF)V",
+          "note": "resetToDefaultPose(); animator.update(entity); keyframes",
+          "sha256": "beb55632bbe84f37d692618393fba4a36adcea6a2de7fa3b74b365c6ac6addee"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/layer/The_Harbinger_Shield_Layer",
+          "method": "render",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/The_Harbinger_Entity;FFFFFF)V",
+          "sha256": "1abf243ba85203107a4239d88a677b01d313ce660ef788e88baed611871e3721"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/entity/Ignis_Renderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;)V",
+          "note": "layer list and order",
+          "sha256": "9ae58a8fd6fbffb2be5f51c40d672aa16db2b3e550e76b0f1a1ad3eb886a3f09"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/layer/Ignis_Armor_Crack_Layer",
+          "method": "render",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/Ignis_Entity;FFFFFF)V",
+          "note": "an earlier layer: draws the renderer model, changes no part",
+          "sha256": "a1c0232f9a57cf1f7e1ea094d628168a7d1081570c912dd17dd8f6b479390a49"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/entity/Ignited_Revenant_Renderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;)V",
+          "note": "layer list and order",
+          "sha256": "47c464544369fdf571dc88164d53f817c1879ff4d4589e6bfd81c76ec4c241f9"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/entity/Ignited_Revenant_Renderer$Ignited_Revenant_GlowLayer",
+          "method": "render",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/Ignited_Revenant_Entity;FFFFFF)V",
+          "note": "an earlier layer: draws the renderer model, changes no part",
+          "sha256": "1faee89aed3abc6e363984663616eb0c66956c828254883b4713b26107180e24"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/entity/The_Harbinger_Renderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;)V",
+          "note": "layer list and order",
+          "sha256": "cd736a4ac7eec70b88b7dc0622d6afe8e6c9d7952f29c5c40445e09f195994a6"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/layer/The_Harbinger_Layer",
+          "method": "render",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/The_Harbinger_Entity;FFFFFF)V",
+          "note": "an earlier layer: draws the renderer model, changes no part",
+          "sha256": "18bd99334f71222f81176627f0a9bafd240c2c3c67836f7fd39b0cc239cec7ec"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/layer/The_Harbinger_Jet_Layer",
+          "method": "render",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/The_Harbinger_Entity;FFFFFF)V",
+          "note": "an earlier layer: draws two quads, changes no part",
+          "sha256": "2ad901d4de290ab6f17e25822ec94d14cc20d93555ad2d00c9e7bf0524680cfa"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/The_Harbinger_Model",
+          "method": "translateToHand",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Z)V",
+          "note": "read by the jet layer before the shield layer: transforms a PoseStack only, writes no part (added in the 1.21.1 port)",
+          "sha256": "02381a5070b463a8be26238dae4f41698500c7c2778356ed651d64f1042a8db6"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/entity/Ignis_Renderer",
+          "method": "render",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/Ignis_Entity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+          "note": "calls super.render first; no model call in between",
+          "sha256": "4c005bb87befe663b3e2add078cb5cc37e46ad97131401391699f5229520d96f"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/entity/The_Harbinger_Renderer",
+          "method": "render",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/The_Harbinger_Entity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+          "note": "draws its beams, then super.render; no model call in between",
+          "sha256": "350e1402f0e8d6acd61bfbe8f6acfa1f1f1099645f26eae095b64302d848d0d0"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/Animations/ModelAnimator",
+          "method": "update",
+          "desc": "(Lcom/github/L_Ender/lionfishapi/server/animation/IAnimatedEntity;)V",
+          "note": "resets the animator state and sets its entity",
+          "sha256": "8f1b607729364c2e75f00f6d6c6911e2eba7f555e3a57c91ad3baad38e494092"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/tools/BasicEntityModel",
+          "method": "renderToBuffer",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V",
+          "note": "the renderer model's draw between its setupAnim and the layers: root().render(...), writes no part (added in the 1.21.1 port: packed colour API)",
+          "sha256": "5885862ff7d569044d4f606d5c2b178f7f4b8c01a0de9f0512f9b8f11111bccc"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/tools/AdvancedModelBox",
+          "method": "render",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V",
+          "note": "draws the box and its children; reads the pose fields, writes none (added in the 1.21.1 port)",
+          "sha256": "3068f44704630ab7b97cd5a7a4c9b8786a81e3fef4b15deea39896c964008ca7"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/tools/AdvancedModelBox",
+          "method": "translateAndRotate",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+          "note": "PoseStack only (added in the 1.21.1 port)",
+          "sha256": "1ceb90b80c494343910b9dc96c1f1f858781fef449d941a05281eff81ea84a57"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/tools/AdvancedModelBox",
+          "method": "doRender",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V",
+          "note": "vertices only (added in the 1.21.1 port)",
+          "sha256": "18e97e1a86dc51bca8240d9733c9f93dff4a1eab0f4c94837b2c0d0f3ccdf853"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at RETURN of Ignis_Model / Ignited_Revenant_Model / The_Harbinger_Model.setupAnim records (model, entity, arguments); MixinExtras @WrapOperation on the setupAnim call in Ignis_Shield_Layer / Revenant_Layer.render (copy the renderer model's pose into the layer model when the record matches) and in The_Harbinger_Shield_Layer.render (skip the repeated call when it matches); helper bons.furious.patch.cataclysm_client.ShieldLayerPose",
+      "license": "CC-BY-NC-ND-4.0 (L_Ender's Cataclysm): no Cataclysm code is carried; the mixins record and compare setupAnim arguments and skip a repeated call; Lionfish API (LGPL-3.0): only called"
+    },
+    "cataclysm_client_leaks": {
+      "mod": "cataclysm",
+      "scripts": [],
+      "since": "1.0.36",
+      "mixins": [
+        "bons.furious.mixin.cataclysm_client.ClientProxyLeakHooksMixin",
+        "bons.furious.mixin.cataclysm_client.LightningRenderMapsMixin",
+        "bons.furious.mixin.cataclysm_client.SandstormSoundAccessor",
+        "bons.furious.mixin.cataclysm_client.ItemTickableSoundAccessor"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/ClientProxy",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "built once, at mod construction, on a client only (Cataclysm 3.33 has no ClientProxy.init)",
+          "sha256": "34cad08c65bb504babaa6b3c172ac67cb061737f817931f6d5d1bc85858105fa"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/ClientProxy",
+          "method": "playWorldSound",
+          "desc": "(Ljava/lang/Object;B)V",
+          "note": "the only writer of ENTITY_SOUND_INSTANCE_MAP besides clearSoundCacheFor",
+          "sha256": "fbcc2f87b899ec976d4a9898c0457ad025fc15533f349d6693f6c14d84383f68"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/ClientProxy",
+          "method": "clearSoundCacheFor",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "239faa4fa7f4e480b7babfde654546355c1c0307e9932cd9382419c4f2a2001b"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/sound/SandstormSound",
+          "method": "isSameEntity",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/effect/Sandstorm_Entity;)Z",
+          "note": "old entity alive && same id",
+          "sha256": "ff4b68f368ed7238884f3d839a9bb113b7d78f93dbc168a7d07bc19f92f58464"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/sound/ItemTickableSound",
+          "method": "isSameEntity",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "old entity alive && same id",
+          "sha256": "bbb04059f872aa33f26787f525c23a3fed38363821fbbaaacf0e485678f0fa90"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/entity/Boltstrike_Renderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;)V",
+          "sha256": "0f0f14652b8a53c0f37fda6189e4e35b4e407622cdae2b9a28f0ab7aed34fab1"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/entity/Boltstrike_Renderer",
+          "method": "getLightingRender",
+          "desc": "(Ljava/util/UUID;)Lcom/github/L_Ender/cataclysm/client/render/etc/LightningRender;",
+          "note": "get or create the UUID entry",
+          "sha256": "d718c16257349cd479f3ce5ffbf61663267361d869788c38a430f39bea18d0a1"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/entity/Death_Laser_beam_Renderer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;)V",
+          "sha256": "b1d9c10ef6292da17f8e63f4c778af275f87d665bda311ac5c366de8d5bd5398"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/entity/Death_Laser_beam_Renderer",
+          "method": "getLightingRender",
+          "desc": "(Ljava/util/UUID;)Lcom/github/L_Ender/cataclysm/client/render/etc/LightningRender;",
+          "note": "get or create the UUID entry",
+          "sha256": "c499488b1d22f186307965dc6133dab2c06e9016f7c47d5c2d113794eb09274e"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/layer/Maledictus_Cicle_Layer",
+          "method": "<init>",
+          "desc": "(Lcom/github/L_Ender/cataclysm/client/render/entity/Maledictus_Renderer;Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;)V",
+          "sha256": "c15174be9a9fbc476f972bcbe30ebd6a40888baee7d22e023d03b7b21d904ec7"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/layer/Maledictus_Cicle_Layer",
+          "method": "getLightingRender",
+          "desc": "(Ljava/util/UUID;)Lcom/github/L_Ender/cataclysm/client/render/etc/LightningRender;",
+          "note": "get or create the UUID entry",
+          "sha256": "0cbc0ae57422565ddc9eb5c4485436da5c0c264ebee4dac20884aad98260922a"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/layer/Scylla_Anchor_Layer",
+          "method": "<init>",
+          "desc": "(Lcom/github/L_Ender/cataclysm/client/render/entity/Scylla_Renderer;Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;)V",
+          "sha256": "d699c988e27ede9f10f64d61d5061c443008d2e17274fd2c04797f66fa80d653"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/layer/Scylla_Anchor_Layer",
+          "method": "getLightingRender",
+          "desc": "(Ljava/util/UUID;)Lcom/github/L_Ender/cataclysm/client/render/etc/LightningRender;",
+          "note": "get or create the UUID entry",
+          "sha256": "c506199535366c2e0378cd0d508c028ac1ce4418eb13405a7c328fe8a7e8bb56"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/layer/Scylla_Eye_Spark_Layer",
+          "method": "<init>",
+          "desc": "(Lcom/github/L_Ender/cataclysm/client/render/entity/Scylla_Renderer;Lnet/minecraft/client/renderer/entity/EntityRendererProvider$Context;)V",
+          "sha256": "f4682cada350ec7e143474834989b85a310422085b1099b9f329f5b9e8e0a146"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/layer/Scylla_Eye_Spark_Layer",
+          "method": "getLightingRender",
+          "desc": "(Ljava/util/UUID;)Lcom/github/L_Ender/cataclysm/client/render/etc/LightningRender;",
+          "note": "get or create the UUID entry",
+          "sha256": "dfa2354d3f63e37181cfe8412fd38bd176b53cf3524b8c8bcac1d7b8da130924"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix: @Inject at RETURN of ClientProxy's constructor registers NeoForge listeners (EntityLeaveLevelEvent, LevelEvent.Unload, client levels only); @Inject at RETURN of the constructors of the five lightning holders hands their maps to ClientLeaks (weakly); accessors read the entity of SandstormSound / ItemTickableSound; helper bons.furious.patch.cataclysm_client.ClientLeaks",
+      "license": "CC-BY-NC-ND-4.0 (L_Ender's Cataclysm): no Cataclysm code is carried; the mixins only register listeners, hand over map references and read two fields"
+    }
+  }
+}

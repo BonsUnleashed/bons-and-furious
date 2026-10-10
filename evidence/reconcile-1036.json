@@ -1,0 +1,182 @@
+{
+  "final": {
+    "sha256": "96ec1b62d1c109cf6e24326ca4f1f50d4ee77d4ed715751bcad204ee17adf88c",
+    "jar": "bons_and_furious-1.0.36.jar",
+    "frozen": "2026-10-09 12:39",
+    "final_dir": "<forge-1.0.36>\\final",
+    "source": "<port>\\inputs\\forge-1.0.36-96ec1b62\\source",
+    "forge_1_0_38": {
+      "sha256": "4e78bd0684f99cdbda8cf060e52e00f1196eba07057610f44e677748d5c0cba6",
+      "jar": "bons_and_furious-1.0.38.jar",
+      "source": "<port>\\inputs\\forge-1.0.38-4e78bd06\\source"
+    }
+  },
+  "copy_vs_final": {
+    "only_in_copy": [],
+    "only_in_final": [],
+    "changed": []
+  },
+  "files_compared": 1162,
+  "accounted": {
+    "forge_controls": 306,
+    "inventory": 306,
+    "missing_from_inventory": [],
+    "not_in_forge": [],
+    "patch_keys_not_in_forge": [],
+    "port_defaults_not_in_forge": [],
+    "port_defaults_differ": {},
+    "ported_without_default": []
+  },
+  "forge_1035_to_1036": {
+    "keys_added": [
+      "alexscaves_item_renderer_reuse",
+      "alexsmobs_item_renderer_reuse",
+      "aquaculture_item_renderer_reuse",
+      "basalt_guards_vanilla_first",
+      "cataclysm_area_attack_scans",
+      "cataclysm_beam_client_scans",
+      "cataclysm_boss_block_breaking",
+      "cataclysm_capability_handles",
+      "cataclysm_client_leaks",
+      "cataclysm_coral_swim_checks",
+      "cataclysm_helm_scan",
+      "cataclysm_idle_animate_skip",
+      "cataclysm_item_renderer_reuse",
+      "cataclysm_pose_hand_events",
+      "cataclysm_server_leg_solver",
+      "cataclysm_shield_layer_pose",
+      "citadel_pose_hand_events",
+      "distanthorizons_tint_neighbour_index",
+      "distanthorizons_unlocked_output_stream",
+      "elysium_lean_replacer",
+      "embeddium_mesh_buffer_growth_fix",
+      "emf_anger_map_prune",
+      "emf_arm_walk_gate",
+      "emf_variable_default_unboxed",
+      "forge_registry_snapshot_reuse",
+      "item_renderer_reload_tracker",
+      "lionfish_model_animator",
+      "lionfish_model_parts",
+      "mekanism_radiation_source_range",
+      "mekanism_transporter_path_index",
+      "netherexp_item_renderer_reuse",
+      "oculus_entity_vertex_direct",
+      "oculus_glyph_extended_vertex_fix",
+      "rats_item_renderer_reuse",
+      "tacz_item_renderer_reuse",
+      "vanilla_chunk_biome_codec_memo",
+      "vanilla_chunk_palette_direct_nbt",
+      "vanilla_climate_last_result_weak",
+      "vanilla_entity_outline_composite_skip",
+      "vanilla_inventory_trigger_index",
+      "vanilla_noise_column_cell_fill",
+      "vanilla_noise_column_summary",
+      "vanilla_noise_corner_share",
+      "vanilla_selector_find_loop",
+      "vanilla_selector_single_type",
+      "vanilla_selector_tag_index",
+      "vanilla_state_codec_dispatch_memo",
+      "vanilla_structure_ring_search",
+      "vanilla_structure_template_hits",
+      "vanilla_ticking_tracker_prune",
+      "xercapaint_item_renderer_reuse"
+    ],
+    "keys_removed": [],
+    "keys_changed": {
+      "radium_experimental_tickets_spawning": [
+        "kind"
+      ],
+      "storagedrawers_count_sync_holders": [
+        "conversion",
+        "note"
+      ],
+      "vanilla_connection_flush_batching": [
+        "conversion"
+      ],
+      "vanilla_selector_type_index": [
+        "license"
+      ]
+    },
+    "defaults_changed": {}
+  },
+  "forge_1036_to_1038": {
+    "jar": "bons_and_furious-1.0.38.jar",
+    "sha256": "4e78bd0684f99cdbda8cf060e52e00f1196eba07057610f44e677748d5c0cba6",
+    "frozen": "2026-10-09 23:16",
+    "source_changed": [
+      "resources/META-INF/mods.toml",
+      "resources/bons_and_furious.default.properties",
+      "src/bons/furious/guard/Guards.java",
+      "src/bons/furious/mixin/elysium_replacer/ElysiumLeanHandlerMixin.java"
+    ],
+    "jar_changed": [
+      "META-INF/MANIFEST.MF",
+      "META-INF/mods.toml",
+      "bons/furious/guard/Guards$ClassPrints.class",
+      "bons/furious/guard/Guards$Decision.class",
+      "bons/furious/guard/Guards$State.class",
+      "bons/furious/guard/Guards.class",
+      "bons/furious/mixin/elysium_replacer/ElysiumLeanHandlerMixin.class",
+      "bons_and_furious.default.properties"
+    ],
+    "defaults_equal": true,
+    "keys_equal": true,
+    "carried_in_port": {
+      "mixinsquared_cancellation_check": "bons/furious/guard/Guards.java",
+      "elysium_lean_replacer": "retired on 1.21.1 (no ElysiumAPI handler to hook)"
+    }
+  },
+  "decisions_for_added_keys": {
+    "alexscaves_item_renderer_reuse": "unavailable",
+    "alexsmobs_item_renderer_reuse": "unavailable",
+    "aquaculture_item_renderer_reuse": "ported",
+    "basalt_guards_vanilla_first": "ported",
+    "cataclysm_area_attack_scans": "ported",
+    "cataclysm_beam_client_scans": "ported",
+    "cataclysm_boss_block_breaking": "ported",
+    "cataclysm_capability_handles": "retired",
+    "cataclysm_client_leaks": "ported",
+    "cataclysm_coral_swim_checks": "ported",
+    "cataclysm_helm_scan": "ported",
+    "cataclysm_idle_animate_skip": "ported",
+    "cataclysm_item_renderer_reuse": "retired",
+    "cataclysm_pose_hand_events": "ported",
+    "cataclysm_server_leg_solver": "ported",
+    "cataclysm_shield_layer_pose": "ported",
+    "citadel_pose_hand_events": "ported",
+    "distanthorizons_tint_neighbour_index": "ported",
+    "distanthorizons_unlocked_output_stream": "ported",
+    "elysium_lean_replacer": "retired",
+    "embeddium_mesh_buffer_growth_fix": "retired",
+    "emf_anger_map_prune": "ported",
+    "emf_arm_walk_gate": "retired",
+    "emf_variable_default_unboxed": "ported",
+    "forge_registry_snapshot_reuse": "retired",
+    "item_renderer_reload_tracker": "ported",
+    "lionfish_model_animator": "ported",
+    "lionfish_model_parts": "ported",
+    "mekanism_radiation_source_range": "retired",
+    "mekanism_transporter_path_index": "retired",
+    "netherexp_item_renderer_reuse": "ported",
+    "oculus_entity_vertex_direct": "retired",
+    "oculus_glyph_extended_vertex_fix": "retired",
+    "rats_item_renderer_reuse": "unavailable",
+    "tacz_item_renderer_reuse": "unavailable",
+    "vanilla_chunk_biome_codec_memo": "ported",
+    "vanilla_chunk_palette_direct_nbt": "ported",
+    "vanilla_climate_last_result_weak": "ported",
+    "vanilla_entity_outline_composite_skip": "ported",
+    "vanilla_inventory_trigger_index": "ported",
+    "vanilla_noise_column_cell_fill": "ported",
+    "vanilla_noise_column_summary": "ported",
+    "vanilla_noise_corner_share": "ported",
+    "vanilla_selector_find_loop": "retired",
+    "vanilla_selector_single_type": "ported",
+    "vanilla_selector_tag_index": "ported",
+    "vanilla_state_codec_dispatch_memo": "ported",
+    "vanilla_structure_ring_search": "ported",
+    "vanilla_structure_template_hits": "ported",
+    "vanilla_ticking_tracker_prune": "retired",
+    "xercapaint_item_renderer_reuse": "retired"
+  }
+}

@@ -1,0 +1,85 @@
+[00:56:07.849] [main/INFO] [Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgeserver, --fml.neoForgeVersion, 21.1.252, --fml.fmlVersion, 4.0.44, --fml.mcVersion, 1.21.1, --fml.neoFormVersion, 20240808.144430, --nogui] 
+[00:56:07.852] [main/INFO] [Launcher/MODLAUNCHER]: JVM identified as Eclipse Adoptium OpenJDK 64-Bit Server VM 21.0.12.1+1-LTS 
+[00:56:07.853] [main/INFO] [Launcher/MODLAUNCHER]: ModLauncher 11.0.5+main.901c6ea8 starting: java version 21.0.12.1 by Eclipse Adoptium; OS Windows 10 arch amd64 version 10.0 
+[00:56:07.971] [main/INFO] [loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgeserver 
+[00:56:08.019] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=union:/<port>/runtime/p36-core-on/libraries/net/fabricmc/sponge-mixin/0.15.2+mixin.0.8.7/sponge-mixin-0.15.2+mixin.0.8.7.jar%2373!/ Service=ModLauncher Env=SERVER 
+[00:56:08.310] [main/INFO] [loading.moddiscovery.ModDiscoverer/SCAN]: Found mod file "server-1.21.1-20240808.144430-srg.jar" [locator: production server provider +net.neoforged:neoforge:21.1.252:server] 
+[00:56:08.334] [main/INFO] [loading.moddiscovery.ModDiscoverer/SCAN]: Found mod file "neoforge-21.1.252-universal.jar" [locator: PathBasedLocator[name=neoforge, paths=[libraries\net\neoforged\neoforge\21.1.252\neoforge-21.1.252-universal.jar]], reader: mod manifest] 
+[00:56:08.337] [main/INFO] [loading.moddiscovery.ModDiscoverer/SCAN]: Found mod file "bons-port-probe-1.jar" [locator: {mods folder locator at <port>\runtime\p36-core-on\mods}, reader: mod manifest] 
+[00:56:08.354] [main/INFO] [loading.moddiscovery.ModDiscoverer/SCAN]: Found mod file "bons_and_furious-neoforge-1.0.38+mc1.21.1.jar" [locator: {mods folder locator at <port>\runtime\p36-core-on\mods}, reader: mod manifest] 
+[00:56:08.458] [main/INFO] [loading.moddiscovery.locators.JarInJarDependencyLocator/]: Found 4 dependencies adding them to mods collection 
+[00:56:08.458] [main/INFO] [loading.moddiscovery.ModDiscoverer/SCAN]: Found gamelibrary file "mixinextras-neoforge-0.5.3.jar" [parent: neoforge-21.1.252-universal.jar, locator: jarinjar, reader: mod manifest] 
+[00:56:08.458] [main/INFO] [loading.moddiscovery.ModDiscoverer/SCAN]: Found gamelibrary file "mixinsquared-neoforge-0.3.6-beta.1.jar" [parent: bons_and_furious-neoforge-1.0.38+mc1.21.1.jar, locator: jarinjar, reader: mod manifest] 
+[00:56:08.458] [main/INFO] [loading.moddiscovery.ModDiscoverer/SCAN]: Found library file "MixinSquared-0.3.6-beta.1.jar" [parent: mixinsquared-neoforge-0.3.6-beta.1.jar, locator: jarinjar] 
+[00:56:08.459] [main/INFO] [loading.moddiscovery.ModDiscoverer/SCAN]: Found library file "net.neoforged.neoforge-coremods-21.1.252.jar" [parent: neoforge-21.1.252-universal.jar, locator: jarinjar, reader: mod manifest] 
+[00:56:08.459] [main/INFO] [loading.moddiscovery.ModDiscoverer/]: 
+     Mod List:
+		Name Version (Mod Id)
+
+		Bons and Furious 1.0.38+mc1.21.1 (bons_and_furious)
+		Bons Port Qualification Probe 1 (bons_port_probe)
+		Minecraft 1.21.1 (minecraft)
+		NeoForge 21.1.252 (neoforge) 
+[00:56:08.928] [main/INFO] [mixin/]: Compatibility level set to JAVA_21 
+[00:56:08.990] [main/INFO] [LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgeserver' with arguments [--nogui] 
+[00:56:09.062] [main/INFO] [Bons and Furious/]: Bons and Furious wrote the default configuration to <port>\runtime\p36-core-on\config\bons_and_furious.properties 
+[00:56:09.063] [main/INFO] [Bons and Furious/]: Bons and Furious 1.0.38+mc1.21.1: 205 of 205 optimizations enabled from <port>\runtime\p36-core-on\config\bons_and_furious.properties 
+WARN StatusConsoleListener Advanced terminal features are not available in this environment
+[00:56:10] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.3).
+[00:56:14] [modloading-worker-0/INFO] [Bons and Furious/]: Bons and Furious 1.0.38+mc1.21.1 constructed; 0 switch(es) disabled in <port>\runtime\p36-core-on\config\bons_and_furious.properties
+[00:56:14] [modloading-worker-0/INFO] [ne.ne.ne.co.NeoForgeMod/NEOFORGE-MOD]: NeoForge mod loading, version 21.1.252, for MC 1.21.1
+[00:56:14] [main/INFO] [mojang/YggdrasilAuthenticationService]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[00:56:14] [main/WARN] [minecraft/VanillaPackResourcesBuilder]: Assets URL 'union:/<port>/runtime/p36-core-on/libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar%23119!/assets/.mcassetsroot' uses unexpected schema
+[00:56:14] [main/WARN] [minecraft/VanillaPackResourcesBuilder]: Assets URL 'union:/<port>/runtime/p36-core-on/libraries/net/minecraft/server/1.21.1-20240808.144430/server-1.21.1-20240808.144430-srg.jar%23119!/data/.mcassetsroot' uses unexpected schema
+[00:56:15] [main/INFO] [bo.fu.pa.va.StateCodecMemo/]: Bons and Furious: vanilla_state_codec_dispatch_memo applies (block state codecs are built once per block, not once per palette entry)
+[00:56:15] [main/INFO] [Bons and Furious/]: Bons and Furious: vanilla_climate_tree_span_bounds computes climate subtree ranges without intermediate objects
+[00:56:15] [main/INFO] [bo.fu.pa.cl.WeakLastResult/]: Bons and Furious: vanilla_climate_last_result_weak applies (climate search trees keep each thread's last leaf weakly, so a closed world's biomes can be freed)
+[00:56:15] [main/INFO] [Bons and Furious/]: Bons and Furious: vanilla_climate_tree_sort_keys sorts climate search tree nodes by precomputed keys
+[00:56:15] [main/INFO] [minecraft/Main]: No existing world data, creating new world
+[00:56:15] [main/INFO] [minecraft/RecipeManager]: Loaded 1290 recipes
+[00:56:16] [main/INFO] [minecraft/AdvancementTree]: Loaded 1399 advancements
+[00:56:16] [Server thread/INFO] [minecraft/DedicatedServer]: Starting minecraft server version 1.21.1
+[00:56:16] [Server thread/INFO] [minecraft/DedicatedServer]: Loading properties
+[00:56:16] [Server thread/INFO] [minecraft/DedicatedServer]: Default game type: SURVIVAL
+[00:56:16] [Server thread/INFO] [minecraft/MinecraftServer]: Generating keypair
+[00:56:16] [Server thread/INFO] [minecraft/DedicatedServer]: Starting Minecraft server on *:25579
+[00:56:16] [Server thread/INFO] [minecraft/ServerConnectionListener]: Using default channel type
+[00:56:16] [Server thread/WARN] [minecraft/DedicatedServer]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[00:56:16] [Server thread/WARN] [minecraft/DedicatedServer]: The server will make no attempt to authenticate usernames. Beware.
+[00:56:16] [Server thread/WARN] [minecraft/DedicatedServer]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[00:56:16] [Server thread/WARN] [minecraft/DedicatedServer]: To change this, set "online-mode" to "true" in the server.properties file.
+[00:56:16] [Server thread/INFO] [minecraft/DedicatedServer]: Preparing level "world"
+[00:56:16] [Server thread/INFO] [Bons and Furious/]: Bons and Furious: vanilla_entity_class_count_layer counts 4 entity classes per level for crittersandcompanions_red_panda_gate and fdbosses_spawner_presence_gate
+[00:56:16] [Worker-Main-16/INFO] [bo.fu.pa.cl.ClimateParts/]: Bons and Furious: vanilla_climate_sample_xz_parts remembers 9 two-dimensional parts of a climate sampler per column
+[00:56:16] [Worker-Main-3/INFO] [Bons and Furious/]: Bons and Furious: vanilla_tag_membership_ids applies (tag tests compare tag numbers; each holder's numbers follow its current tag set)
+[00:56:17] [Worker-Main-2/INFO] [bo.fu.pa.va.ColumnCellFill/]: Bons and Furious: vanilla_noise_column_cell_fill fills only the queried column of each cell in terrain height queries (8 of 128 cell-cache positions per cell)
+[00:56:17] [Worker-Main-2/INFO] [bo.fu.pa.wo.AquiferCandidates/]: Bons and Furious: vanilla_aquifer_candidate_cache applies (aquifer candidates ranked from a per-cell table, with vanilla_aquifer_high_air's early air return)
+[00:56:17] [Worker-Main-2/INFO] [Bons and Furious/]: Bons and Furious: vanilla_block_state_air_flag remembers isAir in each block state
+[00:56:17] [Worker-Main-2/INFO] [bo.fu.pa.va.StructureTemplateHits/]: Bons and Furious: vanilla_structure_template_hits applies (loaded structure templates are answered without the cache lock; map java.util.concurrent.ConcurrentHashMap)
+[00:56:17] [Worker-Main-10/INFO] [bo.fu.pa.be.EmptyBeardifiers/]: Bons and Furious: worldgen_empty_beardifier_marker applies (no other mod changes Beardifier; 0 adaptation slots checked per chunk)
+[00:56:17] [Worker-Main-10/INFO] [bo.fu.pa.be.EmptyBeardifiers/]: Bons and Furious: worldgen_empty_beardifier_marker flagged its first chunk without nearby structure pieces (the empty beardifier is filled without a per-block loop)
+[00:56:19] [Server thread/INFO] [bo.fu.pa.ch.TickingChunkMemo/]: Bons and Furious: vanilla_ticking_chunk_memo applies (each chunk holder remembers its ticking chunk until its future changes)
+[00:56:19] [Server thread/INFO] [minecraft/MinecraftServer]: Preparing start region for dimension minecraft:overworld
+[00:56:19] [Worker-Main-21/INFO] [minecraft/LoggerChunkProgressListener]: Preparing spawn area: 2%
+[00:56:19] [Worker-Main-11/INFO] [minecraft/LoggerChunkProgressListener]: Preparing spawn area: 2%
+[00:56:20] [Worker-Main-22/INFO] [minecraft/LoggerChunkProgressListener]: Preparing spawn area: 18%
+[00:56:20] [Worker-Main-3/INFO] [minecraft/LoggerChunkProgressListener]: Preparing spawn area: 51%
+[00:56:21] [Server thread/INFO] [minecraft/LoggerChunkProgressListener]: Time elapsed: 1931 ms
+[00:56:21] [Server thread/INFO] [minecraft/DedicatedServer]: Done (4.664s)! For help, type "help"
+[00:56:21] [Server thread/INFO] [ne.ne.ne.se.pe.PermissionAPI/]: Successfully initialized permission handler neoforge:default_handler
+[00:56:24] [Worker-Main-2/INFO] [bo.fu.pa.cl.ClimateParts/]: Bons and Furious: vanilla_climate_sample_xz_parts remembers 8 two-dimensional parts of a climate sampler per column
+[00:56:27] [Worker-Main-19/INFO] [bo.fu.pa.wo.BeardifierBounds/]: Bons and Furious: vanilla_beardifier_influence_bounds filtered its first structure chunk (1 pieces, 0 junctions; terms outside their reach are skipped)
+BONS_PORT_PROBE_PASS {minecraft:overworld={block_sha256=0eafea7c8b6f446f4e88c174ee4d8fdcfe8c3da6aca2c39e08d95edb6d13b106, blocks=1572864, biome_sha256=50e6dc9cbd3c851c624712b8d5d2bcc28c63356385b175a9ee998c957940319c}, minecraft:the_nether={block_sha256=60fef7ef38f27e290e7b9d412caceb733281b4b9d75c3ca5a7805da29d5cba40, blocks=1048576, biome_sha256=84aa2bb086016c6e429b19c4de4c583b9e689850f9c4ba4b873bdf0255974671}, minecraft:the_end={block_sha256=d0654dfd0a7fafe21ee39e795c2992d1914c4d7ea25a306aa65b7217601e4988, blocks=1048576, biome_sha256=eae83cb8cb5b7d97099ec4d466253b58734967dc5b4ebe7bbad9ad671f7ad498}}
+[00:56:28] [Server thread/INFO] [minecraft/MinecraftServer]: Stopping server
+[00:56:28] [Server thread/INFO] [minecraft/MinecraftServer]: Saving players
+[00:56:28] [Server thread/INFO] [minecraft/MinecraftServer]: Saving worlds
+[00:56:28] [Server thread/INFO] [bo.fu.pa.va.BiomeCodecMemo/]: Bons and Furious: vanilla_chunk_biome_codec_memo applies (the biome section codec is built once per registry, not once per chunk)
+[00:56:28] [Server thread/INFO] [bo.fu.pa.va.PaletteDirectNbt/]: Bons and Furious: vanilla_chunk_palette_direct_nbt applies (chunk palettes are written directly, each entry checked against the codec once)
+[00:56:29] [Bons and Furious mob class warm-up/INFO] [Bons and Furious/]: Bons and Furious: mob class warm-up loaded and linked 1290 classes (129 entity, 332 mod AI, 829 vanilla entity/AI) in 356 ms on a background thread
+[00:56:29] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+[00:56:30] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_nether
+[00:56:30] [Server thread/INFO] [minecraft/MinecraftServer]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_end
+[00:56:30] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[00:56:30] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[00:56:30] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[00:56:30] [Server thread/INFO] [minecraft/MinecraftServer]: ThreadedAnvilChunkStorage: All dimensions are saved

@@ -1,0 +1,378 @@
+{
+ "terrain_final_density_reuse net/minecraft/world/level/levelgen/DensityFunctions$Ap2.mapAll(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;": {
+  "server": "same",
+  "client": "same"
+ },
+ "terrain_final_density_reuse net/minecraft/world/level/levelgen/DensityFunctions$BlendDensity.mapAll(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;": {
+  "server": "same",
+  "client": "same"
+ },
+ "terrain_final_density_reuse net/minecraft/world/level/levelgen/DensityFunctions$MarkerOrMarked.mapAll(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;": {
+  "server": "same",
+  "client": "same"
+ },
+ "terrain_final_density_reuse net/minecraft/world/level/levelgen/NoiseChunk.<init>(ILnet/minecraft/world/level/levelgen/RandomState;IILnet/minecraft/world/level/levelgen/NoiseSettings;Lnet/minecraft/world/level/levelgen/DensityFunctions$BeardifierOrMarker;Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;Lnet/minecraft/world/level/levelgen/blending/Blender;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "terrain_final_density_reuse net/minecraft/world/level/levelgen/DensityFunctions$RangeChoice.mapAll(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;": {
+  "server": "same",
+  "client": "same"
+ },
+ "terrain_final_density_reuse net/minecraft/world/level/levelgen/DensityFunctions$ShiftedNoise.mapAll(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;": {
+  "server": "same",
+  "client": "same"
+ },
+ "terrain_final_density_reuse net/minecraft/world/level/levelgen/DensityFunctions$Spline.mapAll(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;": {
+  "server": "same",
+  "client": "same"
+ },
+ "terrain_final_density_reuse net/minecraft/world/level/levelgen/DensityFunctions$WeirdScaledSampler.mapAll(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;": {
+  "server": "same",
+  "client": "same"
+ },
+ "terrain_surface_estimate_share net/minecraft/world/level/levelgen/NoiseChunk.computePreliminarySurfaceLevel(J)I": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_column_cache net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator.getBaseHeight(IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)I": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_column_cache net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator.iterateNoiseColumn(Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;IILorg/apache/commons/lang3/mutable/MutableObject;Ljava/util/function/Predicate;)Ljava/util/OptionalInt;": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_column_summary net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator.iterateNoiseColumn(Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;IILorg/apache/commons/lang3/mutable/MutableObject;Ljava/util/function/Predicate;)Ljava/util/OptionalInt;": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_column_summary net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator.getBaseHeight(IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)I": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_column_summary net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator.getBaseColumn(IILnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)Lnet/minecraft/world/level/NoiseColumn;": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_column_summary net/minecraft/world/level/levelgen/NoiseSettings.clampToHeightAccessor(Lnet/minecraft/world/level/LevelHeightAccessor;)Lnet/minecraft/world/level/levelgen/NoiseSettings;": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_column_summary net/minecraft/world/level/NoiseColumn.<init>(I[Lnet/minecraft/world/level/block/state/BlockState;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_column_summary net/minecraft/world/level/levelgen/Heightmap$Types.isOpaque()Ljava/util/function/Predicate;": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_climate_sample_repeat net/minecraft/world/level/biome/Climate$Sampler.sample(III)Lnet/minecraft/world/level/biome/Climate$TargetPoint;": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_climate_search_repeat net/minecraft/world/level/biome/Climate$RTree.search(Lnet/minecraft/world/level/biome/Climate$TargetPoint;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Ljava/lang/Object;": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_climate_search_repeat net/minecraft/world/level/biome/Climate$RTree$SubTree.search([JLnet/minecraft/world/level/biome/Climate$RTree$Leaf;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Lnet/minecraft/world/level/biome/Climate$RTree$Leaf;": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_climate_search_repeat net/minecraft/world/level/biome/Climate$RTree$Leaf.search([JLnet/minecraft/world/level/biome/Climate$RTree$Leaf;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Lnet/minecraft/world/level/biome/Climate$RTree$Leaf;": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_climate_rtree_flat_bounds net/minecraft/world/level/biome/Climate$RTree$Node.distance([J)J": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_climate_rtree_flat_bounds net/minecraft/world/level/biome/Climate$RTree$Node.<init>(Ljava/util/List;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_climate_rtree_flat_bounds net/minecraft/world/level/biome/Climate$Parameter.distance(J)J": {
+  "server": "variant",
+  "client": "variant"
+ },
+ "vanilla_noise_wrap_presize net/minecraft/world/level/levelgen/NoiseChunk.<init>(ILnet/minecraft/world/level/levelgen/RandomState;IILnet/minecraft/world/level/levelgen/NoiseSettings;Lnet/minecraft/world/level/levelgen/DensityFunctions$BeardifierOrMarker;Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;Lnet/minecraft/world/level/levelgen/blending/Blender;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_wrap_presize net/minecraft/world/level/levelgen/NoiseChunk.wrap(Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_column_cell_fill net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator.iterateNoiseColumn(Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;IILorg/apache/commons/lang3/mutable/MutableObject;Ljava/util/function/Predicate;)Ljava/util/OptionalInt;": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_column_cell_fill net/minecraft/world/level/levelgen/NoiseChunk.selectCellYZ(II)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_column_cell_fill net/minecraft/world/level/levelgen/NoiseChunk.forIndex(I)Lnet/minecraft/world/level/levelgen/NoiseChunk;": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_column_cell_fill net/minecraft/world/level/levelgen/NoiseChunk.fillAllDirectly([DLnet/minecraft/world/level/levelgen/DensityFunction;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_column_cell_fill net/minecraft/world/level/levelgen/NoiseChunk.<init>(ILnet/minecraft/world/level/levelgen/RandomState;IILnet/minecraft/world/level/levelgen/NoiseSettings;Lnet/minecraft/world/level/levelgen/DensityFunctions$BeardifierOrMarker;Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;Lnet/minecraft/world/level/levelgen/blending/Blender;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_column_cell_fill net/minecraft/world/level/levelgen/NoiseChunk.updateForY(ID)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_column_cell_fill net/minecraft/world/level/levelgen/NoiseChunk.updateForX(ID)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_column_cell_fill net/minecraft/world/level/levelgen/NoiseChunk.updateForZ(ID)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_column_cell_fill net/minecraft/world/level/levelgen/NoiseChunk$CacheAllInCell.compute(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D": {
+  "server": "variant",
+  "client": "variant"
+ },
+ "vanilla_noise_column_cell_fill net/minecraft/world/level/levelgen/NoiseChunk$NoiseInterpolator.compute(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D": {
+  "server": "variant",
+  "client": "variant"
+ },
+ "vanilla_noise_column_cell_fill net/minecraft/world/level/levelgen/NoiseChunk$NoiseInterpolator.fillArray([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V": {
+  "server": "variant",
+  "client": "variant"
+ },
+ "vanilla_noise_column_cell_fill net/minecraft/world/level/levelgen/NoiseChunk$FlatCache.compute(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D": {
+  "server": "variant",
+  "client": "variant"
+ },
+ "vanilla_noise_column_cell_fill net/minecraft/world/level/levelgen/NoiseChunk$FlatCache.fillArray([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_column_cell_fill net/minecraft/world/level/levelgen/NoiseChunk$Cache2D.compute(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_column_cell_fill net/minecraft/world/level/levelgen/NoiseChunk$Cache2D.fillArray([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_corner_share net/minecraft/world/level/levelgen/NoiseChunk.fillSlice(ZI)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_corner_share net/minecraft/world/level/levelgen/NoiseChunk.<init>(ILnet/minecraft/world/level/levelgen/RandomState;IILnet/minecraft/world/level/levelgen/NoiseSettings;Lnet/minecraft/world/level/levelgen/DensityFunctions$BeardifierOrMarker;Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;Lnet/minecraft/world/level/levelgen/blending/Blender;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_corner_share net/minecraft/world/level/levelgen/NoiseChunk.initializeForFirstCellX()V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_corner_share net/minecraft/world/level/levelgen/NoiseChunk.advanceCellX(I)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_corner_share net/minecraft/world/level/levelgen/NoiseChunk.selectCellYZ(II)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_corner_share net/minecraft/world/level/levelgen/NoiseChunk.updateForZ(ID)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_corner_share net/minecraft/world/level/levelgen/NoiseChunk$1.forIndex(I)Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_corner_share net/minecraft/world/level/levelgen/NoiseChunk$1.fillAllDirectly([DLnet/minecraft/world/level/levelgen/DensityFunction;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_corner_share net/minecraft/world/level/levelgen/NoiseChunk$NoiseInterpolator.<init>(Lnet/minecraft/world/level/levelgen/NoiseChunk;Lnet/minecraft/world/level/levelgen/DensityFunction;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_corner_share net/minecraft/world/level/levelgen/NoiseChunk$NoiseInterpolator.fillArray([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V": {
+  "server": "variant",
+  "client": "variant"
+ },
+ "vanilla_noise_corner_share net/minecraft/world/level/levelgen/NoiseChunk$NoiseInterpolator.compute(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D": {
+  "server": "variant",
+  "client": "variant"
+ },
+ "vanilla_noise_corner_share net/minecraft/world/level/levelgen/NoiseChunk$CacheOnce.compute(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_corner_share net/minecraft/world/level/levelgen/NoiseChunk$CacheOnce.fillArray([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V": {
+  "server": "variant",
+  "client": "variant"
+ },
+ "vanilla_noise_corner_share net/minecraft/world/level/levelgen/NoiseChunk$Cache2D.compute(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_corner_share net/minecraft/world/level/levelgen/NoiseChunk$Cache2D.fillArray([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_noise_corner_share net/minecraft/world/level/levelgen/NoiseChunk$FlatCache.compute(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D": {
+  "server": "variant",
+  "client": "variant"
+ },
+ "vanilla_noise_corner_share net/minecraft/world/level/levelgen/NoiseChunk$FlatCache.fillArray([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_climate_last_result_weak net/minecraft/world/level/biome/Climate$RTree.<init>(Lnet/minecraft/world/level/biome/Climate$RTree$Node;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_climate_last_result_weak net/minecraft/world/level/biome/Climate$RTree.search(Lnet/minecraft/world/level/biome/Climate$TargetPoint;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Ljava/lang/Object;": {
+  "server": "same",
+  "client": "same"
+ },
+ "basalt_guards_vanilla_first net/minecraft/world/level/levelgen/feature/BasaltColumnsFeature.canPlaceAt(Lnet/minecraft/world/level/LevelAccessor;ILnet/minecraft/core/BlockPos$MutableBlockPos;)Z": {
+  "server": "variant",
+  "client": "variant"
+ },
+ "basalt_guards_vanilla_first net/minecraft/world/level/levelgen/feature/BasaltColumnsFeature.isAirOrLavaOcean(Lnet/minecraft/world/level/LevelAccessor;ILnet/minecraft/core/BlockPos;)Z": {
+  "server": "same",
+  "client": "same"
+ },
+ "basalt_guards_vanilla_first net/minecraft/world/level/levelgen/feature/BasaltColumnsFeature.<clinit>()V": {
+  "server": "same",
+  "client": "same"
+ },
+ "basalt_guards_vanilla_first net/minecraft/world/level/levelgen/feature/BasaltColumnsFeature.*": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_structure_ring_search net/minecraft/world/level/chunk/ChunkGenerator.getNearestGeneratedStructure(Ljava/util/Set;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/world/level/StructureManager;IIIZJLnet/minecraft/world/level/levelgen/structure/placement/RandomSpreadStructurePlacement;)Lcom/mojang/datafixers/util/Pair;": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_structure_ring_search net/minecraft/world/level/chunk/ChunkGenerator.getStructureGeneratingAt(Ljava/util/Set;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/world/level/StructureManager;ZLnet/minecraft/world/level/levelgen/structure/placement/StructurePlacement;Lnet/minecraft/world/level/ChunkPos;)Lcom/mojang/datafixers/util/Pair;": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_structure_ring_search net/minecraft/world/level/levelgen/structure/placement/RandomSpreadStructurePlacement.getPotentialStructureChunk(JII)Lnet/minecraft/world/level/ChunkPos;": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_structure_template_hits net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager.get(Lnet/minecraft/resources/ResourceLocation;)Ljava/util/Optional;": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_structure_template_hits net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager.tryLoad(Lnet/minecraft/resources/ResourceLocation;)Ljava/util/Optional;": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_structure_template_hits net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager.getOrCreate(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate;": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_structure_template_hits net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager.onResourceManagerReload(Lnet/minecraft/server/packs/resources/ResourceManager;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_structure_template_hits net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager.save(Lnet/minecraft/resources/ResourceLocation;)Z": {
+  "server": "variant",
+  "client": "variant"
+ },
+ "vanilla_structure_template_hits net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager.remove(Lnet/minecraft/resources/ResourceLocation;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_structure_template_hits net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager.*": {
+  "server": "same",
+  "client": "same"
+ },
+ "worldgen_empty_beardifier_marker net/minecraft/world/level/levelgen/Beardifier.compute(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D": {
+  "server": "same",
+  "client": "same"
+ },
+ "worldgen_empty_beardifier_marker net/minecraft/world/level/levelgen/Beardifier.forStructuresInChunk(Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/ChunkPos;)Lnet/minecraft/world/level/levelgen/Beardifier;": {
+  "server": "same",
+  "client": "same"
+ },
+ "worldgen_empty_beardifier_marker net/minecraft/world/level/levelgen/Beardifier.<init>(Lit/unimi/dsi/fastutil/objects/ObjectListIterator;Lit/unimi/dsi/fastutil/objects/ObjectListIterator;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "worldgen_empty_beardifier_marker net/minecraft/world/level/levelgen/Beardifier.*": {
+  "server": "same",
+  "client": "same"
+ },
+ "worldgen_empty_beardifier_marker net/minecraft/world/level/levelgen/DensityFunction$SimpleFunction.fillArray([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "worldgen_empty_beardifier_marker net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator.createNoiseChunk(Lnet/minecraft/world/level/chunk/ChunkAccess;Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/levelgen/blending/Blender;Lnet/minecraft/world/level/levelgen/RandomState;)Lnet/minecraft/world/level/levelgen/NoiseChunk;": {
+  "server": "same",
+  "client": "same"
+ },
+ "worldgen_empty_beardifier_marker net/minecraft/world/level/levelgen/NoiseChunk.fillAllDirectly([DLnet/minecraft/world/level/levelgen/DensityFunction;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "worldgen_empty_beardifier_marker net/minecraft/world/level/levelgen/NoiseChunk.<init>(ILnet/minecraft/world/level/levelgen/RandomState;IILnet/minecraft/world/level/levelgen/NoiseSettings;Lnet/minecraft/world/level/levelgen/DensityFunctions$BeardifierOrMarker;Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;Lnet/minecraft/world/level/levelgen/blending/Blender;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "worldgen_empty_beardifier_marker net/minecraft/world/level/levelgen/NoiseChunk.wrapNew(Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;": {
+  "server": "variant",
+  "client": "variant"
+ },
+ "vanilla_beardifier_influence_bounds net/minecraft/world/level/levelgen/Beardifier.compute(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_beardifier_influence_bounds net/minecraft/world/level/levelgen/Beardifier.getBeardContribution(IIII)D": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_beardifier_influence_bounds net/minecraft/world/level/levelgen/Beardifier.getBuryContribution(DDD)D": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_beardifier_influence_bounds net/minecraft/world/level/levelgen/Beardifier.isInKernelRange(I)Z": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_beardifier_influence_bounds net/minecraft/world/level/levelgen/Beardifier.<init>(Lit/unimi/dsi/fastutil/objects/ObjectListIterator;Lit/unimi/dsi/fastutil/objects/ObjectListIterator;)V": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_beardifier_influence_bounds net/minecraft/world/level/levelgen/Beardifier.forStructuresInChunk(Lnet/minecraft/world/level/StructureManager;Lnet/minecraft/world/level/ChunkPos;)Lnet/minecraft/world/level/levelgen/Beardifier;": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_beardifier_influence_bounds net/minecraft/util/Mth.clampedMap(DDDDD)D": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_beardifier_influence_bounds net/minecraft/util/Mth.clampedLerp(DDD)D": {
+  "server": "variant",
+  "client": "variant"
+ },
+ "vanilla_beardifier_influence_bounds net/minecraft/util/Mth.lerp(DDD)D": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_beardifier_influence_bounds net/minecraft/util/Mth.length(DDD)D": {
+  "server": "same",
+  "client": "same"
+ },
+ "vanilla_beardifier_influence_bounds net/minecraft/util/Mth.lengthSquared(DDD)D": {
+  "server": "same",
+  "client": "same"
+ }
+}

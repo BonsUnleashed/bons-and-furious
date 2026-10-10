@@ -1,0 +1,1718 @@
+{
+ "fixture": "c36-aero-sd",
+ "opts": [
+  "bons=<port>\\source\\build\\libs\\bons_and_furious-neoforge-1.0.38+mc1.21.1.jar",
+  "mods=aero,sd,gecko",
+  "ticks=400",
+  "timeout=900",
+  "commands=client-commands-sable.txt",
+  "probejar=<port>\\source\\build\\libs\\bons-port-probe-1.jar"
+ ],
+ "port_runtime": "<port-1.0.35>",
+ "mods": {
+  "bons-port-probe-1.jar": "38653afb2762b91f5fabf555a5f2ed0140a9b4d3",
+  "bons_and_furious-neoforge-1.0.38+mc1.21.1.jar": "2eae9de54b9fe27ccb6a15fa6b03b3fc932e786f",
+  "create-1.21.1-6.0.10.jar": "0e97e49837bed766e6f28a4c95b04885d6acc353",
+  "create-aeronautics-bundled-1.21.1-1.3.2.jar": "ddbe9cbc25e8f663218aa1e9fdfc4b99f0e11e4b",
+  "geckolib-neoforge-1.21.1-4.9.3.jar": "5cfe835472a5c5457ae9ac192d9d7b317454d5ac",
+  "sable-neoforge-1.21.1-2.0.6.jar": "cf46f7e8c1511f170abcdbee739944f0540549bf",
+  "StorageDrawers-neoforge-1.21.1-13.11.4.jar": "b8e11e3d1fd63fd1a0d9277ec3f966c7e5cff385"
+ },
+ "bons_sha256": "e5b600a0008c1abadb81e99182873072d8fd0afddca403e4e44e8adcb3edaec9",
+ "exit_code": 0,
+ "timed_out": false,
+ "seconds": 45.0,
+ "crash_reports": [],
+ "hs_err": [],
+ "world_joined": true,
+ "mixin_lines": [],
+ "bons_lines": [
+  "\t\tBons and Furious 1.0.38+mc1.21.1 (bons_and_furious)",
+  "[01:20:28.721] [main/INFO] [Bons and Furious/]: Bons and Furious wrote the default configuration to <sable-rig>\\runs\\c36-aero-sd\\config\\bons_and_furious.properties ",
+  "[01:20:28.722] [main/INFO] [Bons and Furious/]: Bons and Furious 1.0.38+mc1.21.1: 205 of 205 optimizations enabled from <sable-rig>\\runs\\c36-aero-sd\\config\\bons_and_furious.properties ",
+  "[01:20:35] [modloading-worker-0/INFO] [Bons and Furious/]: Bons and Furious 1.0.38+mc1.21.1 constructed; 0 switch(es) disabled in <sable-rig>\\runs\\c36-aero-sd\\config\\bons_and_furious.properties",
+  "[01:20:43] [Render thread/INFO] [bo.fu.pa.ar.LayerBake/]: Bons and Furious: vanilla_layer_bake_streamless: model layers are baked with plain loops",
+  "[01:20:43] [Render thread/INFO] [bo.fu.pa.va.StateCodecMemo/]: Bons and Furious: vanilla_state_codec_dispatch_memo applies (block state codecs are built once per block, not once per palette entry)",
+  "[01:20:43] [Render thread/INFO] [Bons and Furious/]: Bons and Furious: vanilla_climate_tree_span_bounds computes climate subtree ranges without intermediate objects",
+  "[01:20:43] [Render thread/INFO] [bo.fu.pa.cl.WeakLastResult/]: Bons and Furious: vanilla_climate_last_result_weak applies (climate search trees keep each thread's last leaf weakly, so a closed world's biomes can be freed)",
+  "[01:20:43] [Render thread/INFO] [Bons and Furious/]: Bons and Furious: vanilla_climate_tree_sort_keys sorts climate search tree nodes by precomputed keys",
+  "[01:20:45] [Render thread/INFO] [Bons and Furious/]: Bons and Furious: storagedrawers_count_sync_holders steps aside: Sable 2.0.6 (PlayerListMixin) replaces net.minecraft.server.players.PlayerList.broadcast; that method is left to it",
+  "[01:20:46] [Server thread/INFO] [Bons and Furious/]: Bons and Furious: vanilla_tag_membership_ids applies (tag tests compare tag numbers; each holder's numbers follow its current tag set)",
+  "[01:20:46] [Server thread/INFO] [Bons and Furious/]: Bons and Furious: vanilla_entity_class_count_layer counts 4 entity classes per level for crittersandcompanions_red_panda_gate and fdbosses_spawner_presence_gate",
+  "[01:20:46] [Worker-Main-20/INFO] [bo.fu.pa.cl.ClimateParts/]: Bons and Furious: vanilla_climate_sample_xz_parts remembers 9 two-dimensional parts of a climate sampler per column",
+  "[01:20:46] [Server thread/INFO] [bo.fu.pa.va.BiomeCodecMemo/]: Bons and Furious: vanilla_chunk_biome_codec_memo applies (the biome section codec is built once per registry, not once per chunk)",
+  "[01:20:47] [Server thread/INFO] [bo.fu.pa.ch.TickingChunkMemo/]: Bons and Furious: vanilla_ticking_chunk_memo applies (each chunk holder remembers its ticking chunk until its future changes)",
+  "[01:20:47] [Server thread/INFO] [Bons and Furious/]: Bons and Furious: vanilla_spawn_gate_visibility_memo applies (ticking chunks remember their spawning gate until their region changes)",
+  "[01:20:47] [Server thread/INFO] [Bons and Furious/]: Bons and Furious: vanilla_ticker_range_memo applies (block-entity tickers remember their ticking-range answer until their region changes)",
+  "[01:20:47] [Server thread/INFO] [Bons and Furious/]: Bons and Furious: vanilla_block_state_air_flag remembers isAir in each block state",
+  "[01:20:47] [Server thread/INFO] [bo.fu.pa.va.BlockScans/]: Bons and Furious: vanilla_suffocation_scan_loop applies (the suffocation check scans blocks without a stream)",
+  "[01:20:47] [Server thread/INFO] [bo.fu.pa.va.GoalFlags/]: Bons and Furious: vanilla_goal_flags_none_disabled applies (goal selectors with no disabled control flag skip the per-goal flag loop)",
+  "[01:20:47] [Server thread/INFO] [bo.fu.pa.va.BlockScans/]: Bons and Furious: vanilla_fire_scan_loop applies (the fire check of moving entities scans blocks without a stream)",
+  "[01:20:47] [Server thread/INFO] [bo.fu.pa.va.PaletteDirectNbt/]: Bons and Furious: vanilla_chunk_palette_direct_nbt applies (chunk palettes are written directly, each entry checked against the codec once)",
+  "[01:20:47] [Bons and Furious mob class warm-up/INFO] [Bons and Furious/]: Bons and Furious: mob class warm-up loaded and linked 1302 classes (141 entity, 332 mod AI, 829 vanilla entity/AI) in 441 ms on a background thread",
+  "[01:20:48] [Render thread/INFO] [bo.fu.pa.va.ClipFast/]: Bons and Furious: vanilla_raycast_fluid_none stands down: BlockGetter's clip is changed by dev.ryanhcode.sable.mixin.clip_overwrite.BlockGetterMixin (clip); every clip runs that method",
+  "[01:20:48] [Render thread/WARN] [Bons and Furious/]: Bons and Furious: vanilla_camera_fluid_memo stands down: Camera carries mixins it was not tested with (com.simibubi.create.foundation.mixin.client.CameraMixin, dev.ryanhcode.sable.mixin.camera.camera_zoom.CameraMixin, dev.ryanhcode.sable.mixin.entity.entity_sublevel_collision.CameraMixin, dev.ryanhcode.sable.mixin.entity.entity_swimming.CameraMixin, dev.ryanhcode.sable.mixin.water_occlusion.CameraMixin, dev.ryanhcode.sable.neoforge.mixin.camera_rotation.CameraMixin); the fluid check runs unchanged",
+  "[01:20:48] [Worker-Main-1/INFO] [Bons and Furious/]: Bons and Furious: vanilla_strip_formatting_fast_path returns strings without formatting codes unchanged without a regex",
+  "[01:20:48] [Server thread/INFO] [bo.fu.pa.va.StructureTemplateHits/]: Bons and Furious: vanilla_structure_template_hits applies (loaded structure templates are answered without the cache lock; map java.util.concurrent.ConcurrentHashMap)",
+  "[01:20:48] [Server thread/INFO] [bo.fu.pa.va.GameEventRegistries/]: Bons and Furious: vanilla_game_event_registry_lookup applies (game events skip chunk sections without listeners instead of creating empty registries)",
+  "[01:20:48] [Render thread/INFO] [Bons and Furious/]: Bons and Furious: vanilla_entity_outline_composite_skip: the entity-outline composite is left out while nothing was outlined",
+  "[01:20:48] [Server thread/INFO] [Bons and Furious/]: Bons and Furious: vanilla_sun_burn_deferred_wet_check applies (sun-burn ticks ask the wet question after the light test and the roll)",
+  "[01:20:49] [Server thread/INFO] [bo.fu.pa.va.NonPoiSearch/]: Bons and Furious: vanilla_turtle_egg_search_sections applies (RemoveBlockGoal searches skip block reads in sections that cannot hold the target)",
+  "[01:20:49] [Worker-Main-23/INFO] [bo.fu.pa.be.EmptyBeardifiers/]: Bons and Furious: worldgen_empty_beardifier_marker applies (no other mod changes Beardifier; 0 adaptation slots checked per chunk)",
+  "[01:20:49] [Worker-Main-2/INFO] [bo.fu.pa.be.EmptyBeardifiers/]: Bons and Furious: worldgen_empty_beardifier_marker flagged its first chunk without nearby structure pieces (the empty beardifier is filled without a per-block loop)",
+  "[01:20:49] [Worker-Main-17/INFO] [bo.fu.pa.wo.AquiferCandidates/]: Bons and Furious: vanilla_aquifer_candidate_cache applies (aquifer candidates ranked from a per-cell table, with vanilla_aquifer_high_air's early air return)",
+  "[01:20:51] [Worker-Main-14/INFO] [bo.fu.pa.va.ColumnCellFill/]: Bons and Furious: vanilla_noise_column_cell_fill fills only the queried column of each cell in terrain height queries (8 of 128 cell-cache positions per cell)",
+  "[01:20:52] [Worker-Main-12/INFO] [bo.fu.pa.va.CornerShare/]: Bons and Furious: vanilla_noise_corner_share shares the corner columns of terrain height queries between queries (1 of 8 interpolators stored per corner)",
+  "[01:21:08] [Render thread/INFO] [Bons and Furious/]: Bons and Furious: artifacts_living_tick_order applies (Artifacts' living tick tests the creeper type before the kitty slippers scan and the charm of sinking last)"
+ ],
+ "error_lines": [
+  "[01:20:29.134] [main/WARN] [mixin/]: Error loading class: net/irisshaders/iris/pipeline/PipelineManager (java.lang.ClassNotFoundException: net.irisshaders.iris.pipeline.PipelineManager) ",
+  "[01:20:29.952] [main/WARN] [mixin/]: Error loading class: org/jetbrains/annotations/ApiStatus$ScheduledForRemoval (java.lang.ClassNotFoundException: org.jetbrains.annotations.ApiStatus$ScheduledForRemoval) "
+ ],
+ "probe": {
+  "world_loaded": true,
+  "world_ticks": 400,
+  "dimension": "minecraft:overworld",
+  "target_checks": {
+   "adastra_gravity_primitive": {
+    "decision": "Decision[state=ABSENT, detail=target mod ad_astra is not installed]"
+   },
+   "almostunified_duplicate_groups": {
+    "decision": "Decision[state=ABSENT, detail=target mod almostunified is not installed]"
+   },
+   "ambientsounds_biome_match_cache": {
+    "decision": "Decision[state=ABSENT, detail=target mod ambientsounds is not installed]"
+   },
+   "ambientsounds_terrain_scan_bound": {
+    "decision": "Decision[state=ABSENT, detail=target mod ambientsounds is not installed]"
+   },
+   "aquaculture_item_renderer_reuse": {
+    "decision": "Decision[state=ABSENT, detail=target mod aquaculture is not installed]"
+   },
+   "architectury_event_dispatch": {
+    "decision": "Decision[state=ABSENT, detail=target mod architectury is not installed]"
+   },
+   "ars_direct_perk_snapshots": {
+    "decision": "Decision[state=ABSENT, detail=target mod ars_nouveau is not installed]"
+   },
+   "ars_primitive_mana_discounts": {
+    "decision": "Decision[state=ABSENT, detail=target mod ars_nouveau is not installed]"
+   },
+   "artifacts_living_tick_order": {
+    "decision": "Decision[state=ABSENT, detail=target mod artifacts is not installed]"
+   },
+   "basalt_guards_vanilla_first": {
+    "decision": "Decision[state=APPLY, detail=all 4 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.levelgen.feature.BasaltColumnsFeature": [
+      "bons.furious.mixin.basalt_guards.BasaltColumnsFeatureVanillaFirstMixin"
+     ]
+    }
+   },
+   "bettercombat_offhand_lookup": {
+    "decision": "Decision[state=ABSENT, detail=target mod bettercombat is not installed]"
+   },
+   "bomd_block_cache_presence": {
+    "decision": "Decision[state=ABSENT, detail=target mod bosses_of_mass_destruction is not installed]"
+   },
+   "butterflies_landing_rule_lookup": {
+    "decision": "Decision[state=ABSENT, detail=target mod butterflies is not installed]"
+   },
+   "cataclysm_area_attack_scans": {
+    "decision": "Decision[state=ABSENT, detail=target mod cataclysm is not installed]"
+   },
+   "cataclysm_beam_client_scans": {
+    "decision": "Decision[state=ABSENT, detail=target mod cataclysm is not installed]"
+   },
+   "cataclysm_boss_block_breaking": {
+    "decision": "Decision[state=ABSENT, detail=target mod cataclysm is not installed]"
+   },
+   "cataclysm_client_leaks": {
+    "decision": "Decision[state=ABSENT, detail=target mod cataclysm is not installed]"
+   },
+   "cataclysm_coral_swim_checks": {
+    "decision": "Decision[state=ABSENT, detail=target mod cataclysm is not installed]"
+   },
+   "cataclysm_helm_scan": {
+    "decision": "Decision[state=ABSENT, detail=target mod cataclysm is not installed]"
+   },
+   "cataclysm_idle_animate_skip": {
+    "decision": "Decision[state=ABSENT, detail=target mod cataclysm is not installed]"
+   },
+   "cataclysm_pose_hand_events": {
+    "decision": "Decision[state=ABSENT, detail=target mod cataclysm is not installed]"
+   },
+   "cataclysm_server_leg_solver": {
+    "decision": "Decision[state=ABSENT, detail=target mod cataclysm is not installed]"
+   },
+   "cataclysm_shield_layer_pose": {
+    "decision": "Decision[state=ABSENT, detail=target mod cataclysm is not installed]"
+   },
+   "chunksending_expiry_queue": {
+    "decision": "Decision[state=ABSENT, detail=target mod chunksending is not installed]"
+   },
+   "citadel_model_vertices": {
+    "decision": "Decision[state=ABSENT, detail=target mod citadel is not installed]"
+   },
+   "citadel_pose_hand_events": {
+    "decision": "Decision[state=ABSENT, detail=target mod citadel is not installed]"
+   },
+   "colorwheel_phase_labels": {
+    "decision": "Decision[state=ABSENT, detail=target mod colorwheel is not installed]"
+   },
+   "crittersandcompanions_red_panda_gate": {
+    "decision": "Decision[state=ABSENT, detail=target mod crittersandcompanions is not installed]"
+   },
+   "cucumber_tile_dispatch_range_first": {
+    "decision": "Decision[state=ABSENT, detail=target mod cucumber is not installed]"
+   },
+   "curios_lazy_modifier_map": {
+    "decision": "Decision[state=ABSENT, detail=target mod curios is not installed]"
+   },
+   "curios_slot_map_lookup": {
+    "decision": "Decision[state=ABSENT, detail=target mod curios is not installed]"
+   },
+   "curios_tag_predicate_keys": {
+    "decision": "Decision[state=ABSENT, detail=target mod curios is not installed]"
+   },
+   "curios_thread_safe_caches": {
+    "decision": "Decision[state=ABSENT, detail=target mod curios is not installed]"
+   },
+   "distanthorizons_adjacent_face_skip": {
+    "decision": "Decision[state=ABSENT, detail=target mod distanthorizons is not installed]"
+   },
+   "distanthorizons_biome_blend_memo": {
+    "decision": "Decision[state=ABSENT, detail=target mod distanthorizons is not installed]"
+   },
+   "distanthorizons_c2me_direct_reads": {
+    "decision": "Decision[state=ABSENT, detail=target mod distanthorizons is not installed]"
+   },
+   "distanthorizons_cloud_pass_invariants": {
+    "decision": "Decision[state=ABSENT, detail=target mod distanthorizons is not installed]"
+   },
+   "distanthorizons_cloud_scalars": {
+    "decision": "Decision[state=ABSENT, detail=target mod distanthorizons is not installed]"
+   },
+   "distanthorizons_ignored_dimension_match": {
+    "decision": "Decision[state=ABSENT, detail=target mod distanthorizons is not installed]"
+   },
+   "distanthorizons_join_config_resend": {
+    "decision": "Decision[state=ABSENT, detail=target mod distanthorizons is not installed]"
+   },
+   "distanthorizons_lod_biome_memo": {
+    "decision": "Decision[state=ABSENT, detail=target mod distanthorizons is not installed]"
+   },
+   "distanthorizons_pooled_string_index": {
+    "decision": "Decision[state=ABSENT, detail=target mod distanthorizons is not installed]"
+   },
+   "distanthorizons_quad_sort_keys": {
+    "decision": "Decision[state=ABSENT, detail=target mod distanthorizons is not installed]"
+   },
+   "distanthorizons_render_param_inverse_reuse": {
+    "decision": "Decision[state=ABSENT, detail=target mod distanthorizons is not installed]"
+   },
+   "distanthorizons_rough_surface_xz_cache": {
+    "decision": "Decision[state=ABSENT, detail=target mod distanthorizons is not installed]"
+   },
+   "distanthorizons_sql_script_lookup_index": {
+    "decision": "Decision[state=ABSENT, detail=target mod distanthorizons is not installed]"
+   },
+   "distanthorizons_tint_neighbour_index": {
+    "decision": "Decision[state=ABSENT, detail=target mod distanthorizons is not installed]"
+   },
+   "distanthorizons_unlocked_byte_stream": {
+    "decision": "Decision[state=ABSENT, detail=target mod distanthorizons is not installed]"
+   },
+   "distanthorizons_unlocked_output_stream": {
+    "decision": "Decision[state=ABSENT, detail=target mod distanthorizons is not installed]"
+   },
+   "distanthorizons_update_queue_wait": {
+    "decision": "Decision[state=ABSENT, detail=target mod distanthorizons is not installed]"
+   },
+   "distanthorizons_world_change_biome_reset": {
+    "decision": "Decision[state=ABSENT, detail=target mod distanthorizons is not installed]"
+   },
+   "distanthorizons_wrapper_air_flag": {
+    "decision": "Decision[state=ABSENT, detail=target mod distanthorizons is not installed]"
+   },
+   "dungeonsdelight_yam_single_add": {
+    "decision": "Decision[state=ABSENT, detail=target mod dungeonsdelight is not installed]"
+   },
+   "dynamictrees_rot_cycle_guard": {
+    "decision": "Decision[state=ABSENT, detail=target mod dynamictrees is not installed]"
+   },
+   "dynamictrees_thick_shape_memo": {
+    "decision": "Decision[state=ABSENT, detail=target mod dynamictrees is not installed]"
+   },
+   "embeddium_direct_upload_preparation": {
+    "decision": "Decision[state=ABSENT, detail=target mod embeddium is not installed]"
+   },
+   "embeddium_draw_batch_cache": {
+    "decision": "Decision[state=ABSENT, detail=target mod embeddium is not installed]"
+   },
+   "embeddium_entity_sort_radix": {
+    "decision": "Decision[state=ABSENT, detail=target mod embeddium is not installed]"
+   },
+   "embeddium_lazy_completed_jobs": {
+    "decision": "Decision[state=ABSENT, detail=target mod embeddium is not installed]"
+   },
+   "embeddium_merged_draws": {
+    "decision": "Decision[state=ABSENT, detail=target mod embeddium is not installed]"
+   },
+   "embeddium_pending_upload_sum": {
+    "decision": "Decision[state=ABSENT, detail=target mod embeddium is not installed]"
+   },
+   "embeddium_search_replay": {
+    "decision": "Decision[state=ABSENT, detail=target mod embeddium is not installed]"
+   },
+   "embeddium_section_cache_prefix_cleanup": {
+    "decision": "Decision[state=ABSENT, detail=target mod embeddium is not installed]"
+   },
+   "embeddium_serializer_lookup_snapshot": {
+    "decision": "Decision[state=ABSENT, detail=target mod embeddium is not installed]"
+   },
+   "embeddium_sprite_tick_frame_times": {
+    "decision": "Decision[state=ABSENT, detail=target mod embeddium is not installed]"
+   },
+   "embeddium_upload_classification": {
+    "decision": "Decision[state=ABSENT, detail=target mod embeddium is not installed]"
+   },
+   "embeddium_visible_faces_first": {
+    "decision": "Decision[state=ABSENT, detail=target mod embeddium is not installed]"
+   },
+   "embeddium_weighted_pick_table": {
+    "decision": "Decision[state=ABSENT, detail=target mod embeddium is not installed]"
+   },
+   "emf_anger_map_prune": {
+    "decision": "Decision[state=ABSENT, detail=target mod entity_model_features is not installed]"
+   },
+   "emf_block_entity_type_string": {
+    "decision": "Decision[state=ABSENT, detail=target mod entity_model_features is not installed]"
+   },
+   "emf_hierarchical_id_memo": {
+    "decision": "Decision[state=ABSENT, detail=target mod entity_model_features is not installed]"
+   },
+   "emf_variable_default_unboxed": {
+    "decision": "Decision[state=ABSENT, detail=target mod entity_model_features is not installed]"
+   },
+   "emf_variable_index": {
+    "decision": "Decision[state=ABSENT, detail=target mod entity_model_features is not installed]"
+   },
+   "entityculling_dirty_cache_reset": {
+    "decision": "Decision[state=ABSENT, detail=target mod entityculling is not installed]"
+   },
+   "etf_sprite_texture_id_memo": {
+    "decision": "Decision[state=ABSENT, detail=target mod entity_texture_features is not installed]"
+   },
+   "failures": [],
+   "fancymenu_render_thread_state": {
+    "decision": "Decision[state=ABSENT, detail=target mod fancymenu is not installed]"
+   },
+   "fdbosses_phase_sphere_local_only": {
+    "decision": "Decision[state=ABSENT, detail=target mod fdbosses is not installed]"
+   },
+   "fdbosses_spawner_presence_gate": {
+    "decision": "Decision[state=ABSENT, detail=target mod fdbosses is not installed]"
+   },
+   "forge_render_layer_memo": {
+    "decision": "Decision[state=ABSENT, detail=target mod iris is not installed]"
+   },
+   "fowlplay_air_targets_loaded_only": {
+    "decision": "Decision[state=ABSENT, detail=target mod fowlplay is not installed]"
+   },
+   "fowlplay_flock_vectors": {
+    "decision": "Decision[state=ABSENT, detail=target mod fowlplay is not installed]"
+   },
+   "fusion_chunk_layer_id": {
+    "decision": "Decision[state=ABSENT, detail=target mod fusion is not installed]"
+   },
+   "fusion_connection_lookups": {
+    "decision": "Decision[state=ABSENT, detail=target mod fusion is not installed]"
+   },
+   "geckolib_animation_hashes": {
+    "decision": "Decision[state=APPLY, detail=all 2 fingerprints match]",
+    "classes": {
+     "software.bernie.geckolib.animation.RawAnimation": [
+      "bons.furious.mixin.geckolib.RawAnimationMixin"
+     ],
+     "software.bernie.geckolib.animation.keyframe.Keyframe": [
+      "bons.furious.mixin.geckolib.KeyframeMixin"
+     ]
+    }
+   },
+   "geckolib_bone_queue_reuse": {
+    "decision": "Decision[state=APPLY, detail=all 3 fingerprints match]",
+    "classes": {
+     "software.bernie.geckolib.animation.AnimationController": [
+      "bons.furious.mixin.geckolib.AnimationControllerMixin",
+      "bons.furious.mixin.geckolib.AnimationControllerQueueMixin"
+     ]
+    }
+   },
+   "geckolib_keyframe_locals": {
+    "decision": "Decision[state=APPLY, detail=all 2 fingerprints match]",
+    "classes": {
+     "software.bernie.geckolib.animation.AnimationController": [
+      "bons.furious.mixin.geckolib.AnimationControllerMixin",
+      "bons.furious.mixin.geckolib.AnimationControllerQueueMixin"
+     ]
+    }
+   },
+   "geckolib_primitive_easing": {
+    "decision": "Decision[state=APPLY, detail=all 39 fingerprints match]",
+    "classes": {
+     "software.bernie.geckolib.animation.EasingType": [
+      "bons.furious.mixin.geckolib.EasingTypeMixin"
+     ]
+    }
+   },
+   "geckolib_quad_vectors": {
+    "decision": "Decision[state=APPLY, detail=all 1 fingerprints match]",
+    "classes": {
+     "software.bernie.geckolib.renderer.GeoRenderer": [
+      "bons.furious.mixin.geckolib.GeoRendererQuadMixin"
+     ]
+    }
+   },
+   "hostilevillages_distant_generation_queue": {
+    "decision": "Decision[state=ABSENT, detail=target mod hostilevillages is not installed]"
+   },
+   "hostilevillages_pending_chunk_queue": {
+    "decision": "Decision[state=ABSENT, detail=target mod hostilevillages is not installed]"
+   },
+   "immediatelyfast_known_core_shaders": {
+    "decision": "Decision[state=ABSENT, detail=target mod immediatelyfast is not installed]"
+   },
+   "immediatelyfast_offset_layer_prefixes": {
+    "decision": "Decision[state=ABSENT, detail=target mod immediatelyfast is not installed]"
+   },
+   "item_renderer_reload_tracker": {
+    "decision": "Decision[state=APPLY, detail=all 1 fingerprints match]",
+    "classes": {
+     "net.minecraft.server.packs.resources.ReloadableResourceManager": [
+      "bons.furious.mixin.item_renderers.ReloadTrackerMixin"
+     ]
+    }
+   },
+   "jei_baked_index_background_grams": {
+    "decision": "Decision[state=ABSENT, detail=target mod jei is not installed]"
+   },
+   "jei_brewing_lookup": {
+    "decision": "Decision[state=ABSENT, detail=target mod jei is not installed]"
+   },
+   "jei_hidden_menu_sync": {
+    "decision": "Decision[state=ABSENT, detail=target mod jei is not installed]"
+   },
+   "jei_sort_index_keys": {
+    "decision": "Decision[state=ABSENT, detail=target mod jei is not installed]"
+   },
+   "jei_tooltip_words": {
+    "decision": "Decision[state=ABSENT, detail=target mod jei is not installed]"
+   },
+   "jei_typed_stack_cache": {
+    "decision": "Decision[state=ABSENT, detail=target mod jei is not installed]"
+   },
+   "l2library_stop_tracking_noop": {
+    "decision": "Decision[state=ABSENT, detail=target mod l2core is not installed]"
+   },
+   "legendary_monsters_camera_null_guard": {
+    "decision": "Decision[state=ABSENT, detail=target mod legendary_monsters is not installed]"
+   },
+   "lionfish_model_animator": {
+    "decision": "Decision[state=ABSENT, detail=target mod lionfishapi is not installed]"
+   },
+   "lionfish_model_parts": {
+    "decision": "Decision[state=ABSENT, detail=target mod lionfishapi is not installed]"
+   },
+   "lionfishapi_fluid_walk_scan": {
+    "decision": "Decision[state=ABSENT, detail=target mod lionfishapi is not installed]"
+   },
+   "lionfishapi_model_vertices": {
+    "decision": "Decision[state=ABSENT, detail=target mod lionfishapi is not installed]"
+   },
+   "modernfix_bake_location_order": {
+    "decision": "Decision[state=ABSENT, detail=target mod modernfix is not installed]"
+   },
+   "modernfix_c2me_cache_strongholds": {
+    "decision": "Decision[state=ABSENT, detail=target mod modernfix is not installed]"
+   },
+   "modernfix_cube_bake_memo": {
+    "decision": "Decision[state=ABSENT, detail=target mod modernfix is not installed]"
+   },
+   "mutantmonsters_empty_shoulder_skip": {
+    "decision": "Decision[state=ABSENT, detail=target mod mutantmonsters is not installed]"
+   },
+   "netherexp_item_renderer_reuse": {
+    "decision": "Decision[state=ABSENT, detail=target mod netherexp is not installed]"
+   },
+   "oculus_dh_instance_lookup": {
+    "decision": "Decision[state=ABSENT, detail=target mod iris is not installed]"
+   },
+   "oculus_empty_sampler_fast_return": {
+    "decision": "Decision[state=ABSENT, detail=target mod iris is not installed]"
+   },
+   "oculus_empty_transparency_graphs": {
+    "decision": "Decision[state=ABSENT, detail=target mod iris is not installed]"
+   },
+   "oculus_entity_vertex_reuse": {
+    "decision": "Decision[state=ABSENT, detail=target mod iris is not installed]"
+   },
+   "oculus_phase_labels": {
+    "decision": "Decision[state=ABSENT, detail=target mod iris is not installed]"
+   },
+   "oculus_primitive_buffer_affinities": {
+    "decision": "Decision[state=ABSENT, detail=target mod iris is not installed]"
+   },
+   "oculus_primitive_uniform_locations": {
+    "decision": "Decision[state=ABSENT, detail=target mod iris is not installed]"
+   },
+   "oculus_program_traversal": {
+    "decision": "Decision[state=ABSENT, detail=target mod iris is not installed]"
+   },
+   "oculus_reuse_empty_graphs": {
+    "decision": "Decision[state=ABSENT, detail=target mod iris is not installed]"
+   },
+   "oculus_shadow_edge_vectors": {
+    "decision": "Decision[state=ABSENT, detail=target mod iris is not installed]"
+   },
+   "oculus_shadow_outline_discard": {
+    "decision": "Decision[state=ABSENT, detail=target mod iris is not installed]"
+   },
+   "passed": true,
+   "pehkui_scale_tick_callbacks": {
+    "decision": "Decision[state=ABSENT, detail=target mod pehkui is not installed]"
+   },
+   "pipez_empty_filter_fast_path": {
+    "decision": "Decision[state=ABSENT, detail=target mod pipez is not installed]"
+   },
+   "pipez_sorted_connections_memo": {
+    "decision": "Decision[state=ABSENT, detail=target mod pipez is not installed]"
+   },
+   "presencefootsteps_duplicate_tracking": {
+    "decision": "Decision[state=ABSENT, detail=target mod presencefootsteps is not installed]"
+   },
+   "radium_experimental_tickets_spawning": {
+    "decision": "Decision[state=ABSENT, detail=target mod radium is not installed]"
+   },
+   "radium_hash_palette_copy": {
+    "decision": "Decision[state=ABSENT, detail=target mod radium is not installed]"
+   },
+   "radium_part_entity_collisions": {
+    "decision": "Decision[state=ABSENT, detail=target mod radium is not installed]"
+   },
+   "radium_world_border_keep_listeners": {
+    "decision": "Decision[state=ABSENT, detail=target mod radium is not installed]"
+   },
+   "relics_fluid_walk_scan": {
+    "decision": "Decision[state=ABSENT, detail=target mod relics is not installed]"
+   },
+   "ribbits_performer_absent_guard": {
+    "decision": "Decision[state=ABSENT, detail=target mod ribbits is not installed]"
+   },
+   "ryoamiclights_block_entity_lock_skip": {
+    "decision": "Decision[state=ABSENT, detail=target mod ryoamiclights is not installed]"
+   },
+   "ryoamiclights_chunk_iteration": {
+    "decision": "Decision[state=ABSENT, detail=target mod ryoamiclights is not installed]"
+   },
+   "spawn_sealife_tick": {
+    "decision": "Decision[state=ABSENT, detail=target mod spawn is not installed]"
+   },
+   "spawn_sealife_waterlogged_memo": {
+    "decision": "Decision[state=ABSENT, detail=target mod spawn is not installed]"
+   },
+   "storagedrawers_count_label_memo": {
+    "decision": "Decision[state=APPLY, detail=all 1 fingerprints match]",
+    "classes": {
+     "com.jaquadro.minecraft.storagedrawers.util.CountFormatter": [
+      "bons.furious.mixin.storagedrawers.CountFormatterMixin"
+     ]
+    }
+   },
+   "storagedrawers_count_sync_holders": {
+    "decision": "Decision[state=APPLY, detail=all 6 fingerprints match]",
+    "classes": {
+     "com.jaquadro.minecraft.storagedrawers.block.tile.BlockEntityDrawers": [
+      "bons.furious.mixin.storagedrawers_sync_c2.DrawerCountSyncMixin"
+     ],
+     "com.jaquadro.minecraft.storagedrawers.block.tile.BlockEntityDrawersComp$GroupData": [
+      "bons.furious.mixin.storagedrawers_sync_c2.CompDrawerCountSyncMixin"
+     ],
+     "net.minecraft.server.players.PlayerList": [
+      "bons.furious.mixin.storagedrawers_sync_c2.PlayerListCountSyncMixin"
+     ]
+    }
+   },
+   "structurify_check_memo_slim": {
+    "decision": "Decision[state=ABSENT, detail=target mod structurify is not installed]"
+   },
+   "structurify_height_cache": {
+    "decision": "Decision[state=ABSENT, detail=target mod structurify is not installed]"
+   },
+   "structurify_set_data_single_lookup": {
+    "decision": "Decision[state=ABSENT, detail=target mod structurify is not installed]"
+   },
+   "terrablender_lazy_namespace_rules": {
+    "decision": "Decision[state=ABSENT, detail=target mod terrablender is not installed]"
+   },
+   "terrablender_namespace_rule_memo": {
+    "decision": "Decision[state=ABSENT, detail=target mod terrablender is not installed]"
+   },
+   "terrain_final_density_reuse": {
+    "decision": "Decision[state=APPLY, detail=all 8 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.levelgen.DensityFunctions$Ap2": [
+      "bons.furious.mixin.terrain.DensityRecordReuseMixin"
+     ],
+     "net.minecraft.world.level.levelgen.DensityFunctions$BlendDensity": [
+      "bons.furious.mixin.terrain.DensityRecordReuseMixin"
+     ],
+     "net.minecraft.world.level.levelgen.DensityFunctions$MarkerOrMarked": [
+      "bons.furious.mixin.terrain.MarkerOrMarkedReuseMixin"
+     ],
+     "net.minecraft.world.level.levelgen.DensityFunctions$RangeChoice": [
+      "bons.furious.mixin.terrain.DensityRecordReuseMixin"
+     ],
+     "net.minecraft.world.level.levelgen.DensityFunctions$ShiftedNoise": [
+      "bons.furious.mixin.terrain.DensityRecordReuseMixin"
+     ],
+     "net.minecraft.world.level.levelgen.DensityFunctions$Spline": [
+      "bons.furious.mixin.terrain.DensityRecordReuseMixin"
+     ],
+     "net.minecraft.world.level.levelgen.DensityFunctions$WeirdScaledSampler": [
+      "bons.furious.mixin.terrain.DensityRecordReuseMixin"
+     ],
+     "net.minecraft.world.level.levelgen.NoiseChunk": [
+      "bons.furious.mixin.beardifier.NoiseChunkFillStateAccessor",
+      "bons.furious.mixin.terrain.NoiseChunkFinalDensityMixin",
+      "bons.furious.mixin.terrain.NoiseChunkSurfaceEstimateMixin",
+      "bons.furious.mixin.terrain.NoiseChunkWrapPresizeMixin",
+      "bons.furious.mixin.vanilla_cellfill.NoiseChunkColumnFillMixin",
+      "bons.furious.mixin.vanilla_corner_table.NoiseChunkCornerShareMixin"
+     ]
+    }
+   },
+   "terrain_surface_estimate_share": {
+    "decision": "Decision[state=APPLY, detail=all 1 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.levelgen.NoiseChunk": [
+      "bons.furious.mixin.beardifier.NoiseChunkFillStateAccessor",
+      "bons.furious.mixin.terrain.NoiseChunkFinalDensityMixin",
+      "bons.furious.mixin.terrain.NoiseChunkSurfaceEstimateMixin",
+      "bons.furious.mixin.terrain.NoiseChunkWrapPresizeMixin",
+      "bons.furious.mixin.vanilla_cellfill.NoiseChunkColumnFillMixin",
+      "bons.furious.mixin.vanilla_corner_table.NoiseChunkCornerShareMixin"
+     ]
+    }
+   },
+   "vanilla_animate_tick_uniform_biome": {
+    "decision": "Decision[state=APPLY, detail=all 5 fingerprints match]",
+    "classes": {
+     "net.minecraft.client.multiplayer.ClientLevel": [
+      "bons.furious.mixin.vanilla.AnimateTickBiomeMixin"
+     ]
+    }
+   },
+   "vanilla_aquifer_candidate_cache": {
+    "decision": "Decision[state=APPLY, detail=all 7 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer": [
+      "bons.furious.mixin.worldgen_aquifer.AquiferCandidateMixin"
+     ]
+    }
+   },
+   "vanilla_aquifer_high_air": {
+    "decision": "Decision[state=APPLY, detail=all 4 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.levelgen.Aquifer$FluidStatus": [
+      "bons.furious.mixin.worldgen_aquifer.FluidStatusLevelAccessor"
+     ],
+     "net.minecraft.world.level.levelgen.Aquifer$NoiseBasedAquifer": [
+      "bons.furious.mixin.worldgen_aquifer.AquiferCandidateMixin"
+     ]
+    }
+   },
+   "vanilla_beardifier_influence_bounds": {
+    "decision": "Decision[state=APPLY, detail=all 11 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.levelgen.Beardifier": [
+      "bons.furious.mixin.beardifier.BeardifierEmptyFillMixin",
+      "bons.furious.mixin.worldgen_beardifier_bounds.BeardifierBoundsMixin"
+     ]
+    }
+   },
+   "vanilla_biome_fiddle_mask": {
+    "decision": "Decision[state=APPLY, detail=all 1 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.biome.BiomeManager": [
+      "bons.furious.mixin.worldgen_biome_fiddle.BiomeFiddleMaskMixin"
+     ]
+    }
+   },
+   "vanilla_block_entity_tick_state": {
+    "decision": "Decision[state=APPLY, detail=all 7 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.block.entity.BlockEntity": [
+      "bons.furious.mixin.radium_compat.BlockEntityStateAccessor"
+     ],
+     "net.minecraft.world.level.chunk.LevelChunk": [
+      "bons.furious.mixin.radium_compat.LevelChunkBlockEntityStateMixin",
+      "bons.furious.mixin.spawn_gate.LevelChunkVisibilityMixin",
+      "bons.furious.mixin.vanilla_game_events.LevelChunkRegistriesAccessor"
+     ],
+     "net.minecraft.world.level.chunk.LevelChunk$BoundTickingBlockEntity": [
+      "bons.furious.mixin.radium_compat.BlockEntityTickStateMixin"
+     ]
+    }
+   },
+   "vanilla_block_state_air_flag": {
+    "decision": "Decision[state=APPLY, detail=all 4 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.block.state.BlockBehaviour": [
+      "bons.furious.mixin.mesh_air.BlockBehaviourAirInvoker"
+     ],
+     "net.minecraft.world.level.block.state.BlockBehaviour$BlockStateBase": [
+      "bons.furious.mixin.mesh_air.BlockStateAirFlagMixin"
+     ]
+    }
+   },
+   "vanilla_block_ticking_range_memo": {
+    "decision": "Decision[state=APPLY, detail=all 5 fingerprints match]",
+    "classes": {
+     "net.minecraft.server.level.DistanceManager": [
+      "bons.furious.mixin.ticker_gate.DistanceManagerTrackerAccessor",
+      "bons.furious.mixin.vanilla.DistanceManagerTickingMixin"
+     ],
+     "net.minecraft.server.level.TickingTracker": [
+      "bons.furious.mixin.ticker_gate.TickingTrackerEpochsMixin",
+      "bons.furious.mixin.vanilla.TickingTrackerVersionMixin"
+     ]
+    }
+   },
+   "vanilla_camera_fluid_memo": {
+    "decision": "Decision[state=APPLY, detail=all 3 fingerprints match]",
+    "classes": {
+     "net.minecraft.client.Camera": [
+      "bons.furious.mixin.vanilla_camera.CameraFluidMemoMixin"
+     ],
+     "net.minecraft.client.renderer.GameRenderer": [
+      "bons.furious.mixin.vanilla.GameRendererFrameMixin",
+      "bons.furious.mixin.vanilla_camera.CameraFluidFrameMixin"
+     ]
+    }
+   },
+   "vanilla_chunk_biome_codec_memo": {
+    "decision": "Decision[state=APPLY, detail=all 8 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.chunk.storage.ChunkSerializer": [
+      "bons.furious.mixin.vanilla_chunk_codecs.ChunkSerializerBiomeCodecMixin",
+      "bons.furious.mixin.vanilla_chunk_codecs.ChunkSerializerPaletteMixin"
+     ]
+    }
+   },
+   "vanilla_chunk_palette_direct_nbt": {
+    "decision": "Decision[state=APPLY, detail=all 19 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.chunk.storage.ChunkSerializer": [
+      "bons.furious.mixin.vanilla_chunk_codecs.ChunkSerializerBiomeCodecMixin",
+      "bons.furious.mixin.vanilla_chunk_codecs.ChunkSerializerPaletteMixin"
+     ]
+    }
+   },
+   "vanilla_chunk_status_name_memo": {
+    "decision": "Decision[state=APPLY, detail=all 1 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.chunk.status.ChunkStatus": [
+      "bons.furious.mixin.vanilla.ChunkStatusNameMixin"
+     ]
+    }
+   },
+   "vanilla_climate_last_result_weak": {
+    "decision": "Decision[state=APPLY, detail=all 2 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.biome.Climate$RTree": [
+      "bons.furious.mixin.climate_build.ClimateTreeSortMixin",
+      "bons.furious.mixin.climate_build.ClimateTreeSpanMixin",
+      "bons.furious.mixin.climate_last_result.ClimateLastResultMixin",
+      "bons.furious.mixin.terrain.ClimateSearchRepeatMixin"
+     ]
+    }
+   },
+   "vanilla_climate_rtree_flat_bounds": {
+    "decision": "Decision[state=APPLY, detail=all 3 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.biome.Climate$RTree$Node": [
+      "bons.furious.mixin.climate_build.ClimateNodeSpaceAccessor",
+      "bons.furious.mixin.climate_build.ClimateNodeSpanAccessor",
+      "bons.furious.mixin.terrain.ClimateNodeBoundsMixin"
+     ]
+    }
+   },
+   "vanilla_climate_sample_repeat": {
+    "decision": "Decision[state=APPLY, detail=all 1 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.biome.Climate$Sampler": [
+      "bons.furious.mixin.climate_columns.ClimateSamplerPartsMixin",
+      "bons.furious.mixin.terrain.ClimateSampleRepeatMixin"
+     ]
+    }
+   },
+   "vanilla_climate_sample_xz_parts": {
+    "decision": "Decision[state=APPLY, detail=all 2 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.biome.Climate$Sampler": [
+      "bons.furious.mixin.climate_columns.ClimateSamplerPartsMixin",
+      "bons.furious.mixin.terrain.ClimateSampleRepeatMixin"
+     ],
+     "net.minecraft.world.level.levelgen.RandomState": [
+      "bons.furious.mixin.climate_columns.RandomStatePartsMixin",
+      "bons.furious.mixin.terrain.RandomStateWrapSizeMixin"
+     ]
+    }
+   },
+   "vanilla_climate_search_repeat": {
+    "decision": "Decision[state=APPLY, detail=all 3 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.biome.Climate$RTree": [
+      "bons.furious.mixin.climate_build.ClimateTreeSortMixin",
+      "bons.furious.mixin.climate_build.ClimateTreeSpanMixin",
+      "bons.furious.mixin.climate_last_result.ClimateLastResultMixin",
+      "bons.furious.mixin.terrain.ClimateSearchRepeatMixin"
+     ]
+    }
+   },
+   "vanilla_climate_tree_sort_keys": {
+    "decision": "Decision[state=APPLY, detail=all 5 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.biome.Climate$RTree": [
+      "bons.furious.mixin.climate_build.ClimateTreeSortMixin",
+      "bons.furious.mixin.climate_build.ClimateTreeSpanMixin",
+      "bons.furious.mixin.climate_last_result.ClimateLastResultMixin",
+      "bons.furious.mixin.terrain.ClimateSearchRepeatMixin"
+     ],
+     "net.minecraft.world.level.biome.Climate$RTree$Node": [
+      "bons.furious.mixin.climate_build.ClimateNodeSpaceAccessor",
+      "bons.furious.mixin.climate_build.ClimateNodeSpanAccessor",
+      "bons.furious.mixin.terrain.ClimateNodeBoundsMixin"
+     ]
+    }
+   },
+   "vanilla_climate_tree_span_bounds": {
+    "decision": "Decision[state=APPLY, detail=all 5 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.biome.Climate$RTree": [
+      "bons.furious.mixin.climate_build.ClimateTreeSortMixin",
+      "bons.furious.mixin.climate_build.ClimateTreeSpanMixin",
+      "bons.furious.mixin.climate_last_result.ClimateLastResultMixin",
+      "bons.furious.mixin.terrain.ClimateSearchRepeatMixin"
+     ],
+     "net.minecraft.world.level.biome.Climate$RTree$Node": [
+      "bons.furious.mixin.climate_build.ClimateNodeSpaceAccessor",
+      "bons.furious.mixin.climate_build.ClimateNodeSpanAccessor",
+      "bons.furious.mixin.terrain.ClimateNodeBoundsMixin"
+     ]
+    }
+   },
+   "vanilla_cursor_counters": {
+    "decision": "Decision[state=APPLY, detail=all 7 fingerprints match]",
+    "classes": {
+     "net.minecraft.core.Cursor3D": [
+      "bons.furious.mixin.vanilla_c2.Cursor3DCounterMixin"
+     ]
+    }
+   },
+   "vanilla_entity_class_count_layer": {
+    "decision": "Decision[state=APPLY, detail=all 32 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.Level": [
+      "bons.furious.mixin.crittersandcompanions_c2.LevelClassCountMixin",
+      "bons.furious.mixin.ticker_gate.LevelTickerContextMixin",
+      "bons.furious.mixin.vanilla_raycast.LevelClipMixin"
+     ],
+     "net.minecraft.world.level.entity.EntitySection": [
+      "bons.furious.mixin.crittersandcompanions_c2.EntityClassCountSectionMixin"
+     ],
+     "net.minecraft.world.level.entity.EntitySectionStorage": [
+      "bons.furious.mixin.crittersandcompanions_c2.EntityClassCountStorageMixin",
+      "bons.furious.mixin.vanilla_c2.EntitySectionXOverflowMixin"
+     ],
+     "net.minecraft.world.level.entity.LevelEntityGetterAdapter": [
+      "bons.furious.mixin.crittersandcompanions_c2.EntityGetterClassCountMixin"
+     ]
+    }
+   },
+   "vanilla_entity_outline_composite_skip": {
+    "decision": "Decision[state=APPLY, detail=all 15 fingerprints match]",
+    "classes": {
+     "com.mojang.blaze3d.platform.GlStateManager": [
+      "bons.furious.mixin.vanilla_outline_skip.GlStateOutlineTripwireMixin"
+     ],
+     "com.mojang.blaze3d.vertex.BufferUploader": [
+      "bons.furious.mixin.vanilla_outline_skip.BufferUploaderOutlineMixin"
+     ],
+     "net.minecraft.client.renderer.LevelRenderer": [
+      "bons.furious.mixin.vanilla_outline_skip.LevelRendererOutlineMixin"
+     ]
+    }
+   },
+   "vanilla_entity_section_x_overflow": {
+    "decision": "Decision[state=APPLY, detail=all 2 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.entity.EntitySectionStorage": [
+      "bons.furious.mixin.crittersandcompanions_c2.EntityClassCountStorageMixin",
+      "bons.furious.mixin.vanilla_c2.EntitySectionXOverflowMixin"
+     ]
+    }
+   },
+   "vanilla_fire_scan_loop": {
+    "decision": "Decision[state=APPLY, detail=all 6 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.entity.Entity": [
+      "bons.furious.mixin.datapack_selectors.EntityTagsMixin",
+      "bons.furious.mixin.mob_sunburn.EntityInBlockStateAccessor",
+      "bons.furious.mixin.vanilla_entity.EntityFireScanMixin",
+      "bons.furious.mixin.vanilla_entity.EntityInWallScanMixin"
+     ]
+    }
+   },
+   "vanilla_fog_color_sample_memo": {
+    "decision": "Decision[state=APPLY, detail=all 3 fingerprints match]",
+    "classes": {
+     "net.minecraft.client.renderer.FogRenderer": [
+      "bons.furious.mixin.vanilla.FogColorSampleMixin"
+     ],
+     "net.minecraft.client.renderer.GameRenderer": [
+      "bons.furious.mixin.vanilla.GameRendererFrameMixin",
+      "bons.furious.mixin.vanilla_camera.CameraFluidFrameMixin"
+     ]
+    }
+   },
+   "vanilla_framed_map_holder_scan": {
+    "decision": "Decision[state=APPLY, detail=all 4 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.saveddata.maps.MapItemSavedData": [
+      "bons.furious.mixin.vanilla_framed_maps.MapItemSavedDataFramedMixin"
+     ]
+    }
+   },
+   "vanilla_game_event_registry_lookup": {
+    "decision": "Decision[state=APPLY, detail=all 7 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.chunk.LevelChunk": [
+      "bons.furious.mixin.radium_compat.LevelChunkBlockEntityStateMixin",
+      "bons.furious.mixin.spawn_gate.LevelChunkVisibilityMixin",
+      "bons.furious.mixin.vanilla_game_events.LevelChunkRegistriesAccessor"
+     ],
+     "net.minecraft.world.level.gameevent.GameEventDispatcher": [
+      "bons.furious.mixin.vanilla_game_events.GameEventDispatcherMixin"
+     ]
+    }
+   },
+   "vanilla_goal_flags_none_disabled": {
+    "decision": "Decision[state=APPLY, detail=all 1 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.entity.ai.goal.GoalSelector": [
+      "bons.furious.mixin.vanilla_goal_flags.GoalSelectorFlagsMixin"
+     ]
+    }
+   },
+   "vanilla_inventory_trigger_index": {
+    "decision": "Decision[state=APPLY, detail=all 17 fingerprints match]",
+    "classes": {
+     "net.minecraft.advancements.critereon.InventoryChangeTrigger": [
+      "bons.furious.mixin.vanilla_inventory_index.InventoryChangeTriggerContextMixin"
+     ],
+     "net.minecraft.advancements.critereon.SimpleCriterionTrigger": [
+      "bons.furious.mixin.vanilla_inventory_index.SimpleCriterionTriggerIndexMixin"
+     ]
+    }
+   },
+   "vanilla_item_merge_candidates": {
+    "decision": "Decision[state=APPLY, detail=all 16 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.entity.item.ItemEntity": [
+      "bons.furious.mixin.vanilla_item_merge.ItemEntityMergeMixin"
+     ]
+    }
+   },
+   "vanilla_layer_bake_streamless": {
+    "decision": "Decision[state=APPLY, detail=all 5 fingerprints match]",
+    "classes": {
+     "net.minecraft.client.model.geom.builders.PartDefinition": [
+      "bons.furious.mixin.armorbake_c2.LayerBakeStreamlessMixin"
+     ]
+    }
+   },
+   "vanilla_long_jump_weighted_pick": {
+    "decision": "Decision[state=APPLY, detail=all 9 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.entity.ai.behavior.LongJumpToRandomPos": [
+      "bons.furious.mixin.vanilla_long_jump.LongJumpToRandomPosMixin"
+     ]
+    }
+   },
+   "vanilla_mob_class_warmup": {
+    "decision": "Decision[state=APPLY, detail=all 1 fingerprints match]",
+    "classes": {
+     "net.neoforged.neoforge.server.ServerLifecycleHooks": [
+      "bons.furious.mixin.vanilla_mob_warmup.ServerStartedWarmupMixin"
+     ]
+    }
+   },
+   "vanilla_model_bone_lookup": {
+    "decision": "Decision[state=APPLY, detail=all 4 fingerprints match]",
+    "classes": {
+     "net.minecraft.client.model.HierarchicalModel": [
+      "bons.furious.mixin.models.BoneLookupMixin"
+     ],
+     "net.minecraft.client.model.geom.ModelPart": [
+      "bons.furious.mixin.models.ModelPartChildrenAccessor"
+     ]
+    }
+   },
+   "vanilla_noise_column_cache": {
+    "decision": "Decision[state=APPLY, detail=all 2 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator": [
+      "bons.furious.mixin.beardifier.CreateNoiseChunkMixin",
+      "bons.furious.mixin.terrain.ColumnHeightShareMixin",
+      "bons.furious.mixin.terrain.ColumnSummaryMixin",
+      "bons.furious.mixin.vanilla_cellfill.ColumnCellFillMarkMixin"
+     ]
+    }
+   },
+   "vanilla_noise_column_cell_fill": {
+    "decision": "Decision[state=APPLY, detail=all 15 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator": [
+      "bons.furious.mixin.beardifier.CreateNoiseChunkMixin",
+      "bons.furious.mixin.terrain.ColumnHeightShareMixin",
+      "bons.furious.mixin.terrain.ColumnSummaryMixin",
+      "bons.furious.mixin.vanilla_cellfill.ColumnCellFillMarkMixin"
+     ],
+     "net.minecraft.world.level.levelgen.NoiseChunk": [
+      "bons.furious.mixin.beardifier.NoiseChunkFillStateAccessor",
+      "bons.furious.mixin.terrain.NoiseChunkFinalDensityMixin",
+      "bons.furious.mixin.terrain.NoiseChunkSurfaceEstimateMixin",
+      "bons.furious.mixin.terrain.NoiseChunkWrapPresizeMixin",
+      "bons.furious.mixin.vanilla_cellfill.NoiseChunkColumnFillMixin",
+      "bons.furious.mixin.vanilla_corner_table.NoiseChunkCornerShareMixin"
+     ]
+    }
+   },
+   "vanilla_noise_column_summary": {
+    "decision": "Decision[state=APPLY, detail=all 6 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator": [
+      "bons.furious.mixin.beardifier.CreateNoiseChunkMixin",
+      "bons.furious.mixin.terrain.ColumnHeightShareMixin",
+      "bons.furious.mixin.terrain.ColumnSummaryMixin",
+      "bons.furious.mixin.vanilla_cellfill.ColumnCellFillMarkMixin"
+     ]
+    }
+   },
+   "vanilla_noise_corner_share": {
+    "decision": "Decision[state=APPLY, detail=all 17 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.levelgen.NoiseChunk": [
+      "bons.furious.mixin.beardifier.NoiseChunkFillStateAccessor",
+      "bons.furious.mixin.terrain.NoiseChunkFinalDensityMixin",
+      "bons.furious.mixin.terrain.NoiseChunkSurfaceEstimateMixin",
+      "bons.furious.mixin.terrain.NoiseChunkWrapPresizeMixin",
+      "bons.furious.mixin.vanilla_cellfill.NoiseChunkColumnFillMixin",
+      "bons.furious.mixin.vanilla_corner_table.NoiseChunkCornerShareMixin"
+     ],
+     "net.minecraft.world.level.levelgen.NoiseChunk$NoiseInterpolator": [
+      "bons.furious.mixin.vanilla_corner_table.NoiseInterpolatorSlicesAccessor"
+     ]
+    }
+   },
+   "vanilla_noise_wrap_presize": {
+    "decision": "Decision[state=APPLY, detail=all 2 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.levelgen.NoiseChunk": [
+      "bons.furious.mixin.beardifier.NoiseChunkFillStateAccessor",
+      "bons.furious.mixin.terrain.NoiseChunkFinalDensityMixin",
+      "bons.furious.mixin.terrain.NoiseChunkSurfaceEstimateMixin",
+      "bons.furious.mixin.terrain.NoiseChunkWrapPresizeMixin",
+      "bons.furious.mixin.vanilla_cellfill.NoiseChunkColumnFillMixin",
+      "bons.furious.mixin.vanilla_corner_table.NoiseChunkCornerShareMixin"
+     ],
+     "net.minecraft.world.level.levelgen.RandomState": [
+      "bons.furious.mixin.climate_columns.RandomStatePartsMixin",
+      "bons.furious.mixin.terrain.RandomStateWrapSizeMixin"
+     ]
+    }
+   },
+   "vanilla_poi_chunk_sections": {
+    "decision": "Decision[state=APPLY, detail=all 3 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.entity.ai.village.poi.PoiManager": [
+      "bons.furious.mixin.radium_compat.PoiChunkSectionsMixin"
+     ],
+     "net.minecraft.world.level.chunk.storage.SectionStorage": [
+      "bons.furious.mixin.radium_compat.SectionStorageAccess"
+     ]
+    }
+   },
+   "vanilla_raycast_fluid_none": {
+    "decision": "Decision[state=APPLY, detail=all 8 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.ClipContext": [
+      "bons.furious.mixin.vanilla_raycast.ClipContextAccessor"
+     ],
+     "net.minecraft.world.level.Level": [
+      "bons.furious.mixin.crittersandcompanions_c2.LevelClassCountMixin",
+      "bons.furious.mixin.ticker_gate.LevelTickerContextMixin",
+      "bons.furious.mixin.vanilla_raycast.LevelClipMixin"
+     ]
+    }
+   },
+   "vanilla_repellent_search_sections": {
+    "decision": "Decision[state=APPLY, detail=all 19 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.entity.ai.sensing.HoglinSpecificSensor": [
+      "bons.furious.mixin.vanilla_search.HoglinRepellentSearchMixin"
+     ],
+     "net.minecraft.world.entity.ai.sensing.PiglinSpecificSensor": [
+      "bons.furious.mixin.vanilla_search.PiglinRepellentSearchMixin"
+     ]
+    }
+   },
+   "vanilla_selector_single_type": {
+    "decision": "Decision[state=APPLY, detail=all 6 fingerprints match]",
+    "classes": {
+     "net.minecraft.commands.arguments.selector.EntitySelector": [
+      "bons.furious.mixin.datapack_selectors.EntitySelectorMixin",
+      "bons.furious.mixin.datapack_selectors.EntitySelectorSingleTypeMixin",
+      "bons.furious.mixin.datapack_selectors.EntitySelectorTagScanMixin"
+     ]
+    }
+   },
+   "vanilla_selector_tag_index": {
+    "decision": "Decision[state=APPLY, detail=all 22 fingerprints match]",
+    "classes": {
+     "net.minecraft.commands.arguments.selector.EntitySelector": [
+      "bons.furious.mixin.datapack_selectors.EntitySelectorMixin",
+      "bons.furious.mixin.datapack_selectors.EntitySelectorSingleTypeMixin",
+      "bons.furious.mixin.datapack_selectors.EntitySelectorTagScanMixin"
+     ],
+     "net.minecraft.commands.arguments.selector.EntitySelectorParser": [
+      "bons.furious.mixin.datapack_selectors.EntitySelectorParserMixin",
+      "bons.furious.mixin.datapack_selectors.EntitySelectorParserTagMixin"
+     ],
+     "net.minecraft.commands.arguments.selector.options.EntitySelectorOptions": [
+      "bons.furious.mixin.datapack_selectors.EntitySelectorTagOptionMixin",
+      "bons.furious.mixin.datapack_selectors.EntitySelectorTypeOptionMixin"
+     ],
+     "net.minecraft.world.entity.Entity": [
+      "bons.furious.mixin.datapack_selectors.EntityTagsMixin",
+      "bons.furious.mixin.mob_sunburn.EntityInBlockStateAccessor",
+      "bons.furious.mixin.vanilla_entity.EntityFireScanMixin",
+      "bons.furious.mixin.vanilla_entity.EntityInWallScanMixin"
+     ]
+    }
+   },
+   "vanilla_selector_type_index": {
+    "decision": "Decision[state=APPLY, detail=all 25 fingerprints match]",
+    "classes": {
+     "net.minecraft.commands.arguments.selector.EntitySelector": [
+      "bons.furious.mixin.datapack_selectors.EntitySelectorMixin",
+      "bons.furious.mixin.datapack_selectors.EntitySelectorSingleTypeMixin",
+      "bons.furious.mixin.datapack_selectors.EntitySelectorTagScanMixin"
+     ],
+     "net.minecraft.commands.arguments.selector.EntitySelectorParser": [
+      "bons.furious.mixin.datapack_selectors.EntitySelectorParserMixin",
+      "bons.furious.mixin.datapack_selectors.EntitySelectorParserTagMixin"
+     ],
+     "net.minecraft.commands.arguments.selector.options.EntitySelectorOptions": [
+      "bons.furious.mixin.datapack_selectors.EntitySelectorTagOptionMixin",
+      "bons.furious.mixin.datapack_selectors.EntitySelectorTypeOptionMixin"
+     ],
+     "net.minecraft.world.level.entity.EntityLookup": [
+      "bons.furious.mixin.datapack_selectors.EntityLookupMixin"
+     ]
+    }
+   },
+   "vanilla_spawn_gate_visibility_memo": {
+    "decision": "Decision[state=APPLY, detail=all 8 fingerprints match]",
+    "classes": {
+     "net.minecraft.server.level.ServerChunkCache": [
+      "bons.furious.mixin.spawn_gate.ServerChunkCacheSpawnGateMixin"
+     ],
+     "net.minecraft.server.level.ServerLevel": [
+      "bons.furious.mixin.spawn_gate.ServerLevelEntityManagerAccessor",
+      "bons.furious.mixin.spawn_gate.ServerLevelSaveEpochsMixin",
+      "bons.furious.mixin.ticker_gate.ServerLevelTickerGateMixin"
+     ],
+     "net.minecraft.world.level.chunk.LevelChunk": [
+      "bons.furious.mixin.radium_compat.LevelChunkBlockEntityStateMixin",
+      "bons.furious.mixin.spawn_gate.LevelChunkVisibilityMixin",
+      "bons.furious.mixin.vanilla_game_events.LevelChunkRegistriesAccessor"
+     ],
+     "net.minecraft.world.level.entity.PersistentEntitySectionManager": [
+      "bons.furious.mixin.spawn_gate.EntityManagerEpochsMixin"
+     ]
+    }
+   },
+   "vanilla_state_codec_dispatch_memo": {
+    "decision": "Decision[state=APPLY, detail=all 6 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.block.state.StateHolder": [
+      "bons.furious.mixin.vanilla_chunk_codecs.StateHolderDispatchMixin"
+     ]
+    }
+   },
+   "vanilla_strip_formatting_fast_path": {
+    "decision": "Decision[state=APPLY, detail=all 2 fingerprints match]",
+    "classes": {
+     "net.minecraft.ChatFormatting": [
+      "bons.furious.mixin.vanilla_text.StripFormattingMixin"
+     ]
+    }
+   },
+   "vanilla_structure_ring_search": {
+    "decision": "Decision[state=APPLY, detail=all 3 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.chunk.ChunkGenerator": [
+      "bons.furious.mixin.vanilla_structure_ring.StructureRingSearchMixin"
+     ]
+    }
+   },
+   "vanilla_structure_template_hits": {
+    "decision": "Decision[state=APPLY, detail=all 7 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager": [
+      "bons.furious.mixin.vanilla_structure_templates.StructureTemplateManagerHitsMixin"
+     ]
+    }
+   },
+   "vanilla_suffocation_scan_loop": {
+    "decision": "Decision[state=APPLY, detail=all 4 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.entity.Entity": [
+      "bons.furious.mixin.datapack_selectors.EntityTagsMixin",
+      "bons.furious.mixin.mob_sunburn.EntityInBlockStateAccessor",
+      "bons.furious.mixin.vanilla_entity.EntityFireScanMixin",
+      "bons.furious.mixin.vanilla_entity.EntityInWallScanMixin"
+     ]
+    }
+   },
+   "vanilla_sun_burn_deferred_wet_check": {
+    "decision": "Decision[state=APPLY, detail=all 11 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.entity.Entity": [
+      "bons.furious.mixin.datapack_selectors.EntityTagsMixin",
+      "bons.furious.mixin.mob_sunburn.EntityInBlockStateAccessor",
+      "bons.furious.mixin.vanilla_entity.EntityFireScanMixin",
+      "bons.furious.mixin.vanilla_entity.EntityInWallScanMixin"
+     ],
+     "net.minecraft.world.entity.Mob": [
+      "bons.furious.mixin.mob_sunburn.MobSunBurnOrderMixin"
+     ]
+    }
+   },
+   "vanilla_tag_membership_ids": {
+    "decision": "Decision[state=APPLY, detail=all 4 fingerprints match]",
+    "classes": {
+     "net.minecraft.core.Holder$Reference": [
+      "bons.furious.mixin.tag_ids.HolderReferenceTagIdsMixin"
+     ],
+     "net.minecraft.tags.TagKey": [
+      "bons.furious.mixin.tag_ids.TagKeyIdMixin"
+     ]
+    }
+   },
+   "vanilla_ticker_range_memo": {
+    "decision": "Decision[state=APPLY, detail=all 9 fingerprints match]",
+    "classes": {
+     "net.minecraft.server.level.DistanceManager": [
+      "bons.furious.mixin.ticker_gate.DistanceManagerTrackerAccessor",
+      "bons.furious.mixin.vanilla.DistanceManagerTickingMixin"
+     ],
+     "net.minecraft.server.level.ServerLevel": [
+      "bons.furious.mixin.spawn_gate.ServerLevelEntityManagerAccessor",
+      "bons.furious.mixin.spawn_gate.ServerLevelSaveEpochsMixin",
+      "bons.furious.mixin.ticker_gate.ServerLevelTickerGateMixin"
+     ],
+     "net.minecraft.server.level.TickingTracker": [
+      "bons.furious.mixin.ticker_gate.TickingTrackerEpochsMixin",
+      "bons.furious.mixin.vanilla.TickingTrackerVersionMixin"
+     ],
+     "net.minecraft.world.level.Level": [
+      "bons.furious.mixin.crittersandcompanions_c2.LevelClassCountMixin",
+      "bons.furious.mixin.ticker_gate.LevelTickerContextMixin",
+      "bons.furious.mixin.vanilla_raycast.LevelClipMixin"
+     ],
+     "net.minecraft.world.level.chunk.LevelChunk$RebindableTickingBlockEntityWrapper": [
+      "bons.furious.mixin.ticker_gate.TickerWrapperMemoMixin"
+     ]
+    }
+   },
+   "vanilla_ticking_chunk_memo": {
+    "decision": "Decision[state=APPLY, detail=all 4 fingerprints match]",
+    "classes": {
+     "net.minecraft.server.level.ChunkHolder": [
+      "bons.furious.mixin.chunk_tick.ChunkHolderTickingMemoMixin"
+     ]
+    }
+   },
+   "vanilla_turtle_egg_search_sections": {
+    "decision": "Decision[state=APPLY, detail=all 14 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.entity.ai.goal.MoveToBlockGoal": [
+      "bons.furious.mixin.vanilla_search.MoveToBlockGoalSearchMixin"
+     ],
+     "net.minecraft.world.entity.ai.goal.RemoveBlockGoal": [
+      "bons.furious.mixin.vanilla_search.RemoveBlockGoalAccessor"
+     ]
+    }
+   },
+   "worldgen_empty_beardifier_marker": {
+    "decision": "Decision[state=APPLY, detail=all 9 fingerprints match]",
+    "classes": {
+     "net.minecraft.world.level.levelgen.Beardifier": [
+      "bons.furious.mixin.beardifier.BeardifierEmptyFillMixin",
+      "bons.furious.mixin.worldgen_beardifier_bounds.BeardifierBoundsMixin"
+     ],
+     "net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator": [
+      "bons.furious.mixin.beardifier.CreateNoiseChunkMixin",
+      "bons.furious.mixin.terrain.ColumnHeightShareMixin",
+      "bons.furious.mixin.terrain.ColumnSummaryMixin",
+      "bons.furious.mixin.vanilla_cellfill.ColumnCellFillMarkMixin"
+     ],
+     "net.minecraft.world.level.levelgen.NoiseChunk": [
+      "bons.furious.mixin.beardifier.NoiseChunkFillStateAccessor",
+      "bons.furious.mixin.terrain.NoiseChunkFinalDensityMixin",
+      "bons.furious.mixin.terrain.NoiseChunkSurfaceEstimateMixin",
+      "bons.furious.mixin.terrain.NoiseChunkWrapPresizeMixin",
+      "bons.furious.mixin.vanilla_cellfill.NoiseChunkColumnFillMixin",
+      "bons.furious.mixin.vanilla_corner_table.NoiseChunkCornerShareMixin"
+     ]
+    }
+   }
+  },
+  "behavior": {
+   "gecko_samples": 33924,
+   "gecko_sha256": "5549a6cf8705c1572605803c9d3cded056d6ce016f22cd2fdebcc7db8dff998d"
+  },
+  "commands": [
+   {
+    "tick": 40,
+    "command": "execute at @p run setblock ~3 ~ ~ storagedrawers:oak_full_drawers_1",
+    "ok": true
+   },
+   {
+    "tick": 41,
+    "command": "execute at @p run setblock ~3 ~1 ~ minecraft:hopper[facing=down]",
+    "ok": true
+   },
+   {
+    "tick": 42,
+    "command": "execute at @p run item replace block ~3 ~1 ~ container.0 with minecraft:cobblestone 64",
+    "ok": true
+   },
+   {
+    "tick": 43,
+    "command": "execute at @p run item replace block ~3 ~1 ~ container.1 with minecraft:cobblestone 64",
+    "ok": true
+   },
+   {
+    "tick": 60,
+    "command": "execute at @p run setblock ~-3 ~ ~ minecraft:glass",
+    "ok": true
+   },
+   {
+    "tick": 61,
+    "command": "execute at @p run setblock ~-3 ~ ~ minecraft:air destroy",
+    "ok": true
+   },
+   {
+    "tick": 120,
+    "command": "execute at @p run setblock ~-3 ~ ~ minecraft:glass",
+    "ok": true
+   },
+   {
+    "tick": 121,
+    "command": "execute at @p run setblock ~-3 ~ ~ minecraft:air destroy",
+    "ok": true
+   }
+  ],
+  "shadow": {
+   "_summary": {
+    "checks": 0,
+    "mismatches": 0,
+    "mismatching": [],
+    "idle": [],
+    "unavailable": [
+     "bons.furious.patch.dh_loader.QuadSortKeys",
+     "bons.furious.patch.jei_search.SortKeys",
+     "bons.furious.patch.fluidwalk_c2.LionfishFluidWalk",
+     "bons.furious.patch.pipez_logistics.SortedConnections",
+     "bons.furious.patch.cataclysm_client.CataclysmPoseHand",
+     "bons.furious.patch.cataclysm_client.CitadelPoseHand"
+    ]
+   },
+   "bons.furious.patch.almostunified.DuplicateGroups": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.armorbake_c2.CubeBakeMemo": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.artifacts.ArtifactsTickOrder": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.basalt_guards.BasaltGuards": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.beardifier.EmptyBeardifiers": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.cataclysm_client.CataclysmPoseHand": {
+    "unavailable": "java.lang.NoClassDefFoundError: com/github/L_Ender/cataclysm/client/event/EventPosePlayerHand"
+   },
+   "bons.furious.patch.cataclysm_client.CitadelPoseHand": {
+    "unavailable": "java.lang.NoClassDefFoundError: com/github/alexthe666/citadel/client/event/EventPosePlayerHand"
+   },
+   "bons.furious.patch.cataclysm_client.ShieldLayerPose": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.chunk_tick.TickingChunkMemo": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.climate_last_result.WeakLastResult": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.crittersandcompanions_c2.EntityClassCounts": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.crittersandcompanions_c2.RedPandaGate": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.cucumber.CucumberTileDispatch": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.curios_tooltip.CuriosTagKeys": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.datapack_selectors.SelectorPrefilter": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.datapack_selectors.SingleTypeTest": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.datapack_selectors.TagIndex": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.dh_loader.AdjacentFaceSkip": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.dh_loader.PooledStringIndex": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.dh_loader.QuadSortKeys": {
+    "unavailable": "java.lang.NoClassDefFoundError: com/seibel/distanthorizons/core/dataObjects/render/bufferBuilding/BufferQuad"
+   },
+   "bons.furious.patch.dh_loader.WrapperAirFlag": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.distanthorizons.BiomeBlendMemo": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.distanthorizons.LodBiomeMemo": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.distanthorizons_streams.UnlockedOutputStream": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.distanthorizons_tint.TintColumns": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.embeddium_draw.DrawBatchCache": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.embeddium_draw.MergedDraws": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.embeddium_search.SearchReplay": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.embeddium_sorting.QuadKeySort": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.embeddium_sprites.SpriteFrameTimes": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.fdbosses_c2.SpawnerPresence": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.fluidwalk_c2.LionfishFluidWalk": {
+    "unavailable": "java.lang.NoClassDefFoundError: com/github/L_Ender/lionfishapi/server/event/StandOnFluidEvent"
+   },
+   "bons.furious.patch.item_renderers.ItemRendererReuse": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.jei_search.BackgroundGrams": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.jei_search.SortKeys": {
+    "unavailable": "java.lang.NoClassDefFoundError: mezz/jei/common/config/IngredientSortStage"
+   },
+   "bons.furious.patch.lionfish_models.LionfishModelParts": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.mesh_air.BlockStateAirFlag": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.mob_sunburn.SunBurnOrder": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.modernfix_bake.BakeLocations": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.module_resources.DhSqlScriptLookup": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.mutantmonsters_c2.EmptyShoulderSkip": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.pipez_logistics.EmptyFilters": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.pipez_logistics.SortedConnections": {
+    "unavailable": "java.lang.NoClassDefFoundError: de/maxhenkel/pipez/blocks/tileentity/PipeTileEntity$Connection"
+   },
+   "bons.furious.patch.radium_fixes.PartEntityCollisions": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.spawn_gate.SpawnGate": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.state_memo.SeaLifeWaterlogged": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.storagedrawers.CountLabels": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.structurify_c2.CheckMemo": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.tag_ids.TagIds": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.terrablender.LazyNamespaceRules": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.terrablender.NamespaceRuleMemo": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.terrain.ColumnSummary": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.ticker_gate.TickerGate": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.vanilla_cellfill.ColumnCellFill": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.vanilla_chunk_codecs.BiomeCodecMemo": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.vanilla_chunk_codecs.PaletteDirectNbt": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.vanilla_chunk_codecs.StateCodecMemo": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.vanilla_corner_table.CornerShare": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.vanilla_entity.BlockScans": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.vanilla_framed_maps.FramedMaps": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.vanilla_game_events.GameEventRegistries": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.vanilla_goal_flags.GoalFlags": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.vanilla_inventory_index.ListenerIndex": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.vanilla_item_merge.MergeCandidates": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.vanilla_long_jump.LongJumpPicks": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.vanilla_outline_skip.OutlineSkip": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.vanilla_raycast.ClipFast": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.vanilla_search.RepellentSearch": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.vanilla_search.TurtleEggSearch": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.vanilla_structure_ring.StructureRing": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.vanilla_structure_templates.StructureTemplateHits": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.vanilla_text.StripFormatting": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.worldgen_aquifer.AquiferCandidates": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   },
+   "bons.furious.patch.worldgen_beardifier_bounds.BeardifierBounds": {
+    "shadow": false,
+    "checks": 0,
+    "mismatches": 0
+   }
+  },
+  "passed": true
+ },
+ "verdict": "CLEAN"
+}

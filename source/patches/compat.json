@@ -1,6 +1,6 @@
 {
   "group": "compat",
-  "note": "Patches other mods make to the same code, the same way, as one of our switches. Exactly one copy may run: while the other mod's patch is active (installed, its mixin listed for this side, its option on), our switch steps aside; otherwise our switch applies and the other mod's mixin is cancelled. See bons.furious.guard.ForeignPatches. Checked against Collections Of Optimizations 4.4 (CurseForge file 9026925, sha1 d1b067885b0827c12b7eb75bc02896d270adaed8) on 2026-10-02.",
+  "note": "Patches other mods make to the same code, the same way, as one of our switches. Exactly one copy may run: while the other mod's patch is active (installed, its mixin listed for this side, its option on), our switch steps aside; otherwise our switch applies and the other mod's mixin is cancelled. See bons.furious.guard.ForeignPatches. Checked against Collections Of Optimizations 4.4 (CurseForge file 9026925, sha1 d1b067885b0827c12b7eb75bc02896d270adaed8) on 2026-10-02. The Collections Of Optimizations 4.6 entries are carried from the Forge 1.0.36 release for the keys this port ships; they only act when that mod is installed, which no NeoForge 1.21.1 test of this port has.",
   "keys": {},
   "yields": [
     {
@@ -248,6 +248,310 @@
       "name": "GeckoBetterFPS",
       "mixin": "com.moepus.gbf.mixin.GeoRendererMixin",
       "why": "GeckoBetterFPS 1.0.2 rewrites GeoRenderer.renderCube and createVerticesOfQuad itself (client); two copies of the same method cannot both apply."
+    },
+    {
+      "key": "lionfishapi_model_vertices",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.lionfishapi.MixinLionfishModelBoxRender",
+      "option": "lionfishapi.fastModelRender",
+      "default": true,
+      "why": "Both take the per-vertex vectors out of Lionfish API's AdvancedModelBox.doRender (COO 4.5 and later). COO's hook at the start of the method draws the box through its own writer and returns, so with it on our redirects inside the method never run; one copy only."
+    },
+    {
+      "key": "lionfishapi_model_vertices",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.lionfishapi.MixinLionfishModelBoxRender",
+      "option": "lionfishapi.reuseBoxRotations",
+      "default": true,
+      "why": "COO's lionfishapi.reuseBoxRotations is read by the same mixin class (MixinLionfishModelBoxRender); while it is on COO's mixin is in use, so ours steps aside rather than leave that option without its code."
+    },
+    {
+      "key": "dynamictrees_rot_cycle_guard",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.dynamictrees.MixinDTBoundedRapidRot",
+      "option": "dynamictrees.boundedRapidRot",
+      "default": true,
+      "why": "Both stop Dynamic Trees' rapid-rot cascade from looping at a world-generation edge (issue 1150), on the same Species.rot call in BasicBranchBlock and BasicRootsBlock.checkForRot; two copies would each judge a cascade the other already cut. COO loads this mixin on the client only, so a dedicated server keeps ours."
+    },
+    {
+      "key": "fdbosses_spawner_presence_gate",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.fdbosses.MixinFdBossesHellscapeSky",
+      "option": "fdbosses.skipHellscapeSkyScan",
+      "default": true,
+      "why": "Both skip FD Bosses' night-time Malkuth spawner search in BossClientEvents.tickHellscapeSky while none can be found, wrapping the same entity search; two copies would run in a row."
+    },
+    {
+      "key": "fdbosses_spawner_presence_gate",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.fdbosses.MixinFdBossesArenaProtection",
+      "option": "fdbosses.skipArenaProtectionScan",
+      "default": true,
+      "why": "Both skip FD Bosses' boss-spawner search on every block break, placement and explosion (BossEvents.preventArenaDestruction) while no spawner is loaded. Our switch covers this search together with the sky and kinetic-field ones, so it steps aside while any of COO's three options is on."
+    },
+    {
+      "key": "fdbosses_spawner_presence_gate",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.fdbosses.MixinFdBossesKineticFieldCollision",
+      "option": "fdbosses.skipKineticFieldCollision",
+      "default": true,
+      "why": "Both skip FD Bosses' Chesed kinetic-field search in BossCommonMixinHandle.entityCollidersMixin while no field is loaded. Our switch covers this search together with the sky and arena ones, so it steps aside while any of COO's three options is on."
+    },
+    {
+      "key": "ribbits_performer_absent_guard",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.ribbits.MixinRibbitsPerformerRemove",
+      "option": "ribbits.fixPerformerCrash",
+      "default": true,
+      "why": "Both stop PlayerInstrumentTracker.removePerformer from failing on a performer without an audience list, wrapping the same map lookup; two copies of one guard."
+    },
+    {
+      "key": "dungeonsdelight_yam_single_add",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.dungeonsdelight.MixinDdMonsterYamTick",
+      "option": "dungeonsdelight.noDuplicateZombieAdd",
+      "default": true,
+      "why": "Both skip the Monster Yam's second, always refused, addFreshEntity of a zombie it summons on Hard, wrapping the same call; two copies of one fix."
+    },
+    {
+      "key": "dungeonsdelight_yam_single_add",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.dungeonsdelight.MixinDdMonsterYamTick",
+      "option": "dungeonsdelight.leanYamAura",
+      "default": true,
+      "why": "COO's dungeonsdelight.leanYamAura is read by the same mixin class (MixinDdMonsterYamTick); while it is on COO's mixin is in use, so ours steps aside rather than leave that option without its code."
+    },
+    {
+      "key": "cataclysm_area_attack_scans",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.cataclysm.MixinCataclysmAshenBreathScan",
+      "option": "cataclysm.scanOnlyOnDamageTicks",
+      "default": true,
+      "why": "Both skip the victim search of Cataclysm's Ashen Breath on ticks where it cannot hurt anything, wrapping the same entity query; two copies of one skip."
+    },
+    {
+      "key": "cataclysm_area_attack_scans",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.cataclysm.MixinCataclysmEarthQuakeScan",
+      "option": "cataclysm.scanOnlyOnDamageTicks",
+      "default": true,
+      "why": "Both skip the victim search of Cataclysm's Earthquake on ticks where it cannot hurt anything, wrapping the same entity query; two copies of one skip."
+    },
+    {
+      "key": "cataclysm_area_attack_scans",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.cataclysm.MixinCataclysmSandstormScan",
+      "option": "cataclysm.scanOnlyOnDamageTicks",
+      "default": true,
+      "why": "Both skip the victim search of Cataclysm's Sandstorm on ticks where it cannot hurt anything, wrapping the same entity query; two copies of one skip."
+    },
+    {
+      "key": "cataclysm_area_attack_scans",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.cataclysm.MixinCataclysmVoidRuneScan",
+      "option": "cataclysm.scanOnlyOnDamageTicks",
+      "default": true,
+      "why": "Both skip the victim search of Cataclysm's Void Rune on ticks where it cannot hurt anything, wrapping the same entity query; two copies of one skip."
+    },
+    {
+      "key": "cataclysm_beam_client_scans",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.cataclysm.MixinCataclysmDeathLaserBeam",
+      "option": "cataclysm.skipClientBeamEntityScan",
+      "default": true,
+      "why": "Both skip the death laser's client-side entity search in raytraceEntities, wrapping the same getEntitiesOfClass call; two copies of one skip."
+    },
+    {
+      "key": "cataclysm_beam_client_scans",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.cataclysm.MixinCataclysmDeathLaserBeam",
+      "option": "cataclysm.skipEmpScanWithoutEmp",
+      "default": true,
+      "why": "COO's cataclysm.skipEmpScanWithoutEmp is read by the same mixin class (MixinCataclysmDeathLaserBeam); while it is on COO's mixin is in use, so ours steps aside rather than leave that option without its code."
+    },
+    {
+      "key": "cataclysm_beam_client_scans",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.cataclysm.MixinCataclysmMiniAbyssBlast",
+      "option": "cataclysm.skipClientBeamEntityScan",
+      "default": true,
+      "why": "Both skip the mini abyss blast's client-side entity search in raytraceEntities, wrapping the same getEntitiesOfClass call; two copies of one skip."
+    },
+    {
+      "key": "cataclysm_server_leg_solver",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.cataclysm.MixinCataclysmServerLegSolver",
+      "option": "cataclysm.skipServerLegSolver",
+      "default": true,
+      "why": "Both stop the server running the leg solvers of the Ancient Remnant, the Ancient Ancient Remnant and the Clawdian, wrapping the same LegSolver update calls in tick; two copies of one skip."
+    },
+    {
+      "key": "cataclysm_coral_swim_checks",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.cataclysm.MixinCataclysmCoralSwimCheck",
+      "option": "cataclysm.swimCheckFirst",
+      "default": true,
+      "why": "Both let the Coral Golem and the Coralssus test swimming before their collision check, wrapping the same call in tick; two copies of one reorder."
+    },
+    {
+      "key": "cataclysm_helm_scan",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.cataclysm.MixinCataclysmMonstrousHelm",
+      "option": "cataclysm.lazyMonstrousHelmScan",
+      "default": true,
+      "why": "Both run the Monstrous Helm's mob search in onArmorTick only when it can matter, wrapping the same entity search; two copies of one check."
+    },
+    {
+      "key": "cataclysm_boss_block_breaking",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.cataclysm.MixinCataclysmRiftBlockBreaking",
+      "option": "cataclysm.leanRiftBlockBreaking",
+      "default": true,
+      "why": "Both make the Dimensional Rift's block breaking cheaper; COO wraps the whole berserkBlockBreaking method around ours, so with its option on ours would run inside its copy or not at all; one copy only."
+    },
+    {
+      "key": "cataclysm_boss_block_breaking",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.cataclysm.MixinCataclysmMonstrosityBlockBreaking",
+      "option": "cataclysm.leanMonstrosityBlockBreaking",
+      "default": true,
+      "why": "Both make the Netherite Monstrosity's block breaking cheaper; COO wraps the whole BlockBreaking method around ours; one copy only (our berserkBlockBreaking part steps aside with the switch)."
+    },
+    {
+      "key": "cataclysm_pose_hand_events",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.cataclysm.MixinCataclysmArmPoseEvent",
+      "option": "cataclysm.skipIdleArmPoseEvent",
+      "default": true,
+      "why": "Both stop Cataclysm's arm pose event being built and posted when no listener can act on it, on the same merged HumanoidModel handlers (COO wraps them, ours cancels at their head); two copies of one check. Citadel's event (citadel_pose_hand_events) is not COO's and needs no entry."
+    },
+    {
+      "key": "cataclysm_idle_animate_skip",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.cataclysm.MixinCataclysmIdleAnimate",
+      "option": "cataclysm.skipIdleAnimate",
+      "default": true,
+      "why": "Both skip the keyframe pass of Ignis, the Leviathan, the Ancient Remnant, the Ender Guardian and the Amethyst Crab while idle, at the same point after ModelAnimator.update in animate; two copies of one skip."
+    },
+    {
+      "key": "cataclysm_shield_layer_pose",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.cataclysm.MixinCataclysmLayerPose",
+      "option": "cataclysm.reuseLayerPose",
+      "default": true,
+      "why": "Both stop the Ignis, Ignited Revenant and Harbinger shield layers posing the boss model a second time, wrapping the same setupAnim calls in their render; one copy only."
+    },
+    {
+      "key": "basalt_guards_vanilla_first",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.cataclysm.MixinCataclysmBasaltPrecheck",
+      "option": "cataclysm.basaltPrecheck",
+      "default": true,
+      "why": "Both let vanilla reject a basalt column spot first in BasaltColumnsFeature.canPlaceAt (COO before Cataclysm's guard, ours before all seven mods' guards). With COO's option on ours steps aside; with it off COO's mixin is left out, which is also what lets ours run (it stands down at run time when an unknown handler is in that method)."
+    },
+    {
+      "key": "lionfish_model_parts",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.lionfishapi.MixinLionfishPartsCache",
+      "option": "lionfishapi.cacheModelParts",
+      "default": true,
+      "why": "Both keep Lionfish API models' part list for resetToDefaultPose, on the same getAllParts call (COO redirects it, ours wraps it); one copy only."
+    },
+    {
+      "key": "lionfish_model_animator",
+      "mod": "collections_of_optimizations",
+      "name": "Collections Of Optimizations",
+      "config": "collections_of_optimizations-common.toml",
+      "master": "general.enabled",
+      "mixin": "com.misanthropy.collections_of_optimizations.mixin.lionfishapi.MixinLionfishModelAnimator",
+      "option": "lionfishapi.leanModelAnimator",
+      "default": true,
+      "why": "Both make ModelAnimator reuse its transform maps and Transform objects, on the same putAll, clear and computeIfAbsent calls (COO redirects them, ours wraps them); one copy only."
+    },
+    {
+      "key": "vanilla_spawn_gate_visibility_memo",
+      "mod": "servercore",
+      "name": "ServerCore",
+      "mixin": "me.wesley1808.servercore.mixin.optimizations.ticking.chunk.cache.ServerChunkCacheMixin",
+      "why": "ServerCore's mixin @Redirects the same call our switch @Redirects: ServerLevel.isNaturalSpawningAllowed(ChunkPos) inside ServerChunkCache.tickChunks. Mixin applies only one @Redirect of a call, so the second one fails; with ServerCore installed our switch steps aside and ServerCore keeps its own change. ServerCore's settings file is YAML, which is not read here, so the switch steps aside whenever ServerCore lists the mixin."
     }
   ]
 }
