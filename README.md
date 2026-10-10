@@ -105,7 +105,7 @@ Coverage means the tested build and the specific code paths of each mod, not eve
 
 ## Install the matching build
 
-For Minecraft 1.21.1, use `bons_and_furious-neoforge-1.0.38+mc1.21.1.jar`, Java 21 and NeoForge 21.1.252 or newer. MixinSquared is bundled; NeoForge supplies MixinExtras. [NeoForge setup and compatibility](https://github.com/BonsUnleashed/bons-and-furious/wiki/Minecraft-1.21.1-NeoForge).
+For Minecraft 1.21.1, use `bons_and_furious-neoforge-1.0.39+mc1.21.1.jar`, Java 21 and NeoForge 21.1.252 or newer. MixinSquared is bundled; NeoForge supplies MixinExtras. [NeoForge setup and compatibility](https://github.com/BonsUnleashed/bons-and-furious/wiki/Minecraft-1.21.1-NeoForge).
 
 For Minecraft 1.20.1 / Forge:
 
