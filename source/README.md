@@ -1,7 +1,7 @@
 # Bons and Furious — Minecraft 1.21.1 / NeoForge
 
 This is the Minecraft 1.21.1 port of Bons and Furious 1.0.38. It uses mod ID `bons_and_furious`, version
-`1.0.38+mc1.21.1`, and requires Java 21 and NeoForge 21.1.252 or newer. Minecraft is restricted to exactly 1.21.1.
+`1.0.39+mc1.21.1`, and requires Java 21 and NeoForge 21.1.252 or newer. Minecraft is restricted to exactly 1.21.1.
 The tested loader is 21.1.252; later loaders are not automatically qualified.
 
 It builds on the published 1.0.35+mc1.21.1 (SHA-256
@@ -17,7 +17,7 @@ release.
 
 ## Install
 
-Put `bons_and_furious-neoforge-1.0.38+mc1.21.1.jar` in the `mods` folder of a Minecraft 1.21.1 NeoForge instance.
+Put `bons_and_furious-neoforge-1.0.39+mc1.21.1.jar` in the `mods` folder of a Minecraft 1.21.1 NeoForge instance.
 Optional target mods are not required; their patches only apply when the relevant targets and method fingerprints
 match. MixinSquared is bundled; NeoForge supplies MixinExtras.
 
@@ -43,7 +43,7 @@ Of the 51 that 1.0.36 added, 34 are ported, 13 are retired (their 1.21.1 target 
 4 have no 1.21.1 target (Rats, Alex's Caves, Alex's Mobs and Timeless and Classics Zero have no NeoForge 1.21.1
 build by their authors).
 
-Eight crash fixes are included; the two newest are described under 1.0.38+mc1.21.1 below. `oculus_entity_vertex_reuse` (Iris) runs at priority 999 so Accelerated Rendering's
+Nine crash fixes are included; the newest is described under 1.0.39+mc1.21.1 below, the two before it under 1.0.38+mc1.21.1. `oculus_entity_vertex_reuse` (Iris) runs at priority 999 so Accelerated Rendering's
 offset changes apply to it (1.0.27+mc1.21.1 crashes with Accelerated Rendering and Iris). `vanilla_model_bone_lookup`
 stands down inside a mod's own overwrite of that method (Embeddium without Iris). A switch that replaces another mod's
 mixin steps aside while a third mod refines that mixin through MixinSquared. `terrain_final_density_reuse` overwrites
@@ -101,6 +101,13 @@ New in 1.0.38+mc1.21.1, from the Forge 1.0.36 and 1.0.38 releases:
   aside, and nothing of that mod is cancelled.
 - `citadel_pose_hand_events` skips Citadel's pose-hand event only while nothing listens to it (the two listeners the
   Forge version recognises, Alex's Caves and Alex's Mobs, have no NeoForge 1.21.1 build).
+
+New in 1.0.39+mc1.21.1, the same fix as Forge 1.0.39:
+- `vanilla_chunk_palette_direct_nbt` leaves chunk sections that another mod keeps in its own block storage to the
+  regular writer. Bye Pregen 1.1.3.1 keeps chunks that are still being generated that way. When its own chunk saver
+  is off (it turns itself off when another mod listens for chunk saves), 1.0.38+mc1.21.1 did not save those
+  chunks: the log shows `Failed to save chunk` with `UnsupportedOperationException`, and NeoForge writes a report
+  for each one, which made stopping the server slow. With Bye Pregen's own saver on, it was not affected.
 
 The Oculus-prefixed switches target Iris. The tested Iris pairing is Iris 1.8.12 with Sodium 0.6.13. Embeddium 1.0.15
 is tested separately; do not combine Embeddium with Sodium/Iris. Embeddium owns model bone lookup when installed.

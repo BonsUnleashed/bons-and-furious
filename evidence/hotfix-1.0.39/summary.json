@@ -1,0 +1,215 @@
+{
+ "jar": "bons_and_furious-neoforge-1.0.39+mc1.21.1.jar",
+ "sha256": "0fdf2fb35e7791e1216fbb26605b12e0be0ccf1f9858f2950044189fbb1958ea",
+ "base": {
+  "jar": "bons_and_furious-neoforge-1.0.38+mc1.21.1.jar",
+  "sha256": "e5b600a0008c1abadb81e99182873072d8fd0afddca403e4e44e8adcb3edaec9",
+  "unchanged_source_rebuilds_to_it": true
+ },
+ "change": "vanilla_chunk_palette_direct_nbt: only Minecraft's own PalettedContainer class is written directly; a section held in another mod's container type (Bye Pregen's ArenaBlockStatePalettedContainer, whose pack throws UnsupportedOperationException) keeps the codec, with one log line per type",
+ "jar_diff": {
+  "changed_entries": [
+   "META-INF/neoforge.mods.toml",
+   "bons/furious/patch/vanilla_chunk_codecs/PaletteDirectNbt$StateRecipe.class",
+   "bons/furious/patch/vanilla_chunk_codecs/PaletteDirectNbt.class",
+   "bons_and_furious.default.properties"
+  ]
+ },
+ "tested_with": {
+  "minecraft": "1.21.1",
+  "neoforge": "21.1.252",
+  "java": "Temurin 21.0.12.1",
+  "byepregen": "1.1.3.1"
+ },
+ "fixtures": {
+  "nb38": {
+   "what": "1.0.38+mc1.21.1 + Bye Pregen 1.1.3.1 (its own chunk saver on)",
+   "save_failures": 0,
+   "chunks_on_disk": 1741,
+   "statuses": {
+    "minecraft:structure_starts": 1376,
+    "minecraft:biomes": 100,
+    "minecraft:carvers": 84,
+    "minecraft:initialize_light": 68,
+    "minecraft:full": 113
+   }
+  },
+  "nb38L": {
+   "what": "1.0.38+mc1.21.1 + Bye Pregen 1.1.3.1 + a no-op ChunkDataEvent.Save listener (Bye Pregen's saver off)",
+   "save_failures": 3214,
+   "chunks_on_disk": 113,
+   "statuses": {
+    "minecraft:full": 113
+   }
+  },
+  "nb38Loff": {
+   "what": "the same with vanilla_chunk_palette_direct_nbt=false",
+   "save_failures": 0,
+   "chunks_on_disk": 1741,
+   "statuses": {
+    "minecraft:structure_starts": 1376,
+    "minecraft:biomes": 100,
+    "minecraft:carvers": 84,
+    "minecraft:initialize_light": 68,
+    "minecraft:full": 113
+   }
+  },
+  "nh": {
+   "what": "1.0.39+mc1.21.1 + Bye Pregen 1.1.3.1",
+   "save_failures": 0,
+   "chunks_on_disk": 1741,
+   "statuses": {
+    "minecraft:structure_starts": 1376,
+    "minecraft:biomes": 100,
+    "minecraft:carvers": 84,
+    "minecraft:initialize_light": 68,
+    "minecraft:full": 113
+   }
+  },
+  "nhL": {
+   "what": "1.0.39+mc1.21.1 + Bye Pregen 1.1.3.1 + the listener",
+   "save_failures": 0,
+   "chunks_on_disk": 1741,
+   "statuses": {
+    "minecraft:structure_starts": 1376,
+    "minecraft:biomes": 100,
+    "minecraft:carvers": 84,
+    "minecraft:initialize_light": 68,
+    "minecraft:full": 113
+   }
+  },
+  "np38": {
+   "what": "1.0.38+mc1.21.1 without Bye Pregen",
+   "save_failures": 0,
+   "chunks_on_disk": 1741,
+   "statuses": {
+    "minecraft:structure_starts": 1376,
+    "minecraft:biomes": 100,
+    "minecraft:carvers": 84,
+    "minecraft:initialize_light": 68,
+    "minecraft:full": 113
+   }
+  },
+  "nph": {
+   "what": "1.0.39+mc1.21.1 without Bye Pregen",
+   "save_failures": 0,
+   "chunks_on_disk": 1741,
+   "statuses": {
+    "minecraft:structure_starts": 1376,
+    "minecraft:biomes": 100,
+    "minecraft:carvers": 84,
+    "minecraft:initialize_light": 68,
+    "minecraft:full": 113
+   }
+  }
+ },
+ "pairs": {
+  "np38 vs nph": {
+   "probe_terrain_equal": true,
+   "probe_decisions_equal": true,
+   "chunks": {
+    "a": 1741,
+    "b": 1741,
+    "common": 1741,
+    "only_a": 0,
+    "only_b": 0
+   },
+   "pre_features": {
+    "chunks": 1560,
+    "equal": 1555
+   },
+   "full_informative": {
+    "chunks": 113,
+    "equal": 94
+   }
+  },
+  "nb38 vs nh": {
+   "probe_terrain_equal": true,
+   "probe_decisions_equal": true,
+   "chunks": {
+    "a": 1741,
+    "b": 1741,
+    "common": 1741,
+    "only_a": 0,
+    "only_b": 0
+   },
+   "pre_features": {
+    "chunks": 1560,
+    "equal": 1553
+   },
+   "full_informative": {
+    "chunks": 113,
+    "equal": 86
+   }
+  },
+  "nb38Loff vs nhL": {
+   "probe_terrain_equal": true,
+   "probe_decisions_equal": false,
+   "chunks": {
+    "a": 1741,
+    "b": 1741,
+    "common": 1741,
+    "only_a": 0,
+    "only_b": 0
+   },
+   "pre_features": {
+    "chunks": 1560,
+    "equal": 1555
+   },
+   "full_informative": {
+    "chunks": 113,
+    "equal": 82
+   }
+  },
+  "nb38L vs nhL": {
+   "probe_terrain_equal": true,
+   "probe_decisions_equal": true,
+   "chunks": {
+    "a": 113,
+    "b": 1741,
+    "common": 113,
+    "only_a": 0,
+    "only_b": 1628
+   },
+   "pre_features": {
+    "chunks": 0,
+    "equal": 0
+   },
+   "full_informative": {
+    "chunks": 113,
+    "equal": 90
+   }
+  }
+ },
+ "checks": {
+  "reproduced": true,
+  "default_not_affected": true,
+  "listener_turns_raw_saver_off": true,
+  "workaround": true,
+  "fixed": true,
+  "fixed_default": true,
+  "fixed_terrain_equals_published": true,
+  "without_byepregen_identical": true,
+  "static_same_as_published": true
+ },
+ "static": {
+  "crash_class_sweep": {
+   "status": "PASS",
+   "jars": 488,
+   "same_as_1_0_38_mc1_21_1": true
+  },
+  "access_audit": {
+   "status": "PASS",
+   "jars": 489,
+   "same_as_1_0_38_mc1_21_1": true
+  }
+ },
+ "client": {
+  "fixture": "Embeddium without Iris",
+  "mods": 76,
+  "shadow_comparisons": 919326310,
+  "mismatches": 0
+ },
+ "workaround_for_1_0_38_mc1_21_1": "set vanilla_chunk_palette_direct_nbt=false in config/bons_and_furious.properties",
+ "scope": "dedicated-server runs (a singleplayer world runs the same server code) and one client run"
+}

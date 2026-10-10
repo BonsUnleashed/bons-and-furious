@@ -1,3 +1,27 @@
+# Hotfix 1.0.39+mc1.21.1 (2026-10-10)
+
+**PASS** for `bons_and_furious-neoforge-1.0.39+mc1.21.1.jar`, SHA-256
+`0fdf2fb35e7791e1216fbb26605b12e0be0ccf1f9858f2950044189fbb1958ea`.
+
+One change, the same as Forge 1.0.39: `vanilla_chunk_palette_direct_nbt` leaves chunk sections that another mod keeps
+in its own block storage to the regular writer. Bye Pregen keeps chunks that are still being generated in its own
+storage and writes them itself; 1.0.38+mc1.21.1 asked that storage for a step it refuses, so those chunks were not
+saved whenever they reached the regular writer. Evidence is in `../evidence/hotfix-1.0.39/`.
+
+| Check | Result |
+| --- | --- |
+| Build | The unchanged 1.0.38+mc1.21.1 source rebuilds to the published JAR byte for byte; the hotfix JAR differs from it only in 4 entries: the switch's class and its nested record, and the version text |
+| Reproduced | 1.0.38+mc1.21.1 with Bye Pregen 1.1.3.1 and a mod that listens for chunk saves: 3,214 failed chunk saves; only 113 of 1,741 chunks reached the disk |
+| Not affected by default | 1.0.38+mc1.21.1 with Bye Pregen alone: its own chunk saver stays on, no failed save |
+| Workaround | The same mods with `vanilla_chunk_palette_direct_nbt=false`: no failed save, all 1,741 chunks saved |
+| Fixed | Hotfix with Bye Pregen and the chunk-save listener: no failed save, all 1,741 chunks saved, one log line for Bye Pregen's storage; the terrain of every dimension equals 1.0.38+mc1.21.1 |
+| Without Bye Pregen | Hotfix and 1.0.38+mc1.21.1 give identical terrain and identical decisions for every probed switch |
+| Static checks | Guards (Gradle build), name audit, crash-class check over 488 jars and access check over 489 jars: the same result as 1.0.38+mc1.21.1, no crashing kind |
+| Client | The Embeddium client without Iris (76 mods) loaded a world and rendered it; 919,326,310 shadow comparisons, 0 mismatches |
+
+These are dedicated-server runs and one client run; a singleplayer world runs the same server code. The rest of this
+file is the qualification of 1.0.38+mc1.21.1, which this hotfix otherwise equals.
+
 # Qualification (2026-10-10)
 
 **PASS** for `bons_and_furious-neoforge-1.0.38+mc1.21.1.jar`.

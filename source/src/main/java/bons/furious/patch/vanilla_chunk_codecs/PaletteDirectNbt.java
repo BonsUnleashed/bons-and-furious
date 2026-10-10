@@ -14,6 +14,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.LongStream;
 import net.minecraft.core.Holder;
@@ -68,6 +70,12 @@ import org.slf4j.Logger;
  * new CompoundTag() like NbtOps' builder and inserts in the verified order, so equal recipes give equal bytes every time.
  * The DataResult is consumed at once by getOrThrow (guarded fingerprint of write), which reads only its value.
  *
+ * Only Minecraft's own container class takes this path (1.0.39+mc1.21.1, as Forge 1.0.39). A section held in another
+ * mod's container type keeps the original call, with one log line per type: Bye Pregen 1.1.3.x keeps world-generation
+ * sections in its ArenaBlockStatePalettedContainer, whose pack throws UnsupportedOperationException, and writes them with
+ * its own codec, which it puts in ChunkSerializer's BLOCK_STATE_CODEC field. 1.0.38+mc1.21.1, the first port with it, called
+ * pack on it, and such a chunk failed to save whenever it reached ChunkSerializer.write.
+ *
  * -Dbons_and_furious.chunkPaletteDirectNbt=false switches it off at run time.
  * -Dbons_and_furious.chunkPaletteDirectNbt.shadow=true (verification runs only): every direct build is compared with the
  * original call's result (same comparison plus NbtIo bytes); the original's result is returned. SHADOW_CHECKS /
@@ -88,6 +96,9 @@ public final class PaletteDirectNbt {
     public static final AtomicLong SHADOW_CHECKS = new AtomicLong(), SHADOW_MISMATCHES = new AtomicLong();
     /** Test and log support: sections built directly, sections through the codec, verification refusals. */
     public static final AtomicLong DIRECT = new AtomicLong(), CODEC = new AtomicLong(), REFUSED = new AtomicLong(), VERIFIED = new AtomicLong();
+    /** Test and log support: sections in another mod's container type, always left to the codec. */
+    public static final AtomicLong FOREIGN = new AtomicLong();
+    private static final Set<Class<?>> FOREIGN_LOGGED = ConcurrentHashMap.newKeySet();
     private static volatile boolean announced, refusalLogged;
 
     /** Block state -> StateRecipe; biome holder -> its name (String). Verified entries only. */
@@ -123,6 +134,11 @@ public final class PaletteDirectNbt {
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static DataResult encodeStart(Codec codec, DynamicOps ops, Object input, Operation<DataResult> original) {
         if (!enabled || ops != NbtOps.INSTANCE) return original.call(codec, ops, input);
+        // another mod's container type (a subclass, or its own PalettedContainerRO) is written by the codec it was made for
+        if (input instanceof PalettedContainerRO<?> && input.getClass() != PalettedContainer.class) {
+            foreign(input.getClass());
+            return original.call(codec, ops, input);
+        }
         if (codec == blockCodec() && input instanceof PalettedContainer<?> states) {
             return blockStates(codec, ops, (PalettedContainer<BlockState>) states, original);
         }
@@ -385,6 +401,14 @@ public final class PaletteDirectNbt {
             refusalLogged = true;
             LOGGER.warn("Bons and Furious: vanilla_chunk_palette_direct_nbt: a {} section's direct build differs from the codec's ({} / {}); those entries keep using the codec",
                     what, made, direct);
+        }
+    }
+
+    private static void foreign(Class<?> type) {
+        FOREIGN.incrementAndGet();
+        if (FOREIGN_LOGGED.add(type)) {
+            LOGGER.info("Bons and Furious: vanilla_chunk_palette_direct_nbt steps aside for sections held in {} (another mod's container type); those sections are left to the codec",
+                    type.getName());
         }
     }
 
