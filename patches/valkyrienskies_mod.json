@@ -300,6 +300,26 @@
       "cancel": [],
       "conversion": "targethandler",
       "license": "Apache-2.0 (Valkyrien Skies mod mixin classes)"
+    },
+    "valkyrien_packets_server_thread": {
+      "mod": "valkyrienskies",
+      "scripts": [],
+      "since": "1.0.40",
+      "mixins": [
+        "bons.furious.mixin.valkyrienskies_mod.VSForgeNetworkingServerThreadMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/valkyrienskies/mod/forge/common/VSForgeNetworking",
+          "method": "registerPacketHandlers$lambda$3",
+          "desc": "(Lorg/valkyrienskies/core/internal/hooks/VsiCoreHooksIn;Lorg/valkyrienskies/mod/forge/common/MessageVSPacket;Ljava/util/function/Supplier;)V",
+          "note": "the SimpleChannel consumer: getSender, then onReceiveServer(getBuf, getPlayerWrapper(sender)) or onReceiveClient(getBuf), then setPacketHandled",
+          "sha256": "932416e109cccf53f5741c8c564f0535674546e7dd1f641a7fb243cb992352b0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at HEAD of Valkyrien Skies' Forge channel consumer, cancellable: a packet with a sender, received off the server thread, has its payload copied and the same onReceiveServer call queued with the server's executeIfPossible (helper bons.furious.patch.valkyrienskies_mod.VsPacketsServerThread); packets the client receives and calls already on the server thread run unchanged",
+      "license": "Apache-2.0 (Valkyrien Skies mod classes): no code of Valkyrien Skies is carried; the helper calls its onReceiveServer and getPlayerWrapper"
     }
   }
 }
