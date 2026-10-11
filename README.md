@@ -149,7 +149,7 @@ The 1.0.39 release JAR was tested in client and dedicated-server copies of the r
 
 ### Upstream pull requests
 
-Pull requests sent to the projects this mod patches: 10 merged, 86 open, 15 closed without merge (status checked 9 October 2026).
+Pull requests sent to the projects this mod patches: 10 merged, 87 open, 15 closed without merge (status checked 11 October 2026).
 
 | Project | Pull requests | Status |
 | --- | --- | --- |
@@ -219,7 +219,7 @@ Pull requests sent to the projects this mod patches: 10 merged, 86 open, 15 clos
 | TerraBlender | [#241](https://github.com/Glitchfiend/TerraBlender/pull/241) | Merged |
 | Timeless and Classics Zero (TaCZ) | [#745](https://github.com/MCModderAnchor/TACZ/pull/745) | Open |
 | Trackwork | [#70](https://github.com/Endalion/trackwork/pull/70) | Open |
-| Valkyrien Skies | [#1981](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1981), [#1982](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1982), [#1983](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1983), [#1984](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1984), [#1985](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1985) | Open |
+| Valkyrien Skies | [#1981](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1981), [#1982](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1982), [#1983](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1983), [#1984](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1984), [#1985](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1985), [#1997](https://github.com/ValkyrienSkies/Valkyrien-Skies-2/pull/1997) | Open |
 
 ## Development disclosure
 
