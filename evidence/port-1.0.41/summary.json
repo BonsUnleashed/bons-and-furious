@@ -1,0 +1,511 @@
+{
+ "jar": "bons_and_furious-neoforge-1.0.41+mc1.21.1.jar",
+ "sha256": "5e271402cca9eae0fa640e1a5a79fa6b8954da2f37e70ef072af787d23181a5f",
+ "base": {
+  "jar": "bons_and_furious-neoforge-1.0.39+mc1.21.1.jar",
+  "sha256": "0fdf2fb35e7791e1216fbb26605b12e0be0ccf1f9858f2950044189fbb1958ea",
+  "unchanged_source_rebuilds_to_it": true
+ },
+ "forge_base": {
+  "version": "1.0.41",
+  "sha256": "6106736007d8ac7811d54e21f7182f7da846ec186c2b136e1504c8e989c42c46",
+  "note": "Forge 1.0.41 includes the never separately published Forge 1.0.40"
+ },
+ "changes": [
+  "frame_pacing (Forge 1.0.41): the one FPS limiter call is queued for the display update (RenderSystem.flipFrame replays the render queue just before the buffer swap) instead of made from our mixin handler, so no method of this mod is on the stack while the limiter waits and GLFW dispatches input",
+  "radium_experimental_tickets_spawning (Forge 1.0.40): ships false; the switch code is unchanged",
+  "valkyrien_packets_server_thread (Forge 1.0.40): not ported, Valkyrien Skies has no Minecraft 1.21.1 build"
+ ],
+ "jar_diff": {
+  "changed_entries": [
+   "META-INF/neoforge.mods.toml",
+   "bons/pure/pacing/FramePacer.class",
+   "bons/pure/pacing/mixin/MinecraftPacingMixin.class",
+   "bons_and_furious.default.properties"
+  ],
+  "added_entries": [
+   "bons/pure/pacing/FramePacer$Limiter.class"
+  ]
+ },
+ "tested_with": {
+  "minecraft": "1.21.1",
+  "neoforge": "21.1.252",
+  "java": "Temurin 21.0.12.1",
+  "radium": "0.13.1+git.4994e83"
+ },
+ "servers": {
+  "fixtures": {
+   "s39": {
+    "what": "1.0.39+mc1.21.1, base game only",
+    "chunks_on_disk": 1741,
+    "radium_experimental_mixins_applied": 0
+   },
+   "s41": {
+    "what": "1.0.41+mc1.21.1, base game only",
+    "chunks_on_disk": 1741,
+    "radium_experimental_mixins_applied": 0
+   },
+   "r39": {
+    "what": "1.0.39+mc1.21.1 + Radium 0.13.1",
+    "chunks_on_disk": 1741,
+    "radium_experimental_mixins_applied": 14
+   },
+   "r41": {
+    "what": "1.0.41+mc1.21.1 + Radium 0.13.1 (shipped defaults)",
+    "chunks_on_disk": 1741,
+    "radium_experimental_mixins_applied": 0
+   },
+   "r41on": {
+    "what": "1.0.41+mc1.21.1 + Radium 0.13.1 with radium_experimental_tickets_spawning=true",
+    "chunks_on_disk": 1741,
+    "radium_experimental_mixins_applied": 14
+   }
+  },
+  "pairs": {
+   "s39 vs s41": {
+    "terrain_hashes_equal": true,
+    "decisions_that_differ": {
+     "radium_experimental_tickets_spawning": [
+      "Decision[state=ABSENT, detail=target mod radium is not installed]",
+      "Decision[state=DISABLED, detail=disabled by config]"
+     ]
+    }
+   },
+   "r39 vs r41": {
+    "terrain_hashes_equal": true,
+    "decisions_that_differ": {
+     "radium_experimental_tickets_spawning": [
+      "Decision[state=APPLY, detail=all 11 fingerprints match]",
+      "Decision[state=DISABLED, detail=disabled by config]"
+     ]
+    }
+   },
+   "r39 vs r41on": {
+    "terrain_hashes_equal": true,
+    "decisions_that_differ": {}
+   },
+   "r41 vs r41on": {
+    "terrain_hashes_equal": true,
+    "decisions_that_differ": {
+     "radium_experimental_tickets_spawning": [
+      "Decision[state=DISABLED, detail=disabled by config]",
+      "Decision[state=APPLY, detail=all 11 fingerprints match]"
+     ]
+    }
+   }
+  },
+  "checks": {
+   "all_clean": true,
+   "candidate_is_this_jar": true,
+   "published_is_published": true,
+   "default_off": true,
+   "published_switched_radium_on": true,
+   "candidate_leaves_radium_off": true,
+   "candidate_set_true_switches_on": true,
+   "terrain_equal": true,
+   "decisions_bare": true,
+   "decisions_radium": true,
+   "decisions_set_true_equal_published": true
+  }
+ },
+ "clients": {
+  "embeddium_without_iris": {
+   "fixture": "Embeddium without Iris",
+   "mods": 76,
+   "shadow_comparisons": 1704070326,
+   "mismatches": 0
+  },
+  "iris_with_shaders": {
+   "fixture": "Iris and Sodium with Complementary shaders",
+   "mods": 78,
+   "shadow_comparisons": 1518042481,
+   "mismatches": 0
+  }
+ },
+ "frame_pacing": {
+  "checks": {
+   "title_41_no_bons_frames": true,
+   "title_39_bons_frames": true,
+   "off_is_vanilla": true,
+   "one_call_per_frame": true,
+   "f3_limit_text": true,
+   "crash_report_39_has_ours": true,
+   "crash_report_41_clean": true,
+   "no_fallback_warning": true,
+   "world_one_call_per_frame": true,
+   "world_f3_limit_text": true
+  },
+  "timing": {
+   "s1039": {
+    "arms": [
+     "s39a",
+     "s39b"
+    ],
+    "fps": [
+     59.75,
+     59.67
+    ],
+    "p99_ms": [
+     17.5978,
+     17.661
+    ],
+    "mean_fps": 59.71
+   },
+   "s1041": {
+    "arms": [
+     "s41a",
+     "s41b"
+    ],
+    "fps": [
+     59.65,
+     59.59
+    ],
+    "p99_ms": [
+     17.6309,
+     17.6774
+    ],
+    "mean_fps": 59.62
+   },
+   "w1039": {
+    "arms": [
+     "w39a",
+     "w39b"
+    ],
+    "fps": [
+     118.12,
+     117.98
+    ],
+    "p99_ms": [
+     9.5058,
+     9.6533
+    ],
+    "mean_fps": 118.05
+   },
+   "w1041": {
+    "arms": [
+     "w41a",
+     "w41b"
+    ],
+    "fps": [
+     118.24,
+     117.83
+    ],
+    "p99_ms": [
+     9.5746,
+     9.75
+    ],
+    "mean_fps": 118.03
+   }
+  },
+  "arms": {
+   "c39": {
+    "what": "1.0.39+mc1.21.1, a key handler throws during the limiter wait (crash report)",
+    "fps": 59.56312698598966,
+    "p50_ms": 16.6694,
+    "p95_ms": 17.2884,
+    "p99_ms": 18.9372,
+    "limiter_calls_per_frame": [
+     0,
+     299,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "f3_text": "60 fps T: 60 fancy fancy-clouds B: 2",
+    "samples": 1,
+    "in_limiter": 1,
+    "with_bons_frames": 1,
+    "bons_frames": [
+     "net.minecraft.client.Minecraft.handler$zfb000$bons_and_furious$bonspure$beforeDisplay"
+    ],
+    "crash_reports": [
+     {
+      "bons_frame_count": 2,
+      "bons_frames": [
+       "net.minecraft.client.Minecraft.handler$zfb000$bons_and_furious$bonspure$beforeDisplay",
+       "net.minecraft.client.Minecraft.handler$zfb000$bons_and_furious$bonspure$beforeDisplay"
+      ]
+     }
+    ]
+   },
+   "c41": {
+    "what": "1.0.41+mc1.21.1, a key handler throws during the limiter wait (crash report)",
+    "fps": 59.75832896345739,
+    "p50_ms": 16.6689,
+    "p95_ms": 17.167,
+    "p99_ms": 17.5354,
+    "limiter_calls_per_frame": [
+     0,
+     300,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "f3_text": "60 fps T: 60 fancy fancy-clouds B: 2",
+    "samples": 1,
+    "in_limiter": 1,
+    "with_bons_frames": 0,
+    "bons_frames": [],
+    "crash_reports": [
+     {
+      "bons_frame_count": 0,
+      "bons_frames": []
+     }
+    ]
+   },
+   "s39a": {
+    "what": "1.0.39+mc1.21.1, title screen",
+    "fps": 59.75249556874721,
+    "p50_ms": 16.6681,
+    "p95_ms": 17.205,
+    "p99_ms": 17.5978,
+    "limiter_calls_per_frame": [
+     0,
+     2690,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "f3_text": "60 fps T: 60 fancy fancy-clouds B: 2",
+    "samples": 20,
+    "in_limiter": 20,
+    "with_bons_frames": 20,
+    "bons_frames": [
+     "net.minecraft.client.Minecraft.handler$zfb000$bons_and_furious$bonspure$beforeDisplay"
+    ],
+    "crash_reports": []
+   },
+   "s39b": {
+    "what": "1.0.39+mc1.21.1, title screen (repeat)",
+    "fps": 59.66541293684066,
+    "p50_ms": 16.6683,
+    "p95_ms": 17.3988,
+    "p99_ms": 17.661,
+    "limiter_calls_per_frame": [
+     0,
+     2686,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "f3_text": "59 fps T: 60 fancy fancy-clouds B: 2",
+    "samples": 20,
+    "in_limiter": 20,
+    "with_bons_frames": 20,
+    "bons_frames": [
+     "net.minecraft.client.Minecraft.handler$zfb000$bons_and_furious$bonspure$beforeDisplay"
+    ],
+    "crash_reports": []
+   },
+   "s41a": {
+    "what": "1.0.41+mc1.21.1, title screen",
+    "fps": 59.64502453578611,
+    "p50_ms": 16.669,
+    "p95_ms": 17.2882,
+    "p99_ms": 17.6309,
+    "limiter_calls_per_frame": [
+     0,
+     2685,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "f3_text": "60 fps T: 60 fancy fancy-clouds B: 2",
+    "samples": 20,
+    "in_limiter": 19,
+    "with_bons_frames": 0,
+    "bons_frames": [],
+    "crash_reports": []
+   },
+   "s41b": {
+    "what": "1.0.41+mc1.21.1, title screen (repeat)",
+    "fps": 59.58598405241789,
+    "p50_ms": 16.6684,
+    "p95_ms": 17.403,
+    "p99_ms": 17.6774,
+    "limiter_calls_per_frame": [
+     0,
+     2682,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "f3_text": "59 fps T: 60 fancy fancy-clouds B: 2",
+    "samples": 20,
+    "in_limiter": 20,
+    "with_bons_frames": 0,
+    "bons_frames": [],
+    "crash_reports": []
+   },
+   "s41off": {
+    "what": "1.0.41+mc1.21.1 with -Dbons_and_furious.framePacing=false (vanilla timing)",
+    "fps": 59.49663161287544,
+    "p50_ms": 16.7217,
+    "p95_ms": 17.5682,
+    "p99_ms": 18.1722,
+    "limiter_calls_per_frame": [
+     0,
+     2678,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "f3_text": "60 fps T: 60 fancy fancy-clouds B: 2",
+    "samples": 20,
+    "in_limiter": 20,
+    "with_bons_frames": 0,
+    "bons_frames": [],
+    "crash_reports": []
+   },
+   "w39a": {
+    "what": "1.0.39+mc1.21.1, in a world at a 120 FPS cap",
+    "fps": 118.12310308708736,
+    "p50_ms": 8.3394,
+    "p95_ms": 9.1288,
+    "p99_ms": 9.5058,
+    "limiter_calls_per_frame": [
+     0,
+     7088,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "f3_text": "119 fps T: 120 fancy fancy-clouds B: 2",
+    "samples": 0,
+    "in_limiter": 0,
+    "with_bons_frames": 0,
+    "bons_frames": [],
+    "crash_reports": []
+   },
+   "w39b": {
+    "what": "1.0.39+mc1.21.1, in a world (repeat)",
+    "fps": 117.97692482481057,
+    "p50_ms": 8.3461,
+    "p95_ms": 9.1641,
+    "p99_ms": 9.6533,
+    "limiter_calls_per_frame": [
+     0,
+     7079,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "f3_text": "118 fps T: 120 fancy fancy-clouds B: 2",
+    "samples": 0,
+    "in_limiter": 0,
+    "with_bons_frames": 0,
+    "bons_frames": [],
+    "crash_reports": []
+   },
+   "w41a": {
+    "what": "1.0.41+mc1.21.1, in a world at a 120 FPS cap",
+    "fps": 118.23616676260933,
+    "p50_ms": 8.3387,
+    "p95_ms": 9.1335,
+    "p99_ms": 9.5746,
+    "limiter_calls_per_frame": [
+     0,
+     7095,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "f3_text": "119 fps T: 120 fancy fancy-clouds B: 2",
+    "samples": 0,
+    "in_limiter": 0,
+    "with_bons_frames": 0,
+    "bons_frames": [],
+    "crash_reports": []
+   },
+   "w41b": {
+    "what": "1.0.41+mc1.21.1, in a world (repeat)",
+    "fps": 117.833312644616,
+    "p50_ms": 8.3456,
+    "p95_ms": 9.1321,
+    "p99_ms": 9.75,
+    "limiter_calls_per_frame": [
+     0,
+     7071,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "f3_text": "118 fps T: 120 fancy fancy-clouds B: 2",
+    "samples": 0,
+    "in_limiter": 0,
+    "with_bons_frames": 0,
+    "bons_frames": [],
+    "crash_reports": []
+   }
+  },
+  "stack_below_the_key_handler": {
+   "c39": [
+    "org.lwjgl.glfw.GLFW.glfwWaitEventsTimeout <- com.mojang.blaze3d.systems.RenderSystem.limitDisplayFPS <- net.minecraft.client.Minecraft.handler$zfb000$bons_and_furious$bonspure$beforeDisplay <- net.minecraft.client.Minecraft.runTick"
+   ],
+   "c41": [
+    "org.lwjgl.glfw.GLFW.glfwWaitEventsTimeout <- com.mojang.blaze3d.systems.RenderSystem.limitDisplayFPS <- com.mojang.blaze3d.systems.RenderSystem.replayQueue <- com.mojang.blaze3d.systems.RenderSystem.flipFrame <- com.mojang.blaze3d.platform.Window.updateDisplay <- net.minecraft.client.Minecraft.runTick"
+   ],
+   "s39a": [
+    "org.lwjgl.glfw.GLFW.glfwWaitEventsTimeout <- com.mojang.blaze3d.systems.RenderSystem.limitDisplayFPS <- net.minecraft.client.Minecraft.handler$zfb000$bons_and_furious$bonspure$beforeDisplay <- net.minecraft.client.Minecraft.runTick"
+   ],
+   "s39b": [
+    "org.lwjgl.glfw.GLFW.glfwWaitEventsTimeout <- com.mojang.blaze3d.systems.RenderSystem.limitDisplayFPS <- net.minecraft.client.Minecraft.handler$zfb000$bons_and_furious$bonspure$beforeDisplay <- net.minecraft.client.Minecraft.runTick"
+   ],
+   "s41a": [
+    "org.lwjgl.glfw.GLFW.glfwWaitEventsTimeout <- com.mojang.blaze3d.systems.RenderSystem.limitDisplayFPS <- com.mojang.blaze3d.systems.RenderSystem.replayQueue <- com.mojang.blaze3d.systems.RenderSystem.flipFrame <- com.mojang.blaze3d.platform.Window.updateDisplay <- net.minecraft.client.Minecraft.runTick"
+   ],
+   "s41b": [
+    "org.lwjgl.glfw.GLFW.glfwWaitEventsTimeout <- com.mojang.blaze3d.systems.RenderSystem.limitDisplayFPS <- com.mojang.blaze3d.systems.RenderSystem.replayQueue <- com.mojang.blaze3d.systems.RenderSystem.flipFrame <- com.mojang.blaze3d.platform.Window.updateDisplay <- net.minecraft.client.Minecraft.runTick"
+   ],
+   "s41off": [
+    "org.lwjgl.glfw.GLFW.glfwWaitEventsTimeout <- com.mojang.blaze3d.systems.RenderSystem.limitDisplayFPS <- net.minecraft.client.Minecraft.runTick"
+   ]
+  }
+ },
+ "static": {
+  "crash_class_sweep": {
+   "status": "PASS",
+   "jars": 488,
+   "same_as_1_0_39_mc1_21_1": true
+  },
+  "access_audit": {
+   "status": "PASS",
+   "jars": 489,
+   "same_as_1_0_39_mc1_21_1": true
+  }
+ },
+ "scope": "dedicated-server fixtures, the Embeddium-without-Iris and Iris-with-shaders client fixtures, and small title-screen and in-world clients for frame pacing; a singleplayer world runs the same server code"
+}

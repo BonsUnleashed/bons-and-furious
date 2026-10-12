@@ -1,3 +1,29 @@
+# 1.0.41+mc1.21.1 (2026-10-12)
+
+**PASS** for `bons_and_furious-neoforge-1.0.41+mc1.21.1.jar`, SHA-256
+`5e271402cca9eae0fa640e1a5a79fa6b8954da2f37e70ef072af787d23181a5f`.
+
+Built on the published 1.0.39+mc1.21.1 with what Forge 1.0.40 and 1.0.41 changed: `frame_pacing` queues its FPS
+limiter call for the display update, so no method of this mod is on the stack while the limiter waits (the game
+handles clicks and key presses during that wait), and `radium_experimental_tickets_spawning` ships off.
+`valkyrien_packets_server_thread` (Forge 1.0.40) is not ported: Valkyrien Skies has no 1.21.1 build. Evidence is in
+`../evidence/port-1.0.41/`.
+
+| Check | Result |
+| --- | --- |
+| Build | The unchanged 1.0.39+mc1.21.1 source rebuilds to the published JAR byte for byte; this JAR differs from it in 4 entries (the two frame pacing classes, the default properties and the version) and adds 1 class |
+| Static checks | Guards (Gradle build), name audit, crash-class check over 488 jars and access check over 489 jars: the same result as 1.0.39+mc1.21.1, no crash class |
+| Dedicated server, base game | Terrain of every dimension and every probed switch decision equal to 1.0.39+mc1.21.1, apart from the Radium switch, now off |
+| Dedicated server with Radium 0.13.1 | 1.0.39+mc1.21.1 switches Radium's experimental spawning on (14 of Radium's mixins); 1.0.41+mc1.21.1 leaves it off (none) and says so in one log line; with the key set to `true` it switches it on as before; the terrain is equal in all three |
+| Frame pacing, title screen | With 1.0.41+mc1.21.1, 39 of 40 key presses were handled during the limiter wait (a frame with no time left skips the wait) and none of the 40 had a method of this mod on its stack; with 1.0.39+mc1.21.1, 40 of 40 handled during the wait had one. The wait now runs under `RenderSystem.replayQueue`, `flipFrame` and `Window.updateDisplay`. One limiter call per frame and "T: 60" in both |
+| A key handler that throws during the wait | 1.0.39+mc1.21.1: the crash report's stack trace runs through our method `bonspure$beforeDisplay`; 1.0.41+mc1.21.1: no method of this mod in it (the report names the mod only in its list of installed mods) |
+| Frame timing | Title screen (menu cap 60, vsync off): 1.0.39+mc1.21.1 59.7-59.8 FPS, p99 17.6-17.7 ms; 1.0.41+mc1.21.1 59.6 FPS, p99 17.6-17.7 ms. In a world at a 120 FPS cap: 118.0-118.1 and 117.8-118.2 FPS, p99 9.5-9.7 and 9.6-9.8 ms |
+| Embeddium client without Iris or Sodium, 76 mods, shadow | World rendered; 1,704,070,326 shadow comparisons, 0 mismatches |
+| Iris and Sodium client with Complementary shaders, 78 mods, shadow | World rendered; 1,518,042,481 shadow comparisons, 0 mismatches |
+
+These are dedicated-server runs and client runs; a singleplayer world runs the same server code. The rest of this
+file is the qualification of 1.0.39+mc1.21.1 and earlier, which this build otherwise equals.
+
 # Hotfix 1.0.39+mc1.21.1 (2026-10-10)
 
 **PASS** for `bons_and_furious-neoforge-1.0.39+mc1.21.1.jar`, SHA-256

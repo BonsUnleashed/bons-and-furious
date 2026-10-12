@@ -1,11 +1,15 @@
 # Bons and Furious — Minecraft 1.21.1 / NeoForge
 
-This is the Minecraft 1.21.1 port of Bons and Furious 1.0.38. It uses mod ID `bons_and_furious`, version
-`1.0.39+mc1.21.1`, and requires Java 21 and NeoForge 21.1.252 or newer. Minecraft is restricted to exactly 1.21.1.
+This is the Minecraft 1.21.1 port of Bons and Furious 1.0.41. It uses mod ID `bons_and_furious`, version
+`1.0.41+mc1.21.1`, and requires Java 21 and NeoForge 21.1.252 or newer. Minecraft is restricted to exactly 1.21.1.
 The tested loader is 21.1.252; later loaders are not automatically qualified.
 
-It builds on the published 1.0.35+mc1.21.1 (SHA-256
-`9c846abbf874ee01a7df2500b13363737afa4faa81f1800c6f0ca23275ce481a`) and adds what 1.0.36 changed on Forge 1.20.1,
+It builds on the published 1.0.39+mc1.21.1 (SHA-256
+`0fdf2fb35e7791e1216fbb26605b12e0be0ccf1f9858f2950044189fbb1958ea`) and adds what Forge 1.0.40 and 1.0.41 changed, taken
+from the Forge 1.0.41 release (SHA-256 `6106736007d8ac7811d54e21f7182f7da846ec186c2b136e1504c8e989c42c46`), which
+includes 1.0.40. 1.0.39+mc1.21.1 was 1.0.38+mc1.21.1 with the one fix of the Forge 1.0.39 release. 1.0.38+mc1.21.1
+built on the published 1.0.35+mc1.21.1 (SHA-256
+`9c846abbf874ee01a7df2500b13363737afa4faa81f1800c6f0ca23275ce481a`) and added what 1.0.36 changed on Forge 1.20.1,
 taken from the Forge 1.0.36 release (SHA-256
 `96ec1b62d1c109cf6e24326ca4f1f50d4ee77d4ed715751bcad204ee17adf88c`), and the one change of the Forge 1.0.38 release
 (SHA-256 `4e78bd0684f99cdbda8cf060e52e00f1196eba07057610f44e677748d5c0cba6`), which has the same switches. The earlier
@@ -17,7 +21,7 @@ release.
 
 ## Install
 
-Put `bons_and_furious-neoforge-1.0.39+mc1.21.1.jar` in the `mods` folder of a Minecraft 1.21.1 NeoForge instance.
+Put `bons_and_furious-neoforge-1.0.41+mc1.21.1.jar` in the `mods` folder of a Minecraft 1.21.1 NeoForge instance.
 Optional target mods are not required; their patches only apply when the relevant targets and method fingerprints
 match. MixinSquared is bundled; NeoForge supplies MixinExtras.
 
@@ -28,8 +32,8 @@ dedicated servers, where client-only target mods should not be installed.
 ## Coverage and compatibility
 
 The port ships **205 controls**: 201 switches guarded by 1,726 method or class-shape checks, three legacy mixin
-controls and the Scorched function fix. Bons and Furious 1.0.38 has 306 controls in all; 55 are retired because the
-1.21.1 target changed or already does the work, and 46 depend on target mods with no 1.21.1 NeoForge build.
+controls and the Scorched function fix. Bons and Furious 1.0.41 has 307 controls in all; 55 are retired because the
+1.21.1 target changed or already does the work, and 47 depend on target mods with no 1.21.1 NeoForge build.
 [PORT-COVERAGE.md](PORT-COVERAGE.md) accounts for every one of them.
 
 Of the 121 switches that 1.0.28 to 1.0.30 added, 83 are ported, 28 are retired (most because the 1.21.1 build of the
@@ -41,7 +45,8 @@ payloads before that code, so there is nothing to copy. The one control that 1.0
 `distanthorizons_join_config_resend`, is ported, and so is the one that 1.0.35 added, `vanilla_mob_class_warmup`.
 Of the 51 that 1.0.36 added, 34 are ported, 13 are retired (their 1.21.1 target changed or was fixed upstream) and
 4 have no 1.21.1 target (Rats, Alex's Caves, Alex's Mobs and Timeless and Classics Zero have no NeoForge 1.21.1
-build by their authors).
+build by their authors). The one control that 1.0.40 added, `valkyrien_packets_server_thread`, has no 1.21.1 target
+either: Valkyrien Skies has no Minecraft 1.21.1 build. 1.0.37 to 1.0.39 and 1.0.41 added none.
 
 Nine crash fixes are included; the newest is described under 1.0.39+mc1.21.1 below, the two before it under 1.0.38+mc1.21.1. `oculus_entity_vertex_reuse` (Iris) runs at priority 999 so Accelerated Rendering's
 offset changes apply to it (1.0.27+mc1.21.1 crashes with Accelerated Rendering and Iris). `vanilla_model_bone_lookup`
@@ -108,6 +113,18 @@ New in 1.0.39+mc1.21.1, the same fix as Forge 1.0.39:
   is off (it turns itself off when another mod listens for chunk saves), 1.0.38+mc1.21.1 did not save those
   chunks: the log shows `Failed to save chunk` with `UnsupportedOperationException`, and NeoForge writes a report
   for each one, which made stopping the server slow. With Bye Pregen's own saver on, it was not affected.
+
+New in 1.0.41+mc1.21.1, from the Forge 1.0.40 and 1.0.41 releases:
+- `frame_pacing` queues its one FPS limiter call for the display update, which runs it just before the buffer swap,
+  instead of making the call from its own method. Minecraft handles mouse clicks and key presses while the limiter
+  waits, so a crash in a menu click or key press had a Bons and Furious method in its stack trace even when another
+  mod or a data pack caused it. Now no method of this mod is on that stack. The pacing itself is unchanged: one
+  limiter call per frame, before the swap.
+- `radium_experimental_tickets_spawning` is off by default, as in Forge 1.0.40. It switches on Radium's experimental
+  mob-cap count, which walks the entity sections lazily; on Forge 1.20.1 that walk crashed a server ("this.wrapped"
+  is null) when another mod moved players off the server thread. A config file written by an earlier version keeps
+  its value; set the key to `false` there to follow the new default.
+- `valkyrien_packets_server_thread`, new in Forge 1.0.40, is not ported (see above).
 
 The Oculus-prefixed switches target Iris. The tested Iris pairing is Iris 1.8.12 with Sodium 0.6.13. Embeddium 1.0.15
 is tested separately; do not combine Embeddium with Sodium/Iris. Embeddium owns model bone lookup when installed.

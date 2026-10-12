@@ -1,6 +1,6 @@
 # Minecraft 1.21.1 port coverage
 
-All 306 controls of Bons and Furious 1.0.38 (127 from 1.0.27, 179 added in 1.0.28 and later) are accounted for: 205 ported, 55 retired because the 1.21.1 target changed or was fixed upstream, 46 target mods unavailable for Minecraft 1.21.1 / NeoForge.
+All 307 controls of Bons and Furious 1.0.41 (127 from 1.0.27, 180 added in 1.0.28 and later) are accounted for: 205 ported, 55 retired because the 1.21.1 target changed or was fixed upstream, 47 target mods unavailable for Minecraft 1.21.1 / NeoForge.
 
 | Control | Added | Status | Explanation |
 | --- | --- | --- | --- |
@@ -120,7 +120,7 @@ All 306 controls of Bons and Furious 1.0.38 (127 from 1.0.27, 179 added in 1.0.2
 | `forge_status_ping_memo` | 1.0.29 | retired on 1.21.1 | NeoForge 21.1 has no ServerStatusPing; MinecraftServer.buildServerStatus builds vanilla's ServerStatus without a mod/channel list and NeoForge caches the JSON. |
 | `fowlplay_air_targets_loaded_only` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `fowlplay_flock_vectors` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
-| `frame_pacing` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
+| `frame_pacing` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. Since 1.0.41+mc1.21.1 (as Forge 1.0.41) the limiter call is queued for the display update, which runs it just before the buffer swap, so no method of this mod is on the stack while it waits. |
 | `fusion_chunk_layer_id` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `fusion_connection_lookups` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `geckolib_animation_hashes` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
@@ -194,7 +194,7 @@ All 306 controls of Bons and Furious 1.0.38 (127 from 1.0.27, 179 added in 1.0.2
 | `radium_c2me_chunk_access` | 1.0.27 or earlier | retired on 1.21.1 | Radium 0.13.1 has no applyC2MECompat blanket disable, and getChunkBlocking already calls holder.scheduleChunkGenerationTask; the old bypass repair and option override are unnecessary. |
 | `radium_c2me_player_chunk_tick` | 1.0.27 or earlier | retired on 1.21.1 | Radium 0.13.1 has neither the applyC2MECompat blanket disable nor the old world.player_chunk_tick mixin. |
 | `radium_entity_touchable_memo` | 1.0.29 | retired on 1.21.1 | Radium 0.13.1 (BlockStateFlags$5 -> ReflectionUtil.isBlockStateEntityTouchable) already caches the answer per block class; the per-state reflective walk is gone. |
-| `radium_experimental_tickets_spawning` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
+| `radium_experimental_tickets_spawning` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. Off by default since 1.0.41+mc1.21.1, as in Forge 1.0.40. |
 | `radium_hash_palette_copy` | 1.0.30 | ported | [FIX] Radium 0.13.1's hash palette copy() still uses new Reference2IntOpenHashMap(table) and loses the -1 default; idFor unchanged. |
 | `radium_part_entity_collisions` | 1.0.30 | ported | [FIX] Same shortcut and redirect site on Radium 0.13.1 (now also reached from appendEntityCollisions, guarded). Known gap: Radium 0.13.1's new intersection.EntityViewMixin sends EntityGetter.getEntityCollisions to a second copy that also drops part entities; covering it would be a new design. |
 | `radium_untrack_chunk_hooks` | 1.0.27 or earlier | retired on 1.21.1 | Radium 0.13.1 removed world.player_chunk_tick.ThreadedAnvilChunkStorageMixin; its cancelled Forge tracking hooks no longer exist. |
@@ -239,6 +239,7 @@ All 306 controls of Bons and Furious 1.0.38 (127 from 1.0.27, 179 added in 1.0.2
 | `valkyrien_entity_handlers` | 1.0.27 or earlier | target unavailable | No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source. |
 | `valkyrien_entity_ship_collision` | 1.0.27 or earlier | target unavailable | No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source. |
 | `valkyrien_entity_unloads` | 1.0.27 or earlier | target unavailable | No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source. |
+| `valkyrien_packets_server_thread` | 1.0.40 | target unavailable | No author-published Minecraft 1.21.1 NeoForge build of Valkyrien Skies (Modrinth/CurseForge query 2026-10-12: the newest, 2.4.11, is for Forge and Fabric 1.20.1); original patch retained in the 1.20.1 source. |
 | `valkyrien_render_interpolation` | 1.0.27 or earlier | target unavailable | No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source. |
 | `valkyrien_sculk_vibrations` | 1.0.27 or earlier | target unavailable | No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source. |
 | `valkyrien_ship_lookups` | 1.0.27 or earlier | target unavailable | No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source. |
