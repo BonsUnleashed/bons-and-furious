@@ -1,0 +1,3079 @@
+{
+  "group": "benssharks",
+  "keys": {
+    "benssharks_tick_listeners": {
+      "mod": "benssharks",
+      "scripts": [],
+      "since": "1.0.42",
+      "mixins": [
+        "bons.furious.mixin.benssharks.SharkBaseTickMixin",
+        "bons.furious.mixin.benssharks.GreaterAxodileTickMixin",
+        "bons.furious.mixin.benssharks.DolphinTickMixin",
+        "bons.furious.mixin.benssharks.LivingEffectAddedMixin",
+        "bons.furious.mixin.benssharks.BleedingEffectMixin",
+        "bons.furious.mixin.benssharks.LevelStateMixin",
+        "bons.furious.mixin.benssharks.ServerEntityCallbacksMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mcreator/sharks/init/EntityAnimationFactory",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "246903d872d4ba0e5511f75a66c4e623da55931f6dfbe6be831b92b375cc9066"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/AngelsharkEatProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "5814a228ff228542979583d075936fabaa12e9eeafe92dd33b941ed680c011aa"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/AxodileSlideStopperProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "214b722583757f64f24d2092aa4a3a45f7b6f5fecbf7cc27c16ee60ab7893b35"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BREACHProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "19d29691573c79dfcb3cf469c8228aa85a2951bfe24ba106c77840b777e62074"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "0568070ddf56d60cbad54bbee1d7e131183fdd40c390c061aa4d9f062da117ae"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatingProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "7dc57d03d6e1b8052c52c1b856e4efeb3e674a2be998af0ca2d57221e37af4bf"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaSprintProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "278cde0e4cc4723c56ff19a91c23b3b3d88343218fc2d4bdc718c459b5a81193"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BaskingSharkOnEntityTickUpdateProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "5717d021de72f1a5f0ad1f488292176ee442ef2671cc3b5da9d30fe5f17807c9"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BaskingSharkOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "0a72a910c50d3d76364549be87ca928cd24db5e611e1e1942183b043c0a0c69a"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BlacktipReefSharkOnEntityTickUpdateProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "5ca16e2b5ead989f5181ff8f857094e4f12b14a2c09b8450256331b028ffb545"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BleedingImmunityProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "3601b3fba5e11a8931f84a02c9051febd0f0365e112f3a90b522189371b856e1"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BlueSharkOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "a57b8e8e3c727605763452019c918883f32383b6ccbc27cd803697bf6d60b670"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BonnetheadSharkOnEntityTickUpdateProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "73a7282d55ba7b14c1ff4035e3ecfb37221286768e84de96bc6719479bdad679"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BonnetheadSharkOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "09d50e493b79110eea48d69f181f5acafcf2d82a5feec27db8b8bbd6ee29df9f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BullSharkOnEntityTickUpdateProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "bf07ca2ff549f030dcf60390c9ad94f71b237e29cfdadcf083e4eb998b9deddb"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BullSharkOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "554a4dd6b4d6409b948db1f157c50033d606535e55b687ced3743c9d99263043"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ChaseTargetProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "ee107181e7ee21aa8f213127bb2ffb3304a4269f98f2520681f92308372a7183"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/CookiecutterSharkOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "84f504a7df3e14591c4cc71e1a4bdd49051d1d91a4f312e4102ed488c2627ad8"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/DolphinEatSardineProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "02bce36a1f8769f556c1af4c59582fb7eb1f5a5b1ab1972bb641444ff11676af"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatDroppedItemProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "6d569335c22848563ef28159ecc5f51ffc8ceac090e22b8640c7a1520d55e660"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatDroppedItemsProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "b3dd8c83f4c558269dc78e12460d14074fb9549e4b003014d07a99f1d3b34f4a"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatKrillProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "c6011ae70dd4dafcbd7fd5df314d658ee71ff658145153b738375e5242c01102"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatingKrillProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "8ed7434a18b228a5a4d65ae2eb7d94deac82ae958b6e587c92d02097587fcf1b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EntitySprintDataSaveProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "ce7c505f46b316913a21ffc22b70c8c759f3c4d79345230cdbe0650f2539516f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EntityTextureVariationsProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "aaf6c98754fdb33facdb2a1b8789e47379687654c875bce2c3fe77b93cbb0cf2"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/FollowIfTamedProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "e683d620d563f432eacd0f077ed8365c41932dc18bd4e245e409f1b87a6b28ee"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GlobalFishFlopperProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "250b55a2dd4fd8053113bd4a92cc7ce4af145d9b6ba844bef47fcd7151dde3d8"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GlobalFrenzyFlopperProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "4206b21ff806afdae58e2874d284cd906e240fcac2771770228474aee5cb3a6a"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GlobalSharkFloppingProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "3e6e2e4d277de6398e6d2d396512d3d68d0994496c24972cfaa02a3ce9106156"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GoblinSharkOnEntityTickUpdateProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "d6d2b3ed5e91990229e6c2a3a05672e693be8346330688503346f172cab61d4b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreatWhiteSharkEatDroppedItemProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "1064b2be8729f855b0585fa006132273b66a9e9f43b20847f53f880f27202806"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreenlandSharkOnEntityTickUpdateProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "68721644dc9720e1fd25928a556e3cd8835169e9d1a518b76796524914a5878f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreenlandSharkOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "1f90e046b1e28fc99bd3e7c02fe168f74ac7c002898cbcbe868477cce934df66"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/IfWearingArmorProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "900745c32ce787c27ad771059bc519486a41b6e2fb29b747003dc7f68b219771"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/LandSharkOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "22840fcbb3d40ff125a27437f9a295f6bddb4aa37fba3a9ed79045642b9a2fa9"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/LemonSharkOnEntityTickUpdateProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "e19d12da0684c000e57ca85741a84dd498cad01adbbe31b23de4475a9b1c5917"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoBreachingProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "97cb0e4ddb6b5465386072f1363b269bf512d28e2746fbf5015822ac71dc08ac"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSharkOnEntityTickUpdateProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "6bf1e85d694000025a9a9995ecc8442b6eec354a72c9a36ee17b679bcd72fd71"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSharkOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "7b13fb94d4dd97983b396d624021873af4ed4fd004428675da61a17f3c3174ba"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSprintProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "19ae7babd515f5bd5b5258621ade3a14307789944960e07b3403cad60606a1a2"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MegalodonOnEntityTickUpdateProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "ba1c61c67e078ab393daa38a702fb34c89e8af703a42bbf3a3eb400eb73f7f7f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MegalodonOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "c322be1b815ecdbda79c0db7f5bb79f5e3c9dfb0872cfd0b188b7406f274f7a0"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MegamouthSharkOnEntityTickUpdateProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "e8ba99b57f49a5138dc08416461c19129d7bc0f8f6e9921e4b10ba67680e66ca"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MobDeathParticleProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "1e700420df3f368f8cfcb023a3e34e88bd4517ab096dd8e3a837f5ea65e49e19"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MovementRotationProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "df0b0662eb798e4b1805419941abc9a554fb3f2da1222d94b412180c28217cd2"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/RemoraOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "b1c1e6ae8633aff662119716c2027c1168042150f5c56ec4b06560d927a3dd7a"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/RightClickSpeedProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "419f71d2cdfd07deb800c0e26b49c01420820445afa36932714525f788b857f1"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "07b0c2acfa167bf2bcb9629c1edf8c19684767283101fcd1ba13f9a6f5f98c4f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SardineSprintProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "916863af5e42d0f10246b1dd39ce5f1af9e6e713e020047ecc00a63c066f5687"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SaturationProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "a36b8759d0c4494c8a3c461ff6823ed8d9e317a1d59d4b13c6deac838971defc"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeaLionEatDroppedItemProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "d41b59048748a35c7583a662dc7bfd5e0ba02b67457c3a1e2fca6bc2a142ae1f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeaLionEatDroppedItemsProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "503d5666bd45518e590acf4dc8174636c1513eeb7b1b2e8bece5a4a94de50f21"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SharkBleedProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "60cd499e2ada289f1606dec623e0394e777f7abf9bcaf679f671a77e6f0aba33"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ShrakOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "f3c94b770e764da7db702b4d35a494509bc0c00147333d9a6a4545fe6555197e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SittingSneakingSaveProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "ff3332600f3290c2069c6bdbd734c816bd15b402924c89334733b1c78059687f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/StopFloatingProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "937f1198c08251bf06cc90d02b348a524f2fe189c3d6b3acc744878181af673d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/StopRidingBoatProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "34cfc853bf58fa12e2f726b03ee9fa214dd74227468139316455a5f574111cfe"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/TigerSharkOnEntityTickUpdateProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "876bbce3c522bb92dd34b0753e8bd1de544646c022f9db94f95415deaf550b85"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/TigerSharkOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "f7dc1420575556ca117b633adebbf624c405e1e3eacbe4a9164c9b4cbf6b7b95"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/WhaleSharkOnEntityTickUpdateProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "9f3f439264d43c33cde72bfaa86acdd11f8ca9692ece5996ba1895b2811bb3f9"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/WhitetipSharkOnEntityTickUpdateProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "dc42ae2ccc31c0c11070b5ad7fe8ef996da64226843ba090ec327bd488cf099a"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/WhitetipSharkOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "sha256": "c34dd06b40dd7115db709823907315866256cfa041ed1b7baf4503999280ecb9"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeekingHandlerProcedure",
+          "method": "onWorldTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$LevelTickEvent;)V",
+          "sha256": "a2d6c2d951054b0edd1257c1a8c0d1668b77e5e0bf373c3912a29fa664f2e10e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurns2Procedure",
+          "method": "onLevelTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$LevelTickEvent;)V",
+          "sha256": "2f11f7ca1a1c6c103df8b509e66f5fd91cf36cbf3ae7a1aa84112772605ce0bc"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurns3Procedure",
+          "method": "onLevelTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$LevelTickEvent;)V",
+          "sha256": "1c49aed57ce5709cb034d851e3fe5a98fa5aeafa47b263a3b88357920813d013"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurns5Procedure",
+          "method": "onLevelTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$LevelTickEvent;)V",
+          "sha256": "54430b05bde3a0cc809a3a7847ade1984820cbfa1076272dcaaddc8bb8d9f761"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurns6Procedure",
+          "method": "onLevelTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$LevelTickEvent;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurnsProcedure",
+          "method": "onLevelTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$LevelTickEvent;)V",
+          "sha256": "79dfe6b0e7f36326709e0ae76dd88d9a4af0801da7e1b43fd1cdad679032a74e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GlobalFishFlopperProcedure",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "fills the registry-id list the dispatch reads",
+          "sha256": "debb73e6cb6413c93049fa294bf1cd7ef4b4746aa9e6bf9c8af9b997d1d711b1"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GlobalFrenzyFlopperProcedure",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "fills the registry-id list the dispatch reads",
+          "sha256": "fe37b149b77d8e3a2a1f5a59f627fa8566a49cce05d4843341e736dc6703db4b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GlobalSharkFloppingProcedure",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "fills the registry-id list the dispatch reads",
+          "sha256": "013a8bd96e43549280e86ca31541cbede43456617974f91cf2e258f2a10b7762"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurnsProcedure",
+          "method": "applySmoothMotion",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "called from the tracked set",
+          "sha256": "29db9122342e6c65c85e593b0282986ff08f582eb335c2cd6af8c5db9547b944"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurns2Procedure",
+          "method": "applySmoothMotion",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "called from the tracked set",
+          "sha256": "19068a7128918db801c0de34bb58f96e3d60689574ee5797438236c4b8eded94"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurns3Procedure",
+          "method": "applyAxodileMotion",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "called from the tracked set",
+          "sha256": "5d1002178e2f19b2e87f28bda9a661a48d69d4910a37d78e29ade8dcf1afeaae"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurns5Procedure",
+          "method": "applySmoothTurning",
+          "desc": "(Lnet/mcreator/sharks/entity/GreaterAxodileEntity;)V",
+          "note": "called from the tracked set",
+          "sha256": "f611b84cde6da1b96f498287d8acba183135a2ea4af696fc12aa42e9d04facb0"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeekingHandlerProcedure",
+          "method": "tickTrident",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/projectile/ThrownTrident;)V",
+          "note": "called from the tracked set",
+          "sha256": "f4d0727036eaf04fbc41953f6eb93f6ff789f9c23aa9220ee94a1a7e7bbb0b7e"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/AngelsharkEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "ad00f98832b8366072b60ede0292fd036785a77391674e66e95a259276777751"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/AxodileEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "07880409186def1bb78553124f3339ae9f0bc488b968093356e2dac6533eb6a0"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/BarracudaEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "2d20892e2b0bf1e35ac2058e428e7b4c96da2b63218dbf7c7b08c992d677a94f"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/BaskingSharkEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "62b403ae354f94dc7a60d28748be35f5e748277b7b6aa466a45cd14c37ec6013"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/BlacktipReefSharkEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "94f58b5c6757aa706075f5fc7fbbc5fa50df2bbdc66d4466043a19af57e3ad5c"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/BlueSharkEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "76dc283b59539309af74cdbb9e0cdbf0662c4985674630f2764ad1c52f0ed34c"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/BonnetheadSharkEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "0b042988a6d57dd85c13ce7dfa889adbf928177374739d4320891ec30a787bbd"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/BullSharkEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "4da8f2749ca68300c95ff0af2a8df6ca683da050ae049fe4f76ae1e7eccc1290"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/CookiecutterSharkEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "504ec9bd15135eb27ccc0aa210c646c6b11faf50fe284b1b2fa14a0013cbcde3"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/GoblinSharkEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "53c0d43a7f47bcd78bd917241e7018061e513ccc3edc070036af0def45993a37"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/GreenlandSharkEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "90e9bc60dd4f8c7b69f09f662668d6fef70c764dfc659b948a8a8d2eeabc3486"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/KrillEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "fac56cc7ddec2fde8005d7f72a91a007e718a1f1e2b5ff229ed84925d59c7641"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/LandSharkEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "6cf57de932b5b1781c91283b2008a01cba3e856c9b485dded2bcab40b9b7a57d"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/LemonSharkEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "9fd9631122994eba03311d3d4e5f73ca530087818627a0a181b9b6616c94bc4a"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/LeopardSharkEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "668e235da0b7a625703ab27fa036504e5aa223428630896d1f61d2be9a346a6a"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/MakoSharkEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "a46c48f3fcccc4dd537ec395a781acf66d20aa36015dbabdb5efffe701bac52a"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/MegalodonEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "e226f95626b9f87b357462d5c37a625cf0b1b73ac0233b9a3d6a40a4ddd59db8"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/MegamouthSharkEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "dae3e9d4cf50049a445a145bedf22a39bbc6e174e9c5950ae25117fdc8bf8d3a"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/NurseSharkEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "cc9c54f4c95a263825040b3c0e1e7eaa3e419739b862d40dc59f90cfe398ab04"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/PilotFishEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "aeb2784bab48df0920f247e0a6c8dcf8bbbf34f2a9614d8cbb2bb79de32dfdf3"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/RemoraEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "ff21438e8f2ceebf479a7892742c34ff15fa9ff29f619bcd3e4888c307bb1e12"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/SardineEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "fb81eeaffe8b2d6e3ba29dbe1a8fcac476ead1815d7631afca657343ffe08c1f"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/SawsharkEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "ae46ea60a658f0ffe1c76d2a0e3b4226667f07b708721c67c83f4fceb7dfa204"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/SeaLionEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "cc078469eb4a1d1ced28f4ccdc11d82dde75f3ba856e338c58240601be3c8ccb"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/SharkMinionEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "ac2fc8d2dbdaa2731d1ea477ee5a6bb7841f8bc1a5d4558ae070bea3a0219b27"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/ShoalEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "7df9fc6e2edb19f19e64fd1e655cc3e37fc21e80203b04d88d0ae0b251288ab8"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/ShrakEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "78801860344b2a9eb7d1a823fa9dc63a631876511f9f9cead4e4b7fb098ae22b"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/ThalassogerEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "4b6dc9d6d8fa5c3a41ace1f83ffa5efd30a047c1bef64d91acbc00683496d3d5"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/ThresherSharkEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "28b6609887faa6d78ac5a42fe021ac5fc9afb609c9ef6754a35f0afc88337861"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/TigerSharkEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "a69b9db9ec46f185f864447943135fa328e53abd27c7f3165443343240479526"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/WhaleSharkEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "e7e033a24850120c1508c36ac52ea0c2ddda39e6f02d151a7779a1f6adafd00d"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/WhitetipSharkEntity",
+          "method": "m_6075_",
+          "desc": "()V",
+          "note": "baseTick: HEAD hook",
+          "sha256": "ac0f95a4220c052a07d99864f6d596b4cb79aed8ea3d0b1bff848d27e1749f22"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/GreaterAxodileEntity",
+          "method": "m_8119_",
+          "desc": "()V",
+          "note": "tick: HEAD hook",
+          "sha256": "ccb9b6ed22d92dc3aa01cb96278b40c309aae191eb1739fbb9a53653a6f95470"
+        },
+        {
+          "class": "net/mcreator/sharks/potion/BleedingMobEffect",
+          "method": "m_6742_",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;I)V",
+          "note": "applyEffectTick: HEAD hook",
+          "sha256": "a2eb2fef4afdb6647cdc2b1eabdff1fe8da92fed81c4334716abbad6cac33cc3"
+        },
+        {
+          "class": "net/mcreator/sharks/init/BenssharksModMobEffects",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "BLEEDING",
+          "sha256": "9ac23566a6760a0ff7a37365363db6aa67764e511f40a8e13c71250290e9f6fc"
+        },
+        {
+          "class": "net/minecraft/world/entity/animal/Dolphin",
+          "method": "m_8119_",
+          "desc": "()V",
+          "note": "tick: HEAD hook (DolphinEatSardine)",
+          "sha256": "0eb53e0549a6e8c5bcf331c1ee5faf96f27759568b62d9444cdcf369db04aaa7"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_142540_",
+          "desc": "(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "onEffectAdded: TAIL hook",
+          "sha256": "97eaa9bb2af6c16ffb35f45eec474b19f414b180a6038c3aada6c03a6b0bb7de"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel$EntityCallbacks",
+          "method": "m_141985_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "onTrackingStart: TAIL hook",
+          "sha256": "c595ca5143592d34d61d2e76a7cd6f8be1aadc2f0b118de9b913d396440e194c"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel$EntityCallbacks",
+          "method": "m_141981_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "onTrackingEnd: HEAD hook",
+          "sha256": "23408d97f21a037c2c6a1545a5bc43e5e259546308bf0c18495a8eb5b39d8c4f"
+        },
+        {
+          "class": "net/mcreator/sharks/init/BenssharksModEntities",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "the entity set: the per-entity hooks and the all-Ben's-entities handler assume exactly these",
+          "sha256": "f8227e3c732263605f1c6ca67d4e4005580d46e60a99f564c0f4f9c502124c29"
+        },
+        {
+          "class": "net/mcreator/sharks/init/EntityAnimationFactory",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "bd3388811a3d401eb23f299d2fa1908acdebd6f1d4121f1e99063359a469a7cb"
+        },
+        {
+          "class": "net/mcreator/sharks/init/EntityAnimationFactory",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/AngelsharkEatProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f6fab4d307210b1a264cf8d85a6e54b77899f7fc5886de3aae7e30206cdc1c44"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/AngelsharkEatProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/AngelsharkEatProcedure",
+          "method": "isValidShark",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "1a0758f5438fd9d2d584ae78b42ea7b241db57c7fc98960571153dd1d2dd5e96"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/AngelsharkEatProcedure",
+          "method": "isFood",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "c032a0a4e8038c93cba5fa79ef00ed19a411f2643488a3040cd80da4cbdc93be"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/AngelsharkEatProcedure",
+          "method": "onEntityInteract",
+          "desc": "(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V",
+          "sha256": "fa196c53d14e003b7a7ea464a31ccdced8f55a0235082219c03d8a6a8c855442"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/AngelsharkEatProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "783d5ef0c411e3a4a06f67217295167cde171c813b8c5cf119d21d49137356aa"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/AngelsharkEatProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "fae05172e19daa511f7c44b2da724a1dc0fd886e2b52b0e591d5f9495a5331be"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/AngelsharkEatProcedure",
+          "method": "onTargetSet",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingChangeTargetEvent;)V",
+          "sha256": "01e78361031f67416f1fe67f714a3ac45659bf1c9867e246d235cdfa2282260d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/AngelsharkEatProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(DDDLnet/minecraft/world/entity/item/ItemEntity;)D",
+          "sha256": "2ce37eafe3abf6c2ddcb955eb8a33b82eaedc766c39e47609b26b165ed2e8f8f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/AngelsharkEatProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/AxodileSlideStopperProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/AxodileSlideStopperProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/AxodileSlideStopperProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "1dd973e569a55b8b121ca33f1034de2254f78b13341f58b728ad96e0f704ad4d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/AxodileSlideStopperProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BREACHProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BREACHProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BREACHProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "a776ccade03e012eca7ec31045642a47264cc858898d2d01e927ed21e728ca2c"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BREACHProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "713ddabf3f19c2076563c6dfc7fe0672bb98aab026f01fb39ea69551059df5c3"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatingProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "aa054785b03e977807a1f88c34056e58c3e1433ac13a7c1d86a212bcddb7881e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatingProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatingProcedure",
+          "method": "isValidBarracuda",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "e95ec15c4202f20eed667b444a80ab94f3d458950b25bb0d3f991e59ed48ec6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatingProcedure",
+          "method": "isFriend",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "693a326f6b33a37017842a3786199e30344236778a79bae5f9b5773df0c58e84"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatingProcedure",
+          "method": "onTargetSet",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingChangeTargetEvent;)V",
+          "sha256": "e499f23300f52c38a8c5d5cbfed5082ca4e4aa6331240ce59fcfc76b610ba31b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatingProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "39d355ed87f606d3956a4f34dd29c1bebd03fcf7a1ad8db21d7110bd85d7c192"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatingProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "5f31d9ee34bbf0fc620858eaa4e4e7c6b00b7c5f89ac8b53225f1d8dd3603db3"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatingProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaSprintProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "0ce2259c848cbb23d70514feaea4012c183c694bebab649b1e266cc950737f81"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaSprintProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaSprintProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "93abd520bb3b7ba0d6e9a2eee3c105f4e45b3129dc8a9fc0e65dc300472ff415"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaSprintProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "b38f40ff7f844e50329f2a953f195f63ed4f54c9c0527ffff488b766ebd4e036"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaSprintProcedure",
+          "method": "lambda$execute$13",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "373111f334ef3dd1491768faf591219d8528c1800af30e63fcbdb348d80a04fc"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaSprintProcedure",
+          "method": "lambda$execute$12",
+          "desc": "(Lnet/mcreator/sharks/entity/ThresherSharkEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaSprintProcedure",
+          "method": "lambda$execute$11",
+          "desc": "(Lnet/mcreator/sharks/entity/SeaLionEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaSprintProcedure",
+          "method": "lambda$execute$10",
+          "desc": "(Lnet/mcreator/sharks/entity/BlueSharkEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaSprintProcedure",
+          "method": "lambda$execute$9",
+          "desc": "(Lnet/mcreator/sharks/entity/ShrakEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaSprintProcedure",
+          "method": "lambda$execute$8",
+          "desc": "(Lnet/mcreator/sharks/entity/LemonSharkEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaSprintProcedure",
+          "method": "lambda$execute$7",
+          "desc": "(Lnet/mcreator/sharks/entity/GreaterAxodileEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaSprintProcedure",
+          "method": "lambda$execute$6",
+          "desc": "(Lnet/mcreator/sharks/entity/WhitetipSharkEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaSprintProcedure",
+          "method": "lambda$execute$5",
+          "desc": "(Lnet/mcreator/sharks/entity/AxodileEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaSprintProcedure",
+          "method": "lambda$execute$4",
+          "desc": "(Lnet/mcreator/sharks/entity/BullSharkEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaSprintProcedure",
+          "method": "lambda$execute$3",
+          "desc": "(Lnet/mcreator/sharks/entity/TigerSharkEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaSprintProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(Lnet/mcreator/sharks/entity/MakoSharkEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaSprintProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "373111f334ef3dd1491768faf591219d8528c1800af30e63fcbdb348d80a04fc"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaSprintProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BaskingSharkOnEntityTickUpdateProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "6cc58c317374044098b88b7cd8648f2e4beaa70b8138f3f86cab87db648afacf"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BaskingSharkOnEntityTickUpdateProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BaskingSharkOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "7d3b598a222357f2f1ded04aa95c7b55c9ee568b68c105880c042d55f73fb5d8"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BaskingSharkOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BaskingSharkOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BaskingSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "345d4a79ad37ddc9d6eadf485e21a1f6b8efc98dff7b16534e559cbd455779c7"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BaskingSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BlacktipReefSharkOnEntityTickUpdateProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "6cc58c317374044098b88b7cd8648f2e4beaa70b8138f3f86cab87db648afacf"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BlacktipReefSharkOnEntityTickUpdateProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BlacktipReefSharkOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "0ea3fe04cd24fee2b1087a5ed47ef06f31b9079ba25847325e30c2539b584238"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BleedingImmunityProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "547fd5223898311b216ed05d22e08e79f704a7a4f5895ad7fe058c6f0058a089"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BleedingImmunityProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BleedingImmunityProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "99209ca2940f07db6fd871367abbdc13974f264637b1420a08d4e6371263215f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BleedingImmunityProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "33828a8f414dbb9130f58a9b63c9183826b945bf35e6f711218c0c8e115a29fc"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BlueSharkOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BlueSharkOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BlueSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "9b777b27b8378652050cc32720a03777b19a9dbfb6d118792cc922988cb26c5d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BlueSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BonnetheadSharkOnEntityTickUpdateProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "a8bf5f6d5e0a4b634922bc93b45d6298f13a7ab6995648d47bdd3a694534e629"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BonnetheadSharkOnEntityTickUpdateProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BonnetheadSharkOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "5618b4cce15a1cd047a84035ff98442548a886e174041a7414fdba3fcd36cbcd"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BonnetheadSharkOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BonnetheadSharkOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BonnetheadSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "3c37db8774de13661aca77fa6bcb4a302ece641ee83c59995dd701d133ea6e34"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BonnetheadSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BullSharkOnEntityTickUpdateProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "6cc58c317374044098b88b7cd8648f2e4beaa70b8138f3f86cab87db648afacf"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BullSharkOnEntityTickUpdateProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BullSharkOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "a00cefaf14f062d3af10577cc7a5cd1eb395812e18e6f9d3a3e9daf8559cf42f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BullSharkOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BullSharkOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BullSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "282371c449259f075a4183effb5a4aca1771e7e0079273315965377000c3e366"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BullSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ChaseTargetProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ChaseTargetProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ChaseTargetProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "7f86454fa90aa04b68037f1552b0c0cd44308580b204b741b176d22985c86aef"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ChaseTargetProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/CookiecutterSharkOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/CookiecutterSharkOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/CookiecutterSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "43cf33c9b45ba38a4f4951dc5b119362adef8cf40bdff56f038f4bcaae46f2fb"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/CookiecutterSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/DolphinEatSardineProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f7069d6c6ce40c018c8b4f105556ceedd6952899608d4f8795d845e331ce72c1"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/DolphinEatSardineProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/DolphinEatSardineProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "4c67d441d3f91412ee7133af9c0683436fd38b9e9352c099063935f20c5fe655"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/DolphinEatSardineProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "d1f03ec2e88651d7909959500f1c9f4062eee54ecdf3a81a4367ff8a82299b1a"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/DolphinEatSardineProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/item/ItemEntity;)D",
+          "sha256": "03b2276d63dca6cffb1069d2dc16d134bb245e7d760009a0bb90ed657335018b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/DolphinEatSardineProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "a23440d4ba5436853b140bb752ce0a4edc66957509ff0caf195ba51ef8158eed"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatDroppedItemProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatDroppedItemProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatDroppedItemProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "c23b6356c540437f22a0fe32aa8af40c40148effab50fefc0b05604af9b81091"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatDroppedItemProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatDroppedItemsProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f6fab4d307210b1a264cf8d85a6e54b77899f7fc5886de3aae7e30206cdc1c44"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatDroppedItemsProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatDroppedItemsProcedure",
+          "method": "isValidShark",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "5a99b7336f6f363d700b52c720f0e243a097fd8d1e042ba373d377c71a9efc8a"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatDroppedItemsProcedure",
+          "method": "isFood",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "c032a0a4e8038c93cba5fa79ef00ed19a411f2643488a3040cd80da4cbdc93be"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatDroppedItemsProcedure",
+          "method": "onEntityInteract",
+          "desc": "(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V",
+          "sha256": "125a2d3f012c6dddba027a95034bd60e9aaa0bb4bfc62ec9e6227ff2571aac63"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatDroppedItemsProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "dc5719e8d6eadcf0123c1c676e1ca261e2e872cae7ab99b024be69a62e3071c7"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatDroppedItemsProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "e9b221a9749429cb803b1de117a48d190d4b31144cb50b0361b294bfd6b2295e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatDroppedItemsProcedure",
+          "method": "onTargetSet",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingChangeTargetEvent;)V",
+          "sha256": "4e9306ba8752992eca6e4652e41b5dcda09616beaad6269d384a7880b33aa8eb"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatDroppedItemsProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(DDDLnet/minecraft/world/entity/item/ItemEntity;)D",
+          "sha256": "2ce37eafe3abf6c2ddcb955eb8a33b82eaedc766c39e47609b26b165ed2e8f8f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatDroppedItemsProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatKrillProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatKrillProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatKrillProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "9a95f7649d9a083e3ed316644088c1c4d419dcc181ca303b46df4fc4386384d7"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatKrillProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatingKrillProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "7d9518a2eee3478b26aac5059c362554e9c21bf2e5eeee9f6f9e5071f81f4c2d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatingKrillProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatingKrillProcedure",
+          "method": "isValidShark",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "e0f82c9114b997bbf4c2b1fb2c4906dc186b7ee8806cf6d781f0756364bb76f4"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatingKrillProcedure",
+          "method": "onEntityInteract",
+          "desc": "(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$EntityInteract;)V",
+          "sha256": "4550f729b2621c55424507026b89397c595acd642142e45da5dc0affa0c62ca4"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatingKrillProcedure",
+          "method": "isKrillBucket",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "sha256": "79164b6807a8c363fecd2a279ae70a7a9eb62681c75b7ab047346c258fa7e3f8"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatingKrillProcedure",
+          "method": "onTargetSet",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingChangeTargetEvent;)V",
+          "sha256": "31c4c00398806da5327e7442d487a846370d650aeea0c91b8bf26b5ab84c88f2"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatingKrillProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "f32119141381ffbb74ffe47ff18f07b810c0ca144e5c1d04d27a2a1b5c9db4f7"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatingKrillProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "c3013c11d635ea0da1116cc1a92f574d0104c0588ffe93a3c1f6c43fab9b8279"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatingKrillProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/mcreator/sharks/entity/KrillEntity;)Z",
+          "sha256": "46c82afd0d4ff6bb566684c68e4de60ddde1c41e26a63940f4661b7b4cc7fc2e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EatingKrillProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "386bc9ec9f50193b252812e4c2f1917f60f2454e293ec132ff1789807ed8a090"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EntitySprintDataSaveProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EntitySprintDataSaveProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EntitySprintDataSaveProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "52266d939440d27d06425145fc577599074364dddc3c5cbe62f68a45d0b3064b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EntitySprintDataSaveProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EntityTextureVariationsProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "547fd5223898311b216ed05d22e08e79f704a7a4f5895ad7fe058c6f0058a089"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EntityTextureVariationsProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EntityTextureVariationsProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "a8da572de360fd0f247b1431ede2ca5ce9b4a5c85bfd28175af0c971c84997c2"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/EntityTextureVariationsProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "3a9f114d647730a7f9e8229ecda7c72b96ed35c98a7f74305f8d52aad328348e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/FollowIfTamedProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/FollowIfTamedProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/FollowIfTamedProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "80787f55280a012b0490cd50f9ced07a5906be164e4d34c7f6e9779d56ccefc4"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/FollowIfTamedProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GlobalFishFlopperProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "6469285bd805b3c0aab189775082ce5051331bec1c1a5e7ad93ccdda98b82138"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GlobalFishFlopperProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GlobalFrenzyFlopperProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "6469285bd805b3c0aab189775082ce5051331bec1c1a5e7ad93ccdda98b82138"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GlobalFrenzyFlopperProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GlobalSharkFloppingProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "6469285bd805b3c0aab189775082ce5051331bec1c1a5e7ad93ccdda98b82138"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GlobalSharkFloppingProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GoblinSharkOnEntityTickUpdateProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "6cc58c317374044098b88b7cd8648f2e4beaa70b8138f3f86cab87db648afacf"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GoblinSharkOnEntityTickUpdateProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GoblinSharkOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "4c5e4c71c4d293559ea67a7e058e3c67f1053a4235889c16a1c683a592afb3ea"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreatWhiteSharkEatDroppedItemProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreatWhiteSharkEatDroppedItemProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreatWhiteSharkEatDroppedItemProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "0249de128dec8e44643bebd65db49bfa7bdddf6cb947ddc427c437a6926817ed"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreatWhiteSharkEatDroppedItemProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreenlandSharkOnEntityTickUpdateProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "6cc58c317374044098b88b7cd8648f2e4beaa70b8138f3f86cab87db648afacf"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreenlandSharkOnEntityTickUpdateProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreenlandSharkOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "f608f77722e132731ad35c8dd814201c62205df37c2241cd97cebddd85417c1f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreenlandSharkOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreenlandSharkOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreenlandSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "d39f5332efe3abf34d2c983bfb4d3dae27fc22748c0201ed5350084ef64d8a95"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreenlandSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/IfWearingArmorProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "c69004728b18129de55fb79a84cae85e3b8c218b208321e793f18b7eea7606d6"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/IfWearingArmorProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/IfWearingArmorProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "986cfda9f0ded49341ca7a481f5f6561ef0af481cd67d775d070f731f4eea6f5"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/IfWearingArmorProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "42960a57f1cfc7ce6a9e33b2c97e4de05ceea8b5cc6310a518e50440f657f65a"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/IfWearingArmorProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/Entity;)D",
+          "sha256": "e7ea582e9c42f9ea4e019bc4765c513411593c409ed9abc7534b4d4e80ee3788"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/IfWearingArmorProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/LandSharkOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/LandSharkOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/LandSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "28364bf67f1a8d55e9edd83fb3570f415827d3139eeb05f87a12475a57df7547"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/LandSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "01e97f91eeb78be3601b7c52ae321d38ca752437e490255608c05663ab5731c7"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/LemonSharkOnEntityTickUpdateProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "6cc58c317374044098b88b7cd8648f2e4beaa70b8138f3f86cab87db648afacf"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/LemonSharkOnEntityTickUpdateProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/LemonSharkOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "e8855cedc007f250baed90a130eaaa16a58f0be93d53f910ae5f95ab753ac729"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoBreachingProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "77041fa162221a5b9956edb6ead77dc1ffe1a447a8ed12b12b26c4cd01d3d509"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoBreachingProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoBreachingProcedure",
+          "method": "executeBreachLogic",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "9c414d4881904d5c0dd7c19b4022ca128d437c54026491d0feed3062453139c4"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSharkOnEntityTickUpdateProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "6cc58c317374044098b88b7cd8648f2e4beaa70b8138f3f86cab87db648afacf"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSharkOnEntityTickUpdateProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSharkOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "797a5cb42a9a7f79b438a158156c12dd866b9071bc4f2c3c9557426855bd6d13"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSharkOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSharkOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "5405a67b460069b81d9bbc4670c67c241bb934a77d10bba5b2430ff484ecd2ab"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSprintProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSprintProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSprintProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "b800b66b3a3af9719789aa0177d808026e0e047f6c107f09fc8ebed8c0416fae"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSprintProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MegalodonOnEntityTickUpdateProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "6cc58c317374044098b88b7cd8648f2e4beaa70b8138f3f86cab87db648afacf"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MegalodonOnEntityTickUpdateProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MegalodonOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "1d4a64911f399b0d8caaec009637d4c9415f25a90526ff85c3e364e04cf73a60"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MegalodonOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MegalodonOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MegalodonOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "dea6d84d6a33c050efc57410a162e7554fb62855f227fe0a9d2b2364e5dd258f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MegalodonOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MegamouthSharkOnEntityTickUpdateProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "6cc58c317374044098b88b7cd8648f2e4beaa70b8138f3f86cab87db648afacf"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MegamouthSharkOnEntityTickUpdateProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MegamouthSharkOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "a07c1c4767e2afb04b97380c5ccc2bc16c8bc4652436cd90bff187c185e6d33e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MobDeathParticleProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "2a8382de2bd49b868738427e661af4e1db5c01b53316986172abc22000ab688a"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MobDeathParticleProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MobDeathParticleProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "sha256": "2e320e2891fcb276329cbbffcd78168b0c70f06e1e1ad238ea61360a218891a4"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MovementRotationProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MovementRotationProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MovementRotationProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "6b58c2c870223f1295e52cde9f37cea7d3fd4d7793f428f627f7f791f850f9cd"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MovementRotationProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/RemoraOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/RemoraOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/RemoraOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "f2c810c54511c8a9e127110e66dcac88f38336f7904856a4bd74ff82ec155dea"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/RemoraOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/RightClickSpeedProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "547fd5223898311b216ed05d22e08e79f704a7a4f5895ad7fe058c6f0058a089"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/RightClickSpeedProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/RightClickSpeedProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "694859141cd12df452ff916aac844468cf7f5150d49a526fb385fed432d5cda6"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/RightClickSpeedProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "13d80ef40ccbffd1657d56a96581b92034495bc798bf611aa932d120bb73ceb5"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "20152650f12518bfb1a8978bbee5fd5534f32628fb5e7a2850644363e05ec24f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "1040923935522b329c1072b2ff9d41c588e5cabc38abc9565e2d9070e31d6f00"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "2891fd2cf99ebbd9a7e41487b1f5841723b2593aaf828a54063802aae8449443"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$20",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$19",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$18",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$17",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$16",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$15",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$14",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$13",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$12",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$11",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$10",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$9",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$8",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$7",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$6",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$5",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$4",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$3",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SHARKMINIONEATDROPPEDITEMProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SardineSprintProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "bf3330be603574318e5eb062f26da66f49cc41db245e5c1a1c520b622dfe1184"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SardineSprintProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SardineSprintProcedure",
+          "method": "execute",
+          "desc": "(Ljava/lang/Object;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SaturationProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SaturationProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SaturationProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "2c945a95ddeab1cfa5fd3b2b4a26b3da9f8a40dc6717936845ed77c89ef67850"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SaturationProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeaLionEatDroppedItemProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeaLionEatDroppedItemProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeaLionEatDroppedItemProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "93c25ec31e9a0ca1eed1b3db0c39c6e0aede9adcbec629e321bdb4c7e57cf278"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeaLionEatDroppedItemProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeaLionEatDroppedItemsProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "ba7904556483f37a33514f4ce499ff30988ef208ce0daa05c176cc47df8b0d4e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeaLionEatDroppedItemsProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeaLionEatDroppedItemsProcedure",
+          "method": "isSeaLionFood",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "sha256": "ede6df8a86a3b6880e5e0a5ce27c9b46e308a7e31c75f7a5e4c22738d6239678"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeaLionEatDroppedItemsProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "2b73252c636e0e3e5d7fd1dfd3c756cf25579b2f1cb4cab569617b27b7499546"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeaLionEatDroppedItemsProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "204a054665fea7287888a7d34c265c645b7fc814b6ab8867cdc98aedffaf9aab"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeaLionEatDroppedItemsProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/mcreator/sharks/entity/SeaLionEntity;)Z",
+          "sha256": "3f62ad43108a58d95de206d7ae01777aa20e9e5a4a0076e3091d2db5464023ce"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeaLionEatDroppedItemsProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeekingHandlerProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "343da07f95e5c4bd98f942e203599d9e80797db704bda480c68ffaf84d4ab9af"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeekingHandlerProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeekingHandlerProcedure",
+          "method": "initDealtDamageField",
+          "desc": "()V",
+          "sha256": "1aa67155083fdbf602fe32dbac916e02a6776cc8bb93076c7798ba9be1e13b5b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeekingHandlerProcedure",
+          "method": "setDealtDamage",
+          "desc": "(Lnet/minecraft/world/entity/projectile/ThrownTrident;Z)V",
+          "sha256": "e199b05f484892a3be13b95d653757045517247b536c61b7f71b27fcfe4ed6fa"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeekingHandlerProcedure",
+          "method": "getDealtDamage",
+          "desc": "(Lnet/minecraft/world/entity/projectile/ThrownTrident;)Z",
+          "sha256": "b4409dddb92c633e5778184f60e75ae13a628552dec545bc0f4dd5f4f15b0a43"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeekingHandlerProcedure",
+          "method": "onProjectileHit",
+          "desc": "(Lnet/minecraftforge/event/entity/ProjectileImpactEvent;)V",
+          "sha256": "09a36b40ea82a60beed68168b25b789e73622936881f3adc6076d155a9b1dcd1"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeekingHandlerProcedure",
+          "method": "spawnLightning",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/projectile/ThrownTrident;Lnet/minecraft/world/item/ItemStack;)V",
+          "sha256": "c98ad03cd76d79d580479f125599118863c1670240e1a796f87bcf57ebd22bff"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeekingHandlerProcedure",
+          "method": "scanForNextTarget",
+          "desc": "(Lnet/minecraft/world/entity/projectile/ThrownTrident;I)Lnet/minecraft/world/entity/LivingEntity;",
+          "sha256": "1e7fd777edfc5745bf144b89d060e138aebe287589eb009ff1c310eb7baf2b9d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeekingHandlerProcedure",
+          "method": "forceDeactivate",
+          "desc": "(Lnet/minecraft/world/entity/projectile/ThrownTrident;)V",
+          "sha256": "60f37c25ff6025568556e3b7ef1f7648f87611b3682acf6653da27e4ed57a811"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeekingHandlerProcedure",
+          "method": "getIgnoredIds",
+          "desc": "(Lnet/minecraft/world/entity/projectile/ThrownTrident;)Ljava/util/List;",
+          "sha256": "fe0ae4f61c3eb043f464d1a172f42799280ba00a13632ba1a032d6528b0c576f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeekingHandlerProcedure",
+          "method": "addToIgnoreList",
+          "desc": "(Lnet/minecraft/world/entity/projectile/ThrownTrident;I)V",
+          "sha256": "65268860a3631d00997bde5406168710768ab678ddc7501ccf86450d61969656"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeekingHandlerProcedure",
+          "method": "lambda$scanForNextTarget$1",
+          "desc": "(Lnet/minecraft/world/entity/projectile/ThrownTrident;Lnet/minecraft/world/entity/LivingEntity;)D",
+          "sha256": "5697d490ffc238c125d8e092d6aee1a75d3dafbcf93ec3497907b75ef0464f9d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SeekingHandlerProcedure",
+          "method": "lambda$scanForNextTarget$0",
+          "desc": "(Lnet/minecraft/world/entity/projectile/ThrownTrident;Ljava/util/List;Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "sha256": "0baf970c8628517a16dcd5037b8303abe5baec3c34a6c408a337b64678e87c91"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SharkBleedProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "1b33e70f7429b51162df5f88d7e4098e423a56e83463c4a5bc4e56d60f27e5a4"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SharkBleedProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SharkBleedProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "26dc187670da55f3ce2e5f5e0c887fcccef2aff03ad97cf68ad1d5aff315c012"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SharkBleedProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "2cf648a208de33092aaada87db434d1acbcb8aad152ed95607f063e7afeea332"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SharkBleedProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "d284609c288dd528b30ebdf5f56632c320d68894ed2720205b3e48f62cdc3f9c"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ShrakOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ShrakOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ShrakOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "c2aef5ed57f196e9a460e894614f5b24749ba89a7816989b7c9b7f23af7cca5f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ShrakOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SittingSneakingSaveProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "547fd5223898311b216ed05d22e08e79f704a7a4f5895ad7fe058c6f0058a089"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SittingSneakingSaveProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SittingSneakingSaveProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "62b4e4d9af67215df6c03b4a26c5a7429ee766edf89a7a63581c03b17d8f687c"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SittingSneakingSaveProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "96bc4aabc95266d64e15d6f274e64ef264b54aeea4ed16d57807d40830fc44d2"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurns2Procedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "c4dcd58d189990d60fc72990fc9935426dd4810328479d7db20de7f5f19ee6fe"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurns2Procedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurns2Procedure",
+          "method": "rotLerp",
+          "desc": "(FFF)F",
+          "sha256": "aa397f03dfca525e71fefca0b26a51f4d434cfffdf626cb60e95ebfdef44e929"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurns2Procedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurns3Procedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f6074ca878f82108af1bec9bfa16891615fd1e9d667b489f2361280603e4e19c"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurns3Procedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurns3Procedure",
+          "method": "rotLerp",
+          "desc": "(FFF)F",
+          "sha256": "aa397f03dfca525e71fefca0b26a51f4d434cfffdf626cb60e95ebfdef44e929"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurns3Procedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurns5Procedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "4a6165cda078a34c1c42a5f832977beabea5a1b12c4274da395c8b278720823b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurns5Procedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurns5Procedure",
+          "method": "rotLerp",
+          "desc": "(FFF)F",
+          "sha256": "aa397f03dfca525e71fefca0b26a51f4d434cfffdf626cb60e95ebfdef44e929"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurns6Procedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "b4a55e5308ed2d741a4e0c58d98e3d87f3b8ad8c219bf79969232ace5adc228d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurns6Procedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurnsProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "c4dcd58d189990d60fc72990fc9935426dd4810328479d7db20de7f5f19ee6fe"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurnsProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurnsProcedure",
+          "method": "rotLerp",
+          "desc": "(FFF)F",
+          "sha256": "aa397f03dfca525e71fefca0b26a51f4d434cfffdf626cb60e95ebfdef44e929"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/SmoothTurnsProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/StopFloatingProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "46ce9d27de9a07a89d8f3f94095021cf6936c58ade2bcb532cedd3e0c7e8a651"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/StopFloatingProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/StopFloatingProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "034646755169c6d783bc450b64ff43e6133851900bd93d20a093a7fc56522b54"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/StopFloatingProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "cfbded1cc9c16490f441399f02ca661e884fc1b1958192f72c40f3a4004cd97f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/StopRidingBoatProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "547fd5223898311b216ed05d22e08e79f704a7a4f5895ad7fe058c6f0058a089"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/StopRidingBoatProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/StopRidingBoatProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "64e69b4a3c3ddb25e5acff2f264fdc1ec71613f1087773e366d91d1df23fb3fc"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/StopRidingBoatProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "e484854d279d9dec67cabb5b6fe81731732adba52fa5e35b4f82b8b431310775"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/TigerSharkOnEntityTickUpdateProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "6cc58c317374044098b88b7cd8648f2e4beaa70b8138f3f86cab87db648afacf"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/TigerSharkOnEntityTickUpdateProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/TigerSharkOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "bafe0ae05acaeace580467c21f178a036555e27c3d94896cc631d791e5869d91"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/TigerSharkOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/TigerSharkOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/TigerSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "a92ba0b714f8030da4a36ca83c82f4b2e7b58802337c754c338565f8f723f5d2"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/TigerSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/WhaleSharkOnEntityTickUpdateProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "6cc58c317374044098b88b7cd8648f2e4beaa70b8138f3f86cab87db648afacf"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/WhaleSharkOnEntityTickUpdateProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/WhaleSharkOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "9d7793e3ec0c56dfc247cbc85e9cfa9e4ae187074657a906e9f1b318d6d14dff"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/WhitetipSharkOnEntityTickUpdateProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "6cc58c317374044098b88b7cd8648f2e4beaa70b8138f3f86cab87db648afacf"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/WhitetipSharkOnEntityTickUpdateProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/WhitetipSharkOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "2343c11a6a6c5079ced1f7eefddd333fd50ec137c1737eb4c2165e9f9a491501"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/WhitetipSharkOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (the table read every one)",
+          "sha256": "f8b8c8404aae6cf6f83e52b80ed5fa3caf60f56e34a91b18c73143c218595b6b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/WhitetipSharkOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/WhitetipSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "cad443a6f880ae4ee1746b7f9c26b09a94b5e0af15acbf34ac37959acc465f9a"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/WhitetipSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "At the end of common setup (bons.furious.patch.benssharks.SetupHook -> SharksSetup) Ben's 62 LivingTickEvent and 6 LevelTickEvent listeners are taken off the Forge bus; injectors at the head of each Ben's entity's baseTick run the original handlers whose guard can accept it (Dispatch, Table), Dolphin.tick runs DolphinEatSardine, a Bleeding pass runs the two Bleeding handlers for bleeding entities only, and one LevelTickEvent listener runs SmoothTurns / SeekingHandler over sets fed by ServerLevel.EntityCallbacks. Formerly part of the separate mod Bons Sharks Fix 1.0.0.",
+      "license": "LGPL-3.0 (Ben's Sharks): the mixins hold only our own code and call Ben's original methods unchanged; the dispatch table names Ben's classes, fields and methods only"
+    },
+    "benssharks_work_queue_idle": {
+      "mod": "benssharks",
+      "scripts": [],
+      "since": "1.0.42",
+      "mixins": [
+        "bons.furious.mixin.benssharks.BenssharksModTickMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mcreator/sharks/BenssharksMod",
+          "method": "tick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$ServerTickEvent;)V",
+          "note": "HEAD: returns while the work queue is empty",
+          "sha256": "bc59a46b44f67a88527905e4cb08f80002d3f52ace937f8be505f2a80280df0e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD of BenssharksMod.tick: cancelled while the work queue is empty; otherwise the method runs as shipped",
+      "license": "LGPL-3.0 (Ben's Sharks): the mixins hold only our own code and call Ben's original methods unchanged; the dispatch table names Ben's classes, fields and methods only"
+    },
+    "benssharks_item_animation_idle": {
+      "mod": "benssharks",
+      "scripts": [],
+      "since": "1.0.42",
+      "mixins": [
+        "bons.furious.mixin.benssharks.ItemAnimationFactoryMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mcreator/sharks/init/ItemAnimationFactory",
+          "method": "animatedItems",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "HEAD: returns unless a hand holds the Spetum",
+          "sha256": "46cf0f3a153c2646d45c5b6effc60e28f12d51846f331062d1ddeb41f97e91e2"
+        },
+        {
+          "class": "net/mcreator/sharks/item/SpetumItem",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "the one item it acts on",
+          "sha256": "037f954ed9948caa52011d767049be35b85bc626e4546ee7254d190302ae08d0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD of ItemAnimationFactory.animatedItems: cancelled unless it is the START phase and a hand holds a Spetum (the only case in which the method does anything)",
+      "license": "LGPL-3.0 (Ben's Sharks): the mixins hold only our own code and call Ben's original methods unchanged; the dispatch table names Ben's classes, fields and methods only"
+    },
+    "benssharks_prey_search_merge": {
+      "mod": "benssharks",
+      "scripts": [],
+      "since": "1.0.42",
+      "mixins": [
+        "bons.furious.mixin.benssharks.GoalMergeMixin",
+        "bons.furious.mixin.benssharks.MobAccessor",
+        "bons.furious.mixin.benssharks.NatgAccessor",
+        "bons.furious.mixin.benssharks.TargetGoalAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/mcreator/sharks/entity/AngelsharkEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "eaa10f8991f0ee79af246554f237bc54352a8f50845ef030a4303d0eccdd9338"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/AxodileEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "c21127562b91f258c89524d7b644bce5ad80fde492a9d9c4db173888836f2ec8"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/BarracudaEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "fe73e16f23969b7aca6a64d1942967d111a667066867d5d7929f38a3fd399e5b"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/BaskingSharkEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "82c7a73aabf652d92a01e6257184d1092d93872c5943a16a0f9c75b9565d8399"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/BlacktipReefSharkEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "0ecb781d11ca288499b3a4477abd19f44df6da77b26e7ba320a41978ea79d2cd"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/BlueSharkEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "4bf9888efeaba09d6015c7767462959b2a1481aab477ec17650d02f1fc0d8054"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/BonnetheadSharkEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "93f8f46ddc2b01fe0c26a6256c21a7845eed9038fd48b1525b4c66a84dbc45a0"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/BullSharkEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "1107024db85d2fff07f2d431178b887ee3b405682a7fb277e24371cc76c0cc82"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/CookiecutterSharkEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "5fb373f3098ddee71b1b6730b2c2baba0805e2ac1c09f612a0631972fa818a64"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/GoblinSharkEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "336a29b6b0eb0a6612af7c0085306fcbe403189220152721edfc4c6ac7b74e83"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/GreaterAxodileEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "ff99a6e3a7a13929deda8934729a3d7f622997a5789a1e69cd3793862549895c"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/GreenlandSharkEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "0d5f0848a22bde7d84ad5757412d4f42fbac494790b482679f661e3ecf6132f3"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/KrillEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "8587b43fc979b3f60dc65076653809b1e24bbef214cd0024e8dc564460ead813"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/LandSharkEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "a3d93e3c74c42283b76af6fe893c3a780991f5ab368c12b35909a8f79df3a0e6"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/LemonSharkEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "2f65440c02d42fb36a7f30c118601d387b976ed3cdc257a35a52abb8f91453e7"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/LeopardSharkEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "178b4cc5e7204d3cd5567f471940b0e36e6253c62088bf4b48a482685056d8eb"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/MakoSharkEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "ff9532d67df6eeca57436f6519d8f7cfcfb24dc77ce6d0576c20023f842b5243"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/MegalodonEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "9a87152f746b21df039d6e410f9cd7c60ea926f0b9d7a78e4604de8257252043"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/MegamouthSharkEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "40806305a212665f919e97c7f3736aefd684693b57f8c6c83daf25a8a74e3a48"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/NurseSharkEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "1e459ab27ca7e05f516b068b930628a6663f09f6d988fc92787f1b4ea7dc599d"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/PilotFishEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "90fa66bfaa7261bc86683db8189fd522dd532a9308ef62605a54bd35a2be2d7c"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/RemoraEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "fdc5948feeab8d8e8a43dc58d114896a809a30b2803bc0df8a3f5eeed58d1eb3"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/SardineEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "de324c716572854d56b3fb3868a33d8fb3ecfab3d5f03332883743bf1698eaca"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/SawsharkEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "c456c82461c5ecb0e974088154f18b9155bc400e503ebf9f0ca72be16f7938dc"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/SeaLionEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "b162fd4376c21c0383c19b74365d1eadce681ebc0c50680d5cbab367ba4b0c1a"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/SharkMinionEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "92db127f40d683c3a81c18e2ae454834a2f92ea2d51e5489dd34315663af99db"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/ShoalEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "52111bb567d5410f011cfa351bacd9a5326e67778d6729e194723dad4b5b5fca"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/ShrakEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "616d81bffca0ddda904313f0054444de72a0c058cc1c8b68bc5fbefbc0bea292"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/ThalassogerEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "f3a33b752deac843c30c91fa18660d0a4c779860c82b22da81d9259126590d23"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/ThresherSharkEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "66469bd2cf069c875326b4477a279bbb6d71b30c0eeb182610e86d3d74176e70"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/TigerSharkEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "e3aa53767880bf07e823aee16d3055402fc0e64f8d06bf27c525617640de1c3a"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/WhaleSharkEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "b3b9b803880feaca3e703c261236c3c1f9b5a2d6a6f7b9947b45c3e371ddf493"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/WhitetipSharkEntity",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: TAIL hook",
+          "sha256": "08f314ffdc10c0ae1f0a737bbaba516b1a8d7714f5258b0e6e1197121c7fa167"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal",
+          "method": "m_8036_",
+          "desc": "()Z",
+          "note": "canUse, restated by MergedTargetGoal",
+          "sha256": "c9cbba1fbbda735244cd62157eaac23f6c83e1407c8076719c9ec2a5db151e14"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal",
+          "method": "m_26073_",
+          "desc": "()V",
+          "note": "findTarget, restated by MergedTargetGoal",
+          "sha256": "cf99316852c2181605c44899eff2400581b8d669544244e3fda8ad7fe2079a86"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal",
+          "method": "m_8056_",
+          "desc": "()V",
+          "note": "start, restated by MergedTargetGoal",
+          "sha256": "f0101aa45c6b0a0eea7a3d4bff0345a741c6824a5ba151dbca0037e31f089c24"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal",
+          "method": "m_7255_",
+          "desc": "(D)Lnet/minecraft/world/phys/AABB;",
+          "note": "getTargetSearchArea, restated by MergedTargetGoal",
+          "sha256": "e8a0ccebdcc60c643ba260a3d2366f4976e895f13fe7eaa706ed4558e64c74ca"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/goal/GoalSelector",
+          "method": "m_148105_",
+          "desc": "()Ljava/util/Set;",
+          "note": "getAvailableGoals",
+          "sha256": "3ed15a50991063f76f86d7fde3740a12ea2bff199b5c04f22e49d99d48e13c6b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject TAIL of every Ben's entity's registerGoals: runs of plain one-class NearestAttackableTargetGoals become one MergedTargetGoal (helper bons.furious.patch.benssharks.Goals) with the same random rolls and one shared entity search",
+      "license": "LGPL-3.0 (Ben's Sharks): the mixins hold only our own code and call Ben's original methods unchanged; the dispatch table names Ben's classes, fields and methods only"
+    }
+  }
+}

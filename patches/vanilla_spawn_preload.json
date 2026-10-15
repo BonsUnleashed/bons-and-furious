@@ -1,0 +1,32 @@
+{
+  "group": "vanilla_spawn_preload",
+  "keys": {
+    "vanilla_spawn_area_preload": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.42",
+      "mixins": [
+        "bons.furious.mixin.vanilla_spawn_preload.ServerStartingPreloadMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraftforge/server/ServerLifecycleHooks",
+          "method": "handleServerStarting",
+          "desc": "(Lnet/minecraft/server/MinecraftServer;)Z",
+          "note": "the hook: posts ServerStartingEvent; logins open later",
+          "sha256": "d9acb42f2154db75c7d3e993d8af29aa022bfd29aafdf99f80971ce748763ffd"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerPlayer",
+          "method": "m_9201_",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;)V",
+          "note": "fudgeSpawnLocation: the spawn search radius rule the area follows",
+          "sha256": "4bbf77f39c44f0e77091d48e136c2f7654ab8f3993058a2b8b39cab55f51469f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject before the ServerStartingEvent post in Forge's ServerLifecycleHooks.handleServerStarting: generates the spawn area and keeps it at FULL without ticking (helper bons.furious.patch.vanilla_spawn_preload.SpawnAreaPreload); the method itself runs unchanged. Formerly the separate mod Bons Welcome Mat (ac_spawn_preparation 1.0.3).",
+      "license": "Minecraft (Mojang) and Forge: no code of either is carried; the helper is our own and restates the four-line spawn radius rule of ServerPlayer.fudgeSpawnLocation"
+    }
+  }
+}

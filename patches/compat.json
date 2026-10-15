@@ -845,6 +845,48 @@
       "name": "ServerCore",
       "mixin": "me.wesley1808.servercore.mixin.optimizations.ticking.chunk.cache.ServerChunkCacheMixin",
       "why": "ServerCore's mixin @Redirects the same call our switch @Redirects: ServerLevel.isNaturalSpawningAllowed(ChunkPos) inside ServerChunkCache.tickChunks. Mixin applies only one @Redirect of a call, so the second one fails; with ServerCore installed our switch steps aside and ServerCore keeps its own change. ServerCore's settings file is YAML, which is not read here, so the switch steps aside whenever ServerCore lists the mixin."
+    },
+    {
+      "key": "jei_join_recipe_deferral",
+      "mod": "bons_jei_deferral",
+      "name": "Bons JEI Deferral",
+      "mixin": "agentcraft.jeianvil.mixin.VanillaPluginMixin",
+      "why": "The separate mod this switch was folded from (1.0.42) defers the same JEI recipes with the same mixins; at most one copy may run, so the switch steps aside while that jar is installed."
+    },
+    {
+      "key": "jei_join_recipe_deferral",
+      "mod": "fastjei",
+      "name": "FastJEI (Just Enough Freezes)",
+      "mixin": "com.misanthropy.fastjei.gen3.mixin.GrindstoneRecipeMixins$SkipGeneratedDisenchanting",
+      "why": "FastJEI 2.0 skips JEI's generated disenchant recipes by default (skipGeneratedEnchantmentRecipes); this switch walks that loop itself and would add them back, so it steps aside whenever FastJEI lists that mixin."
+    },
+    {
+      "key": "benssharks_tick_listeners",
+      "mod": "bons_sharks_fix",
+      "name": "Bons Sharks Fix",
+      "mixin": "bons.sharksfix.mixin.SharkBaseTickMixin",
+      "why": "Bons Sharks Fix 1.0.0 (the separate mod these switches were folded from in 1.0.42) removes the same listeners; from 1.1.0 it keeps only its despawn and loot changes and no longer lists this mixin."
+    },
+    {
+      "key": "benssharks_work_queue_idle",
+      "mod": "bons_sharks_fix",
+      "name": "Bons Sharks Fix",
+      "mixin": "bons.sharksfix.mixin.BenssharksModTickMixin",
+      "why": "Bons Sharks Fix 1.0.0 makes the same change; 1.1.0 no longer lists this mixin."
+    },
+    {
+      "key": "benssharks_item_animation_idle",
+      "mod": "bons_sharks_fix",
+      "name": "Bons Sharks Fix",
+      "mixin": "bons.sharksfix.mixin.ItemAnimationFactoryMixin",
+      "why": "Bons Sharks Fix 1.0.0 makes the same change; 1.1.0 no longer lists this mixin."
+    },
+    {
+      "key": "benssharks_prey_search_merge",
+      "mod": "bons_sharks_fix",
+      "name": "Bons Sharks Fix",
+      "mixin": "bons.sharksfix.mixin.GoalMergeMixin",
+      "why": "Bons Sharks Fix 1.0.0 merges the same prey searches; 1.1.0 no longer lists this mixin."
     }
   ]
 }

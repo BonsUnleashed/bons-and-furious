@@ -88,3 +88,9 @@ Sodium, Oculus (pull request #760), AzureLib, Mekanism (its 1.20.4+ commit
 messages) and Mekanism: Overclocked. The "Idea:" line of each switch in
 bons_and_furious.properties says which idea it follows; "ours" marks our own
 designs.
+
+Folded in 1.0.42. Three of our own separate performance mods became switches here: a JEI join-recipe deferral
+(jei_join_recipe_deferral), a spawn-area preparation (vanilla_spawn_area_preload) and the tick optimizations of a
+Ben's Sharks companion (benssharks_*). Target added in 1.0.42: Ben's Sharks (benndevs, GNU Lesser General Public
+License version 3). Its exact tested JAR digest is in upstream-credits.json. No target JAR or asset is
+redistributed; the Ben's Sharks switches carry only our own code and call Ben's original methods unchanged.

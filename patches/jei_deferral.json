@@ -1,0 +1,115 @@
+{
+  "group": "jei_deferral",
+  "keys": {
+    "jei_join_recipe_deferral": {
+      "mod": "jei",
+      "scripts": [],
+      "since": "1.0.42",
+      "mixins": [
+        "bons.furious.mixin.jei_deferral.VanillaPluginDeferralMixin",
+        "bons.furious.mixin.jei_deferral.AnvilRecipeMakerDeferralMixin",
+        "bons.furious.mixin.jei_deferral.GrindstoneRecipeMakerDeferralMixin",
+        "bons.furious.mixin.jei_deferral.RecipeManagerInternalDeferralMixin"
+      ],
+      "guard": [
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "registerRecipes",
+          "desc": "(Lmezz/jei/api/registration/IRecipeRegistration;)V",
+          "note": "the window that is armed and disarmed",
+          "sha256": "5dc2c18257ea877e19866ab76a0cd51fcefa55cf8c416b361e54ea9f698d1602"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "getAnvilRecipes",
+          "desc": "()Ljava/util/List;",
+          "note": "concat(repair, book).toList(), restated by the HEAD injector",
+          "sha256": "960daa47b248f255dcc1d3caa48df9fc99a91cc1de2bd38769260efaf38f18bc"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "getAnvilRecipes",
+          "desc": "(Lmezz/jei/api/recipe/vanilla/IVanillaRecipeFactory;Lmezz/jei/api/runtime/IIngredientManager;)Ljava/util/List;",
+          "sha256": "fd06e5d569016bd5552601a00b97cefc0a191aece234b7aa2ff041220b5ca61c"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "getAnvilRecipes",
+          "desc": "(Lmezz/jei/api/recipe/vanilla/IVanillaRecipeFactory;Lmezz/jei/api/runtime/IIngredientManager;Lnet/minecraft/world/inventory/AnvilMenu;)Ljava/util/List;",
+          "sha256": "4aaa5ee7a02dcac2bd3b9c121818d7331c4b75757dc30c08a953c683aae4c5a1"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "getRepairRecipes",
+          "desc": "()Ljava/util/stream/Stream;",
+          "sha256": "062b8daa32d4a2644f436d857215f9c23a8341420c4d384b3b32a08ade8c2faa"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "getBookEnchantmentRecipes",
+          "desc": "()Ljava/util/stream/Stream;",
+          "note": "two @Redirects: ingredient snapshot, one recipe at a time",
+          "sha256": "bd449143c1fd647f26ae01e8797347cc86a6ae6b8bd6c646b711f3afc7c5e66d"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
+          "method": "getGrindstoneRecipes",
+          "desc": "(Lmezz/jei/api/runtime/IIngredientManager;Lmezz/jei/common/platform/IPlatformRecipeHelper;)Ljava/util/List;",
+          "sha256": "aa76dc62f588a443d8068304abaa7576dffc5ec584539b266653121443a37966"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
+          "method": "getGrindstoneRecipes",
+          "desc": "(Lmezz/jei/api/runtime/IIngredientManager;Lmezz/jei/common/platform/IPlatformRecipeHelper;Lnet/minecraft/world/inventory/GrindstoneMenu;)Ljava/util/List;",
+          "note": "concat(repair, disenchant).toList(), restated by the HEAD injector",
+          "sha256": "2570b56469eecda02dedf92b3e3df2777600cbc86a67207ded386f7247c6df19"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
+          "method": "getRepairRecipes",
+          "desc": "(Lmezz/jei/common/platform/IPlatformRecipeHelper;Lmezz/jei/api/runtime/IIngredientManager;Lnet/minecraft/world/inventory/GrindstoneMenu;)Ljava/util/stream/Stream;",
+          "note": "called; @Redirect: ingredient snapshot",
+          "sha256": "7e4ae413b0acc1fbcf6fa5d1a525a3c420f4b6c9cdb61611adacaf97a9d57645"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
+          "method": "getDisenchantRecipes",
+          "desc": "(Lmezz/jei/common/platform/IPlatformRecipeHelper;Lnet/minecraft/world/inventory/GrindstoneMenu;)Ljava/util/stream/Stream;",
+          "note": "the loop GrindstoneDisenchant walks step by step",
+          "sha256": "6611262ba440ea235fdaac6a66c5a3e8308cd94f17fefd73b49deb145cea698e"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
+          "method": "canEnchant",
+          "desc": "(Lmezz/jei/common/platform/IPlatformRecipeHelper;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/enchantment/Enchantment;Lnet/minecraft/resources/ResourceLocation;)Z",
+          "note": "called through @Shadow",
+          "sha256": "1338482ae36ced96962f38e1944308f344e4e6eeda774ae712c54080e33e6078"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
+          "method": "getGrindstoneRecipe",
+          "desc": "(Lmezz/jei/common/platform/IPlatformRecipeHelper;Lnet/minecraft/world/inventory/GrindstoneMenu;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceLocation;)Lmezz/jei/api/recipe/vanilla/IJeiGrindstoneRecipe;",
+          "note": "called through @Shadow",
+          "sha256": "5a1ed5c92fd982e3a2073f2aa0a38eb63e062612c8688ee9a5160b9902da1b63"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "addRecipes",
+          "desc": "(Lmezz/jei/api/recipe/RecipeType;Ljava/util/List;)V",
+          "note": "HEAD: holds later additions of a deferred type",
+          "sha256": "0f347a03cb1769b862fae56a374aa2794e5698f67612bad8aed5c8c96fa99fd9"
+        },
+        {
+          "class": "mezz/jei/library/util/ResourceLocationUtil",
+          "method": "sanitizePath",
+          "desc": "(Ljava/lang/String;)Ljava/lang/String;",
+          "note": "the disenchant recipe uids",
+          "sha256": "7adf8abd41bf0e236168f3a474681a530c53230c58d7f24f3dd910c649a38aaf"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Injectors: HEAD/RETURN of VanillaPlugin.registerRecipes arm and disarm; HEAD of AnvilRecipeMaker.getAnvilRecipes and GrindstoneRecipeMaker.getGrindstoneRecipes hand JEI's own streams to a per-frame job (helper bons.furious.patch.jei_deferral.Deferral, a @JeiPlugin starts and stops it); HEAD of RecipeManagerInternal.addRecipes holds later additions of a deferred type; two @Redirects snapshot the ingredient list and walk flatMap one recipe at a time. Formerly the separate mod Bons JEI Deferral 1.0.0.",
+      "license": "MIT (JEI); independently written Bons helpers; GrindstoneDisenchant walks JEI's disenchant loop step by step with the same uid strings (MIT); no JEF code used"
+    }
+  }
+}
