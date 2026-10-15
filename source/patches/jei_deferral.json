@@ -1,0 +1,471 @@
+{
+  "group": "jei_deferral",
+  "keys": {
+    "jei_join_recipe_deferral": {
+      "mod": "jei",
+      "scripts": [],
+      "since": "1.0.42",
+      "mixins": [
+        "bons.furious.mixin.jei_deferral.VanillaPluginDeferralMixin",
+        "bons.furious.mixin.jei_deferral.AnvilRecipeMakerDeferralMixin",
+        "bons.furious.mixin.jei_deferral.GrindstoneRecipeMakerDeferralMixin",
+        "bons.furious.mixin.jei_deferral.RecipeManagerInternalDeferralMixin"
+      ],
+      "guard": [
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "getPluginUid",
+          "desc": "()Lnet/minecraft/resources/ResourceLocation;",
+          "sha256": "a0714274e478a5ca47a295d79b3586cc669c251ff9c5e8f4303275cc4bea29b0"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "registerItemSubtypes",
+          "desc": "(Lmezz/jei/api/registration/ISubtypeRegistration;)V",
+          "sha256": "5b1cc53c8169c1ee6d90a18770695b2013a0169d68de0a3528b378d754c3719b"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "registerIngredients",
+          "desc": "(Lmezz/jei/api/registration/IModIngredientRegistration;)V",
+          "sha256": "8bdee271aee37dc8cf73b40ea17a4c90722f04ba7839b48d313023b153d3490a"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "registerModInfo",
+          "desc": "(Lmezz/jei/api/registration/IModInfoRegistration;)V",
+          "sha256": "ca1aee9388f3ea8c0bd4bca365af759b7eb47aad275f362fb13f2fa47a8999da"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "registerFluidIngredients",
+          "desc": "(Lmezz/jei/api/registration/IModIngredientRegistration;Lmezz/jei/common/platform/IPlatformFluidHelperInternal;)V",
+          "sha256": "94bb5754e11d00c2f6a414ef0b6772da346590bd846fa16e8fbd98831431d4fe"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "registerCategories",
+          "desc": "(Lmezz/jei/api/registration/IRecipeCategoryRegistration;)V",
+          "sha256": "4dfbd8cff4d535a6eb4562a8bba07bacb3cee0060a1f0d731a2c69a5715113eb"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "registerVanillaCategoryExtensions",
+          "desc": "(Lmezz/jei/api/registration/IVanillaCategoryExtensionRegistration;)V",
+          "sha256": "9d0e68a3975dca69184197d7912b6d5b0bc1012b15a61cfda6aac43669e4283a"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "registerRecipes",
+          "desc": "(Lmezz/jei/api/registration/IRecipeRegistration;)V",
+          "sha256": "8b6801313a3806b20f55e8764bde80fb8ea4cc7dafb390252d150955982d904a"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "registerGuiHandlers",
+          "desc": "(Lmezz/jei/api/registration/IGuiHandlerRegistration;)V",
+          "sha256": "4da2255ba3ebff3293a07d4dd4dacc6b905b74842cac6f3fe32cd5362ddf824a"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "registerRecipeTransferHandlers",
+          "desc": "(Lmezz/jei/api/registration/IRecipeTransferRegistration;)V",
+          "sha256": "0e2534ca7cd1ee8b55917a2af9769bf5ed798ef59cbfcb51a44b7e1fcc17f937"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "registerRecipeCatalysts",
+          "desc": "(Lmezz/jei/api/registration/IRecipeCatalystRegistration;)V",
+          "sha256": "6e334d39e5f925948a090e3258e2d8ffb918aa05af7f376a9872641a51b08653"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "onRuntimeUnavailable",
+          "desc": "()V",
+          "sha256": "48466c0927197c2ad7599f40ddaef4cbb93418042e83c25cbcbaaef9b030d168"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "getCraftingCategory",
+          "desc": "()Ljava/util/Optional;",
+          "sha256": "eab136f7878d2f26d9b9ba76b9127fb682f782026dce88efe87e767d53aa120b"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "getSmithingCategory",
+          "desc": "()Ljava/util/Optional;",
+          "sha256": "df990b82f74b665315fbb3ca507b852aa03bdf0fa44a505a89247a6af47e0550"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "getBrewingExtensionHelper",
+          "desc": "()Ljava/util/Optional;",
+          "sha256": "b660f3c58e8269874d38435f3b129a8c28f7c827ff10d2b2a5df36c6e1421c6e"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "replaceSpecialCraftingRecipes",
+          "desc": "(Ljava/util/List;Lmezz/jei/api/helpers/IJeiHelpers;)Ljava/util/List;",
+          "sha256": "a34783eb08b2ad7b88337e79e4291fa0f39d062e421f6d05e8a5bae0452a4425"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "lambda$registerCategories$0",
+          "desc": "(Lmezz/jei/api/recipe/vanilla/IJeiFuelingRecipe;)Ljava/util/stream/Stream;",
+          "sha256": "2299cd1b18e5119af1ecff967bd64b2fa298fa4c72f8703bfad7ce8e3b34fdba"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "2bb75069f3c39082f49a5b91708c83f9f506a0950901e93512f1d3efe75108a0"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "getAnvilRecipes",
+          "desc": "(Lmezz/jei/api/recipe/vanilla/IVanillaRecipeFactory;Lmezz/jei/api/runtime/IIngredientManager;)Ljava/util/List;",
+          "sha256": "fd06e5d569016bd5552601a00b97cefc0a191aece234b7aa2ff041220b5ca61c"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "getAnvilRecipes",
+          "desc": "(Lmezz/jei/api/recipe/vanilla/IVanillaRecipeFactory;Lmezz/jei/api/runtime/IIngredientManager;Lnet/minecraft/world/inventory/AnvilMenu;)Ljava/util/List;",
+          "sha256": "4aaa5ee7a02dcac2bd3b9c121818d7331c4b75757dc30c08a953c683aae4c5a1"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "<init>",
+          "desc": "(Lmezz/jei/api/recipe/vanilla/IVanillaRecipeFactory;Lmezz/jei/api/runtime/IIngredientManager;Lnet/minecraft/world/inventory/AnvilMenu;)V",
+          "sha256": "70b33bec5c63cd679425207d92ffede08f597a09e719f6c309bb624a26c09d71"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "getAnvilRecipes",
+          "desc": "()Ljava/util/List;",
+          "sha256": "960daa47b248f255dcc1d3caa48df9fc99a91cc1de2bd38769260efaf38f18bc"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "getBookEnchantmentRecipes",
+          "desc": "()Ljava/util/stream/Stream;",
+          "sha256": "ffabf7634379ae98a583d1c11f2ff09d43041b44c9e7885bec8efe36c5e4d799"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "getBookEnchantmentRecipes",
+          "desc": "(Ljava/util/List;Lnet/minecraft/world/item/ItemStack;)Ljava/util/stream/Stream;",
+          "sha256": "0ec4bf079957311bf3d105284b9ea384097a859cc35853416a8a074777d75f66"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "getEnchantedIngredients",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Ljava/util/List;)Ljava/util/List;",
+          "sha256": "9616d26376bab6f709a81b59e4a8b1265a56a6c5238eda94534c497be37d1320"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "getRepairData",
+          "desc": "()Ljava/util/stream/Stream;",
+          "sha256": "9e8a7d2efe46af98d98048becb6d199fa2e1f65c4c92575d528664fbbf680da2"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "getRepairRecipes",
+          "desc": "()Ljava/util/stream/Stream;",
+          "sha256": "062b8daa32d4a2644f436d857215f9c23a8341420c4d384b3b32a08ade8c2faa"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "getRepairRecipes",
+          "desc": "(Lmezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker$RepairData;)Ljava/util/stream/Stream;",
+          "sha256": "163e39ebf3e04ee42353e6f933ab65d3c4c60c9f7d2ca506fe80d2bb6752f47d"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "findLevelsCost",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)I",
+          "sha256": "b509c3aed1330b5750d9115fe930c96217df6e5ad37236b79f39730f8ed74cd4"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "getAnvilOutput",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "379403ca067bf69ac1900ff0181919a7439298858b83c10ed4542e1bff14e88a"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "lambda$getRepairRecipes$7",
+          "desc": "(Ljava/util/List;Lnet/minecraft/world/item/ItemStack;Ljava/util/function/Consumer;)V",
+          "sha256": "c38215d30edd9111033ab17951a37503e6d943171cf2a1230b039f0f1554fc48"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "lambda$getEnchantedIngredients$6",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "sha256": "2caa2c8f796f64d590ddeec85039c0ca5070e1b421d0304b1edf64bf53e642fd"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "lambda$getEnchantedIngredients$5",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "b6295a800c2a168db7e24a58d1852c42215fda15deb82344aeae82b3c69bcd2d"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "lambda$getBookEnchantmentRecipes$4",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Ljava/util/List;Ljava/util/List;)Lmezz/jei/api/recipe/vanilla/IJeiAnvilRecipe;",
+          "sha256": "2881c598aac6e43b8d705c74758a9c49dff3972fbce7aff5c9294008b692f9b8"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "lambda$getBookEnchantmentRecipes$3",
+          "desc": "(Ljava/util/List;)Z",
+          "sha256": "5aa7a5fdfedb8075957ab688d849017486b272666e3e70803d12dfff5a177fba"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "lambda$getBookEnchantmentRecipes$2",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lmezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker$EnchantmentData;)Ljava/util/List;",
+          "sha256": "f95ea31faefb720a5869e601641a61033505c32c73e98b2019bce559be2d2f51"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "lambda$getBookEnchantmentRecipes$1",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lmezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker$EnchantmentData;)Z",
+          "sha256": "172a08aec23d4bba06c1dce365f631ac4c9304b300402f226a3db541689b6477"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "lambda$getBookEnchantmentRecipes$0",
+          "desc": "(Ljava/util/List;Lnet/minecraft/world/item/ItemStack;)Ljava/util/stream/Stream;",
+          "sha256": "bff6fd7eeaf5bd26b16117dc2a76717b00fac91d0cf0d0538f52baa7a9d2087f"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "c2016775415a96b380dd2869e696c94dd389c31d68c669763fe409b76198ac1e"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
+          "method": "getGrindstoneRecipes",
+          "desc": "(Lmezz/jei/api/runtime/IIngredientManager;Lmezz/jei/common/platform/IPlatformRecipeHelper;)Ljava/util/List;",
+          "sha256": "aa76dc62f588a443d8068304abaa7576dffc5ec584539b266653121443a37966"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
+          "method": "getGrindstoneRecipes",
+          "desc": "(Lmezz/jei/api/runtime/IIngredientManager;Lmezz/jei/common/platform/IPlatformRecipeHelper;Lnet/minecraft/world/inventory/GrindstoneMenu;)Ljava/util/List;",
+          "sha256": "87b3aaf711e0e4fdae3211c076b1d6b5f1491a81b4333be2471c52e99b917b59"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
+          "method": "getGrindstoneRecipes",
+          "desc": "(Lmezz/jei/api/runtime/IIngredientManager;Lmezz/jei/common/platform/IPlatformRecipeHelper;Lmezz/jei/common/platform/IPlatformIngredientHelper;Lnet/minecraft/world/inventory/GrindstoneMenu;)Ljava/util/List;",
+          "sha256": "69b69a56b98dd4061e68622333b08b0e26345e6bd46d8ef4c496aa6056e95452"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
+          "method": "getDisenchantRecipes",
+          "desc": "(Lmezz/jei/common/platform/IPlatformRecipeHelper;Lmezz/jei/common/platform/IPlatformIngredientHelper;Lnet/minecraft/world/inventory/GrindstoneMenu;)Ljava/util/stream/Stream;",
+          "sha256": "c562adfbc5c614af7e4fb80ffa3e05569bf20da4a9414d3374e92d66d007a94c"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
+          "method": "canEnchant",
+          "desc": "(Lmezz/jei/common/platform/IPlatformRecipeHelper;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/core/Holder;Lnet/minecraft/resources/ResourceLocation;)Z",
+          "sha256": "d41dea458ea89da8a73a7c4416afeadeb25d5fc6ed84a29f6b4754f132cfa00f"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
+          "method": "getRepairRecipes",
+          "desc": "(Lmezz/jei/common/platform/IPlatformRecipeHelper;Lmezz/jei/api/runtime/IIngredientManager;Lnet/minecraft/world/inventory/GrindstoneMenu;)Ljava/util/stream/Stream;",
+          "sha256": "ab04605482aace11f5d43c44cb88516d5f638d7db2e8acc5dc5281b6ad6afe29"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
+          "method": "getGrindstoneRecipe",
+          "desc": "(Lmezz/jei/common/platform/IPlatformRecipeHelper;Lnet/minecraft/world/inventory/GrindstoneMenu;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/resources/ResourceLocation;)Lmezz/jei/api/recipe/vanilla/IJeiGrindstoneRecipe;",
+          "sha256": "bf6a553365df74fc9394fb2396a66db12d6957440ae6c59337316a82e4406dba"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
+          "method": "clearCache",
+          "desc": "()V",
+          "sha256": "a349dc6df83483dd92add3f60a8243e988bf52e52b1155403559a566c08f9e51"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
+          "method": "lambda$getRepairRecipes$0",
+          "desc": "(Lmezz/jei/common/platform/IPlatformRecipeHelper;Lnet/minecraft/world/inventory/GrindstoneMenu;Lnet/minecraft/world/item/ItemStack;)Lmezz/jei/api/recipe/vanilla/IJeiGrindstoneRecipe;",
+          "sha256": "67d850fff57ca3df922da4eb7085768c6cb43bd549841d98a678808a69de798b"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "a7322a1eb22e8f100a564b3a02d3bdc541c2150f9fbf94d8beeb07b669f44fb5"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "<init>",
+          "desc": "(Ljava/util/List;Lcom/google/common/collect/ImmutableListMultimap;Lmezz/jei/api/runtime/IIngredientManager;Lmezz/jei/library/config/RecipeCategorySortingConfig;Lmezz/jei/api/runtime/IIngredientVisibility;)V",
+          "sha256": "129ee41e1b165e5fb2071b98c45074ba7099c8daa1e56cd9b1de4611e7087841"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "addPlugins",
+          "desc": "(Ljava/util/List;)V",
+          "sha256": "f854a5aa642fea8acd40500adbc113de862d500b00aa8e6986625f80f5b11a2a"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "addRecipes",
+          "desc": "(Lmezz/jei/api/recipe/RecipeType;Ljava/util/List;)V",
+          "sha256": "0f347a03cb1769b862fae56a374aa2794e5698f67612bad8aed5c8c96fa99fd9"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "addRecipe",
+          "desc": "(Lmezz/jei/api/recipe/category/IRecipeCategory;Ljava/lang/Object;Ljava/util/Set;)Z",
+          "sha256": "1629e16c58d83f1907b5732e53ec367eaa29c9d5db1747e8b38976158e80620f"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "isCategoryHidden",
+          "desc": "(Lmezz/jei/api/recipe/category/IRecipeCategory;Lmezz/jei/api/recipe/IFocusGroup;)Z",
+          "sha256": "0efa70701457f02e845420942b58d1289be550f6730c0934db9790b683e5ce0e"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "getRecipeCategoriesForTypes",
+          "desc": "(Ljava/util/Collection;Lmezz/jei/api/recipe/IFocusGroup;Z)Ljava/util/stream/Stream;",
+          "sha256": "07af5a426ac8409d4710620fe4a65d3e5831144aa118415bf26e129a7ecf7e99"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "getRecipeCategory",
+          "desc": "(Lmezz/jei/api/recipe/RecipeType;)Lmezz/jei/api/recipe/category/IRecipeCategory;",
+          "sha256": "e1b157c7d1428f7822fc4b98ee1f77a2bbcaafd5a66e911191a91474bc82ace5"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "getRecipeCategoriesCached",
+          "desc": "(Ljava/util/Collection;Lmezz/jei/api/recipe/IFocusGroup;Z)Ljava/util/stream/Stream;",
+          "sha256": "27ffbc76614aabfab08997590b31c0a3bb58caaf076672498146c72801e6b862"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "getRecipeCategoriesUncached",
+          "desc": "(Ljava/util/Collection;Lmezz/jei/api/recipe/IFocusGroup;Z)Ljava/util/stream/Stream;",
+          "sha256": "aa69751f581339574ac5ac48ad8a4fd0b7a0b2f2d5403cd9e1dff18f8c293393"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "getRecipesStream",
+          "desc": "(Lmezz/jei/api/recipe/RecipeType;Lmezz/jei/api/recipe/IFocusGroup;Z)Ljava/util/stream/Stream;",
+          "sha256": "ddb6363ef10a50809c4d1a234d05483333559dda2da1d52913ce3536f41beb29"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "getRecipeCatalystStream",
+          "desc": "(Lmezz/jei/api/recipe/RecipeType;Z)Ljava/util/stream/Stream;",
+          "sha256": "4cc672acb3ee8221f66e30668a48cf2772aa17cdb7787bac86885721723e1b1c"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "onIngredientVisibilityChanged",
+          "desc": "(Lmezz/jei/api/ingredients/ITypedIngredient;Z)V",
+          "sha256": "18fa58fd109fb3f7b370a53817e89b6eb2daecf84c81bb1b78b2dce2da36f802"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "onIngredientsVisibilityChanged",
+          "desc": "(Ljava/util/Collection;Ljava/util/Collection;Z)V",
+          "sha256": "e05eb37da7b1d9d1f6ab6746af52850245c837ec70da547257eed750d7cdb7ae"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "hideRecipes",
+          "desc": "(Lmezz/jei/api/recipe/RecipeType;Ljava/util/Collection;)V",
+          "sha256": "910ac2344af86f64c262326e5ee4edd43ffb11c83d34a8a47a84d53513368280"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "unhideRecipes",
+          "desc": "(Lmezz/jei/api/recipe/RecipeType;Ljava/util/Collection;)V",
+          "sha256": "1ad73233a6b6cdab65520c7a1a96b546a4ece85573fb7c38e1d8fe32cb35035c"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "hideRecipeCategory",
+          "desc": "(Lmezz/jei/api/recipe/RecipeType;)V",
+          "sha256": "b43fbb4f63a2d9a16865757fc6f84d54a533861d5b011e11c9c877dc88e218eb"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "unhideRecipeCategory",
+          "desc": "(Lmezz/jei/api/recipe/RecipeType;)V",
+          "sha256": "df016f199fa2feb50f58ae5e6d44b4edffd7ecf3f80e7ab9547652c77fc7e9c0"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "getRecipeType",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;Ljava/lang/Class;)Ljava/util/Optional;",
+          "sha256": "6a510e697df28fbc37d7eeb5fa3f5032e63bacdd9448a5aa770f580ddb5a8ab8"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "getRecipeType",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Ljava/util/Optional;",
+          "sha256": "875bec8f9874672f0c5b77750ea9726842ece6b624114f48f9e13ab0a7202a5e"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "compact",
+          "desc": "()V",
+          "sha256": "fb99e6d86f04972baf93aecc39b516e00a1969a70040bf5b578c139fac4933ca"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "isRecipeCatalyst",
+          "desc": "(Lmezz/jei/api/recipe/RecipeType;Lmezz/jei/api/recipe/IFocus;)Z",
+          "sha256": "1906fe38a5b38fa101a3252a78d2832feea55d2c023f218aaa65db379f5b8b19"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "lambda$getRecipeCatalystStream$1",
+          "desc": "(Lmezz/jei/api/ingredients/ITypedIngredient;)Z",
+          "sha256": "9650f0e7126e5a21c32746114e0b9c111447d514030f61e49b07a444736440f4"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "lambda$getRecipeCategoriesUncached$0",
+          "desc": "(Lmezz/jei/api/recipe/IFocusGroup;Lmezz/jei/api/recipe/category/IRecipeCategory;)Z",
+          "sha256": "53b368bf80201c8b32a241377fdfa1504a09d5f12ddbef9ca226f999f31b3827"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeManagerInternal",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "3a8386515471634ed8d3221495c4f99747541515a85b286297c0dd5633c9646c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Defer vanilla anvil-book and grindstone recipes in render-frame slices; use JEI 19.51 holder-based supported-item iteration.",
+      "license": "MIT (JEI); independently written Bons helpers; GrindstoneDisenchant walks JEI's disenchant loop step by step with the same uid strings (MIT); no JEF code used"
+    }
+  }
+}

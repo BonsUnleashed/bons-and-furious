@@ -1,0 +1,1027 @@
+{
+  "group": "benssharks",
+  "keys": {
+    "benssharks_work_queue_idle": {
+      "mod": "benssharks",
+      "since": "1.0.42",
+      "scripts": [],
+      "mixins": [
+        "bons.furious.mixin.benssharks.BenssharksModTickMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mcreator/sharks/BenssharksMod",
+          "method": "tick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/ServerTickEvent$Post;)V",
+          "sha256": "30027d5a62784375d5553e59549d44dd1c178a8344fdc9bf6628de13cbca12cc"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Conditional injection; original non-idle operation unchanged.",
+      "license": "Original helper and injections; Ben's Sharks is LGPL-3.0-only; Minecraft and NeoForge code not redistributed."
+    },
+    "benssharks_item_animation_idle": {
+      "mod": "benssharks",
+      "since": "1.0.42",
+      "scripts": [],
+      "mixins": [
+        "bons.furious.mixin.benssharks.ItemAnimationFactoryMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mcreator/sharks/init/ItemAnimationFactory",
+          "method": "animatedItems",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/PlayerTickEvent$Post;)V",
+          "sha256": "999f7aac3bec0f91a88da61ab54c28a8f66caee73029c190706d229526402540"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Conditional injection; original non-idle operation unchanged.",
+      "license": "Original helper and injections; Ben's Sharks is LGPL-3.0-only; Minecraft and NeoForge code not redistributed."
+    },
+    "benssharks_prey_search_merge": {
+      "mod": "benssharks",
+      "since": "1.0.42",
+      "scripts": [],
+      "mixins": [
+        "bons.furious.mixin.benssharks.GoalMergeMixin",
+        "bons.furious.mixin.benssharks.MobAccessor",
+        "bons.furious.mixin.benssharks.NatgAccessor",
+        "bons.furious.mixin.benssharks.TargetGoalAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/mcreator/sharks/entity/AxodileEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "eb6a4b59245de39700637b0489e6f5b7cd59ce0005e94f408c53a5482ef3d055"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/BarracudaEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "54737304e9ff2ff61f6c588c033291f35a0d65715b42530e8cc1ab269b1fd67d"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/BaskingSharkEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "174cdfa5af690ca71bb2c4d17da066d580f8e111ca4437b6a71d0de4db20a0f9"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/BlacktipReefSharkEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "daa07a1e1b2e25929033f4c636d5cb0e4d2e27688989cc8d8b7e6e22460c28aa"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/BlueSharkEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "73806e5aca3769facc249004cf03847d1ba056cd14c7c6aec98e7d2b1c620775"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/BonnetheadSharkEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "4d7ca2afcacc71d98fef015f67843b5f7e067e61f1656d3037baf80cb460c574"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/BullSharkEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "019853031ecc1ab35d86360f121a539e1de8527fe0e71b1d3810612c7c3e41b0"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/CookiecutterSharkEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "b39e81afdbc897aefe7e5f0346294c4b688cfa9a8e556780a70d7bf2094d975e"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/GreaterAxodileEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "a1718b8190c542491e1db55f48ec196727e1abac0d3e9dd04ca1230a935047fe"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/GreenlandSharkEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "8987e11f592bb07e2673d119cfdc7ad589477eab956c8077c866f2d5f5122e6d"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/KrillEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "f41fee2e2ff19e821d2f924a4c2834db5ddb163d21bb2e5c38827465fe0fc9b3"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/LandSharkEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "b0f7a3305aa4fa80e30a8260828f5941b6461522776cc7aa70bf03bfcd2a05c4"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/LemonSharkEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "f5aa07874a012ef27d990d2bf947e3d1733ccd77a6a1c03aac271312ffbc5501"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/MakoSharkEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "d38c28c1bfe353ea7bc6ded2f298c1e76639715abdc135e01095eaef2020452d"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/MegalodonEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "1ffdaf38304fb1041dd048e83f5ee3a22bdf62931e2861827fe431cbf8290465"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/NurseSharkEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "78380687186eeea066d5a17ac23df23f8aab2ba8597cbaf3fc691b6969494058"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/PilotFishEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "27e923530ac03f9d60c7b952571056e97641a3512e1cfc15f4e368e38afb9f34"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/RemoraEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "d0378651a0859be9e912d72580b337afe2b0e98ab3f091d3300e5f83090f7308"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/RollParticleEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "a8e8346cbab5e17147d15193f22fd27aa7d439500e1f7e4d422710df97d51204"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/ShrakEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "20b5d989b805b9df084787b2082af6591cdd6df08ff2e144c41a3edca7bee101"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/ThalassogerEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "4c6830a23d3e867a5baf2d3d4c271eed610926d19ddf0335dc424b01f7af6273"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/TigerSharkEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "3a6b382f737bbe25193066fd30168546fbb63310cad16d6615abb46178914070"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/WhaleSharkEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "5a851ca8cb75ca8f7e3a1ddd65dc7ebcf37689a3622490abb55b344907da7869"
+        },
+        {
+          "class": "net/mcreator/sharks/entity/WhitetipSharkEntity",
+          "method": "registerGoals",
+          "desc": "()V",
+          "sha256": "f45b495042b3d197a9f1d43cf9d15c4d73d2c6ed44f3ed8482adf17450454bfa"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal",
+          "method": "canUse",
+          "desc": "()Z",
+          "note": "canUse, restated by MergedTargetGoal",
+          "sha256": "40e4675730608cef9265babc766b69bdb9159ddaff150f1adc4a6db89b9c6ce7"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal",
+          "method": "findTarget",
+          "desc": "()V",
+          "note": "findTarget, restated by MergedTargetGoal",
+          "sha256": "cd4aaa7b2137fb39fd91893fbe47cde7b4f5eb84debdfffea904a3ce9f654315",
+          "sha256_variants": [
+            "47d23d8344ceadbdc7b85280b3bb75d424a588128b55e1924ea936c0c439d200"
+          ],
+          "variant_reason": "Reviewed NeoForge 21.1.252 production client and server: identical production hash; Player/ServerPlayer and non-player blocks are reordered and the second class comparison is inverted. Both paths retain the same ordered calls, operands and target assignment. Evidence: evidence/production42/*NearestAttackableTargetGoal.findTarget*.txt."
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal",
+          "method": "start",
+          "desc": "()V",
+          "note": "start, restated by MergedTargetGoal",
+          "sha256": "6465d64e3723e6bac4675bbec67b0b450db9f1c98cb362bfb0278fb46704c95b"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal",
+          "method": "getTargetSearchArea",
+          "desc": "(D)Lnet/minecraft/world/phys/AABB;",
+          "note": "getTargetSearchArea, restated by MergedTargetGoal",
+          "sha256": "a41d801c66f6084ffd5856905c3b31099d73abf16095024fa1e795cc9ac6c24d"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/goal/GoalSelector",
+          "method": "getAvailableGoals",
+          "desc": "()Ljava/util/Set;",
+          "note": "getAvailableGoals",
+          "sha256": "112d34207df11baf29befcd18810f819d1961a72207819af0d0578b7daf7cb44"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject TAIL of every Ben's entity's registerGoals: runs of plain one-class NearestAttackableTargetGoals become one MergedTargetGoal (helper bons.furious.patch.benssharks.Goals) with the same random rolls and one shared entity search",
+      "license": "LGPL-3.0 (Ben's Sharks): the mixins hold only our own code and call Ben's original methods unchanged; the dispatch table names Ben's classes, fields and methods only"
+    },
+    "benssharks_tick_listeners": {
+      "mod": "benssharks",
+      "since": "1.0.42",
+      "scripts": [],
+      "mixins": [
+        "bons.furious.mixin.benssharks.BREACHTickFilterMixin",
+        "bons.furious.mixin.benssharks.ChaseTargetTickFilterMixin",
+        "bons.furious.mixin.benssharks.MovementRotationTickFilterMixin",
+        "bons.furious.mixin.benssharks.BaskingSharkOnInitialEntitySpawnTickFilterMixin",
+        "bons.furious.mixin.benssharks.BlueSharkOnInitialEntitySpawnTickFilterMixin",
+        "bons.furious.mixin.benssharks.BonnetheadSharkOnInitialEntitySpawnTickFilterMixin",
+        "bons.furious.mixin.benssharks.BullSharkOnInitialEntitySpawnTickFilterMixin",
+        "bons.furious.mixin.benssharks.CookiecutterSharkOnInitialEntitySpawnTickFilterMixin",
+        "bons.furious.mixin.benssharks.GreenlandSharkOnInitialEntitySpawnTickFilterMixin",
+        "bons.furious.mixin.benssharks.MakoSharkOnInitialEntitySpawnTickFilterMixin",
+        "bons.furious.mixin.benssharks.MegalodonOnInitialEntitySpawnTickFilterMixin",
+        "bons.furious.mixin.benssharks.NurseSharkOnInitialEntitySpawnTickFilterMixin",
+        "bons.furious.mixin.benssharks.RemoraOnInitialEntitySpawnTickFilterMixin",
+        "bons.furious.mixin.benssharks.ShrakOnInitialEntitySpawnTickFilterMixin",
+        "bons.furious.mixin.benssharks.TigerSharkOnInitialEntitySpawnTickFilterMixin",
+        "bons.furious.mixin.benssharks.WhitetipSharkOnInitialEntitySpawnTickFilterMixin",
+        "bons.furious.mixin.benssharks.BarracudaEatTickFilterMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mcreator/sharks/procedures/BREACHProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BREACHProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "sha256": "985913010ddc4327448784469d64b4bde0ecf8d927362b4fc1919567a83be031"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BREACHProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "7056eda99147fcb1c348d5450079dd1610913aae767db099bf70dd70d4970995"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BREACHProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BREACHProcedure",
+          "method": "*",
+          "desc": "*",
+          "sha256": "e36a0353e6035917e4d1f4ed262f243bf504c29c72acf68ce610b709a9b15b01"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ChaseTargetProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ChaseTargetProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "sha256": "f9c7e8ef92634f9e920fc3524e877e88e3df576b5e6e5df8223438bacb918f8b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ChaseTargetProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "d43eb3835a7b136267445759f78836e0f52c14f501a747330d33815d542f2b95"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ChaseTargetProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ChaseTargetProcedure",
+          "method": "*",
+          "desc": "*",
+          "sha256": "e36a0353e6035917e4d1f4ed262f243bf504c29c72acf68ce610b709a9b15b01"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MovementRotationProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MovementRotationProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "sha256": "40e08f3225cf11fd246e4557a6a214c0daf9775e9f01dfd65635b22259b6fb50"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MovementRotationProcedure",
+          "method": "execute",
+          "desc": "()V",
+          "sha256": "b9a8e738097ee37a308839f978ff1e42988ea7e8569bb9a3dffc74938df83680"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MovementRotationProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;)V",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MovementRotationProcedure",
+          "method": "*",
+          "desc": "*",
+          "sha256": "e36a0353e6035917e4d1f4ed262f243bf504c29c72acf68ce610b709a9b15b01"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BaskingSharkOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BaskingSharkOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "sha256": "4d6cc922ea4600f24fef9de45f193f0168adaf36b1d5827673a0e0e7cfd3ce39"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BaskingSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "4290a89355bbaef27183c37d0ed435a426577ac2741d0cba3891cc108113db04"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BaskingSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "867f635c2556429c38759f626b6f26458b493f87e6068d743ffdbb90a3e973eb"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BaskingSharkOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/Entity;)D",
+          "sha256": "f7f669f42dde2696265fe70f513ff6f85dcf4ab3d2fd2d5f2338e2d43aef341e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BaskingSharkOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BaskingSharkOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "*",
+          "sha256": "9f80825c44d0e9292618baf77add22d7a737777cdc61306360aa8d864f7419c0"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BlueSharkOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BlueSharkOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "sha256": "d73b0477ff3c6c886088f40a80bbbd8c4c373d9691ae5906f758c1b117c355ba"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BlueSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "50bc85d574283c3442402ce787dfcc51b056ab615fe4875846087a84388345cf"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BlueSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "0babd4db966dfbca951214a7e5e266bc1a8487cbe4ce148685f8e59e0823fd1a"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BlueSharkOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/Entity;)D",
+          "sha256": "f7f669f42dde2696265fe70f513ff6f85dcf4ab3d2fd2d5f2338e2d43aef341e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BlueSharkOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BlueSharkOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "*",
+          "sha256": "9f80825c44d0e9292618baf77add22d7a737777cdc61306360aa8d864f7419c0"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BonnetheadSharkOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BonnetheadSharkOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "sha256": "a8a5c508ef68b5cb17ca85a07dc7a984e6f1cb4edd272271ec24e7e3a6126514"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BonnetheadSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "94dcf009f9063f4d78376a24782b62e6efcf94ee2b478f0532d1476468ccb7fb"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BonnetheadSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "eb58afa75e5ee18bbaa193291a066f03878d737ef41152fed27b896ceeb18dc4"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BonnetheadSharkOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/Entity;)D",
+          "sha256": "f7f669f42dde2696265fe70f513ff6f85dcf4ab3d2fd2d5f2338e2d43aef341e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BonnetheadSharkOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BonnetheadSharkOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "*",
+          "sha256": "9f80825c44d0e9292618baf77add22d7a737777cdc61306360aa8d864f7419c0"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BullSharkOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BullSharkOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "sha256": "e6e26fa82c4d046b7ca8e816169bea7c71c9928d202fa852787d2073c3a9a04a"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BullSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "daed60f3818faf3e4c41c36c254c77c73529e020255db8b1c186df0f4ced3a5c"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BullSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "97ae3f3a5f107d154a53d04ced538ad1638f9bec21a6d3d6b84e535c36ee668a"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BullSharkOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/Entity;)D",
+          "sha256": "f7f669f42dde2696265fe70f513ff6f85dcf4ab3d2fd2d5f2338e2d43aef341e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BullSharkOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BullSharkOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "*",
+          "sha256": "9f80825c44d0e9292618baf77add22d7a737777cdc61306360aa8d864f7419c0"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/CookiecutterSharkOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/CookiecutterSharkOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "sha256": "74ff791347e704f64ffaa8b0f9cb28985bb6e7696889fd7001e56d619333575e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/CookiecutterSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "4c8d642df4cf012b621f5fe22c184165bd34fa251a7938c84b4471e3d91629d1"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/CookiecutterSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "00319bf457df07d22c38884ebaf4c2a4564e0daced896ba93657fa83eb26028c"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/CookiecutterSharkOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/Entity;)D",
+          "sha256": "f7f669f42dde2696265fe70f513ff6f85dcf4ab3d2fd2d5f2338e2d43aef341e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/CookiecutterSharkOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/CookiecutterSharkOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "*",
+          "sha256": "9f80825c44d0e9292618baf77add22d7a737777cdc61306360aa8d864f7419c0"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreenlandSharkOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreenlandSharkOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "sha256": "19f76d4e69b361e6e8c33de603dc313682d2b0278edb35f7362b3fc47a2be6fb"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreenlandSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "96ccbccd196482580e6705ee69f5673f12bca96ae569f7edf96961ecd5d85c9b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreenlandSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "6cd7e6a912970f7d0e02e7784b3d4cea8f4e6489ee1e2c5fad061e2efef92c64"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreenlandSharkOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/Entity;)D",
+          "sha256": "f7f669f42dde2696265fe70f513ff6f85dcf4ab3d2fd2d5f2338e2d43aef341e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreenlandSharkOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/GreenlandSharkOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "*",
+          "sha256": "9f80825c44d0e9292618baf77add22d7a737777cdc61306360aa8d864f7419c0"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSharkOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSharkOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "sha256": "f682cad78bc16f38cfa609ae6ca94f88ed267016aea3ca8dac0c6a947cb559be"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "74f87f5a79fa67d7e77cd1c20dbc80c9d28bc8deb112bd473d87952bd827ef9b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "34ba0a3eb81311d71824d7e28d55e16938330b20d793e60a9893b792e34e8bcb"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSharkOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/Entity;)D",
+          "sha256": "f7f669f42dde2696265fe70f513ff6f85dcf4ab3d2fd2d5f2338e2d43aef341e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSharkOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MakoSharkOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "*",
+          "sha256": "9f80825c44d0e9292618baf77add22d7a737777cdc61306360aa8d864f7419c0"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MegalodonOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MegalodonOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "sha256": "8beeb8eb9c95bc7334eefe731d2bdae855fa3c903645e15f059c8f370c55fc3a"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MegalodonOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "2e5d6434f229ca806771218514ceccc9ce90d97c4a1740a77c2f514fab81bf23"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MegalodonOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "cc889ca3c7e472d7f0cb3f179ff0f62fb3c58a2adc39d780e825159c3e25faaf"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MegalodonOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/Entity;)D",
+          "sha256": "f7f669f42dde2696265fe70f513ff6f85dcf4ab3d2fd2d5f2338e2d43aef341e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MegalodonOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/MegalodonOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "*",
+          "sha256": "9f80825c44d0e9292618baf77add22d7a737777cdc61306360aa8d864f7419c0"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/NurseSharkOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/NurseSharkOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "sha256": "f6e8b07b6bbcc828f4836b27bf50f2a3848eff9f1c023fd1e1de2e23080b4a19"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/NurseSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "ad8d6ac4b793d83c3e2c6b0c6b089511f86cb5b19e0ab82a4666a3f4b958ab4c"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/NurseSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "1a5fed7ed3484fe8d4969c77d729d67c1d44938f92aac03e49a951d6201f464d"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/NurseSharkOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/Entity;)D",
+          "sha256": "f7f669f42dde2696265fe70f513ff6f85dcf4ab3d2fd2d5f2338e2d43aef341e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/NurseSharkOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/NurseSharkOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "*",
+          "sha256": "9f80825c44d0e9292618baf77add22d7a737777cdc61306360aa8d864f7419c0"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/RemoraOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/RemoraOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "sha256": "2bc9ad554fa8c1fed20868632ff73319ed9108dc882b44ebe2005f8b2cb95460"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/RemoraOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "1c34e9e71593a936f461e7d1538dbf92868349b5dc4cca61a20679695f846300"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/RemoraOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "e516362b06669615efd28671130559e6ccbe4e8a1d5018103b19acab1eb68c93"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/RemoraOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/Entity;)D",
+          "sha256": "f7f669f42dde2696265fe70f513ff6f85dcf4ab3d2fd2d5f2338e2d43aef341e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/RemoraOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/RemoraOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "*",
+          "sha256": "9f80825c44d0e9292618baf77add22d7a737777cdc61306360aa8d864f7419c0"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ShrakOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ShrakOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "sha256": "2e5cb51fb55492467caf71ec6a2e6abccd25422c51f07e3f217beb0927962721"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ShrakOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "3da25046ffa9cfcece0a3a4e159672f6651d04467971ee7eeb2eb58a0bcc9bc8"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ShrakOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "37828daeac01e6bb4f82c7ed5b0bfb33bd712c7f650621bd214a356aaa236252"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ShrakOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/Entity;)D",
+          "sha256": "f7f669f42dde2696265fe70f513ff6f85dcf4ab3d2fd2d5f2338e2d43aef341e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ShrakOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/ShrakOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "*",
+          "sha256": "9f80825c44d0e9292618baf77add22d7a737777cdc61306360aa8d864f7419c0"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/TigerSharkOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/TigerSharkOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "sha256": "447ed5c4fb60e7a7ce84d459c7c48bcca6e93a0df3e6e33450c1a4b5409f3f2a"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/TigerSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "a8144dee20a75dd285223aa787f8ff8664821236f14466951b6d9900910c9c7e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/TigerSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "3b21fa98c1bddc0d497a45e3ade7edac79d0efe66370497095ddfb20c90f9d0b"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/TigerSharkOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/Entity;)D",
+          "sha256": "f7f669f42dde2696265fe70f513ff6f85dcf4ab3d2fd2d5f2338e2d43aef341e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/TigerSharkOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/TigerSharkOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "*",
+          "sha256": "9f80825c44d0e9292618baf77add22d7a737777cdc61306360aa8d864f7419c0"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/WhitetipSharkOnInitialEntitySpawnProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/WhitetipSharkOnInitialEntitySpawnProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "sha256": "b31cc2e9e9c06488b101148e36b0e269a039f84f38b71270c01cac33b696456e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/WhitetipSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "e315f09501200c1f2336f11a849a503831491de274ab47194fbb91f0ef933233"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/WhitetipSharkOnInitialEntitySpawnProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "d1c23ca4c76c4f11800e276ac6def022c9a6243c25f3293769bf9afc9a6466d0"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/WhitetipSharkOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/Entity;)D",
+          "sha256": "f7f669f42dde2696265fe70f513ff6f85dcf4ab3d2fd2d5f2338e2d43aef341e"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/WhitetipSharkOnInitialEntitySpawnProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/WhitetipSharkOnInitialEntitySpawnProcedure",
+          "method": "*",
+          "desc": "*",
+          "sha256": "9f80825c44d0e9292618baf77add22d7a737777cdc61306360aa8d864f7419c0"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "<init>",
+          "desc": "()V",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "sha256": "601aeeb45c01ff51c286392481d05cb7c7c4614bf7d39bded0a4e0378bb54351"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "547cd0fecbd9911f61c18375dd80951cbd90733c1db260bb08c5ee2badbf13b0"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "sha256": "d0b0deeb9b2182a824da02277ee713591b3cdb2f41bf229a2233a57327e68ead"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "lambda$execute$14",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "lambda$execute$13",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "lambda$execute$12",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "lambda$execute$11",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "lambda$execute$10",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "lambda$execute$9",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "lambda$execute$8",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "lambda$execute$7",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "lambda$execute$6",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "lambda$execute$5",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "lambda$execute$4",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "lambda$execute$3",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;)Z",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/sharks/procedures/BarracudaEatProcedure",
+          "method": "*",
+          "desc": "*",
+          "sha256": "a63ec1deefde17d45e9e9f6ef0a90328dfecc9467170a54094373f69b655d105"
+        }
+      ],
+      "cancel": [],
+      "conversion": "NeoForge 1.2.6 adaptation: filter proven unrelated-entity and empty handlers at entry. Keeps event registration, priority, cancellation semantics and all relevant handler bodies unchanged. No Forge 1.3.0 dispatch table reused.",
+      "license": "Original conditional injections; target Ben's Sharks is LGPL-3.0-only."
+    }
+  }
+}

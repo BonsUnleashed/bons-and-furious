@@ -22,12 +22,20 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 public final class ClientProbe {
     private static int ticks,worldTicks;
     private static boolean finished;
+    private static int reconnectStage, reconnectWait;
     private static NavigableMap<Integer,List<String>> commands;
     private static final List<Map<String,Object>> commandLog=Collections.synchronizedList(new ArrayList<>());
     @SubscribeEvent
     public static void tick(ClientTickEvent.Post event) {
         if(finished || !Boolean.getBoolean("bons_and_furious.clientProbe"))return;
         Minecraft mc=Minecraft.getInstance();ticks++;
+        if (reconnectStage == 1) {
+            if (++reconnectWait >= 40) {
+                reconnectStage = 2;
+                mc.createWorldOpenFlows().openWorld("BonsPortProbe", () -> {});
+            }
+            return;
+        }
         if(mc.screen instanceof net.neoforged.neoforge.client.gui.LoadingErrorScreen screen) {
             // NeoForge only offers this button for warnings, never for fatal loading errors.
             String label=net.neoforged.fml.i18n.FMLTranslations.parseMessage("fml.button.continue.launch");
@@ -50,6 +58,15 @@ public final class ClientProbe {
         }
         int wanted=Integer.getInteger("bons_and_furious.probeWorldTicks",120);
         if(worldTicks<wanted && ticks<Math.max(2400,wanted*4))return;
+        boolean jei42 = Boolean.getBoolean("bons_and_furious.jeiOracle42");
+        if (jei42 && !JeiOracle42.ready() && ticks < 18000) return;
+        if (jei42 && Boolean.getBoolean("bons_and_furious.jeiReconnect42") && reconnectStage == 0 && JeiOracle42.ready()) {
+            reconnectStage = 1;
+            worldTicks = 0;
+            mc.level.disconnect();
+            mc.disconnect(new net.minecraft.client.gui.screens.TitleScreen());
+            return;
+        }
         finished=true;Map<String,Object> result=new LinkedHashMap<>();
         try {
             result.put("world_loaded",mc.level!=null);result.put("world_ticks",worldTicks);
@@ -57,6 +74,8 @@ public final class ClientProbe {
             result.put("dimension",mc.level.dimension().location().toString());
             result.put("target_checks",ProbeChecks.forceTargets(true));
             result.put("behavior",BehaviorChecks.run());
+            if (jei42) result.put("jei42", JeiOracle42.dump());
+            if (Boolean.getBoolean("bons_and_furious.sharksClient42")) result.put("sharks_client42", SharksClient42.run());
             result.put("commands",new ArrayList<>(commandLog));
             Map<String,Object> shadow=ShadowHarvest.harvest(true);
             result.put("shadow",shadow);

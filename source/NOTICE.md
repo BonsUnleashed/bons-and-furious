@@ -76,3 +76,15 @@ their code: Collections Of Optimizations, C2ME, Paper, Gale, Leaves, Bellows,
 Lithium (documentation), TickMender, InventoryAdvancementAccelerator, Sodium (pull
 request #2679) and AzureLib. The Forge release's bons_and_furious.properties names
 the idea behind each switch on its "Idea:" line; "ours" marks our own designs.
+
+In 1.0.42+mc1.21.1, JEI recipe deferral adapts the recipe enumeration of
+Just Enough Items 19.51.0.418 (mezz, MIT), including grindstone disenchanting,
+to resumable work. Its copyright and permission notice is retained in
+src/main/resources/META-INF/licenses/mezz--JustEnoughItems.txt.
+The notice was retrieved from the upstream 1.21.1 source at commit
+b74c702fe9e192da58e960e1ab2d1dd639a2488d.
+
+Ben's Sharks 1.2.6 (benndevs) is an optional compatibility target; its JAR
+declares LGPLv3. This release adds targeted hooks and our goal-query helper,
+not its entity classes, textures, sounds, loot or other assets. Its exact
+target hashes and upstream location are recorded in upstream-credits.json.

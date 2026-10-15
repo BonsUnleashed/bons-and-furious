@@ -1,9 +1,15 @@
 # Minecraft 1.21.1 port coverage
 
-All 307 controls of Bons and Furious 1.0.41 (127 from 1.0.27, 180 added in 1.0.28 and later) are accounted for: 205 ported, 55 retired because the 1.21.1 target changed or was fixed upstream, 47 target mods unavailable for Minecraft 1.21.1 / NeoForge.
+All 313 controls of Bons and Furious 1.0.42 are accounted for: 211 ported, 55 retired because the 1.21.1 target changed or was fixed upstream, 47 target mods unavailable in the recorded Minecraft 1.21.1 / NeoForge survey.
 
 | Control | Added | Status | Explanation |
 | --- | --- | --- | --- |
+| `benssharks_tick_listeners` | 1.0.42 | ported | Guarded no-op domain filters for Ben's Sharks 1.2.6 EntityTickEvent.Pre handlers; original event ordering retained. |
+| `benssharks_work_queue_idle` | 1.0.42 | ported | Skip empty queue allocation; delayed and nested work timing compared on/off. |
+| `benssharks_item_animation_idle` | 1.0.42 | ported | Skip non-Spetum hands; main/offhand server data and client animation transitions checked. |
+| `benssharks_prey_search_merge` | 1.0.42 | ported | Preserve selection/random rolls and priority preemption; first post-start duplicate rolls corrected in qualification. |
+| `jei_join_recipe_deferral` | 1.0.42 | ported | JEI 19.51 anvil/grindstone order/content, late additions and actual reconnect checked; default false. |
+| `vanilla_spawn_area_preload` | 1.0.42 | ported | NeoForge server-start preload, repeated preparation/restart, residency and non-ticking sentinel checked; default true. |
 | `adastra_gravity_primitive` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `alexscaves_equipment_enumeration` | 1.0.27 or earlier | target unavailable | No author-published Minecraft 1.21.1 NeoForge build found in the recorded Modrinth/CurseForge query; original patch retained in the 1.20.1 source. |
 | `alexscaves_item_renderer_reuse` | 1.0.36 | target unavailable | No author-published Minecraft 1.21.1 NeoForge build of Alex's Caves (Modrinth/CurseForge query 2026-10-09, evidence/new-target-discovery-1036.json). |

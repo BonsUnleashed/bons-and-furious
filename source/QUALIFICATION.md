@@ -1,4 +1,38 @@
-# 1.0.41+mc1.21.1 (2026-10-12)
+# 1.0.42+mc1.21.1 (2026-10-15)
+
+Runtime gates PASS for SHA-256
+`d3a821e635caafb90d05fa9f09b2f40ff350d47a6fc3172a2690a8ad4e84ad98`.
+The release artifact is SHA-256
+`ddc72a3ebb4954debb3440641e03470f7fadb486a23bd9661fd34a79fb387555`.
+It adds only the JEI copyright and MIT permission notice: all 927 entries of
+the runtime-tested artifact, including every class and configuration, are
+byte-identical. It was rebuilt and passed fingerprint and naming checks.
+The separate release receipt binds the final public source archive hash to
+its independent rebuild; archive hashes are not embedded in the archive itself.
+
+- Build and fingerprint verification pass; Gradle test has no source tests. Separate
+  production-runtime probes provide the behavior evidence below.
+- 3,072 direct goal comparisons (2,068 positive), 1,280 selector comparisons including
+  live-target preemption and intermediate ticks; 24 Sharks mob layouts/19 merged groups.
+- 52 guarded listener guardian-target comparisons, 3 Barracuda feeding comparisons,
+  4 server hand-state and 2 client animation checks. Delayed/nested work matches on/off.
+- Spawn preparation/repeat/restart passes with unchanged forced chunks and terrain;
+  a distant preloaded chunk stays resident while its cow receives zero ticks over 101
+  server ticks with vanilla spawn radius 0.
+- JEI ordered content matches on/off: 662 anvil and 1,449 grindstone; with two late-plugin
+  marker recipes 664/1,449. Actual disconnect/reopen observes 2 starts/1 stop/2 completions
+  and unchanged recipe dumps. Cancellation/reset assertions pass.
+- Embeddium 1,361,428,793 and Iris 1,412,298,376 shadow checks, zero mismatches.
+  Idle helpers remain explicitly unexercised; these are not performance benchmarks.
+- Static compatibility: 489 jars, zero unreadable/crash-class hits; access audit: 490 jars,
+  88 overwrites, zero unsafe access verdicts. Static rules do not replace runtime tests.
+- Isolated source snapshot rebuild with build cache disabled is byte-identical.
+
+Not a comprehensive modpack, multiplayer, long-session, or every-species gameplay test.
+No performance claim from Forge 1.20.1 is reused. Previous release evidence follows as
+historical context, not evidence for this candidate's changed code.
+
+# Historical: 1.0.41+mc1.21.1 (2026-10-12)
 
 **PASS** for `bons_and_furious-neoforge-1.0.41+mc1.21.1.jar`, SHA-256
 `5e271402cca9eae0fa640e1a5a79fa6b8954da2f37e70ef072af787d23181a5f`.

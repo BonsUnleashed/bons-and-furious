@@ -1,10 +1,17 @@
 # Bons and Furious — Minecraft 1.21.1 / NeoForge
 
-This is the Minecraft 1.21.1 port of Bons and Furious 1.0.41. It uses mod ID `bons_and_furious`, version
-`1.0.41+mc1.21.1`, and requires Java 21 and NeoForge 21.1.252 or newer. Minecraft is restricted to exactly 1.21.1.
+This is the Minecraft 1.21.1 port of Bons and Furious 1.0.42. It uses mod ID `bons_and_furious`, version
+`1.0.42+mc1.21.1`, and requires Java 21 and NeoForge 21.1.252 or newer. Minecraft is restricted to exactly 1.21.1.
 The tested loader is 21.1.252; later loaders are not automatically qualified.
 
-It builds on the published 1.0.39+mc1.21.1 (SHA-256
+This release builds on 1.0.41+mc1.21.1 and adds six controls: spawn-area preload,
+JEI recipe deferral (default off), and four Ben's Sharks optimizations. Sharks targets
+the author's 1.2.6 NeoForge beta, not the Forge 1.3.0 build; its upstream beta warnings
+still apply. No despawn, loot or rarity changes are folded into this port.
+Qualification corrected duplicate initial goal-selector random rolls and clears JEI
+armed state on cancellation. See QUALIFICATION.md for exact scope and limitations.
+
+Historical baseline: 1.0.41 builds on the published 1.0.39+mc1.21.1 (SHA-256
 `0fdf2fb35e7791e1216fbb26605b12e0be0ccf1f9858f2950044189fbb1958ea`) and adds what Forge 1.0.40 and 1.0.41 changed, taken
 from the Forge 1.0.41 release (SHA-256 `6106736007d8ac7811d54e21f7182f7da846ec186c2b136e1504c8e989c42c46`), which
 includes 1.0.40. 1.0.39+mc1.21.1 was 1.0.38+mc1.21.1 with the one fix of the Forge 1.0.39 release. 1.0.38+mc1.21.1
@@ -21,7 +28,7 @@ release.
 
 ## Install
 
-Put `bons_and_furious-neoforge-1.0.41+mc1.21.1.jar` in the `mods` folder of a Minecraft 1.21.1 NeoForge instance.
+Put `bons_and_furious-neoforge-1.0.42+mc1.21.1.jar` in the `mods` folder of a Minecraft 1.21.1 NeoForge instance.
 Optional target mods are not required; their patches only apply when the relevant targets and method fingerprints
 match. MixinSquared is bundled; NeoForge supplies MixinExtras.
 
@@ -31,8 +38,8 @@ dedicated servers, where client-only target mods should not be installed.
 
 ## Coverage and compatibility
 
-The port ships **205 controls**: 201 switches guarded by 1,726 method or class-shape checks, three legacy mixin
-controls and the Scorched function fix. Bons and Furious 1.0.41 has 307 controls in all; 55 are retired because the
+The port ships **211 controls**: 207 switches guarded by 1,959 method or class-shape checks, three legacy mixin
+controls and the Scorched function fix. Bons and Furious 1.0.42 has 313 controls in all; 55 are retired because the
 1.21.1 target changed or already does the work, and 47 depend on target mods with no 1.21.1 NeoForge build.
 [PORT-COVERAGE.md](PORT-COVERAGE.md) accounts for every one of them.
 
@@ -186,9 +193,9 @@ On Unix, use `./gradlew build`. The wrapper pins Gradle 9.2.1 and the build pins
 directories. It does not install those mods into a game.
 
 `build` checks all fingerprints against the pinned targets and refuses a stale guard table. Do not refresh fingerprints
-merely to silence a mismatch: review the target's behavior first. Thirty-three methods have explicitly reviewed alternate
-fingerprints for the equivalent NeoForm development and Mojang production instruction layouts (41 guard entries). No
-wildcard hashes are accepted.
+merely to silence a mismatch: review the target's behavior first. Explicitly reviewed alternate
+fingerprints cover equivalent NeoForm development and Mojang production instruction layouts.
+No wildcard hashes are accepted.
 
 The output is in `build/libs/`. `src/probe` is a separate qualification mod; `gradlew.bat probeJar` builds it
 separately. It is excluded from the release JAR. The archive order, timestamps and compression are deterministic.

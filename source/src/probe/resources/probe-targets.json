@@ -1325,5 +1325,85 @@
     "targets": [
       "net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager"
     ]
+  },
+  "benssharks_work_queue_idle": {
+    "client": false,
+    "targets": [
+      "net.mcreator.sharks.BenssharksMod"
+    ]
+  },
+  "benssharks_item_animation_idle": {
+    "client": false,
+    "targets": [
+      "net.mcreator.sharks.init.ItemAnimationFactory"
+    ]
+  },
+  "benssharks_prey_search_merge": {
+    "client": false,
+    "targets": [
+      "net.mcreator.sharks.entity.AxodileEntity",
+      "net.mcreator.sharks.entity.BarracudaEntity",
+      "net.mcreator.sharks.entity.BaskingSharkEntity",
+      "net.mcreator.sharks.entity.BlacktipReefSharkEntity",
+      "net.mcreator.sharks.entity.BlueSharkEntity",
+      "net.mcreator.sharks.entity.BonnetheadSharkEntity",
+      "net.mcreator.sharks.entity.BullSharkEntity",
+      "net.mcreator.sharks.entity.CookiecutterSharkEntity",
+      "net.mcreator.sharks.entity.GreaterAxodileEntity",
+      "net.mcreator.sharks.entity.GreenlandSharkEntity",
+      "net.mcreator.sharks.entity.KrillEntity",
+      "net.mcreator.sharks.entity.LandSharkEntity",
+      "net.mcreator.sharks.entity.LemonSharkEntity",
+      "net.mcreator.sharks.entity.MakoSharkEntity",
+      "net.mcreator.sharks.entity.MegalodonEntity",
+      "net.mcreator.sharks.entity.NurseSharkEntity",
+      "net.mcreator.sharks.entity.PilotFishEntity",
+      "net.mcreator.sharks.entity.RemoraEntity",
+      "net.mcreator.sharks.entity.RollParticleEntity",
+      "net.mcreator.sharks.entity.ShrakEntity",
+      "net.mcreator.sharks.entity.ThalassogerEntity",
+      "net.mcreator.sharks.entity.TigerSharkEntity",
+      "net.mcreator.sharks.entity.WhaleSharkEntity",
+      "net.mcreator.sharks.entity.WhitetipSharkEntity",
+      "net.minecraft.world.entity.ai.goal.GoalSelector",
+      "net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal"
+    ]
+  },
+  "benssharks_tick_listeners": {
+    "client": false,
+    "targets": [
+      "net.mcreator.sharks.procedures.BREACHProcedure",
+      "net.mcreator.sharks.procedures.BarracudaEatProcedure",
+      "net.mcreator.sharks.procedures.BaskingSharkOnInitialEntitySpawnProcedure",
+      "net.mcreator.sharks.procedures.BlueSharkOnInitialEntitySpawnProcedure",
+      "net.mcreator.sharks.procedures.BonnetheadSharkOnInitialEntitySpawnProcedure",
+      "net.mcreator.sharks.procedures.BullSharkOnInitialEntitySpawnProcedure",
+      "net.mcreator.sharks.procedures.ChaseTargetProcedure",
+      "net.mcreator.sharks.procedures.CookiecutterSharkOnInitialEntitySpawnProcedure",
+      "net.mcreator.sharks.procedures.GreenlandSharkOnInitialEntitySpawnProcedure",
+      "net.mcreator.sharks.procedures.MakoSharkOnInitialEntitySpawnProcedure",
+      "net.mcreator.sharks.procedures.MegalodonOnInitialEntitySpawnProcedure",
+      "net.mcreator.sharks.procedures.MovementRotationProcedure",
+      "net.mcreator.sharks.procedures.NurseSharkOnInitialEntitySpawnProcedure",
+      "net.mcreator.sharks.procedures.RemoraOnInitialEntitySpawnProcedure",
+      "net.mcreator.sharks.procedures.ShrakOnInitialEntitySpawnProcedure",
+      "net.mcreator.sharks.procedures.TigerSharkOnInitialEntitySpawnProcedure",
+      "net.mcreator.sharks.procedures.WhitetipSharkOnInitialEntitySpawnProcedure"
+    ]
+  },
+  "jei_join_recipe_deferral": {
+    "client": true,
+    "targets": [
+      "mezz.jei.library.plugins.vanilla.VanillaPlugin",
+      "mezz.jei.library.plugins.vanilla.anvil.AnvilRecipeMaker",
+      "mezz.jei.library.plugins.vanilla.grindstone.GrindstoneRecipeMaker",
+      "mezz.jei.library.recipes.RecipeManagerInternal"
+    ]
+  },
+  "vanilla_spawn_area_preload": {
+    "client": false,
+    "targets": [
+      "net.neoforged.neoforge.server.ServerLifecycleHooks"
+    ]
   }
 }

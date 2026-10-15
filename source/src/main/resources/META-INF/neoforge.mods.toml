@@ -4,7 +4,7 @@ license="GPL-3.0-only"
 issueTrackerURL="https://github.com/BonsUnleashed/bons-and-furious/issues"
 [[mods]]
 modId="bons_and_furious"
-version="1.0.41+mc1.21.1"
+version="1.0.42+mc1.21.1"
 displayName="Bons and Furious"
 authors="BonsUnleashed"
 description="Targeted performance patches and compatibility fixes for Minecraft 1.21.1 and NeoForge."
@@ -377,3 +377,19 @@ config="bons_and_furious_pacing.mixins.json"
 
 [[mixins]]
 config="terrain_efficiency.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.vanilla_spawn_preload.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.benssharks.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.jei_deferral.mixins.json"
+
+[[dependencies.bons_and_furious]]
+modId="benssharks"
+type="optional"
+versionRange="*"
+ordering="AFTER"
+side="BOTH"

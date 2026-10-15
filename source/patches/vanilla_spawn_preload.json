@@ -1,0 +1,24 @@
+{
+  "group": "vanilla_spawn_preload",
+  "keys": {
+    "vanilla_spawn_area_preload": {
+      "mod": "minecraft",
+      "since": "1.0.42",
+      "scripts": [],
+      "mixins": [
+        "bons.furious.mixin.vanilla_spawn_preload.ServerStartingPreloadMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/neoforged/neoforge/server/ServerLifecycleHooks",
+          "method": "handleServerStarting",
+          "desc": "(Lnet/minecraft/server/MinecraftServer;)V",
+          "sha256": "7f622a6f6f55c96ad721a733aca518deb5fe1e8014515aab2ab202711837c252"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Conditional injection; original non-idle operation unchanged.",
+      "license": "Original helper and injections; Ben's Sharks is LGPL-3.0-only; Minecraft and NeoForge code not redistributed."
+    }
+  }
+}

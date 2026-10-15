@@ -1,0 +1,35 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.benssharks",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "bons.pure.config.PureMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "BenssharksModTickMixin",
+    "ItemAnimationFactoryMixin",
+    "GoalMergeMixin",
+    "MobAccessor",
+    "NatgAccessor",
+    "TargetGoalAccessor",
+    "BREACHTickFilterMixin",
+    "ChaseTargetTickFilterMixin",
+    "MovementRotationTickFilterMixin",
+    "BaskingSharkOnInitialEntitySpawnTickFilterMixin",
+    "BlueSharkOnInitialEntitySpawnTickFilterMixin",
+    "BonnetheadSharkOnInitialEntitySpawnTickFilterMixin",
+    "BullSharkOnInitialEntitySpawnTickFilterMixin",
+    "CookiecutterSharkOnInitialEntitySpawnTickFilterMixin",
+    "GreenlandSharkOnInitialEntitySpawnTickFilterMixin",
+    "MakoSharkOnInitialEntitySpawnTickFilterMixin",
+    "MegalodonOnInitialEntitySpawnTickFilterMixin",
+    "NurseSharkOnInitialEntitySpawnTickFilterMixin",
+    "RemoraOnInitialEntitySpawnTickFilterMixin",
+    "ShrakOnInitialEntitySpawnTickFilterMixin",
+    "TigerSharkOnInitialEntitySpawnTickFilterMixin",
+    "WhitetipSharkOnInitialEntitySpawnTickFilterMixin",
+    "BarracudaEatTickFilterMixin"
+  ]
+}

@@ -71,6 +71,12 @@ public final class PortProbe {
                     if(!key.isBlank()) decisions.put(key, Guards.decide(key).toString());
             }
             result.put("decisions",decisions);
+            if (Boolean.getBoolean("bons_and_furious.spawnOracle42"))
+                result.put("spawn_oracle42", SpawnOracle42.run(server));
+            if (Boolean.getBoolean("bons_and_furious.goalOracle42"))
+                result.put("goal_oracle42", GoalOracle42.run(server.overworld()));
+            if (Boolean.getBoolean("bons_and_furious.sharksLifecycle42"))
+                result.put("sharks_lifecycle42", SharksLifecycle42.run(server.overworld()));
             Map<String,Object> dimensions = new LinkedHashMap<>();
             Map<BlockState,byte[]> stateNames=new IdentityHashMap<>();
             for (var dimension:List.of(Level.OVERWORLD,Level.NETHER,Level.END)) {
@@ -111,6 +117,8 @@ public final class PortProbe {
             result.put("surface_hits",bons.pure.terrain.SurfaceEstimateShare.HITS.sum());
             result.put("surface_misses",bons.pure.terrain.SurfaceEstimateShare.MISSES.sum());
             result.put("passed",true);
+            if (Boolean.getBoolean("bons_and_furious.spawnNonTicking42")) SpawnOracle42.beginNonTicking(server);
+            if (Boolean.getBoolean("bons_and_furious.sharksQueue42")) SharksQueue42.begin(server);
             System.out.println("BONS_PORT_PROBE_PASS "+dimensions);
             return true;
         } catch(Throwable t) {
@@ -152,6 +160,14 @@ public final class PortProbe {
         pending = null;
         result.put("soak_ticks", soakDone);
         result.put("commands", commandLog);
+        if (Boolean.getBoolean("bons_and_furious.sharksQueue42")) {
+            try { result.put("sharks_queue42", SharksQueue42.finish()); }
+            catch (Throwable error) { result.put("passed", false); result.put("error", error.toString()); }
+        }
+        if (Boolean.getBoolean("bons_and_furious.spawnNonTicking42")) {
+            try { result.put("spawn_non_ticking42", SpawnOracle42.finishNonTicking(server)); }
+            catch (Throwable error) { result.put("passed", false); result.put("error", error.toString()); }
+        }
         Map<String, Object> shadow = ShadowHarvest.harvest(false);
         result.put("shadow", shadow);
         if (!ShadowHarvest.clean(shadow)) result.put("passed", false);
