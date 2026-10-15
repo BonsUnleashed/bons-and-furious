@@ -81,7 +81,7 @@ The mob warm-up uses about 7 MB more class memory and adds roughly half a second
 | Minecraft | Loader | Controls | Requirements |
 | --- | --- | ---: | --- |
 | 1.20.1 | Forge | 313 | Forge 47.3.22 or newer |
-| 1.21.1 | NeoForge | 205 | Java 21; NeoForge 21.1.252 or newer |
+| 1.21.1 | NeoForge | 211 | Java 21; NeoForge 21.1.252 or newer |
 
 Each build uses one JAR for client and server, with no required target mods. Coverage differs between builds; the figures above are Forge 1.20.1 measurements.
 
@@ -101,7 +101,7 @@ Coverage means the tested build and the specific code paths of each mod, not eve
 
 ## Install the matching build
 
-For Minecraft 1.21.1, use `bons_and_furious-neoforge-1.0.41+mc1.21.1.jar`, Java 21 and NeoForge 21.1.252 or newer. MixinSquared is bundled; NeoForge supplies MixinExtras. [NeoForge setup and compatibility](https://github.com/BonsUnleashed/bons-and-furious/wiki/Minecraft-1.21.1-NeoForge).
+For Minecraft 1.21.1, use `bons_and_furious-neoforge-1.0.42+mc1.21.1.jar`, Java 21 and NeoForge 21.1.252 or newer. MixinSquared is bundled; NeoForge supplies MixinExtras. [NeoForge setup and compatibility](https://github.com/BonsUnleashed/bons-and-furious/wiki/Minecraft-1.21.1-NeoForge).
 
 For Minecraft 1.20.1 / Forge:
 
