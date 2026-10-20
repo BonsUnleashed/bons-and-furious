@@ -21,6 +21,8 @@ import org.slf4j.Logger;
  * and the one method that clears it, clean(), has no caller in Forge 47.4.16 or in any installed jar (scanned). Registry
  * sync with a server changes the registry object in place, so contains() keeps answering for the current contents.
  * Nothing is kept while the active item registry is still missing (the original then fails the same way on its own).
+ * Since 1.0.46: JEI 15.62.0.218 keeps the wrapper itself (our merged PR #4525, ItemStackHelper's constructor); there the
+ * switch stands down with an INFO line (patches/jei.json redundant_since).
  */
 public final class ServerItemRegistry {
     /** Runtime switch (the config switch acts when classes are transformed). -Dbons_and_furious.jeiServerItemRegistry=false also turns it off. */

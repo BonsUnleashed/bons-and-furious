@@ -1,0 +1,110 @@
+{
+  "group": "modernfix_pack_prebuild",
+  "keys": {
+    "modernfix_pack_cache_prebuild": {
+      "mod": "modernfix",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.modernfix_pack_prebuild.PathPackResourcesPrebuildMixin",
+        "bons.furious.mixin.modernfix_pack_prebuild.ResourcePackLoaderPrebuildMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/resourcepacks/ForgePathPackResourcesMixin",
+          "method": "generateResourceCache",
+          "desc": "()Lorg/embeddedt/modernfix/resources/PackResourcesCacheEngine;",
+          "note": "under the pack's lock: the existing engine, or new PackResourcesCacheEngine(type -> resolve(type directory)) stored in cacheEngine",
+          "sha256": "785fe2dafbc82faeb68dc14bd24abd346c0a76c27024a9e4a6e2148ee459bcc0"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/resourcepacks/ForgePathPackResourcesMixin",
+          "method": "lambda$generateResourceCache$0",
+          "desc": "(Lnet/minecraft/server/packs/PackType;)Ljava/nio/file/Path;",
+          "note": "the root-path function: this.resolve(type directory)",
+          "sha256": "ded9202a96986cd850e523dfe918ee46e087a0a939fa8f193d749d508ab4f912"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/resourcepacks/ForgePathPackResourcesMixin",
+          "method": "cacheResources",
+          "desc": "(Ljava/lang/String;ZLjava/nio/file/Path;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "a new pack starts without an engine (invalidateCache at the end of the constructor)",
+          "sha256": "1e2e6205046e1bea58269d0244cb9208a1c5ceda6969eff9a67d6f50534cf72a"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/resourcepacks/ForgePathPackResourcesMixin",
+          "method": "useCacheForNamespaces",
+          "desc": "(Lnet/minecraftforge/resource/PathPackResources;Lnet/minecraft/server/packs/PackType;)Ljava/util/Set;",
+          "note": "getNamespaces uses the engine only once the pack holds one (the switch never stores one itself)",
+          "sha256": "49b136bb0bc5ef942673ff6d154bde465ad556c1486c29f634ce45abfb1830af"
+        },
+        {
+          "class": "org/embeddedt/modernfix/resources/PackResourcesCacheEngine",
+          "method": "<init>",
+          "desc": "(Ljava/util/function/Function;)V",
+          "note": "records the root paths and the build tasks; builds nothing",
+          "sha256": "ce2b65fb724b358a7e2053c1bf19aa8fa59a5599a2f826369c1d7214b97c51cd"
+        },
+        {
+          "class": "org/embeddedt/modernfix/resources/PackResourcesCacheEngine",
+          "method": "awaitLoad",
+          "desc": "()V",
+          "note": "the first caller builds the tree under the engine's lock; later callers find it built",
+          "sha256": "203f2f96007488fbe4062c58540c31c10b710bb644ec27c547629c3cfe456dc0"
+        },
+        {
+          "class": "org/embeddedt/modernfix/resources/PackResourcesCacheEngine",
+          "method": "doGenerateCache",
+          "desc": "()V",
+          "note": "runs the walk tasks and the optimise step",
+          "sha256": "e29e532ff1a9300d061e4ce061693cf758f66058221b496a0a56b4dd4149155a"
+        },
+        {
+          "class": "org/embeddedt/modernfix/resources/PackResourcesCacheEngine",
+          "method": "hasResource",
+          "desc": "([Ljava/lang/String;)Z",
+          "note": "awaitLoad first: the call the background task uses to build",
+          "sha256": "9b2115bc2ddd7251cba5c23fee3b053588dadbb001d7f984527829e78532c2d2"
+        },
+        {
+          "class": "net/minecraftforge/resource/ResourcePackLoader",
+          "method": "loadResourcePacks",
+          "desc": "(Lnet/minecraft/server/packs/repository/PackRepository;Ljava/util/function/Function;)V",
+          "note": "fills modResourcePacks (mod file -> its new pack), then registers the pack finder",
+          "sha256": "25300a3300ddaa29823334769271f4d514bc15a0b25f8b4becca258aae2a1b2e"
+        },
+        {
+          "class": "net/minecraftforge/resource/ResourcePackLoader",
+          "method": "createPackForMod",
+          "desc": "(Lnet/minecraftforge/forgespi/language/IModFileInfo;)Lnet/minecraftforge/resource/PathPackResources;",
+          "note": "the pack is a ResourcePackLoader$1 over mf.getFile()",
+          "sha256": "96cf67086d2b8a868a2aa587931538868913bd7f144298e7634d13de28108549"
+        },
+        {
+          "class": "net/minecraftforge/resource/ResourcePackLoader$1",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;ZLjava/nio/file/Path;Lnet/minecraftforge/forgespi/language/IModFileInfo;)V",
+          "note": "modFile = mf.getFile(), the map key",
+          "sha256": "3b710108d0bb6f7dedf3706f5d99e883d4560bc6c9d4f82204e9ce1300250108"
+        },
+        {
+          "class": "net/minecraftforge/resource/ResourcePackLoader$1",
+          "method": "resolve",
+          "desc": "([Ljava/lang/String;)Ljava/nio/file/Path;",
+          "note": "resolve = modFile.findResource(paths), which the background task's root-path function repeats",
+          "sha256": "4196bf7953ff7c2f7300d0b32df63fe056aff0e184979675d1e004390a66c8ae"
+        },
+        {
+          "class": "net/minecraftforge/resource/PathPackResources",
+          "method": "toString",
+          "desc": "()Ljava/lang/String;",
+          "note": "the injector's second target (always present, creates no engine): keeps it valid when ModernFix's mixin, and with it generateResourceCache, is not applied; also makes dev apply/control transform PathPackResources",
+          "sha256": "553383e3335face0b178641f7aa49285f5c3134a90f4a278e05660911b380d1a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject TAIL on ResourcePackLoader.loadResourcePacks(PackRepository, Function): one background task per jar-backed mod-file pack builds a ModernFix PackResourcesCacheEngine as ModernFix does (same constructor, root paths from the mod file's findResource, awaitLoad via hasResource); nothing is stored in the pack. MixinExtras @WrapOperation (priority 1500, require = 0, expect = 0; targets generateResourceCache and Forge's toString, see the guard note) on the NEW PackResourcesCacheEngine inside ModernFix's generateResourceCache (merged into Forge's PathPackResources): hands over the finished engine (waits while building; ModernFix builds in place when the task never started or failed). Finished engines are kept per mod file and handed to the packs later loads make for the same file. Helper bons.furious.patch.modernfix_pack_prebuild.PackCachePrebuild. Shadow mode -Dbons_and_furious.modernfixPackCachePrebuild.shadow=true.",
+      "license": "ModernFix (LGPL-3.0) and Forge (LGPL-2.1): no code of either is carried; the task calls ModernFix's own public engine constructor and methods"
+    }
+  }
+}

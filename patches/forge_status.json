@@ -13,7 +13,13 @@
           "class": "net/minecraftforge/network/ServerStatusPing",
           "method": "toBuf",
           "desc": "()Lio/netty/buffer/ByteBuf;",
-          "sha256": "6e48276d3acb25233ddfca2ac604b4262ef54ba001c2afbcf62c50211b89733c"
+          "sha256": "7185631470867802a7c5dba484688db49ddff30fae305c665db1a03dd1b482de",
+          "sha256_also": [
+            {
+              "build": "forge 47.4.16",
+              "sha256": "6e48276d3acb25233ddfca2ac604b4262ef54ba001c2afbcf62c50211b89733c"
+            }
+          ]
         },
         {
           "class": "net/minecraftforge/network/ServerStatusPing",
@@ -25,25 +31,76 @@
           "class": "net/minecraftforge/network/ServerStatusPing",
           "method": "getChannelsForMod",
           "desc": "(Ljava/lang/String;)Ljava/util/List;",
-          "sha256": "4d8b8abf18c98b55b17f31fa2195308f07ec2faadc0d4310a6bfa60026f455a7"
+          "note": "since 1.0.46: Forge 47.4.26 replaced it with getChannelsByMod (our merged PR #10893)",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "forge 47.4.16",
+              "sha256": "4d8b8abf18c98b55b17f31fa2195308f07ec2faadc0d4310a6bfa60026f455a7"
+            }
+          ]
         },
         {
           "class": "net/minecraftforge/network/ServerStatusPing",
           "method": "getNonModChannels",
           "desc": "()Ljava/util/List;",
-          "sha256": "5adde9b79e08eb401584e780385df45764e7a6415d352b19969da6dcffbf6c5d"
+          "sha256": "92956442be86998fd0058d415238a2df8d88617f6a976994dd62b1f231c0989c",
+          "sha256_also": [
+            {
+              "build": "forge 47.4.16",
+              "sha256": "5adde9b79e08eb401584e780385df45764e7a6415d352b19969da6dcffbf6c5d"
+            }
+          ]
         },
         {
           "class": "net/minecraftforge/network/ServerStatusPing",
           "method": "lambda$getChannelsForMod$10",
           "desc": "(Ljava/lang/String;Ljava/util/Map$Entry;)Z",
-          "sha256": "be295e25e820900b6b2c4ea0a53d99cfda069b452c2b2b8ec161a3bceebb3958"
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "forge 47.4.16",
+              "sha256": "be295e25e820900b6b2c4ea0a53d99cfda069b452c2b2b8ec161a3bceebb3958"
+            }
+          ]
         },
         {
           "class": "net/minecraftforge/network/ServerStatusPing",
           "method": "lambda$getNonModChannels$11",
           "desc": "(Ljava/util/Map$Entry;)Z",
-          "sha256": "b127a2bbb2cf959d28414addcd65ae6d899e89833dec84a5ee3a7e6f03d1d70b"
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "forge 47.4.16",
+              "sha256": "b127a2bbb2cf959d28414addcd65ae6d899e89833dec84a5ee3a7e6f03d1d70b"
+            }
+          ]
+        },
+        {
+          "class": "net/minecraftforge/network/ServerStatusPing",
+          "method": "getChannelsByMod",
+          "desc": "()Ljava/util/HashMap;",
+          "note": "since 1.0.46: Forge 47.4.26+: channels grouped by namespace in channel order (toBuf's input stays the same sequence)",
+          "sha256": "d7224832615926284739bc74612d7a46bedf4d1c593070a1e9131c0d437b8b00",
+          "sha256_also": [
+            {
+              "build": "forge 47.4.16",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "net/minecraftforge/network/ServerStatusPing",
+          "method": "lambda$getNonModChannels$10",
+          "desc": "(Ljava/util/Map$Entry;)Z",
+          "note": "since 1.0.46: Forge 47.4.26+ name of getNonModChannels' filter (47.4.16 named it lambda$getNonModChannels$11)",
+          "sha256": "b127a2bbb2cf959d28414addcd65ae6d899e89833dec84a5ee3a7e6f03d1d70b",
+          "sha256_also": [
+            {
+              "build": "forge 47.4.16",
+              "sha256": null
+            }
+          ]
         }
       ],
       "cancel": [],

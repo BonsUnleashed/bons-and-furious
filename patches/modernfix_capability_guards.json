@@ -1,0 +1,278 @@
+{
+  "group": "modernfix_capability_guards",
+  "keys": {
+    "modernfix_capability_guards": {
+      "mod": "modernfix",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.modernfix_capability_guards.DispatcherGeneratorMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/CapabilityProviderDispatcherGenerator",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set of ModernFix's generator (both hooks live here)",
+          "sha256": "cb1fd4176e70a0f4eaac0373a925a664b4ce1446654a579afbbeebaf2e0ca1d5"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/CapabilityProviderDispatcherGenerator",
+          "method": "getOrGenerateDispatcher",
+          "desc": "([Lnet/minecraftforge/common/capabilities/ICapabilityProvider;)Lorg/embeddedt/modernfix/forge/capability/GeneratedDispatcher;",
+          "note": "the GA entry we wrap (analysis flag = BETA && option)",
+          "sha256": "ffaee5361a395b5c9a7ba1696ec4d87ce127b70152fb6d7db85620d5392af9b4"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/CapabilityProviderDispatcherGenerator",
+          "method": "getOrGenerateDispatcher",
+          "desc": "([Lnet/minecraftforge/common/capabilities/ICapabilityProvider;Z)Lorg/embeddedt/modernfix/forge/capability/GeneratedDispatcher;",
+          "note": "the overload we call with analysis on",
+          "sha256": "5c109e3034da73eda9dde03c06907d9865f35bf6e5a3e5b2adc5c689a33988d3"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/CapabilityProviderDispatcherGenerator",
+          "method": "getOrGenerateConstructor",
+          "desc": "([Lnet/minecraftforge/common/capabilities/ICapabilityProvider;Z)Ljava/lang/invoke/MethodHandle;",
+          "sha256": "905f468ef94ca0ac360dca8f20ce97a922ccb48531127df1bc52b9f897ad93c8"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/CapabilityProviderDispatcherGenerator",
+          "method": "getOrGenerateConstructor",
+          "desc": "(Ljava/util/List;Z)Ljava/lang/invoke/MethodHandle;",
+          "note": "cache keyed by (types, analysis flag)",
+          "sha256": "c09174f23d16261c40d59353df21d722c355b4c29f1ba148011f2c8153bc8690"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/CapabilityProviderDispatcherGenerator",
+          "method": "lambda$getOrGenerateConstructor$0",
+          "desc": "(Lorg/embeddedt/modernfix/forge/capability/CapabilityProviderDispatcherGenerator$CacheKey;)Ljava/lang/invoke/MethodHandle;",
+          "sha256": "6aad217a663cfe4a65f7b54ff5293c44e4954e64848ce6251deaf074b22896a3"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/CapabilityProviderDispatcherGenerator",
+          "method": "generateClass",
+          "desc": "(Ljava/util/List;Z)Ljava/lang/invoke/MethodHandle;",
+          "note": "holds the CapabilityAnalyzer.analyze call we wrap",
+          "sha256": "cb1257453f9a108499907a6194e2886ac4b41e16d78cf3f240e2ec66aaa9b0c9"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/CapabilityProviderDispatcherGenerator",
+          "method": "buildDispatchList",
+          "desc": "(Ljava/util/List;Ljava/util/List;)Ljava/util/List;",
+          "note": "AlwaysEmpty = omitted, Known <= 5 = guarded, else unguarded",
+          "sha256": "0103329cd6f0fd7b1079bf49fa55abdb7c88c374d29de183f8ce8bebc8a0ae77"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/CapabilityProviderDispatcherGenerator",
+          "method": "collectCapabilityRefs",
+          "desc": "(Ljava/util/List;)Ljava/util/LinkedHashMap;",
+          "sha256": "aaff97891eae35cfb5974dab7869e3295714867d90e0d3706c08bcb3488c9d0e"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/CapabilityProviderDispatcherGenerator",
+          "method": "resolveCapabilityValues",
+          "desc": "(Ljava/util/LinkedHashMap;)Ljava/util/List;",
+          "note": "the field values the guards compare with (our resolver mirrors it)",
+          "sha256": "52a931e646658eed9a333f526a3def0d97170992e0319ffb04d533313a0602e5"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/CapabilityProviderDispatcherGenerator",
+          "method": "getRefField",
+          "desc": "(Ljava/lang/Class;Lorg/embeddedt/modernfix/forge/capability/analysis/CapabilityRef;)Ljava/lang/reflect/Field;",
+          "sha256": "053ac6584e00799764c2fa1c5767ac2ee530db31515cdb012a4c6f205eb6a7b7"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/CapabilityProviderDispatcherGenerator",
+          "method": "generateClinit",
+          "desc": "(Lorg/objectweb/asm/ClassWriter;Ljava/lang/String;Ljava/util/LinkedHashMap;)V",
+          "sha256": "cb6be06e941c31636f9c642c7c1660acc2b136c79d0e9a8bb840feeafb424440"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/CapabilityProviderDispatcherGenerator",
+          "method": "generateGetCapabilityMethod",
+          "desc": "(Lorg/objectweb/asm/ClassWriter;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;)V",
+          "note": "provider order, nonEmptyOrNull per call",
+          "sha256": "daeaa549eee1b0f68cf4672a24384f4e1f7f99e2105884cfe00d96dc8285fc00"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/CapabilityProviderDispatcherGenerator",
+          "method": "emitGuardedDispatch",
+          "desc": "(Lorg/objectweb/asm/MethodVisitor;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILorg/objectweb/asm/Label;Ljava/util/Map;)I",
+          "note": "identity tests of the asked capability against the resolved fields",
+          "sha256": "123316fca763637f951b44f00cb46af7569731f967d6c0106cc1b96c8fb6a4ae"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/CapabilityProviderDispatcherGenerator",
+          "method": "emitProviderGetCapability",
+          "desc": "(Lorg/objectweb/asm/MethodVisitor;Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)V",
+          "sha256": "b02cc2db9cbc24533a73e15f0ecc4a2d6f25fa31268b8ca5f5f5f688d8f41c2f"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/CapabilityProviderDispatcherGenerator",
+          "method": "emitCapabilityLoad",
+          "desc": "(Lorg/objectweb/asm/MethodVisitor;Ljava/lang/String;Lorg/embeddedt/modernfix/forge/capability/analysis/CapabilityRef;Ljava/util/Map;)V",
+          "sha256": "84ca40a049e6e7c6130cb253380cbd0269720ba159efd8c27b6aadbb2ee02976"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/GeneratedDispatcher",
+          "method": "*",
+          "desc": "",
+          "note": "the shadow dispatcher extends it",
+          "sha256": "5b7bb7fc1ed0d637b14731e25b90b407786e8c9833db9074bdc7decbdced2d4c"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/GeneratedDispatcher",
+          "method": "nonEmptyOrNull",
+          "desc": "(Lnet/minecraftforge/common/util/LazyOptional;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "the EMPTY identity test the proof relies on",
+          "sha256": "5e20980e8a73365d5832711df7be4bf22882fc17f3e2390154213120fa3a30d0"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/analysis/CapabilityAnalyzer",
+          "method": "analyze",
+          "desc": "(Ljava/lang/Class;)Lorg/embeddedt/modernfix/forge/capability/analysis/CapabilityAnalysisResult;",
+          "sha256": "e37da934b029394b9ff1f15bbdd5a486f021e60651d2e0bcf0e245cd45a48c2b"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/analysis/CapabilityAnalysisResult$KnownCapabilities",
+          "method": "*",
+          "desc": "",
+          "sha256": "f0cc3e02cc0682674e94b9d122d750e772fdc9394d4d51759ede7fb5a926d60e"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/analysis/CapabilityAnalysisResult$AlwaysEmpty",
+          "method": "*",
+          "desc": "",
+          "sha256": "d3fb3c3fe5912008fe8ea8f5cf870f907c8f5ca99dc08842c0060389f590d4ee"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/analysis/CapabilityAnalysisResult$Indeterminate",
+          "method": "*",
+          "desc": "",
+          "sha256": "dc462b2fbf9059e426282e7220d2332f0c03db45862f05360efe358a4314006e"
+        },
+        {
+          "class": "org/embeddedt/modernfix/forge/capability/analysis/CapabilityRef",
+          "method": "*",
+          "desc": "",
+          "sha256": "11d5792219987350bf74e733e0c95bb309931561ca3283717c946d8734c6cc80"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/faster_capabilities/CapabilityDispatcherMixin",
+          "method": "*",
+          "desc": "",
+          "note": "ModernFix's mixin: constructor hook calls the GA entry, getCapability delegates to the generated dispatcher",
+          "sha256": "2814557a9f4f59d2bd7670ecbf2a664f11451fa0ef91b57ef03edd8925182ecc"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/faster_capabilities/CapabilityDispatcherMixin",
+          "method": "createTurboDispatcher",
+          "desc": "(Ljava/util/Map;Ljava/util/List;Lnet/minecraftforge/common/capabilities/ICapabilityProvider;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "5aa494f122816f791d2f85bbe465957e774fbed6e348c51f99e61b502b32054a"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/faster_capabilities/CapabilityDispatcherMixin",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "sha256": "5c230a92fa32fc786f97d2ba4d343bca3d5dadbd73e978a9a2aaede1a42f2115"
+        },
+        {
+          "class": "org/embeddedt/modernfix/core/ModernFixMixinPlugin",
+          "method": "activeFeatureLevel",
+          "desc": "()Lorg/embeddedt/modernfix/annotation/FeatureLevel;",
+          "note": "stand-down at BETA",
+          "sha256": "3163067ae3751625b9f2f67f4e2b8f33dd31d1bd6a250c5a61bde95a9103e708"
+        },
+        {
+          "class": "org/embeddedt/modernfix/core/ModernFixMixinPlugin",
+          "method": "isOptionEnabled",
+          "desc": "(Ljava/lang/String;)Z",
+          "note": "stand-down when the user turns bytecode_analysis off",
+          "sha256": "a3b8dd9f93c8089c08204bb5bbee4056999b62ee2162097c36849c5ad4f21caa"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityDispatcher",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "Forge's loop (the reference ModernFix replaces): first present answer",
+          "sha256": "aff7dbc58d1187f3f6603f119e7235c01bad0b716e879dac45d07ba84ecb5696"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/Capability",
+          "method": "*",
+          "desc": "",
+          "note": "package-private constructor only: no subclass outside Forge's package",
+          "sha256": "ef1b2fe5d97b9a4992426188c57e42871214d07ae0c2042268009e6d57aa553b"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/Capability",
+          "method": "orEmpty",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraftforge/common/util/LazyOptional;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "the singleton when the asked capability differs, inst untouched",
+          "sha256": "635794e7d9dfe32cc1a3fffe20dc90fe4ee1ac6e0f776a404aea0e83370d56f3"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "*",
+          "desc": "",
+          "note": "private constructor only: no subclass",
+          "sha256": "eb3df48d49e75f27db2102a41c1206c592599c5c72b03f6be9d407bdc8977c0e"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "empty",
+          "desc": "()Lnet/minecraftforge/common/util/LazyOptional;",
+          "sha256": "daade5076cdc683554d5dcd12d56681e17aac9f4301a9212853f9e38e68d8af5"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "of",
+          "desc": "(Lnet/minecraftforge/common/util/NonNullSupplier;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "sha256": "1ffaa8df85b53b683fa3f2e4592a7be70cf39c6173e910db38be18f98e6066ff"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "cast",
+          "desc": "()Lnet/minecraftforge/common/util/LazyOptional;",
+          "sha256": "d6ee11652b8fc4b605d91bac434ba2b5574e707e7f1d329704c05f8c39a592e8"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "isPresent",
+          "desc": "()Z",
+          "sha256": "528ff0650ee32736aedfad726cb2cecad9ff733967636cf3f368cb7713d94073"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "<init>",
+          "desc": "(Lnet/minecraftforge/common/util/NonNullSupplier;)V",
+          "sha256": "a794c924c5e50a8c117e44b106b122bdf1680739f2668bbb2591febcd9443f30"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityManager",
+          "method": "get",
+          "desc": "(Lnet/minecraftforge/common/capabilities/CapabilityToken;)Lnet/minecraftforge/common/capabilities/Capability;",
+          "note": "pure holder initializers call only this",
+          "sha256": "cfcb25690a981b891339664a5e5d9fba4ca28a5e5a73482815f76dcf9d495e54"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityManager",
+          "method": "get",
+          "desc": "(Ljava/lang/String;Z)Lnet/minecraftforge/common/capabilities/Capability;",
+          "sha256": "825c0ee876585c01aa89fb7dc6d338d49ac66d331cde998b443f8bea75035a68"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityToken",
+          "method": "*",
+          "desc": "",
+          "note": "implicit empty constructor that token subclasses call",
+          "sha256": "e364741dc4aeb538db20bd0b7eeb3bdb341761d68bda1aef1b8ed5a1620fdee6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinExtras @WrapMethod on ModernFix's one-argument CapabilityProviderDispatcherGenerator.getOrGenerateDispatcher: asks the two-argument overload with analysis on; @WrapOperation on the CapabilityAnalyzer.analyze call in generateClass: ModernFix's result is kept only when our proof (helper bons.furious.patch.modernfix_capability_guards.CapabilityGuards + ProviderProof) confirms it, else Indeterminate); shadow helper ShadowDispatcher (extends ModernFix's GeneratedDispatcher)",
+      "license": "LGPL-3.0 (ModernFix): no ModernFix code is carried; we call its public generator and wrap one call; Forge (LGPL-2.1) classes are only fingerprinted"
+    }
+  }
+}

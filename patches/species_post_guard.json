@@ -1,0 +1,32 @@
+{
+  "group": "species_post_guard",
+  "keys": {
+    "species_post_disguise_guard": {
+      "mod": "species",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.species_post_guard.ForgeClientEventsPostGuardMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ninni/species/client/events/ForgeClientEvents",
+          "method": "livingEntityRenderer",
+          "desc": "(Lnet/minecraftforge/client/event/RenderLivingEvent;)V",
+          "note": "headItem.is(WICKED_MASK) && hasTag && tag has id && disguise != null && not a spectator -> event.setCanceled(true) (throws on Post), draw the disguise; then the TANKED / SNATCHED scales",
+          "sha256": "e6dc9c8b8eb3ee01f2f2215f129da3dce79a9ec132231fea52629627827d4f5e"
+        },
+        {
+          "class": "com/ninni/species/client/events/ForgeClientEvents",
+          "method": "*",
+          "desc": "",
+          "sha256": "cc495fdcb273768a7043733fa38c05106900ea7eae901246a28a47a3eb762c20"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix: MixinExtras @ModifyExpressionValue on the first ItemStack.is call of ForgeClientEvents.livingEntityRenderer: true only when the event is a RenderLivingEvent.Pre; helper bons.furious.patch.species_post_guard.PostDisguiseGuard",
+      "license": "All Rights Reserved (Species): no Species code is carried; the injector adds our own event-phase test to one boolean"
+    }
+  }
+}

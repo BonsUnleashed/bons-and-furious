@@ -1,0 +1,53 @@
+{
+  "group": "vanilla_zip_index",
+  "keys": {
+    "vanilla_zip_pack_listing_index": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.vanilla_zip_index.FilePackResourcesZipIndexMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/server/packs/FilePackResources",
+          "method": "m_8031_",
+          "desc": "(Lnet/minecraft/server/packs/PackType;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/server/packs/PackResources$ResourceOutput;)V",
+          "note": "listResources: ZipFile.entries(), then vanilla's filter loop (isDirectory, startsWith type/namespace/path/, tryBuild, accept or warn) that the index feeds",
+          "sha256": "0bfbe9cc68bc46fe315af6a62422f189dbcad236887f1e9b52f9a356d741a765"
+        },
+        {
+          "class": "net/minecraft/server/packs/FilePackResources",
+          "method": "m_10247_",
+          "desc": "()Ljava/util/zip/ZipFile;",
+          "note": "getOrCreateZipFile: one ZipFile object until close(); the index is tied to that object",
+          "sha256": "b9096fb37a067fc66a9ec4e465800fcdcbe67b95540ac33b0018e30e4018001e"
+        },
+        {
+          "class": "net/minecraft/server/packs/FilePackResources",
+          "method": "close",
+          "desc": "()V",
+          "note": "close() drops the ZipFile; the next listing reopens a new one and gets a new index",
+          "sha256": "908dec96150ecfafdba2aa14b208cfa196e36e621cc7f92e95c6a695b90a06af"
+        },
+        {
+          "class": "net/minecraft/server/packs/resources/IoSupplier",
+          "method": "m_247178_",
+          "desc": "(Ljava/util/zip/ZipFile;Ljava/util/zip/ZipEntry;)Lnet/minecraft/server/packs/resources/IoSupplier;",
+          "note": "IoSupplier.create(zip, entry): the supplier vanilla's loop hands out keeps the zip and the entry",
+          "sha256": "629b2339c487aec36c23435c3a6d1dc1e8ca57a6a6794113767fe0aa352a942a"
+        },
+        {
+          "class": "net/minecraft/server/packs/resources/IoSupplier",
+          "method": "m_247182_",
+          "desc": "(Ljava/util/zip/ZipFile;Ljava/util/zip/ZipEntry;)Ljava/io/InputStream;",
+          "note": "its body: zip.getInputStream(entry), which finds the entry by its name, so one ZipEntry object serves every listing",
+          "sha256": "23653f3417daf19ea1958824575c41dcece4115834757b92be5175b93e20461a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation (priority 1500, require = 0) on the ZipFile.entries() call in FilePackResources.listResources (m_8031_): after the original call (a closed ZipFile still throws), the enumeration of the bucket type/namespace/path/ (entry name up to its third '/') from a per-ZipFile index built in one walk (central-directory order, directories and names with fewer than three '/' left out); vanilla's filter loop runs unchanged on it. Helper bons.furious.patch.vanilla_zip_index.ZipListings (index, two fields added by the mixin: the index and its lock); Neighbours steps aside for ModernFix's BETA FilePackResourcesMixin and for any untested foreign mixin on FilePackResources. Shadow mode -Dbons_and_furious.zipPackListingIndex.shadow=true.",
+      "license": "Minecraft (Mojang): no-copy; the mixin replaces only the enumeration vanilla's own loop walks, with our own index (helpers bons.furious.patch.vanilla_zip_index.ZipListings and Neighbours)"
+    }
+  }
+}

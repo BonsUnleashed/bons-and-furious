@@ -1,0 +1,259 @@
+{
+  "group": "projectile_gates",
+  "keys": {
+    "immersiveaircraft_vehicle_trace_gate": {
+      "mod": "immersive_aircraft",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.projectile_gates.ImmersiveAircraftTraceGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "immersive_aircraft/mixin/ProjectileUtilMixin",
+          "method": "ia$getEntityHitResult",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;DLorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "RETURN of m_37287_: ia$vehicleTrace(previous, shooter.level(), ...); only a hit sets the return value",
+          "sha256": "d5bb3df3d25da33d034ca2bed6e73d3338dad0b3823056664d9c8ff70a31086b"
+        },
+        {
+          "class": "immersive_aircraft/mixin/ProjectileUtilMixin",
+          "method": "ia$getEntityHitResult",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;FLorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "RETURN of m_150175_",
+          "sha256": "845d291ba6c91ce3fa87ca2fa1eee5af2033a93c9af47afb7777853cc001b64c"
+        },
+        {
+          "class": "immersive_aircraft/mixin/ProjectileUtilMixin",
+          "method": "ia$vehicleTrace",
+          "desc": "(Lnet/minecraft/world/phys/EntityHitResult;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;FD)Ljava/util/Optional;",
+          "note": "level.getEntities(source, box.inflate(16), VehicleEntity::isInstance); filter only for vehicles; empty -> Optional.empty()",
+          "sha256": "55e9cb587b738c9abd5923b733a876c086770f7fa2279f2e8a9663287bbc7076"
+        },
+        {
+          "class": "immersive_aircraft/entity/VehicleEntity",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;Z)V",
+          "note": "VehicleEntity extends Entity directly (never a PartEntity or an Aquamirae SubPartEntity)",
+          "sha256": "7c0e8aa935e253fa4b942fa8034cc49633c41a51f1055c7b90aed28872de1011"
+        },
+        {
+          "class": "net/minecraft/world/entity/projectile/ProjectileUtil",
+          "method": "m_37287_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;D)Lnet/minecraft/world/phys/EntityHitResult;",
+          "sha256": "87e8354b04bbac9a5bd57148f20243367a325b92b00d4ceeb37a1978ecf55bd7"
+        },
+        {
+          "class": "net/minecraft/world/entity/projectile/ProjectileUtil",
+          "method": "m_150175_",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;F)Lnet/minecraft/world/phys/EntityHitResult;",
+          "sha256": "bbe22f5e79b2a24042a05952f567c02e65094e24160cae4b685b3abcf358d23d"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_6249_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+          "note": "Forge 47.4.16: profiler counter, section walk, then getPartEntities(); candidates are section entities and part entities only",
+          "sha256": "f64a036652ed9773518dc1939fb9149fa37aa93ceb9439fbdd6eef29541d73b1"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/LevelEntityGetterAdapter",
+          "method": "m_142232_",
+          "desc": "(Lnet/minecraft/world/phys/AABB;Ljava/util/function/Consumer;)V",
+          "sha256": "62c02342e7e0766387d97108d429102f557bfb130d027ae8b4b4ce23828a6af2"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntitySectionStorage",
+          "method": "m_188362_",
+          "desc": "(Lnet/minecraft/world/phys/AABB;Lnet/minecraft/util/AbortableIterationConsumer;)V",
+          "note": "section-key arithmetic: no wrap and no subSet(from > to) for coordinates within +-3e7",
+          "sha256": "6486526750f73e1597cef041f725ad09dd48a7c75e9fc441519b29e504ec1c43"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntitySectionStorage",
+          "method": "m_261111_",
+          "desc": "(Lnet/minecraft/world/phys/AABB;Lnet/minecraft/util/AbortableIterationConsumer;)V",
+          "sha256": "8efdf3acef602506f3956b61e84c9906d5c759d34465f913ed4a555dcbf1cdd8"
+        },
+        {
+          "class": "net/minecraft/util/profiling/ProfilerFiller",
+          "method": "m_6174_",
+          "desc": "(Ljava/lang/String;)V",
+          "note": "incrementCounter(String) = incrementCounter(String, 1)",
+          "sha256": "a64096ff181776c3d89e824432fc0f65882971a2314d9415b29de0872268c5eb"
+        },
+        {
+          "class": "net/minecraft/util/profiling/InactiveProfiler",
+          "method": "m_183275_",
+          "desc": "(Ljava/lang/String;I)V",
+          "note": "does nothing on the inactive profiler",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "dev/obscuria/aquamirae/mixin/MixinLevel",
+          "method": "injectMultipartEntities",
+          "desc": "(Lnet/minecraft/world/level/entity/LevelEntityGetter;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Consumer;Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;Lnet/minecraft/world/entity/Entity;Ljava/util/function/Predicate;Ljava/util/List;)V",
+          "note": "audited: adds the SubPartEntity sub-parts of MultipartEntity section entities that pass the predicate",
+          "audit": true,
+          "sha256": "9dea36a762f7fcecfb377b09f10b3862617f87356bcdb220a665996b5bfbd8f3"
+        },
+        {
+          "class": "dev/obscuria/aquamirae/api/common/entity/SubPartEntity",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "audited: SubPartEntity extends Entity directly (never a VehicleEntity)",
+          "audit": true,
+          "sha256": "e9b7c172ba2a337af444bb6e2ce926bf2c7b0533f22ee87f8b2784484f56fd1d"
+        },
+        {
+          "class": "org/valkyrienskies/mod/mixin/feature/get_entities/MixinLevel",
+          "method": "check2",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "audited: empty list for a too-big box, no log",
+          "audit": true,
+          "sha256": "63bf2b6c0f897516d3d525a6718011521462fe65117f01ed63acd9cc0b3ec87f"
+        },
+        {
+          "class": "org/valkyrienskies/mod/mixin/feature/get_entities/MixinLevel",
+          "method": "moveAABB1",
+          "desc": "(Lnet/minecraft/world/phys/AABB;)Lnet/minecraft/world/phys/AABB;",
+          "note": "audited: moves a shipyard box to world space (same level)",
+          "audit": true,
+          "sha256": "b90b54894a48dbf2aa1725c5bea67851685ca16c5d6a4f2642c98dd51462ca5d"
+        },
+        {
+          "class": "org/valkyrienskies/mod/mixin/feature/shipyard_entities/MixinEntitySectionStorage",
+          "method": "shipSections",
+          "desc": "(Lnet/minecraft/world/phys/AABB;Lnet/minecraft/util/AbortableIterationConsumer;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "audited: walks the same storage's shipyard sections; prints a stack trace only if that walk throws",
+          "audit": true,
+          "sha256": "e764005041101c76284c3b6532a13ed8dea31f094d4b57c27e85eb639b4210bf"
+        },
+        {
+          "class": "org/valkyrienskies/mod/util/BugFixUtil",
+          "method": "isCollisionBoxTooBig",
+          "desc": "(Lnet/minecraft/world/phys/AABB;)Z",
+          "note": "audited: volume > 1e8",
+          "audit": true,
+          "sha256": "7c5a8322877272ab23ed64d775d51c82649bc58d013bd1a270eb53245bfa61eb"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinSquared @TargetHandler, selected by name and descriptor: @Inject at the HEAD of Immersive Aircraft's two merged ProjectileUtilMixin.ia$getEntityHitResult handlers in ProjectileUtil, cancellable, require = 0, expect = 0, priority 1500); helper bons.furious.patch.projectile_gates.ProjectileGates (vanilla_entity_class_count_layer through constant method handles; tracked types added by the 1.0.46 layer edit)",
+      "license": "GPL-3.0 (Immersive Aircraft): no Immersive Aircraft code is carried; our injector only decides whether its unchanged handler runs; Minecraft: no code"
+    },
+    "knightlib_bone_hitbox_gate": {
+      "mod": "knightlib",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.projectile_gates.KnightLibPickGateMixin",
+        "bons.furious.mixin.projectile_gates.AbstractClientPlayerInfoAccessor"
+      ],
+      "guard": [
+        {
+          "class": "dev/xylonity/knightlib/client/entity/layer/BoneHitboxPicker",
+          "method": "pick",
+          "desc": "(Lnet/minecraft/client/Minecraft;F)V",
+          "note": "selection = null; camera ray; for each entitiesForRendering(): != camera, !isSpectator(), isPickable(), instanceof BoneHitboxHolder, ...",
+          "sha256": "4ee9125c0301189d85802f8acc1538942e484e3559470baa02960f077b4c5d66"
+        },
+        {
+          "class": "dev/xylonity/knightlib/mixin/GameRendererMixin",
+          "method": "knightlib$pickBoneHitboxes",
+          "desc": "(FLorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "2a9239b50aea01f7b0064af05d95aace61c697b6c2d0ee5aba411c7b022450b7"
+        },
+        {
+          "class": "dev/xylonity/knightlib/api/entity/hitbox/BoneHitboxHolder",
+          "method": "*",
+          "desc": "",
+          "sha256": "616d90a800a56b67ff0dbb231ed3d89f4dce768509a7e43d1cc200194e533bd0"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel",
+          "method": "m_104735_",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "entitiesForRendering = getEntities().getAll()",
+          "sha256": "4ccf94cc5c03f8e06360248ccbce8b8f3468445798aa4b5c5e56434b4c5561d4"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel",
+          "method": "m_6907_",
+          "desc": "()Ljava/util/List;",
+          "note": "players",
+          "sha256": "f941a3e4a9c9c3b84a981fec796b4068250b0e3c26307dabaf2deb0a855d73b3"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/LevelEntityGetterAdapter",
+          "method": "m_142273_",
+          "desc": "()Ljava/lang/Iterable;",
+          "sha256": "9d30e2cc61f9b6f46461df04c561bcdb4f5ecb246e12685650112b315cf2c151"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/TransientEntitySectionManager",
+          "method": "m_157653_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)V",
+          "note": "addEntity: lookup and section",
+          "sha256": "5f2f67f1c20294f5b4d354e0053fef4f1d87d67c0b0cd4eee5d600193300259c"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/TransientEntitySectionManager$Callback",
+          "method": "m_142044_",
+          "desc": "()V",
+          "note": "onMove: re-added to the new section",
+          "sha256": "d1e857c9bcf30c6d1c78c7e1e3b3586a18cf1cb8cd690a3f0885f21a54d1e0c8"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/TransientEntitySectionManager$Callback",
+          "method": "m_142472_",
+          "desc": "(Lnet/minecraft/world/entity/Entity$RemovalReason;)V",
+          "note": "onRemove: section, then lookup",
+          "sha256": "8d56d9c22965d3e4130a39575f3c966b9e709dc11a0901cc43e93249579a15a6"
+        },
+        {
+          "class": "net/minecraft/client/player/AbstractClientPlayer",
+          "method": "m_5833_",
+          "desc": "()Z",
+          "sha256": "52fbf81e6ae8fee397eab4ac50097b8d9a2da59eac4cc8fa7afbc0414a8bb2c2"
+        },
+        {
+          "class": "net/minecraft/client/player/AbstractClientPlayer",
+          "method": "m_108558_",
+          "desc": "()Lnet/minecraft/client/multiplayer/PlayerInfo;",
+          "note": "fills playerInfo once",
+          "sha256": "340191fe53c96bd428eb8ce60668150443efd18bebfe537446bfde8b8a9cda6a"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_5833_",
+          "desc": "()Z",
+          "sha256": "a9057d062fb197564c8e845386d2280bde1a1cc2fd7f4098adc42ac45ea65ea5"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_6087_",
+          "desc": "()Z",
+          "sha256": "a9057d062fb197564c8e845386d2280bde1a1cc2fd7f4098adc42ac45ea65ea5"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_6087_",
+          "desc": "()Z",
+          "sha256": "b1c9b91fabf4986dc38cb3c2b325a71ecd334d2e51c25915030f1ce5a5c1204a"
+        },
+        {
+          "class": "net/mehvahdjukaar/amendments/mixins/SmallFireballMixin",
+          "method": "amendments$isPickable",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "audited: reads a config value",
+          "audit": true,
+          "sha256": "c608bf0c30601b78a123d359cc953263531ce1b742d1da94d569e7752064b8e8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the single ClientLevel.entitiesForRendering() (m_104735_) call in KnightLib's BoneHitboxPicker.pick: the call runs as before, then the loop gets that iterable or a shared empty one (require = 0); @Accessor on AbstractClientPlayer.playerInfo (f_108546_); helper bons.furious.patch.projectile_gates.BoneHitboxPickGate (vanilla_entity_class_count_layer through ProjectileGates' method handles)",
+      "license": "LGPL-3.0 (KnightLib): no KnightLib code is carried; our wrapper only decides which entities its unchanged loop sees; Minecraft: no code"
+    }
+  }
+}

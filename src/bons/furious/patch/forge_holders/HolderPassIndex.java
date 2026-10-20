@@ -42,6 +42,8 @@ import org.apache.logging.log4j.Logger;
  * set's iterator does: ConcurrentModificationException before the next holder if there is one, else the pass ends.
  * The snapshot is dropped when postRegisterEvents returns. Other applyObjectHolders callers (revertTo, injectSnapshot:
  * predicate key -> true) always run the original loop.
+ * Since 1.0.46: Forge 47.4.27 stores the handlers per registry name and runs only that registry's in each pass (our merged
+ * PR #10899, backported); there the switch stands down with an INFO line (patches/forge_holders.json redundant_since).
  */
 public final class HolderPassIndex {
     /** Runtime switch (the config switch acts when classes are transformed). -Dbons_and_furious.forgeObjectHolderPassIndex=false also turns it off. */

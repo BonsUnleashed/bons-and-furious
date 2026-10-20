@@ -1,0 +1,81 @@
+{
+  "group": "naturesaura_watch",
+  "keys": {
+    "naturesaura_watched_chunk_purge": {
+      "mod": "naturesaura",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.naturesaura_watch.CommonEventsWatchMixin"
+      ],
+      "guard": [
+        {
+          "class": "de/ellpeck/naturesaura/events/CommonEvents",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "PENDING_AURA_CHUNKS = ArrayListMultimap.create()",
+          "sha256": "8d5c8c95371ad8c78530ae77dac9c033abd8a74423ef1f82df612d08cbfbf5f1"
+        },
+        {
+          "class": "de/ellpeck/naturesaura/events/CommonEvents",
+          "method": "onChunkWatch",
+          "desc": "(Lnet/minecraftforge/event/level/ChunkWatchEvent$Watch;)V",
+          "note": "put(player UUID, pos): the only writer",
+          "sha256": "2f3d2e031c881148d0abb983e38a982d859455827455cb83777d0bc36d778877"
+        },
+        {
+          "class": "de/ellpeck/naturesaura/events/CommonEvents",
+          "method": "onPlayerTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "every 10 ticks: get(uuid).removeIf(handleChunkWatchDeferred)",
+          "sha256": "0273b76590db684d99bc0b81eca1664ac2b3423d6dd7051dc1bbefbf21eabd9c"
+        },
+        {
+          "class": "de/ellpeck/naturesaura/events/CommonEvents",
+          "method": "lambda$onPlayerTick$0",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;Lnet/minecraft/world/level/ChunkPos;)Z",
+          "sha256": "6574c1b3c7edb733874cfcbe2747c80bd6456a084d0663a77d264819b0654fba"
+        },
+        {
+          "class": "de/ellpeck/naturesaura/events/CommonEvents",
+          "method": "handleChunkWatchDeferred",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/ChunkPos;)Z",
+          "note": "ticking chunk of the player's current level with an aura cap: send its packet, drop the entry",
+          "sha256": "5c09a1fc7ad7e9da6f471da33eadf3d2230ca13d39886e3ea729795ab8f02908"
+        },
+        {
+          "class": "de/ellpeck/naturesaura/events/CommonEvents",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: no other accessor of the private field",
+          "sha256": "2e8131dc5a294c0350c0b7f8ffd61da536bc4da4be9c1f627b1e1d1aa8b3a609"
+        },
+        {
+          "class": "de/ellpeck/naturesaura/Helper",
+          "method": "getLoadedChunk",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;II)Lnet/minecraft/world/level/chunk/ChunkAccess;",
+          "note": "ServerChunkCache.isPositionTicking ? getChunk(FULL, false) : null",
+          "sha256": "bed0fbca7754fb0c290169bdbc8f605a2cd1d593210cc86268ff1ac6d3779319"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap",
+          "method": "m_183754_",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/level/ChunkPos;Lorg/apache/commons/lang3/mutable/MutableObject;ZZ)V",
+          "note": "updateChunkTracking: fireChunkUnWatch whenever tracking of a chunk ends (move, view distance, removal from the level)",
+          "sha256": "ebe0fc31233c5063f1e3ee64dd287f8f96335dbc2b8346fb5eec227bec43e71d"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap",
+          "method": "m_183760_",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;Lorg/apache/commons/lang3/mutable/MutableObject;Lnet/minecraft/world/level/chunk/LevelChunk;)V",
+          "note": "playerLoadedChunk: fireChunkWatch when the chunk is sent",
+          "sha256": "14afaf1bf9646fdcf6624ea4f6cf816afa361ed13ab471f0c37a86527cb47572"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix (exact variant: no stale or duplicate aura packets, server state identical): @Inject at RETURN of CommonEvents.<clinit> hands PENDING_AURA_CHUNKS over and registers a ChunkWatchEvent.UnWatch listener that removes one (player UUID, chunk) entry; helper bons.furious.patch.naturesaura_watch.WatchedChunkPurge",
+      "license": "MIT (Nature's Aura): no Nature's Aura code is carried; the mixin hands over the multimap reference, the listener is ours"
+    }
+  }
+}

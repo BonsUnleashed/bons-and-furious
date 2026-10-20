@@ -74,6 +74,13 @@
         }
       ],
       "cancel": [],
+      "redundant_since": [
+        {
+          "mod": "forge",
+          "version": "47.4.27",
+          "note": "Forge PR #10899 (merged, backported): object holder handlers are stored per registry name and each registry pass runs only its own"
+        }
+      ],
       "conversion": "injectors (MixinExtras @WrapOperation of GameData.postRegisterEvents' applyObjectHolders call and of applyObjectHolders' Set.forEach, @WrapOperation of the Set.add/remove in addHandler/removeHandler, @Inject at the return of postRegisterEvents, two read-only @Accessor interfaces)",
       "license": "Forge (LGPL-2.1): no Forge code is carried; the wrapper calls applyObjectHolders' own per-holder lambda for the holders that can act (helper bons.furious.patch.forge_holders.HolderPassIndex)"
     }

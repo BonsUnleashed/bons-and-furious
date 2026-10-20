@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 /**
- * forge_status_ping_memo (Forge 47.4.16, both sides).
+ * forge_status_ping_memo (Forge 47.4.28 tested since 1.0.46, 47.4.16 accepted; both sides).
  *
  * ServerStatusPing.toBuf() (the mod/channel blob of the server-list status) and the private encodeOptimized (which packs
  * those bytes into the "d" string) are recomputed on every status rebuild although the mod list does not change. Both are

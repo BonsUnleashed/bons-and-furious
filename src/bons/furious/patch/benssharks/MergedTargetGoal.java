@@ -30,6 +30,7 @@ public final class MergedTargetGoal extends TargetGoal {
     final int[] prios;
     private LivingEntity found;
     private int rank = -1;
+    private boolean justStarted;
 
     MergedTargetGoal(Mob mob, boolean mustSee, boolean mustReach, int unseenMemory,
                      Class<? extends LivingEntity>[] types, int[] intervals, TargetingConditions[] conds, int[] prios) {
@@ -73,8 +74,14 @@ public final class MergedTargetGoal extends TargetGoal {
 
     /** NearestAttackableTargetGoal.findTarget for one class, from the shared list (same order, same call). */
     static LivingEntity nearest(Mob mob, List<LivingEntity> all, Class<? extends LivingEntity> type, TargetingConditions c) {
-        List<LivingEntity> sub = new ArrayList<>();
-        for (LivingEntity e : all) if (type.isInstance(e)) sub.add(e);
+        List<LivingEntity> sub = null;
+        for (LivingEntity e : all) if (type.isInstance(e)) {
+            if (sub == null) sub = new ArrayList<>();
+            sub.add(e);
+        }
+        // Most prey classes are absent. Preserve the original nearest-entity call
+        // and order for nonempty classes without allocating an empty list per miss.
+        if (sub == null) return null;
         return mob.m_9236_().m_45982_(sub, c, mob, mob.m_20185_(), mob.m_20188_(), mob.m_20189_());
     }
 
@@ -82,10 +89,17 @@ public final class MergedTargetGoal extends TargetGoal {
     public void m_8056_() {      // start = NearestAttackableTargetGoal.start
         this.f_26135_.m_6710_(this.found);
         super.m_8056_();
+        justStarted = true;
     }
 
     @Override
     public void m_8037_() {      // tick: higher-priority classes may still take over
+        // GoalSelector ticks a goal immediately after starting it. canUse has
+        // already rolled higher-priority classes during that same update.
+        if (justStarted) {
+            justStarted = false;
+            return;
+        }
         int r = this.rank;
         if (r <= 0) return;
         int limit = prios[r];

@@ -1,0 +1,358 @@
+{
+  "group": "terrablender_layers",
+  "keys": {
+    "terrablender_stacked_layer_dedupe": {
+      "mod": "terrablender",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.terrablender_layers.NamespacedSourceLayersMixin"
+      ],
+      "guard": [
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule;",
+          "note": "the base.apply call that is wrapped (one per apply)",
+          "sha256": "56b73168020b1ba5bf615dcaf41e1ab3100bbd1353c28f1aa9ef1bc516db80a7"
+        },
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods of the record (components base, sources; accessors read by StackedLayers)",
+          "sha256": "eea86e7ea3af33d76fb5f6dff16fb45917d5025aecd3620309e3678d3636b5c3"
+        },
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource",
+          "method": "base",
+          "desc": "()Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;",
+          "note": "record accessor",
+          "sha256": "b08a1af843a92ada48b36451a6ec36e3ac6350da094b5ec383801e1cd3dd5bd5"
+        },
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource",
+          "method": "sources",
+          "desc": "()Ljava/util/Map;",
+          "note": "record accessor",
+          "sha256": "817d372da021b224b8605fe6edaac7f34119ee907b4a2dedd2fc89dd8d85ef6d"
+        },
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;Ljava/util/Map;)V",
+          "note": "the constructor the flattened layers use",
+          "sha256": "d02a71d0d2f043afaf3704aaef541b56520599ad3993aa55988604620808363a"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$SequenceRuleSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "32ad3ece02ed7a238cf04fdd69379d0729371bf5c77d4e70a5269c8f30f2ce7d"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$TestRuleSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "18cbba5152bd5c1bded70ab533a767cf350be66649a0be8aa1148b1045350d26"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$BlockRuleSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "43a2276e7cc7a3103c99c921bef12d46217b5271747d2ac6de04f47465193e3c"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$Bandlands",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "c6b0fb56201e5daf5f5eeb1eaaf65da5ae7cca1c88efb09731080fa97ef96d78"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$NotConditionSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "28b172457822d1f9651942be788017712c9e2149f58691b29755a72d0576c981"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$BiomeConditionSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "d1478aded7ad1ca25a5b230a3a3a37ef410b93bd5c22cda2885edd88df836cde"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$NoiseThresholdConditionSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "53552d5b6399443c9914efd8b97b448a2d3d02f998636231b64e9585250d7d87"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$VerticalGradientConditionSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "6d36bd8c68d3c1c283a883df4b618c24f707e9bf8cc2d89b747d632b3c6692ed"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$YConditionSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "fdf03b9e4fe1569dbeb5841e3f804a0106fdf5f446b8978bdc8c1ce506be1c97"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$WaterConditionSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "2ff53ad68dd85ba6bfb69f75f4841ade2292871c6d81f28739359171be972dfa"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$StoneDepthCheck",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "e579f322bfb05b7fd0e73051ef3d88db0ccc8bddffda3a9bedcbf7118e9a21ff"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$Hole",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "8e031ed4a24597e60470839faf80fac280db2a5ae49ba0f4c13b54beb7234f7e"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$Steep",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "d4617bda71d00c366e8f69cea28ae3b4059ef8449e240bf1af3a364a65cbf81d"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$Temperature",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "fca4aeb0718c47c707448d34ead515c2d1e77b8be814c7e904a8747ac8ddada7"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$AbovePreliminarySurface",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "703facce659f4fd778c02cd05c5266f98af27d6825082a80627f52833894b58c"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$LazyCondition",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)V",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): lastUpdate = counter - 1 at construction",
+          "sha256": "8d852d3bccda3fd7497a244b1b0dfd6aac5fed6081461228b5e18b534daa1466"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$LazyCondition",
+          "method": "m_183475_",
+          "desc": "()Z",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): test: computes when the counter moved",
+          "sha256": "5159f90cf3052955d20c32611a0300b4c990632668f726c00a8e251c2f9597da"
+        }
+      ],
+      "cancel": [],
+      "runtime_checks": [
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource$NamespacedRule",
+          "note": "the chain semantics (namespace rule, then base) the dropping relies on: LazyNamespaceRules.deferrable refuses every tree unless TerraBlender NamespacedRule.tryApply is a tested build (3.0.1.10 or 3.0.1.11, terrablender.json runtime_checks) and the vanilla rule classes carry only verified mixins"
+        }
+      ],
+      "conversion": "@WrapOperation of the base.apply(context) call in NamespacedSurfaceRuleSource.apply: a base that is itself a stack of NamespacedSurfaceRuleSource layers is applied through StackedLayers.baseFor (inner namespace entries equal to an outer layer's entry of the same key dropped when their tree is proven pure, empty layers removed, innermost base kept; memoised per top-level source); any other base unchanged",
+      "license": "LGPL-3.0 (TerraBlender): no TerraBlender code is carried (its public record constructor and accessors are called); Minecraft (Mojang) no-copy (helper bons.furious.patch.terrablender_layers.StackedLayers)"
+    },
+    "terrablender_stacked_layer_save": {
+      "mod": "terrablender",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.terrablender_layers.SurfaceRuleManagerLayersMixin"
+      ],
+      "guard": [
+        {
+          "class": "terrablender/api/SurfaceRuleManager",
+          "method": "getNamespacedRules",
+          "desc": "(Lterrablender/api/SurfaceRuleManager$RuleCategory;Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;)Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;",
+          "note": "returns NamespacedSurfaceRuleSource(fallback, minecraft + registered namespaces): the value whose base is flattened",
+          "sha256": "6f8f5f9c255c338efba9e2a368b6312a61f79bf3e27742db22c52a268edd01ed"
+        },
+        {
+          "class": "terrablender/mixin/MixinNoiseGeneratorSettings",
+          "method": "surfaceRule",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "TerraBlender caches getNamespacedRules(category, raw field) and returns it as surfaceRule() (also the codec getter): the value that generates and is saved",
+          "sha256": "72fdb616fcb657b5ae51b586f6e5f1f0aa80460c5505216a7dae485612151170"
+        },
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;Ljava/util/Map;)V",
+          "note": "the constructor the flattened layers use",
+          "sha256": "d02a71d0d2f043afaf3704aaef541b56520599ad3993aa55988604620808363a"
+        },
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods of the record (components base, sources; accessors read by StackedLayers)",
+          "sha256": "eea86e7ea3af33d76fb5f6dff16fb45917d5025aecd3620309e3678d3636b5c3"
+        },
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource",
+          "method": "base",
+          "desc": "()Lnet/minecraft/world/level/levelgen/SurfaceRules$RuleSource;",
+          "note": "record accessor",
+          "sha256": "b08a1af843a92ada48b36451a6ec36e3ac6350da094b5ec383801e1cd3dd5bd5"
+        },
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource",
+          "method": "sources",
+          "desc": "()Ljava/util/Map;",
+          "note": "record accessor",
+          "sha256": "817d372da021b224b8605fe6edaac7f34119ee907b4a2dedd2fc89dd8d85ef6d"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$SequenceRuleSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "32ad3ece02ed7a238cf04fdd69379d0729371bf5c77d4e70a5269c8f30f2ce7d"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$TestRuleSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "18cbba5152bd5c1bded70ab533a767cf350be66649a0be8aa1148b1045350d26"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$BlockRuleSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "43a2276e7cc7a3103c99c921bef12d46217b5271747d2ac6de04f47465193e3c"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$Bandlands",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "c6b0fb56201e5daf5f5eeb1eaaf65da5ae7cca1c88efb09731080fa97ef96d78"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$NotConditionSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "28b172457822d1f9651942be788017712c9e2149f58691b29755a72d0576c981"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$BiomeConditionSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "d1478aded7ad1ca25a5b230a3a3a37ef410b93bd5c22cda2885edd88df836cde"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$NoiseThresholdConditionSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "53552d5b6399443c9914efd8b97b448a2d3d02f998636231b64e9585250d7d87"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$VerticalGradientConditionSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "6d36bd8c68d3c1c283a883df4b618c24f707e9bf8cc2d89b747d632b3c6692ed"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$YConditionSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "fdf03b9e4fe1569dbeb5841e3f804a0106fdf5f446b8978bdc8c1ce506be1c97"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$WaterConditionSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "2ff53ad68dd85ba6bfb69f75f4841ade2292871c6d81f28739359171be972dfa"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$StoneDepthCheck",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "e579f322bfb05b7fd0e73051ef3d88db0ccc8bddffda3a9bedcbf7118e9a21ff"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$Hole",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "8e031ed4a24597e60470839faf80fac280db2a5ae49ba0f4c13b54beb7234f7e"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$Steep",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "d4617bda71d00c366e8f69cea28ae3b4059ef8449e240bf1af3a364a65cbf81d"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$Temperature",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "fca4aeb0718c47c707448d34ead515c2d1e77b8be814c7e904a8747ac8ddada7"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$AbovePreliminarySurface",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$Condition;",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): pure: reads only per-context constants, allocates",
+          "sha256": "703facce659f4fd778c02cd05c5266f98af27d6825082a80627f52833894b58c"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$LazyCondition",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)V",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): lastUpdate = counter - 1 at construction",
+          "sha256": "8d852d3bccda3fd7497a244b1b0dfd6aac5fed6081461228b5e18b534daa1466"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/SurfaceRules$LazyCondition",
+          "method": "m_183475_",
+          "desc": "()Z",
+          "note": "the purity the equality rule relies on (as terrablender_lazy_namespace_rules): test: computes when the counter moved",
+          "sha256": "5159f90cf3052955d20c32611a0300b4c990632668f726c00a8e251c2f9597da"
+        }
+      ],
+      "cancel": [],
+      "runtime_checks": [
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource$NamespacedRule",
+          "note": "the chain semantics (namespace rule, then base) the dropping relies on: LazyNamespaceRules.deferrable refuses every tree unless TerraBlender NamespacedRule.tryApply is a tested build (3.0.1.10 or 3.0.1.11, terrablender.json runtime_checks) and the vanilla rule classes carry only verified mixins"
+        }
+      ],
+      "conversion": "@ModifyReturnValue of SurfaceRuleManager.getNamespacedRules: when the fallback is a decoded stack of earlier NamespacedSurfaceRuleSource wrappers, the returned top layer sits on StackedLayers' flattened chain (Fix: level.dat stops growing by a full namespace map per world open; blocks identical); otherwise the value is returned unchanged",
+      "license": "LGPL-3.0 (TerraBlender): no TerraBlender code is carried; Minecraft (Mojang) no-copy (helper bons.furious.patch.terrablender_layers.StackedLayers)"
+    }
+  }
+}

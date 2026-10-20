@@ -86,6 +86,110 @@
       "cancel": [],
       "conversion": "MixinExtras @WrapOperation on Level.getBlockStatesIfLoaded(AABB) in Entity.move (priority 1500, require 0); the returned DeferredStream answers the match with hasChunksAt plus a loop over BlockPos.betweenClosed and builds the vanilla stream for anything else",
       "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helpers bons.furious.patch.vanilla_entity.BlockScans, DeferredStream)"
+    },
+    "vanilla_fire_scan_idle_skip": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.vanilla_entity.EntityFireIdleMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_6478_",
+          "desc": "(Lnet/minecraft/world/entity/MoverType;Lnet/minecraft/world/phys/Vec3;)V",
+          "note": "move: wasOnFire set at the start; after the scan only the setter branch (rft <= 0) and the wasOnFire-gated sound depend on the answer",
+          "sha256": "17b339289be52d730ba555a5d266c77e87b2baee7061ba2e547ea971795ba8bc"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_7311_",
+          "desc": "(I)V",
+          "note": "setRemainingFireTicks: a field write (gfit 1)",
+          "sha256": "24766c3edc4c6a2033a9aef2b5f01b1b606830e853d76a5a16907d4ba2350448"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_6101_",
+          "desc": "()I",
+          "note": "getFireImmuneTicks: returns 1",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/minecraft/world/entity/player/Player",
+          "method": "m_7311_",
+          "desc": "(I)V",
+          "note": "setRemainingFireTicks: min(v, 1) only while invulnerable; same value for v = -20",
+          "sha256": "330f48ce0e080a32ab02d36edc1ae5542fdc7de89485b783a6a5ee1b9c5e1314"
+        },
+        {
+          "class": "net/minecraft/world/entity/player/Player",
+          "method": "m_6101_",
+          "desc": "()I",
+          "note": "getFireImmuneTicks: returns 20",
+          "sha256": "0963274b8101bcc2ed6ca9743b0ae58d25a97e4c09f70ed017fa45664604d80b"
+        },
+        {
+          "class": "net/minecraft/world/level/LevelReader",
+          "method": "m_46847_",
+          "desc": "(Lnet/minecraft/world/phys/AABB;)Ljava/util/stream/Stream;",
+          "note": "getBlockStatesIfLoaded: floors of the box, hasChunksAt, then getBlockStates",
+          "sha256": "9cb19637bc4dd76ebbfff6dc67e0c2706185a9c9c4b075c4295620d20046b37a"
+        },
+        {
+          "class": "net/minecraft/world/level/LevelReader",
+          "method": "m_46812_",
+          "desc": "(IIIIII)Z",
+          "note": "hasChunksAt over the box corners (the decided path asks it too)",
+          "sha256": "832e3d38afaafa8b033680934c38c9dd3ac62dc6f878101193959fef4024b0c5"
+        },
+        {
+          "class": "net/minecraft/world/level/BlockGetter",
+          "method": "m_45556_",
+          "desc": "(Lnet/minecraft/world/phys/AABB;)Ljava/util/stream/Stream;",
+          "note": "getBlockStates: betweenClosedStream(box).map(getBlockState)",
+          "sha256": "51a5da8f1248ee6c0362ba799b8bc6a7c03793e2b3b5c6c86fc69f8f02e305cd"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "m_121921_",
+          "desc": "(Lnet/minecraft/world/phys/AABB;)Ljava/util/stream/Stream;",
+          "note": "betweenClosedStream(AABB): floors of min and max",
+          "sha256": "ffc76d2e377aa43451a2ae083dc333236b84927cf2b6c9fbce6f8220068edb22"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "m_121886_",
+          "desc": "(IIIIII)Ljava/util/stream/Stream;",
+          "note": "betweenClosedStream(ints): Cursor3D order",
+          "sha256": "dc308d1a7d0b51d80951f238f0f1a7a0392dda003fd2338dd6bfb3f764f36b76"
+        },
+        {
+          "class": "net/minecraft/core/Cursor3D",
+          "method": "m_122304_",
+          "desc": "()Z",
+          "note": "advance: x fastest, then y, then z (the order the decided path replays the chunk lookups in)",
+          "sha256": "38f5af4ac8006be66a9bbd58adf3113be5b11cc174fef55e2ce01e49ec2b2fd3"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_8055_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "getBlockState: getChunk(x >> 4, z >> 4) first inside the build height (Radium's inlined copy: always)",
+          "sha256": "cb0e4f7ff3d67591f62963ba1937adb91261c87b4c5adc352a50f532b8f8aa1b"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_6325_",
+          "desc": "(II)Lnet/minecraft/world/level/chunk/LevelChunk;",
+          "note": "getChunk(int, int), the lookup the decided path makes",
+          "sha256": "c048935fcc3a6dec55807fcd484505752f9c29e076561b22117f453fee2f9d8e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on Level.getBlockStatesIfLoaded(AABB) in Entity.move (priority 1600, require 0: the outer wrapper around vanilla_fire_scan_loop's); for an entity with wasOnFire false and remainingFireTicks == -getFireImmuneTicks (Entity/Player classes only) and a box inside the build height, returns FireIdleScan.IdleStream: noneMatch answers true after hasChunksAt and the chunk lookups the block reads would make (immediate repeats dropped); anything else goes to the original call",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helpers bons.furious.patch.vanilla_entity.FireIdleScan, DeferredStream, BlockScans.radiumCacheApplied)"
     }
   }
 }

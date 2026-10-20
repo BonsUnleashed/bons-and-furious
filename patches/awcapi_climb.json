@@ -1,0 +1,224 @@
+{
+  "group": "awcapi_climb",
+  "keys": {
+    "awcapi_collision_direct": {
+      "mod": "awcapi",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.awcapi_climb.ClimberComponentDirectWalkMixin",
+        "bons.furious.mixin.awcapi_climb.ClimbableViewAccessor"
+      ],
+      "guard": [
+        {
+          "class": "com/nyfaria/awcapi/entity/ClimberComponent",
+          "method": "forEachCollisonBox",
+          "desc": "(Lnet/minecraft/world/phys/AABB;Lnet/minecraft/world/phys/shapes/Shapes$DoubleLineConsumer;)V",
+          "note": "views per column (getChunkForCollisions + climbableView), $2 getter, getBlockCollisions(mob, box).forEach(shape -> shape.forAllBoxes(action))",
+          "sha256": "a8f0559ffa1df120834a0080b75abff27a3d4e450d374c13deb304f3fd83e960"
+        },
+        {
+          "class": "com/nyfaria/awcapi/entity/ClimberComponent",
+          "method": "getCollisionBoxes",
+          "desc": "(Lnet/minecraft/world/phys/AABB;)Ljava/util/List;",
+          "sha256": "453202e01373c29f77ad9c2b9d05d71d0014a033d77079c8f6ea6235ecb9d54b"
+        },
+        {
+          "class": "com/nyfaria/awcapi/entity/ClimberComponent",
+          "method": "climbableView",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;)Lnet/minecraft/world/level/BlockGetter;",
+          "sha256": "a25c2a3d5ed9867c9511ada98a3bbad85ceb1176a5b952cd9d18ad5cde52826c"
+        },
+        {
+          "class": "com/nyfaria/awcapi/entity/ClimberComponent$1",
+          "method": "*",
+          "desc": "",
+          "note": "the per-column view: the same six methods",
+          "sha256": "57e52cf80e8873057b7a18d86b395ee3e4cf54bbc02ed5abca63966594d8847a"
+        },
+        {
+          "class": "com/nyfaria/awcapi/entity/ClimberComponent$1",
+          "method": "<init>",
+          "desc": "(Lcom/nyfaria/awcapi/entity/ClimberComponent;Lnet/minecraft/world/level/BlockGetter;)V",
+          "note": "val$getter = the chunk",
+          "sha256": "5f8eb7b29fb9647c35424eb2256fa474ceb726c05a20e1c9b09c0744bce1365c"
+        },
+        {
+          "class": "com/nyfaria/awcapi/entity/ClimberComponent$1",
+          "method": "m_8055_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "state = chunk.getBlockState(pos); !isAir && !canClimbOnBlock -> air",
+          "sha256": "fd20b7f504cf6255481061db0b9265bfd77949c97b54bf7028a1a573193cccd8"
+        },
+        {
+          "class": "com/nyfaria/awcapi/entity/ClimberComponent$2",
+          "method": "*",
+          "desc": "",
+          "note": "the filtered getter declares no getBlockCollisions of its own (CollisionGetter's default = BlockCollisions)",
+          "sha256": "3edfa11c0f83d0c622b45a03cbbe1b75864b8346ddbab10e6b5d23732a5e05b2"
+        },
+        {
+          "class": "com/nyfaria/awcapi/entity/ClimberComponent$2",
+          "method": "m_7925_",
+          "desc": "(II)Lnet/minecraft/world/level/BlockGetter;",
+          "note": "getChunkForCollisions = the precomputed view",
+          "sha256": "e2ddd67b8c6a0f745ccdaaea255d71923f598775ac599c0e4f3fc084c7336f5e"
+        },
+        {
+          "class": "com/nyfaria/awcapi/entity/ClimberComponent$2",
+          "method": "m_8055_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "71acf2e439a545f3287395ed67eaf41beb8237185f31988982ff4f478918b8ed"
+        },
+        {
+          "class": "net/minecraft/world/level/CollisionGetter",
+          "method": "m_186434_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;)Ljava/lang/Iterable;",
+          "note": "() -> new BlockCollisions(this, entity, box, false, (pos, shape) -> shape)",
+          "sha256": "750a6c84491900d09015a8f2dd98062d6f6faac15361fbc221726b86e3317abe"
+        },
+        {
+          "class": "net/minecraft/world/level/BlockCollisions",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/CollisionGetter;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;ZLjava/util/function/BiFunction;)V",
+          "note": "context, Shapes.create(box), bounds floor(min - 1e-7) - 1 .. floor(max + 1e-7) + 1",
+          "sha256": "a5afa76a68187cbf060540e5e37f978bdc557991a492e8c89922da4adcc46a80"
+        },
+        {
+          "class": "net/minecraft/world/level/BlockCollisions",
+          "method": "m_186411_",
+          "desc": "(II)Lnet/minecraft/world/level/BlockGetter;",
+          "note": "getChunk: getter.getChunkForCollisions per chunk change",
+          "sha256": "41fea8b7826ec1b825047ddb50380548771f2041cd07e75686f7d0604b276905"
+        },
+        {
+          "class": "net/minecraft/world/level/BlockCollisions",
+          "method": "computeNext",
+          "desc": "()Ljava/lang/Object;",
+          "note": "the rules: type 3 skipped, type 1 large shape, type 2 moving piston, block() fast test, else move + joinIsNotEmpty",
+          "sha256": "88f175804a886391f6c8c9c4b2b2b2374dddcebff01b0d362e3cdd762efcea84"
+        },
+        {
+          "class": "net/minecraft/core/Cursor3D",
+          "method": "m_122304_",
+          "desc": "()Z",
+          "note": "advance: x fastest, then y, then z",
+          "sha256": "38f5af4ac8006be66a9bbd58adf3113be5b11cc174fef55e2ce01e49ec2b2fd3"
+        },
+        {
+          "class": "net/minecraft/core/Cursor3D",
+          "method": "m_122308_",
+          "desc": "()I",
+          "note": "getNextType",
+          "sha256": "ae70fd670bd814086c7773fc864de615c22a3d0ddf16b93d619c585807c7cf0c"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunk",
+          "method": "m_8055_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "Forge 47.4.16: non-debug: air for a section index out of range or an all-air section",
+          "sha256": "d5a3f2bd5d95ad50a1dc4d8e118af704a17b2c9eb7dad1450788b33624d17fc8"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunkSection",
+          "method": "m_188008_",
+          "desc": "()Z",
+          "note": "hasOnlyAir",
+          "sha256": "9c89c7fb82b800713dff576b559458466c89d883e7f94e912ab59d93f51186fc"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/VoxelShape",
+          "method": "m_83216_",
+          "desc": "(DDD)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "note": "move: ArrayVoxelShape over OffsetDoubleLists",
+          "sha256": "70b5259854cc11d8bd9ae5f4417b4e7f46d3afe1deb387fabb768bd2ffd945c0"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/VoxelShape",
+          "method": "m_83286_",
+          "desc": "(Lnet/minecraft/world/phys/shapes/Shapes$DoubleLineConsumer;)V",
+          "note": "forAllBoxes",
+          "sha256": "c4d2b4486fd2553484ce566705dfb2aa1b56dd0cfab4363a63732aac5ac67c7e"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/OffsetDoubleList",
+          "method": "getDouble",
+          "desc": "(I)D",
+          "note": "delegate + offset",
+          "sha256": "c7034a39aede978a393aeb5f35ef93f6ee5e0aa9f7c3cbd6c70b6b35dc9fa2b2"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/CubeVoxelShape",
+          "method": "m_7700_",
+          "desc": "(Lnet/minecraft/core/Direction$Axis;)Lit/unimi/dsi/fastutil/doubles/DoubleList;",
+          "note": "getCoords = CubePointRange(size)",
+          "sha256": "9c1a99b0ca5cf5087972317509882bf9653ddd362763cc5808ee204794dfdd31"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/CubePointRange",
+          "method": "getDouble",
+          "desc": "(I)D",
+          "note": "i / parts",
+          "sha256": "c81bf703494b02a039f3785349f536e44048de16867133258859cb34e3d3f56d"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase",
+          "method": "m_60742_",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "note": "getCollisionShape",
+          "sha256": "d69bebc3c50746753026f5739d3b23c3527020290a5bc702f1e726c0500c95a6"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase",
+          "method": "m_60779_",
+          "desc": "()Z",
+          "note": "hasLargeCollisionShape",
+          "sha256": "6af962cc2a2a324f6ae445fe227c719449c94815626f3e8e4d84a0b995f44e25"
+        },
+        {
+          "class": "net/orcinus/galosphere/mixin/BlockStateBaseMixin",
+          "method": "G$getCollisionShape",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "audited: acts only when blocksMotion() (never for air)",
+          "audit": true,
+          "sha256": "81d60f8767d4eeb7ee827abddeeb246f601b81074c570b795bd212a57466d6fb"
+        },
+        {
+          "class": "snownee/kiwi/mixin/customization/BlockStateMixin",
+          "method": "kiwi$getCollisionShape",
+          "desc": "(Lnet/minecraft/world/level/block/Block;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "note": "audited: only blocks with Kiwi settings (never vanilla air)",
+          "audit": true,
+          "sha256": "b26da365201837eb7de7a414cebd861d992c58012017efd6362bf7a1d3b01493"
+        },
+        {
+          "class": "aqario/fowlplay/mixin/BlockStateBaseMixin",
+          "method": "fowlplay$changeLeavesCollisionShape",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "audited: leaves only",
+          "audit": true,
+          "sha256": "8a0f23f9950cd9df6fa924c5bd16d21a7f050be17d65961dcc489cca14c1ac72"
+        },
+        {
+          "class": "com/cerbon/cerbons_api/mixin/multipart_entities/ShapesMixin",
+          "method": "hook",
+          "desc": "(Lnet/minecraft/world/phys/AABB;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "audited: Shapes.create acts only on its CompoundOrientedBox (the walk takes plain AABBs only)",
+          "audit": true,
+          "sha256": "160a4d8342aef98613cb20eb1a8f60e22eb3db8ce8d2b2616f9ff35f020984a5"
+        },
+        {
+          "class": "org/valkyrienskies/mod/mixin/world/level/MixinBlockCollisions",
+          "method": "postInit",
+          "desc": "(Lnet/minecraft/world/level/CollisionGetter;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;ZLjava/util/function/BiFunction;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "audited: acts only on boxes of volume > 1e8 (the walk takes boxes of at most 32 blocks per side)",
+          "audit": true,
+          "sha256": "fe8187ccf53a5723c2b515598edd5b488d16d9b9069dbc42040a762b32a4ce0b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors in awcapi's ClimberComponent.forEachCollisonBox: MixinExtras @ModifyReceiver on the CollisionGetter.getBlockCollisions call (keeps awcapi's own filtered getter, returned unchanged) and @WrapOperation on the final Iterable.forEach (our direct walk for plain boxes of at most 32 blocks, the shipped forEach otherwise); @Accessor on awcapi's anonymous ClimberComponent$1 view (val$getter, its chunk); helper bons.furious.patch.awcapi_climb.ClimberCollisions",
+      "license": "Advanced Wall Climber API (all rights reserved): no awcapi code is carried; the walk is our own, following Minecraft 1.20.1's BlockCollisions rules (no Mojang code copied); Minecraft: no code"
+    }
+  }
+}

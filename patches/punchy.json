@@ -1,0 +1,133 @@
+{
+  "group": "punchy",
+  "keys": {
+    "punchy_lazy_resource_scans": {
+      "mod": "punchy",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.punchy.GeoRegistryLazyScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "punchy/client/model/ResourcePackGeoRegistry",
+          "method": "load",
+          "desc": "(Lnet/minecraft/server/packs/resources/ResourceManager;)V",
+          "sha256": "75e53a93a9cc09d975674e05345007908be4dd1d949d454b17bc07b3a58b9197"
+        },
+        {
+          "class": "punchy/client/model/ResourcePackGeoRegistry",
+          "method": "loadGeoModels",
+          "desc": "(Lnet/minecraft/server/packs/resources/ResourceManager;)V",
+          "sha256": "5ff6a67a32787f67384a943727bce0aa14ed13d6fe7f38e7ee031393904ca847"
+        },
+        {
+          "class": "punchy/client/model/ResourcePackGeoRegistry",
+          "method": "loadModelBones",
+          "desc": "(Lnet/minecraft/server/packs/resources/ResourceManager;)V",
+          "sha256": "b429ce305a43a56b46a742c0ffa9c1d49c8ddd9ada86aa0221f2a31e6131d7ae"
+        },
+        {
+          "class": "punchy/client/model/ResourcePackGeoRegistry",
+          "method": "loadMappings",
+          "desc": "(Lnet/minecraft/server/packs/resources/ResourceManager;)V",
+          "sha256": "7201f17fc68291ff17b1d95c97c5c9bc8268b3b792e9780e663c6e582667a0c5"
+        },
+        {
+          "class": "punchy/client/model/ResourcePackGeoRegistry",
+          "method": "getGeoModel",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lpunchy/client/model/BedrockGeoModel;",
+          "sha256": "06458997341ac121ba5ad15f9af6a734b2838759bb78bedd1d5959676bf26338"
+        },
+        {
+          "class": "punchy/client/model/ResourcePackGeoRegistry",
+          "method": "getBonesForTarget",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lpunchy/client/model/BedrockGeoModel;",
+          "sha256": "112b2fba5756a87cda74f449de659e129afeaccd4e2ee2c86c5435b953089a39"
+        },
+        {
+          "class": "punchy/client/model/ResourcePackGeoRegistry",
+          "method": "*",
+          "desc": "*",
+          "sha256": "ace00b678c94c4a9c521cbf95219037ed675d7bf24600512ce27009c7c1ee3db"
+        },
+        {
+          "class": "punchy/client/model/ResourcePackGeoRegistry",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "e6d054394abd04bba99ada7a4808cad25e81afd81417af1b91891570a7c53538"
+        }
+      ],
+      "cancel": [],
+      "conversion": "HEAD @Inject on Punchy's ResourcePackGeoRegistry: loadGeoModels / loadModelBones cancelled while deferred (only when no class of Punchy's jar calls the two readers, constant-pool scan once per session), load() drops a stale wait, getGeoModel / getBonesForTarget run the waiting scans first by calling Punchy's own load(manager) with the same manager; helper bons.furious.patch.punchy.LazyGeoScans",
+      "license": "Punchy is All Rights Reserved: injections with our own logic only, no Punchy code carried; Minecraft (Mojang): no-copy"
+    },
+    "punchy_emf_trace_skip": {
+      "mod": "punchy",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.punchy.EmfDebugTraceSkipMixin"
+      ],
+      "guard": [
+        {
+          "class": "punchy/client/debug/EmfEtfFreshAnimationsDebug",
+          "method": "pushLivingEntityRender",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Ljava/lang/Object;Ljava/lang/Object;)V",
+          "sha256": "8ab9ebe8306ca0877cd3c91ad9384688e3c8559b4fa3f7cb433dc808d05a8c0a"
+        },
+        {
+          "class": "punchy/client/debug/EmfEtfFreshAnimationsDebug",
+          "method": "popLivingEntityRender",
+          "desc": "()V",
+          "sha256": "c35114d9c4643d9c100671f3d8fb90b26fbf610fa740db6b4f1f20a9444aa9e5"
+        },
+        {
+          "class": "punchy/client/debug/EmfEtfFreshAnimationsDebug",
+          "method": "recordResetPose",
+          "desc": "(Lnet/minecraft/client/model/geom/ModelPart;Lorg/joml/Matrix4f;)V",
+          "sha256": "fab0526c32b0245ed50018e2af436e0d87fd42fe5446f71c789f8cf417b74a0e"
+        },
+        {
+          "class": "punchy/client/debug/EmfEtfFreshAnimationsDebug",
+          "method": "recordExplicitTransformApplication",
+          "desc": "(Lnet/minecraft/client/model/geom/ModelPart;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;FFFFFF)V",
+          "sha256": "a06c6e7cd1462052b9236db0dcfc6d0998325cacc037deaa03e002b5e9941a62"
+        },
+        {
+          "class": "punchy/client/debug/EmfEtfFreshAnimationsDebug",
+          "method": "currentContext",
+          "desc": "()Lpunchy/client/debug/EmfEtfFreshAnimationsDebug$RenderContext;",
+          "sha256": "451b12495ece7b4cf9ebf787831e572bc9fac19e2d5fd01ac330d0bed7bad3e8"
+        },
+        {
+          "class": "punchy/client/debug/EmfEtfFreshAnimationsDebug",
+          "method": "shouldTrace",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "sha256": "290a698ef089b70ffe2aa2e17dbf8a15bf07f0ec6c69fca2dc6206afb8a5e32f"
+        },
+        {
+          "class": "punchy/client/debug/EmfEtfFreshAnimationsDebug",
+          "method": "shouldLog",
+          "desc": "(Ljava/lang/String;J)Z",
+          "sha256": "9841a63c2355db78b872c8ee0c3029b07a855e5708119cb5a92a287eb015fde1"
+        },
+        {
+          "class": "punchy/client/debug/EmfEtfFreshAnimationsDebug",
+          "method": "*",
+          "desc": "*",
+          "sha256": "ef882edce27f3c8f5d4968b9302d139a87dcf8bcddcdc7f8a17527032c257f5f"
+        },
+        {
+          "class": "punchy/client/debug/EmfEtfFreshAnimationsDebug",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "581e313b51fb4b017d3d27917e557d841ee25ddf202a61514efaffc488c38026"
+        }
+      ],
+      "cancel": [],
+      "conversion": "cancellable HEAD @Inject on Punchy's EmfEtfFreshAnimationsDebug.pushLivingEntityRender / popLivingEntityRender (return at once), plus HEAD hooks on the two record methods that count calls in shadow mode only; helper bons.furious.patch.punchy.EmfTraceSkip",
+      "license": "Punchy is All Rights Reserved: injections with our own logic only, no Punchy code carried"
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "group": "vanilla_climate_distance",
+  "keys": {
+    "vanilla_climate_search_distance_reuse": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.vanilla_climate_distance.ClimateDistanceRootMixin",
+        "bons.furious.mixin.vanilla_climate_distance.ClimateDistanceVanillaSiteMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree",
+          "method": "m_186930_",
+          "desc": "(Lnet/minecraft/world/level/biome/Climate$TargetPoint;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Ljava/lang/Object;",
+          "sha256": "0821658daf94ec1dd48339b1da7fdbc7d49d3aaa0d1d15c56f4a1b0d4c865ed7"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree$SubTree",
+          "method": "m_183370_",
+          "desc": "([JLnet/minecraft/world/level/biome/Climate$RTree$Leaf;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Lnet/minecraft/world/level/biome/Climate$RTree$Leaf;",
+          "sha256": "2ac8a1635e1ce1bf5a890a8839b9d8de2263282bdf5ba0074ee2069fb849a62f"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree$Leaf",
+          "method": "m_183370_",
+          "desc": "([JLnet/minecraft/world/level/biome/Climate$RTree$Leaf;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Lnet/minecraft/world/level/biome/Climate$RTree$Leaf;",
+          "sha256": "d6ee11652b8fc4b605d91bac434ba2b5574e707e7f1d329704c05f8c39a592e8"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree$Node",
+          "method": "m_186959_",
+          "desc": "([J)J",
+          "sha256": "e260f03cfa1d2c7251a388b7475768da59665a4eaae542b151f91638dc1d62e8"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree$SubTree",
+          "method": "<init>",
+          "desc": "(Ljava/util/List;Ljava/util/List;)V",
+          "sha256": "1b65be673aa11f9faa18cba3f003830ed58014c9bc3e0e3a2174705f958bc4f2"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$ParameterList",
+          "method": "m_186851_",
+          "desc": "(Lnet/minecraft/world/level/biome/Climate$TargetPoint;)Ljava/lang/Object;",
+          "sha256": "714df24947a1f5fc080c6d16b485d4d87e76edcde68706ec769642dfb9cd55f5"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$ParameterList",
+          "method": "m_186853_",
+          "desc": "(Lnet/minecraft/world/level/biome/Climate$TargetPoint;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Ljava/lang/Object;",
+          "sha256": "fd668d0b104657cf7896c83a42bc3de2131fc893592d89b0c0b1078e3bbcc902"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect (coerced node, leaf and metric types; coerced return) of the one Climate$RTree$Node.m_183370_ root call in Climate$RTree.search (m_186930_): the helper walks the tree in SubTree.search's order with its strict comparisons, carrying the caller's best distance down and the found leaf's distance up, computing all other distances with Node.m_186959_ where vanilla computes them, only for metric objects registered at their guarded creation sites (Climate.RTree.Node::m_186959_ method references); otherwise the original call. MixinExtras @WrapOperation (coerced metric) of the m_186853_ call in Climate$ParameterList.findValueIndex (m_186851_) registers vanilla's metric object and makes the same call; runtime flag and shadow mode in the helper",
+      "license": "Minecraft (Mojang): no-copy; the mixins and helper carry only our own logic (helper bons.furious.patch.vanilla_climate_distance.ClimateDistanceReuse)"
+    },
+    "terrablender_climate_search_distance_reuse": {
+      "mod": "terrablender",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.vanilla_climate_distance.ClimateDistanceTerraBlenderSiteMixin"
+      ],
+      "guard": [
+        {
+          "class": "terrablender/mixin/MixinParameterList",
+          "method": "findValuePositional",
+          "desc": "(Lnet/minecraft/world/level/biome/Climate$TargetPoint;III)Ljava/lang/Object;",
+          "sha256": "e9b12761e066c401a80a963067a29d0eaa45749c43731865137bc281e6fc1c75"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree",
+          "method": "m_186930_",
+          "desc": "(Lnet/minecraft/world/level/biome/Climate$TargetPoint;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Ljava/lang/Object;",
+          "sha256": "0821658daf94ec1dd48339b1da7fdbc7d49d3aaa0d1d15c56f4a1b0d4c865ed7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation (coerced tree and metric, priority 1100 above TerraBlender's 1000) of the two Climate$RTree.m_186930_ calls in TerraBlender's findValuePositional, the method TerraBlender's MixinParameterList merges into Climate$ParameterList: registers TerraBlender's metric objects (two non-capturing Climate.RTree.Node::m_186959_ method references, guarded in TerraBlender's mixin bytecode) for vanilla_climate_search_distance_reuse's walk and makes the same call; nothing else",
+      "license": "TerraBlender: LGPL-3.0; Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_climate_distance.ClimateDistanceReuse)"
+    }
+  }
+}

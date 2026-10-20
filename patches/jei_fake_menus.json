@@ -1,0 +1,138 @@
+{
+  "group": "jei_fake_menus",
+  "keys": {
+    "jei_anvil_menu_player_release": {
+      "mod": "jei",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.jei_fake_menus.AnvilMenuReleaseMixin"
+      ],
+      "guard": [
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilHelper",
+          "method": "getFakeAnvilMenu",
+          "desc": "()Lnet/minecraft/world/inventory/AnvilMenu;",
+          "note": "ANVIL_MENU = new AnvilMenu(0, new Inventory(Minecraft.player)) when null: the wrapped PUTSTATIC, once",
+          "sha256": "0afc48988d94da80b7f5f9934cdeea05c7fd325b7972f2af6302af13d81419c5"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilHelper",
+          "method": "clearCache",
+          "desc": "()V",
+          "note": "ANVIL_MENU = null: the release",
+          "sha256": "d95edf8a1b8c0fe8ce4b97e2e40fd445b6c90b0bd705981c8c809962190fb84c"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilHelper",
+          "method": "findLevelsCost",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)I",
+          "note": "getFakeAnvilMenu + setAnvilMenu + getCost: the wrapped method (shadow only)",
+          "sha256": "f0ae2031903d81397ee088bf1d7f66c36fad233d844b99c15a22d8262598f460"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilHelper",
+          "method": "setAnvilMenu",
+          "desc": "(Lnet/minecraft/world/inventory/AnvilMenu;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/inventory/AnvilMenu;",
+          "note": "sets both input slots of the menu it is given (the shadow uses it on JEI's earlier menu)",
+          "sha256": "bf4fdd1477fcda51762debf9619787039973ae8191afd4ecd30d847debab12cd"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilHelper",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "ANVIL_MENU starts null",
+          "sha256": "4bef572752f59399eea5df4ba1f604a93e3b38b00ac1ff09304b97debde51eae"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilHelper",
+          "method": "*",
+          "desc": "",
+          "note": "the declared methods: only getFakeAnvilMenu and clearCache write ANVIL_MENU",
+          "sha256": "69566560720d787ff5fba6d33cbfde5d5f5a680632084bc1d56dc9423207d687"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "getAnvilRecipes",
+          "desc": "(Lmezz/jei/api/recipe/vanilla/IVanillaRecipeFactory;Lmezz/jei/api/runtime/IIngredientManager;)Ljava/util/List;",
+          "note": "JEI's start takes the menu once and hands it to the recipe maker (the deferred lanes keep it)",
+          "sha256": "fd06e5d569016bd5552601a00b97cefc0a191aece234b7aa2ff041220b5ca61c"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
+          "method": "getAnvilOutput",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;",
+          "note": "the recipe maker computes on its own anvilMenu field, not on ANVIL_MENU",
+          "sha256": "81f3f69a924c7f243457efd3ed2fe717f677a4ce3ec49077418bf5311f063ed1"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "onRuntimeUnavailable",
+          "desc": "()V",
+          "note": "JEI's own release at logout (AnvilHelper.clearCache, GrindstoneRecipeMaker.clearCache): the same reset",
+          "sha256": "48466c0927197c2ad7599f40ddaef4cbb93418042e83c25cbcbaaef9b030d168"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the PUTSTATIC ANVIL_MENU in AnvilHelper.getFakeAnvilMenu (the store runs unchanged; the helper then knows the menu and registers Forge listeners for ClientPlayerNetworkEvent.Clone and LoggingOut once) and @WrapMethod on AnvilHelper.findLevelsCost (unchanged; shadow check only). On a respawn, a dimension change or a logout the menu is released with JEI's own AnvilHelper.clearCache when its fake inventory belongs to a player other than the current one; JEI builds it again for the current player at its next use. Helper bons.furious.patch.jei_fake_menus.FakeMenuRelease (runtime flag jeiAnvilMenuPlayerRelease; shadow: the level costs computed on JEI's earlier menu must be equal). Fix: JEI's static fake anvil kept the player of JEI's start, and its ClientLevel, after every respawn and dimension change until logout.",
+      "license": "MIT (JEI 15.71.0.224 / 15.59.0.212): no JEI code is carried; the mixin wraps one field store and one method of AnvilHelper and calls JEI's own clearCache (helper bons.furious.patch.jei_fake_menus.FakeMenuRelease)",
+      "kind": "fix"
+    },
+    "jei_grindstone_menu_player_release": {
+      "mod": "jei",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.jei_fake_menus.GrindstoneMenuReleaseMixin"
+      ],
+      "guard": [
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneHelper",
+          "method": "getFakeGrindstoneMenu",
+          "desc": "()Lnet/minecraft/world/inventory/GrindstoneMenu;",
+          "note": "GRINDSTONE_MENU = new GrindstoneMenu(0, new Inventory(Minecraft.player)) when null: the wrapped PUTSTATIC, once",
+          "sha256": "2fc6c282c5cb8b620dd94097da35db0e58d3c15f1b987fbf603a82510c0c1ad9"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneHelper",
+          "method": "clearCache",
+          "desc": "()V",
+          "note": "GRINDSTONE_MENU = null: the release",
+          "sha256": "eb70e8f226ab54f62d85695415a672170d959c6abb8f8d25ad7088875ce35235"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneHelper",
+          "method": "*",
+          "desc": "",
+          "note": "the declared methods: only getFakeGrindstoneMenu and clearCache write GRINDSTONE_MENU",
+          "sha256": "63b8404aff64c715d3426edf77923dbd6a215a2647672674bb2adf65f6fee6c6"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
+          "method": "clearCache",
+          "desc": "()V",
+          "note": "GrindstoneHelper.clearCache: the public entry the release calls",
+          "sha256": "a349dc6df83483dd92add3f60a8243e988bf52e52b1155403559a566c08f9e51"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
+          "method": "getGrindstoneRecipes",
+          "desc": "(Lmezz/jei/api/runtime/IIngredientManager;Lmezz/jei/common/platform/IPlatformRecipeHelper;)Ljava/util/List;",
+          "note": "the only reader of the fake menu: JEI's start takes it once and hands it on (the deferred recipe job keeps it)",
+          "sha256": "aa76dc62f588a443d8068304abaa7576dffc5ec584539b266653121443a37966"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/VanillaPlugin",
+          "method": "onRuntimeUnavailable",
+          "desc": "()V",
+          "note": "JEI's own release at logout: the same reset",
+          "sha256": "48466c0927197c2ad7599f40ddaef4cbb93418042e83c25cbcbaaef9b030d168"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the PUTSTATIC GRINDSTONE_MENU in GrindstoneHelper.getFakeGrindstoneMenu (the store runs unchanged; the helper then knows the menu and registers the same Forge listeners): on a respawn, a dimension change or a logout the menu is released with JEI's own GrindstoneRecipeMaker.clearCache when its fake inventory belongs to a player other than the current one; JEI reads it only at its start, so nothing JEI computes changes. Helper bons.furious.patch.jei_fake_menus.FakeMenuRelease (runtime flag jeiGrindstoneMenuPlayerRelease). Fix: JEI's static fake grindstone kept the player of JEI's start, and its ClientLevel, until logout.",
+      "license": "MIT (JEI 15.71.0.224 / 15.59.0.212): no JEI code is carried; the mixin wraps one field store of GrindstoneHelper and calls JEI's own clearCache (helper bons.furious.patch.jei_fake_menus.FakeMenuRelease)",
+      "kind": "fix"
+    }
+  }
+}

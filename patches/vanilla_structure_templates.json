@@ -5,6 +5,14 @@
       "mod": "minecraft",
       "scripts": [],
       "since": "1.0.36",
+      "redundant_since": [
+        {
+          "mod": "modernfix",
+          "version": "5.27.89",
+          "note": "ModernFix 5.27.89 serves loaded templates without the cache lock and loads missing ones outside it itself (dynamic_structure_manager StructureManagerMixin.loadOutsideLock, #701); the vanilla fingerprints still match",
+          "even_if_matching": true
+        }
+      ],
       "mixins": [
         "bons.furious.mixin.vanilla_structure_templates.StructureTemplateManagerHitsMixin"
       ],

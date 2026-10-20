@@ -67,6 +67,13 @@
         }
       ],
       "cancel": [],
+      "redundant_since": [
+        {
+          "mod": "forge",
+          "version": "47.4.26",
+          "note": "Forge PR #10893 (merged): toBuf groups the channels by mod once (getChannelsByMod), as this switch does"
+        }
+      ],
       "conversion": "injectors (@Inject at the start and returns of toBuf, @Redirect of getChannelsForMod)",
       "license": "Forge (LGPL-2.1): no Forge code is carried; helper bons.furious.patch.forge.StatusPingChannels"
     },
@@ -86,6 +93,13 @@
         }
       ],
       "cancel": [],
+      "redundant_since": [
+        {
+          "mod": "forge",
+          "version": "47.4.25",
+          "note": "Forge PR #10894 (merged): parseFormat returns a template without '{' or ''' as it is, the same fast path"
+        }
+      ],
       "conversion": "injectors (@Inject HEAD)",
       "license": "Forge (LGPL-2.1): no Forge code is carried; helper bons.furious.patch.forge.PlainTranslation"
     }

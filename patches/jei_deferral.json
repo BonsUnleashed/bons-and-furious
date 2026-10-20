@@ -17,7 +17,13 @@
           "method": "registerRecipes",
           "desc": "(Lmezz/jei/api/registration/IRecipeRegistration;)V",
           "note": "the window that is armed and disarmed",
-          "sha256": "5dc2c18257ea877e19866ab76a0cd51fcefa55cf8c416b361e54ea9f698d1602"
+          "sha256": "3a3e18b4f6c264cdac442fea59291411e97831fc60f5adbd7708592ec287ed5c",
+          "sha256_also": [
+            {
+              "build": "jei 15.59.0.212",
+              "sha256": "5dc2c18257ea877e19866ab76a0cd51fcefa55cf8c416b361e54ea9f698d1602"
+            }
+          ]
         },
         {
           "class": "mezz/jei/library/plugins/vanilla/anvil/AnvilRecipeMaker",
@@ -75,8 +81,14 @@
           "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
           "method": "getDisenchantRecipes",
           "desc": "(Lmezz/jei/common/platform/IPlatformRecipeHelper;Lnet/minecraft/world/inventory/GrindstoneMenu;)Ljava/util/stream/Stream;",
-          "note": "the loop GrindstoneDisenchant walks step by step",
-          "sha256": "6611262ba440ea235fdaac6a66c5a3e8308cd94f17fefd73b49deb145cea698e"
+          "note": "the loop GrindstoneDisenchantGroups (tested build) / GrindstoneDisenchant (jei 15.59.0.212) walk step by step",
+          "sha256": "90e75384d505244109d8f2eaa4b2af37580187f060a59c45ba0dd2c195627d2c",
+          "sha256_also": [
+            {
+              "build": "jei 15.59.0.212",
+              "sha256": "6611262ba440ea235fdaac6a66c5a3e8308cd94f17fefd73b49deb145cea698e"
+            }
+          ]
         },
         {
           "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
@@ -97,7 +109,13 @@
           "method": "addRecipes",
           "desc": "(Lmezz/jei/api/recipe/RecipeType;Ljava/util/List;)V",
           "note": "HEAD: holds later additions of a deferred type",
-          "sha256": "0f347a03cb1769b862fae56a374aa2794e5698f67612bad8aed5c8c96fa99fd9"
+          "sha256": "1184d5188cb34a4ea0c2659f5098d6bedef71ddb3f1b4c4fc5c5ed7255f798da",
+          "sha256_also": [
+            {
+              "build": "jei 15.59.0.212",
+              "sha256": "0f347a03cb1769b862fae56a374aa2794e5698f67612bad8aed5c8c96fa99fd9"
+            }
+          ]
         },
         {
           "class": "mezz/jei/library/util/ResourceLocationUtil",
@@ -105,6 +123,26 @@
           "desc": "(Ljava/lang/String;)Ljava/lang/String;",
           "note": "the disenchant recipe uids",
           "sha256": "7adf8abd41bf0e236168f3a474681a530c53230c58d7f24f3dd910c649a38aaf"
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipeMaker",
+          "method": "getDisenchantmentRecipeUid",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;I)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "since 1.0.46: restated by GrindstoneDisenchantGroups.uid; absent in JEI 15.59",
+          "sha256": "bff02f50317394bc7811ce7337942c60339ba191bdd878bdaf90840062646fb6",
+          "sha256_also": [
+            {
+              "build": "jei 15.59.0.212",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "mezz/jei/library/plugins/vanilla/grindstone/GrindstoneRecipe",
+          "method": "<init>",
+          "desc": "(Ljava/util/List;Ljava/util/List;Ljava/util/List;IILnet/minecraft/resources/ResourceLocation;)V",
+          "note": "since 1.0.46: built by GrindstoneDisenchantGroups as JEI's grouped loop builds it (stores the three lists as given)",
+          "sha256": "8d4def8663da05cc4109b3dac7149f707cc2df8c515fb4129a8b9c8d002bee14"
         }
       ],
       "cancel": [],

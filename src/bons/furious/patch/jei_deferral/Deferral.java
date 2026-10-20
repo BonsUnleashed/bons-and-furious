@@ -24,7 +24,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * jei_join_recipe_deferral (JEI 15.59.0.212): the deferred part of JEI's vanilla plugin. JEI 15.59 builds its anvil
+ * jei_join_recipe_deferral (JEI 15.71.0.224 tested since 1.0.46; JEI 15.59.0.212 accepted as an alternative build, see
+ * JEI_1559): the deferred part of JEI's vanilla plugin. JEI 15.59 builds its anvil
  * enchanted-book recipes and its grindstone recipes (repair and disenchanting) by running a simulated anvil or grindstone
  * for every enchantable item at every enchantment level while the player joins a world. With the switch, JEI's cheap
  * anvil repair recipes are registered at its start as before and the rest are built in "lanes" (anvil enchanted-book,
@@ -154,6 +155,20 @@ public final class Deferral {
                 SLICE_NANOS / 1_000_000L);
     }
 
+    /**
+     * Since 1.0.46: the guard label (patches/jei_deferral.json, sha256_also) of JEI 15.59.0.212's fingerprints. With that
+     * build the disenchant recipes are walked by GrindstoneDisenchant (one recipe per item, enchantment and level); with the
+     * tested JEI 15.62+ loop (one recipe per enchantment and level) by GrindstoneDisenchantGroups.
+     */
+    public static final String JEI_1559 = "jei 15.59.0.212";
+
+    /** Since 1.0.46, JEI 15.62 and later: the same grindstone lane with the grouped disenchant walk. */
+    public static void scheduleGrindstone(Iterator<IJeiGrindstoneRecipe> repairRecipes, GrindstoneDisenchantGroups disenchantRecipes) {
+        lanes.add(new Lane("grindstone", RecipeTypes.GRINDSTONE, concat(fromIterator(repairRecipes), disenchantRecipes)));
+        LOGGER.info("Bons and Furious: JEI deferral: the grindstone recipes follow in the background ({} ms per frame)",
+                SLICE_NANOS / 1_000_000L);
+    }
+
     /** ingredients.flatMap(mapper), walked one element of the mapped streams at a time (same elements, same order). */
     public static Stream<IJeiAnvilRecipe> oneAtATime(Iterator<ItemStack> ingredients, Function<ItemStack, Stream<IJeiAnvilRecipe>> mapper) {
         Iterator<IJeiAnvilRecipe> recipes = new Iterator<>() {
@@ -262,6 +277,9 @@ public final class Deferral {
         }
         lanes.clear();
         running = false;
+        armAnvil = false;
+        armGrindstone = false;
+        snapshotting = false;
     }
 
     // --- the background job: a slice of every frame until done --------------------------------------------------------

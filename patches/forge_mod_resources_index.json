@@ -1,0 +1,109 @@
+{
+  "group": "forge_mod_resources_index",
+  "keys": {
+    "forge_mod_resources_namespace_index": {
+      "mod": "forge",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.forge_mod_resources_index.DelegatingPackResourcesIndexMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraftforge/resource/DelegatingPackResources",
+          "method": "m_8031_",
+          "desc": "(Lnet/minecraft/server/packs/PackType;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/server/packs/PackResources$ResourceOutput;)V",
+          "note": "listResources: for each delegate (delegates.iterator()), delegate.listResources(type, namespace, path, output)",
+          "sha256": "33dacd3f7e569b81fd5516a3c9d3a775a2256f7a605f1883e2a1634c0a861914"
+        },
+        {
+          "class": "net/minecraftforge/resource/DelegatingPackResources",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;ZLnet/minecraft/server/packs/metadata/pack/PackMetadataSection;Ljava/util/List;)V",
+          "note": "delegates = an immutable copy; namespacesAssets / namespacesData built from it",
+          "sha256": "44af7838ce16d7995f7449b9a6db1eb287fd2fa6ab7a5c17fc93db7cca2a9082"
+        },
+        {
+          "class": "net/minecraftforge/resource/DelegatingPackResources",
+          "method": "buildNamespaceMap",
+          "desc": "(Lnet/minecraft/server/packs/PackType;Ljava/util/List;)Ljava/util/Map;",
+          "note": "namespace -> delegates that declare it (getNamespaces), in delegate order",
+          "sha256": "dc48b4dbdf4c3efc909957ae872a2e9497765a4394e2cceb99c48b4c83c2f63d"
+        },
+        {
+          "class": "net/minecraftforge/resource/DelegatingPackResources",
+          "method": "getCandidatePacks",
+          "desc": "(Lnet/minecraft/server/packs/PackType;Lnet/minecraft/resources/ResourceLocation;)Ljava/util/List;",
+          "note": "the map choice the switch repeats: namespacesAssets for client resources, namespacesData otherwise",
+          "sha256": "832dbf590294d85b5d36fdfa9c430f8f21b30300e901a466b227808ec4992d61"
+        },
+        {
+          "class": "net/minecraftforge/resource/PathPackResources",
+          "method": "m_8031_",
+          "desc": "(Lnet/minecraft/server/packs/PackType;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/server/packs/PackResources$ResourceOutput;)V",
+          "note": "a mod-file pack's listing: decomposePath, then listPath under resolve(type, namespace), or an error log for an invalid path",
+          "sha256": "e7dcecfd94276590e27d6b30ac3c4a5beeb9b5fd3876f7728a82ac51cf90809b"
+        },
+        {
+          "class": "net/minecraftforge/resource/PathPackResources",
+          "method": "lambda$listResources$0",
+          "desc": "(Ljava/lang/String;Lnet/minecraft/server/packs/PackType;Lnet/minecraft/server/packs/PackResources$ResourceOutput;Ljava/util/List;)V",
+          "note": "the listPath call, rooted at resolve(type directory, namespace)",
+          "sha256": "c479801b70d7d675dc5c89f7a545eb050ae35f0ee8af1c342e20d27c3b75cb3b"
+        },
+        {
+          "class": "net/minecraftforge/resource/PathPackResources",
+          "method": "m_5698_",
+          "desc": "(Lnet/minecraft/server/packs/PackType;)Ljava/util/Set;",
+          "note": "getNamespaces = getNamespacesFromDisk",
+          "sha256": "db64a71c016020eca7e857832593220705c31ae075525f3ba937db0a275aed07"
+        },
+        {
+          "class": "net/minecraftforge/resource/PathPackResources",
+          "method": "getNamespacesFromDisk",
+          "desc": "(Lnet/minecraft/server/packs/PackType;)Ljava/util/Set;",
+          "note": "every directory directly under the type folder; data falls back to the asset namespaces (adds only)",
+          "sha256": "6ea93f09bbcd65c8f1d904cb183aa0072a008e5e782f8823b8e7015046a0e605"
+        },
+        {
+          "class": "net/minecraftforge/resource/ResourcePackLoader",
+          "method": "createPackForMod",
+          "desc": "(Lnet/minecraftforge/forgespi/language/IModFileInfo;)Lnet/minecraftforge/resource/PathPackResources;",
+          "note": "a mod-file pack is the anonymous ResourcePackLoader$1 the switch recognises",
+          "sha256": "96cf67086d2b8a868a2aa587931538868913bd7f144298e7634d13de28108549"
+        },
+        {
+          "class": "net/minecraftforge/resource/ResourcePackLoader$1",
+          "method": "resolve",
+          "desc": "([Ljava/lang/String;)Ljava/nio/file/Path;",
+          "note": "resolves inside the mod file (IModFile.findResource)",
+          "sha256": "4196bf7953ff7c2f7300d0b32df63fe056aff0e184979675d1e004390a66c8ae"
+        },
+        {
+          "class": "net/minecraft/server/packs/PathPackResources",
+          "method": "m_246914_",
+          "desc": "(Ljava/lang/String;Ljava/nio/file/Path;Ljava/util/List;Lnet/minecraft/server/packs/PackResources$ResourceOutput;)V",
+          "note": "listPath: files found under the resolved folder; a missing folder is a silently caught NoSuchFileException",
+          "sha256": "b59590f5e9eda6209c73d222d8fdbd78113b5372f0933659ce193bcc354b6db7"
+        },
+        {
+          "class": "net/minecraft/FileUtil",
+          "method": "m_245538_",
+          "desc": "(Ljava/lang/String;)Lcom/mojang/serialization/DataResult;",
+          "note": "decomposePath: the path test the switch repeats before skipping any delegate",
+          "sha256": "fe717dc6b6145ddb6f5da3aff8a2483e1264b985fb3ef7614078c98713bde555"
+        },
+        {
+          "class": "net/minecraft/FileUtil",
+          "method": "m_245247_",
+          "desc": "(Ljava/nio/file/Path;Ljava/util/List;)Ljava/nio/file/Path;",
+          "note": "resolvePath: listPath's folder stays under the namespace folder",
+          "sha256": "ff3f94cc17cf310b552975e3afb11e4d5074eeb56c74bfeb681d99a8e5e2dc9d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Client only (config list \"client\"): Forge builds the mod_resources DelegatingPackResources only for client resource packs (ClientModLoader); a dedicated or integrated server registers every mod file as its own data pack \"mod:<id>\" (ServerLifecycleHooks.serverPackFinder) and never lists mod_resources. MixinExtras @WrapOperation (priority 1500, require = 0) on the delegates.iterator() call in DelegatingPackResources.listResources (m_8031_): an iterator over Forge's own namespace -> delegates list (namespacesAssets / namespacesData, as getCandidatePacks) when every delegate is a Forge mod-file pack (ResourcePackLoader$1), the namespace is in the map and FileUtil.decomposePath accepts the path; the original iterator otherwise (other DelegatingPackResources, e.g. TACZ's gun packs and Kiwi's, keep Forge's loop: one DEBUG line per class). Helper bons.furious.patch.forge_mod_resources_index.ModResourcesIndex; Neighbours steps aside when another mod's untested mixin is applied to Forge's PathPackResources, ResourcePackLoader(1), vanilla's PathPackResources or DelegatingPackResources. Shadow mode -Dbons_and_furious.modResourcesNamespaceIndex.shadow=true. Our TrackworkResources @ModifyVariable on the same method is untouched.",
+      "license": "Forge (LGPL-2.1) and Minecraft (Mojang): no code of either is carried; the loop iterates Forge's own candidate list (helpers bons.furious.patch.forge_mod_resources_index.ModResourcesIndex and Neighbours)"
+    }
+  }
+}

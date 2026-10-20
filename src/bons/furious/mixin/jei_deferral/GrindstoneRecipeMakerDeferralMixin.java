@@ -1,7 +1,9 @@
 package bons.furious.mixin.jei_deferral;
 
+import bons.furious.guard.Guards;
 import bons.furious.patch.jei_deferral.Deferral;
 import bons.furious.patch.jei_deferral.GrindstoneDisenchant;
+import bons.furious.patch.jei_deferral.GrindstoneDisenchantGroups;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
@@ -21,12 +23,15 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
- * jei_join_recipe_deferral (JEI 15.59.0.212): GrindstoneRecipeMaker.getGrindstoneRecipes(manager, helper, menu) =
- * concat(repair recipes, disenchant recipes).toList(), every recipe a simulated grindstone, and the disenchant half an eager
- * loop over every enchantment x every registered item. For JEI's own vanilla-plugin call this registers nothing now and
- * hands {@link Deferral} JEI's own (lazy) repair stream plus a step-by-step walk of the disenchant loop
- * ({@link GrindstoneDisenchant}) that calls JEI's own private canEnchant and getGrindstoneRecipe; the deferral adds them,
- * repair first, after JEI has started. Every other caller gets JEI's method as shipped.
+ * jei_join_recipe_deferral (JEI 15.71.0.224 tested, JEI 15.59.0.212 accepted): GrindstoneRecipeMaker.getGrindstoneRecipes(
+ * manager, helper, menu) = concat(repair recipes, disenchant recipes).toList(), every recipe a simulated grindstone, and the
+ * disenchant half an eager loop over every enchantment x every registered item. For JEI's own vanilla-plugin call this
+ * registers nothing now and hands {@link Deferral} JEI's own (lazy) repair stream plus a step-by-step walk of the
+ * disenchant loop that calls JEI's own private canEnchant (and, on 15.59, getGrindstoneRecipe; on 15.62+, the platform
+ * helper's getGrindstoneResult, as JEI's grouped loop does): {@link GrindstoneDisenchant} for 15.59's loop (one recipe per
+ * item, enchantment and level), {@link GrindstoneDisenchantGroups} for 15.62's (one recipe per enchantment and level). Which
+ * loop is installed is the build label the switch's guard matched (Guards.matchedBuild). The deferral adds them, repair
+ * first, after JEI has started. Every other caller gets JEI's method as shipped.
  */
 @Mixin(value = GrindstoneRecipeMaker.class, remap = false)
 public abstract class GrindstoneRecipeMakerDeferralMixin {
@@ -61,10 +66,19 @@ public abstract class GrindstoneRecipeMakerDeferralMixin {
         } finally {
             Deferral.snapshotting(false);
         }
-        GrindstoneDisenchant disenchant = new GrindstoneDisenchant(
-                (stack, enchantment, enchantmentId) -> canEnchant(platformHelper, stack, enchantment, enchantmentId),
-                (topInput, bottomInput, uid) -> getGrindstoneRecipe(platformHelper, grindstoneMenu, topInput, bottomInput, uid));
-        Deferral.scheduleGrindstone(repairRecipes.iterator(), disenchant);
+        if (Deferral.JEI_1559.equals(Guards.matchedBuild("jei_join_recipe_deferral"))) {
+            // JEI 15.59: one recipe per item, enchantment and level
+            GrindstoneDisenchant disenchant = new GrindstoneDisenchant(
+                    (stack, enchantment, enchantmentId) -> canEnchant(platformHelper, stack, enchantment, enchantmentId),
+                    (topInput, bottomInput, uid) -> getGrindstoneRecipe(platformHelper, grindstoneMenu, topInput, bottomInput, uid));
+            Deferral.scheduleGrindstone(repairRecipes.iterator(), disenchant);
+        } else {
+            // JEI 15.62 and later (tested 15.71): one recipe per enchantment and level holding every supported item
+            GrindstoneDisenchantGroups disenchant = new GrindstoneDisenchantGroups(
+                    (stack, enchantment, enchantmentId) -> canEnchant(platformHelper, stack, enchantment, enchantmentId),
+                    (topInput, bottomInput) -> platformHelper.getGrindstoneResult(grindstoneMenu, topInput, bottomInput));
+            Deferral.scheduleGrindstone(repairRecipes.iterator(), disenchant);
+        }
         cir.setReturnValue(List.of());
     }
 

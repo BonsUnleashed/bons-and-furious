@@ -1,0 +1,114 @@
+{
+  "group": "zeta_clusters",
+  "keys": {
+    "zeta_cluster_bounds_first": {
+      "mod": "zeta",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.zeta_clusters.ClusterBoundsFirstMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/violetmoon/zeta/world/generator/multichunk/ClusterBasedGenerator",
+          "method": "generateChunkPart",
+          "desc": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/chunk/ChunkGenerator;Ljava/util/Random;Lnet/minecraft/core/BlockPos;Lnet/minecraft/server/level/WorldGenRegion;)V",
+          "sha256": "9033cc5c47ab70a3c72913346ac930df5948f94a0767857288a0b24199569b5e"
+        },
+        {
+          "class": "org/violetmoon/zeta/world/generator/multichunk/ClusterBasedGenerator",
+          "method": "lambda$generateChunkPart$0",
+          "desc": "(Lorg/violetmoon/zeta/world/generator/multichunk/ClusterBasedGenerator$IGenerationContext;Lorg/violetmoon/zeta/world/generator/multichunk/ClusterShape;Lnet/minecraft/core/BlockPos;)V",
+          "sha256": "932e7f1aad325cf3634a5ec1b89df54b83b56c16b1962dfa4af01afa3b9a6eb0"
+        },
+        {
+          "class": "org/violetmoon/zeta/world/generator/multichunk/ClusterShape",
+          "method": "isInside",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "09b842b64f53ffbacee04c8fc6ded16bd19ea0fbbed1068b5d806939ce58ccab"
+        },
+        {
+          "class": "org/violetmoon/zeta/world/generator/multichunk/ClusterShape",
+          "method": "src",
+          "desc": "()Lnet/minecraft/core/BlockPos;",
+          "sha256": "0b2ca302ad301041932bf5a0010555b1f251a4108a826e71888fd22589a4e4ef"
+        },
+        {
+          "class": "org/violetmoon/zeta/world/generator/multichunk/ClusterShape",
+          "method": "radius",
+          "desc": "()Lnet/minecraft/world/phys/Vec3;",
+          "sha256": "94fed38adbfe70a000cf95e68f6ee4c24f72d4b72e2c5feb67f15079090bb682"
+        },
+        {
+          "class": "org/violetmoon/zeta/world/generator/multichunk/MultiChunkFeatureGenerator",
+          "method": "forEachChunkBlock",
+          "desc": "(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;IILjava/util/function/Consumer;)V",
+          "sha256": "ba91cf358993ca90694d520f0a1f69029eb0bac3d028609626d28dd9a5ec95e6"
+        },
+        {
+          "class": "org/violetmoon/quark/content/world/gen/BigStoneClusterGenerator",
+          "method": "createContext",
+          "desc": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/chunk/ChunkGenerator;Ljava/util/Random;Lnet/minecraft/core/BlockPos;Lnet/minecraft/server/level/WorldGenRegion;)Lorg/violetmoon/zeta/world/generator/multichunk/ClusterBasedGenerator$IGenerationContext;",
+          "sha256": "d313503eb49999ba540d43988e901399930a8eba81bc9e6176979909ed8704f9"
+        },
+        {
+          "class": "org/violetmoon/quark/content/world/gen/BigStoneClusterGenerator",
+          "method": "canPlaceBlock",
+          "desc": "(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "487302279b039b8c1164c876c601d89d48203868e1bee20cce930bc392f4d1a9"
+        },
+        {
+          "class": "org/violetmoon/quark/content/world/gen/BigStoneClusterGenerator$1",
+          "method": "canPlaceAt",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "7c1c0196ff5bfffb1d332ff7e90dd21885ab4d7e9e3b8234c3d86e85af7429ec"
+        },
+        {
+          "class": "org/violetmoon/quark/content/world/module/BigStoneClustersModule",
+          "method": "configChanged",
+          "desc": "(Lorg/violetmoon/zeta/event/load/ZConfigChanged;)V",
+          "sha256": "8f997a793deda4010c8bae88bf633a5a4060b5e5fd2f91dd63158a6458a81a18"
+        },
+        {
+          "class": "org/violetmoon/quark/content/world/module/BigStoneClustersModule",
+          "method": "lambda$configChanged$5",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/Block;)Z",
+          "sha256": "a9057d062fb197564c8e845386d2280bde1a1cc2fd7f4098adc42ac45ea65ea5"
+        },
+        {
+          "class": "org/violetmoon/quark/content/world/module/BigStoneClustersModule",
+          "method": "lambda$configChanged$6",
+          "desc": "(Lnet/minecraft/world/level/block/Block;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/Block;)Z",
+          "sha256": "c102841da5c3b9651534a348ac8b554ff797f82ab21b816c014fc7d73d3678df"
+        },
+        {
+          "class": "org/violetmoon/quark/content/world/module/BigStoneClustersModule",
+          "method": "lambda$configChanged$7",
+          "desc": "(Lnet/minecraft/world/level/block/Block;Ljava/lang/String;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/Block;)Z",
+          "sha256": "c3a76e43df1fb2807989618ad6d05fedc035bf93cee2da1fc169f0680f29679f"
+        },
+        {
+          "class": "org/violetmoon/quark/content/world/module/BigStoneClustersModule",
+          "method": "lambda$configChanged$8",
+          "desc": "(Ljava/lang/String;Lnet/minecraft/world/level/block/Block;)V",
+          "sha256": "8d6c457e5f30405a4e211462e06d1433933ca74fe1dc713025026ba2ceb177e3"
+        },
+        {
+          "class": "org/violetmoon/quark/content/world/module/BigStoneClustersModule",
+          "method": "lambda$static$0",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/Block;)Z",
+          "sha256": "a9057d062fb197564c8e845386d2280bde1a1cc2fd7f4098adc42ac45ea65ea5"
+        },
+        {
+          "class": "net/minecraft/server/level/WorldGenRegion",
+          "method": "m_8055_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "b4973372f63989f45f2da6bd510ca001283ed71f2509a27c5d3b1e80d210ac90"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the IGenerationContext.canPlaceAt call in Zeta's per-block lambda ClusterBasedGenerator.lambda$generateChunkPart$0, with the lambda's (context, shape, pos) arguments captured as trailing handler parameters: the helper computes the cluster's ellipsoid value from ClusterShape's src and radius and returns false without calling canPlaceAt when it is above 1 and the context is Quark's BigStoneClusterGenerator$1 (whose canPlaceAt is a pure read); otherwise it calls canPlaceAt; runtime flag and shadow mode in the helper",
+      "license": "Zeta and Quark: CC-BY-NC-SA-3.0; no Zeta or Quark code is carried, the redirect and helper are our own logic (helper bons.furious.patch.zeta_clusters.ClusterBoundsFirst)"
+    }
+  }
+}

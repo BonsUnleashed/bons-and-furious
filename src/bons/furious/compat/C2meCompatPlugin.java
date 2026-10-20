@@ -365,7 +365,14 @@ public final class C2meCompatPlugin implements IMixinConfigPlugin {
         }
         Class<?> o = option.getClass();
         if (Boolean.TRUE.equals(o.getMethod("getValue").invoke(option))) {
-            LOGGER.debug("Bons and Furious: {} has nothing to do: ModernFix's mixin.perf.cache_strongholds is already on", STRONGHOLD_KEY);
+            // 1.0.46: ModernFix 5.27.89 dropped "c2me" from the mods that switch this option off (our PR #696, merged
+            // 2026-10-02): with C2ME installed and the option on and not set by C2ME, the switch has been made redundant
+            Collection<?> by = (Collection<?>) o.getMethod("getDefiningMods").invoke(option);
+            if (modVersion("c2me") != null && by.stream().map(String::valueOf).noneMatch("c2me"::equals))
+                LOGGER.info("Bons and Furious: {}: fixed upstream in ModernFix {} (C2ME no longer switches mixin.perf.cache_strongholds off), stands down",
+                        STRONGHOLD_KEY, modVersion("modernfix"));
+            else
+                LOGGER.debug("Bons and Furious: {} has nothing to do: ModernFix's mixin.perf.cache_strongholds is already on", STRONGHOLD_KEY);
             return false;
         }
         if ((Boolean) o.getMethod("isUserDefined").invoke(option)) {

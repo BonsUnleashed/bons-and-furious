@@ -7,6 +7,7 @@
       "since": "1.0.28",
       "mixins": [
         "bons.furious.mixin.mowziesmobs.CapabilityHandlerLookupMixin",
+        "bons.furious.mixin.mowziesmobs.CapabilityHandlerValueMixin",
         "bons.furious.mixin.mowziesmobs.CapabilityProviderStateAccessor",
         "bons.furious.mixin.mowziesmobs.LivingEntityCapabilityHandlesMixin"
       ],
@@ -58,10 +59,108 @@
           "method": "getCapability",
           "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
           "sha256": "aff7dbc58d1187f3f6603f119e7235c01bad0b716e879dac45d07ba84ecb5696"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "isPresent",
+          "desc": "()Z",
+          "note": "supplier != null && isValid: the hit test of a kept LazyOptional",
+          "sha256": "528ff0650ee32736aedfad726cb2cecad9ff733967636cf3f368cb7713d94073"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "getValue",
+          "desc": "()Ljava/lang/Object;",
+          "note": "resolves the supplier once (resolved MutableObject), null while invalid: a present optional keeps its value",
+          "sha256": "0be5fedce9c2d2707e842939887abfc1dfae08adea3717a2939f6d5259045627"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "orElseThrow",
+          "desc": "(Lnet/minecraftforge/common/util/NonNullSupplier;)Ljava/lang/Object;",
+          "note": "getValue() or the supplied exception: the call the value form answers",
+          "sha256": "5bd6d2e1665e9cc3ca44a600feccee9e806cee32ac783becf5e2b2e17567129b"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "invalidate",
+          "desc": "()V",
+          "note": "isValid true -> false once, then the listeners: an optional never becomes present again",
+          "sha256": "b5bcc4e96795e8f2ead91035f320ed53703efe6bf30a7fd235698d49b22c8057"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "empty",
+          "desc": "()Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "the EMPTY singleton the dispatcher answers when nothing is present (absent entries hand it out)",
+          "sha256": "daade5076cdc683554d5dcd12d56681e17aac9f4301a9212853f9e38e68d8af5"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "*",
+          "desc": "",
+          "note": "no other method writes isValid or resolved",
+          "sha256": "eb3df48d49e75f27db2102a41c1206c592599c5c72b03f6be9d407bdc8977c0e"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "ITEM_HANDLER only, then super (PLAIN: absent entries)",
+          "sha256": "258831e142d2f796e042c20e25700e18a93b78a31be76c2999dd122f15e36f43"
+        },
+        {
+          "class": "net/minecraft/world/entity/player/Player",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "ITEM_HANDLER only, then super (PLAIN: absent entries)",
+          "sha256": "c404867d35e2ef41b6bcec7a2789615d8575f1e599f15f82354102421738e62b"
+        },
+        {
+          "class": "net/minecraft/world/entity/animal/horse/AbstractHorse",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "ITEM_HANDLER only, then super (PLAIN: absent entries)",
+          "sha256": "aa9b966f85556cfbb492fa44bdae84d386cc1a2af0c47322f94a32713eebc32d"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/capability/CapabilityHandler",
+          "method": "attachEntityCapability",
+          "desc": "(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V",
+          "note": "Living + Frozen providers on every LivingEntity, Player + Ability on players only: the absent entries of non-players",
+          "sha256": "3cf640a7a41a41891fb99e158e1e1e2887807a87e61ada8dbecec0b90083c846"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/capability/FrozenCapability$FrozenProvider",
+          "method": "*",
+          "desc": "",
+          "note": "one private final LazyOptional field set in <init>; no other method (absent entries)",
+          "sha256": "99b3c948d4d901885f6462121b1683e995456c9bb9919ba04ee7d1045d154a0e"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/capability/LivingCapability$LivingProvider",
+          "method": "*",
+          "desc": "",
+          "note": "one private final LazyOptional field set in <init>; no other method (absent entries)",
+          "sha256": "99b3c948d4d901885f6462121b1683e995456c9bb9919ba04ee7d1045d154a0e"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/capability/AbilityCapability$AbilityProvider",
+          "method": "*",
+          "desc": "",
+          "note": "one private final LazyOptional field set in <init>; no other method (absent entries)",
+          "sha256": "99b3c948d4d901885f6462121b1683e995456c9bb9919ba04ee7d1045d154a0e"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/capability/PlayerCapability$PlayerProvider",
+          "method": "*",
+          "desc": "",
+          "note": "one private final LazyOptional field set in <init>; no other method (absent entries)",
+          "sha256": "99b3c948d4d901885f6462121b1683e995456c9bb9919ba04ee7d1045d154a0e"
         }
       ],
       "cancel": [],
-      "conversion": "injectors: two @Redirects of Entity.getCapability(Capability) in CapabilityHandler.getCapability to our lookup (helper bons.furious.patch.mowziesmobs.MowzieCapabilityHandles); @Accessor for CapabilityProvider.valid/capabilities; one @Unique reference field on LivingEntity",
+      "conversion": "injectors: two @Redirects of Entity.getCapability(Capability) in CapabilityHandler.getCapability to our lookup (helper bons.furious.patch.mowziesmobs.MowzieCapabilityHandles); @Accessor for CapabilityProvider.valid/capabilities; one @Unique reference field on LivingEntity; since 1.0.46 (value form): MixinExtras @WrapMethod on CapabilityHandler.getCapability (kept value or absent, after Mowzie's own null/isRemoved checks) and a @Redirect of its orElseThrow call to itself that keeps the value",
       "license": "custom (Mowzie's Mobs, treated as All Rights Reserved): no Mowzie's Mobs code is carried, the mixins only redirect the two dispatcher calls to our own lookup; Minecraft/Forge: one field and accessors, no code"
     }
   }

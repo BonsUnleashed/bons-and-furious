@@ -110,10 +110,24 @@ public final class TurtleEggSearch {
     private TurtleEggSearch() {
     }
 
+    /**
+     * Whether c itself declares the method (an inspection failure counts as declared: the original runs).
+     *
+     * 1.0.45: a synthetic bridge does not count unless c also declares a non-bridge method of that name and parameter count.
+     * javac emits a bridge in a mixin class that extends a game class; Mixin merges it into the target. Six ServerLevel mixins
+     * of this pack merge "ChunkAccess getChunk(int, int)" (body: super.getChunk, the LevelChunk method), so RepellentSearch's
+     * level check refused every server level and vanilla_repellent_search_sections never acted in this pack. A bridge alone only
+     * forwards to the inherited method. A bridge next to a non-bridge method of the same name and arity forwards to that
+     * method (a covariant or generic override), so it still counts. getDeclaredMethod returns the most specific return type,
+     * so a real override with exactly these parameters is found first.
+     */
     static boolean declares(Class<?> c, String name, Class<?>... params) {
         try {
-            c.getDeclaredMethod(name, params);
-            return true;
+            if (!c.getDeclaredMethod(name, params).isBridge()) return true;
+            for (Method m : c.getDeclaredMethods()) {
+                if (!m.isBridge() && m.getName().equals(name) && m.getParameterCount() == params.length) return true;
+            }
+            return false;
         } catch (NoSuchMethodException e) {
             return false;
         } catch (Throwable t) {

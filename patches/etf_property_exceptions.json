@@ -1,0 +1,876 @@
+{
+  "group": "etf_property_exceptions",
+  "keys": {
+    "etf_stackless_property_exception": {
+      "mod": "entity_texture_features",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.etf_property_exceptions.RandomPropertyExceptionMixin"
+      ],
+      "guard": [
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/RandomProperty$RandomPropertyException",
+          "method": "*",
+          "desc": "",
+          "sha256": "5ca107de58689987fadaa2c7becdde8a9aec33ad5feb4f351aaffd8d25e86994"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/RandomProperty$RandomPropertyException",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;)V",
+          "sha256": "d77673a6580fc47cb92e2fb6f5f21ddb6d0b3d3b05647b14433677b46f22a004"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/generic_properties/BooleanProperty",
+          "method": "<init>",
+          "desc": "(Ljava/lang/Boolean;)V",
+          "sha256": "cd6a86feaf59400c1417f9a7c544c3b13b230b0dd8e5bfb6781e50bced5b6e2a"
+        },
+        {
+          "class": "traben/entity_model_features/propeties/EntityVariableBooleanProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "cf952edc92a5c67c14cf5b3e1eec79ee7653b9f58d7523e46e6ac5bf49228d2c"
+        },
+        {
+          "class": "traben/entity_model_features/propeties/EntityVariableFloatProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "6cc2fc1b8a95f20a77d8a93bd8060649230bc013b4193bc85deabc45a1887bca"
+        },
+        {
+          "class": "traben/entity_model_features/propeties/GlobalVariableBooleanProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "3e8cd669e202b1ba39cfac2f07336e9f76b2bd351ffc96709c54b1d96202297d"
+        },
+        {
+          "class": "traben/entity_model_features/propeties/GlobalVariableFloatProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "748e2820a74b8449f1f831f270f55431c60c27bdb8e90f059e70f087755ed5d3"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/NBTProperty$NBTTester",
+          "method": "of",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/NBTProperty$NBTTester;",
+          "sha256": "789333d35f908d399bf0744828c5dec76b58c6fe4b1bbe20b1deb3d9d7a6256f"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/NBTProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;ILjava/lang/String;)V",
+          "sha256": "1feb8224cbbe5e637488c3371fecbca2fc38b0553ac0c0995985cd4c4e9b24cb"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/NameProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/NameProperty;",
+          "sha256": "0eae3c70b017554721a774a0b165a05036783b309d85a4332d23b67159bfe8c4"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/generic_properties/NumberRangeFromStringArrayProperty",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;)V",
+          "sha256": "4c2aaf1fed001dd23bdae577c883c589cdd613e65909a61b6977f51fcea8c06b"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/RandomProperty",
+          "method": "readPropertiesOrThrow",
+          "desc": "(Ljava/util/Properties;I[Ljava/lang/String;)Ljava/lang/String;",
+          "sha256": "ef564d9bf3d678bc7d397e88157cc9b44d7f0d8cc46a470441cd6b263b572bd8"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/generic_properties/SimpleIntegerArrayProperty",
+          "method": "<init>",
+          "desc": "([Ljava/lang/Integer;)V",
+          "sha256": "e4e7225fba4c00f5583b7f9916705a8d8582e55db1a2b028fbdd5a98299b53f6"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/generic_properties/StringArrayOrRegexProperty",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;)V",
+          "sha256": "54f05e18b16e0a2eef9dcd113a3e96db1e892519c6f8a24521a934d7ae2ac947"
+        },
+        {
+          "class": "traben/entity_model_features/propeties/ModelRuleIndexProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "a787c06d846bc3a3be418c66442271178554148e2c39a847a335b56f5d614e72"
+        },
+        {
+          "class": "traben/entity_model_features/propeties/ModelSuffixProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "7bc2877fccde5f8ea37680d8c6b342a4e1b025954443809451a6baa520b84af0"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/AngryProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "aa8b349126422724aa40d43de5355be30b20fcedd3bbe0c1584c2975739c7472"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/BiomeTagProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "be3590bd86a9c74426b7472e623df42ea6ae62fdc17c2a452d6466e751818d3d"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/ChargedCreeperProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "cf55bc2681718fd81adad54477347e87fce67f699706f199f90cb966b6ba4124"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/ClientPlayerProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "06be4adf5eecb8d15a95909295e9ba90aa291e4559acb31e432c95d3c04721da"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/CreativeProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "9017e2f5700e6e274483bbe272dbaa26797faa6b9e0633903dc542a27ea6ab21"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/DimensionProperty",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;)V",
+          "sha256": "3ff455d09be4536545787c924d5e6d1c425a98b0932197c9cb18f2147bd7f866"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/DistanceToPlayerProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "c4ab291facdfcc7fdfbec77a5136946c8a669cf4146e8c49b40f333458df73c0"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/ItemProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "3517c6c6630cf44d1cbb98a82aad0b26bdba270f534113b175a8a8433e4026b4"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/JumpProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "e2c2a1ef8b38eb88692c37e245e5ef1e81262e74456358ff7525a287a1bcea0a"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/LightProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "035ad11da7fe5312e9a2a1b94de0244d77df8865020250a6253d8383a8678afd"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/LlamaInventoryProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "945149b2e3ecc590151542c4241541be6bbbbc53c374cdcd235731269b91ffa1"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/MaxHealthProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "cbcd40d0884f689f8b8e34638c99d4c57c731c2b8620a2bc5a3b1cc4e8b02f5f"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/MovingProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "f424d077f67bd48f67ef42026ab19029c8108ff1d421d10866ad650d16399ffc"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/NBTClientProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;ILjava/lang/String;)V",
+          "sha256": "27ae9adfc5df12106236eb8204411c0981099352c7fff6760d16272fd02ed139"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/PandaGeneProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "091eb3e58f302106527f99b2949e7cfa87434021ab9e0495c6d8cdd45c86fe7c"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/PlayerCreatedProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "44e2b4b54d00fdf639028835c785841b06b0de187457b3745b1574bbf3645bad"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/ScreamingGoatProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "4cedb62c20e5cfe7a104f79dc3a8c7ea99c52a84f7f4f56ff7d0846634649aba"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/SpawnerProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "45411b8e69157e87927843eed696aafdaa3fc4482c08ff943579ab7cdd38083f"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/SpeedProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "806d36ea69db4dc27baa4c7e5f8c25eda855894cd8fffcfc96763a752dbd327d"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/TeamProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "cd0bc0026775d1a24d1071fb5c24b34ae6c145b7de06c08daf8d8b4b184628ca"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/TeammateProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "317b4e5bfa7e021e791cb1629b850c8f112d79f4aa2e2c042042e8ae3a5fbd89"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/TemperatureProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "15f57d45fa531c8562f33e80dcd1c2450626f3ad03c74c9cdb5cd6a0389f4f5b"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/TextureRuleIndexProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "76eceab9688026100cc85a129de3f6e6ac74b94e2e7ee8d3427831627bed6d4f"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/TextureSuffixProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "d2a92f5c81e164f22bacc9cc8f48428bbf97113adc4614aeeb77ac735f4c7352"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/VariantProperty",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;)V",
+          "sha256": "c1d7a1cddccab1ce3332a0993add5934a6e53f4a3a31d32cb6324480aceed0f8"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/ClientGameModeProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "8a624f6473ce165592bc81519b54324251ff2717d804a85aff643c3060756530"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/DifficultyProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "f2cdade1103116835da17123edd919f51c0bb51c85e42939959eaaccfa364257"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/HardcoreProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "7b00d7019cf1dcb57241bf48044fe1c8949b24f9aea15b180b7bd55a70476673"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/HourProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "07721e43da1c25b81904a0d942093eed084ff2ebd3e25391326927fe61bcd81c"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/LanguageProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "b30386f45e96a2ffcfdc0c6a7a2fabb168c51db1582bf3febfef98502122bfa0"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/MinecraftVersionProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "88f20967b696cb21b6501c6f12956fa2c841d4ff69c0fb1968fe76b7a99bd99d"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/MinuteProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "f7c523013f36a0a5f29399f5359fb9db71cc56416ef121cc9b930dde9a67ef06"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/ModLoadedProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "46fde32d076d7dd2d0cdac85aa81a72606e46634b8164a9219423cf8f984a862"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/MonthDayProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "4b29fae9c911f7631bb9c1a0ca6373c8f2ffc37df9cca0c8873df1a33766c7f0"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/MonthProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "09fcae0d5dbbc588044b216ce631342ee19713b4e45720f5c26008b092601ba5"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/NBTVehicleProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;ILjava/lang/String;)V",
+          "sha256": "27ae9adfc5df12106236eb8204411c0981099352c7fff6760d16272fd02ed139"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/RegionalDifficultyProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "ad19a5562d7582ef5afd9167e6860ff15c1c2d016e92214f3595d7bec7329ce4"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/SecondProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "e1fd036445162882e3c3e2ce8188693333524cee1b05b8a4029767d04fb4de9f"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/WeekDayProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "4b842c7e645ccef64fd990665cc3d9d677ef59828e6b57289d9c0643609fe993"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/YearDayProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "45209a755479e280fd126d44626839005babd92ed6331305c0fb0b95998f3c70"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/YearProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "25add9062f5eda5edbf0056f87ea3f4375645cf35d866699e8fb6ced2ea5a369"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/generic_properties/FloatRangeFromStringArrayProperty",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;)V",
+          "sha256": "b7778b7bbb997e2831ea8d2e72efa403feaab890a387ae39f7ec7deaed77d282"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/generic_properties/LongRangeFromStringArrayProperty",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;)V",
+          "sha256": "b7778b7bbb997e2831ea8d2e72efa403feaab890a387ae39f7ec7deaed77d282"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/generic_properties/SemVerRangeFromStringArrayProperty",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;)V",
+          "sha256": "b7778b7bbb997e2831ea8d2e72efa403feaab890a387ae39f7ec7deaed77d282"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/BabyProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "bc2afb6260a5405427fd40e614a6b25d43a314f7a7a9afa1d3ade41c05d721db"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/BiomeProperty",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;)V",
+          "sha256": "c1d7a1cddccab1ce3332a0993add5934a6e53f4a3a31d32cb6324480aceed0f8"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/BlocksProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I[Ljava/lang/String;)V",
+          "sha256": "fa2edee9bc135580e3c9190abd68b233e51c867a33f4e0ecaeb913e7d56f3ee7"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/ColorProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "95a60ef82383b5472ba9659ceb910870854a6cd03d1382cdac2cedf26c28687f"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/HealthProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "d1cf24e89701c5500269dfb4b898caec5cc2316099bfce98c8eeb56a7e5ba21a"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/HeightProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "579076444176eb1c23a0fbfa0310a007ba3dcee24c14700ffdf674cc7ab7e734"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/MoonPhaseProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "d179134fa059796554cbd751f4f205bd3a41e6f491ab16e617a9fe037de296ba"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/NameProperty",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;)V",
+          "sha256": "c1d7a1cddccab1ce3332a0993add5934a6e53f4a3a31d32cb6324480aceed0f8"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/ProfessionProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "781693dfac33c03ff42b87ffee73b5d04f07fc3e6ce9ae5870934b223e596ac7"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/SizeProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "9b4ddb1209b7c73584b8b44dfe362c95f41f75c1ffb438eb54a71b29949857b8"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/TimeOfDayProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "85ae6cbc6edd6f8890a029126361017a3e11cd4f5f9889eb94cd69f0f18883f7"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/WeatherProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I)V",
+          "sha256": "32c79a354a2186a9cc06a9820a9bd6659f222f8c68513bc183ed324a151cc441"
+        },
+        {
+          "class": "traben/entity_model_features/propeties/EntityVariableFloatProperty$InnerTester",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;Ljava/util/function/Function;Ljava/lang/String;)V",
+          "sha256": "8ab4325ac2bff4945c0026d90739f8c0ed4937751545f8047e4a61b3be0ab965"
+        },
+        {
+          "class": "traben/entity_model_features/propeties/GlobalVariableFloatProperty$InnerTester",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;Ljava/util/function/Function;Ljava/lang/String;)V",
+          "sha256": "6ef091cf70feac871b5c9742911c76be6e31a6b24697b953ea372619dc4fd560"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/BlockAboveProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I[Ljava/lang/String;)V",
+          "sha256": "23b14d2b750d9d8e733b126195b356cea9b21dbf60b465262e8d71d086c7e6bb"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/BlockAboveSolidProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I[Ljava/lang/String;)V",
+          "sha256": "23b14d2b750d9d8e733b126195b356cea9b21dbf60b465262e8d71d086c7e6bb"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/BlockBelowProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I[Ljava/lang/String;)V",
+          "sha256": "23b14d2b750d9d8e733b126195b356cea9b21dbf60b465262e8d71d086c7e6bb"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/BlockBelowSolidProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I[Ljava/lang/String;)V",
+          "sha256": "23b14d2b750d9d8e733b126195b356cea9b21dbf60b465262e8d71d086c7e6bb"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/BlockSpawnedProperty",
+          "method": "<init>",
+          "desc": "(Ljava/util/Properties;I[Ljava/lang/String;)V",
+          "sha256": "23b14d2b750d9d8e733b126195b356cea9b21dbf60b465262e8d71d086c7e6bb"
+        },
+        {
+          "class": "traben/entity_model_features/propeties/EntityVariableBooleanProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_model_features/propeties/EntityVariableBooleanProperty;",
+          "sha256": "c5af96ec5be13d62b435863c6be0d739f942810d8679701f7789b8224491671e"
+        },
+        {
+          "class": "traben/entity_model_features/propeties/EntityVariableFloatProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_model_features/propeties/EntityVariableFloatProperty;",
+          "sha256": "8b34a15d0a23cd95c8341723dbe6c3316f5dd2ffa4644ac5970b621ee0d3bfb2"
+        },
+        {
+          "class": "traben/entity_model_features/propeties/GlobalVariableBooleanProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_model_features/propeties/GlobalVariableBooleanProperty;",
+          "sha256": "291ea441ded10330bea187321521979369e21a3a0198d48eb290c9da010c3b1e"
+        },
+        {
+          "class": "traben/entity_model_features/propeties/GlobalVariableFloatProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_model_features/propeties/GlobalVariableFloatProperty;",
+          "sha256": "ddfebe36ab36370f598a26ccf929402a9d11dfd5657aa8b91200d4029915e749"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/DimensionProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/DimensionProperty;",
+          "sha256": "58c87773d098ccb005ef5d3f75ea76f5a7e193813a8b7930ba63ad0610d3ee5f"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/VariantProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/VariantProperty;",
+          "sha256": "256d137d88d88e83272ad6ffbb701512c3df4db752f36fa1b3538252cf06227d"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/BiomeProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/BiomeProperty;",
+          "sha256": "b61d965efd52959e8b5dfd0708f041018c77ca0d98958a38db0a88b2ce2e1b29"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/NBTProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/NBTProperty;",
+          "sha256": "2607f7eb64b7e747e1381c14b4329fd8fa5883654ac83cfc2c82492aa2d35ad4"
+        },
+        {
+          "class": "traben/entity_model_features/propeties/ModelRuleIndexProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_model_features/propeties/ModelRuleIndexProperty;",
+          "sha256": "c9b762fc6f66745102def71d36aa50a6ec4461d806dd742607d6f7496ed1028d"
+        },
+        {
+          "class": "traben/entity_model_features/propeties/ModelSuffixProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_model_features/propeties/ModelSuffixProperty;",
+          "sha256": "fae3930d3d0c57e60ee062eeb37122fdab14381a12e7977fd25e6d891531e149"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/AngryProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/AngryProperty;",
+          "sha256": "2fd75b84ec9cedbe445c592cdee3c02e9fcefa59cd6bd22bb1cbb11f8db3f98e"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/BiomeTagProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/BiomeTagProperty;",
+          "sha256": "7907da66e6b3b31a4720687cc4b0d11e49e1841252831de784d7354c30b8b160"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/ChargedCreeperProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/ChargedCreeperProperty;",
+          "sha256": "832283f9c533884f9514cf9736ea5cfb475bf61767f740bea6f521599fab1bba"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/ClientPlayerProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/ClientPlayerProperty;",
+          "sha256": "2407c3609966b1f103c0e40e552af61a524fc3b23b759c74cad2735501d85b8c"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/CreativeProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/CreativeProperty;",
+          "sha256": "193e2454ce52946d345852cf9e13c8b901c007392991de19294f20d78755b57e"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/DistanceToPlayerProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/DistanceToPlayerProperty;",
+          "sha256": "a640aed074f680ac73898aa9dbd202603905812dbde5c19727e658f0dda6c4de"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/ItemProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/ItemProperty;",
+          "sha256": "d4e826cea3c3f78692dba68895a2c135296e995ad5a5e453a5d6a24f4634db34"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/JumpProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/JumpProperty;",
+          "sha256": "a6cc6d6075eeb748e38dcb30f7aa5fd3e0eb2641be800837986e106c311d230a"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/LightProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/LightProperty;",
+          "sha256": "163b70fad9bc25e572aa45a32c808bc6318475c2d6383c5ed17c8893ed6b319c"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/LlamaInventoryProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/LlamaInventoryProperty;",
+          "sha256": "87aae500b37f525e026e368d31456210cf88f2469342c8344efef54071f06026"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/MaxHealthProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/MaxHealthProperty;",
+          "sha256": "38860b6989174475ff1b427fbd40307a4fb5d4500d0c75382c2e2c7d64e0364c"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/MovingProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/MovingProperty;",
+          "sha256": "c9d1a746382b07ce10b57dce6e6009b87842ee46cc85c15350b9e9da51fe1f06"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/NBTClientProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/NBTProperty;",
+          "sha256": "345762c0eb8f3f33f3b5cec63de9718c41ba7b8f7a11dcf6884543ecae924a6b"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/PandaGeneProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/PandaGeneProperty;",
+          "sha256": "2a2dff29dac1714998e53c392b126b1a4ccb8d3a47bdd91ea7925782f044d786"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/PlayerCreatedProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/PlayerCreatedProperty;",
+          "sha256": "a2e0ac3e214c366b0802ee263b5d00002c7c9cab410dc92aeac9af21f72a011d"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/ScreamingGoatProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/ScreamingGoatProperty;",
+          "sha256": "62b6c8e61524f565cc1881049352dd931a807e4e7aeed366b0788f82ad2bec05"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/SpawnerProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/SpawnerProperty;",
+          "sha256": "760c421fadce5d19ff0eda0c96c08e3438344af90906d24bee61eb43a3d0c642"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/SpeedProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/SpeedProperty;",
+          "sha256": "063c683aa90493b2565ecd2db6b117caeea8cff0c189c5cc9e5746f5c2e937c5"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/TeamProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/TeamProperty;",
+          "sha256": "3691c6903fd6451d31e092a570c7a3b63738edc8593f80f3a0d8fd726f4ebb63"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/TeammateProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/TeammateProperty;",
+          "sha256": "f922b59c10e79c9cc015228a39888a66da20cd8b2f39791d274cfaca4f0e093d"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/TemperatureProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/TemperatureProperty;",
+          "sha256": "b70edc329e09e1e6d216cb84a1096958e977e1e7a94a96d1adf31301b443abfb"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/TextureRuleIndexProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/TextureRuleIndexProperty;",
+          "sha256": "e18d9901f38a33729e7daf627204c38ee25b937dbae4c98cb2b8ffb7d59d9769"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/TextureSuffixProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/TextureSuffixProperty;",
+          "sha256": "a3ee147a9fc7ad77c9bd318ad6801ef619847bdb7d9cddbe3ae88f7fe00260ef"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/ClientGameModeProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/external/ClientGameModeProperty;",
+          "sha256": "d7a5b6546f39c490135a01687f94c1d46f92c365fe0f8f4f99215679a1f9f4f9"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/DifficultyProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/external/DifficultyProperty;",
+          "sha256": "c2a8bb5152136b7dd96ef059c1a124a28bcb4c286f676e13f55db5361572f407"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/HardcoreProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/external/HardcoreProperty;",
+          "sha256": "5a5c4f12290c79d1572944cfcb8cc26595836958d0e192bf5124dc54340a3f98"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/HourProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/external/HourProperty;",
+          "sha256": "52ff42c2e5514264c9dc87df6b705ea5f5acc9e75a482a9f27c7ce9fb3f9802e"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/LanguageProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/external/LanguageProperty;",
+          "sha256": "1db3e95e102eeab1e927d181fb1376fd372b2186ad7dcf549cbf3026c3d83dee"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/MinecraftVersionProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/external/MinecraftVersionProperty;",
+          "sha256": "2f2335ce5a36f3833b1265227b36c50792ac11802b6afdc48dcaa214b4af351b"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/MinuteProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/external/MinuteProperty;",
+          "sha256": "cf8a826a533954097c8572e2f3eb194c298d60f2bcbac07e1db277b1782f1e09"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/ModLoadedProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/external/ModLoadedProperty;",
+          "sha256": "63dbf04ae639dedb3cad19b926c020b49243c6221890aa869d460f828cf57599"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/MonthDayProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/external/MonthDayProperty;",
+          "sha256": "d323e9b1979b33e25b5429b77fed62daec557fb22b6cfbc799dd52c54f1050f0"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/MonthProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/external/MonthProperty;",
+          "sha256": "bafdce399df2d1e02108a34308b06b9911bebfbe29d76ae374eff81d573134e9"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/NBTVehicleProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/NBTProperty;",
+          "sha256": "2e45bff4f6189d77741935c53b7889ab77a217d3dc0d2f4a6cb2a8182afd895e"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/RegionalDifficultyProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/external/RegionalDifficultyProperty;",
+          "sha256": "4d85666574e874f2fbfeeb0cab9047636426d8eb691ca48ec71eb2b65ca77d95"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/SecondProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/external/SecondProperty;",
+          "sha256": "bc75dbc14f3327b2eabed0c55fb84e0bdfc256ddfd45800b80f0e64b1a6964f2"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/WeekDayProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/external/WeekDayProperty;",
+          "sha256": "d168e02a05bf278474f3aa8af233f680c0f100de309771889fcc7bc0274d50a9"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/YearDayProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/external/YearDayProperty;",
+          "sha256": "acf6c69305af1fa00770fbffc0a3f3692b800a8984f44dad1a306eb4ca17434a"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/external/YearProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/etf_properties/external/YearProperty;",
+          "sha256": "ceaf5a74dd81f19440a953701929f8e3288795b4cc1e4352d0f361c5cf7c3580"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/BabyProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/BabyProperty;",
+          "sha256": "4806f0ab31ca07e7f983e21c2580ca3198a589e472db265a5a667ca7f6eddba6"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/BlocksProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/BlocksProperty;",
+          "sha256": "bd3a427469b3cb062ec0d9c6c263c3ce0b48717788b7230f2b602f054257275d"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/ColorProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/ColorProperty;",
+          "sha256": "7a8a39386d9605a79ffd6050d80490eb72b3cce60f85d2282607c3c2da89c447"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/HealthProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/HealthProperty;",
+          "sha256": "7e3d5bc1c993ad5bfd149fa053632185a679a440980356dee67ef3bf5f09b12a"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/HeightProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/HeightProperty;",
+          "sha256": "97e943466758fe841df957b4728b759e3e431f70f780fb4651d4bef4354d530b"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/MoonPhaseProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/MoonPhaseProperty;",
+          "sha256": "0fd76ac01ba0147c5f3c3d3eb1eae71839f7c5f363ff2e3373347969ad199469"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/ProfessionProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/ProfessionProperty;",
+          "sha256": "dd135caf8b361c4db4c3a0d3194dd8e6ea144f0458b68f6bb4e4df3fb1cd270e"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/SizeProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/SizeProperty;",
+          "sha256": "0cd9abb123c0a5abef8a8bd3c7b9811189ca83ee9a37720f8f4814c3544a3127"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/TimeOfDayProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/TimeOfDayProperty;",
+          "sha256": "1d17a913accb7aa2596c94a5b9af51b4a6d5d129b795e6dbea669d981a6db851"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/optifine_properties/WeatherProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/WeatherProperty;",
+          "sha256": "4ede09ec8c75fb5a20eb605280056aaf0206c2b7cb4a1e4753572acd72e1dd82"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/BlockAboveProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/BlocksProperty;",
+          "sha256": "7b222466d6ebbc0f26ec29b966e192c6d1cbd7e0930edd5641922d8c341ccf1c"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/BlockAboveSolidProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/BlocksProperty;",
+          "sha256": "8c8cb5697d26262a758c755b8d0207bcec914c45aacf8ad0a308c3e5451a13b9"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/BlockBelowProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/BlocksProperty;",
+          "sha256": "c940ce5902eaca7c273124e8cfdba5b5918c1354aa610c7fd3f4b6a835c51bb1"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/BlockBelowSolidProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/BlocksProperty;",
+          "sha256": "6dc343db9054cd1dd831ded73a212f420942d8cc07724bfd5abd818cdff333d6"
+        },
+        {
+          "class": "traben/entity_texture_features/features/property_reading/properties/etf_properties/BlockSpawnedProperty",
+          "method": "getPropertyOrNull",
+          "desc": "(Ljava/util/Properties;I)Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/BlocksProperty;",
+          "sha256": "4aa0030be54b1d9f2b62c954d61a7bd1316aa6c7b1368132fb345d7d0d4154cd"
+        }
+      ],
+      "cancel": [],
+      "conversion": "mixin adds fillInStackTrace() to RandomProperty$RandomPropertyException (no stack walk while the switch is on) and a tripwire on getStackTrace/printStackTrace; exact because every handler that can receive the exception discards it (tools/mixedproof/EtfPropertyExceptionsAudit.java: 12 construction methods, 76 methods it escapes, 66 handlers: 65 DISCARD, 1 RETHROW into those, 0 READ); the guard fingerprints all 142 of those methods (ETF 7.1 + EMF 3.2.4) and the exception class shape",
+      "license": "LGPL-3.0 (ETF, EMF); helper bons.furious.patch.etf_property_exceptions.EtfPropertyExceptions; no ETF or EMF code is carried"
+    }
+  }
+}

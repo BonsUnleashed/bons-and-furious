@@ -9,6 +9,7 @@
   },
   "mixins": [
     "EntityInWallScanMixin",
-    "EntityFireScanMixin"
+    "EntityFireScanMixin",
+    "EntityFireIdleMixin"
   ]
 }

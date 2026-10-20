@@ -1,0 +1,124 @@
+{
+  "group": "reliquary_charm",
+  "keys": {
+    "reliquary_mob_charm_type_gate": {
+      "mod": "reliquary",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.reliquary_charm.MobCharmItemTypeGateMixin",
+        "bons.furious.mixin.reliquary_charm.MobCharmRegistryVersionMixin",
+        "bons.furious.mixin.reliquary_charm.EntityTypeCharmMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "reliquary/items/MobCharmItem",
+          "method": "onLivingUpdate",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "server Mob: player from target / last attacker / brain memories; only then getCharmDefinitionFor(entity).ifPresent(...)",
+          "sha256": "ab2be9a1e764829925c297cd9615179114e5bf01ae7008663a58d241def24009"
+        },
+        {
+          "class": "reliquary/items/MobCharmItem",
+          "method": "getRealPlayer",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/Optional;",
+          "sha256": "d35a8c50bd293d6de4f345a2509bc6eba7cf222d20a9cde556c5ac09925cacbf"
+        },
+        {
+          "class": "reliquary/items/MobCharmRegistry",
+          "method": "registerMobCharmDefinition",
+          "desc": "(Lreliquary/items/MobCharmDefinition;)V",
+          "note": "the only writer of ENTITY_NAME_CHARM_DEFINITIONS",
+          "sha256": "6ae51211d4d1fe271dd9d78ca72a871bb3c4a9858b8cebbb37746992d82a7217"
+        },
+        {
+          "class": "reliquary/items/MobCharmRegistry",
+          "method": "getCharmDefinitionFor",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Ljava/util/Optional;",
+          "note": "ENTITY_NAME_CHARM_DEFINITIONS.get(getRegistryName(entity).toString())",
+          "sha256": "e786dbd3b5da3236740e633fd77698a1cb39f8491627d2aef4831db8de42a5d1"
+        },
+        {
+          "class": "reliquary/items/MobCharmRegistry",
+          "method": "*",
+          "desc": "",
+          "note": "no other method (no other writer of the private map)",
+          "sha256": "f707fdaf9d25d898bc957aaf975ca2e9a78472581286a2644751c3eeb46bbf31"
+        },
+        {
+          "class": "reliquary/util/RegistryHelper",
+          "method": "getRegistryName",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "getRegistryName(entity.getType())",
+          "sha256": "8bd424c468446fd431d1b9d173777605d7d104b9349c6dc7c3bbee0850d85201"
+        },
+        {
+          "class": "reliquary/util/RegistryHelper",
+          "method": "getRegistryName",
+          "desc": "(Lnet/minecraft/world/entity/EntityType;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(type))",
+          "sha256": "9cdcb50568f3cb115d1ff6c016a68fb137d7898594f1104ae5bc20c1c296aac5"
+        },
+        {
+          "class": "reliquary/util/MobHelper",
+          "method": "getTargetedPlayerFromMemory",
+          "desc": "(Lnet/minecraft/world/entity/Mob;)Ljava/util/Optional;",
+          "note": "hasMemoryValue / getMemory over five memories: reads",
+          "sha256": "844962ac4ecf6dc48d8998e4e70c53499a414ad7652ac397fe1f7dbdcfd5e955"
+        },
+        {
+          "class": "net/minecraft/world/entity/Mob",
+          "method": "m_5448_",
+          "desc": "()Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "getTarget",
+          "sha256": "877ef3a7d99133760521e3a02a3f769fe5afb5406751cde7a35c1fbe63ce7abf"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21188_",
+          "desc": "()Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "getLastHurtByMob",
+          "sha256": "45af6d6320a25097fe4981c678b910c092b95bfe2693af4d58f8bdc6d88846c3"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_6274_",
+          "desc": "()Lnet/minecraft/world/entity/ai/Brain;",
+          "note": "getBrain",
+          "sha256": "e46fadfc2963d9a236b0866ad761b8d4fa78442ff67b6d65de8cab2815f0e343"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/Brain",
+          "method": "m_21874_",
+          "desc": "(Lnet/minecraft/world/entity/ai/memory/MemoryModuleType;)Z",
+          "note": "hasMemoryValue",
+          "sha256": "25b2a8bb94d15171e6491b26dbb92b6a46036f40eabe4cb03841354f30fbf8eb"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/Brain",
+          "method": "m_21876_",
+          "desc": "(Lnet/minecraft/world/entity/ai/memory/MemoryModuleType;Lnet/minecraft/world/entity/ai/memory/MemoryStatus;)Z",
+          "note": "checkMemory",
+          "sha256": "5b3ff3121ce99dece034daae42b04de6bbe26ea32161f049e7921c7dace269cb"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/Brain",
+          "method": "m_21952_",
+          "desc": "(Lnet/minecraft/world/entity/ai/memory/MemoryModuleType;)Ljava/util/Optional;",
+          "note": "getMemory",
+          "sha256": "6f42f7deaedafdc8b7430e79df15a0a6f719ea1480c6b8db8541fc221088b7cc"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_6095_",
+          "desc": "()Lnet/minecraft/world/entity/EntityType;",
+          "note": "getType",
+          "sha256": "a6b0d80644427fd9656ff7ecea5059bcc1bd04eef0adb1de6601d9862f028f2b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: @Inject at the HEAD of Reliquary's MobCharmItem.onLivingUpdate (cancellable) and at the TAIL of MobCharmRegistry.registerMobCharmDefinition (a @Shadow of its private ENTITY_NAME_CHARM_DEFINITIONS hands that map to our helper, read only); one @Unique int on EntityType (the memo); helper bons.furious.patch.reliquary_charm.ReliquaryCharmGate",
+      "license": "Reliquary (licence unstated, treated as all rights reserved): no Reliquary code is carried; our injectors only decide whether its unchanged handler runs; Minecraft: no code"
+    }
+  }
+}

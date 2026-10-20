@@ -9,6 +9,7 @@
   },
   "mixins": [
     "CapabilityHandlerLookupMixin",
+    "CapabilityHandlerValueMixin",
     "CapabilityProviderStateAccessor",
     "LivingEntityCapabilityHandlesMixin"
   ]

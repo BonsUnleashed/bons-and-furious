@@ -102,6 +102,13 @@
         }
       ],
       "cancel": [],
+      "redundant_since": [
+        {
+          "mod": "jei",
+          "version": "15.62.0.218",
+          "note": "JEI PR #4525 (merged): ItemStackHelper keeps the item registry wrapper from its constructor"
+        }
+      ],
       "conversion": "injectors (MixinExtras @WrapOperation on IPlatformHelper.getRegistry in isIngredientOnServer(ItemStack))",
       "license": "MIT (JEI); Forge LGPL-2.1; helper bons.furious.patch.jei.ServerItemRegistry; no JEI code is carried"
     }

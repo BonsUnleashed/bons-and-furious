@@ -104,3 +104,54 @@ Folded in 1.0.42. Three of our own separate performance mods became switches her
 Ben's Sharks companion (benssharks_*). Target added in 1.0.42: Ben's Sharks (benndevs, GNU Lesser General Public
 License version 3). Its exact tested JAR digest is in upstream-credits.json. No target JAR or asset is
 redistributed; the Ben's Sharks switches carry only our own code and call Ben's original methods unchanged.
+
+Targets added in 1.0.45: NaturesAura (Ellpeck, MIT); Subtle Effects
+(MincraftEinstein, All rights reserved); Text Animator (Snownee, Apache License
+2.0); HT's TreeChop (hammertater, MIT
+(https://github.com/hammertater/treechop/blob/main/LICENSE)); AzureLib
+(AzureDoom, Gecko, Eliot, Chappie, DerToaster, Tslat, Bvanseg, ZigyTheBird,
+MIT); Brutality (goo, MIT); Cable Facades (Leclowndu93150, Thepigcat76,
+SuperMartijn642, Heather White, IMS212, ARR); Celestisynth (AquTheSeal, Meme
+Man, UnanimousVoid, Massachusetts Institute of Technology (MIT)); Item Filters
+(LatvianModder, GNU LGPLv3); L2 Hostility (Love, Cheese and small house plants,
+All rights reserved); LowDragLib (KilaBash, WarmthDawn, GPL-3.0 license); More
+Artifacts (gobies, All Rights Reserved); Punchy (Punchy, ARR); Species (Ninni,
+Noon, Bornulhu, FloofHips, GLaDOS edition, ARR); Unique Dungeons
+(beckenrandspringer, MIT). Their exact tested JAR digests are in upstream-
+credits.json. No target JAR or asset is redistributed. Targets under restricted
+or custom licences get only our own code, as described above. Text Animator's
+Effect.create (Snownee, Apache License 2.0) is carried as a modified copy in
+textanimator_parse_prechecks (TextAnimatorParsePrecheck.createQuietly; its
+source says what changed), distributed with its source; the Apache License 2.0
+text is in resources/META-INF/licenses/Snownee--TextAnimator.txt.
+
+Ideas credited in 1.0.45. Several 1.0.45 switches follow an idea another project
+described; we worked from those descriptions only (option names and
+descriptions, changelogs, issue text), never from their code: Collections Of
+Optimizations (its option descriptions and changelogs). The "Idea:" line of each
+switch in bons_and_furious.properties says which idea it follows; "ours" marks
+our own designs.
+
+Targets added in 1.0.46: Botania (Vazkii, wiiv, williewillus, dylan4ever, Hubry,
+Alwinfy, artemisSystem, Falkory220, Wormbo, Botania License); Cerbons API
+(CerbonXD, GNU LGPL 3.0); Galosphere (Orcinus, All rights reserved); Quark
+(Vazkii, WireSegal, MCVinnyq, Sully,
+https://github.com/VazkiiMods/Quark/blob/master/LICENSE.md); Zeta (Vazkii, quat,
+IThundxr, siuol, wiresegal, MehVahdJukaar,
+https://github.com/VazkiiMods/Zeta/blob/master/LICENSE.md); Amendments
+(MehVahdJukaar, Supplementaries Team License v.1.3); Aquamirae (Obscuria,
+Obscuria Modding License (OML)); Advanced Wall Climber API (Nyfaria, ARR);
+Clanging Howl (Mongoose_artist, Polarice3, All Rights Reserved); Flywheel
+(Jozufozu, PepperCode1, MIT); Immersive Aircraft (Luke100000, GPL-3.0-only);
+Knight Lib (Xylonity, GNU LGPLv3); Reliquary (authors in its mods.toml, GNU
+General Public License v3.0); Smart Particles (Andrew-Chedid, MIT); Spawn
+(Ninni, All Rights Reserved). Their exact tested JAR digests are in upstream-
+credits.json. No target JAR or asset is redistributed. Targets under restricted
+or custom licences get only our own code, as described above.
+
+Ideas credited in 1.0.46. Several 1.0.46 switches follow an idea another project
+described; we worked from those descriptions only (option names and
+descriptions, changelogs, issue text), never from their code: Moonrise,
+NeoForge, Valkyrien Skies, Flywheel, Create and ModernFix. The "Idea:" line of
+each switch in bons_and_furious.properties says which idea it follows; "ours"
+marks our own designs.

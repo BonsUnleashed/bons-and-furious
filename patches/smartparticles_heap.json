@@ -1,0 +1,66 @@
+{
+  "group": "smartparticles_heap",
+  "keys": {
+    "smartparticles_heap_slot_clear": {
+      "mod": "smart_particles",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.smartparticles_heap.ParticleEngineHeapClearMixin"
+      ],
+      "guard": [
+        {
+          "class": "sp/mixin/ParticleManagerMixin",
+          "method": "smartparticles$enforceParticleLimit",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "the only reader and writer of spHeapParticles / spHeapScores / spKeep: fills the heap from slot 0 each call, reads only slots below the current heap size, clears or replaces spKeep before use",
+          "sha256": "90574b015682253c0fe011784d55519407796c06cf59289587da6bec3c92c3e1"
+        },
+        {
+          "class": "sp/mixin/ParticleManagerMixin",
+          "method": "heapSiftUp",
+          "desc": "([Lnet/minecraft/client/particle/Particle;[DI)V",
+          "note": "touches indices up to the given index only",
+          "sha256": "65acae8546bb8ec8ec553f6c99547a7fc98ac01981b5236e7c043597540368bc"
+        },
+        {
+          "class": "sp/mixin/ParticleManagerMixin",
+          "method": "heapSiftDown",
+          "desc": "([Lnet/minecraft/client/particle/Particle;[DII)V",
+          "note": "touches indices below the given size only",
+          "sha256": "a0dfff1e159bc93f88633635006d42122711b475be271145c3bcd8d66ba2c832"
+        },
+        {
+          "class": "sp/mixin/ParticleManagerMixin",
+          "method": "swap",
+          "desc": "([Lnet/minecraft/client/particle/Particle;[DII)V",
+          "sha256": "507d1acb8288262cb5fceab0996f9af40d3d794455d028b9002321721a97d1fb"
+        },
+        {
+          "class": "sp/mixin/ParticleManagerMixin",
+          "method": "decrementGroupCount",
+          "desc": "(Lnet/minecraft/client/particle/Particle;)V",
+          "sha256": "4b16da78677719856883f1c22e66e91821ac4687d94af55a83cd97e3fbb209e7"
+        },
+        {
+          "class": "sp/mixin/ParticleManagerMixin",
+          "method": "*",
+          "desc": "",
+          "note": "the declared methods: no other method reads the heap fields",
+          "sha256": "0925210540b9deaba5ae75a1962f51629a0ebc0da16e077f609c10f098e17b6a"
+        },
+        {
+          "class": "net/minecraft/client/particle/ParticleEngine",
+          "method": "m_107342_",
+          "desc": "(Lnet/minecraft/client/multiplayer/ClientLevel;)V",
+          "note": "setLevel: level = new level; clearParticles(); trackingEmitters.clear() (the injection point)",
+          "sha256": "a390c58cbddc48519f87dfb240a7942c6001fcff51cd61baef6eb4f4a05beae7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at HEAD of ParticleEngine.setLevel (m_107342_): Smart Particles' merged fields spHeapParticles (every slot set to null; the array stays) and spKeep (emptied) are reached by reflection by name and cleared; setLevel runs unchanged. Smart Particles reads only heap slots it wrote in the same tick and empties spKeep before use, so nothing it reads changes. Helper bons.furious.patch.smartparticles_heap.SmartParticlesHeap (runtime flag smartparticlesHeapSlotClear). Fix: particles of a previous level (and that level) stayed referenced from Smart Particles' heap array after a dimension change or a reconnect.",
+      "license": "MIT (Smart Particles 20.1.10): no Smart Particles code is carried; the mixin injects into Minecraft's ParticleEngine.setLevel with our own logic (helper bons.furious.patch.smartparticles_heap.SmartParticlesHeap)",
+      "kind": "fix"
+    }
+  }
+}

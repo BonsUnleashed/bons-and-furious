@@ -1,0 +1,132 @@
+{
+  "group": "valkyrien_client_chunks",
+  "keys": {
+    "valkyrien_client_ship_chunk_unload": {
+      "mod": "valkyrienskies",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.valkyrien_client_chunks.ClientShipChunkUnloadMixin",
+        "bons.furious.mixin.valkyrien_client_chunks.LevelTickerListsAccessor"
+      ],
+      "guard": [
+        {
+          "class": "org/valkyrienskies/mod/mixin/client/world/MixinClientChunkCache",
+          "method": "preUnload",
+          "desc": "(IILorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "HEAD of ClientChunkCache.drop, cancels it; for a shipyard chunk removes it from vs$shipChunks (the wrapped LongObjectMap.remove), unloads its render view and sends delete terrain updates; never unloads its block entities",
+          "sha256": "8ba4706cfce4e65cf9867dad342f1c757f8fd63de36036c930eed1b18587ea65"
+        },
+        {
+          "class": "org/valkyrienskies/mod/mixin/client/world/MixinClientChunkCache",
+          "method": "removeShipChunk",
+          "desc": "(II)V",
+          "note": "@Unique, merged under its own name: removes the chunk from vs$shipChunks (the wrapped call) and unloads its render view; never unloads its block entities",
+          "sha256": "a6ff01555be92cddfd18c96438a3a8e530d9da39008cb1b3a609acf2cdff084e"
+        },
+        {
+          "class": "org/valkyrienskies/mod/mixin/client/world/MixinClientChunkCache",
+          "method": "vs$removeShip",
+          "desc": "(Lorg/valkyrienskies/core/api/ships/ClientShip;)V",
+          "note": "ShipUnloadEventClient: removeShipChunk for every chunk of the ship's claim",
+          "sha256": "5fa8137e6fc33363780b5047f3c6c5e8259bab54ea45caa8b79f484e2019ef2e"
+        },
+        {
+          "class": "org/valkyrienskies/mod/mixin/client/world/MixinClientChunkCache",
+          "method": "preLoadChunkFromPacket",
+          "desc": "(IILnet/minecraft/network/FriendlyByteBuf;Lnet/minecraft/nbt/CompoundTag;Ljava/util/function/Consumer;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "a shipyard chunk still in vs$shipChunks is refilled (replaceWithPacketData clears its block entities first); one that is not is built anew: new block entities, new tickers",
+          "sha256": "1b1a672088e3a7d59ac5e5264b76c453af6e7546465bdfd48bf14373d8997ac0"
+        },
+        {
+          "class": "org/valkyrienskies/mod/forge/mixin/feature/fix_tp_ships_cross_dimension/MixinLevelChunk",
+          "method": "clearAllBlockEntities",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "priority 1500 HEAD cancel of LevelChunk.clearAllBlockEntities: onChunkUnloaded, then setRemoved, on a snapshot of the block entities; tickers rebound to the no-op ticker on a snapshot; both maps cleared",
+          "sha256": "07c669c36ddd2fe161561446c0d31359a1a0e8a07aeefbeca2c9c6c5ccebb07e"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunk",
+          "method": "m_187957_",
+          "desc": "()V",
+          "note": "clearAllBlockEntities, the call the helper makes",
+          "sha256": "01c19697a856d182a30837ffbff091de33a5b87399f2c8fe691d91de2d312147"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel",
+          "method": "m_104665_",
+          "desc": "(Lnet/minecraft/world/level/chunk/LevelChunk;)V",
+          "note": "unload: clearAllBlockEntities, then light and entity sections; the block-entity part is what the switch restores for ship chunks",
+          "sha256": "6f1ae755c1dd7b6dd66ce8841bbacd533f1d2530db9d2dd0e6dff562b10a2998"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientChunkCache",
+          "method": "m_104455_",
+          "desc": "(II)V",
+          "note": "drop: ChunkEvent.Unload, then Storage.replace(i, chunk, null) -> ClientLevel.unload",
+          "sha256": "4859f5c4e6ac5aa83590d2514524656288b492ce0bf0b21511c4ae4220b96921"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the LongObjectMap.remove(J) call in Valkyrien Skies' MixinClientChunkCache.preUnload (MixinSquared @TargetHandler) and in its merged removeShipChunk (named directly; priority 1500 after VS's 1000): the call runs unchanged and the LevelChunk it returns, if any, gets LevelChunk.clearAllBlockEntities (m_187957_), the block-entity part of ClientLevel.unload; helper bons.furious.patch.valkyrien_client_chunks.ShipChunkUnload (runtime flag valkyrienClientShipChunkUnload, shadow check of the level's ticker lists through the accessor mixin LevelTickerListsAccessor). Fix: ghost block-entity tickers of reloaded ship chunks.",
+      "license": "Apache-2.0 (Valkyrien Skies 2.4.11 jar; LGPL-3.0 on Modrinth): no Valkyrien Skies code is carried; the mixin wraps one call in each of two of its methods and calls Minecraft's own clearAllBlockEntities (helper bons.furious.patch.valkyrien_client_chunks.ShipChunkUnload)",
+      "kind": "fix"
+    },
+    "valkyrien_client_chunk_drop": {
+      "mod": "valkyrienskies",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.valkyrien_client_chunks.ClientChunkDropMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/valkyrienskies/mod/mixin/client/world/MixinClientChunkCache",
+          "method": "preUnload",
+          "desc": "(IILorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "isChunkInShipyard(level, x, z) first, the shipyard branch, then ci.cancel() for EVERY chunk (the not-in-shipyard branch jumps straight to it): the wrapped call",
+          "sha256": "8ba4706cfce4e65cf9867dad342f1c757f8fd63de36036c930eed1b18587ea65"
+        },
+        {
+          "class": "org/valkyrienskies/mod/common/VSGameUtilsKt",
+          "method": "isChunkInShipyard",
+          "desc": "(Lnet/minecraft/world/level/Level;II)Z",
+          "note": "the classification VS's handler makes first and the helper makes again (pure: a coordinate range test)",
+          "sha256": "41966a10f093a0632d1dbfdfd76fd28b88d700ee8028fc854966bf969eed2788"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientChunkCache",
+          "method": "m_104455_",
+          "desc": "(II)V",
+          "note": "drop, which now runs for world chunks: in range and still the chunk at that position -> ChunkEvent.Unload, then Storage.replace(i, chunk, null)",
+          "sha256": "4859f5c4e6ac5aa83590d2514524656288b492ce0bf0b21511c4ae4220b96921"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientChunkCache$Storage",
+          "method": "m_104487_",
+          "desc": "(ILnet/minecraft/world/level/chunk/LevelChunk;Lnet/minecraft/world/level/chunk/LevelChunk;)Lnet/minecraft/world/level/chunk/LevelChunk;",
+          "note": "replace(i, chunk, null): clears the slot, ClientLevel.unload(chunk)",
+          "sha256": "92dffee29a635c84ccc0b85ef00918df6c9b32ca2a18e4806696aee0651bea83"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel",
+          "method": "m_104665_",
+          "desc": "(Lnet/minecraft/world/level/chunk/LevelChunk;)V",
+          "note": "unload: clearAllBlockEntities, light off for the column, entity sections stop ticking",
+          "sha256": "6f1ae755c1dd7b6dd66ce8841bbacd533f1d2530db9d2dd0e6dff562b10a2998"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientPacketListener",
+          "method": "m_5729_",
+          "desc": "(Lnet/minecraft/network/protocol/game/ClientboundForgetLevelChunkPacket;)V",
+          "note": "handleForgetLevelChunk: drop(x, z), then queueLightRemoval: the caller",
+          "sha256": "ef39a998783715d503a78f5a2c127ddd4a6de4569d5a3763adeb17fa82c16a0d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the CallbackInfo.cancel() call in Valkyrien Skies' MixinClientChunkCache.preUnload (MixinSquared @TargetHandler, priority 1500; the handler's chunkX/chunkZ arguments read with MixinExtras @Local): the cancel is made as before for a shipyard chunk (VSGameUtilsKt.isChunkInShipyard, the test VS makes first) and skipped for any other chunk, so ClientChunkCache.drop continues into Minecraft's own code; helper bons.furious.patch.valkyrien_client_chunks.WorldChunkDrop (runtime flag valkyrienClientChunkDrop, shadow check that each dropped world chunk left the client's chunk array without block entities). Fix: world chunks the server forgets are never unloaded on a Valkyrien Skies client (no client ChunkEvent.Unload, their block entities keep ticking).",
+      "license": "Apache-2.0 (Valkyrien Skies 2.4.11 jar; LGPL-3.0 on Modrinth): no Valkyrien Skies code is carried; the mixin decides whether VS's own cancel call is made (helper bons.furious.patch.valkyrien_client_chunks.WorldChunkDrop)",
+      "kind": "fix"
+    }
+  }
+}

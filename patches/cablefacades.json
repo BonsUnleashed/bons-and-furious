@@ -1,0 +1,200 @@
+{
+  "group": "cablefacades",
+  "keys": {
+    "cablefacades_no_facade_fast_exit": {
+      "mod": "cable_facades",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.cablefacades.CfBlockStateBaseGuardMixin",
+        "bons.furious.mixin.cablefacades.CfBlockStateGuardMixin",
+        "bons.furious.mixin.cablefacades.DimensionDataStorageCacheAccessor"
+      ],
+      "guard": [
+        {
+          "class": "com/portingdeadmods/cable_facades/mixins/BlockStateBaseMixin",
+          "method": "onRemove",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;ZLorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "8078cb51a4835f677b0f6ee658cde90e0b0e50da21f75cad9b5b94cf6ec752f1"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/mixins/BlockStateBaseMixin",
+          "method": "getCollisionShape",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "sha256": "551ae4d2b81be79b5bd9d6c3d3b90b9451d6fb760234b432fe2441f29e563880"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/mixins/BlockStateBaseMixin",
+          "method": "getShape",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "sha256": "ffe7a80afe0d94ed9ba821abdde13bf4611a759cb128e4157170d8f7dc30b82b"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/mixins/BlockStateBaseMixin",
+          "method": "getOcclusionShape",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "sha256": "fa38f474b1e536c487602f38ee84b47360c85964fafddbd14569ffa6142847a8"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/mixins/BlockStateBaseMixin",
+          "method": "getLightBlock",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "sha256": "f9161fb4b4def2e42c85d848da92b9e0f109b46ea9ed6f07287538ddfd0d445b"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/mixins/BlockStateBaseMixin",
+          "method": "propagatesSkylightDown",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "sha256": "9d73b3c4f89c4e0d5c28328817e42081436e1743054baa1293f0f98ff5c58d1c"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/mixins/BlockStateBaseMixin",
+          "method": "isSolidRender",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "sha256": "8111ff52eb2fd1c9696eb0f4ac26424e55406c3d570d3f48accc3f85edde9cd5"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/mixins/BlockStateBaseMixin",
+          "method": "lambda$static$0",
+          "desc": "()Ljava/lang/Boolean;",
+          "sha256": "05701da08830d1479009b3418891ae2d6a2b97bfa089ec860e080b10ee179ffc"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/mixins/BlockStateBaseMixin",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "bdf38ce472a89a31ba22e46511bfe26a7e9e50e0eed56c4170bf89154a869f69"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/mixins/BlockStateMixin",
+          "method": "getAppearance",
+          "desc": "(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "c68f9d67c171ecac14c8863dd662de074665b9fa738bb7372b730320890d95a8"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/mixins/BlockStateMixin",
+          "method": "getLightEmission",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)I",
+          "sha256": "032505aba995307645b5ca172cef40e89a1b002c4ed3a9420c0eab308929a34a"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/mixins/BlockStateMixin",
+          "method": "m_60659_",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Lnet/minecraft/world/level/block/SupportType;)Z",
+          "sha256": "66df3fbb3efac7e9c894ddc2947d8e506ce32933c1176aa7ed2407ae17a2c4b2"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/mixins/BlockStateMixin",
+          "method": "m_60771_",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "sha256": "31de37cf4aba8c76a60b5a46310e92a0b22e2ae908a47b680b0c8ae21d393bcc"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/mixins/BlockStateMixin",
+          "method": "m_60739_",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)I",
+          "sha256": "955c331e32a912fa799c3d38dbe85af71447df58f4417c3a6997cd09d4b1c4f3"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/mixins/BlockStateMixin",
+          "method": "lambda$static$0",
+          "desc": "()Ljava/lang/Boolean;",
+          "sha256": "05701da08830d1479009b3418891ae2d6a2b97bfa089ec860e080b10ee179ffc"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/mixins/BlockStateMixin",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "f70137d91736fdb73a2d9ce2514312f8d3ff540036962324ed640eb0c98031e7"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/utils/FacadeUtils",
+          "method": "getFacadeData",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lcom/portingdeadmods/cable_facades/data/FacadeData;",
+          "sha256": "7e4836fc713bf095ced2d0df199a1a7ce7e487b3a65271d6519f1ecdc3cb55f1"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/utils/ClientFacadeManager",
+          "method": "get",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lcom/portingdeadmods/cable_facades/data/FacadeData;",
+          "sha256": "bcdc1b639c711ba8414ad8deab15993576bdf30917f8f8ea95fd70d1c603ac89"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/utils/ClientFacadeManager",
+          "method": "isEmpty",
+          "desc": "()Z",
+          "sha256": "b26b715aed61ab8c2961a1b4a81a1d51d4b83eaeb1a1ff8933fa772461de5084"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/utils/ClientFacadeManager",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "204dd6ca7714aa7c91a79ab481c0bdf599f7cb81cdea33271e68b5319080cc00"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/data/CableFacadeSavedData",
+          "method": "get",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;)Lcom/portingdeadmods/cable_facades/data/CableFacadeSavedData;",
+          "sha256": "7ed02cfd16a121766cd8b33653deee7ec7898070e2d243a9c38409333573359d"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/data/CableFacadeSavedData",
+          "method": "isEmpty",
+          "desc": "()Z",
+          "sha256": "737a439785e7ac55187452bbc2dd68298c4c5d1a6c1ba3bd59b6133e32bf3213"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/data/CableFacadeSavedData",
+          "method": "getFacadeData",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lcom/portingdeadmods/cable_facades/data/FacadeData;",
+          "sha256": "e2c6f92b42aea98f4c140ee3d4767a97c4b021ed59606152717c3c7ce3444dd5"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/data/CableFacadeSavedData",
+          "method": "getFacadeMapForPos",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lcom/portingdeadmods/cable_facades/data/helper/ChunkFacadeMap;",
+          "sha256": "916de2b49a17aa86f433898943825db9d226c64bc0f33c0cf34a993827b7af23"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/data/CableFacadeSavedData",
+          "method": "getFacadeMapForChunk",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;)Lcom/portingdeadmods/cable_facades/data/helper/ChunkFacadeMap;",
+          "sha256": "824caabce32580f45bcb386a9abae5449acd393b3b2a32df17cdc119cbc615b5"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/data/CableFacadeSavedData",
+          "method": "getOrCreateFacadeMapForChunk",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;)Lcom/portingdeadmods/cable_facades/data/helper/ChunkFacadeMap;",
+          "sha256": "b708ced92d34c3f92ab5fa8d7a6ee40c675a15fd14daea0e5b0a15a218c3c5e7"
+        },
+        {
+          "class": "com/portingdeadmods/cable_facades/data/helper/LevelFacadeMap",
+          "method": "getChunkFacadeMaps",
+          "desc": "()Ljava/util/Map;",
+          "sha256": "441fbf62182b61b31068e2be263376743729109352163e0e6e6b8a19d158f910"
+        },
+        {
+          "class": "net/minecraft/world/level/storage/DimensionDataStorage",
+          "method": "m_164861_",
+          "desc": "(Ljava/util/function/Function;Ljava/util/function/Supplier;Ljava/lang/String;)Lnet/minecraft/world/level/saveddata/SavedData;",
+          "sha256": "832b7938906eb05b18ecfe1e962f4b3bc8b5a026fdc0f16c921d4ee071534b37"
+        },
+        {
+          "class": "net/minecraft/world/level/storage/DimensionDataStorage",
+          "method": "m_164858_",
+          "desc": "(Ljava/util/function/Function;Ljava/lang/String;)Lnet/minecraft/world/level/saveddata/SavedData;",
+          "sha256": "47973d47291afeb802caf4d2063ac3a89444aa6eec97ec69e610a752e68e89c0"
+        },
+        {
+          "class": "net/minecraft/world/level/storage/DimensionDataStorage",
+          "method": "m_164855_",
+          "desc": "(Ljava/lang/String;Lnet/minecraft/world/level/saveddata/SavedData;)V",
+          "sha256": "06366f745077d56e6fa33f05b6cd0b19459ec928ea7b786b93929dd42e19064a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinSquared @TargetHandler @Redirect (capturing the handler's getter and position) of the recursion-guard ThreadLocal.get() (ordinal 0) of Cable Facades' seven BlockStateBaseMixin handlers merged into BlockStateBase, and @Redirect of the same read in the five methods its BlockStateMixin adds to BlockState (priority 1500, require 0); answered Boolean.TRUE (the guard-held branch = the null-lookup result) when no facade can exist for the getter: ServerLevel -> its CableFacadeSavedData read from DimensionDataStorage's cache map (accessor, nothing kept) exists and isEmpty(); any other getter and getAppearance -> ClientFacadeManager.isEmpty(); helper bons.furious.patch.cablefacades.CfFastExit",
+      "license": "Cable Facades 2.1.3 says All Rights Reserved in its mods.toml (MIT per the sweep-4 research table): our own logic only, no Cable Facades code carried; Minecraft (Mojang): no-copy"
+    }
+  }
+}

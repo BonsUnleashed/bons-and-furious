@@ -1,0 +1,99 @@
+{
+  "group": "number_prechecks",
+  "keys": {
+    "emf_token_number_precheck": {
+      "mod": "entity_model_features",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.number_prechecks.EmfTokenPrecheckMixin"
+      ],
+      "guard": [
+        {
+          "class": "traben/entity_model_features/models/animation/math/expression_tree/MathExpressionParser",
+          "method": "readVariableOrConstant",
+          "desc": "(Ltraben/entity_model_features/models/animation/math/expression_tree/MathExpressionParser$RollingReader;)V",
+          "sha256": "512d3c27f4449cece106ad048b85d4d793827259523aa1ec752cd1c7d9625671"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the one Float.parseFloat(String) call in MathExpressionParser.readVariableOrConstant: a token that FloatGrammar.mustThrow rejects (cannot be a Java float literal: first character after trim and sign not a digit, '.', N or I; or a character no float literal contains) throws a fresh stackless NumberFormatException into EMF's own catch block, whose stored exception is never read; every other token is parsed by Float.parseFloat; require = 0, degrades to EMF's code",
+      "license": "LGPL-3.0; helpers bons.furious.patch.number_prechecks.EmfTokenPrecheck / FloatGrammar / QuietNumberFormatException; no EMF code is carried"
+    },
+    "molang_number_precheck": {
+      "mod": "geckolib",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.number_prechecks.GeckoMolangPrecheckMixin"
+      ],
+      "guard": [
+        {
+          "class": "software/bernie/geckolib/core/molang/MolangParser",
+          "method": "parseJson",
+          "desc": "(Lcom/google/gson/JsonElement;)Lsoftware/bernie/geckolib/core/molang/expressions/MolangValue;",
+          "sha256": "bbcc956356a51fc00b4d1ba234c41a28f4dbc830387abc71455a516227943d62"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the one Double.parseDouble(String) call in GeckoLib's MolangParser.parseJson: a keyframe string that FloatGrammar.mustThrow rejects throws a fresh stackless NumberFormatException into GeckoLib's own catch block (stored exception never read; parseExpression runs as before); every other string is parsed by Double.parseDouble; require = 0",
+      "license": "MIT; helpers bons.furious.patch.number_prechecks.MolangNumberPrecheck / FloatGrammar / QuietNumberFormatException; no GeckoLib code is carried"
+    },
+    "azurelib_molang_number_precheck": {
+      "mod": "azurelib",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.number_prechecks.AzureMolangPrecheckMixin"
+      ],
+      "guard": [
+        {
+          "class": "mod/azure/azurelib/core/molang/MolangParser",
+          "method": "parseJson",
+          "desc": "(Lcom/google/gson/JsonElement;)Lmod/azure/azurelib/core/molang/expressions/MolangValue;",
+          "sha256": "595ae5f2c3f0c1c3c425cad9af33201c16cf8cc5e8a438c964b30a994759ae02"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the one Double.parseDouble(String) call in AzureLib's MolangParser.parseJson, the same change as molang_number_precheck (separate key: the two libraries install independently); require = 0",
+      "license": "MIT; helpers bons.furious.patch.number_prechecks.AzureMolangNumberPrecheck / FloatGrammar / QuietNumberFormatException; no AzureLib code is carried"
+    },
+    "textanimator_parse_prechecks": {
+      "mod": "textanimator",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.number_prechecks.TextAnimatorIterateMixin"
+      ],
+      "guard": [
+        {
+          "class": "snownee/textanimator/util/CommonProxy",
+          "method": "iterateFormatted",
+          "desc": "(Ljava/lang/String;ILnet/minecraft/network/chat/Style;Lnet/minecraft/network/chat/Style;Lnet/minecraft/util/FormattedCharSink;)Z",
+          "sha256": "203d795b5ed63087df64c684dfe43e7094642fa3493d675366b565576e253e30"
+        },
+        {
+          "class": "snownee/textanimator/effect/Effect",
+          "method": "create",
+          "desc": "([Ljava/lang/String;Z)Lsnownee/textanimator/effect/Effect;",
+          "sha256": "eb8f8a460d3d5e21e08b5bc87b1be0b7e88e1f99e9b36bc95de741ef0ed63d25"
+        },
+        {
+          "class": "snownee/textanimator/effect/EffectFactory",
+          "method": "create",
+          "desc": "(Ljava/lang/String;Lsnownee/textanimator/effect/params/Params;)Lsnownee/textanimator/effect/Effect;",
+          "sha256": "e6af48d11469296f4413a402e7b4a204db9a1bcf6574c6f2cdc76745bda0a930"
+        },
+        {
+          "class": "snownee/textanimator/effect/EffectFactory",
+          "method": "listTypes",
+          "desc": "()Ljava/util/Set;",
+          "sha256": "3577ff13ff776877507c81dbe6cf9f6d8971b61091a70fd6343d5cfaca828e1b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Effect.create(String[], boolean) call in CommonProxy.iterateFormatted (Effect.create is a static interface method: Mixin 0.8.5 has no injectors there): a tag whose type is not in EffectFactory.listTypes() (or a disallowed typewriter) throws a fresh stackless IllegalArgumentException into the method's catch (Exception), which discards it, instead of running create to its throw; a registered tag with a parameter value FloatGrammar.mustThrow rejects is built by a pre-checked copy of create; every other tag calls Effect.create; require = 0",
+      "license": "Apache-2.0 (Text Animator, Snownee); the helper bons.furious.patch.number_prechecks.TextAnimatorParsePrecheck carries a modified copy of Effect.create(String[], boolean) (attributed there; NOTICE entry needed)"
+    }
+  }
+}

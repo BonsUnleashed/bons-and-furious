@@ -85,13 +85,6 @@
           "sha256": "83a36472fb88645828ff9bc45dd3554b43ea4f572da89b9f557664a32038e0a0"
         },
         {
-          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource$NamespacedRule",
-          "method": "m_183550_",
-          "desc": "(III)Lnet/minecraft/world/level/block/state/BlockState;",
-          "note": "calls tryApply on the selected namespace rule only",
-          "sha256": "e6ac2f4acecc7a669b4786c4426d1a945f84daad3b1e68aed2ecba758cbabbd0"
-        },
-        {
           "class": "net/minecraft/world/level/levelgen/SurfaceRules$SequenceRuleSource",
           "method": "apply",
           "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule;",
@@ -212,8 +205,51 @@
         }
       ],
       "cancel": [],
-      "conversion": "@ModifyArg of the Consumer TerraBlender passes to sources.entrySet().forEach in NamespacedSurfaceRuleSource.apply: each entry goes through LazyNamespaceRules.defer (same key; a deferring source for namespaces made only of vanilla rule sources, else the original entry)",
-      "license": "LGPL-3.0 (TerraBlender): no TerraBlender code is carried; Minecraft (Mojang) no-copy: the vanilla sources are only walked and called (helper bons.furious.patch.terrablender.LazyNamespaceRules)"
+      "runtime_checks": [
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource$NamespacedRule",
+          "methods": "m_183550_(III)Lnet/minecraft/world/level/block/state/BlockState; and the lambdas it calls",
+          "note": "since 1.0.45: checked by LazyNamespaceRules.terraBlenderBuild at the first surface pass (guard fingerprints of the class file in TerraBlender's jar; the guard table holds one fingerprint per method); one tested build must match in full, otherwise the switch stands down with one INFO line",
+          "accepted": {
+            "3.0.1.10": {
+              "m_183550_(III)Lnet/minecraft/world/level/block/state/BlockState;": "e6ac2f4acecc7a669b4786c4426d1a945f84daad3b1e68aed2ecba758cbabbd0",
+              "lambda$tryApply$0(Lnet/minecraft/resources/ResourceKey;)Z": "1dada2146fd6a9af80c8433a448644e76d0c1aebaf5357a4b229fe263ed210a3"
+            },
+            "3.0.1.11": {
+              "m_183550_(III)Lnet/minecraft/world/level/block/state/BlockState;": "4958c2d17103c3a5df286e3f62974c6521c9fdc35485c6536a3d80c0afc47cad",
+              "lambda$tryApply$0(Lnet/minecraft/resources/ResourceKey;)Lnet/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule;": "2912a560840f70dba68a822d96c22e685dc4f3c1f9bfa0c58f60abf3500a117e",
+              "lambda$tryApply$1(Lnet/minecraft/resources/ResourceKey;)Z": "1dada2146fd6a9af80c8433a448644e76d0c1aebaf5357a4b229fe263ed210a3"
+            }
+          }
+        },
+        {
+          "class": "com/ishland/c2me/opts/allocs/mixin/surfacebuilder/MixinMaterialRulesSequenceMaterialRule (C2ME 0.2.0+alpha.12, nested c2meF-opts-allocs)",
+          "note": "since 1.0.45: class-file SHA-256 in LazyNamespaceRules.VERIFIED (merged into SurfaceRules$SequenceRuleSource)",
+          "sha256": "b2b8273fb29e24e97ea1dc4bfd1d8d664aa1a6c988ae6773cb8f68f81ca5548f"
+        },
+        {
+          "class": "com/ishland/c2me/opts/allocs/mixin/surfacebuilder/MixinMaterialRulesSequenceBlockStateRule (C2ME 0.2.0+alpha.12, nested c2meF-opts-allocs)",
+          "note": "since 1.0.45: class-file SHA-256 in LazyNamespaceRules.VERIFIED (merged into SurfaceRules$SequenceRule)",
+          "sha256": "808dcca80bdf8188c61f0aa899d5dda4d28cc823b76cf9823a70515e2319283f"
+        },
+        {
+          "class": "net/potionstudios/biomeswevegone/world/level/levelgen/surfacerules/WeightedRuleSource (Oh The Biomes We've Gone 1.8.0)",
+          "note": "since 1.0.45: class-file SHA-256 in LazyNamespaceRules.FOREIGN_SOURCES, no other mod's code merged; walked into every weighted entry",
+          "sha256": "76985e13e82c914b329be5e5f5931b6e431e9e9a473bc793228675d0cc719601"
+        },
+        {
+          "class": "net/potionstudios/biomeswevegone/world/level/levelgen/surfacerules/BetweenRepeatingNoiseRange (Oh The Biomes We've Gone 1.8.0)",
+          "note": "since 1.0.45: as above; walked into its 'rule' field (the vanilla sequence apply delegates to)",
+          "sha256": "f29a5b038442aaa2b339b5c2dec465f16797078bdabef8b5b6f989d063c34b89"
+        },
+        {
+          "class": "net/potionstudios/biomeswevegone/world/level/levelgen/surfacerules/BandsRuleSource (Oh The Biomes We've Gone 1.8.0)",
+          "note": "since 1.0.45: as above; a leaf (its rule reads the SurfaceSystem's band table at tryApply time)",
+          "sha256": "1f8b0e0484120716287dc95fe8c3bcaaca81b105464e753e46b01af2f4af5851"
+        }
+      ],
+      "conversion": "@ModifyArg of the Consumer TerraBlender passes to sources.entrySet().forEach in NamespacedSurfaceRuleSource.apply: each entry goes through LazyNamespaceRules.defer (same key; a deferring source for namespaces made only of verified rule sources, else the original entry). 1.0.45: verified sources widened (C2ME 0.2.0+alpha.12's two surface-builder mixins, Oh The Biomes We've Gone 1.8.0's three rule types) and TerraBlender 3.0.1.11 accepted beside 3.0.1.10 (NamespacedRule moved from the table guard to the runtime check above; NamespacedSurfaceRuleSource is byte-identical in both builds)",
+      "license": "LGPL-3.0 (TerraBlender): no TerraBlender code is carried; Minecraft (Mojang) no-copy: the vanilla sources are only walked and called; C2ME (MIT) and Oh The Biomes We've Gone (All Rights Reserved): only their class files are hashed and their rule objects' fields read, no code carried (helper bons.furious.patch.terrablender.LazyNamespaceRules)"
     }
   }
 }

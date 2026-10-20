@@ -1,0 +1,45 @@
+{
+  "group": "geckolib_constant_resources",
+  "keys": {
+    "geckolib_constant_resource_reuse": {
+      "mod": "geckolib",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.geckolib_constant_resources.GeoModelConstantResourceMixin"
+      ],
+      "guard": [
+        {
+          "class": "software/bernie/geckolib/model/GeoModel",
+          "method": "getModelResource",
+          "desc": "(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/renderer/GeoRenderer;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "the renderers' entry point: one virtual call of the model's 1-argument getter (the call wrapped)",
+          "sha256": "a20e5887afe491209cbfebea570055d60d868cd3f39f3094670c05ffa7e2e788"
+        },
+        {
+          "class": "software/bernie/geckolib/model/GeoModel",
+          "method": "getTextureResource",
+          "desc": "(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/renderer/GeoRenderer;)Lnet/minecraft/resources/ResourceLocation;",
+          "sha256": "7f41e490480681e8fd6a859e215452d73fa7874647c78cff66e8cb8b0ff5b595"
+        },
+        {
+          "class": "software/bernie/geckolib/model/GeoModel",
+          "method": "getAnimation",
+          "desc": "(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Ljava/lang/String;)Lsoftware/bernie/geckolib/core/animation/Animation;",
+          "note": "getAnimationResource(animatable) once, then the baked-animation map and the fallbacks (unchanged)",
+          "sha256": "c30a17d8b566c0504627e7ae18565a2582da6b91e596d53e452f36bd47496756"
+        },
+        {
+          "class": "software/bernie/geckolib/model/GeoModel",
+          "method": "*",
+          "desc": "",
+          "note": "the declared methods of GeoModel 4.8.4 (the abstract 1-argument getters among them)",
+          "sha256": "2dd57a02ffa7244e63ef813e15ddcb8ccee1837c278757a82d0ca2dccbb40f58"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the 1-argument getter call inside GeoModel.getModelResource(T, GeoRenderer), getTextureResource(T, GeoRenderer) and getAnimation(T, String): for a model class whose dispatched getter is proven from its bytecode (javac bridge with checkcast + typed getter returning new ResourceLocation of two string constants, no mixin merged into either class) the first result is handed out again when the argument is null or of the bridge's type; every other call runs the original (helper bons.furious.patch.geckolib_constant_resources.ConstantResources: runtime flag, SHADOW mode)",
+      "license": "GeckoLib (MIT): no code carried; the model classes of the mods (some All Rights Reserved) are only read as bytecode and called as before, nothing of theirs is copied"
+    }
+  }
+}

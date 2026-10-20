@@ -15,9 +15,23 @@
           "method": "m_132045_",
           "desc": "()Lnet/minecraft/network/FriendlyByteBuf;",
           "sha256": "aa4a5e025b2eb0486e3a19fd2fa0d2897dc4896c89b5172dac7ef050c5466fe9"
+        },
+        {
+          "class": "net/minecraft/network/protocol/game/ClientboundCustomPayloadPacket",
+          "method": "getInternalData",
+          "desc": "()Lnet/minecraft/network/FriendlyByteBuf;",
+          "note": "since 1.0.46: the fix relies on getInternalData() returning getData() (Forge 47.4.16); Forge 47.4.24 copies there itself",
+          "sha256": "86c5d8bf1eb1efed6cc4ea3e75b346b2adb2ff3870bb9e14592ec25aaf4c4296"
         }
       ],
       "cancel": [],
+      "redundant_since": [
+        {
+          "mod": "forge",
+          "version": "47.4.24",
+          "note": "Forge 47.4.24 (issue #10861): getInternalData makes its own unpooled heap copy; every getData() caller left in the pack releases its copy"
+        }
+      ],
       "conversion": "injector (@Redirect of the FriendlyByteBuf.copy() call in ClientboundCustomPayloadPacket.getData)",
       "license": "Forge (LGPL-2.1) / Minecraft: no Forge or Minecraft code is carried; helper bons.furious.patch.forge_payload.PayloadCopies"
     }

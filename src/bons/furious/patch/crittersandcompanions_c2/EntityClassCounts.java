@@ -26,10 +26,26 @@ import org.apache.logging.log4j.Logger;
  *   BOSS_SPAWNER     FD Bosses 3.1.0.3 BossSpawnerEntity             (fdbosses_spawner_presence_gate)
  *   KINETIC_FIELD    FD Bosses 3.1.0.3 ChesedKineticFieldEntity      (fdbosses_spawner_presence_gate)
  *   MALKUTH_SPAWNER  FD Bosses 3.1.0.3 MalkuthBossSpawner            (fdbosses_spawner_presence_gate)
+ * Since 1.0.45, for the camera-shake presence gates (group client_shake_gate):
+ *   SCREEN_SHAKE     Cataclysm 3.16 ScreenShake_Entity                (cataclysm_shake_scan_presence_gate)
+ *   LM_CAMERA_SHAKE  Legendary Monsters 2.2.2 CameraShakeEntity       (legendary_monsters_shake_scan_presence_gate)
+ *   LM_CAMERA_ZOOM   Legendary Monsters 2.2.2 DynamicCameraZoomEntity (legendary_monsters_shake_scan_presence_gate)
+ *   MOWZIE_SHAKE     Mowzie's Mobs 1.7.3 EntityCameraShake            (mowziesmobs_shake_scan_presence_gate)
+ *   CF_SHAKE         Cryptic Foes 1.0.4 EntityCameraShake             (crypticfoes_shake_scan_presence_gate)
+ *   SHAKES_SCREEN    Alex's Caves 2.0.2 ShakesScreen, an INTERFACE    (alexscaves_shake_scan_presence_gate)
+ * Since 1.0.46, for the projectile hit-test gates (group projectile_gates; they find these through trackedIndex):
+ *   IA_VEHICLE       Immersive Aircraft 1.1.8 VehicleEntity          (immersiveaircraft_vehicle_trace_gate; also Immersive
+ *                    Machinery's and Man of Many Planes' vehicles, which extend it)
+ *   BONE_HITBOX      KnightLib 2.0.3 BoneHitboxHolder, an INTERFACE  (knightlib_bone_hitbox_gate)
+ * An interface entry counts every entity whose class (or a superclass) implements it, directly or through another
+ * interface (the runtime class's interfaces, so an interface a mixin adds counts too).
  * A gate asks {@link #none(Level, int)}; true only when the level's storage holds no instance of that class, the asking
  * thread owns the storage, and nothing ever made the counts doubtful. Then getEntitiesOfClass(that class, any box, any
  * predicate) returns an empty list (Forge's part-entity pass cannot add one: a tracked class is never a PartEntity), and its
- * only other effect is the profiler counter "getEntities", which the gates keep.
+ * only other effect is the profiler counter "getEntities", which the gates keep. For an interface entry, none() says that
+ * no entity in the level's entity sections implements it; part entities are not in sections, so a gate that uses an
+ * interface entry must show by itself that no part entity can reach its search (the Alex's Caves gate searches Mob, and a
+ * PartEntity is never a Mob).
  *
  * Exactness of the counts. Per storage, count[c] = the number of entries of class c (or a subclass) in the "all instances"
  * lists of its sections. An add counts the entity when the multimap took it; a removal of a tracked entity (or any removal
@@ -50,11 +66,23 @@ public final class EntityClassCounts {
     public static final AtomicLong SHADOW_CHECKS = new AtomicLong(), SHADOW_MISMATCHES = new AtomicLong();
 
     public static final int RED_PANDA = 0, BOSS_SPAWNER = 1, KINETIC_FIELD = 2, MALKUTH_SPAWNER = 3;
+    /** Since 1.0.45: the camera-shake presence gates (group client_shake_gate; they find these through trackedIndex). */
+    public static final int SCREEN_SHAKE = 4, LM_CAMERA_SHAKE = 5, LM_CAMERA_ZOOM = 6, MOWZIE_SHAKE = 7, CF_SHAKE = 8, SHAKES_SCREEN = 9;
+    /** Since 1.0.46: the projectile hit-test gates (group projectile_gates; they find these through trackedIndex). */
+    public static final int IA_VEHICLE = 10, BONE_HITBOX = 11;
     static final String[] TRACKED = {
             "com.github.eterdelta.crittersandcompanions.entity.RedPandaEntity",
             "com.finderfeed.fdbosses.content.entities.base.BossSpawnerEntity",
             "com.finderfeed.fdbosses.content.entities.chesed_boss.kinetic_field.ChesedKineticFieldEntity",
-            "com.finderfeed.fdbosses.content.entities.malkuth_boss.malkuth_boss_spawner.MalkuthBossSpawner"};
+            "com.finderfeed.fdbosses.content.entities.malkuth_boss.malkuth_boss_spawner.MalkuthBossSpawner",
+            "com.github.L_Ender.cataclysm.entity.effect.ScreenShake_Entity",
+            "net.miauczel.legendary_monsters.entity.AnimatedMonster.Effect.CameraShakeEntity",
+            "net.miauczel.legendary_monsters.effect.DynamicCameraZoomEntity",
+            "com.bobmowzie.mowziesmobs.server.entity.effects.EntityCameraShake",
+            "com.min01.crypticfoes.entity.EntityCameraShake",
+            "com.github.alexmodguy.alexscaves.server.entity.util.ShakesScreen",
+            "immersive_aircraft.entity.VehicleEntity",
+            "dev.xylonity.knightlib.api.entity.hitbox.BoneHitboxHolder"};
     public static final int TRACKED_COUNT = TRACKED.length;
     /** Marker for "no element of the section equals the entity being removed" (beforeRemove's null means "nothing to do"). */
     public static final Object ABSENT = new Object();
@@ -64,18 +92,41 @@ public final class EntityClassCounts {
     private static volatile boolean unattributed;   // a tracked entity entered a section no storage created: all doubtful
     private static int warnings;
 
-    /** Bit i set when TRACKED[i] is the class or one of its superclasses. */
+    /**
+     * Bit i set when TRACKED[i] is the class, one of its superclasses, or (since 1.0.45) an interface any of them implements,
+     * directly or through another interface.
+     */
     private static final ClassValue<Integer> MASK = new ClassValue<>() {
         @Override
         protected Integer computeValue(Class<?> type) {
             int m = 0;
             for (Class<?> c = type; c != null; c = c.getSuperclass()) {
-                String n = c.getName();
-                for (int i = 0; i < TRACKED.length; i++) if (TRACKED[i].equals(n)) m |= 1 << i;
+                m |= bits(c.getName());
+                m |= interfaceBits(c);
             }
             return m;
         }
     };
+
+    private static int bits(String name) {
+        int m = 0;
+        for (int i = 0; i < TRACKED.length; i++) if (TRACKED[i].equals(name)) m |= 1 << i;
+        return m;
+    }
+
+    /** The bits of every interface {@code c} declares, and of the interfaces those extend (each visited once). */
+    private static int interfaceBits(Class<?> c) {
+        int m = 0;
+        java.util.ArrayDeque<Class<?>> todo = new java.util.ArrayDeque<>(java.util.Arrays.asList(c.getInterfaces()));
+        Set<Class<?>> seen = new java.util.HashSet<>();
+        while (!todo.isEmpty()) {
+            Class<?> i = todo.pop();
+            if (!seen.add(i)) continue;
+            m |= bits(i.getName());
+            todo.addAll(java.util.Arrays.asList(i.getInterfaces()));
+        }
+        return m;
+    }
 
     /**
      * The level classes whose entity search is vanilla's (Level.getEntities + Forge's part-entity pass over
@@ -147,7 +198,10 @@ public final class EntityClassCounts {
         return MASK.get(entity.getClass());
     }
 
-    /** Index of a tracked class by its exact name, or -1 (never for a PartEntity type: the gates rely on that). */
+    /**
+     * Index of a tracked class by its exact name, or -1 (never for a PartEntity type: the gates rely on that; since 1.0.45
+     * never for an interface either, so noneOf only ever speaks for a class an entity search can be made for).
+     */
     public static int index(Class<?> c) {
         return c == null ? -1 : INDEX.get(c);
     }
@@ -155,12 +209,23 @@ public final class EntityClassCounts {
     private static final ClassValue<Integer> INDEX = new ClassValue<>() {
         @Override
         protected Integer computeValue(Class<?> c) {
-            if (PartEntity.class.isAssignableFrom(c)) return -1;
+            if (c.isInterface() || PartEntity.class.isAssignableFrom(c)) return -1;
             String n = c.getName();
             for (int i = 0; i < TRACKED.length; i++) if (TRACKED[i].equals(n)) return i;
             return -1;
         }
     };
+
+    /**
+     * Since 1.0.45: the index of a tracked class or interface by its exact name, or -1. For a gate that must ask about a
+     * type it does not search for directly (alexscaves_shake_scan_presence_gate searches Mob for ShakesScreen mobs); such a
+     * gate asks {@link #none(Level, int)} and answers for part entities itself (see the class comment). Reached through a
+     * method handle, so that group compiles on its own.
+     */
+    public static int trackedIndex(String name) {
+        for (int i = 0; i < TRACKED.length; i++) if (TRACKED[i].equals(name)) return i;
+        return -1;
+    }
 
     /**
      * none(level, index(searched)) for a search of class {@code searched} in {@code level}: true only when such a search is
@@ -176,8 +241,8 @@ public final class EntityClassCounts {
     public static void storageCreated() {
         if (!announced) {
             announced = true;
-            LOGGER.info("Bons and Furious: vanilla_entity_class_count_layer counts {} entity classes per level for crittersandcompanions_red_panda_gate "
-                    + "and fdbosses_spawner_presence_gate{}", TRACKED.length, SHADOW ? " (SHADOW MODE: the gates always run their original searches)" : "");
+            LOGGER.info("Bons and Furious: vanilla_entity_class_count_layer counts {} entity classes per level for crittersandcompanions_red_panda_gate, "
+                    + "fdbosses_spawner_presence_gate, the camera-shake presence gates and the projectile hit-test gates{}", TRACKED.length, SHADOW ? " (SHADOW MODE: the gates always run their original searches)" : "");
         }
     }
 

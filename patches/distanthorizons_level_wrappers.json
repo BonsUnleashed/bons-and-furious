@@ -1,0 +1,125 @@
+{
+  "group": "distanthorizons_level_wrappers",
+  "keys": {
+    "distanthorizons_save_folder_weak_keys": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.distanthorizons_level_wrappers.SaveStructureWeakKeysMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/core/file/structure/ClientOnlySaveStructure",
+          "method": "getSaveFolder",
+          "desc": "(Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/ILevelWrapper;)Ljava/io/File;",
+          "note": "levelWrapperToFileMap.computeIfAbsent(wrapper, lambda$getSaveFolder$0 capturing the wrapper): the wrapped call, once",
+          "sha256": "ff32e2c916df8f81cab8b5a0ca4bda0da9ad27db0c29de7f2c629d267ad37d15"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/file/structure/ClientOnlySaveStructure",
+          "method": "toString",
+          "desc": "()Ljava/lang/String;",
+          "note": "StringUtil.join over levelWrapperToFileMap.values(): the other wrapped call",
+          "sha256": "de653bf1353ff5dcf8fdd230000990fb0d80f0899c43fcaeaf8ecf3704b49a47"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/file/structure/ClientOnlySaveStructure",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "the map is a new ConcurrentHashMap (the table copies its hashing and iteration order)",
+          "sha256": "f3667875fc45d562341516597cf865b4f5e3bd51494afd4322c7165a576998a4"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/file/structure/ClientOnlySaveStructure",
+          "method": "lambda$getSaveFolder$0",
+          "desc": "(Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/ILevelWrapper;Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/ILevelWrapper;)Ljava/io/File;",
+          "note": "DH's function: computes the folder from the wrapper, never touches the map",
+          "sha256": "edb415129f64c3fae5beb75dad1c23f569ab2e055fc787797e2e61f377aaee43"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/file/structure/ClientOnlySaveStructure",
+          "method": "getPre23SaveFolder",
+          "desc": "(Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/ILevelWrapper;)Ljava/io/File;",
+          "note": "reaches the map only through getSaveFolder",
+          "sha256": "2eb9360275eb9b4aa060189b4ecf66279e4d6b75ee228ae941a48959414fda3d"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/file/structure/ClientOnlySaveStructure",
+          "method": "*",
+          "desc": "",
+          "note": "the declared methods: only getSaveFolder and toString touch the private map",
+          "sha256": "08cfb0d0f468abe5f3730d153340d98ccd21f71ce08413b4c7b4a0bbd90814cc"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the ConcurrentHashMap.computeIfAbsent call in ClientOnlySaveStructure.getSaveFolder and on the ConcurrentHashMap.values() call in its toString: both go to a table of this structure (a ConcurrentHashMap of weak identity keys, hashed by the wrapper's identity hash code like DH's map, and strong File values; never shrunk, so its entry count, bins and iteration order are DH's); DH's own function computes each folder, once per wrapper, with the wrapper as its argument; keys whose class overrides equals or hashCode go to DH's map. Helper bons.furious.patch.distanthorizons_level_wrappers.WeakFolders (runtime flag distanthorizonsSaveFolderWeakKeys, read at a structure's first call; shadow mode compares every answer and every toString with DH's own map). Fix: one old ClientLevel per visited level stayed in memory through the save folder map until the player left the server.",
+      "license": "LGPL-3.0 (Distant Horizons 3.3.2): no Distant Horizons code is carried; the mixin wraps two map calls of ClientOnlySaveStructure and hands DH's own folder function on (helper bons.furious.patch.distanthorizons_level_wrappers.WeakFolders)",
+      "kind": "fix"
+    },
+    "distanthorizons_keyed_level_pins": {
+      "mod": "distanthorizons",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.distanthorizons_level_wrappers.ClientLevelKeyedPinsMixin",
+        "bons.furious.mixin.distanthorizons_level_wrappers.KeyedLevelCacheMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/level/KeyedClientLevelManager_forge",
+          "method": "getServerKeyedLevel",
+          "desc": "(Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/IClientLevelWrapper;)Lcom/seibel/distanthorizons/core/level/IServerKeyedClientLevel;",
+          "note": "keyedLevelsCache.get(level) (the first Map.get) and keyedLevelsCache.put(level, new wrapper): the wrapped calls, under synchronized(keyedLevelsCache)",
+          "sha256": "984ed0e7aa01af1ca8854a82450925af3b7bdd8e01bda925eff0fb60a985f3f2"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/level/KeyedClientLevelManager_forge",
+          "method": "setServerKeyedLevel",
+          "desc": "(Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/IClientLevelWrapper;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/seibel/distanthorizons/core/level/IServerKeyedClientLevel;",
+          "note": "keyedLevelsCache.keySet().removeIf(dimension test): keys only",
+          "sha256": "06e5709baa7533464b21ecd351eb26fc0da07debcb4f8c78aaadc0d6f448c7fd"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/level/KeyedClientLevelManager_forge",
+          "method": "lambda$setServerKeyedLevel$0",
+          "desc": "(Ljava/lang/String;Lnet/minecraft/client/multiplayer/ClientLevel;)Z",
+          "note": "the removeIf test reads the level's dimension only",
+          "sha256": "140efc8b92974d86c6e2e60c68d128ba12eb77938fd68557cccd3ad9215f4035"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/level/KeyedClientLevelManager_forge",
+          "method": "clearKeyedLevel",
+          "desc": "()V",
+          "note": "keyedLevelsCache.clear(): keys only",
+          "sha256": "c09c9d313bb0488b64dd44e0fe0e5de962e6c5c833e6abd319c3d84ae6d999d2"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/level/KeyedClientLevelManager_forge",
+          "method": "disable",
+          "desc": "()V",
+          "note": "clearKeyedLevel only",
+          "sha256": "e7e100b6de3b061bcef128c047b7e5f9523774259c2b0f598bcabe6a7ac00ae1"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/level/KeyedClientLevelManager_forge",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "keyedLevelsCache = Collections.synchronizedMap(new WeakHashMap())",
+          "sha256": "f6232078b46025624d696baea986e6180f3f07cfdd440cb7c1ae330df9fd52d6"
+        },
+        {
+          "class": "com/seibel/distanthorizons/common/wrappers/level/KeyedClientLevelManager_forge",
+          "method": "*",
+          "desc": "",
+          "note": "the declared methods: only these read or write the private cache",
+          "sha256": "0feb8066c6840565eb10c752c80baa01dff2d81273f85b131e5d4556d152c0bb"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Map.get (ordinal 0) and Map.put calls in KeyedClientLevelManager_forge.getServerKeyedLevel: the put stores the new ServerKeyedClientLevelWrapper_forge behind a weak reference and pins it on its ClientLevel (an Object[] field ClientLevelKeyedPinsMixin adds to ClientLevel, pairs cache map, wrapper); the get opens the reference. The wrapper lives exactly as long as its level; every lookup returns the same object as before. Helper bons.furious.patch.distanthorizons_level_wrappers.KeyedLevelPins (runtime flag distanthorizonsKeyedLevelPins, read at every store; shadow check of every hit against the level's pin). Fix: the last ClientLevel of every other dimension stayed in memory until that dimension was visited again.",
+      "license": "LGPL-3.0 (Distant Horizons 3.3.2): no Distant Horizons code is carried; the mixin wraps two map calls of KeyedClientLevelManager_forge and adds a field to Minecraft's ClientLevel (helper bons.furious.patch.distanthorizons_level_wrappers.KeyedLevelPins)",
+      "kind": "fix"
+    }
+  }
+}

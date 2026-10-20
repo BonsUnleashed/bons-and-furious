@@ -1,0 +1,40 @@
+{
+  "group": "jei_menu_weak",
+  "keys": {
+    "jei_unsupported_menu_weak_set": {
+      "mod": "jei",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.jei_menu_weak.RecipeTransferManagerWeakSetMixin"
+      ],
+      "guard": [
+        {
+          "class": "mezz/jei/library/recipes/RecipeTransferManager",
+          "method": "getMenuType",
+          "desc": "(Lnet/minecraft/world/inventory/AbstractContainerMenu;)Lnet/minecraft/world/inventory/MenuType;",
+          "note": "unsupportedContainers.contains(menu) ? null : try menu.getType() catch UnsupportedOperationException -> unsupportedContainers.add(menu), null",
+          "sha256": "8a6246470a050ef3b24eac6779087823befc9a079f1b009cf88e714e26ac31da"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeTransferManager",
+          "method": "<init>",
+          "desc": "(Lcom/google/common/collect/ImmutableTable;Ljava/util/List;)V",
+          "note": "unsupportedContainers = new HashSet<>() (equality by the menus' equals/hashCode)",
+          "sha256": "9fb679d8295485603aecc27c6617a2ed8164741f4a024d2b55d1dcf96fc8961b"
+        },
+        {
+          "class": "mezz/jei/library/recipes/RecipeTransferManager",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: getMenuType is the only method that touches the private field besides <init> (bytecode audit of every installed jar)",
+          "sha256": "70b484151e5f1f31fd5cfc43b17b1ff48f6e52ad260d17e4844b853cab6ab97a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix: MixinExtras @WrapOperation on the Set.contains and Set.add calls in RecipeTransferManager.getMenuType; a per-manager helper set (WeakHashMap for menus with Object's equals/hashCode, strong HashSet otherwise) answers them; JEI's HashSet stays in place (consulted by contains, empty while the switch is on); helper bons.furious.patch.jei_menu_weak.WeakMenuSet",
+      "license": "MIT (JEI): no JEI code is carried; the wrappers only route the set's two calls to our set"
+    }
+  }
+}

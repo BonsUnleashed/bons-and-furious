@@ -1,0 +1,471 @@
+{
+  "group": "capability_callers",
+  "keys": {
+    "forge_capability_handle_layer": {
+      "mod": "forge",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.capability_callers.CapabilityProviderCallerStateAccessor",
+        "bons.furious.mixin.capability_callers.LivingEntityCallerHandlesMixin"
+      ],
+      "cancel": [],
+      "conversion": "layer only: @Accessor for CapabilityProvider.valid/capabilities and one volatile @Unique reference field on LivingEntity (the CallerCapabilityHandles table that spawn_capability_handles, botania_capability_handles and clanginghowl_capability_handles keep their answers in); changes no behaviour by itself",
+      "license": "Minecraft/Forge: one field and accessors, no code",
+      "guard": [
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "!valid || capabilities == null ? empty : capabilities.getCapability(cap, side)",
+          "sha256": "84fca09ed93a5775f15ebb84533d079c78578a784fd7e8f016f41afbff45da9a"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityProvider",
+          "method": "invalidateCaps",
+          "desc": "()V",
+          "note": "valid = false, then the dispatcher listeners",
+          "sha256": "a1fae051df9bd0b5e5460a50ac320235e0355743d32077e37168ffcd441a73b6"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityProvider",
+          "method": "reviveCaps",
+          "desc": "()V",
+          "note": "valid = true",
+          "sha256": "1ae79a7a15e13c29686706c59ea2598dd95978a5b7f08e9a04874e937009f898"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityProvider",
+          "method": "doGatherCapabilities",
+          "desc": "(Lnet/minecraftforge/common/capabilities/ICapabilityProvider;)V",
+          "note": "the only writer of capabilities (once per provider)",
+          "sha256": "b1f70276baa470c4efa5d73a6194eb39c7ca98cb476e7ab37a7f5cfa5e4d86db"
+        }
+      ]
+    },
+    "spawn_capability_handles": {
+      "mod": "spawn",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.capability_callers.SpawnFlyHandlesMixin"
+      ],
+      "cancel": [],
+      "conversion": "injectors: one @Redirect of LivingEntity.getCapability(Capability) in ForgeEvents.livingTick to our lookup (helpers bons.furious.patch.capability_callers.SpawnFlyHandles + the forge_capability_handle_layer table CallerCapabilityHandles)",
+      "license": "Spawn (licence not stated, treated as All Rights Reserved): no Spawn code is carried, the mixin only redirects the dispatcher call to our own lookup",
+      "guard": [
+        {
+          "class": "com/ninni/spawn/server/events/ForgeEvents",
+          "method": "livingTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "event.getEntity().getCapability(FLY_CAP).ifPresent(fly particles)",
+          "sha256": "48633239534c72aab8540b28874725ce6dd50904663ee69bae5413e208f444dd"
+        },
+        {
+          "class": "com/ninni/spawn/server/events/ForgeEvents",
+          "method": "attachCapabilities",
+          "desc": "(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V",
+          "note": "FlyCapabilityProvider on every Mob and Player",
+          "sha256": "877f0074e612a7b4383d6a0c9dc638a1424a3248742a213efcfc46dd368b3bd2"
+        },
+        {
+          "class": "com/ninni/spawn/server/gui/fly/FlyCapabilityProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "cap == FLY_CAP ? this.optional.cast() : empty()",
+          "sha256": "301e15a2d2f8ceffbcf63c82cb29ab72e32744822535b477aaa0b97c63fe2868"
+        },
+        {
+          "class": "com/ninni/spawn/server/gui/fly/FlyCapabilityProvider",
+          "method": "*",
+          "desc": "",
+          "note": "one private final LazyOptional field set in <init>; no other method",
+          "sha256": "42b7f5a6ff7aff84cbd1932a9222138ecd22f9ba51105a016a8cffcbe39b863f"
+        },
+        {
+          "class": "com/ninni/spawn/server/gui/fly/FlyCapabilityProvider",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "FLY_CAP (static final)",
+          "sha256": "cebf82f0a19fe8e6d2e947c3e0474792be96528b26ce2b228d2bc27536b65a6a"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "!valid || capabilities == null ? empty : capabilities.getCapability(cap, side)",
+          "sha256": "84fca09ed93a5775f15ebb84533d079c78578a784fd7e8f016f41afbff45da9a"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityDispatcher",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "first present answer of the final caps array, else LazyOptional.empty() (ModernFix overwrites it with a generated walk in the same order)",
+          "sha256": "aff7dbc58d1187f3f6603f119e7235c01bad0b716e879dac45d07ba84ecb5696"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/ICapabilityProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "the one-argument default: getCapability(cap, null)",
+          "sha256": "3de75abc745161c991b677ce8d9eb9d0460f2d232c89035aec64148760b5cf87"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "ITEM_HANDLER only, then super (PLAIN)",
+          "sha256": "258831e142d2f796e042c20e25700e18a93b78a31be76c2999dd122f15e36f43"
+        },
+        {
+          "class": "net/minecraft/world/entity/player/Player",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "ITEM_HANDLER only, then super (PLAIN)",
+          "sha256": "c404867d35e2ef41b6bcec7a2789615d8575f1e599f15f82354102421738e62b"
+        },
+        {
+          "class": "net/minecraft/world/entity/animal/horse/AbstractHorse",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "ITEM_HANDLER only, then super (PLAIN)",
+          "sha256": "aa9b966f85556cfbb492fa44bdae84d386cc1a2af0c47322f94a32713eebc32d"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "isPresent",
+          "desc": "()Z",
+          "note": "supplier != null && isValid: the hit test of a kept LazyOptional",
+          "sha256": "528ff0650ee32736aedfad726cb2cecad9ff733967636cf3f368cb7713d94073"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "getValue",
+          "desc": "()Ljava/lang/Object;",
+          "note": "resolves the supplier once, null while invalid",
+          "sha256": "0be5fedce9c2d2707e842939887abfc1dfae08adea3717a2939f6d5259045627"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "empty",
+          "desc": "()Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "the EMPTY singleton (absent entries hand it out)",
+          "sha256": "daade5076cdc683554d5dcd12d56681e17aac9f4301a9212853f9e38e68d8af5"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "invalidate",
+          "desc": "()V",
+          "note": "isValid true -> false once: an optional never becomes present again",
+          "sha256": "b5bcc4e96795e8f2ead91035f320ed53703efe6bf30a7fd235698d49b22c8057"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "*",
+          "desc": "",
+          "note": "no other method writes isValid or resolved",
+          "sha256": "eb3df48d49e75f27db2102a41c1206c592599c5c72b03f6be9d407bdc8977c0e"
+        }
+      ]
+    },
+    "botania_capability_handles": {
+      "mod": "botania",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.capability_callers.BotaniaLooniumHandlesMixin"
+      ],
+      "cancel": [],
+      "conversion": "injectors: one @Redirect of LivingEntity.getCapability(Capability) in ForgeXplatImpl.looniumComponent to our lookup (helpers bons.furious.patch.capability_callers.BotaniaLooniumHandles + the forge_capability_handle_layer table CallerCapabilityHandles)",
+      "license": "Botania licence: no Botania code is carried, the mixin only redirects the dispatcher call to our own lookup",
+      "guard": [
+        {
+          "class": "vazkii/botania/forge/xplat/ForgeXplatImpl",
+          "method": "looniumComponent",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lvazkii/botania/common/internal_caps/LooniumComponent;",
+          "note": "entity.getCapability(LOONIUM_DROP).orElse(null)",
+          "sha256": "7c9e1d13bda99f461b39009def9179f66debb651c165221d4eaa9412319306e1"
+        },
+        {
+          "class": "vazkii/botania/forge/internal_caps/ForgeInternalEntityCapabilities$ForgeBusEvents",
+          "method": "attachCapabilities",
+          "desc": "(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V",
+          "note": "LOONIUM_DROP provider (makeSavedProvider) on every Mob",
+          "sha256": "7770591ee3b888749ff48d0d819481e3a27c5d003b3ce504e37464683ffbf469"
+        },
+        {
+          "class": "vazkii/botania/forge/internal_caps/ForgeInternalEntityCapabilities",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "LOONIUM_DROP (static final)",
+          "sha256": "67502b3e03af6e88879657e9d87db9c5ffd5412d17e8f08c8d3044f2c829a591"
+        },
+        {
+          "class": "vazkii/botania/forge/CapabilityUtil",
+          "method": "makeSavedProvider",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lvazkii/botania/common/internal_caps/SerializableComponent;)Lnet/minecraftforge/common/capabilities/ICapabilityProvider;",
+          "note": "new CapProviderSerializable(cap, instance)",
+          "sha256": "d4a4f691018df41b48ec26379b58b185cfe681b016e8fd958e97f92067235e39"
+        },
+        {
+          "class": "vazkii/botania/forge/CapabilityUtil$CapProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "this.cap.orEmpty(queryCap, this.lazyInstanceButNotReally)",
+          "sha256": "b93bddd6336f8835446ced66f3d213610f730d9338d1b1f2cbaea4a7b8402f6e"
+        },
+        {
+          "class": "vazkii/botania/forge/CapabilityUtil$CapProvider",
+          "method": "*",
+          "desc": "",
+          "note": "two protected final fields set in <init>; no other method",
+          "sha256": "c63c83ce5b149fd01c69b0c187bc28ee734224ce68a9080b816301c16a1c3511"
+        },
+        {
+          "class": "vazkii/botania/forge/CapabilityUtil$CapProviderSerializable",
+          "method": "*",
+          "desc": "",
+          "note": "super(cap, LazyOptional.of(() -> instance)); serialize/deserialize only",
+          "sha256": "06cc6319ec418ce4cd308d31bdc76e387bd803ce54487726f383068b486fb6da"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/Capability",
+          "method": "orEmpty",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraftforge/common/util/LazyOptional;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "this == toCheck ? inst.cast() : LazyOptional.empty()",
+          "sha256": "635794e7d9dfe32cc1a3fffe20dc90fe4ee1ac6e0f776a404aea0e83370d56f3"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "!valid || capabilities == null ? empty : capabilities.getCapability(cap, side)",
+          "sha256": "84fca09ed93a5775f15ebb84533d079c78578a784fd7e8f016f41afbff45da9a"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityDispatcher",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "first present answer of the final caps array, else LazyOptional.empty() (ModernFix overwrites it with a generated walk in the same order)",
+          "sha256": "aff7dbc58d1187f3f6603f119e7235c01bad0b716e879dac45d07ba84ecb5696"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/ICapabilityProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "the one-argument default: getCapability(cap, null)",
+          "sha256": "3de75abc745161c991b677ce8d9eb9d0460f2d232c89035aec64148760b5cf87"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "ITEM_HANDLER only, then super (PLAIN)",
+          "sha256": "258831e142d2f796e042c20e25700e18a93b78a31be76c2999dd122f15e36f43"
+        },
+        {
+          "class": "net/minecraft/world/entity/player/Player",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "ITEM_HANDLER only, then super (PLAIN)",
+          "sha256": "c404867d35e2ef41b6bcec7a2789615d8575f1e599f15f82354102421738e62b"
+        },
+        {
+          "class": "net/minecraft/world/entity/animal/horse/AbstractHorse",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "ITEM_HANDLER only, then super (PLAIN)",
+          "sha256": "aa9b966f85556cfbb492fa44bdae84d386cc1a2af0c47322f94a32713eebc32d"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "isPresent",
+          "desc": "()Z",
+          "note": "supplier != null && isValid: the hit test of a kept LazyOptional",
+          "sha256": "528ff0650ee32736aedfad726cb2cecad9ff733967636cf3f368cb7713d94073"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "getValue",
+          "desc": "()Ljava/lang/Object;",
+          "note": "resolves the supplier once, null while invalid",
+          "sha256": "0be5fedce9c2d2707e842939887abfc1dfae08adea3717a2939f6d5259045627"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "empty",
+          "desc": "()Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "the EMPTY singleton (absent entries hand it out)",
+          "sha256": "daade5076cdc683554d5dcd12d56681e17aac9f4301a9212853f9e38e68d8af5"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "invalidate",
+          "desc": "()V",
+          "note": "isValid true -> false once: an optional never becomes present again",
+          "sha256": "b5bcc4e96795e8f2ead91035f320ed53703efe6bf30a7fd235698d49b22c8057"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "*",
+          "desc": "",
+          "note": "no other method writes isValid or resolved",
+          "sha256": "eb3df48d49e75f27db2102a41c1206c592599c5c72b03f6be9d407bdc8977c0e"
+        }
+      ]
+    },
+    "clanginghowl_capability_handles": {
+      "mod": "clanginghowl",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.capability_callers.CHCapHelperValueMixin"
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapMethod on CHCapHelper.getCapability (the kept value while the capabilities are valid and the dispatcher is the same) and a @Redirect of its orElse call to itself that keeps a present value (helpers bons.furious.patch.capability_callers.ClangingHowlHandles + the forge_capability_handle_layer table CallerCapabilityHandles)",
+      "license": "Clanging Howl (no licence file, treated as All Rights Reserved): no Clanging Howl code is carried, the mixin only wraps the helper with our own lookup",
+      "guard": [
+        {
+          "class": "com/mongoose/clanginghowl/common/capabilities/CHCapHelper",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lcom/mongoose/clanginghowl/common/capabilities/ICHCap;",
+          "note": "entity.getCapability(CHCapProvider.CAPABILITY).orElse(new CHCapImp())",
+          "sha256": "937541878cc4f220246d9a77df306c52a0d2b6c0fe6ba2e8208db7d5e48f98cc"
+        },
+        {
+          "class": "com/mongoose/clanginghowl/common/capabilities/CHCapProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "cap == CAPABILITY ? LazyOptional.of(() -> this.instance) : empty()",
+          "sha256": "0504e55977ab5d8f84f6f2e0203b732ecb6992347054ed55f6ef51f1287bcc94"
+        },
+        {
+          "class": "com/mongoose/clanginghowl/common/capabilities/CHCapProvider",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "instance = new CHCapImp(): the only write of instance",
+          "sha256": "40ecd24026fda58031878b185a9784fa59afa6391770886e0243bee4a9f882cf"
+        },
+        {
+          "class": "com/mongoose/clanginghowl/common/capabilities/CHCapProvider",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "CAPABILITY (public static, written only here)",
+          "sha256": "6585be66096f8992683bd18c7e801b4051e62f34ce1edf10a7c84e3bca6a26bf"
+        },
+        {
+          "class": "com/mongoose/clanginghowl/common/capabilities/CHCapProvider",
+          "method": "*",
+          "desc": "",
+          "note": "no other method writes instance (serialize/deserialize change its fields only)",
+          "sha256": "72a19cfd87bd4fdee94f85c05206fc2159c55e268bec6aafed3797d4ab633d7e"
+        },
+        {
+          "class": "com/mongoose/clanginghowl/common/capabilities/CHCapImp",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "plain field initialisation: the dropped fallback has no side effect",
+          "sha256": "5b7dae69c1b0beec228d2fdac5fb7e49d6d704ac5f63f2ea33107d4f86c121ab"
+        },
+        {
+          "class": "com/mongoose/clanginghowl/init/InitEvents",
+          "method": "attachCapabilities",
+          "desc": "(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V",
+          "note": "CHCapProvider on every LivingEntity",
+          "sha256": "ccb9332c3f9aabba3f8722547594fc96342f3807dbd5ff0c3214bcd678853658"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "of",
+          "desc": "(Lnet/minecraftforge/common/util/NonNullSupplier;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "a new optional per ask",
+          "sha256": "1ffaa8df85b53b683fa3f2e4592a7be70cf39c6173e910db38be18f98e6066ff"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "orElse",
+          "desc": "(Ljava/lang/Object;)Ljava/lang/Object;",
+          "note": "getValue() if non-null, else the fallback",
+          "sha256": "28cc736150f375e63b5bb2b18a75e6a6fd4174c63e31bee4e8bc428c049cb292"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "!valid || capabilities == null ? empty : capabilities.getCapability(cap, side)",
+          "sha256": "84fca09ed93a5775f15ebb84533d079c78578a784fd7e8f016f41afbff45da9a"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityDispatcher",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "first present answer of the final caps array, else LazyOptional.empty() (ModernFix overwrites it with a generated walk in the same order)",
+          "sha256": "aff7dbc58d1187f3f6603f119e7235c01bad0b716e879dac45d07ba84ecb5696"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/ICapabilityProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "the one-argument default: getCapability(cap, null)",
+          "sha256": "3de75abc745161c991b677ce8d9eb9d0460f2d232c89035aec64148760b5cf87"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "ITEM_HANDLER only, then super (PLAIN)",
+          "sha256": "258831e142d2f796e042c20e25700e18a93b78a31be76c2999dd122f15e36f43"
+        },
+        {
+          "class": "net/minecraft/world/entity/player/Player",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "ITEM_HANDLER only, then super (PLAIN)",
+          "sha256": "c404867d35e2ef41b6bcec7a2789615d8575f1e599f15f82354102421738e62b"
+        },
+        {
+          "class": "net/minecraft/world/entity/animal/horse/AbstractHorse",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "ITEM_HANDLER only, then super (PLAIN)",
+          "sha256": "aa9b966f85556cfbb492fa44bdae84d386cc1a2af0c47322f94a32713eebc32d"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "isPresent",
+          "desc": "()Z",
+          "note": "supplier != null && isValid: the hit test of a kept LazyOptional",
+          "sha256": "528ff0650ee32736aedfad726cb2cecad9ff733967636cf3f368cb7713d94073"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "getValue",
+          "desc": "()Ljava/lang/Object;",
+          "note": "resolves the supplier once, null while invalid",
+          "sha256": "0be5fedce9c2d2707e842939887abfc1dfae08adea3717a2939f6d5259045627"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "empty",
+          "desc": "()Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "the EMPTY singleton (absent entries hand it out)",
+          "sha256": "daade5076cdc683554d5dcd12d56681e17aac9f4301a9212853f9e38e68d8af5"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "invalidate",
+          "desc": "()V",
+          "note": "isValid true -> false once: an optional never becomes present again",
+          "sha256": "b5bcc4e96795e8f2ead91035f320ed53703efe6bf30a7fd235698d49b22c8057"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "*",
+          "desc": "",
+          "note": "no other method writes isValid or resolved",
+          "sha256": "eb3df48d49e75f27db2102a41c1206c592599c5c72b03f6be9d407bdc8977c0e"
+        }
+      ]
+    }
+  }
+}

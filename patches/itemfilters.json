@@ -1,0 +1,169 @@
+{
+  "group": "itemfilters",
+  "keys": {
+    "itemfilters_tag_key_reuse": {
+      "mod": "itemfilters",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.itemfilters.TagDataVerifiedKeyMixin",
+        "bons.furious.mixin.itemfilters.TagFilterItemMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/latvian/mods/itemfilters/item/TagFilterItem",
+          "method": "filter",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+          "sha256": "38217896f97862df907e899f14312780766c7dc28671156bfdf8148dd3012685"
+        },
+        {
+          "class": "dev/latvian/mods/itemfilters/item/TagFilterItem",
+          "method": "filterItem",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/Item;)Z",
+          "sha256": "43c7f2dda9f91f141f5921ce33013327372d211ccdf5fcdf563fd09eb39ddb38"
+        },
+        {
+          "class": "dev/latvian/mods/itemfilters/item/TagFilterItem",
+          "method": "createData",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Ldev/latvian/mods/itemfilters/item/StringValueData;",
+          "sha256": "4e47b08412c9338425d707b66b77fd20f4252021ebe539fc048662e6b3f99250"
+        },
+        {
+          "class": "dev/latvian/mods/itemfilters/item/TagFilterItem$TagData",
+          "method": "fromString",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/tags/TagKey;",
+          "sha256": "9bbdc53ea8662138b9a9bef4fb92d0fddc480ddb6856bfae431fa4467cfe8325"
+        },
+        {
+          "class": "dev/latvian/mods/itemfilters/item/TagFilterItem$TagData",
+          "method": "fromString",
+          "desc": "(Ljava/lang/String;)Ljava/lang/Object;",
+          "sha256": "c8bead3f3f8f013c2b99616f4ff324b4cb806dd88f49a4512b1b4be4eb3160f4"
+        },
+        {
+          "class": "dev/latvian/mods/itemfilters/item/TagFilterItem$TagData",
+          "method": "toString",
+          "desc": "(Lnet/minecraft/tags/TagKey;)Ljava/lang/String;",
+          "sha256": "650bfb70e893f6cd3c4b595dac1cf42655422857c4aa11f63172d70966e2e6fb"
+        },
+        {
+          "class": "dev/latvian/mods/itemfilters/item/TagFilterItem$TagData",
+          "method": "toString",
+          "desc": "(Ljava/lang/Object;)Ljava/lang/String;",
+          "sha256": "84d1b9da434c56ec7004267cf6d39cac2d489e6d5614d457c4f1ea4a1c95873f"
+        },
+        {
+          "class": "dev/latvian/mods/itemfilters/item/TagFilterItem$TagData",
+          "method": "*",
+          "desc": "*",
+          "sha256": "e420a1db320263492e1bdae852879426598cd0220435171881b66bc9edd8161a"
+        },
+        {
+          "class": "dev/latvian/mods/itemfilters/item/StringValueData",
+          "method": "getValue",
+          "desc": "()Ljava/lang/Object;",
+          "sha256": "fe325355c1afbc7fa433e50288a9a478fa01d53631acb63ae90f50dbc4a8831f"
+        },
+        {
+          "class": "dev/latvian/mods/itemfilters/item/StringValueData",
+          "method": "getValueAsString",
+          "desc": "()Ljava/lang/String;",
+          "sha256": "f78d0b86c9605d2afe3b922959c826135825bf4a789034510c3c92c7932d40a6"
+        },
+        {
+          "class": "dev/latvian/mods/itemfilters/item/StringValueData",
+          "method": "setValue",
+          "desc": "(Ljava/lang/Object;)V",
+          "sha256": "46602e58b4b910fb0a3f23587b13fe5cb92cebb15adff4b44cf2ee52dc04b84d"
+        },
+        {
+          "class": "dev/latvian/mods/itemfilters/item/StringValueFilterItem",
+          "method": "getValue",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Ljava/lang/String;",
+          "sha256": "0481ded329189be1603f33f6cd0f9ee547ca0fb715225967fdb8a6d63c90c7c8"
+        },
+        {
+          "class": "dev/latvian/mods/itemfilters/item/StringValueFilterItem",
+          "method": "getStringValueData",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Ldev/latvian/mods/itemfilters/item/StringValueData;",
+          "sha256": "4a87888b3388d92329bf5b78475c65d9044639b8dfdb6daf1478ac423ff87349"
+        },
+        {
+          "class": "dev/latvian/mods/itemfilters/core/ItemFiltersStack",
+          "method": "getStringValueFilterData",
+          "desc": "()Ldev/latvian/mods/itemfilters/item/StringValueData;",
+          "sha256": "fc65a376a93cdd18f6f15391c0df5ed0a5f913783ae9a384a5bd3027f6ad2d4e"
+        },
+        {
+          "class": "dev/latvian/mods/itemfilters/core/ItemFiltersStack",
+          "method": "createDataIF",
+          "desc": "(Lnet/minecraft/world/item/Item;)Ljava/lang/Object;",
+          "sha256": "127a77815b6aae48a41f066968ab35a389361b2f9609d0e9f8e16ae4629ecdce"
+        },
+        {
+          "class": "dev/latvian/mods/itemfilters/core/mixin/common/ItemStackMixin",
+          "method": "getItemFiltersData",
+          "desc": "()Ljava/lang/Object;",
+          "sha256": "7d1b9e3eb9f9fcfa1df6510c4977cd131202429addeedb808ced4e3ec4279320"
+        },
+        {
+          "class": "net/minecraft/tags/TagKey",
+          "method": "m_203882_",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/tags/TagKey;",
+          "sha256": "9f2ed852b1a7ff8bf40c67b07db96933ed61ecc88f5a26367e571aa0d60ec0ef"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;)V",
+          "sha256": "0a6c843d2f00cd240fdaaf764417e090fdcb44f113b2dc3f262612b1c7a31443"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "<init>",
+          "desc": "([Ljava/lang/String;)V",
+          "sha256": "472687db0764d1cce4c1cdb02c678a4b79908cd54942927ee8502e213acc2ee1"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "m_135832_",
+          "desc": "(Ljava/lang/String;C)[Ljava/lang/String;",
+          "sha256": "99e3f1ebf7d08df4960db8338065c2522513b5c8918af2dadedd1dde43af683e"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "toString",
+          "desc": "()Ljava/lang/String;",
+          "sha256": "bfbaac15eab73dfae46cd682c078e8c2d64610ba49f535318278e7b7794d682c"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "m_135841_",
+          "desc": "(Ljava/lang/String;)Z",
+          "sha256": "779f5974ad257bea4bf03084cea90b6b9cee5825df0b775756318826ef8bceec"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "m_135843_",
+          "desc": "(Ljava/lang/String;)Z",
+          "sha256": "b0a770c50b1fa1bd10f1ff1dd4f239ed78eef4db418843092b08b49f0996bd7f"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "m_135828_",
+          "desc": "(C)Z",
+          "sha256": "55c3b69af47f7c0c372b21ea76fc21e765ae67dc6b9a9be82d23a2b9dbc4e409"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "m_135835_",
+          "desc": "(C)Z",
+          "sha256": "a19d59b8179e0c2e4472ae07843aa437a8e62c5fe8208d106b15b3e79c6436e5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "cancellable HEAD @Inject on TagFilterItem.filter and filterItem answering stack.is / holder.is with the TagKey the filter stack's TagData already holds (exact TagFilterItem / TagData classes, item-registry key, plain vanilla-valid location, verified once to be the interner's instance and remembered in one @Unique field added to TagData); every other case runs the unchanged method; helper bons.furious.patch.itemfilters.TagKeyReuse",
+      "license": "Item Filters is LGPL-3.0 (mods.toml; GPL-3.0-only on Modrinth): the injections are our own logic (no Item Filters code carried; the shadow mode evaluates stock's one-line expression for comparison); Minecraft (Mojang): no-copy"
+    }
+  }
+}

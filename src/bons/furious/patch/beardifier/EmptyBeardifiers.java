@@ -44,10 +44,13 @@ import org.spongepowered.asm.mixin.transformer.meta.MixinMerged;
  *
  * "Provably adds nothing" (all must hold, else the chunk runs the original code):
  *  1. Armed once per run: every mixin that merged code into Beardifier is ours or one of VERIFIED, byte for byte (SHA-256
- *     of its class file), and so are the enhanced-adaptation helpers their compute handlers call; every instance field of
- *     Beardifier is vanilla's, ours, or an ObjectListIterator slot; and no other mod's NoiseChunk mixin mentions the fill
- *     state (fillAllDirectly, inCellX/Y/Z, arrayIndex, beardifier). Unknown code anywhere: the switch stands down (one INFO
- *     line) and nothing is flagged.
+ *     of its class file), and so are the enhanced-adaptation helpers their compute handlers call, or (since 1.0.45) an
+ *     accessor-only interface (accessorOnly: every method an @Accessor or @Invoker, no field, no other Mixin annotation,
+ *     read from its class file), which only adds methods that read, write or call existing members and changes no
+ *     existing code (Collections Of Optimizations 4.6-5.1's vanilla.BeardifierAccessor: two getters of vanilla's two
+ *     iterator fields); every instance field of Beardifier is vanilla's, ours, or an ObjectListIterator slot; and no other
+ *     mod's NoiseChunk mixin mentions the fill state (fillAllDirectly, inCellX/Y/Z, arrayIndex, beardifier). Unknown code
+ *     anywhere: the switch stands down (one INFO line) and nothing is flagged.
  *  2. Per chunk: the object is exactly a Beardifier (no subclass), vanilla's piece and junction lists are empty, and every
  *     ObjectListIterator slot other mods added (YUNG's/Integrated API's shared slot, Moog's slots) is null or empty.
  *     With the verified code that means: vanilla's loops add nothing; fdbosses' handler runs only inside the rigid loop;
@@ -201,7 +204,9 @@ public final class EmptyBeardifiers {
                 if (c == null) {
                     c = take(Beardifier.class, NoiseChunk.class, Beardifier.class.getClassLoader());
                     census = c;
-                    if (c.armed()) LOGGER.info("Bons and Furious: worldgen_empty_beardifier_marker applies ({})", c.detail());
+                    if (c.armed() && !markerApplies())   // since 1.0.45: read only by vanilla_beardifier_influence_bounds here
+                        LOGGER.info("Bons and Furious: the Beardifier census of worldgen_empty_beardifier_marker is armed ({}); the marker itself is not applied, vanilla_beardifier_influence_bounds uses the census", c.detail());
+                    else if (c.armed()) LOGGER.info("Bons and Furious: worldgen_empty_beardifier_marker applies ({})", c.detail());
                     else LOGGER.info("Bons and Furious: worldgen_empty_beardifier_marker stands down: {}; every chunk keeps the original beardifier fill", c.detail());
                 }
             }
@@ -209,16 +214,36 @@ public final class EmptyBeardifiers {
         return c;
     }
 
+    /**
+     * Since 1.0.45: whether worldgen_empty_beardifier_marker's own mixins apply (its guard decision). The census is also
+     * taken for vanilla_beardifier_influence_bounds when the marker steps aside (Collections Of Optimizations makes the same
+     * change) or is off; its "applies" line would then be wrong. True when the decision cannot be read (the old line).
+     */
+    private static boolean markerApplies() {
+        try {
+            return bons.furious.guard.Guards.decide("worldgen_empty_beardifier_marker").state() == bons.furious.guard.Guards.State.APPLY;
+        } catch (Throwable t) {
+            return true;
+        }
+    }
+
     /** Reads which mixins merged code into the given classes and checks them; public for the offline proof. */
     public static Census take(Class<?> beardifier, Class<?> noiseChunk, ClassLoader loader) {
         try {
-            TreeSet<String> verified = new TreeSet<>();
+            TreeSet<String> verified = new TreeSet<>(), accessors = new TreeSet<>();
             for (String mixin : mergedMixins(beardifier)) {
                 if (mixin.startsWith("bons.furious.mixin.")) continue;
                 List<String> want = VERIFIED.get(mixin);
-                if (want == null) return new Census(false, "Beardifier carries code from " + mixin + ", which this switch has not verified", new MethodHandle[0]);
-                String got = sha256(loader, mixin);
-                if (!want.contains(got)) return new Census(false, mixin + " is not the verified build", new MethodHandle[0]);
+                String got = want == null ? null : sha256(loader, mixin);
+                if (want == null || !want.contains(got)) {
+                    // since 1.0.45: an accessor-only interface adds members and changes no code (see the class comment)
+                    if (accessorOnly(classBytes(loader, mixin)) == null) {
+                        accessors.add(mixin);
+                        continue;
+                    }
+                    if (want == null) return new Census(false, "Beardifier carries code from " + mixin + ", which this switch has not verified", new MethodHandle[0]);
+                    return new Census(false, mixin + " is not the verified build", new MethodHandle[0]);
+                }
                 String[] helper = HELPERS.get(got);
                 if (helper != null && !helper[1].equals(sha256(loader, helper[0])))
                     return new Census(false, helper[0] + " is not the verified build", new MethodHandle[0]);
@@ -244,10 +269,62 @@ public final class EmptyBeardifiers {
                     if (text.contains(word)) return new Census(false, "NoiseChunk mixin " + mixin + " touches " + word, new MethodHandle[0]);
             }
             return new Census(true, (verified.isEmpty() ? "no other mod changes Beardifier" : verified.size() + " verified Beardifier mixins: "
-                    + String.join(", ", verified)) + "; " + slots.size() + " adaptation slots checked per chunk", slots.toArray(new MethodHandle[0]));
+                    + String.join(", ", verified)) + (accessors.isEmpty() ? "" : "; accessor-only: " + String.join(", ", accessors))
+                    + "; " + slots.size() + " adaptation slots checked per chunk", slots.toArray(new MethodHandle[0]));
         } catch (Throwable t) {
             return new Census(false, "the check failed (" + t + ")", new MethodHandle[0]);
         }
+    }
+
+    private static final String ACCESSOR = "Lorg/spongepowered/asm/mixin/gen/Accessor;";
+    private static final String INVOKER = "Lorg/spongepowered/asm/mixin/gen/Invoker;";
+    /** Annotation packages that never make Mixin change code (nullness and documentation markers). */
+    private static final String[] INERT = {"Lorg/jetbrains/annotations/", "Ljavax/annotation/", "Lorg/jspecify/annotations/", "Ljava/lang/"};
+
+    /**
+     * Since 1.0.45: null when the class file is an accessor-only mixin interface, otherwise why not. Accessor-only: an
+     * interface with an @Mixin annotation and no other class annotation (except inert ones), no field, and every method
+     * carrying @Accessor or @Invoker and no other annotation (except inert ones). Mixin turns such a mixin into new methods
+     * of the target that read or write an existing field or call an existing method; it changes no existing method and
+     * adds no field. Anything else (an injector, @Overwrite, @Shadow, @Unique, any unknown annotation, a field, a class)
+     * is not accessor-only. Public for the offline proof.
+     */
+    public static String accessorOnly(byte[] bytes) {
+        if (bytes == null) return "its class file could not be read";
+        org.objectweb.asm.tree.ClassNode node = new org.objectweb.asm.tree.ClassNode();
+        new org.objectweb.asm.ClassReader(bytes).accept(node, org.objectweb.asm.ClassReader.SKIP_CODE | org.objectweb.asm.ClassReader.SKIP_DEBUG
+                | org.objectweb.asm.ClassReader.SKIP_FRAMES);
+        if ((node.access & org.objectweb.asm.Opcodes.ACC_INTERFACE) == 0) return "it is not an interface";
+        if (node.fields != null && !node.fields.isEmpty()) return "it declares a field";
+        boolean mixin = false;
+        for (org.objectweb.asm.tree.AnnotationNode a : annotations(node.visibleAnnotations, node.invisibleAnnotations)) {
+            if (a.desc.equals("Lorg/spongepowered/asm/mixin/Mixin;")) mixin = true;
+            else if (!inert(a.desc)) return "it carries the class annotation " + a.desc;
+        }
+        if (!mixin) return "it has no @Mixin annotation";
+        if (node.methods == null || node.methods.isEmpty()) return "it declares no method";
+        for (org.objectweb.asm.tree.MethodNode m : node.methods) {
+            int gen = 0;
+            for (org.objectweb.asm.tree.AnnotationNode a : annotations(m.visibleAnnotations, m.invisibleAnnotations)) {
+                if (a.desc.equals(ACCESSOR) || a.desc.equals(INVOKER)) gen++;
+                else if (!inert(a.desc)) return "method " + m.name + " carries " + a.desc;
+            }
+            if (gen != 1) return "method " + m.name + " is not exactly one @Accessor or @Invoker";
+        }
+        return null;
+    }
+
+    private static List<org.objectweb.asm.tree.AnnotationNode> annotations(List<org.objectweb.asm.tree.AnnotationNode> a,
+                                                                          List<org.objectweb.asm.tree.AnnotationNode> b) {
+        List<org.objectweb.asm.tree.AnnotationNode> out = new ArrayList<>();
+        if (a != null) out.addAll(a);
+        if (b != null) out.addAll(b);
+        return out;
+    }
+
+    private static boolean inert(String desc) {
+        for (String p : INERT) if (desc.startsWith(p)) return true;
+        return false;
     }
 
     /** The mixins whose members Mixin merged into the class, from the @MixinMerged annotations it leaves behind. */

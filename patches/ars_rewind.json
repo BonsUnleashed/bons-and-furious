@@ -1,0 +1,33 @@
+{
+  "group": "ars_rewind",
+  "keys": {
+    "ars_rewind_stack_compaction": {
+      "mod": "ars_nouveau",
+      "scripts": [],
+      "since": "1.0.44",
+      "mixins": [
+        "bons.furious.mixin.ars_rewind.FixedStackMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/hollingsworth/arsnouveau/common/entity/debug/FixedStack",
+          "method": "<init>",
+          "desc": "(I)V",
+          "sha256": "fcd418c3488e6d4bcd3b05ca5a79a53d967f5e52b7f3ed2eec5255b21528c426"
+        },
+        {
+          "class": "com/hollingsworth/arsnouveau/common/entity/debug/FixedStack",
+          "method": "push",
+          "desc": "(Ljava/lang/Object;)Ljava/lang/Object;",
+          "sha256": "2e7b21542e1d584fc30d05575ab5b8909c6326be5b04812016323d702ee1d24d"
+        },
+        {
+          "class": "com/hollingsworth/arsnouveau/common/entity/debug/FixedStack",
+          "method": "*",
+          "desc": "",
+          "sha256": "2d490f24c9229a4fea1e1d25b3b3f552c1bce602669f4fee84867251d6572140"
+        }
+      ]
+    }
+  }
+}

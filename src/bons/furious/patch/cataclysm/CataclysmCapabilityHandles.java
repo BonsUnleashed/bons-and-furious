@@ -19,7 +19,12 @@ import net.minecraftforge.common.util.LazyOptional;
  * LazyOptional) are registered in the shared PrivateCapabilityHandles table, which hands out the identical
  * LazyOptional the walk returns (see there for the proof).
  *
+ * Since 1.0.46 (value form): ModCapabilitiesValueMixin answers the whole getCapability from the kept value (Cataclysm's
+ * own null and isAlive checks still run first) and keeps the value at the original orElseThrow; absent entries are on
+ * (all five providers answer with a private final LazyOptional field, so PrivateCapabilityHandles' absent rule holds).
+ *
  * -Dbons_and_furious.cataclysmCapabilityHandles=false asks the dispatcher every time;
+ * -Dbons_and_furious.cataclysmCapabilityHandles.values=false keeps the 1.0.36 handle form only;
  * -Dbons_and_furious.cataclysmCapabilityHandles.shadow=true (verification runs only) asks it again on every hand-out and
  * counts non-identical answers in SHADOW_CHECKS / SHADOW_MISMATCHES (WARN for the first 20; the asked answer is returned).
  */
@@ -29,15 +34,39 @@ public final class CataclysmCapabilityHandles {
     public static final AtomicLong SHADOW_CHECKS = new AtomicLong(), SHADOW_MISMATCHES = new AtomicLong();
     /** Hook, charge and render rush first: the three asked for every living entity every tick. */
     static final PrivateCapabilityHandles.Owner OWNER = PrivateCapabilityHandles.register("cataclysm_capability_handles", SHADOW,
-            SHADOW_CHECKS, SHADOW_MISMATCHES, ModCapabilities.HOOK_CAPABILITY, ModCapabilities.CHARGE_CAPABILITY,
+            SHADOW_CHECKS, SHADOW_MISMATCHES, true, ModCapabilities.HOOK_CAPABILITY, ModCapabilities.CHARGE_CAPABILITY,
             ModCapabilities.RENDER_RUSH_CAPABILITY, ModCapabilities.TENTACLE_CAPABILITY, ModCapabilities.PARRY_CAPABILITY);
 
+    static {
+        OWNER.values = !"false".equalsIgnoreCase(System.getProperty("bons_and_furious.cataclysmCapabilityHandles.values", "true"));
+    }
+
     private CataclysmCapabilityHandles() {
+    }
+
+    /** Since 1.0.46: the value form on or off at run time (false = the 1.0.36 handle form only). */
+    public static void setValues(boolean on) {
+        OWNER.values = on;
     }
 
     /** The redirect target of both entity.getCapability(capability) calls in ModCapabilities.getCapability. */
     public static <T> LazyOptional<T> lookup(Entity entity, Capability<T> capability) {
         if (!enabled) return entity.getCapability(capability);
         return PrivateCapabilityHandles.lookup(entity, capability, OWNER);
+    }
+
+    /** For ModCapabilitiesValueMixin: the kept value, PrivateCapabilityHandles.ABSENT, or PrivateCapabilityHandles.MISS. */
+    public static Object kept(Entity entity, Capability<?> capability) {
+        if (!enabled) return PrivateCapabilityHandles.MISS;
+        return PrivateCapabilityHandles.kept(entity, capability, OWNER);
+    }
+
+    /** At the original orElseThrow in ModCapabilities.getCapability. */
+    public static void keepValue(Entity entity, Capability<?> capability, LazyOptional<?> optional, Object value) {
+        if (enabled) PrivateCapabilityHandles.keepValue(entity, capability, OWNER, optional, value);
+    }
+
+    public static Object shadowValue(Entity entity, Capability<?> capability, Object ours, Object asked) {
+        return PrivateCapabilityHandles.shadowValue(entity, capability, OWNER, ours, asked);
     }
 }

@@ -13,7 +13,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Bons and Furious switch forge_status_ping_memo (Forge 47.4.16, both sides). No Forge code here.
+ * Bons and Furious switch forge_status_ping_memo (Forge 47.4.28 tested since 1.0.46, 47.4.16 accepted as build
+ * "forge 47.4.16"; both sides). No Forge code here. Forge 47.4.26 groups the channels per mod in toBuf; toBuf's bytes stay a
+ * function of the same mods/channels sequence, so the memo below is unchanged (1.0.46 rerun of the proof on 47.4.28).
  *
  * MinecraftServer.resetStatusCache encodes the whole server-list status, including Forge's "d" field: ServerStatusPing.toBuf()
  * writes every mod (id, version, its channels found by filtering ALL channels for each mod: mods x channels comparisons)

@@ -1,0 +1,100 @@
+{
+  "group": "mcreator_item_animation",
+  "keys": {
+    "mcreator_item_animation_idle": {
+      "mod": "mcreator",
+      "target_mods": [
+        "born_in_chaos_v1",
+        "rustic_engineer",
+        "terramity",
+        "under_the_moon"
+      ],
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.mcreator_item_animation.BornInChaosItemAnimationMixin",
+        "bons.furious.mixin.mcreator_item_animation.RusticEngineerItemAnimationMixin",
+        "bons.furious.mixin.mcreator_item_animation.TerramityItemAnimationMixin",
+        "bons.furious.mixin.mcreator_item_animation.UnderTheMoonItemAnimationMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41777_",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "copy: keeps getItem() (empty -> EMPTY, else a stack of the same item), so the test on the held stacks equals the test on the copies",
+          "sha256": "09624940bbdb89f1bf03606b5e8edc4b88524135142800fe80ed791b37cf7c3c"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41720_",
+          "desc": "()Lnet/minecraft/world/item/Item;",
+          "note": "getItem: AIR for an empty stack",
+          "sha256": "ce7982961328f6d190746b117db6ef59920bc2a9dcbb28fadc3c325294da242c"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41619_",
+          "desc": "()Z",
+          "note": "isEmpty, used by copy and getItem",
+          "sha256": "8f98b32b0197e0943c848b64db2e019736072716a7da9afd7bf61b23ad3a46e1"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21205_",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "getMainHandItem, read by the handler and by the switch",
+          "sha256": "527e4271cfee67a7c2566bcb89d703b044425dd4838d7482046d4319609cb95d"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21206_",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "getOffhandItem, read by the handler and by the switch",
+          "sha256": "c85db0b1a46aaf954cd2807127a981b5593ce942873ffaea171e8fe119ef2ad6"
+        }
+      ],
+      "target_guard": [
+        {
+          "mixin": "bons.furious.mixin.mcreator_item_animation.BornInChaosItemAnimationMixin",
+          "mod": "born_in_chaos_v1",
+          "class": "net/mcreator/borninchaosv/init/ItemAnimationFactory",
+          "method": "animatedItems",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "Born in Chaos 1.7.5: 736 bytes, 4 GeckoLib item classes acted on; per-target guard (TargetGuards)",
+          "sha256": "344821bb96ff52a5f9d39013962afdf79e293fd5606a4fd74db54a1fab189cc8"
+        },
+        {
+          "mixin": "bons.furious.mixin.mcreator_item_animation.RusticEngineerItemAnimationMixin",
+          "mod": "rustic_engineer",
+          "class": "net/mcreator/rusticengineer/init/ItemAnimationFactory",
+          "method": "animatedItems",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "Rustic Engineer 1.1.2: 226 bytes, 1 GeckoLib item class acted on; per-target guard (TargetGuards)",
+          "sha256": "f6363ca7c8403e078eed1bcc6b969f8b65dd098e275a71733a4967cff16b524a"
+        },
+        {
+          "mixin": "bons.furious.mixin.mcreator_item_animation.TerramityItemAnimationMixin",
+          "mod": "terramity",
+          "class": "net/mcreator/terramity/init/ItemAnimationFactory",
+          "method": "animatedItems",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "Terramity 0.9.8: 9,576 bytes, 56 GeckoLib item classes acted on; per-target guard (TargetGuards)",
+          "sha256": "00676287bf5b9686e1c76caae3936eea81b5428ca97bd2f009d5296817fcc27f"
+        },
+        {
+          "mixin": "bons.furious.mixin.mcreator_item_animation.UnderTheMoonItemAnimationMixin",
+          "mod": "under_the_moon",
+          "class": "net/mcreator/underthemoon/init/ItemAnimationFactory",
+          "method": "animatedItems",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "Under the Moon 1.0.5: 236 bytes, 1 GeckoLib item class acted on; per-target guard (TargetGuards)",
+          "sha256": "b6aa5c7918298db7f21d8c52384754182ac8216b21064c4865ca133f989d5b1d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of each mod's ItemAnimationFactory.animatedItems: cancelled unless it is the START phase and a hand holds a GeckoLib GeoItem (the test every effect of the method sits behind, evaluated on the held stacks instead of their copies); the design of benssharks_item_animation_idle with a generic condition. Each mixin is applied only when its target matches the target_guard fingerprint of the tested build (ItemAnimationPlugin / TargetGuards)",
+      "license": "Target licences (mods.toml): born_in_chaos_v1: All Rights Reserved; rustic_engineer: Not specified; terramity: All Rights Reserved; under_the_moon: Not specified. All treated as no-copy: the mixins hold only our own test; the mods' code stays in their jars"
+    }
+  }
+}

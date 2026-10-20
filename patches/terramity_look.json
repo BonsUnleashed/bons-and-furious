@@ -1,0 +1,47 @@
+{
+  "group": "terramity_look",
+  "keys": {
+    "terramity_client_scan_skip": {
+      "mod": "terramity",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.terramity_look.TerramityLookScanMixin",
+        "bons.furious.mixin.terramity_look.TerramityAuraScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mcreator/terramity/procedures/ConductiteScouterHelmetTickEventProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;)V",
+          "note": "timer write, 64-step look scan (one int constant 64), message only when !isClientSide",
+          "sha256": "d51bf425d1c451b3d874df96b9517b264c0d7fb640bf00c42ad53c40b8172d86"
+        },
+        {
+          "class": "net/mcreator/terramity/procedures/VoidGlassesWhileBaubleIsEquippedTickProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;)V",
+          "note": "timer write, 64-step look scan (one int constant 64), Glowing only when !isClientSide",
+          "sha256": "379277d0919ef8c240061451a95f66d056f4414b179e214d8f02dd523bb7863d"
+        },
+        {
+          "class": "net/mcreator/terramity/procedures/MalwareWhileBaubleIsEquippedTickProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "entity query + sort; effects only when !isClientSide",
+          "sha256": "b772aa1abf384366b449e2a7747c879ee141ec583060abbb30c6bca90498de63"
+        },
+        {
+          "class": "net/mcreator/terramity/procedures/PhantomAmuletEquippedTickProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "entity query + sort; effect only when !isClientSide",
+          "sha256": "fc9329413f68b5aff939cfc10d877e8ec26612e1ca87cfafa948d2191c04b5a4"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on the loop bound 64 of the Conductite Scouter / Void Glasses look scans (0 on a client level) and @WrapOperation on the entity query of the Malware / Phantom Amulet procedures (a new empty ArrayList on a client level); on the client those parts only read, every effect is behind !isClientSide",
+      "license": "Terramity: All Rights Reserved (no-copy): the mixins hold only our own logic (helper bons.furious.patch.terramity_look.TerramityClientScans); Terramity's code stays in its jar"
+    }
+  }
+}

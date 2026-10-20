@@ -8,13 +8,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 /**
- * terrablender_lazy_namespace_rules (TerraBlender 3.0.1.10, LGPL-3.0; server side of world generation).
+ * terrablender_lazy_namespace_rules (TerraBlender 3.0.1.10 and, since 1.0.45, 3.0.1.11, whose NamespacedSurfaceRuleSource
+ * is byte-identical; LGPL-3.0; server side of world generation).
  *
  * NamespacedSurfaceRuleSource.apply(context) does sources.entrySet().forEach(entry -> rules.put(key, value.apply(context))).
  * The consumer handed to forEach is wrapped: each entry first goes through LazyNamespaceRules.defer, which returns the
- * same entry, or (for a namespace made only of vanilla sources) the same key with a source whose apply defers the build
- * to the rule's first use. TerraBlender's own lambda still builds the map in the same order with the same keys. Runs
- * once per chunk surface pass.
+ * same entry, or (for a namespace made only of verified sources: vanilla ones, since 1.0.45 also with C2ME's surface-builder
+ * mixins, and Oh The Biomes We've Gone's rule types) the same key with a source whose apply defers the build to the rule's
+ * first use. TerraBlender's own lambda still builds the map in the same order with the same keys. Runs once per chunk
+ * surface pass.
  */
 @Mixin(targets = "terrablender.worldgen.surface.NamespacedSurfaceRuleSource", remap = false)
 public abstract class NamespacedSourceDeferMixin {

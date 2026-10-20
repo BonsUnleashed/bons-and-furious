@@ -1,0 +1,71 @@
+{
+  "group": "noise",
+  "keys": {
+    "vanilla_noise_gradient_table": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.44",
+      "mixins": [
+        "bons.furious.mixin.noise.ImprovedNoiseGradientMixin",
+        "bons.furious.mixin.noise.SimplexGradientAccessor",
+        "bons.furious.mixin.noise.ImprovedNoiseInvoker"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/synth/ImprovedNoise",
+          "method": "m_75327_",
+          "desc": "(DDDDD)D",
+          "sha256": "6969d448214e01ca10f14c4844d3c7ab9a50798c229bd7ba1450255e7bbda0b2"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/synth/ImprovedNoise",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/util/RandomSource;)V",
+          "sha256": "80912ca019677926137497eb1707e7275675c3048be1a6d05f7f48e55d337c5c"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/synth/ImprovedNoise",
+          "method": "m_164317_",
+          "desc": "(IIIDDDD)D",
+          "sha256": "847980055819cb8651be889767978962620d4871c0c6fd57ca967ef82abfe287"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/synth/ImprovedNoise",
+          "method": "m_75333_",
+          "desc": "(I)I",
+          "sha256": "c2ba2248793739f58a73434e26a1108f04f6b7708bcdf691a4702e666e4f5bd3"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/synth/ImprovedNoise",
+          "method": "m_75335_",
+          "desc": "(IDDD)D",
+          "sha256": "924e4c6a0b1e1ed61e991ef5ce79a1a82f1cc1103110885f95e0828ddab43414"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/synth/SimplexNoise",
+          "method": "m_75479_",
+          "desc": "([IDDD)D",
+          "sha256": "f49b658dee5dcff173b9b210faddbd60c5bf297cc743273362e410946a420b7c"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/synth/SimplexNoise",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "06a21db51c065a35101fe152604752f2d33b5ef812aed1a1e8fd1ea69a4904bd"
+        },
+        {
+          "class": "net/minecraft/util/Mth",
+          "method": "m_14197_",
+          "desc": "(D)D",
+          "sha256": "15052d6f90361814838d5257c8713b73ac57e41c6b2e16c7e0081043d9163bdc"
+        },
+        {
+          "class": "net/minecraft/util/Mth",
+          "method": "m_14019_",
+          "desc": "(DDDDDDDDDDD)D",
+          "sha256": "29cbb4e288a8cc6324b6aebf236783ad05703501f971bbabf6e2a7e13c040967"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "group": "vanilla_leveldat_encode",
+  "keys": {
+    "vanilla_leveldat_encode_reuse": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.vanilla_leveldat_encode.ParameterListCodecMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/biome/Climate$ParameterList",
+          "method": "m_274436_",
+          "desc": "(Lcom/mojang/serialization/MapCodec;)Lcom/mojang/serialization/Codec;",
+          "note": "codec(entry): the codec whose encodes are kept (wrapped on return)",
+          "sha256": "808a4bfc9d9b00ec50c5ab4ec8b38e8e5f0b5cb4397469488b962e540f2a4884"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$ParameterList",
+          "method": "m_274448_",
+          "desc": "(Lcom/mojang/serialization/MapCodec;Lcom/mojang/serialization/codecs/RecordCodecBuilder$Instance;)Lcom/mojang/datafixers/kinds/App;",
+          "note": "the entry codec: parameters + entry, read from the Pair only",
+          "sha256": "34fa2e106decd3802459bc9e1a0b647d3cc7c028b4dbb6ebbf910e428baeb8b2"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$ParameterList",
+          "method": "m_186850_",
+          "desc": "()Ljava/util/List;",
+          "note": "values(): the final list field the codec reads",
+          "sha256": "ad4af335a300a8c467c1f1515bde83105b9aabd360332913ee71614e9ccfe1ac"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$ParameterList",
+          "method": "<init>",
+          "desc": "(Ljava/util/List;)V",
+          "note": "keeps the list it is given (identity check on it)",
+          "sha256": "c12df5c6009661c0131ac1d2c8d2777fe2d853b502fc8bed1511c090286ea6dd"
+        },
+        {
+          "class": "net/minecraft/resources/RegistryFileCodec",
+          "method": "encode",
+          "desc": "(Lnet/minecraft/core/Holder;Lcom/mojang/serialization/DynamicOps;Ljava/lang/Object;)Lcom/mojang/serialization/DataResult;",
+          "note": "a bound Reference holder is written as its key when the ops owner allows it (owner is part of the check)",
+          "sha256": "4be5bb7e1c67ab90282576dc3caa288ebf9ea09a582670e146dca319788e7c1f"
+        },
+        {
+          "class": "net/minecraft/resources/RegistryOps",
+          "method": "m_255056_",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;)Ljava/util/Optional;",
+          "note": "owner(registry): the holder owner the check compares",
+          "sha256": "90d664e592512da19508ed4c541f883eefd7f9d6e2d5a993f08836c138b36649"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag$1",
+          "method": "m_7300_",
+          "desc": "(Ljava/io/DataInput;ILnet/minecraft/nbt/NbtAccounter;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "reading a compound: a default HashMap filled in written order (same key order as the codec built it)",
+          "sha256": "e615f7d11e4e7c0565176dd66e8ddaf1fdcd4d2cfab094e84b2a4f82e3ae64db"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "a new compound starts from a default HashMap",
+          "sha256": "5c47cd99a39edfa0536d93e46e399571f26b39cfc9711787747b429e96703d84"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "m_6434_",
+          "desc": "(Ljava/io/DataOutput;)V",
+          "note": "writes the keys in map order",
+          "sha256": "df09ab95611909b256c02cd878535a7d9d2ba9f3bbe1eb525f7efe7d38bd2d5c"
+        },
+        {
+          "class": "net/minecraft/nbt/NbtOps$NbtRecordBuilder",
+          "method": "initBuilder",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "the codec builds each compound from new CompoundTag()",
+          "sha256": "d5a80d186f2e8a295c269122d915be69a093a5cc5eab5bf4c39ea8b97ea1273e"
+        },
+        {
+          "class": "net/minecraft/nbt/NbtOps$NbtRecordBuilder",
+          "method": "append",
+          "desc": "(Ljava/lang/String;Lnet/minecraft/nbt/Tag;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "and puts the fields in codec order",
+          "sha256": "178cdd2ddbee012b04e1581040dc371ea57bb8bd43c73d3c7b30da04fca72c8d"
+        },
+        {
+          "class": "net/minecraft/core/Holder$Reference",
+          "method": "m_203633_",
+          "desc": "()Z",
+          "note": "isBound: only bound references are kept",
+          "sha256": "006ad289e7260d387360581dde87a014ab4053dc3850b58f3ad259b91c46f600"
+        },
+        {
+          "class": "net/minecraft/core/Holder$Reference",
+          "method": "m_203543_",
+          "desc": "()Ljava/util/Optional;",
+          "note": "unwrapKey: only references with a key",
+          "sha256": "edb30932b01007f5ecf4d88912262c677da0b3dbb3886fdeb9faebd40281fdf1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@ModifyReturnValue of Climate.ParameterList.codec(MapCodec): the returned codec is wrapped (ParameterListEncodes.Cached); decode unchanged; an encode of a list of at least 256 bound registry holders through RegistryOps over NbtOps into an empty prefix keeps the result as NBT bytes per ParameterList object (weak key) and returns a tag read from them while the list object, its element objects and the ops biome holder owner are unchanged",
+      "license": "Minecraft (Mojang) no-copy: no Minecraft code is carried; the vanilla codec is called and its output kept as bytes (helper bons.furious.patch.vanilla_leveldat_encode.ParameterListEncodes)"
+    }
+  }
+}

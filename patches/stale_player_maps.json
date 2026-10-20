@@ -1,0 +1,569 @@
+{
+  "group": "stale_player_maps",
+  "keys": {
+    "stale_player_map_purge_uniquedungeons": {
+      "mod": "uniquedungeons",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.stale_player_maps.UniqueDungeonsCooldownMapMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/becks/uniquedungeons/common/stackCooldowns/StackCooldownMap",
+          "method": "getCooldowns",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Lcom/becks/uniquedungeons/common/stackCooldowns/StackCooldowns;",
+          "note": "map.containsKey(player) ? map.get(player) : put(player, new (Server)StackCooldowns): the map's only accessor",
+          "sha256": "777e128ef777d2ece5ed127f3700a0e1e70fc8bcc6b260d1f2247698f5cdcaa2"
+        },
+        {
+          "class": "com/becks/uniquedungeons/common/stackCooldowns/StackCooldownMap",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "map = new HashMap<>() (keys compared with Entity.equals = entity id)",
+          "sha256": "5166438a1028eb56679f6aff0650c8a27df9d9bbe670e7f046e52e701c1e34c2"
+        },
+        {
+          "class": "com/becks/uniquedungeons/common/stackCooldowns/StackCooldownMap",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: no other accessor of the private field (bytecode audit of every installed jar)",
+          "sha256": "11b20596c06c053f247607584a548ae0860c4254005cee7192d80ecaf6dc6c05"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "note": "equal = same entity id: a respawned or dimension-changed player equals its predecessor",
+          "sha256": "000f7cb48e2b39bc86ee1a95b8cb3118171a2244b7283fbeacb468976cc6cadf"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "hashCode",
+          "desc": "()I",
+          "note": "the entity id",
+          "sha256": "4873322f2d7f913668bc9548ab9af71e9c84e085a28162a1b923e1f18cbd2ec8"
+        },
+        {
+          "class": "net/minecraft/server/players/PlayerList",
+          "method": "m_11286_",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "note": "remove (logout, server stop): removePlayerImmediately(player, UNLOADED_WITH_PLAYER)",
+          "sha256": "76edce53b64c99e23a540d85829499fabd3c7f25d8eec1d66872a187a2b3f92b"
+        },
+        {
+          "class": "net/minecraft/server/players/PlayerList",
+          "method": "m_11236_",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;Z)Lnet/minecraft/server/level/ServerPlayer;",
+          "note": "respawn: old player removed with DISCARDED, the new one gets its id (setId)",
+          "sha256": "a6697761f40183511931f6225f5b00a6cd22a2c15a9126e9f7168e6a2a8e036f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix: @Inject at RETURN of StackCooldownMap.<clinit> hands the map to our shared layer (Forge listeners: EntityJoinLevelEvent key swap, EntityLeaveLevelEvent logout purge on a dedicated server, client session end); MixinExtras @WrapMethod runs getCooldowns under one lock (also the single-player cross-thread race); every guarded member exists in both the client and the server jar; helpers bons.furious.patch.stale_player_maps.UniqueDungeonsMaps, StalePlayerKeys, StalePlayerKeysClient",
+      "license": "MIT (Unique Dungeons): no Unique Dungeons code is carried; the mixins hand over a map reference and lock around the unchanged method"
+    },
+    "stale_player_map_purge_uniquedungeons_remote": {
+      "mod": "uniquedungeons",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.stale_player_maps.UniqueDungeonsRemoteCooldownsMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/becks/uniquedungeons/common/stackCooldowns/StackCooldownUtils",
+          "method": "updateClientCooldowns",
+          "desc": "(Lcom/becks/uniquedungeons/common/stackCooldowns/ClientboundStackCooldownPacket;)V",
+          "note": "the client sync: the local player's cooldowns only (@OnlyIn CLIENT: only the client jar has it, hence this client-only key)",
+          "sha256": "79753c62bc9f8f4f106118db870171eb433f3a2e59fc0268846e777207dda629"
+        },
+        {
+          "class": "com/becks/uniquedungeons/common/stackCooldowns/StackCooldownUtils",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: no other path that gives a player cooldowns on the client",
+          "sha256": "1385b03efe0fcd8a938c567155d7c606daf378876c2d65be63ac1f3431fb1465"
+        },
+        {
+          "class": "com/becks/uniquedungeons/common/stackCooldowns/StackCooldownMap",
+          "method": "getCooldowns",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Lcom/becks/uniquedungeons/common/stackCooldowns/StackCooldowns;",
+          "note": "a player without an entry gets a fresh empty StackCooldowns",
+          "sha256": "777e128ef777d2ece5ed127f3700a0e1e70fc8bcc6b260d1f2247698f5cdcaa2"
+        },
+        {
+          "class": "com/becks/uniquedungeons/common/stackCooldowns/StackCooldownMap",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: getCooldowns is the map's only accessor",
+          "sha256": "11b20596c06c053f247607584a548ae0860c4254005cee7192d80ecaf6dc6c05"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "note": "a returning remote player (same server id) equals the departed one: it gets a fresh entry instead of the old empty one",
+          "sha256": "000f7cb48e2b39bc86ee1a95b8cb3118171a2244b7283fbeacb468976cc6cadf"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "hashCode",
+          "desc": "()I",
+          "note": "the entity id",
+          "sha256": "4873322f2d7f913668bc9548ab9af71e9c84e085a28162a1b923e1f18cbd2ec8"
+        },
+        {
+          "class": "com/becks/uniquedungeons/common/stackCooldowns/StackCooldowns",
+          "method": "*",
+          "desc": "",
+          "note": "inert remote values: the declared methods of the value class",
+          "sha256": "fe9aab73c6613d3757aafb53ad732788cebc787cac45fd7936f2d6b233b5f55e"
+        },
+        {
+          "class": "com/becks/uniquedungeons/common/stackCooldowns/StackCooldowns",
+          "method": "tick",
+          "desc": "()V",
+          "note": "tickCount++, expired cooldowns dropped: an empty instance changes only its counter",
+          "sha256": "6846c445bd7e117a3f0b02deec22b3069c5dde5305748d9a2cfb4b307b99e97c"
+        },
+        {
+          "class": "com/becks/uniquedungeons/common/stackCooldowns/StackCooldowns",
+          "method": "getCooldownPercent",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;F)F",
+          "note": "0 without a cooldown entry; the counter is read only against an entry",
+          "sha256": "c67c497c215fb804ecf601950986634c32a359d36a2640be980940376d3bada7"
+        },
+        {
+          "class": "com/becks/uniquedungeons/common/stackCooldowns/StackCooldowns",
+          "method": "isOnCooldown",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "sha256": "ba022ccbc6b95b1abe088138ded54ae65898e102597c84c79e102539a63b9242"
+        },
+        {
+          "class": "com/becks/uniquedungeons/common/stackCooldowns/StackCooldowns",
+          "method": "addCooldown",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;IZ)V",
+          "note": "entry from tickCount to tickCount + ticks (relative to the counter)",
+          "sha256": "ab568a466bc30bc03c64de3d94935d0bdf90070a1e7923280a0a59c5996eed0c"
+        },
+        {
+          "class": "com/becks/uniquedungeons/common/stackCooldowns/StackCooldowns",
+          "method": "addCooldown",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;ILnet/minecraft/world/entity/EquipmentSlot;Z)V",
+          "sha256": "c0593540d4e60cda11409f1af50c8b495105737b63850184f186e4f29dcf2318"
+        },
+        {
+          "class": "com/becks/uniquedungeons/common/stackCooldowns/StackCooldowns",
+          "method": "removeCooldown",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Z)V",
+          "sha256": "faca1088b9d0afdc3c496a4659aeaf12a52920648f9eff3dfef8d95451bee0cb"
+        },
+        {
+          "class": "com/becks/uniquedungeons/common/items/artifacts/RageBlade",
+          "method": "m_7579_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "hurtEnemy: the only addCooldown call outside the client sync (runs where the hit lands: the server; never for a remote player on a client)",
+          "sha256": "2f642ae4c4e05fa0d68907e66b49d037fb0de3dad28eeb0d5c79d18e185ebd78"
+        },
+        {
+          "class": "com/becks/uniquedungeons/common/items/artifacts/RageBlade",
+          "method": "m_6883_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;IZ)V",
+          "note": "inventoryTick: reads cooldowns only",
+          "sha256": "6160f987ced1a51abb322f99b204bf5efdad30bd6cbaaef51fb9cfdf1e139b76"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix (client only, acts on the map stale_player_map_purge_uniquedungeons hands over): an empty mixin on StackCooldownUtils adds the marker interface UniqueDungeonsMaps.RemoteInert, so it exists only when every premise member above matches; the client listeners (EntityLeaveLevelEvent, LevelEvent.Unload of a replaced level) then drop a departed remote player's empty cooldown record at once (never the local player's id, never while an integrated server shares the map); helpers bons.furious.patch.stale_player_maps.UniqueDungeonsMaps, StalePlayerKeys, StalePlayerKeysClient",
+      "license": "MIT (Unique Dungeons): no Unique Dungeons code is carried; the mixin adds an empty marker interface and changes no member"
+    },
+    "stale_player_map_purge_treechop": {
+      "mod": "treechop",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.stale_player_maps.TreeChopNoChopRecursionMixin"
+      ],
+      "guard": [
+        {
+          "class": "ht/treechop/compat/NoChopRecursion",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "lastChopTickByPlayers = new HashMap<>()",
+          "sha256": "0aff76b9e8c98e97117e0f6004edc3f27fdcf11fc86c132bf08ad11b43cb24d4"
+        },
+        {
+          "class": "ht/treechop/compat/NoChopRecursion",
+          "method": "*",
+          "desc": "",
+          "sha256": "22ec025418e7dbe904753db057f1ebeefe7837caedaad8c7c0800121c0071069"
+        },
+        {
+          "class": "ht/treechop/compat/NoChopRecursion$EventHandler",
+          "method": "onChop",
+          "desc": "(Lht/treechop/api/ChopEvent$StartChopEvent;)V",
+          "note": "getOrDefault(event.getPlayer(), NEVER) == time ? cancel : put(player, time): the map's only accessor",
+          "sha256": "730bf5c2a4d551af4adddb6a61483eba1f38bd430de81bbd7319b766f4389c0a"
+        },
+        {
+          "class": "ht/treechop/compat/NoChopRecursion$EventHandler",
+          "method": "*",
+          "desc": "",
+          "sha256": "e62c2ba478ed6206aca5246b0a11de6768563b2625d9b06ab6b300566b7b37d9"
+        },
+        {
+          "class": "ht/treechop/api/ChopEvent",
+          "method": "getPlayer",
+          "desc": "()Lnet/minecraft/world/entity/player/Player;",
+          "sha256": "4fa84a1d0b7e3f47d47adb51f74e8b19c80a1fb1574529f74877fa2671b4f704"
+        },
+        {
+          "class": "ht/treechop/api/ChopEvent$StartChopEvent",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lht/treechop/api/ChopData;)V",
+          "note": "a StartChopEvent always carries a ServerPlayer: the map is server-only",
+          "sha256": "608c0d2264ba98d8027b3dc778f00e5ada84a6f71f28030ca83fb0b4a85f6e4a"
+        },
+        {
+          "class": "ht/treechop/api/ChopEvent$StartChopEvent",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lht/treechop/api/ChopData;Ljava/lang/Object;)V",
+          "sha256": "da20d1e70207c35acc69381311d82a48c55fccf4100bf25da5cf0306115daa5f"
+        },
+        {
+          "class": "ht/treechop/common/ForgePlatform",
+          "method": "startChopEvent",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lht/treechop/api/ChopData;Ljava/lang/Object;)Z",
+          "note": "the only constructor call of StartChopEvent in the pack",
+          "sha256": "4590d3759ffeb8c27f66c136b790a67d2b7bb68dbd1bddc1d5943b5d08375bff"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "sha256": "000f7cb48e2b39bc86ee1a95b8cb3118171a2244b7283fbeacb468976cc6cadf"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "hashCode",
+          "desc": "()I",
+          "sha256": "4873322f2d7f913668bc9548ab9af71e9c84e085a28162a1b923e1f18cbd2ec8"
+        },
+        {
+          "class": "net/minecraft/server/players/PlayerList",
+          "method": "m_11286_",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "sha256": "76edce53b64c99e23a540d85829499fabd3c7f25d8eec1d66872a187a2b3f92b"
+        },
+        {
+          "class": "net/minecraft/server/players/PlayerList",
+          "method": "m_11236_",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;Z)Lnet/minecraft/server/level/ServerPlayer;",
+          "sha256": "a6697761f40183511931f6225f5b00a6cd22a2c15a9126e9f7168e6a2a8e036f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix: @Inject at RETURN of NoChopRecursion.<clinit> hands lastChopTickByPlayers to our shared layer (server: key swap on join, purge at logout); helpers bons.furious.patch.stale_player_maps.TreeChopMaps, StalePlayerKeys",
+      "license": "MIT (TreeChop): no TreeChop code is carried; the mixin hands over a map reference"
+    },
+    "stale_player_map_purge_celestisynth": {
+      "mod": "celestisynth",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.stale_player_maps.CelestisynthAnimatorMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/thecelestialworkshop/celestisynth/api/animation/player/CSAnimator",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "three new IdentityHashMap<>()",
+          "sha256": "93f0b93abab670bf8041b328c5a8bfa1173f3161b37854a997b6a0e8fbb74c20"
+        },
+        {
+          "class": "org/thecelestialworkshop/celestisynth/api/animation/player/CSAnimator",
+          "method": "registerPlayerAnimation",
+          "desc": "(Lnet/minecraft/client/player/AbstractClientPlayer;Ldev/kosmx/playerAnim/api/layered/AnimationStack;)V",
+          "note": "the only writer: three new ModifierLayers per player object",
+          "sha256": "3a9fa7fc14336e58d0c5a95f5cdec5d1f3a99626c52d2e1d6b30998aa4bebe9a"
+        },
+        {
+          "class": "org/thecelestialworkshop/celestisynth/api/animation/player/CSAnimator",
+          "method": "*",
+          "desc": "",
+          "sha256": "ecfd79920fb32fb495a2bf93158286cc29dcc625e53272ae6b0140de4a28b49c"
+        },
+        {
+          "class": "org/thecelestialworkshop/celestisynth/api/animation/player/AnimationManager",
+          "method": "playAnimation",
+          "desc": "(Ldev/kosmx/playerAnim/core/data/KeyframeAnimation;Ldev/kosmx/playerAnim/api/layered/ModifierLayer;)V",
+          "note": "containsValue(layer) on the three maps, layer from a live player (only caller: animatePlayer)",
+          "sha256": "d8a300e05cca170d875b8d3aeb4acfe765753f643038b1a5442669d19be2896b"
+        },
+        {
+          "class": "org/thecelestialworkshop/celestisynth/common/network/c2s/UpdateAnimationToAllPacket",
+          "method": "animatePlayer",
+          "desc": "(ILnet/minecraft/resources/ResourceLocation;Lnet/minecraft/client/player/AbstractClientPlayer;)V",
+          "note": "get(player) on the maps",
+          "sha256": "bacf6ecd07a0e6b29c97265b44708f9108334f9dccf859719b6fdc21459de9f3"
+        },
+        {
+          "class": "org/thecelestialworkshop/celestisynth/common/network/c2s/UpdateAnimationToAllPacket",
+          "method": "lambda$handle$0",
+          "desc": "()V",
+          "note": "the player comes from Minecraft.level.getEntity(id): only live objects",
+          "sha256": "5f5d851a56184a948cf7716361051e3f42e85764a49e3674d451984a18f74cbd"
+        },
+        {
+          "class": "org/thecelestialworkshop/celestisynth/common/network/c2s/UpdateAnimationToAllPacket",
+          "method": "*",
+          "desc": "",
+          "sha256": "75bef62febf761872a09bcc360322930d11e3195f00fff66c96c4991abeb5995"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix: @Inject at RETURN of CSAnimator.<clinit> hands the three identity maps to our shared layer (client: entry removed when its player leaves its level, when its level is replaced, at session end); helpers bons.furious.patch.stale_player_maps.CelestisynthMaps, StalePlayerKeys, StalePlayerKeysClient",
+      "license": "MIT (Celestisynth): no Celestisynth code is carried; the mixin hands over map references"
+    },
+    "stale_player_map_purge_brutality": {
+      "mod": "brutality",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.stale_player_maps.BrutalityAnimationHelperMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/goo/brutality/client/player_animation/AnimationHelper",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "two new HashMap<>()",
+          "sha256": "89e1cd7ae2f113de4b63761f90640c26e264bdbdfcd2ae4a74dad9c8057d72c5"
+        },
+        {
+          "class": "net/goo/brutality/client/player_animation/AnimationHelper",
+          "method": "playAnimation",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/resources/ResourceLocation;ZF)V",
+          "note": "computeIfAbsent(player, ...) on both maps: their only accessor",
+          "sha256": "7c5b2d435fc1c435f5dbfb5cfab74668d88d2f07b25497ea67f938865b6cc203"
+        },
+        {
+          "class": "net/goo/brutality/client/player_animation/AnimationHelper",
+          "method": "*",
+          "desc": "",
+          "sha256": "cdde7699a15c7979efa97b1a668bd2c1a5da69c9735988548e9e49185b52fba5"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "sha256": "000f7cb48e2b39bc86ee1a95b8cb3118171a2244b7283fbeacb468976cc6cadf"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "hashCode",
+          "desc": "()I",
+          "sha256": "4873322f2d7f913668bc9548ab9af71e9c84e085a28162a1b923e1f18cbd2ec8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix: @Inject at RETURN of AnimationHelper.<clinit> hands the two modifier maps to our shared layer (client: key swap on join, purge at session end); helpers bons.furious.patch.stale_player_maps.BrutalityMaps, StalePlayerKeys, StalePlayerKeysClient",
+      "license": "MIT (Brutality): no Brutality code is carried; the mixin hands over map references"
+    },
+    "stale_player_map_purge_moreartifacts": {
+      "mod": "moreartifacts",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.stale_player_maps.MoreArtifactsDamageEventsMixin",
+        "bons.furious.mixin.stale_player_maps.MoreArtifactsUtilsMixin",
+        "bons.furious.mixin.stale_player_maps.MoreArtifactsTeleportMixin",
+        "bons.furious.mixin.stale_player_maps.MoreArtifactsNecroplasmMixin",
+        "bons.furious.mixin.stale_player_maps.MoreArtifactsSpectreMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/gobies/moreartifacts/event/DamageEvents",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "6e22d031d6f1ee5028db0d611718f3e51f6fa426e4ecfc4f0bc14edab1e9797d"
+        },
+        {
+          "class": "net/gobies/moreartifacts/event/DamageEvents",
+          "method": "*",
+          "desc": "",
+          "sha256": "e7d476d69083050ab2b21b2725ee0e9532f944e04b8aff5babfa4347aa010759"
+        },
+        {
+          "class": "net/gobies/moreartifacts/event/DamageEvents",
+          "method": "getTotalDamageReduction",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)D",
+          "sha256": "d4924500da551f43d3b6ce1f7af6877e03bb37fc46be666b56cd0a2910559949"
+        },
+        {
+          "class": "net/gobies/moreartifacts/event/DamageEvents",
+          "method": "getFireDamageReduction",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)D",
+          "sha256": "a640a32b55b125851d477ecb049f815065bf9edb944ea0347c3e4324cb00436e"
+        },
+        {
+          "class": "net/gobies/moreartifacts/event/DamageEvents",
+          "method": "getTotalDamageIncrease",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)D",
+          "sha256": "9372122286808fced6ebe1150f1eb246e6af70156adba617338d5b1fbeb67f81"
+        },
+        {
+          "class": "net/gobies/moreartifacts/event/DamageEvents",
+          "method": "updateDamageReduction",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "sha256": "4263c2425aa5e9967466213f44b66b3c57ef13593ee4fc5a9bd13be501651035"
+        },
+        {
+          "class": "net/gobies/moreartifacts/event/DamageEvents",
+          "method": "updateDamageIncrease",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "sha256": "7426184c57afc51690af623b7aa3350d07d7701dd25620941987f4c825dea4f9"
+        },
+        {
+          "class": "net/gobies/moreartifacts/event/DamageEvents",
+          "method": "onLivingHurt",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V",
+          "note": "lastHealTimeMap get/put (server-only event)",
+          "sha256": "550fc302cc1b06d1b74c8e553c47ad19dd293f7f0f3857464883b7fbbc747bbe"
+        },
+        {
+          "class": "net/gobies/moreartifacts/event/DamageEvents",
+          "method": "onTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "equippedArtifactsMap getOrDefault/put (both sides)",
+          "sha256": "6bfe2158e4de1ad360f98374400cc2c0a5ac96637f90b7f3be4d31f8afb22ce5"
+        },
+        {
+          "class": "net/gobies/moreartifacts/util/MAUtils",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "6d212b7d00a5e85de8f0164e374751ca25aaa5048fc49f5b47ad0ccbc38c6662"
+        },
+        {
+          "class": "net/gobies/moreartifacts/util/MAUtils",
+          "method": "*",
+          "desc": "",
+          "sha256": "68a7e370b4fe47f7573b24ca4918cbe8728a364622025c557bb22180cdb55aba"
+        },
+        {
+          "class": "net/gobies/moreartifacts/util/MAUtils",
+          "method": "getCooldownTimer",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;D)D",
+          "sha256": "7beb688b24b96d3e42fadb56a38e58e9c8f61e0c628ca3d2c56bb8b517ab5f30"
+        },
+        {
+          "class": "net/gobies/moreartifacts/util/MAUtils",
+          "method": "updateCooldown",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "sha256": "13f123934f103f77fd2a70924127bb84d71251f860a1bd7cca82811a306460c2"
+        },
+        {
+          "class": "net/gobies/moreartifacts/util/MAUtils",
+          "method": "resetCooldownTimer",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "sha256": "84c7b54b56239489255fa12426e92731c66233a2ec7dfecc42c369ef34adf7a9"
+        },
+        {
+          "class": "net/gobies/moreartifacts/util/Teleport",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "c01846027f8d7b8f57d77556f6c4e8dcc12b593696a272251d24d13b9ea5e45e"
+        },
+        {
+          "class": "net/gobies/moreartifacts/util/Teleport",
+          "method": "*",
+          "desc": "",
+          "sha256": "1c37225a9a3203057862937965bbd3c515515c4306896cb195371d162e33d18c"
+        },
+        {
+          "class": "net/gobies/moreartifacts/util/Teleport",
+          "method": "hasTeleported",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Z",
+          "sha256": "10635ab5c934d73964474004b59bf14971210dbdcad45420da003ed6424a2615"
+        },
+        {
+          "class": "net/gobies/moreartifacts/util/Teleport",
+          "method": "updateTeleportStatus",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Z)V",
+          "sha256": "ab790e695ef6b4e79443c0ca9c00ace423e3677d7a0af52ae241395ad4cb0c83"
+        },
+        {
+          "class": "net/gobies/moreartifacts/item/artifacts/NecroplasmAmuletItem",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "97e04ed55bc4dcac7f0d78377d3f703a50ace55212c15d3ecd0366c2d36165e8"
+        },
+        {
+          "class": "net/gobies/moreartifacts/item/artifacts/NecroplasmAmuletItem",
+          "method": "*",
+          "desc": "",
+          "sha256": "b69983303e56a30f0da9ecd3571394760508efbd7face0d9f605f23f601e4203"
+        },
+        {
+          "class": "net/gobies/moreartifacts/item/artifacts/NecroplasmAmuletItem",
+          "method": "onLivingHurt",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V",
+          "sha256": "c8048364e1e3be199b95f3639a6723099ab2b6e5962892e1d47ebe4d565e3247"
+        },
+        {
+          "class": "net/gobies/moreartifacts/item/artifacts/SpectreAmuletItem",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "72846c5ca606f851f2e8f9844f65339f2fa827f9b165d4f77681ec0bd134a532"
+        },
+        {
+          "class": "net/gobies/moreartifacts/item/artifacts/SpectreAmuletItem",
+          "method": "*",
+          "desc": "",
+          "sha256": "b69983303e56a30f0da9ecd3571394760508efbd7face0d9f605f23f601e4203"
+        },
+        {
+          "class": "net/gobies/moreartifacts/item/artifacts/SpectreAmuletItem",
+          "method": "onLivingHurt",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V",
+          "sha256": "69bdba765f680b503dc3ee449d19b2d5e5a9dad7d79ff7e6dc7bbdaddea4ca57"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "sha256": "000f7cb48e2b39bc86ee1a95b8cb3118171a2244b7283fbeacb468976cc6cadf"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "hashCode",
+          "desc": "()I",
+          "sha256": "4873322f2d7f913668bc9548ab9af71e9c84e085a28162a1b923e1f18cbd2ec8"
+        },
+        {
+          "class": "net/minecraft/server/players/PlayerList",
+          "method": "m_11286_",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "sha256": "76edce53b64c99e23a540d85829499fabd3c7f25d8eec1d66872a187a2b3f92b"
+        },
+        {
+          "class": "net/minecraft/server/players/PlayerList",
+          "method": "m_11236_",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;Z)Lnet/minecraft/server/level/ServerPlayer;",
+          "sha256": "a6697761f40183511931f6225f5b00a6cd22a2c15a9126e9f7168e6a2a8e036f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix: @Inject at RETURN of the static initializers of DamageEvents, MAUtils, Teleport, NecroplasmAmuletItem and SpectreAmuletItem hands their nine player maps to our shared layer (server-only maps: key swap on join, purge at logout; both-side maps without a lock: changed only while one thread can touch them, else purged at client session end); helpers bons.furious.patch.stale_player_maps.MoreArtifactsMaps, StalePlayerKeys, StalePlayerKeysClient",
+      "license": "All Rights Reserved (More Artifacts): no More Artifacts code is carried; the mixins only hand over map references; the purge logic is ours"
+    }
+  }
+}

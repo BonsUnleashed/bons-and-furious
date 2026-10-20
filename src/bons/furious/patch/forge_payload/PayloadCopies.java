@@ -16,6 +16,9 @@ import io.netty.buffer.Unpooled;
  * reader index, reader index 0, writer index and capacity equal to that length, the same maximum capacity, big-endian
  * order; the data's own indices are not touched. Every handler reads the same bytes. The buffer is garbage collected
  * like any object once nothing references it (releasing it, as vanilla's handler does, still works).
+ * Since 1.0.46: from Forge 47.4.24 getInternalData makes its own heap copy and no longer calls getData, and every getData()
+ * caller left in the pack (vanilla's handler, Bad Packets, ModernFix) releases its copy; the switch also guards
+ * getInternalData now and stands down there with an INFO line (patches/forge_payload.json redundant_since).
  */
 public final class PayloadCopies {
     private PayloadCopies() {

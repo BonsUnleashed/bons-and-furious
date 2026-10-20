@@ -202,6 +202,13 @@
       "mod": "modernfix",
       "scripts": [],
       "since": "1.0.22",
+      "redundant_since": [
+        {
+          "mod": "modernfix",
+          "version": "5.27.89",
+          "note": "ModernFix PR #696 (merged 2026-10-02): ModernFixEarlyConfig no longer passes c2me to disableIfModPresent for mixin.perf.cache_strongholds"
+        }
+      ],
       "mixins": [
         "bons.furious.mixin.c2me_compat.StrongholdCacheOptionTrigger"
       ],

@@ -40,6 +40,9 @@ import org.apache.logging.log4j.Logger;
  * the list is not exactly java.util.ArrayList, a stage other than MOD_NAME / INGREDIENT_TYPE / CREATIVE_MENU /
  * ALPHABETICAL, a config whose order is not loaded, a null alphabetical key, or any exception while computing keys (the
  * original then fails the same way).
+ * Since 1.0.46: JEI 15.62.0.214 sorts through MezzConfig's SortingConfig, whose comparator reads each value's position from
+ * a prebuilt index map (no List.indexOf per comparison); there the switch stands down with an INFO line
+ * (patches/jei_search.json redundant_since).
  */
 public final class SortKeys {
     /** Runtime switch (the config switch acts when classes are transformed). -Dbons_and_furious.jeiSortIndexKeys=false also turns it off. */

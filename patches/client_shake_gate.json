@@ -1,0 +1,195 @@
+{
+  "group": "client_shake_gate",
+  "keys": {
+    "vanilla_entity_walk_skip": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.client_shake_gate.LevelWalkSkipMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_260826_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;Ljava/util/List;I)V",
+          "note": "getEntities(test, box, predicate, list, limit): profiler count, the walk (LevelEntityGetter.get, the one call wrapped), Forge's part-entity pass",
+          "sha256": "41892b3e844425b38a0ef6d0c27c1b4ee3a396f0cb4ae5df5c2ead80125bf572"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_260792_",
+          "desc": "(Ljava/util/function/Predicate;Ljava/util/List;ILnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/util/AbortableIterationConsumer$Continuation;",
+          "note": "the walk's consumer: predicate, then add (what the left-out walk would run for each visited entity)",
+          "sha256": "b7d59f712600bb5161f1c88ba25cd6c857cf3d9a802e93d259c62ba62165503d"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_261153_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;Ljava/util/List;)V",
+          "sha256": "e60c8865d6b8ae62a2b00c693d0528a226abf6b7a5d6b5ab57b36d167b28a752"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_142425_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+          "sha256": "f19100e812512ca77f0e46444b8eae9a444752b14c71779440b88a3270c8c94e"
+        },
+        {
+          "class": "net/minecraft/world/level/EntityGetter",
+          "method": "m_6443_",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+          "sha256": "c289117fdc7e8c886602e8666557d13e9808405ba0d8ca8a26a7207fb917ec79"
+        },
+        {
+          "class": "net/minecraft/world/level/EntityGetter",
+          "method": "m_45976_",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;",
+          "sha256": "02b741b674cda0ec6d8bfa9662b11dd0e9065674d64257adc716432fd5c3b338"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntityTypeTest",
+          "method": "m_156916_",
+          "desc": "(Ljava/lang/Class;)Lnet/minecraft/world/level/entity/EntityTypeTest;",
+          "sha256": "1e85d320d7889978de926d2d607b7a26d3a099937e8cd1ced170df26651f9e15"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntityTypeTest$1",
+          "method": "m_142225_",
+          "desc": "()Ljava/lang/Class;",
+          "note": "forClass's getBaseClass: the searched class, which the mark is compared with",
+          "sha256": "785db44c8d8ab62b8dce2f5dbfc5100d2d5c2a70ca6df50f050df308b715ce4d"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel",
+          "method": "m_142646_",
+          "desc": "()Lnet/minecraft/world/level/entity/LevelEntityGetter;",
+          "sha256": "659f1cf9475445d9c119cc105d2bceed263c2a2c30cdf55b75cfdffa66503a60"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel",
+          "method": "getPartEntities",
+          "desc": "()Ljava/util/Collection;",
+          "sha256": "978342bb04aa8aef0dd28e532d680b9cd48ef5dfd6f7e3a3815673aba0da8348"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the LevelEntityGetter.get (m_142137_) call inside Level.getEntities (m_260826_): the walk is left out only for the one search a camera-shake presence gate marked on this thread, in this level, for this base class, while vanilla_entity_class_count_layer still says no entity section holds a match; every other call walks as before (helper bons.furious.patch.client_shake_gate.ShakeGate, runtime flag entityWalkSkip)",
+      "license": "Minecraft (Mojang) and Forge: no code of either is carried; the handler calls the original walk"
+    },
+    "cataclysm_shake_scan_presence_gate": {
+      "mod": "cataclysm",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.client_shake_gate.CataclysmShakeGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/client/event/ClientEvent",
+          "method": "onCameraSetup",
+          "desc": "(Lnet/minecraftforge/client/event/ViewportEvent$ComputeCameraAngles;)V",
+          "note": "getEntitiesOfClass(ScreenShake_Entity, player box +-20), then the shake sum over the list",
+          "sha256": "c402ea20a097cf5d131ee06c3feed806cf8d2cfdf7c930ee137a538680db53c6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass (m_45976_) call in ClientEvent.onCameraSetup: while vanilla_entity_class_count_layer says the client level holds no ScreenShake_Entity, the call is marked so that vanilla_entity_walk_skip leaves out its empty section walk; the call itself runs (helper bons.furious.patch.client_shake_gate.ShakeGate)",
+      "license": "Cataclysm (licence unresolved in its mods.toml): no code carried, the wrapper carries only our own logic"
+    },
+    "alexscaves_shake_scan_presence_gate": {
+      "mod": "alexscaves",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.client_shake_gate.AlexsCavesShakeGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexmodguy/alexscaves/client/event/ClientEvents",
+          "method": "computeCameraAngles",
+          "desc": "(Lnet/minecraftforge/client/event/ViewportEvent$ComputeCameraAngles;)V",
+          "note": "getEntitiesOfClass(Mob, camera box +-64, mob -> mob instanceof ShakesScreen), shake amount, three level.random draws only when something shakes",
+          "sha256": "4386974eeb63617a9de267efa8ea045eebb7946fb7013bc43a589aaa99ea6e39"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/client/event/ClientEvents",
+          "method": "lambda$computeCameraAngles$4",
+          "desc": "(Lnet/minecraft/world/entity/Mob;)Z",
+          "note": "the predicate: instanceof ShakesScreen",
+          "sha256": "756729bfb9a7ce40302fbad449300bb608da26641ffa89b4563f8987c7185fa1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the ClientLevel.getEntitiesOfClass (m_6443_) call in ClientEvents.computeCameraAngles: while vanilla_entity_class_count_layer says no entity of the client level implements ShakesScreen, the call is marked so that vanilla_entity_walk_skip leaves out its section walk (which only tests the predicate on other mobs); the call itself runs (helper bons.furious.patch.client_shake_gate.ShakeGate)",
+      "license": "Alex's Caves (LGPL): no code carried, the wrapper carries only our own logic"
+    },
+    "legendary_monsters_shake_scan_presence_gate": {
+      "mod": "legendary_monsters",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.client_shake_gate.LegendaryMonstersShakeGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/miauczel/legendary_monsters/client/event/ClientEvent",
+          "method": "onCameraSetup",
+          "desc": "(Lnet/minecraftforge/client/event/ViewportEvent$ComputeCameraAngles;)V",
+          "note": "getEntitiesOfClass(CameraShakeEntity, player box +-20); also wrapped by legendary_monsters_camera_null_guard (@WrapMethod)",
+          "sha256": "95a3757d1f17ed480767bed2a362ae3dfb6476461ac8eb1e792ae90ce86d199b"
+        },
+        {
+          "class": "net/miauczel/legendary_monsters/client/event/ClientEvent",
+          "method": "setDynamicZoom",
+          "desc": "(Lnet/minecraftforge/client/event/ViewportEvent$ComputeCameraAngles;)V",
+          "note": "third person: getEntitiesOfClass(DynamicCameraZoomEntity, camera box +-20)",
+          "sha256": "38948d96139e409004888dd764e83ca845f7816e3059272a39c4ec81fdc241a4"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass (m_45976_) calls in ClientEvent.onCameraSetup and setDynamicZoom: while vanilla_entity_class_count_layer says the client level holds none of the searched class, the call is marked so that vanilla_entity_walk_skip leaves out its empty section walk; the calls themselves run (helper bons.furious.patch.client_shake_gate.ShakeGate)",
+      "license": "Legendary Monsters: All Rights Reserved: no code carried, the wrappers carry only our own logic"
+    },
+    "mowziesmobs_shake_scan_presence_gate": {
+      "mod": "mowziesmobs",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.client_shake_gate.MowziesShakeGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/ClientEventHandler",
+          "method": "onSetupCamera",
+          "desc": "(Lnet/minecraftforge/client/event/ViewportEvent$ComputeCameraAngles;)V",
+          "note": "getEntitiesOfClass(EntityCameraShake, player box +-20), then the shake sum over the list",
+          "sha256": "bc48bfbea467259f71bf2b68bf3bfe876846dc2e1acad3cce8811d4c75c27e34"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass (m_45976_) call in ClientEventHandler.onSetupCamera: while vanilla_entity_class_count_layer says the client level holds no EntityCameraShake, the call is marked so that vanilla_entity_walk_skip leaves out its empty section walk; the call itself runs (helper bons.furious.patch.client_shake_gate.ShakeGate)",
+      "license": "Mowzie's Mobs (custom licence): no code carried, the wrapper carries only our own logic"
+    },
+    "crypticfoes_shake_scan_presence_gate": {
+      "mod": "crypticfoes",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.client_shake_gate.CrypticFoesShakeGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/min01/crypticfoes/event/ClientEventHandlerForge",
+          "method": "onComputeCameraAngles",
+          "desc": "(Lnet/minecraftforge/client/event/ViewportEvent$ComputeCameraAngles;)V",
+          "note": "getEntitiesOfClass(EntityCameraShake, player box +-100), then the shake sum over the list",
+          "sha256": "b34d6a8cc6e228d8e02423ce36dd4ea8601008d36f58e63972074c9bfb68138b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass (m_45976_) call in ClientEventHandlerForge.onComputeCameraAngles: while vanilla_entity_class_count_layer says the client level holds no EntityCameraShake, the call is marked so that vanilla_entity_walk_skip leaves out its empty section walk; the call itself runs (helper bons.furious.patch.client_shake_gate.ShakeGate)",
+      "license": "Cryptic Foes: All Rights Reserved: no code carried, the wrapper carries only our own logic"
+    }
+  }
+}

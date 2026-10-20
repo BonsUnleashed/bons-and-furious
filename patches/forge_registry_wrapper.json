@@ -1,0 +1,46 @@
+{
+  "group": "forge_registry_wrapper",
+  "keys": {
+    "forge_registry_wrapper_growth": {
+      "mod": "forge",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.forge_registry_wrapper.WrapperGrowthMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraftforge/registries/NamespacedWrapper",
+          "method": "onAdded",
+          "desc": "(Lnet/minecraftforge/registries/RegistryManager;ILnet/minecraft/resources/ResourceKey;Ljava/lang/Object;Ljava/lang/Object;)Lnet/minecraft/core/Holder$Reference;",
+          "note": "the one ObjectList.size(I) call, on this.holdersById, followed by set(id, holder)",
+          "sha256": "dd29f891fb2434d18210dc9c0579d8dd9dbfc054f7cd4e01717f9122d290c6e2"
+        },
+        {
+          "class": "net/minecraftforge/registries/NamespacedWrapper",
+          "method": "<init>",
+          "desc": "(Lnet/minecraftforge/registries/ForgeRegistry;Ljava/util/function/Function;Lnet/minecraftforge/registries/RegistryManager;)V",
+          "note": "holdersById = new ObjectArrayList(256), not wrapping a caller's array",
+          "sha256": "065c57978926e7c41b491e1e8764944954be6c16e0b2b8419497b7d49ce7a85f"
+        },
+        {
+          "class": "net/minecraftforge/registries/NamespacedWrapper",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: none added that could read or replace holdersById",
+          "sha256": "fcd08135202ca96676aec8910be4bb764c952acdcc468965da4f1c070355294c"
+        },
+        {
+          "class": "net/minecraftforge/registries/NamespacedDefaultedWrapper",
+          "method": "onAdded",
+          "desc": "(Lnet/minecraftforge/registries/RegistryManager;ILnet/minecraft/resources/ResourceKey;Ljava/lang/Object;Ljava/lang/Object;)Lnet/minecraft/core/Holder$Reference;",
+          "note": "calls super.onAdded",
+          "sha256": "7ac4daeaa92d180d545eb3e08a880fe875461573741d26573d77d432f88687e4"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injector (@ModifyArg on the ObjectList.size(I) call in NamespacedWrapper.onAdded: the argument is handed on unchanged after WrapperGrowth.ahead raised the list's capacity; @Shadow of holdersById)",
+      "license": "Forge (LGPL-2.1) and fastutil (Apache-2.0): no Forge or fastutil code is carried; helper bons.furious.patch.forge_registry_wrapper.WrapperGrowth"
+    }
+  }
+}

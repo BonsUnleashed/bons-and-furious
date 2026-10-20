@@ -1,0 +1,24 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.stale_player_maps",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "bons.pure.config.PureMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "MoreArtifactsDamageEventsMixin",
+    "MoreArtifactsNecroplasmMixin",
+    "MoreArtifactsSpectreMixin",
+    "MoreArtifactsTeleportMixin",
+    "MoreArtifactsUtilsMixin",
+    "TreeChopNoChopRecursionMixin",
+    "UniqueDungeonsCooldownMapMixin"
+  ],
+  "client": [
+    "BrutalityAnimationHelperMixin",
+    "CelestisynthAnimatorMixin",
+    "UniqueDungeonsRemoteCooldownsMixin"
+  ]
+}

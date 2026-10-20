@@ -1,0 +1,72 @@
+{
+  "group": "l2hostility",
+  "keys": {
+    "l2hostility_curio_check_lean": {
+      "mod": "l2hostility",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.l2hostility.CurioCompatLeanMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/xkmc/l2hostility/compat/curios/CurioCompat",
+          "method": "hasItemImpl",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/Item;)Z",
+          "sha256": "65e86567ba245dc9a293090c9964d256c77d4153646ef4c15c66d2e2c529e83e"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$CurioInventoryWrapper",
+          "method": "findFirstCurio",
+          "desc": "(Lnet/minecraft/world/item/Item;)Ljava/util/Optional;",
+          "sha256": "dbfe1232fa172e48079cb5fdfca6eba037f8083bdbbd8149347c1ad547a932ca"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$CurioInventoryWrapper",
+          "method": "findFirstCurio",
+          "desc": "(Ljava/util/function/Predicate;)Ljava/util/Optional;",
+          "sha256": "e8eb633325430b29377487fe2c6f061f5b6061230bb50b661279bbe351de1ccd"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$CurioInventoryWrapper",
+          "method": "getCurios",
+          "desc": "()Ljava/util/Map;",
+          "sha256": "483f6d6b65b8e83cafa20645ffd3668ad80b990f35d8aec1e74d243c016002b0"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/inventory/CurioStacksHandler",
+          "method": "getStacks",
+          "desc": "()Ltop/theillusivec4/curios/api/type/inventory/IDynamicStackHandler;",
+          "sha256": "6675e74182e8b58193b191461d657ffc8cffe58a6ce8fd39570de6bd30155c22"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/inventory/CurioStacksHandler",
+          "method": "update",
+          "desc": "()V",
+          "sha256": "2f365d2637d4c1ed755d7e1cb85f45f41073d3eb27d698d2d6710ebf26304387"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/inventory/CurioStacksHandler",
+          "method": "getRenders",
+          "desc": "()Lnet/minecraft/core/NonNullList;",
+          "sha256": "66c782ed672edf7b9c7d16fcf65e3b823f50a86a5b1ff75ce94ad55244a9a582"
+        },
+        {
+          "class": "net/minecraft/tags/ItemTags",
+          "method": "create",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/tags/TagKey;",
+          "sha256": "786939ebec5843dd92aad6a873acada43067cb765a8eaaa5df30ff5f8a878dee"
+        },
+        {
+          "class": "net/minecraft/tags/TagKey",
+          "method": "m_203882_",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/tags/TagKey;",
+          "sha256": "9f2ed852b1a7ff8bf40c67b07db96933ed61ecc88f5a26367e571aa0d60ec0ef"
+        }
+      ],
+      "cancel": [],
+      "conversion": "three @Redirects in L2 Hostility's CurioCompat.hasItemImpl: the dropped ICuriosItemHandler.findFirstCurio(Item) call is skipped only when the handler is Curios' own CurioInventoryWrapper and every slot type is Curios' own CurioStacksHandler (no pending update) with Curios' own DynamicStackHandler (then that call only reads); new ResourceLocation(\"curios\", id) answers the location of curios_tag_predicate_keys' kept key (CuriosTagKeys.slotTag through a method handle; original expression for ids without a vanilla path) and ItemTags.create of exactly that location answers the kept canonical key; helper bons.furious.patch.l2hostility.CurioCheckLean",
+      "license": "L2 Hostility: mods.toml says All rights reserved (its repository says LGPL-2.1), treated as ARR: our own logic only, no L2 Hostility code carried; Curios API (LGPL-3.0): not modified, read through reflection; Minecraft (Mojang): no-copy"
+    }
+  }
+}

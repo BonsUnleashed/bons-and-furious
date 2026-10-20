@@ -12,9 +12,15 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.jar.Manifest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.spongepowered.asm.mixin.MixinEnvironment;
+import org.spongepowered.asm.mixin.Mixins;
+import org.spongepowered.asm.mixin.extensibility.IMixinConfig;
+import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
+import org.spongepowered.asm.mixin.transformer.Config;
 
 /**
  * Patches another mod makes to the same code, the same way, as one of our switches (the "yield" lines of the guard
@@ -29,11 +35,38 @@ import org.apache.logging.log4j.Logger;
  * own mixin config lists the mixin for this side, none of the mods it steps aside for is installed, and its master switch
  * and the patch's option are on in its config file (or the file does not say, and the default is on). The option is read
  * once at start, like our own switches.
+ *
+ * Since 1.0.45 the patch must also really be applied: the other mod's own mixin config plugin is asked, through Mixin's
+ * public API, whether it applies that mixin (IMixinConfigPlugin.shouldApplyMixin(target, mixin), the call Mixin itself
+ * makes while it prepares that config). Collections Of Optimizations 4.7 and later leave out their own copies of patches
+ * that Bons and Furious also makes; with the earlier rule our switch stepped aside for a copy that never ran, so neither
+ * mod ran the patch (KNOWLEDGE 2026-10-19). Asking the plugin follows whatever the other mod decides, in any version:
+ *
+ *  - the plugin applies the mixin to at least one of its targets, or the config has no plugin (Mixin then applies every
+ *    mixin it lists): the patch is active, as before;
+ *  - the plugin leaves the mixin out of every target, the same answer twice in a row: the patch is not active, our switch
+ *    applies (one INFO line) and the cancel line still leaves the other mod's mixin out should it reach a class anyway;
+ *  - the plugin cannot be asked (its config is not registered with Mixin or not selected yet, the mixin's targets cannot
+ *    be read, the plugin throws) or answers differently when asked again: the rule above decides alone, as before (one
+ *    WARN line).
+ *
+ * Mixin removes a config from Mixins.getConfigs() when it selects it, before the plugin's onLoad, so a config selected
+ * already is found through the names Mixin registered for the environment (MixinEnvironment.getMixinConfigs()) and
+ * Config.create(name, environment), which returns Mixin's own handle of a registered config. Every config is selected,
+ * and its plugin loaded, before Mixin prepares any config's mixins, which is where our switches decide.
  */
 final class ForeignPatches {
     private static final Logger LOGGER = LogManager.getLogger("Bons and Furious");
     private static final Map<String, List<String>> LISTED = new HashMap<>();          // mod id -> mixins listed for this side
+    private static final Map<String, Map<String, String>> LISTED_IN = new HashMap<>(); // mod id -> mixin -> the config listing it
     private static final Map<String, Map<String, String>> OPTIONS = new HashMap<>();  // config file -> dotted key -> value
+    private static final Map<String, Asked> ASKED = new HashMap<>();                  // other mod's mixin -> its plugin's answer
+    private static final Set<String> LOGGED = new java.util.HashSet<>();
+
+    /** What the other mod's mixin plugin answered for its mixin (since 1.0.45). */
+    enum Verdict { APPLIES, LEFT_OUT, UNKNOWN }
+
+    record Asked(Verdict verdict, String detail) {}
 
     /** One patch of another mod that does what our switch {@code key} does. */
     record Yield(String key, String mod, String name, String mixin, String config, String master, String option,
@@ -78,11 +111,99 @@ final class ForeignPatches {
                 if (!on(opts.get(y.option()), y.byDefault())) return null;
                 setting = ", option " + y.option() + " on";
             }
+            // since 1.0.45: and the other mod's own mixin plugin really applies it (asked once per mixin; see the class comment)
+            Asked a = asked(y);
+            if (a.verdict() == Verdict.LEFT_OUT) {
+                if (LOGGED.add("left|" + y.key() + "|" + y.mixin()))
+                    LOGGER.info("Bons and Furious: {} applies: {} {}'s own copy ({}) is left out by its mixin plugin ({}), so only this switch's copy runs",
+                            y.key(), y.name(), version, y.shortMixin(), a.detail());
+                return null;
+            }
             return y.name() + " " + version + " makes the same change (" + y.shortMixin() + setting + ")";
         } catch (Throwable t) {
             LOGGER.warn("Bons and Furious: could not check {}'s {} for {} ({}); {} applies as usual", y.name(), y.shortMixin(), y.key(), t.toString(), y.key());
             return null;
         }
+    }
+
+    /**
+     * Since 1.0.45: the reason the other mod's plugin gave for leaving this mixin out, when that was its answer; null
+     * otherwise (not asked, applied, or not askable). Guards.shouldCancel uses it to tell a mixin that reached a class
+     * although its plugin had left it out (the plugin answered Mixin differently than it answered us).
+     */
+    static synchronized String leftOutByPlugin(Yield y) {
+        Asked a = ASKED.get(y.mixin());
+        return a != null && a.verdict() == Verdict.LEFT_OUT ? a.detail() : null;
+    }
+
+    /** The other mod's plugin's answer for the yield's mixin, asked once per mixin; one WARN line when it cannot be asked. */
+    private static Asked asked(Yield y) {
+        Asked known = ASKED.get(y.mixin());
+        if (known != null) return known;
+        Asked a;
+        try {
+            a = ask(y);
+        } catch (Throwable t) {
+            a = new Asked(Verdict.UNKNOWN, "its mixin plugin threw " + t);
+        }
+        ASKED.put(y.mixin(), a);
+        if (a.verdict() == Verdict.UNKNOWN)
+            LOGGER.warn("Bons and Furious: could not ask {}'s mixin plugin about {} for {} ({}); {} follows {}'s config alone, as before",
+                    y.name(), y.shortMixin(), y.key(), a.detail(), y.key(), y.name());
+        else
+            LOGGER.debug("Bons and Furious: {}'s mixin plugin for {} (asked for {}): {} - {}", y.name(), y.shortMixin(), y.key(), a.verdict(), a.detail());
+        return a;
+    }
+
+    /**
+     * Asks the plugin of the mixin config that lists the yield's mixin, for each target the mixin declares, the way Mixin
+     * asks it (MixinInfo: plugin.shouldApplyMixin(declared target, mixin class)), each question twice.
+     */
+    private static Asked ask(Yield y) {
+        Map<String, String> where = LISTED_IN.get(y.mod());
+        String name = where == null ? null : where.get(y.mixin());
+        if (name == null) return new Asked(Verdict.UNKNOWN, "no mixin config of " + y.mod() + " lists it");
+        IMixinConfig config = registeredConfig(name);
+        if (config == null) return new Asked(Verdict.UNKNOWN, "its mixin config " + name + " is not registered with Mixin");
+        IMixinConfigPlugin plugin;
+        try {
+            plugin = config.getPlugin();
+        } catch (NullPointerException e) {   // Mixin has not selected the config yet: no plugin handle exists
+            return new Asked(Verdict.UNKNOWN, "its mixin config " + name + " is not selected yet");
+        }
+        if (plugin == null) return new Asked(Verdict.APPLIES, "its mixin config " + name + " has no plugin, so Mixin applies every mixin it lists");
+        List<String> targets = Guards.declaredTargets(y.mixin());
+        if (targets == null || targets.isEmpty()) return new Asked(Verdict.UNKNOWN, "the targets of " + y.shortMixin() + " could not be read");
+        List<String> applied = new ArrayList<>();
+        for (String target : targets) {
+            boolean first = plugin.shouldApplyMixin(target, y.mixin());
+            boolean second = plugin.shouldApplyMixin(target, y.mixin());
+            if (first != second)
+                return new Asked(Verdict.UNKNOWN, "its mixin plugin answered " + first + ", then " + second + " for " + target);
+            if (first) applied.add(target);
+        }
+        String plugins = plugin.getClass().getName();
+        if (!applied.isEmpty())
+            return new Asked(Verdict.APPLIES, plugins.substring(plugins.lastIndexOf('.') + 1) + " applies it to " + String.join(", ", applied));
+        return new Asked(Verdict.LEFT_OUT, plugins.substring(plugins.lastIndexOf('.') + 1) + " leaves it out of "
+                + (targets.size() == 1 ? targets.get(0) : "all " + targets.size() + " targets"));
+    }
+
+    /**
+     * Mixin's own handle of the registered config with this name, or null when Mixin never registered it. A config still
+     * waiting to be selected is in Mixins.getConfigs(); a selected one was removed from there, and Config.create(name,
+     * environment) returns the handle Mixin keeps for every registered name (it creates nothing for a registered name,
+     * which is why the name is first looked up in the environments' registered lists).
+     */
+    static IMixinConfig registeredConfig(String name) {
+        for (Config c : Mixins.getConfigs()) if (name.equals(c.getName())) return c.getConfig();
+        MixinEnvironment[] envs = {MixinEnvironment.getDefaultEnvironment(), MixinEnvironment.getCurrentEnvironment()};
+        for (MixinEnvironment env : envs) {
+            if (env == null || !env.getMixinConfigs().contains(name)) continue;
+            Config c = Config.create(name, env);
+            return c == null ? null : c.getConfig();
+        }
+        return null;
     }
 
     /** True when the other mod lists the mixin for this side (cancelling one it never loads is pointless and not logged). */
@@ -287,11 +408,15 @@ final class ForeignPatches {
         }
     }
 
-    /** Every mixin the mod's mixin configs (manifest MixinConfigs, as Forge 47 reads them) list for this side. */
+    /**
+     * Every mixin the mod's mixin configs (manifest MixinConfigs, as Forge 47 reads them) list for this side. Since 1.0.45
+     * also records which config lists each one (LISTED_IN), whose plugin is asked; the list itself is unchanged.
+     */
     private static List<String> listed(String modId) throws Exception {
         List<String> known = LISTED.get(modId);
         if (known != null) return known;
         List<String> out = new ArrayList<>();
+        Map<String, String> where = new HashMap<>();
         var file = net.minecraftforge.fml.loading.LoadingModList.get().getModFileById(modId).getFile();
         Path mf = file.findResource("META-INF", "MANIFEST.MF");
         if (Files.isRegularFile(mf)) {
@@ -310,9 +435,13 @@ final class ForeignPatches {
                 if (pkg == null) continue;
                 String prefix = pkg.isEmpty() ? "" : pkg + ".";
                 for (String list : new String[] {"mixins", client ? "client" : "server"})
-                    for (String e : strings(cfg, list)) out.add(prefix + e);
+                    for (String e : strings(cfg, list)) {
+                        out.add(prefix + e);
+                        where.putIfAbsent(prefix + e, name.trim());
+                    }
             }
         }
+        LISTED_IN.put(modId, where);
         LISTED.put(modId, out);
         return out;
     }
@@ -350,11 +479,14 @@ final class ForeignPatches {
         return s.length() >= 2 && s.startsWith("\"") && s.endsWith("\"") ? s.substring(1, s.length() - 1) : s;
     }
 
+    /** FML's config directory, else ./config (1.0.46: also when Forge 47.4.28 returns null offline, see PureConfig). */
     private static Path configDirectory() {
         try {
-            return net.minecraftforge.fml.loading.FMLPaths.CONFIGDIR.get();
+            Path dir = net.minecraftforge.fml.loading.FMLPaths.CONFIGDIR.get();
+            if (dir != null) return dir;
         } catch (Throwable t) {
-            return Path.of("config").toAbsolutePath();
+            // offline: no FML
         }
+        return Path.of("config").toAbsolutePath();
     }
 }

@@ -202,6 +202,13 @@
         }
       ],
       "cancel": [],
+      "redundant_since": [
+        {
+          "mod": "jei",
+          "version": "15.62.0.214",
+          "note": "JEI 15.62 sorts through MezzConfig's SortingConfig, whose comparator reads each value's position from a prebuilt index map instead of List.indexOf"
+        }
+      ],
       "conversion": "injectors (MixinExtras @WrapOperation in IngredientSorter.sortIngredients on IngredientSorterComparators.getComparator(List) (noted, result unchanged) and on List.sort; read-only @Accessors of the sorting configs, their loaded order and mapping)",
       "license": "MIT (JEI); no JEI code is carried: the keys are computed with JEI's own mapping functions and the order from the comparators' documented behaviour (helper bons.furious.patch.jei_search.SortKeys)"
     }
