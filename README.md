@@ -18,8 +18,10 @@ Those results were measured with **Bons and Furious 1.0.31 on Minecraft 1.20.1**
 
 - **Less waiting for terrain.** Reuse terrain calculations and ground-height estimates instead of repeating them for neighbouring chunks. In the flight test, an average of 504 of 529 nearby chunks were loaded with Bons, compared with 354 without it.
 - **Smoother crowded scenes.** Reduce repeated animation, model and rendering work across Minecraft, Embeddium, Oculus, Entity Model Features, Entity Texture Features and other supported mods. The matched 64-mob scene gained 17% average FPS and 34% in 1% lows.
-- **Less work during loading and saves.** Speed up recipe processing, model rebuilds and chunk serialization, and move supported saved-data and player-file writes off the server thread.
-- **Fewer first-spawn spikes and specific mod freezes.** Prepare mob classes before their first spawn, and repair reproduced threading and world-generation bugs. The first-night improvement was measured separately with 1.0.35; details are below.
+- **Less work during loading and saves.** Speed up recipe processing, resource loading, model rebuilds and chunk serialization, and move supported saved-data and player-file writes off the server thread.
+- **Fewer first-spawn spikes and specific mod freezes.** Prepare mob classes before their first spawn, and repair reproduced threading and world-generation bugs. Also stop unloaded ship chunks from continuing to tick and prevent a TerraBlender crash caused by saved rules that reference missing terrain noise. The first-night improvement was measured separately with 1.0.35; details are below.
+
+- **Less memory held after leaving a world.** Release old worlds and players retained by specific paths in Distant Horizons, JEI, Flywheel, Smart Particles and other supported mods. These fix reproduced leaks; they do not remove every source of memory growth.
 
 ## Measured on an already optimized pack
 
@@ -71,8 +73,14 @@ These Forge 1.20.1 examples explain where the savings come from. **They measure 
 | **AmbientSounds** | Bounded terrain scan | **88% lower p95** (5.45 → 0.65 ms per analysis) |
 | **Frame pacing** (client) | The FPS-limiter wait moves before the display update | **84% less frame-interval variation** at p95 (7.63 → 1.25 ms) at the same 120 FPS cap |
 | **ImmediatelyFast** | Horse-layer ordering without substrings | **46% less time** (28.9 → 15.5 ns), 64 → 0 bytes |
+| **Resource and data packs** | Folder listings use an index instead of repeatedly walking the ZIP | **305 → 11.9 ms** for 3,472 listings in the 1.0.46 tests. |
+| **Minecraft + TerraBlender** biome searches | Reuse distances already calculated during the same climate search | **13% less time per search** in the recorded pack workload with 1.0.46. |
+| **Quark + Zeta** stone clusters | Test the cluster shape before reading blocks outside it | **26.9% less time** per chunk touched by a cluster in the 1.0.46 tests. |
+| **Distant Horizons, JEI, Flywheel and Smart Particles** | Release old world references held by the repaired caches and menus | **No old worlds retained by the repaired holders** in the 1.0.46 checks after six dimension changes and three reconnects. Other holders remain. |
+| **Valkyrien Skies** chunk cleanup | Unload client ship block entities and world chunks when they are no longer needed | Fixes the reproduced buildup of **845 tickers for a 169-block-entity ship** after four revisits, plus world chunks continuing to tick after the server unloaded them (1.0.46). |
+| **TerraBlender** saved surface rules | Skip an obsolete saved rule that needs a terrain noise removed by a mod change; keep current rules | In the 1.0.47 missing-noise test, **16 of 16 chunks failed without the fix; all 16 generated with it**. A crash fix, not a speed measurement. |
 
-The mob warm-up uses about 7 MB more class memory and adds roughly half a second to a singleplayer join. Other newer controls reduce chunk-save allocation, inventory advancement checks and repeated work in mods such as Cataclysm and Mekanism. Their individual measurements are in the wiki; they have not yet had a new whole-pack benchmark.
+The mob warm-up uses about 7 MB more class memory and adds roughly half a second to a singleplayer join. Other controls reduce chunk-save allocation, inventory advancement checks, idle mob and camera-shake scans, and repeated work in mods such as Cataclysm and Mekanism. The 1.0.46 and 1.0.47 examples above are separate checks, not a new whole-pack benchmark. Distant Horizons and Valkyrien Skies still have other paths that retain old worlds. [Details and remaining limits](https://github.com/BonsUnleashed/bons-and-furious/wiki/Version-history).
 
 [Measurements and caveats](https://github.com/BonsUnleashed/bons-and-furious/wiki/Measurements-and-caveats) · [Every control and its evidence](https://github.com/BonsUnleashed/bons-and-furious/wiki/All-controls)
 
@@ -115,6 +123,8 @@ JVM overrides, log messages and troubleshooting: [Installation and configuration
 
 Keep your optimization stack: Embeddium, ImmediatelyFast, ModernFix, FerriteCore, Radium and C2ME. Bons and Furious changes paths that still did unnecessary work in the tested pack, including a few inside Embeddium, ImmediatelyFast and Oculus themselves. With C2ME installed it also gives Radium and ModernFix three optimizations back that they switch off for every C2ME build, as long as the C2ME module that would clash with each one is off in `c2me.toml`.
 
+On newer Forge, JEI and ModernFix builds that already include eight of these changes, the corresponding Bons controls step aside automatically. With Collections Of Optimizations, shared controls also check which implementation is active so the same optimization is not applied twice or left disabled in both mods. [Compatibility details](https://github.com/BonsUnleashed/bons-and-furious/wiki/Known-conflicts-and-workarounds).
+
 ## Build from source
 
 Requires Python 3.11+, JDK 17 or newer, a Forge 1.20.1 SRG development classpath,
@@ -145,11 +155,11 @@ switch's mixins and guarded methods are listed in `patches/<mod>.json`.
 
 Licensed GPL-3.0-only ([LICENSE](LICENSE)). Upstream attribution is in [NOTICE.md](NOTICE.md); the tested dependency builds are listed in [upstream-credits.json](upstream-credits.json).
 
-The 1.0.47 release JAR was tested in client and dedicated-server copies of the reference pack before release. The whole-pack benchmark above was measured with 1.0.26; its snapshot had 510 client and 471 server mod JARs.
+The 1.0.47 release JAR was tested in client and dedicated-server copies of the reference pack before release. The whole-pack benchmark above was measured with 1.0.31 on 5 October 2026.
 
 ### Upstream pull requests
 
-Pull requests sent to the projects this mod patches: 10 merged, 87 open, 15 closed without merge (status checked 11 October 2026).
+Pull requests sent to the projects this mod patches: 13 merged, 83 open, 18 closed without merge (status checked 23 October 2026).
 
 | Project | Pull requests | Status |
 | --- | --- | --- |
@@ -159,12 +169,12 @@ Pull requests sent to the projects this mod patches: 10 merged, 87 open, 15 clos
 | Almost Unified | [#144](https://github.com/AlmostReliable/almostunified/pull/144) | Closed without merge |
 | AmbientSounds | [#348](https://github.com/CreativeMD/AmbientSounds/pull/348), [#349](https://github.com/CreativeMD/AmbientSounds/pull/349) | Merged |
 | Architectury API | [#747](https://github.com/architectury/architectury-api/pull/747) | Open |
-| Ars Nouveau | [#2258](https://github.com/baileyholl/Ars-Nouveau/pull/2258) | Open |
+| Ars Nouveau | [#2258](https://github.com/baileyholl/Ars-Nouveau/pull/2258) | Closed without merge |
 | Artifacts | [#518](https://github.com/ochotonida/artifacts/pull/518) | Open |
 | Baked Substring Index | [#1](https://github.com/mezz/baked-substring-index/pull/1) | Open |
 | Better Combat | [#623](https://github.com/ZsoltMolnarrr/BetterCombat/pull/623) | Open |
 | Bosses of Mass Destruction Forge | [#31](https://github.com/CERBON-MODS/Bosses-of-Mass-Destruction-FORGE/pull/31) | Open |
-| Butterflies | [#493](https://github.com/doc-bok/Butterflies/pull/493) | Open |
+| Butterflies | [#493](https://github.com/doc-bok/Butterflies/pull/493) | Merged |
 | ChunkSending | [#13](https://github.com/someaddons/chunksending/pull/13) | Closed without merge |
 | CIT Reforged | [#16](https://github.com/tomwmth/cit-reforged/pull/16) | Open |
 | Citadel | [#232](https://github.com/AlexModGuy/Citadel/pull/232) | Open |
@@ -180,10 +190,9 @@ Pull requests sent to the projects this mod patches: 10 merged, 87 open, 15 clos
 | Entity Texture Features | [#508](https://github.com/Traben-0/Entity_Texture_Features/pull/508) | Merged |
 | Farmer's Delight | [#1397](https://github.com/vectorwing/FarmersDelight/pull/1397), [#1398](https://github.com/vectorwing/FarmersDelight/pull/1398) | Open |
 | FDBosses | [#42](https://github.com/FINDERFEED/FDBosses/pull/42) | Open |
-| Forge | [#10893](https://github.com/MinecraftForge/MinecraftForge/pull/10893), [#10894](https://github.com/MinecraftForge/MinecraftForge/pull/10894) | Merged |
+| Forge | [#10893](https://github.com/MinecraftForge/MinecraftForge/pull/10893), [#10894](https://github.com/MinecraftForge/MinecraftForge/pull/10894), [#10899](https://github.com/MinecraftForge/MinecraftForge/pull/10899) | Merged |
 | Forge | [#10895](https://github.com/MinecraftForge/MinecraftForge/pull/10895) | Closed without merge. Withdrawn in favour of #10899 on the 26.3 branch, with the design the maintainer asked for. |
 | Forge | [#10896](https://github.com/MinecraftForge/MinecraftForge/pull/10896) | Closed without merge. Withdrawn: too little left to gain after #10893. |
-| Forge | [#10899](https://github.com/MinecraftForge/MinecraftForge/pull/10899) | Open |
 | Fowl Play | [#242](https://github.com/aqariio/Fowl-Play/pull/242), [#243](https://github.com/aqariio/Fowl-Play/pull/243) | Open |
 | Fusion | [#316](https://github.com/SuperMartijn642/Fusion/pull/316), [#317](https://github.com/SuperMartijn642/Fusion/pull/317), [#318](https://github.com/SuperMartijn642/Fusion/pull/318) | Open |
 | Hostile Villages | [#37](https://github.com/someaddons/HostileVillages/pull/37), [#38](https://github.com/someaddons/HostileVillages/pull/38) | Open |
@@ -197,23 +206,25 @@ Pull requests sent to the projects this mod patches: 10 merged, 87 open, 15 clos
 | Legendary Monsters | [#13](https://github.com/Miauczel/Legendary-Monsters-1.20.1/pull/13) | Open |
 | Lionfish API | [#5](https://github.com/lender544/Lionfish-API/pull/5), [#6](https://github.com/lender544/Lionfish-API/pull/6) | Open |
 | ModernFix | [#696](https://github.com/embeddedt/ModernFix/pull/696) | Merged |
-| ModernFix | [#697](https://github.com/embeddedt/ModernFix/pull/697), [#698](https://github.com/embeddedt/ModernFix/pull/698) | Closed without merge |
-| ModernFix | [#699](https://github.com/embeddedt/ModernFix/pull/699) | Open |
+| ModernFix | [#697](https://github.com/embeddedt/ModernFix/pull/697), [#698](https://github.com/embeddedt/ModernFix/pull/698), [#699](https://github.com/embeddedt/ModernFix/pull/699) | Closed without merge |
 | Mowzie's Mobs | [#65](https://github.com/BobMowzie/MowziesMobs-Public/pull/65) | Open |
 | Mutant Monsters | [#139](https://github.com/Fuzss/mutant-monsters/pull/139) | Open |
 | Nether Depths Upgrade | [#67](https://github.com/Scouter456/Nether_Depths_Upgrade/pull/67) | Closed without merge. The 1.20 branch is no longer maintained. |
-| OcclusionCulling (EntityCulling) | [#5](https://github.com/LogisticsCraft/OcclusionCulling/pull/5) | Open |
+| OcclusionCulling (EntityCulling) | [#5](https://github.com/LogisticsCraft/OcclusionCulling/pull/5) | Merged |
 | Oculus | [#869](https://github.com/Asek3/Oculus/pull/869), [#870](https://github.com/Asek3/Oculus/pull/870), [#871](https://github.com/Asek3/Oculus/pull/871), [#872](https://github.com/Asek3/Oculus/pull/872) | Open |
 | Oh The Biomes We've Gone | [#421](https://github.com/Potion-Studios/Oh-The-Biomes-Weve-Gone/pull/421) | Open |
 | Particular | [#59](https://github.com/Leclowndu93150/Particular/pull/59) | Open |
 | Pehkui | [#636](https://github.com/Virtuoel/Pehkui/pull/636) | Open |
 | Placebo | [#125](https://github.com/Shadows-of-Fire/Placebo/pull/125) | Closed without merge. The 1.20 branch is no longer maintained; newer branches removed this event. |
 | Presence Footsteps (Forge) | [#67](https://github.com/PaintNinja/Presence-Footsteps-Forge/pull/67) | Open |
-| Radium Re-Reforged | [#8](https://github.com/bigenergy/radium-reforged-patched/pull/8), [#9](https://github.com/bigenergy/radium-reforged-patched/pull/9), [#11](https://github.com/bigenergy/radium-reforged-patched/pull/11), [#15](https://github.com/bigenergy/radium-reforged-patched/pull/15), [#16](https://github.com/bigenergy/radium-reforged-patched/pull/16), [#17](https://github.com/bigenergy/radium-reforged-patched/pull/17), [#18](https://github.com/bigenergy/radium-reforged-patched/pull/18) | Open |
+| Radium Re-Reforged | [#8](https://github.com/bigenergy/radium-reforged-patched/pull/8) | Closed without merge |
+| Radium Re-Reforged | [#9](https://github.com/bigenergy/radium-reforged-patched/pull/9), [#11](https://github.com/bigenergy/radium-reforged-patched/pull/11), [#15](https://github.com/bigenergy/radium-reforged-patched/pull/15), [#16](https://github.com/bigenergy/radium-reforged-patched/pull/16), [#17](https://github.com/bigenergy/radium-reforged-patched/pull/17), [#18](https://github.com/bigenergy/radium-reforged-patched/pull/18) | Open |
 | Regions Unexplored | [#234](https://github.com/UHQ-GAMES-MODS/REGIONS_UNEXPLORED_FORGE/pull/234) | Open |
 | Relics | [#357](https://github.com/Octo-Studios/relics/pull/357), [#358](https://github.com/Octo-Studios/relics/pull/358) | Open |
 | Ribbits | [#85](https://github.com/yungnickyoung/Ribbits/pull/85) | Open |
 | Ryoamic Lights | [#54](https://github.com/ThinkingStudios/RyoamicLights/pull/54), [#55](https://github.com/ThinkingStudios/RyoamicLights/pull/55) | Open |
+| Smart Particles | [#10](https://github.com/chedidandrew/Smart_Particles/pull/10) | Open |
+| Species | [#91](https://github.com/Peculiar-Room/Species/pull/91) | Open |
 | Storage Drawers | [#1307](https://github.com/jaquadro/StorageDrawers/pull/1307) | Open |
 | Structurify | [#93](https://github.com/Faboslav/structurify/pull/93) | Closed without merge |
 | TerraBlender | [#241](https://github.com/Glitchfiend/TerraBlender/pull/241) | Merged |
