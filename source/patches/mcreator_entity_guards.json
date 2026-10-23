@@ -1,0 +1,55 @@
+{
+  "group": "mcreator_entity_guards",
+  "keys": {
+    "mcreator_animation_entity_guard": {
+      "mod": "mcreator",
+      "target_mods": [
+        "born_in_chaos_v1",
+        "luminous_beasts"
+      ],
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.mcreator_entity_guards.BornInChaosEntityGuardMixin",
+        "bons.furious.mixin.mcreator_entity_guards.LuminousBeastsEntityGuardMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/neoforged/neoforge/event/entity/EntityEvent",
+          "method": "getEntity",
+          "desc": "()Lnet/minecraft/world/entity/Entity;",
+          "sha256": "259df892ed748a154c8d2f9fc16c376d20c7e6156f97964b228c5b2aae390dc1"
+        },
+        {
+          "class": "net/neoforged/neoforge/event/tick/EntityTickEvent$Pre",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "3a171ac1ea26d3e8d1efec85b223af107ce79599aa09a31038ec6303b30fe9f5"
+        }
+      ],
+      "target_guard": [
+        {
+          "mixin": "bons.furious.mixin.mcreator_entity_guards.BornInChaosEntityGuardMixin",
+          "mod": "born_in_chaos_v1",
+          "class": "net/mcreator/borninchaosv/init/EntityAnimationFactory",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "note": "Inspected NeoForge 1.21.1 factory; per-target guard. Behavior qualification recorded separately.",
+          "sha256": "dd8ab99d4ead6d93fafc823eec1f71623785a904e3d2f9f7ca9f424a52a36d5f"
+        },
+        {
+          "mixin": "bons.furious.mixin.mcreator_entity_guards.LuminousBeastsEntityGuardMixin",
+          "mod": "luminous_beasts",
+          "class": "net/mcreator/luminousbeasts/init/EntityAnimationFactory",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "note": "Inspected NeoForge 1.21.1 factory; per-target guard. Behavior qualification recorded separately.",
+          "sha256": "2d722f556fc02c69d04acbe579ad6d8dc35ee9641b114df6f432d5073059861c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@ModifyVariable (argsOnly, HEAD) on each mod's EntityAnimationFactory.onEntityTick: a plain LivingTickEvent whose entity is not a GeckoLib GeoEntity is handed to the method as null, so its own first test returns; the 1.0.19 *_animation_entity_guard design with a run-time flag. Each mixin is applied only when its target matches the target_guard fingerprint of the tested build (bons.furious.patch.mcreator_entity_guards.EntityGuardsPlugin / TargetGuards), so one changed mod stands aside alone; the guard list holds the Forge methods every handler uses. Targets: the two factories the guard measurably speeds up (Born in Chaos, 83 tested classes; Luminous Beasts, 35); 16 more MCreator factories were measured and left out (no gain)",
+      "license": "Target licences (mods.toml): born_in_chaos_v1: All Rights Reserved; luminous_beasts: Apache License version 2.0. Treated as no-copy: the mixins hold only our guard; the mods' code stays in their jars"
+    }
+  }
+}

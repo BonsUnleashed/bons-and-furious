@@ -1,0 +1,28 @@
+{
+  "group": "vanilla_owner_name",
+  "keys": {
+    "vanilla_owner_name_empty_skip": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.vanilla_owner_name.OldUsersConverterOwnerNameMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/server/players/OldUsersConverter",
+          "method": "convertMobOwnerIfNecessary",
+          "desc": "(Lnet/minecraft/server/MinecraftServer;Ljava/lang/String;)Ljava/util/UUID;",
+          "sha256": "cd788e78410fee334ad826333c58c0882cf07cb49d54a99193516cf090e82904",
+          "sha256_variants": [
+            "6f67353f738fd89f9fabcc83794946e5fb60e1970f7b3fe218dcfcb2b0f9abee"
+          ],
+          "note": "NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ."
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the one UUID.fromString(String) call in OldUsersConverter.convertMobOwnerIfNecessary (convertMobOwnerIfNecessary): returns null for the empty name (UUID.fromString(\"\") always throws an explicit IllegalArgumentException that convertMobOwnerIfNecessary catches into null), the call itself for every other name incl. null; require = 0, degrades to vanilla",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_owner_name.OwnerNames)"
+    }
+  }
+}

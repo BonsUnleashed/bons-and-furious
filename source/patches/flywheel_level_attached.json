@@ -1,0 +1,142 @@
+{
+  "group": "flywheel_level_attached",
+  "keys": {
+    "flywheel_level_attached_weak_keys": {
+      "mod": "flywheel",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.flywheel_level_attached.LevelAttachedPinsMixin",
+        "bons.furious.mixin.flywheel_level_attached.LevelAttachedWeakKeysMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/engine_room/flywheel/lib/util/LevelAttached",
+          "method": "<init>",
+          "desc": "(Ljava/util/function/Function;Ljava/util/function/Consumer;)V",
+          "note": "CacheBuilder.newBuilder().removalListener(n -> finalizer.accept(n.getValue())).build(new LevelAttached$1(this, factory)); the two wrapped calls, once each",
+          "sha256": "20250ab5d13732dc1447d6a7d3244b6094b8d7632ed4948fd81bc3e30b9bf195"
+        },
+        {
+          "class": "dev/engine_room/flywheel/lib/util/LevelAttached",
+          "method": "*",
+          "desc": "",
+          "note": "the declared methods: the cache is only read by get (getUnchecked) and changed by remove / reset (invalidate / invalidateAll)",
+          "sha256": "fcb4585210808cc7508007a2cb4080b374ad81e8377e1b69e0d4a2f202a38643"
+        },
+        {
+          "class": "dev/engine_room/flywheel/lib/util/LevelAttached",
+          "method": "get",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;)Ljava/lang/Object;",
+          "sha256": "733a3a1f67c96de98b95d12fec5d4a37bd9825a0b5c79695f1595a96b8b5622c"
+        },
+        {
+          "class": "dev/engine_room/flywheel/lib/util/LevelAttached",
+          "method": "remove",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;)V",
+          "sha256": "0c8310f55f6d494714d0951d163ccee5769dc0a9ecbef7b647ee95ee0ac591f4"
+        },
+        {
+          "class": "dev/engine_room/flywheel/lib/util/LevelAttached",
+          "method": "refresh",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;)Ljava/lang/Object;",
+          "sha256": "92463842f21d22d8b595fa92763126a0dace21f3ab926508682e699d55a4c16f"
+        },
+        {
+          "class": "dev/engine_room/flywheel/lib/util/LevelAttached",
+          "method": "reset",
+          "desc": "()V",
+          "sha256": "1e922030093d5a88aa9b32f838348f8a3f36365ea89cbdd312cd4701258ea3d4"
+        },
+        {
+          "class": "dev/engine_room/flywheel/lib/util/LevelAttached",
+          "method": "invalidateLevel",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;)V",
+          "sha256": "42a561e8715a12de00de51cf64222ecbd0734e199fce2877219f4b9c8c43a976"
+        },
+        {
+          "class": "dev/engine_room/flywheel/lib/util/LevelAttached",
+          "method": "lambda$new$0",
+          "desc": "(Ljava/util/function/Consumer;Lcom/google/common/cache/RemovalNotification;)V",
+          "note": "Flywheel's removal listener: finalizer.accept(notification.getValue()), nothing else",
+          "sha256": "96af0b8dca6471e71b66946a67089a2f51de643952223dfebaf0bbbdcaa40c5f"
+        },
+        {
+          "class": "dev/engine_room/flywheel/lib/util/LevelAttached$1",
+          "method": "load",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;)Ljava/lang/Object;",
+          "note": "Flywheel's loader: factory.apply(key)",
+          "sha256": "71b5d9e6d49befdd520113ba38e7e3e53987beabf017069bf64cbe01ba571cff"
+        },
+        {
+          "class": "dev/engine_room/flywheel/lib/util/LevelAttached$CleaningAction",
+          "method": "run",
+          "desc": "()V",
+          "sha256": "275fed3d7ca93c64b01fb09a5af26bccfa6a571c3be0020bdb837a5e16b26fcb"
+        },
+        {
+          "class": "dev/engine_room/flywheel/impl/visualization/VisualizationManagerImpl",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "MANAGERS = new LevelAttached(VisualizationManagerImpl::new, VisualizationManagerImpl::delete), the only LevelAttached in Flywheel 1.0.5",
+          "sha256": "0e42ee7e6f9faa3ae34566bb4f4b113a39efbe1c2f137005a90338cbebcbe722"
+        },
+        {
+          "class": "dev/engine_room/flywheel/impl/visualization/VisualizationManagerImpl",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;)V",
+          "note": "keeps its level (final field level): a value that references its own key, the reason weak keys alone free nothing",
+          "sha256": "1c2382780306826aff46c6460e1ca9b33fe06cb63045836299f3b1a6631f287f"
+        },
+        {
+          "class": "dev/engine_room/flywheel/impl/visualization/VisualizationManagerImpl",
+          "method": "get",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;)Ldev/engine_room/flywheel/impl/visualization/VisualizationManagerImpl;",
+          "sha256": "eeafb6578a05b50a2571a12f47c8be69b54e9bbd0c9d614b2f99e79312483992"
+        },
+        {
+          "class": "dev/engine_room/flywheel/impl/visualization/VisualizationManagerImpl",
+          "method": "getOrThrow",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;)Ldev/engine_room/flywheel/impl/visualization/VisualizationManagerImpl;",
+          "sha256": "a9a970b779f2518d9054ed87da39e04cdc897eba58b777a016ad1a63a92404e8"
+        },
+        {
+          "class": "dev/engine_room/flywheel/impl/visualization/VisualizationManagerImpl",
+          "method": "supportsVisualization",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;)Z",
+          "sha256": "184ee7249072aae1035355bc62badf6bd7aa266f133c272cae69f2364b589890"
+        },
+        {
+          "class": "dev/engine_room/flywheel/impl/visualization/VisualizationManagerImpl",
+          "method": "reset",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;)V",
+          "sha256": "d588dfd74410465c5373d51b9ff258e886c882e45ee15b3f7bbfa9267225a700"
+        },
+        {
+          "class": "dev/engine_room/flywheel/impl/visualization/VisualizationManagerImpl",
+          "method": "resetAll",
+          "desc": "()V",
+          "sha256": "22c7a3caa4dcc88d5df991d7c654aa9eaef21a6b1a6622e6559d21a02ae28c12"
+        },
+        {
+          "class": "dev/engine_room/flywheel/impl/visualization/VisualizationManagerImpl",
+          "method": "lateInit",
+          "desc": "()Ldev/engine_room/flywheel/impl/visualization/VisualizationManagerImpl$LateInit;",
+          "note": "the engine (GPU resources) is made only on tick / frame / render / light calls, which Flywheel makes for client levels only",
+          "sha256": "756e174bf753757f2bce864a1eb2007c7c4a8459ac0177d96bc0174f4b65995c"
+        },
+        {
+          "class": "dev/engine_room/flywheel/impl/visualization/VisualizationManagerImpl",
+          "method": "delete",
+          "desc": "()V",
+          "note": "the finalizer; reached only through explicit removal, as before",
+          "sha256": "cf0972acd7bfdc3296e9c94a03eb46511a4fa5fe41231582ba9be63c80100137"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on CacheBuilder.removalListener and CacheBuilder.build in LevelAttached.<init>(Function, Consumer) (a token handed from the first to the second through a thread-local paired with the CacheBuilder): Flywheel's removal listener runs behind one that releases the value's pin and ignores COLLECTED entries; the builder gets weakKeys().weakValues(); Flywheel's loader runs behind one that pins each loaded value on its key (an Object[] field LevelAttachedPinsMixin adds to Level; a strong side table for keys that are not a Level). Values live exactly as long as their key is reachable from outside the cache; helper bons.furious.patch.flywheel_level_attached.AttachedPins (runtime flag flywheelLevelAttachedWeakKeys, shadow check of lost values). Fix: Create contraption render levels and the ClientLevel behind them leaked through Flywheel's visualization managers.",
+      "license": "MIT (Flywheel 1.0.5): no Flywheel code is carried; the mixin wraps two builder calls in LevelAttached's constructor and hands Flywheel's own listener and loader on (helper bons.furious.patch.flywheel_level_attached.AttachedPins)",
+      "kind": "fix"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.stale_player_maps",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "bons.pure.config.PureMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "TreeChopNoChopRecursionMixin"
+  ],
+  "client": [
+    "CelestisynthAnimatorMixin"
+  ]
+}

@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
  * builder, then new NamespacedRule(context, base.apply(context), map)). ModernFix's BETA-gated
  * NamespacedSurfaceRuleSourceMixin puts a second @ModifyArg on this same forEach (a namespace filter); either wrapping
  * order hands TerraBlender's lambda the same entries, so the two compose.
+
  */
 @Mixin(targets = "terrablender.worldgen.surface.NamespacedSurfaceRuleSource", remap = false)
 public abstract class NamespacedSourceDeferMixin {

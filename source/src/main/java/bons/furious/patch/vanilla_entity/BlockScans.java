@@ -92,6 +92,14 @@ public final class BlockScans {
     private BlockScans() {
     }
 
+    /**
+     * 1.0.45 (vanilla_fire_scan_idle_skip, FireIdleScan): whether Radium applies its experimental fire and lava cache to
+     * Entity.move (the same decision vanilla_fire_scan_loop steps aside for; computed once).
+     */
+    static boolean radiumCacheApplied() {
+        return RadiumFireLava.APPLIED;
+    }
+
     /** Entity.isInWall: BlockPos.betweenClosedStream(box). */
     public static Stream<BlockPos> positions(AABB box, Operation<Stream<BlockPos>> original) {
         if (!wallEnabled) {

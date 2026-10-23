@@ -1,7 +1,6 @@
 package bons.furious.mixin.jei_search;
 
 import java.util.function.Function;
-import mezz.jei.common.config.sorting.MappedSortingConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
@@ -11,8 +10,9 @@ import org.spongepowered.asm.mixin.gen.Accessor;
  * elements of every comparison). Read only.
  *
  * Ported to 1.21.1: no change (MappedSortingConfig decompiles identically in JEI 15.59.0.212 and 19.51.0.418).
+
  */
-@Mixin(value = MappedSortingConfig.class, remap = false)
+@Mixin(targets = "mezz.jei.common.config.sorting.MappedSortingConfig", remap = false)
 public interface MappedSortingConfigAccessor {
     @Accessor(value = "mapping", remap = false)
     Function<Object, Object> bons$mapping();

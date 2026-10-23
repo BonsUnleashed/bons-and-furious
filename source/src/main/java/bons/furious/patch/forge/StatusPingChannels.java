@@ -15,6 +15,8 @@ import net.minecraft.resources.ResourceLocation;
  * iteration order (the order the stream's filter keeps), and toBuf's getChannelsForMod calls take their group from it
  * (an empty list for a mod without channels). The groups belong to that one toBuf call on that thread and are dropped at
  * its return; the bytes written are the same.
+ * Since 1.0.46: Forge 47.4.26 does exactly this itself (our merged PR #10893, getChannelsByMod); there the switch stands
+ * down with an INFO line (patches/forge.json redundant_since) and keeps working on older Forge builds.
  */
 public final class StatusPingChannels {
     /** Runtime switch (the config switch acts when classes are transformed). -Dbons_and_furious.statusPingGroups=false also turns it off. */

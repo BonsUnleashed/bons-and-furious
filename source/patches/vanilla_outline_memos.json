@@ -1,0 +1,107 @@
+{
+  "group": "vanilla_outline_memos",
+  "keys": {
+    "vanilla_outline_style_memo": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.vanilla_outline_memos.FontOutlineStyleMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/gui/Font",
+          "method": "drawInBatch8xOutline",
+          "desc": "(Lnet/minecraft/util/FormattedCharSequence;FFIILorg/joml/Matrix4f;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+          "note": "drawInBatch8xOutline: eight passes through the lambda, then the text itself",
+          "sha256": "92c8f03d76c74b43d5fa2177008664e521196097f0e95859fa1626163fc2350c"
+        },
+        {
+          "class": "net/minecraft/client/gui/Font",
+          "method": "lambda$drawInBatch8xOutline$1",
+          "desc": "(Lnet/minecraft/client/gui/Font$StringRenderOutput;[FIFIIILnet/minecraft/network/chat/Style;I)Z",
+          "note": "the pass lambda: withColor(outline colour) once per glyph, handed to StringRenderOutput.accept",
+          "sha256": "5bce4c63ef0b96a58a83e678b9dd9cc14602da8928cbbb19c345c6395e840451"
+        },
+        {
+          "class": "net/minecraft/network/chat/Style",
+          "method": "withColor",
+          "desc": "(I)Lnet/minecraft/network/chat/Style;",
+          "note": "withColor(int) = withColor(TextColor.fromRgb(int))",
+          "sha256": "fd60c178cb4e48d7472b9b92e9dafc4ec9e3991ba970bc0181c457cc67b8f6c7"
+        },
+        {
+          "class": "net/minecraft/network/chat/Style",
+          "method": "withColor",
+          "desc": "(Lnet/minecraft/network/chat/TextColor;)Lnet/minecraft/network/chat/Style;",
+          "note": "withColor(TextColor): a new Style with every other field copied NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ.",
+          "sha256": "74533952181ecf02d9b06313c290d1bcc0f6661fdfad24e959a65b4058e8a13c",
+          "sha256_variants": [
+            "54dd2e10982315a066cfcc614931c89cdf25b1daa7d10405a19aa9688dc26844"
+          ]
+        },
+        {
+          "class": "net/minecraft/network/chat/TextColor",
+          "method": "fromRgb",
+          "desc": "(I)Lnet/minecraft/network/chat/TextColor;",
+          "note": "fromRgb: new TextColor(rgb)",
+          "sha256": "0114675fc0232efe4cad909867f2cf38f9d84c2c136295d9cdae79e3973045a4"
+        },
+        {
+          "class": "net/minecraft/client/gui/Font$StringRenderOutput",
+          "method": "accept",
+          "desc": "(ILnet/minecraft/network/chat/Style;I)Z",
+          "note": "accept: reads the style's getters only",
+          "sha256": "3e8b62e69dce9906834b7be6ed9afab7c322908b0230ddc75a332a5418137d25"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Style.withColor(int) (withColor) call inside Font's drawInBatch8xOutline pass lambda (lambda$drawInBatch8xOutline$1): the recoloured style of the last (Style object, colour) pair is handed out again; anything else calls withColor (helper bons.furious.patch.vanilla_outline_memos.OutlineStyle: runtime flag, SHADOW mode)",
+      "license": "Minecraft (Mojang): no-copy; the wrapper carries only our own logic and calls the original method"
+    },
+    "vanilla_outline_edge_memo": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.vanilla_outline_memos.LevelRendererOutlineEdgeMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/renderer/LevelRenderer",
+          "method": "renderShape",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/world/phys/shapes/VoxelShape;DDDFFFF)V",
+          "note": "renderShape: one forAllEdges call into a vertex-writing consumer",
+          "sha256": "9fb23092475174cb3805198aea47ab91a3af4b53d3a8a75d418a0e0172f112c2"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/VoxelShape",
+          "method": "forAllEdges",
+          "desc": "(Lnet/minecraft/world/phys/shapes/Shapes$DoubleLineConsumer;)V",
+          "note": "forAllEdges: the voxel grid's edge walk, coordinates through get(axis, index)",
+          "sha256": "12fc99af5ba0593bf68f93ed090c5b0689f4e48e908efeb84ee5f13c9946ffae"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/DiscreteVoxelShape",
+          "method": "forAllEdges",
+          "desc": "(Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape$IntLineConsumer;Z)V",
+          "note": "forAllEdges(consumer, combine): three axis walks",
+          "sha256": "b8ec27ba2882ad62048e755be243f5aa3651db2a83deb873e457d59d171ef04d"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/DiscreteVoxelShape",
+          "method": "forAllAxisEdges",
+          "desc": "(Lnet/minecraft/world/phys/shapes/DiscreteVoxelShape$IntLineConsumer;Lnet/minecraft/core/AxisCycle;Z)V",
+          "note": "forAllAxisEdges: reads only the grid NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ.",
+          "sha256": "35a3480f4ed00c3b64af5954a6f2ee48152467c8bdc22a6f229f7badd51d5690",
+          "sha256_variants": [
+            "e760d9d0a95292b55954a2bad8e79ed726243a124dd0ea7692f2130c4e7f962b"
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the VoxelShape.forAllEdges (forAllEdges) call inside LevelRenderer.renderShape (renderShape): the edges of the last shape object of a known immutable class (vanilla ArrayVoxelShape / CubeVoxelShape / SliceShape, Radium's specialised shapes) are replayed into the consumer in the walk's order; a new shape is walked once into a recorder; any other class walks as before (helper bons.furious.patch.vanilla_outline_memos.OutlineEdges: runtime flag, SHADOW mode, stands down when a shape class carries a merged member of a mixin outside the checked list)",
+      "license": "Minecraft (Mojang): no-copy; the wrapper carries only our own logic and calls the original method"
+    }
+  }
+}

@@ -1,4 +1,25 @@
-# 1.0.42+mc1.21.1 (2026-10-15)
+# 1.0.47+mc1.21.1 (2026-10-23)
+
+Runtime checks PASS for SHA-256 `4c779d739d16ab8b7b48f28a0a14988946ca37bb4511da1ac441134af5c5c245`.
+The public source rebuild receipt is published separately and bound to the source archive hash.
+
+- 260 controls: all 211 previous NeoForge controls retained, 49 added; 256 guarded controls and 2,510 fingerprints.
+- Native TerraBlender 4.1.0.8 with Biomes We've Gone 2.6.0: 510 saved-layer regression checks, zero failures, 19,334,826 block positions.
+- All 49 additions disabled versus enabled: identical block and biome hashes in three dimensions.
+- Guard helper regression: 31 cases, plus full 256-control table loading and an optional audited class with an empty descriptor.
+- Active gradient optimization: 131,072 exact noise samples; ZIP listing comparisons: 252, with six close/reopen indexes.
+- Additional target tests: 20,012 numeric grammar cases, 2,048 Ars stack operations, 570 Text Animator comparisons and 18 positive/empty/mutated basket queries. All compare original and optimized behavior.
+- Each installed MCreator factory receives its expected mixin; 83 Born in Chaos and 39 Luminous entity branches were inspected for their required GeckoLib base type.
+- JEI enabled/disabled ordered content matches after a real disconnect/rejoin: 3278 anvil and 9717 grindstone recipes. Two later-plugin marker recipes remain last; cancellation/reset assertions pass.
+- Dedicated-server Ben's Sharks goal, listener, hand, feeding and spawn-residency checks pass.
+- Embeddium without Iris and Iris with shaders render the test world. Enabled shadow comparisons report zero mismatches. Idle helpers are explicitly unexercised; these are not speed benchmarks.
+- Static compatibility and overwrite-access checks pass; counts and per-gate receipts are in the published summary.
+
+Known external combination issue: Celestisynth 1.3.9 with Distant Horizons 3.3.3 can generate Wintereis spikes below the DH world bounds. It was reproduced with every Bons and Furious control disabled. The expanded target behavior test runs without DH; the separate renderer tests include DH. This release does not fix or certify that combination.
+
+These are targeted tests, not comprehensive multiplayer, every-species or long-session modpack coverage. Gradle test is NO-SOURCE; the separate native probes provide behavior checks. No Minecraft 1.21.1 speed claim is inferred from Forge results.
+
+# Historical: 1.0.42+mc1.21.1 (2026-10-15)
 
 Runtime gates PASS for SHA-256
 `d3a821e635caafb90d05fa9f09b2f40ff350d47a6fc3172a2690a8ad4e84ad98`.

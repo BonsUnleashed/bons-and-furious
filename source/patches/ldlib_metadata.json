@@ -1,0 +1,24 @@
+{
+  "group": "ldlib_metadata",
+  "keys": {
+    "ldlib_metadata_no_throw": {
+      "mod": "ldlib",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.ldlib_metadata.LDLMetadataSectionMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/lowdragmc/lowdraglib/client/model/custommodel/LDLMetadataSection",
+          "method": "getMetadata",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lcom/lowdragmc/lowdraglib/client/model/custommodel/LDLMetadataSection;",
+          "sha256": "263f84e57390dceb05ba67254f6e91b03f471556650a8737806e598af0812f0f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the second Optional.get() call (ordinal 1, the metadata section) in LDLMetadataSection.getMetadata(ResourceLocation): an empty Optional returns LDLMetadataSection.MISSING (what ret keeps when the stock get() throws NoSuchElementException into the method's catch (Exception)), everything else calls Optional.get; require = 0",
+      "license": "LGPL-3.0; helper bons.furious.patch.ldlib_metadata.LdlibMetadata; no LDLib code is carried"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "group": "vanilla_rl_path",
+  "keys": {
+    "vanilla_rl_path_char_fast": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.vanilla_rl_path.ResourceLocationPathCharMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "isValidPath",
+          "desc": "(Ljava/lang/String;)Z",
+          "note": "isValidPath: one validPathChar call per character, the call this switch wraps",
+          "sha256": "5672181f868eab9515f5a58ee6238fb554d58f804f13a42a52c2f1938cb88736"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "validPathChar",
+          "desc": "(C)Z",
+          "note": "validPathChar: vanilla accepts [a-z0-9_./-], the set the switch answers true for",
+          "sha256": "55c3b69af47f7c0c372b21ea76fc21e765ae67dc6b9a9be82d23a2b9dbc4e409"
+        },
+        {
+          "class": "net/irisshaders/iris/mixin/texture/MixinResourceLocation",
+          "method": "iris$allowInvalidPaths",
+          "desc": "(CLorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "Oculus 1.8.0: the HEAD hook on validPathChar answers true for A-Z only (the switch is only useful with it; without Oculus it is ABSENT)",
+          "sha256": "3ed4b3a69395e167e0a3bf54f3906e3375bba4b96845d460e053549832b740d9"
+        },
+        {
+          "class": "net/irisshaders/iris/mixin/texture/MixinResourceLocation",
+          "method": "*",
+          "desc": "",
+          "note": "Oculus 1.8.0 MixinResourceLocation declares only its two hooks (blockDUMMY on isValidPath, allowInvalidPaths)",
+          "sha256": "73a66b12e8ad0f9c782cf6708de537d9512ed77a689f597c2347e4bbeca868f0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the validPathChar (validPathChar) call inside ResourceLocation.isValidPath (isValidPath): characters in [a-z0-9_./-] are answered true without the call, every other character makes the original call; helper bons.furious.patch.vanilla_rl_path.PathCharFast (runtime flag, SHADOW mode, stands down when ResourceLocation carries a merged member of a mixin outside the checked list)",
+      "license": "Minecraft (Mojang): no-copy, the accepted set is our own test of the documented character rule; Oculus (LGPL-3.0-only): no code carried, its hook is left in place and still runs for every other character"
+    }
+  }
+}

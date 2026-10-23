@@ -88,3 +88,9 @@ Ben's Sharks 1.2.6 (benndevs) is an optional compatibility target; its JAR
 declares LGPLv3. This release adds targeted hooks and our goal-query helper,
 not its entity classes, textures, sounds, loot or other assets. Its exact
 target hashes and upstream location are recorded in upstream-credits.json.
+
+Targets added in 1.0.47+mc1.21.1 include Advanced Wall Climber API (Nyfaria), AzureLib, Cable Facades, Celestisynth, Immersive Aircraft, Knight Lib, LowDragLib, Nature's Aura (Ellpeck), Punchy, Reliquary, Smart Particles, Subtle Effects, Text Animator (Snownee), HT's TreeChop (hammertater), Zeta, Born in Chaos (Mongoose_artist), Luminous Beasts (RipleysMods), and Rustic Engineer (Mizz). Flywheel and L2Core library metadata are also recorded explicitly. Exact authors, licences and target hashes are in upstream-credits.json.
+
+Text Animator parameter construction adapts the Apache-2.0 Effect.create logic with the same order of parsing and exceptions. Nature's Aura and other permissively licensed method adaptations retain their source attribution. Restricted-licence targets receive only independently written injection helpers; their original methods and assets are not redistributed. The additional upstream licence documents shipped in these target JARs are retained under META-INF/licenses/1.21.1.
+
+The newer controls also credit ideas described by Collections Of Optimizations and the other projects named in the switch documentation. These are idea credits; no Collections Of Optimizations code or binary is bundled.

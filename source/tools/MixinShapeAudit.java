@@ -68,6 +68,11 @@ public final class MixinShapeAudit {
                             String selector=raw.toString();if(selector.contains("*")||selector.startsWith("@"))continue;
                             List<MethodNode> matches=targetNode.methods.stream().filter(t->selector.equals(t.name)||selector.equals(t.name+t.desc)).toList();
                             if(matches.isEmpty()) {failures.add(mixin+" injector "+m.name+" unresolved method "+selector+" (possibly merged by another mod)");continue;}
+                            for(var matched:matches) {
+                                checks++;
+                                if((matched.access & Opcodes.ACC_STATIC)!=0 && (m.access & Opcodes.ACC_STATIC)==0)
+                                    failures.add(mixin+" non-static callback "+m.name+" targets static method "+matched.name+matched.desc);
+                            }
                             for(Object rawAt:list(value(a,"at")))if(rawAt instanceof AnnotationNode at) {
                                 int found=matches.stream().mapToInt(t->anchors(t,at)).sum();
                                 int ordinal=value(at,"ordinal") instanceof Integer i?i:-1;

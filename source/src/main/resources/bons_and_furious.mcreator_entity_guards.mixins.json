@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.mcreator_entity_guards",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "bons.furious.patch.mcreator_entity_guards.EntityGuardsPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "BornInChaosEntityGuardMixin",
+    "LuminousBeastsEntityGuardMixin"
+  ]
+}

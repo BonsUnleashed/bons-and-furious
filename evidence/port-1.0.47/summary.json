@@ -1,0 +1,3206 @@
+{
+  "version": "1.0.47+mc1.21.1",
+  "sha256": "4c779d739d16ab8b7b48f28a0a14988946ca37bb4511da1ac441134af5c5c245",
+  "controls": 260,
+  "guarded_controls": 256,
+  "fingerprints": 2510,
+  "server": {
+    "passed": true,
+    "sha256": "4c779d739d16ab8b7b48f28a0a14988946ca37bb4511da1ac441134af5c5c245",
+    "terrain_equal": true,
+    "primitive": {
+      "guard_helper_checks": 31,
+      "noise_exact_samples": 131072,
+      "zip_exact_listings": 252,
+      "zip_reopened_indexes": 6
+    },
+    "stale": {
+      "failures": 0,
+      "positions": 19334826,
+      "checks": 510
+    },
+    "access_jars": 582,
+    "access_overwrites": 89
+  },
+  "client": {
+    "passed": true,
+    "sha256": "4c779d739d16ab8b7b48f28a0a14988946ca37bb4511da1ac441134af5c5c245",
+    "clients": {
+      "extras51": {
+        "passed": true,
+        "delta_proof47": {
+          "number_grammar_cases": 20012,
+          "ars_stack_operations": 2048,
+          "text_effect_comparisons": 570,
+          "basket_queries": 18,
+          "passed": true
+        },
+        "shadow": {
+          "_summary": {
+            "checks": 79443622,
+            "mismatches": 0,
+            "mismatching": [],
+            "idle": [
+              "bons.furious.patch.dh_loader.PooledStringIndex",
+              "bons.furious.patch.dh_loader.WrapperAirFlag",
+              "bons.furious.patch.dh_loader.AdjacentFaceSkip",
+              "bons.furious.patch.distanthorizons.LodBiomeMemo",
+              "bons.furious.patch.distanthorizons.BiomeBlendMemo",
+              "bons.furious.patch.beardifier.EmptyBeardifiers",
+              "bons.furious.patch.chunk_tick.TickingChunkMemo",
+              "bons.furious.patch.datapack_selectors.SelectorPrefilter",
+              "bons.furious.patch.cucumber.CucumberTileDispatch",
+              "bons.furious.patch.embeddium_search.SearchReplay",
+              "bons.furious.patch.worldgen_aquifer.AquiferCandidates",
+              "bons.furious.patch.worldgen_beardifier_bounds.BeardifierBounds",
+              "bons.furious.patch.module_resources.DhSqlScriptLookup",
+              "bons.furious.patch.armorbake_c2.CubeBakeMemo",
+              "bons.furious.patch.modernfix_bake.BakeLocations",
+              "bons.furious.patch.pipez_logistics.SortedConnections",
+              "bons.furious.patch.pipez_logistics.EmptyFilters",
+              "bons.furious.patch.mob_sunburn.SunBurnOrder",
+              "bons.furious.patch.vanilla_framed_maps.FramedMaps",
+              "bons.furious.patch.vanilla_item_merge.MergeCandidates",
+              "bons.furious.patch.vanilla_long_jump.LongJumpPicks",
+              "bons.furious.patch.vanilla_raycast.ClipFast",
+              "bons.furious.patch.vanilla_search.RepellentSearch",
+              "bons.furious.patch.crittersandcompanions_c2.RedPandaGate",
+              "bons.furious.patch.fdbosses_c2.SpawnerPresence",
+              "bons.furious.patch.storagedrawers.CountLabels",
+              "bons.furious.patch.item_renderers.ItemRendererReuse",
+              "bons.furious.patch.distanthorizons_streams.UnlockedOutputStream",
+              "bons.furious.patch.distanthorizons_tint.TintColumns",
+              "bons.furious.patch.cataclysm_client.CataclysmPoseHand",
+              "bons.furious.patch.cataclysm_client.CitadelPoseHand",
+              "bons.furious.patch.cataclysm_client.ShieldLayerPose",
+              "bons.furious.patch.lionfish_models.LionfishModelParts",
+              "bons.furious.patch.terrain.ColumnSummary",
+              "bons.furious.patch.vanilla_cellfill.ColumnCellFill",
+              "bons.furious.patch.vanilla_corner_table.CornerShare",
+              "bons.furious.patch.climate_last_result.WeakLastResult",
+              "bons.furious.patch.vanilla_structure_ring.StructureRing",
+              "bons.furious.patch.awcapi_climb.ClimberCollisions",
+              "bons.furious.patch.client_shake_gate.ShakeGate",
+              "bons.furious.patch.distanthorizons_level_wrappers.KeyedLevelPins",
+              "bons.furious.patch.distanthorizons_level_wrappers.WeakFolders",
+              "bons.furious.patch.etf_property_exceptions.EtfPropertyExceptions",
+              "bons.furious.patch.geckolib_constant_resources.ConstantResources",
+              "bons.furious.patch.jei_fake_menus.FakeMenuRelease",
+              "bons.furious.patch.number_prechecks.EmfTokenPrecheck",
+              "bons.furious.patch.number_prechecks.MolangNumberPrecheck",
+              "bons.furious.patch.projectile_gates.BoneHitboxPickGate",
+              "bons.furious.patch.projectile_gates.ProjectileGates",
+              "bons.furious.patch.punchy.EmfTraceSkip",
+              "bons.furious.patch.ribbits_search.RibbitsSearch",
+              "bons.furious.patch.subtleeffects.DryChests",
+              "bons.furious.patch.terrablender_layers.StackedLayers",
+              "bons.furious.patch.vanilla_climate_distance.ClimateDistanceReuse",
+              "bons.furious.patch.vanilla_leveldat_encode.ParameterListEncodes",
+              "bons.furious.patch.vanilla_outline_memos.OutlineEdges",
+              "bons.furious.patch.vanilla_outline_memos.OutlineStyle",
+              "bons.furious.patch.vanilla_rl_path.PathCharFast",
+              "bons.furious.patch.vanilla_zip_index.ZipListings"
+            ],
+            "unavailable": [
+              "bons.furious.patch.dh_loader.QuadSortKeys"
+            ]
+          },
+          "bons.furious.patch.almostunified.DuplicateGroups": {
+            "shadow": true,
+            "checks": 479,
+            "mismatches": 0
+          },
+          "bons.furious.patch.armorbake_c2.CubeBakeMemo": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.artifacts.ArtifactsTickOrder": {
+            "shadow": true,
+            "checks": 97961,
+            "mismatches": 0
+          },
+          "bons.furious.patch.awcapi_climb.ClimberCollisions": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.basalt_guards.BasaltGuards": {
+            "shadow": true,
+            "checks": 161,
+            "mismatches": 0
+          },
+          "bons.furious.patch.beardifier.EmptyBeardifiers": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cablefacades.CfFastExit": {
+            "shadow": true,
+            "checks": 15722447,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cataclysm_client.CataclysmPoseHand": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cataclysm_client.CitadelPoseHand": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cataclysm_client.ShieldLayerPose": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.chunk_tick.TickingChunkMemo": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.client_shake_gate.ShakeGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.climate_last_result.WeakLastResult": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.crittersandcompanions_c2.EntityClassCounts": {
+            "shadow": true,
+            "checks": 11365,
+            "mismatches": 0
+          },
+          "bons.furious.patch.crittersandcompanions_c2.RedPandaGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cucumber.CucumberTileDispatch": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.curios_tooltip.CuriosTagKeys": {
+            "shadow": true,
+            "checks": 114842,
+            "mismatches": 0
+          },
+          "bons.furious.patch.datapack_selectors.SelectorPrefilter": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.datapack_selectors.SingleTypeTest": {
+            "shadow": true,
+            "checks": 89516,
+            "mismatches": 0
+          },
+          "bons.furious.patch.datapack_selectors.TagIndex": {
+            "shadow": true,
+            "checks": 87388,
+            "mismatches": 0
+          },
+          "bons.furious.patch.dh_loader.AdjacentFaceSkip": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.dh_loader.PooledStringIndex": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.dh_loader.QuadSortKeys": {
+            "unavailable": "java.lang.NoClassDefFoundError: com/seibel/distanthorizons/core/dataObjects/render/bufferBuilding/BufferQuad"
+          },
+          "bons.furious.patch.dh_loader.WrapperAirFlag": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons.BiomeBlendMemo": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons.LodBiomeMemo": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons_level_wrappers.KeyedLevelPins": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons_level_wrappers.WeakFolders": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons_streams.UnlockedOutputStream": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons_tint.TintColumns": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_draw.DrawBatchCache": {
+            "shadow": true,
+            "checks": 32251,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_draw.MergedDraws": {
+            "shadow": true,
+            "checks": 25619,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_search.SearchReplay": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_shader_sources.ShaderSources": {
+            "shadow": true,
+            "checks": 15,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_sorting.QuadKeySort": {
+            "shadow": true,
+            "checks": 2364,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_sprites.SpriteFrameTimes": {
+            "shadow": true,
+            "checks": 192057,
+            "mismatches": 0
+          },
+          "bons.furious.patch.etf_property_exceptions.EtfPropertyExceptions": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.fdbosses_c2.SpawnerPresence": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.fluidwalk_c2.LionfishFluidWalk": {
+            "shadow": true,
+            "checks": 73020,
+            "mismatches": 0
+          },
+          "bons.furious.patch.flywheel_level_attached.AttachedPins": {
+            "shadow": true,
+            "checks": 1,
+            "mismatches": 0
+          },
+          "bons.furious.patch.geckolib_constant_resources.ConstantResources": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.item_renderers.ItemRendererReuse": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.jei_fake_menus.FakeMenuRelease": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.jei_menu_weak.WeakMenuSet": {
+            "shadow": true,
+            "checks": 116,
+            "mismatches": 0
+          },
+          "bons.furious.patch.jei_search.BackgroundGrams": {
+            "shadow": true,
+            "checks": 1,
+            "mismatches": 0
+          },
+          "bons.furious.patch.jei_search.SortKeys": {
+            "shadow": true,
+            "checks": 1,
+            "mismatches": 0
+          },
+          "bons.furious.patch.ldlib_metadata.LdlibMetadata": {
+            "shadow": true,
+            "checks": 9297,
+            "mismatches": 0
+          },
+          "bons.furious.patch.lionfish_models.LionfishModelParts": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.mesh_air.BlockStateAirFlag": {
+            "shadow": true,
+            "checks": 27648013,
+            "mismatches": 0
+          },
+          "bons.furious.patch.mob_sunburn.SunBurnOrder": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.modernfix_bake.BakeLocations": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.module_resources.DhSqlScriptLookup": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.mutantmonsters_c2.EmptyShoulderSkip": {
+            "shadow": true,
+            "checks": 2414,
+            "mismatches": 0
+          },
+          "bons.furious.patch.number_prechecks.AzureMolangNumberPrecheck": {
+            "shadow": true,
+            "checks": 1043,
+            "mismatches": 0
+          },
+          "bons.furious.patch.number_prechecks.EmfTokenPrecheck": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.number_prechecks.MolangNumberPrecheck": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.number_prechecks.TextAnimatorParsePrecheck": {
+            "shadow": true,
+            "checks": 570,
+            "mismatches": 0
+          },
+          "bons.furious.patch.pipez_logistics.EmptyFilters": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.pipez_logistics.SortedConnections": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.projectile_gates.BoneHitboxPickGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.projectile_gates.ProjectileGates": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.punchy.EmfTraceSkip": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.punchy.LazyGeoScans": {
+            "shadow": true,
+            "checks": 4,
+            "mismatches": 0
+          },
+          "bons.furious.patch.radium_fixes.PartEntityCollisions": {
+            "shadow": true,
+            "checks": 58775,
+            "mismatches": 0
+          },
+          "bons.furious.patch.reliquary_charm.ReliquaryCharmGate": {
+            "shadow": true,
+            "checks": 76632,
+            "mismatches": 0
+          },
+          "bons.furious.patch.ribbits_search.RibbitsSearch": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.spawn_gate.SpawnGate": {
+            "shadow": true,
+            "checks": 131769,
+            "mismatches": 0
+          },
+          "bons.furious.patch.state_memo.SeaLifeWaterlogged": {
+            "shadow": true,
+            "checks": 34992,
+            "mismatches": 0
+          },
+          "bons.furious.patch.storagedrawers.CountLabels": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.structurify_c2.CheckMemo": {
+            "shadow": true,
+            "checks": 39,
+            "mismatches": 0
+          },
+          "bons.furious.patch.subtleeffects.DisplayTickBiomes": {
+            "shadow": true,
+            "checks": 1785823,
+            "mismatches": 0
+          },
+          "bons.furious.patch.subtleeffects.DryChests": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.subtleeffects.IdleFluids": {
+            "shadow": true,
+            "checks": 5176,
+            "mismatches": 0
+          },
+          "bons.furious.patch.tag_ids.TagIds": {
+            "shadow": true,
+            "checks": 9393678,
+            "mismatches": 0
+          },
+          "bons.furious.patch.terrablender.LazyNamespaceRules": {
+            "shadow": true,
+            "checks": 7300396,
+            "mismatches": 0
+          },
+          "bons.furious.patch.terrablender.NamespaceRuleMemo": {
+            "shadow": true,
+            "checks": 7166053,
+            "mismatches": 0
+          },
+          "bons.furious.patch.terrablender_layers.StackedLayers": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.terrain.ColumnSummary": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.ticker_gate.TickerGate": {
+            "shadow": true,
+            "checks": 90447,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_cellfill.ColumnCellFill": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_chunk_codecs.BiomeCodecMemo": {
+            "shadow": true,
+            "checks": 6,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_chunk_codecs.PaletteDirectNbt": {
+            "shadow": true,
+            "checks": 28588,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_chunk_codecs.StateCodecMemo": {
+            "shadow": true,
+            "checks": 6659,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_climate_distance.ClimateDistanceReuse": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_corner_table.CornerShare": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_entity.BlockScans": {
+            "shadow": true,
+            "checks": 159032,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_entity.FireIdleScan": {
+            "shadow": true,
+            "checks": 72441,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_framed_maps.FramedMaps": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_game_events.GameEventRegistries": {
+            "shadow": true,
+            "checks": 49086,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_goal_flags.GoalFlags": {
+            "shadow": true,
+            "checks": 363199,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_inventory_index.ListenerIndex": {
+            "shadow": true,
+            "checks": 5011,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_item_merge.MergeCandidates": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_leveldat_encode.ParameterListEncodes": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_long_jump.LongJumpPicks": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_outline_memos.OutlineEdges": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_outline_memos.OutlineStyle": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_outline_skip.OutlineSkip": {
+            "shadow": true,
+            "checks": 1713,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_owner_name.OwnerNames": {
+            "shadow": true,
+            "checks": 12,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_raycast.ClipFast": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_rl_path.PathCharFast": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_search.RepellentSearch": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_search.TurtleEggSearch": {
+            "shadow": true,
+            "checks": 37,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_structure_ring.StructureRing": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_structure_templates.StructureTemplateHits": {
+            "shadow": true,
+            "checks": 539,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_text.StripFormatting": {
+            "shadow": true,
+            "checks": 8698,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_zip_index.ZipListings": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.worldgen_aquifer.AquiferCandidates": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.worldgen_beardifier_bounds.BeardifierBounds": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.zeta_clusters.ClusterBoundsFirst": {
+            "shadow": true,
+            "checks": 8593876,
+            "mismatches": 0
+          }
+        }
+      },
+      "iris51": {
+        "passed": true,
+        "shadow": {
+          "_summary": {
+            "checks": 1669981801,
+            "mismatches": 0,
+            "mismatching": [],
+            "idle": [
+              "bons.furious.patch.beardifier.EmptyBeardifiers",
+              "bons.furious.patch.chunk_tick.TickingChunkMemo",
+              "bons.furious.patch.datapack_selectors.SelectorPrefilter",
+              "bons.furious.patch.cucumber.CucumberTileDispatch",
+              "bons.furious.patch.embeddium_draw.DrawBatchCache",
+              "bons.furious.patch.embeddium_draw.MergedDraws",
+              "bons.furious.patch.embeddium_search.SearchReplay",
+              "bons.furious.patch.embeddium_sorting.QuadKeySort",
+              "bons.furious.patch.worldgen_aquifer.AquiferCandidates",
+              "bons.furious.patch.worldgen_beardifier_bounds.BeardifierBounds",
+              "bons.furious.patch.armorbake_c2.CubeBakeMemo",
+              "bons.furious.patch.modernfix_bake.BakeLocations",
+              "bons.furious.patch.pipez_logistics.SortedConnections",
+              "bons.furious.patch.pipez_logistics.EmptyFilters",
+              "bons.furious.patch.mob_sunburn.SunBurnOrder",
+              "bons.furious.patch.vanilla_framed_maps.FramedMaps",
+              "bons.furious.patch.vanilla_item_merge.MergeCandidates",
+              "bons.furious.patch.vanilla_long_jump.LongJumpPicks",
+              "bons.furious.patch.vanilla_raycast.ClipFast",
+              "bons.furious.patch.vanilla_search.RepellentSearch",
+              "bons.furious.patch.crittersandcompanions_c2.RedPandaGate",
+              "bons.furious.patch.fdbosses_c2.SpawnerPresence",
+              "bons.furious.patch.embeddium_sprites.SpriteFrameTimes",
+              "bons.furious.patch.storagedrawers.CountLabels",
+              "bons.furious.patch.item_renderers.ItemRendererReuse",
+              "bons.furious.patch.cataclysm_client.ShieldLayerPose",
+              "bons.furious.patch.lionfish_models.LionfishModelParts",
+              "bons.furious.patch.terrain.ColumnSummary",
+              "bons.furious.patch.vanilla_cellfill.ColumnCellFill",
+              "bons.furious.patch.vanilla_corner_table.CornerShare",
+              "bons.furious.patch.vanilla_structure_ring.StructureRing",
+              "bons.furious.patch.awcapi_climb.ClimberCollisions",
+              "bons.furious.patch.cablefacades.CfFastExit",
+              "bons.furious.patch.client_shake_gate.ShakeGate",
+              "bons.furious.patch.distanthorizons_level_wrappers.KeyedLevelPins",
+              "bons.furious.patch.distanthorizons_level_wrappers.WeakFolders",
+              "bons.furious.patch.embeddium_shader_sources.ShaderSources",
+              "bons.furious.patch.etf_property_exceptions.EtfPropertyExceptions",
+              "bons.furious.patch.geckolib_constant_resources.ConstantResources",
+              "bons.furious.patch.jei_fake_menus.FakeMenuRelease",
+              "bons.furious.patch.ldlib_metadata.LdlibMetadata",
+              "bons.furious.patch.number_prechecks.AzureMolangNumberPrecheck",
+              "bons.furious.patch.number_prechecks.EmfTokenPrecheck",
+              "bons.furious.patch.number_prechecks.MolangNumberPrecheck",
+              "bons.furious.patch.projectile_gates.BoneHitboxPickGate",
+              "bons.furious.patch.projectile_gates.ProjectileGates",
+              "bons.furious.patch.punchy.EmfTraceSkip",
+              "bons.furious.patch.punchy.LazyGeoScans",
+              "bons.furious.patch.reliquary_charm.ReliquaryCharmGate",
+              "bons.furious.patch.ribbits_search.RibbitsSearch",
+              "bons.furious.patch.subtleeffects.DisplayTickBiomes",
+              "bons.furious.patch.subtleeffects.DryChests",
+              "bons.furious.patch.subtleeffects.IdleFluids",
+              "bons.furious.patch.terrablender_layers.StackedLayers",
+              "bons.furious.patch.vanilla_leveldat_encode.ParameterListEncodes",
+              "bons.furious.patch.vanilla_outline_memos.OutlineEdges",
+              "bons.furious.patch.vanilla_outline_memos.OutlineStyle",
+              "bons.furious.patch.vanilla_zip_index.ZipListings",
+              "bons.furious.patch.zeta_clusters.ClusterBoundsFirst"
+            ],
+            "unavailable": [
+              "bons.furious.patch.number_prechecks.TextAnimatorParsePrecheck"
+            ]
+          },
+          "bons.furious.patch.almostunified.DuplicateGroups": {
+            "shadow": true,
+            "checks": 413,
+            "mismatches": 0
+          },
+          "bons.furious.patch.armorbake_c2.CubeBakeMemo": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.artifacts.ArtifactsTickOrder": {
+            "shadow": true,
+            "checks": 97857,
+            "mismatches": 0
+          },
+          "bons.furious.patch.awcapi_climb.ClimberCollisions": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.basalt_guards.BasaltGuards": {
+            "shadow": true,
+            "checks": 1018,
+            "mismatches": 0
+          },
+          "bons.furious.patch.beardifier.EmptyBeardifiers": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cablefacades.CfFastExit": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cataclysm_client.CataclysmPoseHand": {
+            "shadow": true,
+            "checks": 3264,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cataclysm_client.CitadelPoseHand": {
+            "shadow": true,
+            "checks": 3264,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cataclysm_client.ShieldLayerPose": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.chunk_tick.TickingChunkMemo": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.client_shake_gate.ShakeGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.climate_last_result.WeakLastResult": {
+            "shadow": true,
+            "checks": 7644581,
+            "mismatches": 0
+          },
+          "bons.furious.patch.crittersandcompanions_c2.EntityClassCounts": {
+            "shadow": true,
+            "checks": 6896,
+            "mismatches": 0
+          },
+          "bons.furious.patch.crittersandcompanions_c2.RedPandaGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cucumber.CucumberTileDispatch": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.curios_tooltip.CuriosTagKeys": {
+            "shadow": true,
+            "checks": 151056,
+            "mismatches": 0
+          },
+          "bons.furious.patch.datapack_selectors.SelectorPrefilter": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.datapack_selectors.SingleTypeTest": {
+            "shadow": true,
+            "checks": 90244,
+            "mismatches": 0
+          },
+          "bons.furious.patch.datapack_selectors.TagIndex": {
+            "shadow": true,
+            "checks": 88102,
+            "mismatches": 0
+          },
+          "bons.furious.patch.dh_loader.AdjacentFaceSkip": {
+            "shadow": true,
+            "checks": 256336676,
+            "mismatches": 0
+          },
+          "bons.furious.patch.dh_loader.PooledStringIndex": {
+            "shadow": true,
+            "checks": 3561264,
+            "mismatches": 0
+          },
+          "bons.furious.patch.dh_loader.QuadSortKeys": {
+            "shadow": true,
+            "checks": 31053,
+            "mismatches": 0
+          },
+          "bons.furious.patch.dh_loader.WrapperAirFlag": {
+            "shadow": true,
+            "checks": 121367294,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons.BiomeBlendMemo": {
+            "shadow": true,
+            "checks": 241145262,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons.LodBiomeMemo": {
+            "shadow": true,
+            "checks": 51091595,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons_level_wrappers.KeyedLevelPins": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons_level_wrappers.WeakFolders": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons_streams.UnlockedOutputStream": {
+            "shadow": true,
+            "checks": 10816,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons_tint.TintColumns": {
+            "shadow": true,
+            "checks": 278079140,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_draw.DrawBatchCache": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_draw.MergedDraws": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_search.SearchReplay": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_shader_sources.ShaderSources": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_sorting.QuadKeySort": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_sprites.SpriteFrameTimes": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.etf_property_exceptions.EtfPropertyExceptions": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.fdbosses_c2.SpawnerPresence": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.fluidwalk_c2.LionfishFluidWalk": {
+            "shadow": true,
+            "checks": 75185,
+            "mismatches": 0
+          },
+          "bons.furious.patch.flywheel_level_attached.AttachedPins": {
+            "shadow": true,
+            "checks": 2,
+            "mismatches": 0
+          },
+          "bons.furious.patch.geckolib_constant_resources.ConstantResources": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.item_renderers.ItemRendererReuse": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.jei_fake_menus.FakeMenuRelease": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.jei_menu_weak.WeakMenuSet": {
+            "shadow": true,
+            "checks": 92,
+            "mismatches": 0
+          },
+          "bons.furious.patch.jei_search.BackgroundGrams": {
+            "shadow": true,
+            "checks": 1,
+            "mismatches": 0
+          },
+          "bons.furious.patch.jei_search.SortKeys": {
+            "shadow": true,
+            "checks": 1,
+            "mismatches": 0
+          },
+          "bons.furious.patch.ldlib_metadata.LdlibMetadata": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.lionfish_models.LionfishModelParts": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.mesh_air.BlockStateAirFlag": {
+            "shadow": true,
+            "checks": 511301949,
+            "mismatches": 0
+          },
+          "bons.furious.patch.mob_sunburn.SunBurnOrder": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.modernfix_bake.BakeLocations": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.module_resources.DhSqlScriptLookup": {
+            "shadow": true,
+            "checks": 741,
+            "mismatches": 0
+          },
+          "bons.furious.patch.mutantmonsters_c2.EmptyShoulderSkip": {
+            "shadow": true,
+            "checks": 2540,
+            "mismatches": 0
+          },
+          "bons.furious.patch.number_prechecks.AzureMolangNumberPrecheck": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.number_prechecks.EmfTokenPrecheck": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.number_prechecks.MolangNumberPrecheck": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.number_prechecks.TextAnimatorParsePrecheck": {
+            "unavailable": "java.lang.NoClassDefFoundError: snownee/textanimator/effect/params/Params"
+          },
+          "bons.furious.patch.pipez_logistics.EmptyFilters": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.pipez_logistics.SortedConnections": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.projectile_gates.BoneHitboxPickGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.projectile_gates.ProjectileGates": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.punchy.EmfTraceSkip": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.punchy.LazyGeoScans": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.radium_fixes.PartEntityCollisions": {
+            "shadow": true,
+            "checks": 55596,
+            "mismatches": 0
+          },
+          "bons.furious.patch.reliquary_charm.ReliquaryCharmGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.ribbits_search.RibbitsSearch": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.spawn_gate.SpawnGate": {
+            "shadow": true,
+            "checks": 137444,
+            "mismatches": 0
+          },
+          "bons.furious.patch.state_memo.SeaLifeWaterlogged": {
+            "shadow": true,
+            "checks": 8546,
+            "mismatches": 0
+          },
+          "bons.furious.patch.storagedrawers.CountLabels": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.structurify_c2.CheckMemo": {
+            "shadow": true,
+            "checks": 90,
+            "mismatches": 0
+          },
+          "bons.furious.patch.subtleeffects.DisplayTickBiomes": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.subtleeffects.DryChests": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.subtleeffects.IdleFluids": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.tag_ids.TagIds": {
+            "shadow": true,
+            "checks": 17805617,
+            "mismatches": 0
+          },
+          "bons.furious.patch.terrablender.LazyNamespaceRules": {
+            "shadow": true,
+            "checks": 73883008,
+            "mismatches": 0
+          },
+          "bons.furious.patch.terrablender.NamespaceRuleMemo": {
+            "shadow": true,
+            "checks": 73405924,
+            "mismatches": 0
+          },
+          "bons.furious.patch.terrablender_layers.StackedLayers": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.terrain.ColumnSummary": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.ticker_gate.TickerGate": {
+            "shadow": true,
+            "checks": 61100,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_cellfill.ColumnCellFill": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_chunk_codecs.BiomeCodecMemo": {
+            "shadow": true,
+            "checks": 38,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_chunk_codecs.PaletteDirectNbt": {
+            "shadow": true,
+            "checks": 244926,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_chunk_codecs.StateCodecMemo": {
+            "shadow": true,
+            "checks": 10495,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_climate_distance.ClimateDistanceReuse": {
+            "shadow": true,
+            "checks": 7645214,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_corner_table.CornerShare": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_entity.BlockScans": {
+            "shadow": true,
+            "checks": 160606,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_entity.FireIdleScan": {
+            "shadow": true,
+            "checks": 73265,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_framed_maps.FramedMaps": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_game_events.GameEventRegistries": {
+            "shadow": true,
+            "checks": 37368,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_goal_flags.GoalFlags": {
+            "shadow": true,
+            "checks": 388980,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_inventory_index.ListenerIndex": {
+            "shadow": true,
+            "checks": 4305,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_item_merge.MergeCandidates": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_leveldat_encode.ParameterListEncodes": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_long_jump.LongJumpPicks": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_outline_memos.OutlineEdges": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_outline_memos.OutlineStyle": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_outline_skip.OutlineSkip": {
+            "shadow": true,
+            "checks": 1631,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_owner_name.OwnerNames": {
+            "shadow": true,
+            "checks": 8,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_raycast.ClipFast": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_rl_path.PathCharFast": {
+            "shadow": true,
+            "checks": 24854259,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_search.RepellentSearch": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_search.TurtleEggSearch": {
+            "shadow": true,
+            "checks": 55,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_structure_ring.StructureRing": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_structure_templates.StructureTemplateHits": {
+            "shadow": true,
+            "checks": 103457,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_text.StripFormatting": {
+            "shadow": true,
+            "checks": 9563,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_zip_index.ZipListings": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.worldgen_aquifer.AquiferCandidates": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.worldgen_beardifier_bounds.BeardifierBounds": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.zeta_clusters.ClusterBoundsFirst": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          }
+        }
+      },
+      "jeioff51": {
+        "passed": true,
+        "jei42": {
+          "added": 0,
+          "anvil": {
+            "count": 3278,
+            "ordered_sha256": "b24c9b2cd445b40d43eb7e4e9183cda016286a708a057b0e90c969f119446a50"
+          },
+          "cancellation_restart_checks": 2,
+          "finished_runs": 0,
+          "grindstone": {
+            "count": 9717,
+            "ordered_sha256": "a53fc59542f8a5fc9b3d8439be278a9e1865320cd3e4ffea2c073d1964678a25"
+          },
+          "passed": true,
+          "starts": 2,
+          "stops": 1
+        },
+        "shadow": {
+          "_summary": {
+            "checks": 2368324239,
+            "mismatches": 0,
+            "mismatching": [],
+            "idle": [
+              "bons.furious.patch.beardifier.EmptyBeardifiers",
+              "bons.furious.patch.chunk_tick.TickingChunkMemo",
+              "bons.furious.patch.datapack_selectors.SelectorPrefilter",
+              "bons.furious.patch.cucumber.CucumberTileDispatch",
+              "bons.furious.patch.embeddium_search.SearchReplay",
+              "bons.furious.patch.embeddium_sorting.QuadKeySort",
+              "bons.furious.patch.worldgen_aquifer.AquiferCandidates",
+              "bons.furious.patch.worldgen_beardifier_bounds.BeardifierBounds",
+              "bons.furious.patch.armorbake_c2.CubeBakeMemo",
+              "bons.furious.patch.modernfix_bake.BakeLocations",
+              "bons.furious.patch.pipez_logistics.SortedConnections",
+              "bons.furious.patch.pipez_logistics.EmptyFilters",
+              "bons.furious.patch.mob_sunburn.SunBurnOrder",
+              "bons.furious.patch.vanilla_framed_maps.FramedMaps",
+              "bons.furious.patch.vanilla_long_jump.LongJumpPicks",
+              "bons.furious.patch.vanilla_raycast.ClipFast",
+              "bons.furious.patch.vanilla_search.RepellentSearch",
+              "bons.furious.patch.crittersandcompanions_c2.RedPandaGate",
+              "bons.furious.patch.fdbosses_c2.SpawnerPresence",
+              "bons.furious.patch.storagedrawers.CountLabels",
+              "bons.furious.patch.item_renderers.ItemRendererReuse",
+              "bons.furious.patch.cataclysm_client.CataclysmPoseHand",
+              "bons.furious.patch.cataclysm_client.CitadelPoseHand",
+              "bons.furious.patch.cataclysm_client.ShieldLayerPose",
+              "bons.furious.patch.lionfish_models.LionfishModelParts",
+              "bons.furious.patch.terrain.ColumnSummary",
+              "bons.furious.patch.vanilla_cellfill.ColumnCellFill",
+              "bons.furious.patch.vanilla_corner_table.CornerShare",
+              "bons.furious.patch.vanilla_structure_ring.StructureRing",
+              "bons.furious.patch.awcapi_climb.ClimberCollisions",
+              "bons.furious.patch.cablefacades.CfFastExit",
+              "bons.furious.patch.client_shake_gate.ShakeGate",
+              "bons.furious.patch.distanthorizons_level_wrappers.KeyedLevelPins",
+              "bons.furious.patch.distanthorizons_level_wrappers.WeakFolders",
+              "bons.furious.patch.etf_property_exceptions.EtfPropertyExceptions",
+              "bons.furious.patch.geckolib_constant_resources.ConstantResources",
+              "bons.furious.patch.jei_fake_menus.FakeMenuRelease",
+              "bons.furious.patch.ldlib_metadata.LdlibMetadata",
+              "bons.furious.patch.number_prechecks.AzureMolangNumberPrecheck",
+              "bons.furious.patch.number_prechecks.EmfTokenPrecheck",
+              "bons.furious.patch.number_prechecks.MolangNumberPrecheck",
+              "bons.furious.patch.projectile_gates.BoneHitboxPickGate",
+              "bons.furious.patch.projectile_gates.ProjectileGates",
+              "bons.furious.patch.punchy.EmfTraceSkip",
+              "bons.furious.patch.punchy.LazyGeoScans",
+              "bons.furious.patch.reliquary_charm.ReliquaryCharmGate",
+              "bons.furious.patch.ribbits_search.RibbitsSearch",
+              "bons.furious.patch.subtleeffects.DisplayTickBiomes",
+              "bons.furious.patch.subtleeffects.DryChests",
+              "bons.furious.patch.subtleeffects.IdleFluids",
+              "bons.furious.patch.terrablender_layers.StackedLayers",
+              "bons.furious.patch.vanilla_leveldat_encode.ParameterListEncodes",
+              "bons.furious.patch.vanilla_outline_memos.OutlineEdges",
+              "bons.furious.patch.vanilla_outline_memos.OutlineStyle",
+              "bons.furious.patch.vanilla_rl_path.PathCharFast",
+              "bons.furious.patch.vanilla_zip_index.ZipListings",
+              "bons.furious.patch.zeta_clusters.ClusterBoundsFirst"
+            ],
+            "unavailable": [
+              "bons.furious.patch.number_prechecks.TextAnimatorParsePrecheck"
+            ]
+          },
+          "bons.furious.patch.almostunified.DuplicateGroups": {
+            "shadow": true,
+            "checks": 826,
+            "mismatches": 0
+          },
+          "bons.furious.patch.armorbake_c2.CubeBakeMemo": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.artifacts.ArtifactsTickOrder": {
+            "shadow": true,
+            "checks": 212928,
+            "mismatches": 0
+          },
+          "bons.furious.patch.awcapi_climb.ClimberCollisions": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.basalt_guards.BasaltGuards": {
+            "shadow": true,
+            "checks": 1041,
+            "mismatches": 0
+          },
+          "bons.furious.patch.beardifier.EmptyBeardifiers": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cablefacades.CfFastExit": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cataclysm_client.CataclysmPoseHand": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cataclysm_client.CitadelPoseHand": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cataclysm_client.ShieldLayerPose": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.chunk_tick.TickingChunkMemo": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.client_shake_gate.ShakeGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.climate_last_result.WeakLastResult": {
+            "shadow": true,
+            "checks": 12879956,
+            "mismatches": 0
+          },
+          "bons.furious.patch.crittersandcompanions_c2.EntityClassCounts": {
+            "shadow": true,
+            "checks": 17888,
+            "mismatches": 0
+          },
+          "bons.furious.patch.crittersandcompanions_c2.RedPandaGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cucumber.CucumberTileDispatch": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.curios_tooltip.CuriosTagKeys": {
+            "shadow": true,
+            "checks": 302112,
+            "mismatches": 0
+          },
+          "bons.furious.patch.datapack_selectors.SelectorPrefilter": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.datapack_selectors.SingleTypeTest": {
+            "shadow": true,
+            "checks": 176680,
+            "mismatches": 0
+          },
+          "bons.furious.patch.datapack_selectors.TagIndex": {
+            "shadow": true,
+            "checks": 172480,
+            "mismatches": 0
+          },
+          "bons.furious.patch.dh_loader.AdjacentFaceSkip": {
+            "shadow": true,
+            "checks": 380282498,
+            "mismatches": 0
+          },
+          "bons.furious.patch.dh_loader.PooledStringIndex": {
+            "shadow": true,
+            "checks": 5433059,
+            "mismatches": 0
+          },
+          "bons.furious.patch.dh_loader.QuadSortKeys": {
+            "shadow": true,
+            "checks": 63531,
+            "mismatches": 0
+          },
+          "bons.furious.patch.dh_loader.WrapperAirFlag": {
+            "shadow": true,
+            "checks": 197591999,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons.BiomeBlendMemo": {
+            "shadow": true,
+            "checks": 310254621,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons.LodBiomeMemo": {
+            "shadow": true,
+            "checks": 58050304,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons_level_wrappers.KeyedLevelPins": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons_level_wrappers.WeakFolders": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons_streams.UnlockedOutputStream": {
+            "shadow": true,
+            "checks": 66408,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons_tint.TintColumns": {
+            "shadow": true,
+            "checks": 357791216,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_draw.DrawBatchCache": {
+            "shadow": true,
+            "checks": 65101,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_draw.MergedDraws": {
+            "shadow": true,
+            "checks": 51657,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_search.SearchReplay": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_shader_sources.ShaderSources": {
+            "shadow": true,
+            "checks": 36,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_sorting.QuadKeySort": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_sprites.SpriteFrameTimes": {
+            "shadow": true,
+            "checks": 290986,
+            "mismatches": 0
+          },
+          "bons.furious.patch.etf_property_exceptions.EtfPropertyExceptions": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.fdbosses_c2.SpawnerPresence": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.fluidwalk_c2.LionfishFluidWalk": {
+            "shadow": true,
+            "checks": 161201,
+            "mismatches": 0
+          },
+          "bons.furious.patch.flywheel_level_attached.AttachedPins": {
+            "shadow": true,
+            "checks": 2,
+            "mismatches": 0
+          },
+          "bons.furious.patch.geckolib_constant_resources.ConstantResources": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.item_renderers.ItemRendererReuse": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.jei_fake_menus.FakeMenuRelease": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.jei_menu_weak.WeakMenuSet": {
+            "shadow": true,
+            "checks": 184,
+            "mismatches": 0
+          },
+          "bons.furious.patch.jei_search.BackgroundGrams": {
+            "shadow": true,
+            "checks": 2,
+            "mismatches": 0
+          },
+          "bons.furious.patch.jei_search.SortKeys": {
+            "shadow": true,
+            "checks": 2,
+            "mismatches": 0
+          },
+          "bons.furious.patch.ldlib_metadata.LdlibMetadata": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.lionfish_models.LionfishModelParts": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.mesh_air.BlockStateAirFlag": {
+            "shadow": true,
+            "checks": 758154114,
+            "mismatches": 0
+          },
+          "bons.furious.patch.mob_sunburn.SunBurnOrder": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.modernfix_bake.BakeLocations": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.module_resources.DhSqlScriptLookup": {
+            "shadow": true,
+            "checks": 1469,
+            "mismatches": 0
+          },
+          "bons.furious.patch.mutantmonsters_c2.EmptyShoulderSkip": {
+            "shadow": true,
+            "checks": 4800,
+            "mismatches": 0
+          },
+          "bons.furious.patch.number_prechecks.AzureMolangNumberPrecheck": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.number_prechecks.EmfTokenPrecheck": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.number_prechecks.MolangNumberPrecheck": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.number_prechecks.TextAnimatorParsePrecheck": {
+            "unavailable": "java.lang.NoClassDefFoundError: snownee/textanimator/effect/params/Params"
+          },
+          "bons.furious.patch.pipez_logistics.EmptyFilters": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.pipez_logistics.SortedConnections": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.projectile_gates.BoneHitboxPickGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.projectile_gates.ProjectileGates": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.punchy.EmfTraceSkip": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.punchy.LazyGeoScans": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.radium_fixes.PartEntityCollisions": {
+            "shadow": true,
+            "checks": 120310,
+            "mismatches": 0
+          },
+          "bons.furious.patch.reliquary_charm.ReliquaryCharmGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.ribbits_search.RibbitsSearch": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.spawn_gate.SpawnGate": {
+            "shadow": true,
+            "checks": 264567,
+            "mismatches": 0
+          },
+          "bons.furious.patch.state_memo.SeaLifeWaterlogged": {
+            "shadow": true,
+            "checks": 69646,
+            "mismatches": 0
+          },
+          "bons.furious.patch.storagedrawers.CountLabels": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.structurify_c2.CheckMemo": {
+            "shadow": true,
+            "checks": 135,
+            "mismatches": 0
+          },
+          "bons.furious.patch.subtleeffects.DisplayTickBiomes": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.subtleeffects.DryChests": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.subtleeffects.IdleFluids": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.tag_ids.TagIds": {
+            "shadow": true,
+            "checks": 22190000,
+            "mismatches": 0
+          },
+          "bons.furious.patch.terrablender.LazyNamespaceRules": {
+            "shadow": true,
+            "checks": 125377821,
+            "mismatches": 0
+          },
+          "bons.furious.patch.terrablender.NamespaceRuleMemo": {
+            "shadow": true,
+            "checks": 123260280,
+            "mismatches": 0
+          },
+          "bons.furious.patch.terrablender_layers.StackedLayers": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.terrain.ColumnSummary": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.ticker_gate.TickerGate": {
+            "shadow": true,
+            "checks": 192394,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_cellfill.ColumnCellFill": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_chunk_codecs.BiomeCodecMemo": {
+            "shadow": true,
+            "checks": 51,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_chunk_codecs.PaletteDirectNbt": {
+            "shadow": true,
+            "checks": 350456,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_chunk_codecs.StateCodecMemo": {
+            "shadow": true,
+            "checks": 18478,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_climate_distance.ClimateDistanceReuse": {
+            "shadow": true,
+            "checks": 12882115,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_corner_table.CornerShare": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_entity.BlockScans": {
+            "shadow": true,
+            "checks": 348684,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_entity.FireIdleScan": {
+            "shadow": true,
+            "checks": 143323,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_framed_maps.FramedMaps": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_game_events.GameEventRegistries": {
+            "shadow": true,
+            "checks": 100251,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_goal_flags.GoalFlags": {
+            "shadow": true,
+            "checks": 819566,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_inventory_index.ListenerIndex": {
+            "shadow": true,
+            "checks": 8610,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_item_merge.MergeCandidates": {
+            "shadow": true,
+            "checks": 31,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_leveldat_encode.ParameterListEncodes": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_long_jump.LongJumpPicks": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_outline_memos.OutlineEdges": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_outline_memos.OutlineStyle": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_outline_skip.OutlineSkip": {
+            "shadow": true,
+            "checks": 3464,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_owner_name.OwnerNames": {
+            "shadow": true,
+            "checks": 16,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_raycast.ClipFast": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_rl_path.PathCharFast": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_search.RepellentSearch": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_search.TurtleEggSearch": {
+            "shadow": true,
+            "checks": 112,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_structure_ring.StructureRing": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_structure_templates.StructureTemplateHits": {
+            "shadow": true,
+            "checks": 134226,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_text.StripFormatting": {
+            "shadow": true,
+            "checks": 12602,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_zip_index.ZipListings": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.worldgen_aquifer.AquiferCandidates": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.worldgen_beardifier_bounds.BeardifierBounds": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.zeta_clusters.ClusterBoundsFirst": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          }
+        }
+      },
+      "jei51": {
+        "passed": true,
+        "jei42": {
+          "added": 12881,
+          "anvil": {
+            "count": 3278,
+            "ordered_sha256": "b24c9b2cd445b40d43eb7e4e9183cda016286a708a057b0e90c969f119446a50"
+          },
+          "cancellation_restart_checks": 2,
+          "finished_runs": 2,
+          "grindstone": {
+            "count": 9717,
+            "ordered_sha256": "a53fc59542f8a5fc9b3d8439be278a9e1865320cd3e4ffea2c073d1964678a25"
+          },
+          "passed": true,
+          "starts": 2,
+          "stops": 1
+        },
+        "shadow": {
+          "_summary": {
+            "checks": 2583516588,
+            "mismatches": 0,
+            "mismatching": [],
+            "idle": [
+              "bons.furious.patch.beardifier.EmptyBeardifiers",
+              "bons.furious.patch.chunk_tick.TickingChunkMemo",
+              "bons.furious.patch.datapack_selectors.SelectorPrefilter",
+              "bons.furious.patch.cucumber.CucumberTileDispatch",
+              "bons.furious.patch.embeddium_search.SearchReplay",
+              "bons.furious.patch.embeddium_sorting.QuadKeySort",
+              "bons.furious.patch.worldgen_aquifer.AquiferCandidates",
+              "bons.furious.patch.worldgen_beardifier_bounds.BeardifierBounds",
+              "bons.furious.patch.armorbake_c2.CubeBakeMemo",
+              "bons.furious.patch.modernfix_bake.BakeLocations",
+              "bons.furious.patch.pipez_logistics.SortedConnections",
+              "bons.furious.patch.pipez_logistics.EmptyFilters",
+              "bons.furious.patch.mob_sunburn.SunBurnOrder",
+              "bons.furious.patch.vanilla_framed_maps.FramedMaps",
+              "bons.furious.patch.vanilla_item_merge.MergeCandidates",
+              "bons.furious.patch.vanilla_long_jump.LongJumpPicks",
+              "bons.furious.patch.vanilla_raycast.ClipFast",
+              "bons.furious.patch.vanilla_search.RepellentSearch",
+              "bons.furious.patch.crittersandcompanions_c2.RedPandaGate",
+              "bons.furious.patch.fdbosses_c2.SpawnerPresence",
+              "bons.furious.patch.storagedrawers.CountLabels",
+              "bons.furious.patch.item_renderers.ItemRendererReuse",
+              "bons.furious.patch.cataclysm_client.ShieldLayerPose",
+              "bons.furious.patch.lionfish_models.LionfishModelParts",
+              "bons.furious.patch.terrain.ColumnSummary",
+              "bons.furious.patch.vanilla_cellfill.ColumnCellFill",
+              "bons.furious.patch.vanilla_corner_table.CornerShare",
+              "bons.furious.patch.vanilla_structure_ring.StructureRing",
+              "bons.furious.patch.awcapi_climb.ClimberCollisions",
+              "bons.furious.patch.cablefacades.CfFastExit",
+              "bons.furious.patch.client_shake_gate.ShakeGate",
+              "bons.furious.patch.distanthorizons_level_wrappers.KeyedLevelPins",
+              "bons.furious.patch.distanthorizons_level_wrappers.WeakFolders",
+              "bons.furious.patch.etf_property_exceptions.EtfPropertyExceptions",
+              "bons.furious.patch.geckolib_constant_resources.ConstantResources",
+              "bons.furious.patch.jei_fake_menus.FakeMenuRelease",
+              "bons.furious.patch.ldlib_metadata.LdlibMetadata",
+              "bons.furious.patch.number_prechecks.AzureMolangNumberPrecheck",
+              "bons.furious.patch.number_prechecks.EmfTokenPrecheck",
+              "bons.furious.patch.number_prechecks.MolangNumberPrecheck",
+              "bons.furious.patch.projectile_gates.BoneHitboxPickGate",
+              "bons.furious.patch.projectile_gates.ProjectileGates",
+              "bons.furious.patch.punchy.EmfTraceSkip",
+              "bons.furious.patch.punchy.LazyGeoScans",
+              "bons.furious.patch.reliquary_charm.ReliquaryCharmGate",
+              "bons.furious.patch.ribbits_search.RibbitsSearch",
+              "bons.furious.patch.subtleeffects.DisplayTickBiomes",
+              "bons.furious.patch.subtleeffects.DryChests",
+              "bons.furious.patch.subtleeffects.IdleFluids",
+              "bons.furious.patch.terrablender_layers.StackedLayers",
+              "bons.furious.patch.vanilla_leveldat_encode.ParameterListEncodes",
+              "bons.furious.patch.vanilla_outline_memos.OutlineEdges",
+              "bons.furious.patch.vanilla_outline_memos.OutlineStyle",
+              "bons.furious.patch.vanilla_rl_path.PathCharFast",
+              "bons.furious.patch.vanilla_zip_index.ZipListings",
+              "bons.furious.patch.zeta_clusters.ClusterBoundsFirst"
+            ],
+            "unavailable": [
+              "bons.furious.patch.number_prechecks.TextAnimatorParsePrecheck"
+            ]
+          },
+          "bons.furious.patch.almostunified.DuplicateGroups": {
+            "shadow": true,
+            "checks": 826,
+            "mismatches": 0
+          },
+          "bons.furious.patch.armorbake_c2.CubeBakeMemo": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.artifacts.ArtifactsTickOrder": {
+            "shadow": true,
+            "checks": 219073,
+            "mismatches": 0
+          },
+          "bons.furious.patch.awcapi_climb.ClimberCollisions": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.basalt_guards.BasaltGuards": {
+            "shadow": true,
+            "checks": 1041,
+            "mismatches": 0
+          },
+          "bons.furious.patch.beardifier.EmptyBeardifiers": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cablefacades.CfFastExit": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cataclysm_client.CataclysmPoseHand": {
+            "shadow": true,
+            "checks": 2,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cataclysm_client.CitadelPoseHand": {
+            "shadow": true,
+            "checks": 2,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cataclysm_client.ShieldLayerPose": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.chunk_tick.TickingChunkMemo": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.client_shake_gate.ShakeGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.climate_last_result.WeakLastResult": {
+            "shadow": true,
+            "checks": 14543519,
+            "mismatches": 0
+          },
+          "bons.furious.patch.crittersandcompanions_c2.EntityClassCounts": {
+            "shadow": true,
+            "checks": 13240,
+            "mismatches": 0
+          },
+          "bons.furious.patch.crittersandcompanions_c2.RedPandaGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cucumber.CucumberTileDispatch": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.curios_tooltip.CuriosTagKeys": {
+            "shadow": true,
+            "checks": 302112,
+            "mismatches": 0
+          },
+          "bons.furious.patch.datapack_selectors.SelectorPrefilter": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.datapack_selectors.SingleTypeTest": {
+            "shadow": true,
+            "checks": 176849,
+            "mismatches": 0
+          },
+          "bons.furious.patch.datapack_selectors.TagIndex": {
+            "shadow": true,
+            "checks": 172774,
+            "mismatches": 0
+          },
+          "bons.furious.patch.dh_loader.AdjacentFaceSkip": {
+            "shadow": true,
+            "checks": 412962052,
+            "mismatches": 0
+          },
+          "bons.furious.patch.dh_loader.PooledStringIndex": {
+            "shadow": true,
+            "checks": 6319309,
+            "mismatches": 0
+          },
+          "bons.furious.patch.dh_loader.QuadSortKeys": {
+            "shadow": true,
+            "checks": 77228,
+            "mismatches": 0
+          },
+          "bons.furious.patch.dh_loader.WrapperAirFlag": {
+            "shadow": true,
+            "checks": 224018551,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons.BiomeBlendMemo": {
+            "shadow": true,
+            "checks": 326798675,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons.LodBiomeMemo": {
+            "shadow": true,
+            "checks": 59599460,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons_level_wrappers.KeyedLevelPins": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons_level_wrappers.WeakFolders": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons_streams.UnlockedOutputStream": {
+            "shadow": true,
+            "checks": 159512,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons_tint.TintColumns": {
+            "shadow": true,
+            "checks": 377161935,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_draw.DrawBatchCache": {
+            "shadow": true,
+            "checks": 61427,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_draw.MergedDraws": {
+            "shadow": true,
+            "checks": 51513,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_search.SearchReplay": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_shader_sources.ShaderSources": {
+            "shadow": true,
+            "checks": 36,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_sorting.QuadKeySort": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_sprites.SpriteFrameTimes": {
+            "shadow": true,
+            "checks": 290993,
+            "mismatches": 0
+          },
+          "bons.furious.patch.etf_property_exceptions.EtfPropertyExceptions": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.fdbosses_c2.SpawnerPresence": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.fluidwalk_c2.LionfishFluidWalk": {
+            "shadow": true,
+            "checks": 161941,
+            "mismatches": 0
+          },
+          "bons.furious.patch.flywheel_level_attached.AttachedPins": {
+            "shadow": true,
+            "checks": 2,
+            "mismatches": 0
+          },
+          "bons.furious.patch.geckolib_constant_resources.ConstantResources": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.item_renderers.ItemRendererReuse": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.jei_fake_menus.FakeMenuRelease": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.jei_menu_weak.WeakMenuSet": {
+            "shadow": true,
+            "checks": 180,
+            "mismatches": 0
+          },
+          "bons.furious.patch.jei_search.BackgroundGrams": {
+            "shadow": true,
+            "checks": 2,
+            "mismatches": 0
+          },
+          "bons.furious.patch.jei_search.SortKeys": {
+            "shadow": true,
+            "checks": 2,
+            "mismatches": 0
+          },
+          "bons.furious.patch.ldlib_metadata.LdlibMetadata": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.lionfish_models.LionfishModelParts": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.mesh_air.BlockStateAirFlag": {
+            "shadow": true,
+            "checks": 836704069,
+            "mismatches": 0
+          },
+          "bons.furious.patch.mob_sunburn.SunBurnOrder": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.modernfix_bake.BakeLocations": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.module_resources.DhSqlScriptLookup": {
+            "shadow": true,
+            "checks": 1469,
+            "mismatches": 0
+          },
+          "bons.furious.patch.mutantmonsters_c2.EmptyShoulderSkip": {
+            "shadow": true,
+            "checks": 4806,
+            "mismatches": 0
+          },
+          "bons.furious.patch.number_prechecks.AzureMolangNumberPrecheck": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.number_prechecks.EmfTokenPrecheck": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.number_prechecks.MolangNumberPrecheck": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.number_prechecks.TextAnimatorParsePrecheck": {
+            "unavailable": "java.lang.NoClassDefFoundError: snownee/textanimator/effect/params/Params"
+          },
+          "bons.furious.patch.pipez_logistics.EmptyFilters": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.pipez_logistics.SortedConnections": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.projectile_gates.BoneHitboxPickGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.projectile_gates.ProjectileGates": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.punchy.EmfTraceSkip": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.punchy.LazyGeoScans": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.radium_fixes.PartEntityCollisions": {
+            "shadow": true,
+            "checks": 114660,
+            "mismatches": 0
+          },
+          "bons.furious.patch.reliquary_charm.ReliquaryCharmGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.ribbits_search.RibbitsSearch": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.spawn_gate.SpawnGate": {
+            "shadow": true,
+            "checks": 265015,
+            "mismatches": 0
+          },
+          "bons.furious.patch.state_memo.SeaLifeWaterlogged": {
+            "shadow": true,
+            "checks": 70889,
+            "mismatches": 0
+          },
+          "bons.furious.patch.storagedrawers.CountLabels": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.structurify_c2.CheckMemo": {
+            "shadow": true,
+            "checks": 198,
+            "mismatches": 0
+          },
+          "bons.furious.patch.subtleeffects.DisplayTickBiomes": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.subtleeffects.DryChests": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.subtleeffects.IdleFluids": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.tag_ids.TagIds": {
+            "shadow": true,
+            "checks": 22499920,
+            "mismatches": 0
+          },
+          "bons.furious.patch.terrablender.LazyNamespaceRules": {
+            "shadow": true,
+            "checks": 142610744,
+            "mismatches": 0
+          },
+          "bons.furious.patch.terrablender.NamespaceRuleMemo": {
+            "shadow": true,
+            "checks": 141178296,
+            "mismatches": 0
+          },
+          "bons.furious.patch.terrablender_layers.StackedLayers": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.terrain.ColumnSummary": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.ticker_gate.TickerGate": {
+            "shadow": true,
+            "checks": 195013,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_cellfill.ColumnCellFill": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_chunk_codecs.BiomeCodecMemo": {
+            "shadow": true,
+            "checks": 78,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_chunk_codecs.PaletteDirectNbt": {
+            "shadow": true,
+            "checks": 516157,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_chunk_codecs.StateCodecMemo": {
+            "shadow": true,
+            "checks": 20430,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_climate_distance.ClimateDistanceReuse": {
+            "shadow": true,
+            "checks": 14543842,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_corner_table.CornerShare": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_entity.BlockScans": {
+            "shadow": true,
+            "checks": 350804,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_entity.FireIdleScan": {
+            "shadow": true,
+            "checks": 152817,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_framed_maps.FramedMaps": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_game_events.GameEventRegistries": {
+            "shadow": true,
+            "checks": 111078,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_goal_flags.GoalFlags": {
+            "shadow": true,
+            "checks": 803089,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_inventory_index.ListenerIndex": {
+            "shadow": true,
+            "checks": 8610,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_item_merge.MergeCandidates": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_leveldat_encode.ParameterListEncodes": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_long_jump.LongJumpPicks": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_outline_memos.OutlineEdges": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_outline_memos.OutlineStyle": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_outline_skip.OutlineSkip": {
+            "shadow": true,
+            "checks": 3452,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_owner_name.OwnerNames": {
+            "shadow": true,
+            "checks": 16,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_raycast.ClipFast": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_rl_path.PathCharFast": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_search.RepellentSearch": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_search.TurtleEggSearch": {
+            "shadow": true,
+            "checks": 110,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_structure_ring.StructureRing": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_structure_templates.StructureTemplateHits": {
+            "shadow": true,
+            "checks": 256168,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_text.StripFormatting": {
+            "shadow": true,
+            "checks": 12602,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_zip_index.ZipListings": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.worldgen_aquifer.AquiferCandidates": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.worldgen_beardifier_bounds.BeardifierBounds": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.zeta_clusters.ClusterBoundsFirst": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          }
+        }
+      },
+      "extrasoff51": {
+        "passed": true,
+        "shadow": {
+          "_summary": {
+            "checks": 0,
+            "mismatches": 0,
+            "mismatching": [],
+            "idle": [
+              "bons.furious.patch.dh_loader.PooledStringIndex",
+              "bons.furious.patch.dh_loader.WrapperAirFlag",
+              "bons.furious.patch.dh_loader.AdjacentFaceSkip",
+              "bons.furious.patch.dh_loader.QuadSortKeys",
+              "bons.furious.patch.distanthorizons.LodBiomeMemo",
+              "bons.furious.patch.distanthorizons.BiomeBlendMemo",
+              "bons.furious.patch.beardifier.EmptyBeardifiers",
+              "bons.furious.patch.terrablender.NamespaceRuleMemo",
+              "bons.furious.patch.terrablender.LazyNamespaceRules",
+              "bons.furious.patch.vanilla_entity.BlockScans",
+              "bons.furious.patch.chunk_tick.TickingChunkMemo",
+              "bons.furious.patch.mesh_air.BlockStateAirFlag",
+              "bons.furious.patch.datapack_selectors.SelectorPrefilter",
+              "bons.furious.patch.cucumber.CucumberTileDispatch",
+              "bons.furious.patch.almostunified.DuplicateGroups",
+              "bons.furious.patch.artifacts.ArtifactsTickOrder",
+              "bons.furious.patch.embeddium_draw.DrawBatchCache",
+              "bons.furious.patch.embeddium_draw.MergedDraws",
+              "bons.furious.patch.embeddium_search.SearchReplay",
+              "bons.furious.patch.embeddium_sorting.QuadKeySort",
+              "bons.furious.patch.jei_search.BackgroundGrams",
+              "bons.furious.patch.jei_search.SortKeys",
+              "bons.furious.patch.curios_tooltip.CuriosTagKeys",
+              "bons.furious.patch.radium_fixes.PartEntityCollisions",
+              "bons.furious.patch.fluidwalk_c2.LionfishFluidWalk",
+              "bons.furious.patch.structurify_c2.CheckMemo",
+              "bons.furious.patch.mutantmonsters_c2.EmptyShoulderSkip",
+              "bons.furious.patch.tag_ids.TagIds",
+              "bons.furious.patch.ticker_gate.TickerGate",
+              "bons.furious.patch.spawn_gate.SpawnGate",
+              "bons.furious.patch.state_memo.SeaLifeWaterlogged",
+              "bons.furious.patch.worldgen_aquifer.AquiferCandidates",
+              "bons.furious.patch.worldgen_beardifier_bounds.BeardifierBounds",
+              "bons.furious.patch.vanilla_text.StripFormatting",
+              "bons.furious.patch.module_resources.DhSqlScriptLookup",
+              "bons.furious.patch.armorbake_c2.CubeBakeMemo",
+              "bons.furious.patch.modernfix_bake.BakeLocations",
+              "bons.furious.patch.pipez_logistics.SortedConnections",
+              "bons.furious.patch.pipez_logistics.EmptyFilters",
+              "bons.furious.patch.mob_sunburn.SunBurnOrder",
+              "bons.furious.patch.vanilla_framed_maps.FramedMaps",
+              "bons.furious.patch.vanilla_game_events.GameEventRegistries",
+              "bons.furious.patch.vanilla_goal_flags.GoalFlags",
+              "bons.furious.patch.vanilla_item_merge.MergeCandidates",
+              "bons.furious.patch.vanilla_long_jump.LongJumpPicks",
+              "bons.furious.patch.vanilla_raycast.ClipFast",
+              "bons.furious.patch.vanilla_search.TurtleEggSearch",
+              "bons.furious.patch.vanilla_search.RepellentSearch",
+              "bons.furious.patch.crittersandcompanions_c2.EntityClassCounts",
+              "bons.furious.patch.crittersandcompanions_c2.RedPandaGate",
+              "bons.furious.patch.fdbosses_c2.SpawnerPresence",
+              "bons.furious.patch.embeddium_sprites.SpriteFrameTimes",
+              "bons.furious.patch.storagedrawers.CountLabels",
+              "bons.furious.patch.item_renderers.ItemRendererReuse",
+              "bons.furious.patch.distanthorizons_streams.UnlockedOutputStream",
+              "bons.furious.patch.distanthorizons_tint.TintColumns",
+              "bons.furious.patch.vanilla_outline_skip.OutlineSkip",
+              "bons.furious.patch.cataclysm_client.CataclysmPoseHand",
+              "bons.furious.patch.cataclysm_client.CitadelPoseHand",
+              "bons.furious.patch.cataclysm_client.ShieldLayerPose",
+              "bons.furious.patch.lionfish_models.LionfishModelParts",
+              "bons.furious.patch.vanilla_chunk_codecs.StateCodecMemo",
+              "bons.furious.patch.vanilla_chunk_codecs.BiomeCodecMemo",
+              "bons.furious.patch.vanilla_chunk_codecs.PaletteDirectNbt",
+              "bons.furious.patch.vanilla_inventory_index.ListenerIndex",
+              "bons.furious.patch.datapack_selectors.SingleTypeTest",
+              "bons.furious.patch.datapack_selectors.TagIndex",
+              "bons.furious.patch.terrain.ColumnSummary",
+              "bons.furious.patch.vanilla_cellfill.ColumnCellFill",
+              "bons.furious.patch.vanilla_corner_table.CornerShare",
+              "bons.furious.patch.climate_last_result.WeakLastResult",
+              "bons.furious.patch.basalt_guards.BasaltGuards",
+              "bons.furious.patch.vanilla_structure_ring.StructureRing",
+              "bons.furious.patch.vanilla_structure_templates.StructureTemplateHits",
+              "bons.furious.patch.awcapi_climb.ClimberCollisions",
+              "bons.furious.patch.cablefacades.CfFastExit",
+              "bons.furious.patch.client_shake_gate.ShakeGate",
+              "bons.furious.patch.distanthorizons_level_wrappers.KeyedLevelPins",
+              "bons.furious.patch.distanthorizons_level_wrappers.WeakFolders",
+              "bons.furious.patch.embeddium_shader_sources.ShaderSources",
+              "bons.furious.patch.etf_property_exceptions.EtfPropertyExceptions",
+              "bons.furious.patch.flywheel_level_attached.AttachedPins",
+              "bons.furious.patch.geckolib_constant_resources.ConstantResources",
+              "bons.furious.patch.jei_fake_menus.FakeMenuRelease",
+              "bons.furious.patch.jei_menu_weak.WeakMenuSet",
+              "bons.furious.patch.ldlib_metadata.LdlibMetadata",
+              "bons.furious.patch.number_prechecks.AzureMolangNumberPrecheck",
+              "bons.furious.patch.number_prechecks.EmfTokenPrecheck",
+              "bons.furious.patch.number_prechecks.MolangNumberPrecheck",
+              "bons.furious.patch.number_prechecks.TextAnimatorParsePrecheck",
+              "bons.furious.patch.projectile_gates.BoneHitboxPickGate",
+              "bons.furious.patch.projectile_gates.ProjectileGates",
+              "bons.furious.patch.punchy.EmfTraceSkip",
+              "bons.furious.patch.punchy.LazyGeoScans",
+              "bons.furious.patch.reliquary_charm.ReliquaryCharmGate",
+              "bons.furious.patch.ribbits_search.RibbitsSearch",
+              "bons.furious.patch.subtleeffects.DisplayTickBiomes",
+              "bons.furious.patch.subtleeffects.DryChests",
+              "bons.furious.patch.subtleeffects.IdleFluids",
+              "bons.furious.patch.terrablender_layers.StackedLayers",
+              "bons.furious.patch.vanilla_climate_distance.ClimateDistanceReuse",
+              "bons.furious.patch.vanilla_entity.FireIdleScan",
+              "bons.furious.patch.vanilla_leveldat_encode.ParameterListEncodes",
+              "bons.furious.patch.vanilla_outline_memos.OutlineEdges",
+              "bons.furious.patch.vanilla_outline_memos.OutlineStyle",
+              "bons.furious.patch.vanilla_owner_name.OwnerNames",
+              "bons.furious.patch.vanilla_rl_path.PathCharFast",
+              "bons.furious.patch.vanilla_zip_index.ZipListings",
+              "bons.furious.patch.zeta_clusters.ClusterBoundsFirst"
+            ],
+            "unavailable": []
+          },
+          "bons.furious.patch.almostunified.DuplicateGroups": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.armorbake_c2.CubeBakeMemo": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.artifacts.ArtifactsTickOrder": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.awcapi_climb.ClimberCollisions": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.basalt_guards.BasaltGuards": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.beardifier.EmptyBeardifiers": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cablefacades.CfFastExit": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cataclysm_client.CataclysmPoseHand": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cataclysm_client.CitadelPoseHand": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cataclysm_client.ShieldLayerPose": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.chunk_tick.TickingChunkMemo": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.client_shake_gate.ShakeGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.climate_last_result.WeakLastResult": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.crittersandcompanions_c2.EntityClassCounts": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.crittersandcompanions_c2.RedPandaGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.cucumber.CucumberTileDispatch": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.curios_tooltip.CuriosTagKeys": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.datapack_selectors.SelectorPrefilter": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.datapack_selectors.SingleTypeTest": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.datapack_selectors.TagIndex": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.dh_loader.AdjacentFaceSkip": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.dh_loader.PooledStringIndex": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.dh_loader.QuadSortKeys": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.dh_loader.WrapperAirFlag": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons.BiomeBlendMemo": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons.LodBiomeMemo": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons_level_wrappers.KeyedLevelPins": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons_level_wrappers.WeakFolders": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons_streams.UnlockedOutputStream": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.distanthorizons_tint.TintColumns": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_draw.DrawBatchCache": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_draw.MergedDraws": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_search.SearchReplay": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_shader_sources.ShaderSources": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_sorting.QuadKeySort": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.embeddium_sprites.SpriteFrameTimes": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.etf_property_exceptions.EtfPropertyExceptions": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.fdbosses_c2.SpawnerPresence": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.fluidwalk_c2.LionfishFluidWalk": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.flywheel_level_attached.AttachedPins": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.geckolib_constant_resources.ConstantResources": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.item_renderers.ItemRendererReuse": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.jei_fake_menus.FakeMenuRelease": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.jei_menu_weak.WeakMenuSet": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.jei_search.BackgroundGrams": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.jei_search.SortKeys": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.ldlib_metadata.LdlibMetadata": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.lionfish_models.LionfishModelParts": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.mesh_air.BlockStateAirFlag": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.mob_sunburn.SunBurnOrder": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.modernfix_bake.BakeLocations": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.module_resources.DhSqlScriptLookup": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.mutantmonsters_c2.EmptyShoulderSkip": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.number_prechecks.AzureMolangNumberPrecheck": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.number_prechecks.EmfTokenPrecheck": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.number_prechecks.MolangNumberPrecheck": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.number_prechecks.TextAnimatorParsePrecheck": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.pipez_logistics.EmptyFilters": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.pipez_logistics.SortedConnections": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.projectile_gates.BoneHitboxPickGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.projectile_gates.ProjectileGates": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.punchy.EmfTraceSkip": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.punchy.LazyGeoScans": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.radium_fixes.PartEntityCollisions": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.reliquary_charm.ReliquaryCharmGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.ribbits_search.RibbitsSearch": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.spawn_gate.SpawnGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.state_memo.SeaLifeWaterlogged": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.storagedrawers.CountLabels": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.structurify_c2.CheckMemo": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.subtleeffects.DisplayTickBiomes": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.subtleeffects.DryChests": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.subtleeffects.IdleFluids": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.tag_ids.TagIds": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.terrablender.LazyNamespaceRules": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.terrablender.NamespaceRuleMemo": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.terrablender_layers.StackedLayers": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.terrain.ColumnSummary": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.ticker_gate.TickerGate": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_cellfill.ColumnCellFill": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_chunk_codecs.BiomeCodecMemo": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_chunk_codecs.PaletteDirectNbt": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_chunk_codecs.StateCodecMemo": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_climate_distance.ClimateDistanceReuse": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_corner_table.CornerShare": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_entity.BlockScans": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_entity.FireIdleScan": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_framed_maps.FramedMaps": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_game_events.GameEventRegistries": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_goal_flags.GoalFlags": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_inventory_index.ListenerIndex": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_item_merge.MergeCandidates": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_leveldat_encode.ParameterListEncodes": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_long_jump.LongJumpPicks": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_outline_memos.OutlineEdges": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_outline_memos.OutlineStyle": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_outline_skip.OutlineSkip": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_owner_name.OwnerNames": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_raycast.ClipFast": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_rl_path.PathCharFast": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_search.RepellentSearch": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_search.TurtleEggSearch": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_structure_ring.StructureRing": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_structure_templates.StructureTemplateHits": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_text.StripFormatting": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.vanilla_zip_index.ZipListings": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.worldgen_aquifer.AquiferCandidates": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.worldgen_beardifier_bounds.BeardifierBounds": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          },
+          "bons.furious.patch.zeta_clusters.ClusterBoundsFirst": {
+            "shadow": true,
+            "checks": 0,
+            "mismatches": 0
+          }
+        }
+      }
+    },
+    "celestisynth_dh_issue_reproduced_with_all_controls_off": true
+  },
+  "limitations": [
+    "Targeted tests, no comprehensive multiplayer coverage.",
+    "No 1.21.1 speed benchmark.",
+    "Celestisynth 1.3.9 + DH 3.3.3 worldgen failure persists with every control disabled."
+  ]
+}

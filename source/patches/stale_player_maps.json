@@ -1,0 +1,156 @@
+{
+  "group": "stale_player_maps",
+  "keys": {
+    "stale_player_map_purge_treechop": {
+      "mod": "treechop",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.stale_player_maps.TreeChopNoChopRecursionMixin"
+      ],
+      "guard": [
+        {
+          "class": "ht/treechop/compat/NoChopRecursion",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "lastChopTickByPlayers = new HashMap<>()",
+          "sha256": "0aff76b9e8c98e97117e0f6004edc3f27fdcf11fc86c132bf08ad11b43cb24d4"
+        },
+        {
+          "class": "ht/treechop/compat/NoChopRecursion",
+          "method": "*",
+          "desc": "",
+          "sha256": "4e9e08071b5b6cc5f85e6559c7a706f0c07b901c642386620119372a4521ddc0"
+        },
+        {
+          "class": "ht/treechop/compat/NoChopRecursion$EventHandler",
+          "method": "onChop",
+          "desc": "(Lht/treechop/api/ChopEvent$StartChopEvent;)V",
+          "note": "getOrDefault(event.getPlayer(), NEVER) == time ? cancel : put(player, time): the map's only accessor",
+          "sha256": "4c3d834db91768e1cf3a080cc8ed35544c294ca1906f0e5ff367eea80cccde17"
+        },
+        {
+          "class": "ht/treechop/compat/NoChopRecursion$EventHandler",
+          "method": "*",
+          "desc": "",
+          "sha256": "e62c2ba478ed6206aca5246b0a11de6768563b2625d9b06ab6b300566b7b37d9"
+        },
+        {
+          "class": "ht/treechop/api/ChopEvent",
+          "method": "getPlayer",
+          "desc": "()Lnet/minecraft/world/entity/player/Player;",
+          "sha256": "4fa84a1d0b7e3f47d47adb51f74e8b19c80a1fb1574529f74877fa2671b4f704"
+        },
+        {
+          "class": "ht/treechop/api/ChopEvent$StartChopEvent",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lht/treechop/api/ChopData;)V",
+          "note": "a StartChopEvent always carries a ServerPlayer: the map is server-only",
+          "sha256": "608c0d2264ba98d8027b3dc778f00e5ada84a6f71f28030ca83fb0b4a85f6e4a"
+        },
+        {
+          "class": "ht/treechop/api/ChopEvent$StartChopEvent",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lht/treechop/api/ChopData;Ljava/lang/Object;)V",
+          "sha256": "da20d1e70207c35acc69381311d82a48c55fccf4100bf25da5cf0306115daa5f"
+        },
+        {
+          "class": "ht/treechop/common/NeoForgePlatform",
+          "method": "startChopEvent",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lht/treechop/api/ChopData;Ljava/lang/Object;)Z",
+          "note": "the only constructor call of StartChopEvent in the pack",
+          "sha256": "c5a01df57cfec9ddcd4cb7e11468d688dd385360f99728cb380b2f3b8ef27e12"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "sha256": "dcd4eab34d6347ed8288a5fb8224c9d683d497bad0a0e8fffae926cd24971deb"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "hashCode",
+          "desc": "()I",
+          "sha256": "45f42d1db77741534e550ab77c573466c57f830c021cd4d0c8e63374bbdb454e"
+        },
+        {
+          "class": "net/minecraft/server/players/PlayerList",
+          "method": "remove",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "sha256": "95a0ed959bbceaa2a558a7a1efb29a3da9809186920412f74394e97dd445db2d"
+        },
+        {
+          "class": "net/minecraft/server/players/PlayerList",
+          "method": "respawn",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;ZLnet/minecraft/world/entity/Entity$RemovalReason;)Lnet/minecraft/server/level/ServerPlayer;",
+          "sha256": "4d3a716b38995a9826b71cf5d983b47e08974d24de7da56ee326945f013d3135"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix: @Inject at RETURN of NoChopRecursion.<clinit> hands lastChopTickByPlayers to our shared layer (server: key swap on join, purge at logout); helpers bons.furious.patch.stale_player_maps.TreeChopMaps, StalePlayerKeys",
+      "license": "MIT (TreeChop): no TreeChop code is carried; the mixin hands over a map reference"
+    },
+    "stale_player_map_purge_celestisynth": {
+      "mod": "celestisynth",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.stale_player_maps.CelestisynthAnimatorMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/thecelestialworkshop/celestisynth/api/animation/player/CSAnimator",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "three new IdentityHashMap<>()",
+          "sha256": "93f0b93abab670bf8041b328c5a8bfa1173f3161b37854a997b6a0e8fbb74c20"
+        },
+        {
+          "class": "org/thecelestialworkshop/celestisynth/api/animation/player/CSAnimator",
+          "method": "registerPlayerAnimation",
+          "desc": "(Lnet/minecraft/client/player/AbstractClientPlayer;Ldev/kosmx/playerAnim/api/layered/AnimationStack;)V",
+          "note": "the only writer: three new ModifierLayers per player object",
+          "sha256": "3a9fa7fc14336e58d0c5a95f5cdec5d1f3a99626c52d2e1d6b30998aa4bebe9a"
+        },
+        {
+          "class": "org/thecelestialworkshop/celestisynth/api/animation/player/CSAnimator",
+          "method": "*",
+          "desc": "",
+          "sha256": "dbe3a291e6983875b9f63408dd98e1c5cb6efbf226f781d185401fff721c451e"
+        },
+        {
+          "class": "org/thecelestialworkshop/celestisynth/api/animation/player/AnimationManager",
+          "method": "playAnimation",
+          "desc": "(Ldev/kosmx/playerAnim/api/IPlayable;Ldev/kosmx/playerAnim/api/layered/ModifierLayer;)V",
+          "note": "containsValue(layer) on the three maps, layer from a live player (only caller: animatePlayer)",
+          "sha256": "034d76d234268ac0e0d25cc9e1fb26773c33daa864f1e8174c6b2cfb5acdff83"
+        },
+        {
+          "class": "org/thecelestialworkshop/celestisynth/common/network/c2s/UpdateAnimationToAllPacket",
+          "method": "animatePlayer",
+          "desc": "(ILnet/minecraft/resources/ResourceLocation;Lnet/minecraft/client/player/AbstractClientPlayer;)V",
+          "note": "get(player) on the maps",
+          "sha256": "5d67fc1281cdb49ba6498bbc05d86b4abd301173a0c38d383b3bca1627eb8244"
+        },
+        {
+          "class": "org/thecelestialworkshop/celestisynth/common/network/c2s/UpdateAnimationToAllPacket",
+          "method": "lambda$handle$0",
+          "desc": "(Lorg/thecelestialworkshop/celestisynth/common/network/c2s/UpdateAnimationToAllPacket;)V",
+          "note": "the player comes from Minecraft.level.getEntity(id): only live objects",
+          "sha256": "0f727a82428a6651d3436a2c6c388e8100b743cfdfab6cbcb54eb455b0f3bf47"
+        },
+        {
+          "class": "org/thecelestialworkshop/celestisynth/common/network/c2s/UpdateAnimationToAllPacket",
+          "method": "*",
+          "desc": "",
+          "sha256": "13a8ec87e4b8fc9d442ffe33fff7534dbc429e868c0b36aef8a11795f4bab516"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix: @Inject at RETURN of CSAnimator.<clinit> hands the three identity maps to our shared layer (client: entry removed when its player leaves its level, when its level is replaced, at session end); helpers bons.furious.patch.stale_player_maps.CelestisynthMaps, StalePlayerKeys, StalePlayerKeysClient",
+      "license": "MIT (Celestisynth): no Celestisynth code is carried; the mixin hands over map references"
+    }
+  }
+}

@@ -71,6 +71,13 @@ public final class PortProbe {
                     if(!key.isBlank()) decisions.put(key, Guards.decide(key).toString());
             }
             result.put("decisions",decisions);
+            if (Boolean.getBoolean("bons_and_furious.primitiveProof47"))
+                result.put("primitive_proof47",PrimitiveProof47.run());
+            if (Boolean.getBoolean("bons_and_furious.staleProof47")) {
+                String tbJar = net.neoforged.fml.ModList.get().getModFileById("terrablender").getFile().getFilePath().toString();
+                TerrablenderStaleProof.main(new String[]{"proof",tbJar,"16"});
+                result.put("stale_proof47",Map.of("checks",TerrablenderStaleProof.checks,"failures",TerrablenderStaleProof.fails,"positions",TerrablenderStaleProof.positions));
+            }
             if (Boolean.getBoolean("bons_and_furious.spawnOracle42"))
                 result.put("spawn_oracle42", SpawnOracle42.run(server));
             if (Boolean.getBoolean("bons_and_furious.goalOracle42"))

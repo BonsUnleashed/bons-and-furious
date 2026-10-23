@@ -74,8 +74,14 @@ public final class MergedTargetGoal extends TargetGoal {
 
     /** NearestAttackableTargetGoal.findTarget for one class, from the shared list (same order, same call). */
     static LivingEntity nearest(Mob mob, List<LivingEntity> all, Class<? extends LivingEntity> type, TargetingConditions c) {
-        List<LivingEntity> sub = new ArrayList<>();
-        for (LivingEntity e : all) if (type.isInstance(e)) sub.add(e);
+        List<LivingEntity> sub = null;
+        for (LivingEntity e : all) if (type.isInstance(e)) {
+            if (sub == null) sub = new ArrayList<>();
+            sub.add(e);
+        }
+        // Most prey classes are absent. Preserve the original nearest-entity call
+        // and order for nonempty classes without allocating an empty list per miss.
+        if (sub == null) return null;
         return mob.level().getNearestEntity(sub, c, mob, mob.getX(), mob.getEyeY(), mob.getZ());
     }
 
@@ -90,6 +96,7 @@ public final class MergedTargetGoal extends TargetGoal {
     public void tick() {      // tick: higher-priority classes may still take over
         // GoalSelector ticks a goal immediately after starting it. canUse already
         // rolled every higher-priority class during that same update.
+
         if (justStarted) {
             justStarted = false;
             return;

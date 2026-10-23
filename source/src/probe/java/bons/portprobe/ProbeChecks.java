@@ -7,6 +7,13 @@ import org.spongepowered.asm.mixin.transformer.meta.MixinMerged;
 
 final class ProbeChecks {
     static Map<String,Object> forceTargets(boolean client) throws Exception {
+        if(Boolean.getBoolean("bons_and_furious.inspectItemStack47")) {
+            var node=org.spongepowered.asm.service.MixinService.getService().getBytecodeProvider().getClassNode("net.minecraft.world.item.ItemStack");
+            var writer=new org.objectweb.asm.ClassWriter(0);node.accept(writer);
+            java.nio.file.Files.write(java.nio.file.Path.of("ItemStack-runtime.class"),writer.toByteArray());
+            for(var m:node.methods)if(m.name.equals("isEmpty"))
+                java.nio.file.Files.writeString(java.nio.file.Path.of("ItemStack-runtime.sha256"),bons.furious.guard.Fingerprint.of(m));
+        }
         JsonObject targets;
         try(var in=ProbeChecks.class.getResourceAsStream("/probe-targets.json")) {
             targets=JsonParser.parseString(new String(Objects.requireNonNull(in).readAllBytes(),StandardCharsets.UTF_8)).getAsJsonObject();
@@ -24,6 +31,10 @@ final class ProbeChecks {
                 Map<String,Object> classes=new TreeMap<>();
                 for(var target:row.getAsJsonArray("targets")) {
                     String name=target.getAsString();
+                    if(row.has("per_target") && row.getAsJsonObject("per_target").has(name)) {
+                        String mod=row.getAsJsonObject("per_target").getAsJsonObject(name).get("mod").getAsString();
+                        if(!net.neoforged.fml.ModList.get().isLoaded(mod))continue;
+                    }
                     try {
                         Class<?> type=Class.forName(name,false,ProbeChecks.class.getClassLoader());
                         Set<String> applied=new TreeSet<>();
@@ -32,6 +43,10 @@ final class ProbeChecks {
                             if(merged!=null && merged.mixin().startsWith("bons."))applied.add(merged.mixin());
                         }
                         classes.put(name,applied);
+                        if(row.has("per_target") && row.getAsJsonObject("per_target").has(name)) {
+                            String mixin=row.getAsJsonObject("per_target").getAsJsonObject(name).get("mixin").getAsString();
+                            if(!applied.contains(mixin))failures.add(key+": installed fixture factory did not receive "+mixin);
+                        }
                     } catch(Throwable t) { classes.put(name,t.toString());failures.add(key+": "+t); }
                 }
                 detail.put("classes",classes);

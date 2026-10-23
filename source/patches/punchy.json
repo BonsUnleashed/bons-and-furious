@@ -1,0 +1,66 @@
+{
+  "group": "punchy",
+  "keys": {
+    "punchy_lazy_resource_scans": {
+      "mod": "punchy",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.punchy.GeoRegistryLazyScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "punchy/client/model/ResourcePackGeoRegistry",
+          "method": "load",
+          "desc": "(Lnet/minecraft/server/packs/resources/ResourceManager;)V",
+          "sha256": "75e53a93a9cc09d975674e05345007908be4dd1d949d454b17bc07b3a58b9197"
+        },
+        {
+          "class": "punchy/client/model/ResourcePackGeoRegistry",
+          "method": "loadGeoModels",
+          "desc": "(Lnet/minecraft/server/packs/resources/ResourceManager;)V",
+          "sha256": "597c49cd0f683756f80f544ce02b41bbfe453a56652c7ca39199cd232e3fe4fb"
+        },
+        {
+          "class": "punchy/client/model/ResourcePackGeoRegistry",
+          "method": "loadModelBones",
+          "desc": "(Lnet/minecraft/server/packs/resources/ResourceManager;)V",
+          "sha256": "9300aef7a23e8d8dca7d4312b84dcef587a3a3eb71129e1109209d9085e4d900"
+        },
+        {
+          "class": "punchy/client/model/ResourcePackGeoRegistry",
+          "method": "loadMappings",
+          "desc": "(Lnet/minecraft/server/packs/resources/ResourceManager;)V",
+          "sha256": "659f4c11b019452298c02ecbcc4bf485c89a0e6094797454d156eaa02024cf7b"
+        },
+        {
+          "class": "punchy/client/model/ResourcePackGeoRegistry",
+          "method": "getGeoModel",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lpunchy/client/model/BedrockGeoModel;",
+          "sha256": "06458997341ac121ba5ad15f9af6a734b2838759bb78bedd1d5959676bf26338"
+        },
+        {
+          "class": "punchy/client/model/ResourcePackGeoRegistry",
+          "method": "getBonesForTarget",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lpunchy/client/model/BedrockGeoModel;",
+          "sha256": "112b2fba5756a87cda74f449de659e129afeaccd4e2ee2c86c5435b953089a39"
+        },
+        {
+          "class": "punchy/client/model/ResourcePackGeoRegistry",
+          "method": "*",
+          "desc": "*",
+          "sha256": "ace00b678c94c4a9c521cbf95219037ed675d7bf24600512ce27009c7c1ee3db"
+        },
+        {
+          "class": "punchy/client/model/ResourcePackGeoRegistry",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "e6d054394abd04bba99ada7a4808cad25e81afd81417af1b91891570a7c53538"
+        }
+      ],
+      "cancel": [],
+      "conversion": "HEAD @Inject on Punchy's ResourcePackGeoRegistry: loadGeoModels / loadModelBones cancelled while deferred (only when no class of Punchy's jar calls the two readers, constant-pool scan once per session), load() drops a stale wait, getGeoModel / getBonesForTarget run the waiting scans first by calling Punchy's own load(manager) with the same manager; helper bons.furious.patch.punchy.LazyGeoScans",
+      "license": "Punchy is All Rights Reserved: injections with our own logic only, no Punchy code carried; Minecraft (Mojang): no-copy"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.noise",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "bons.furious.patch.noise.NoiseMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "ImprovedNoiseGradientMixin",
+    "ImprovedNoiseInvoker",
+    "SimplexGradientAccessor"
+  ]
+}

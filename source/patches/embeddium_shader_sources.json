@@ -1,0 +1,25 @@
+{
+  "group": "embeddium_shader_sources",
+  "keys": {
+    "embeddium_shader_source_memo": {
+      "mod": "embeddium",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.embeddium_shader_sources.ShaderLoaderSourceMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/embeddedt/embeddium/impl/gl/shader/ShaderLoader",
+          "method": "getShaderSource",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Ljava/lang/String;",
+          "note": "reads /assets/NS/shaders/PATH through ShaderLoader's class loader; throws when missing or unreadable",
+          "sha256": "d8463c7ea5e9055bc0c7309713480aba4ecadb9cd3514d06e0ee962842524b29"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on Embeddium's ShaderLoader.getShaderSource: the text of a shader read successfully is kept per ResourceLocation (ConcurrentHashMap) and returned on later calls; misses and read errors are never kept and throw as before. Helper bons.furious.patch.embeddium_shader_sources.ShaderSources. Shadow mode -Dbons_and_furious.embeddiumShaderSourceMemo.shadow=true.",
+      "license": "Embeddium (LGPL-3.0-only): no code of it is carried; only a memo around the original call"
+    }
+  }
+}

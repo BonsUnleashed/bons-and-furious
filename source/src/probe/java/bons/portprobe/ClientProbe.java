@@ -74,6 +74,7 @@ public final class ClientProbe {
             result.put("dimension",mc.level.dimension().location().toString());
             result.put("target_checks",ProbeChecks.forceTargets(true));
             result.put("behavior",BehaviorChecks.run());
+            if(Boolean.getBoolean("bons_and_furious.deltaProof47"))result.put("delta_proof47",DeltaProof47.run(mc.getSingleplayerServer()));
             if (jei42) result.put("jei42", JeiOracle42.dump());
             if (Boolean.getBoolean("bons_and_furious.sharksClient42")) result.put("sharks_client42", SharksClient42.run());
             result.put("commands",new ArrayList<>(commandLog));

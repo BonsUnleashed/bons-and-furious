@@ -1,0 +1,78 @@
+{
+  "group": "mcreator_item_animation",
+  "keys": {
+    "mcreator_item_animation_idle": {
+      "mod": "mcreator",
+      "target_mods": [
+        "born_in_chaos_v1",
+        "rustic_engineer"
+      ],
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.mcreator_item_animation.BornInChaosItemAnimationMixin",
+        "bons.furious.mixin.mcreator_item_animation.RusticEngineerItemAnimationMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "copy",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "copy: keeps getItem() (empty -> EMPTY, else a stack of the same item), so the test on the held stacks equals the test on the copies",
+          "sha256": "6368b72382fb6d72045513735a6a385334d2a94aa21730e80c1f9667094d9be7"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "getItem",
+          "desc": "()Lnet/minecraft/world/item/Item;",
+          "note": "getItem: AIR for an empty stack",
+          "sha256": "3a6fb84c9fb8b13d8a893bf8ef0510480605b691247ef1d9962c46088e2e7612"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "isEmpty",
+          "desc": "()Z",
+          "note": "Native NeoForge 1.21.1 isEmpty uses the item field directly; no Forge 1.20.1 field_to_method coremod replay. Development and native instruction listings match exactly.",
+          "sha256": "721230359957c26dc8a8a9445b94644ecb03bd3dd37333dfc0f0a7dbf608579f"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "getMainHandItem",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "getMainHandItem, read by the handler and by the switch",
+          "sha256": "23aa0cb6a33a34593883c9f57961e2362a3e13fc1cfb108bf21afce289e598fb"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "getOffhandItem",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "getOffhandItem, read by the handler and by the switch",
+          "sha256": "a13b2aa057469636dc3ff9fbaf4225957a4266a983b2d9fc492db31097edb099"
+        }
+      ],
+      "target_guard": [
+        {
+          "mixin": "bons.furious.mixin.mcreator_item_animation.BornInChaosItemAnimationMixin",
+          "mod": "born_in_chaos_v1",
+          "class": "net/mcreator/borninchaosv/init/ItemAnimationFactory",
+          "method": "animatedItems",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/PlayerTickEvent$Post;)V",
+          "note": "Inspected NeoForge 1.21.1 factory; per-target guard. Behavior qualification recorded separately.",
+          "sha256": "f5135b85e40af9bc20d077c0e9f4bacd673c2ece86e6143a89708e9a7b545020"
+        },
+        {
+          "mixin": "bons.furious.mixin.mcreator_item_animation.RusticEngineerItemAnimationMixin",
+          "mod": "rustic_engineer",
+          "class": "net/mcreator/rusticengineer/init/ItemAnimationFactory",
+          "method": "animatedItems",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/PlayerTickEvent$Post;)V",
+          "note": "Inspected NeoForge 1.21.1 factory; per-target guard. Behavior qualification recorded separately.",
+          "sha256": "3cee00987f68955deca2f9566b06a295f21599067254af98e53e2433d7098eb5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of each mod's ItemAnimationFactory.animatedItems: cancelled unless it is the START phase and a hand holds a GeckoLib GeoItem (the test every effect of the method sits behind, evaluated on the held stacks instead of their copies); the design of benssharks_item_animation_idle with a generic condition. Each mixin is applied only when its target matches the target_guard fingerprint of the tested build (ItemAnimationPlugin / TargetGuards)",
+      "license": "Target licences (mods.toml): born_in_chaos_v1: All Rights Reserved; rustic_engineer: Not specified; terramity: All Rights Reserved; under_the_moon: Not specified. All treated as no-copy: the mixins hold only our own test; the mods' code stays in their jars"
+    }
+  }
+}

@@ -54,16 +54,30 @@ public final class RepellentSearch {
     private static final long NO_KEY = Long.MIN_VALUE;
     private static volatile boolean announced;
 
+    /**
+     * The level-class check. 1.0.45: synthetic bridges no longer count (TurtleEggSearch.declares): six ServerLevel mixins of this
+     * pack merge a javac bridge "ChunkAccess getChunk(int, int)", which kept this switch off on every server level since 1.0.30.
+     * A refused level class now logs ONE INFO line naming the class and what it declares (at most 8).
+     */
     private static final ClassValue<Boolean> LEVEL_OK = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
             for (Class<?> c = type; c != null && c != Level.class; c = c.getSuperclass()) {
-                if (TurtleEggSearch.declares(c, "getBlockState", BlockPos.class) || TurtleEggSearch.declares(c, "getChunk", int.class, int.class)
-                        || TurtleEggSearch.declares(c, "getChunkAt", BlockPos.class)) return false;
+                String which = TurtleEggSearch.declares(c, "getBlockState", BlockPos.class) ? "getBlockState(BlockPos) [getBlockState]"
+                        : TurtleEggSearch.declares(c, "getChunk", int.class, int.class) ? "getChunk(int, int) [getChunk]"
+                        : TurtleEggSearch.declares(c, "getChunkAt", BlockPos.class) ? "getChunkAt(BlockPos) [getChunkAt]" : null;
+                if (which != null) {
+                    if (STAND_DOWN_LINES.incrementAndGet() <= 8)
+                        NonPoiSearch.LOGGER.info("Bons and Furious: vanilla_repellent_search_sections steps aside for level class {}: {} overrides {}",
+                                type.getName(), c.getName(), which);
+                    return false;
+                }
             }
             return true;
         }
     };
+
+    private static final java.util.concurrent.atomic.AtomicInteger STAND_DOWN_LINES = new java.util.concurrent.atomic.AtomicInteger();
 
     private RepellentSearch() {
     }

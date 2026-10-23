@@ -1,0 +1,155 @@
+{
+  "group": "ribbits_search",
+  "keys": {
+    "ribbits_goal_search_sections": {
+      "mod": "ribbits",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.ribbits_search.RibbitWaterCropsSearchMixin",
+        "bons.furious.mixin.ribbits_search.RibbitFishSearchMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/yungnickyoung/minecraft/ribbits/entity/goal/RibbitWaterCropsGoal",
+          "method": "canUse",
+          "desc": "()Z",
+          "note": "canUse: findClosestMatch(pos, (int) range, 5, test); WrapOperation of that call",
+          "sha256": "263301f58901746863b44878f7a8c9c367554ee48a27b148146c04f6215f5f59"
+        },
+        {
+          "class": "com/yungnickyoung/minecraft/ribbits/entity/goal/RibbitWaterCropsGoal",
+          "method": "lambda$canUse$0",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Z",
+          "note": "the crop test: CropBlock ? (cooldown == 0 && !isMaxAge) : false",
+          "sha256": "e658e18127a43d44ec3b11d51ff096dc0b07cc3beab912bb5d2ef7c76010f154"
+        },
+        {
+          "class": "com/yungnickyoung/minecraft/ribbits/entity/goal/RibbitFishGoal",
+          "method": "canUse",
+          "desc": "()Z",
+          "note": "canUse: findClosestMatch(pos, (int) range, 5, test); WrapOperation of that call",
+          "sha256": "2a5c185043c7264ba60989fea4b98d27d57b41b911559b931b1027d722685835"
+        },
+        {
+          "class": "com/yungnickyoung/minecraft/ribbits/entity/goal/RibbitFishGoal",
+          "method": "lambda$canUse$0",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Z",
+          "note": "the fish test: fluid in #water && the block above is air",
+          "sha256": "e55a912b10044e9531f8a1a57db18c98f5b4b4acdac5da4f7459db27ae2cffff"
+        },
+        {
+          "class": "com/yungnickyoung/minecraft/ribbits/entity/RibbitEntity",
+          "method": "getBuffCooldown",
+          "desc": "()I",
+          "note": "a plain field read (the cooldown rule reads it between skipped positions)",
+          "sha256": "a37b113f3a6b87a7f91905f8c5a0e5de9a94d117af7ed3b45df092197ae19d32"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "findClosestMatch",
+          "desc": "(Lnet/minecraft/core/BlockPos;IILjava/util/function/Predicate;)Ljava/util/Optional;",
+          "note": "findClosestMatch: first hit of withinManhattan(pos, w, h, w)",
+          "sha256": "842e7a48c0e88dd58ca4e633ea47eb5811a1fc0d96fd9d6a49fbf6a5d1ce54c7"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "withinManhattan",
+          "desc": "(Lnet/minecraft/core/BlockPos;III)Ljava/lang/Iterable;",
+          "note": "withinManhattan",
+          "sha256": "a2437e5cfd014866fb3a80596df73d43331b52388fa66d3dce1268f5f40da827"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos$2",
+          "method": "computeNext",
+          "desc": "()Lnet/minecraft/core/BlockPos;",
+          "note": "withinManhattan's visiting order (NonPoiSearch.diamond restates it) NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ.",
+          "sha256": "75aa2cecdbd4ebe3ddc2f37a2e42f7df46246fa3c6969fe9f820d9192f3e79cb",
+          "sha256_variants": [
+            "2d937319996b083b550f1e16c7e97e76bcd1951b4dbb815c7cbe1922a02fd97d"
+          ]
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "getBlockState",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "getBlockState: getChunk(x >> 4, z >> 4) first inside the build height",
+          "sha256": "4ff4f96e5ead04e8279a0bd18788c2cd0e8c69ea472aeed667af2ea7c8b52827"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "getFluidState",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/FluidState;",
+          "note": "getFluidState: getChunkAt(pos) inside the build height",
+          "sha256": "449e76e4eeb1e5858740422b0bb81f8d6707516f6e7f3a0aa4e79b3c7e1909e0"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "getChunkAt",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/chunk/LevelChunk;",
+          "note": "getChunkAt: getChunk(x >> 4, z >> 4)",
+          "sha256": "81ae33d8586d8c891a391f48887eb7c950f8cf41fe3606e2c238f8368798f9e4"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "getChunk",
+          "desc": "(II)Lnet/minecraft/world/level/chunk/LevelChunk;",
+          "note": "getChunk(int, int), the lookup the switch makes",
+          "sha256": "2104628e4674e822311ea2c00d0a002b0b17fd5070466b081b88382846bd9608"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunk",
+          "method": "getBlockState",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "reads the section; an air-only section reads AIR",
+          "sha256": "4e64da0e5a1c25f05dde0b588e80ce58043c21860b356d75b55136d7f6fe9ba7"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunk",
+          "method": "getFluidState",
+          "desc": "(III)Lnet/minecraft/world/level/material/FluidState;",
+          "note": "getFluidState: the section's state's fluid; an air-only section reads EMPTY",
+          "sha256": "6246688df4ccac8a530ad0f35031176f307f7c321740c655497b119c89942e85"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunkSection",
+          "method": "getBlockState",
+          "desc": "(III)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "the palette entry of the position",
+          "sha256": "c6e3b48d9fd13c1c77238202b5aba3989d6d863eee95836933f6d9f6aee32069"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunkSection",
+          "method": "getFluidState",
+          "desc": "(III)Lnet/minecraft/world/level/material/FluidState;",
+          "note": "getBlockState(...).getFluidState()",
+          "sha256": "ef6ec0e6c6a84a91f59f73ee257a235252ab1ae1416254af630bb18043b94f5e"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LinearPalette",
+          "method": "maybeHas",
+          "desc": "(Ljava/util/function/Predicate;)Z",
+          "note": "maybeHas over every palette entry (NonPoiSearch.Verdicts)",
+          "sha256": "a9a7603a38286d0a69c6c0a6761fd2ef972101bbfe0ddc72333ca27fa015d224"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/HashMapPalette",
+          "method": "maybeHas",
+          "desc": "(Ljava/util/function/Predicate;)Z",
+          "note": "maybeHas",
+          "sha256": "fb3d0b6c092424840f12eff32b59bd5740aeb88fa019c79f205829042881c869"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/SingleValuePalette",
+          "method": "maybeHas",
+          "desc": "(Ljava/util/function/Predicate;)Z",
+          "note": "maybeHas",
+          "sha256": "c0b49d1064d48e28b9c52f9e7b9cdaf8a1b5339a6d2747c2ce4e6c63f96c3688"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on BlockPos.findClosestMatch in RibbitWaterCropsGoal.canUse and RibbitFishGoal.canUse: RibbitsSearch visits the same positions in the same order (NonPoiSearch.diamond) with the same Level.getChunk lookups (immediate repeats dropped) and runs the goal's own test only where it is not a pure false (NonPoiSearch.Verdicts palette test: CropBlock states / states with a #water fluid; crops also skip everything while the buff cooldown is not 0, re-read after every lookup)",
+      "license": "Ribbits: LGPL-3.0 (mods.toml LGPLv3); Minecraft: no-copy. The mixins carry only our own logic (helper bons.furious.patch.ribbits_search.RibbitsSearch, which calls the vanilla_search group's NonPoiSearch)"
+    }
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "group": "reliquary_charm",
+  "keys": {
+    "reliquary_mob_charm_type_gate": {
+      "mod": "reliquary",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.reliquary_charm.MobCharmItemTypeGateMixin",
+        "bons.furious.mixin.reliquary_charm.MobCharmRegistryVersionMixin",
+        "bons.furious.mixin.reliquary_charm.EntityTypeCharmMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "reliquary/item/MobCharmItem",
+          "method": "onLivingUpdate",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "note": "server Mob: player from target / last attacker / brain memories; only then getCharmDefinitionFor(entity).ifPresent(...)",
+          "sha256": "f57776a74473f6ce54bc951a2cd0be3edb3c61134ae32276f88ed5afa3d94fcd"
+        },
+        {
+          "class": "reliquary/item/MobCharmItem",
+          "method": "getRealPlayer",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/Optional;",
+          "sha256": "78cdd60ae574eba007e7c6214d0a0c01637a3653617dd4f18429938c585f5b95"
+        },
+        {
+          "class": "reliquary/item/MobCharmRegistry",
+          "method": "registerMobCharmDefinition",
+          "desc": "(Lreliquary/item/MobCharmDefinition;)V",
+          "note": "the only writer of ENTITY_NAME_CHARM_DEFINITIONS",
+          "sha256": "26bcc9d88463135681ae4419b5e64e1bfdfe427e1d1bfbc688b35f008c3be456"
+        },
+        {
+          "class": "reliquary/item/MobCharmRegistry",
+          "method": "getCharmDefinitionFor",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Ljava/util/Optional;",
+          "note": "ENTITY_NAME_CHARM_DEFINITIONS.get(getRegistryName(entity).toString())",
+          "sha256": "c2ff6b49f46f1d2560310468160f81d3ab2399f6dcca03f710c36c91a3a28b30"
+        },
+        {
+          "class": "reliquary/item/MobCharmRegistry",
+          "method": "*",
+          "desc": "",
+          "note": "no other method (no other writer of the private map)",
+          "sha256": "d0ec10d177f18c7d15a03e7c414d178980b0f51a015645ddc243555672c82ae3"
+        },
+        {
+          "class": "reliquary/util/RegistryHelper",
+          "method": "getRegistryName",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "getRegistryName(entity.getType())",
+          "sha256": "3150f98272d7f9804f3a8c60af67038c295d884ad0816e09314c4e374c56a476"
+        },
+        {
+          "class": "reliquary/util/RegistryHelper",
+          "method": "getRegistryName",
+          "desc": "(Lnet/minecraft/world/entity/EntityType;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(type))",
+          "sha256": "22517df6c0f9ca03df17babf4a187817640af57d57600fc227b73dea1eb51ad1"
+        },
+        {
+          "class": "reliquary/util/MobHelper",
+          "method": "getTargetedPlayerFromMemory",
+          "desc": "(Lnet/minecraft/world/entity/Mob;)Ljava/util/Optional;",
+          "note": "hasMemoryValue / getMemory over five memories: reads",
+          "sha256": "f3f31b45f812e355b480e6643805bedb9833cc1aca027dc04196886b61bc581d"
+        },
+        {
+          "class": "net/minecraft/world/entity/Mob",
+          "method": "getTarget",
+          "desc": "()Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "getTarget",
+          "sha256": "26a3aac164baabdb24f02616c25900de8a4a99c3cb5168a45e2a9eedcd4e6c5b"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "getLastHurtByMob",
+          "desc": "()Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "getLastHurtByMob",
+          "sha256": "756acffa5392733871e51d605c73d0e2f21389a3e05051d46e8fcb55481b36f1"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "getBrain",
+          "desc": "()Lnet/minecraft/world/entity/ai/Brain;",
+          "note": "getBrain",
+          "sha256": "cc99add865ed00eb7852c3dfc3bbdfada6ead31aa1e3fc74131e914f82a395cf"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/Brain",
+          "method": "hasMemoryValue",
+          "desc": "(Lnet/minecraft/world/entity/ai/memory/MemoryModuleType;)Z",
+          "note": "hasMemoryValue",
+          "sha256": "f0ad826348597bf3f55cec03a0899a91f4635f7eaa9b46e32041daebff095756"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/Brain",
+          "method": "checkMemory",
+          "desc": "(Lnet/minecraft/world/entity/ai/memory/MemoryModuleType;Lnet/minecraft/world/entity/ai/memory/MemoryStatus;)Z",
+          "note": "checkMemory NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ.",
+          "sha256": "cfc19944c94842f04bcc30ab42baf78771e93a557685aa47ef25dd99690de150",
+          "sha256_variants": [
+            "6d93c908221b1c69363bc34fafa4fec46f73780f4639e699a7130532a5477fae"
+          ]
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/Brain",
+          "method": "getMemory",
+          "desc": "(Lnet/minecraft/world/entity/ai/memory/MemoryModuleType;)Ljava/util/Optional;",
+          "note": "getMemory",
+          "sha256": "0f8c23fa3cd9a94eeba20bc1b0195cd32f67b58837e2025a172a583fde0ba6a3"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "getType",
+          "desc": "()Lnet/minecraft/world/entity/EntityType;",
+          "note": "getType",
+          "sha256": "6a37a73d781232736e9180f6808a434d06843c7cdba3f83ef53039233b873722"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: @Inject at the HEAD of Reliquary's MobCharmItem.onLivingUpdate (cancellable) and at the TAIL of MobCharmRegistry.registerMobCharmDefinition (a @Shadow of its private ENTITY_NAME_CHARM_DEFINITIONS hands that map to our helper, read only); one @Unique int on EntityType (the memo); helper bons.furious.patch.reliquary_charm.ReliquaryCharmGate",
+      "license": "Reliquary (licence unstated, treated as all rights reserved): no Reliquary code is carried; our injectors only decide whether its unchanged handler runs; Minecraft: no code"
+    }
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "group": "subtleeffects",
+  "keys": {
+    "subtleeffects_display_tick_biome_reuse": {
+      "mod": "subtle_effects",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.subtleeffects.BiomeEffectsBiomeMixin",
+        "bons.furious.mixin.subtleeffects.FireflyBiomeMixin"
+      ],
+      "guard": [
+        {
+          "class": "einstein/subtle_effects/ticking/FireflyManager",
+          "method": "tick",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/util/RandomSource;)V",
+          "sha256": "52a642255e5381cac35310e19b716019dc11dae578e520f24f9e10e10aa7b1d3"
+        },
+        {
+          "class": "einstein/subtle_effects/ticking/BiomeEffectsManager",
+          "method": "tick",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/util/RandomSource;)V",
+          "sha256": "f2baf05e87341086c7059d3b3117f8e3061503ba077adf05d5df228026b13122"
+        },
+        {
+          "class": "einstein/subtle_effects/ticking/BiomeEffectsManager",
+          "method": "init",
+          "desc": "()V",
+          "sha256": "178346e91fb26a8c03d2c84e09957f508baa4382990a4dc3afe125e94ceb2cda"
+        },
+        {
+          "class": "einstein/subtle_effects/ticking/BiomeEffectsManager",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "eeda1307c13f7245bf500a6c2a60634ac0d3603682546d5c7119db80d19c91f2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of level.getBiome(pos) in FireflyManager.tick and of the per-effect getBiome (first call site) in BiomeEffectsManager.tick, plus @ModifyExpressionValue on BiomeEffectsManager.tick's first test (isCollisionShapeFullBlock) to start a call; first lookups go through vanilla_animate_tick_uniform_biome's AnimateTickBiome.biome (method handle, used while that switch is enabled in the config), later lookups of the same call reuse the Holder for the same level and position object (render thread only); helper bons.furious.patch.subtleeffects.DisplayTickBiomes",
+      "license": "Subtle Effects is All Rights Reserved: our own logic only, no Subtle Effects code carried; Minecraft (Mojang): no-copy"
+    },
+    "subtleeffects_dry_chest_guard": {
+      "mod": "subtle_effects",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.subtleeffects.ChestTickerDryGuardMixin"
+      ],
+      "guard": [
+        {
+          "class": "einstein/subtle_effects/ticking/tickers/ChestBlockEntityTicker",
+          "method": "positionedTick",
+          "desc": "()V",
+          "sha256": "37a9fb4aa039e51ac39a871627fd9eb7d520d23177b0093964bab64076fd28f9"
+        },
+        {
+          "class": "einstein/subtle_effects/ticking/tickers/ChestBlockEntityTicker",
+          "method": "isUnderwater",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "9e67bd3154c647f50abbc82d4cc28f98c8e31cada60855b5a61bf6822dd940fe"
+        },
+        {
+          "class": "einstein/subtle_effects/ticking/tickers/ChestBlockEntityTicker",
+          "method": "isNotUpwardsBubbleColumn",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "95b13e65cee4386b9f893e8e072e785cfac187acc5822a4f69cedba20a3b19ed"
+        },
+        {
+          "class": "net/minecraft/world/level/block/ChestBlock",
+          "method": "isChestBlockedAt",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "55a6128407a970818a88ee17ab72889ac145e189b64ac117394f214f90aaa87b"
+        },
+        {
+          "class": "net/minecraft/world/level/block/ChestBlock",
+          "method": "isBlockedChestByBlock",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "e7cd95118ca4488a21f072947b3692117451770ccd58bb6174eaf0953ecacdf2"
+        },
+        {
+          "class": "net/minecraft/world/level/block/ChestBlock",
+          "method": "isCatSittingOnChest",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "6245ace7dd1539bc35345473852ebe67e5e45c34548a0f8bd6eb433162ee4768"
+        }
+      ],
+      "cancel": [],
+      "conversion": "cancellable @Inject just before the first ChestBlock.isChestBlockedAt call of Subtle Effects' ChestBlockEntityTicker.positionedTick (the double-chest flag and the other half read with MixinExtras @Local by value; the mixin extends BlockPosTicker for the inherited level and pos): returns when the underwater test answers return (Subtle Effects' own isUnderwater for the chest, or for the other half of a double chest), both counters are 0 and Level.getProfiler() is InactiveProfiler.INSTANCE; helper bons.furious.patch.subtleeffects.DryChests",
+      "license": "Subtle Effects is All Rights Reserved: our own logic only, no Subtle Effects code carried; Minecraft (Mojang): no-copy"
+    },
+    "subtleeffects_idle_fluid_hooks": {
+      "mod": "subtle_effects",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.subtleeffects.LavaSparksIdleMixin",
+        "bons.furious.mixin.subtleeffects.WaterSteamIdleMixin"
+      ],
+      "guard": [
+        {
+          "class": "einstein/subtle_effects/mixin/client/fluid/LavaFluidMixin",
+          "method": "animateTick",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/util/RandomSource;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "4ce4a8dbec1a6e170db358573b5bf3369beda28efb389eb6968b7eff7ccc8f34"
+        },
+        {
+          "class": "einstein/subtle_effects/util/Util",
+          "method": "isSolidOrNotEmpty",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z",
+          "sha256": "d3a2bf10991301b4437c09903fe0f3bf1e23dfd17606c62f08aa35239689960d"
+        },
+        {
+          "class": "einstein/subtle_effects/mixin/client/fluid/WaterFluidMixin",
+          "method": "animateTick",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/util/RandomSource;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "e63bd88d596a39594de9b6b2c7a3b1e0b54e42e9748a8e995d8ee0d6e2be9f03"
+        },
+        {
+          "class": "einstein/subtle_effects/util/ParticleSpawnUtil",
+          "method": "spawnHeatedWaterParticles",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;ZDZZ)V",
+          "sha256": "e46c1a03338254df7ac3f7b59e01c5f842658dbd92218e56717192e311aa44d8"
+        },
+        {
+          "class": "einstein/subtle_effects/util/ParticleSpawnUtil",
+          "method": "spawnHeatedWaterParticles",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;ZDZZI)V",
+          "sha256": "8e74d7e46ea002a1bf7414d427b80cb1f8f8aad2543fa79618a55b8578c6c1db"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinSquared @TargetHandler cancellable HEAD @Inject into Subtle Effects' WaterFluidMixin.animateTick handler (merged into WaterFluid.animateTick, priority 1500, require 0): returns at once while steamingWater and boilingWater are both off; MixinSquared @TargetHandler cancellable @Inject before the 3 x 3 walk of Subtle Effects' LavaFluidMixin.animateTick handler (merged into LavaFluid.animateTick; at its first int constant 1, the start of the not-falling branch): returns at once when the walk's centre cell would return (top solid or not empty, same fluid, not a conductor), plus a pass-through @ModifyExpressionValue on the handler's first random draw for the shadow check; helper bons.furious.patch.subtleeffects.IdleFluids",
+      "license": "Subtle Effects is All Rights Reserved: our own logic only, no Subtle Effects code carried"
+    }
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "group": "vanilla_climate_distance",
+  "keys": {
+    "vanilla_climate_search_distance_reuse": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.vanilla_climate_distance.ClimateDistanceRootMixin",
+        "bons.furious.mixin.vanilla_climate_distance.ClimateDistanceVanillaSiteMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree",
+          "method": "search",
+          "desc": "(Lnet/minecraft/world/level/biome/Climate$TargetPoint;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Ljava/lang/Object;",
+          "sha256": "2be3eed9844c1770613db2cc85e9d0ace6fc087b882133d2321da873dd76f60d"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree$SubTree",
+          "method": "search",
+          "desc": "([JLnet/minecraft/world/level/biome/Climate$RTree$Leaf;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Lnet/minecraft/world/level/biome/Climate$RTree$Leaf;",
+          "sha256": "4f811b9c474e7056a98215e3c44b1b075b1b693a679ca4a2044f7b6dcc570ca8"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree$Leaf",
+          "method": "search",
+          "desc": "([JLnet/minecraft/world/level/biome/Climate$RTree$Leaf;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Lnet/minecraft/world/level/biome/Climate$RTree$Leaf;",
+          "sha256": "d6ee11652b8fc4b605d91bac434ba2b5574e707e7f1d329704c05f8c39a592e8"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree$Node",
+          "method": "distance",
+          "desc": "([J)J",
+          "sha256": "d507c182100b0aa6e138deacec24bd20c3a6dbcb5c23742bef5ed47512315061"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree$SubTree",
+          "method": "<init>",
+          "desc": "(Ljava/util/List;Ljava/util/List;)V",
+          "sha256": "1496ccd55c21b49b5c0375973460861e90e061dea321e1d8527e389ca67904fb"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$ParameterList",
+          "method": "findValueIndex",
+          "desc": "(Lnet/minecraft/world/level/biome/Climate$TargetPoint;)Ljava/lang/Object;",
+          "sha256": "074e1e2651850d4299a2dfcbb9bc713231ba3d7ae9f3c6fe28fda58bc9dcd13e"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$ParameterList",
+          "method": "findValueIndex",
+          "desc": "(Lnet/minecraft/world/level/biome/Climate$TargetPoint;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Ljava/lang/Object;",
+          "sha256": "456f4e0db716c2c9100e8bb41756858413e476426b07068ba2e62a94fbb2f6c9"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect (coerced node, leaf and metric types; coerced return) of the one Climate$RTree$Node.search root call in Climate$RTree.search (search): the helper walks the tree in SubTree.search's order with its strict comparisons, carrying the caller's best distance down and the found leaf's distance up, computing all other distances with Node.distance where vanilla computes them, only for metric objects registered at their guarded creation sites (Climate.RTree.Node::distance method references); otherwise the original call. MixinExtras @WrapOperation (coerced metric) of the findValueIndex call in Climate$ParameterList.findValueIndex (findValueIndex) registers vanilla's metric object and makes the same call; runtime flag and shadow mode in the helper",
+      "license": "Minecraft (Mojang): no-copy; the mixins and helper carry only our own logic (helper bons.furious.patch.vanilla_climate_distance.ClimateDistanceReuse)"
+    },
+    "terrablender_climate_search_distance_reuse": {
+      "mod": "terrablender",
+      "scripts": [],
+      "since": "1.0.46",
+      "mixins": [
+        "bons.furious.mixin.vanilla_climate_distance.ClimateDistanceTerraBlenderSiteMixin"
+      ],
+      "guard": [
+        {
+          "class": "terrablender/mixin/MixinParameterList",
+          "method": "findValuePositional",
+          "desc": "(Lnet/minecraft/world/level/biome/Climate$TargetPoint;III)Ljava/lang/Object;",
+          "sha256": "d35d108547502ce4c10e4bac0e26ed7931ef3ddd85d237b90c48efda61d52f6a"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$RTree",
+          "method": "search",
+          "desc": "(Lnet/minecraft/world/level/biome/Climate$TargetPoint;Lnet/minecraft/world/level/biome/Climate$DistanceMetric;)Ljava/lang/Object;",
+          "sha256": "2be3eed9844c1770613db2cc85e9d0ace6fc087b882133d2321da873dd76f60d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation (coerced tree and metric, priority 1100 above TerraBlender's 1000) of the two Climate$RTree.search calls in TerraBlender's findValuePositional, the method TerraBlender's MixinParameterList merges into Climate$ParameterList: registers TerraBlender's metric objects (two non-capturing Climate.RTree.Node::distance method references, guarded in TerraBlender's mixin bytecode) for vanilla_climate_search_distance_reuse's walk and makes the same call; nothing else",
+      "license": "TerraBlender: LGPL-3.0; Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_climate_distance.ClimateDistanceReuse)"
+    }
+  },
+  "yields": [
+    {
+      "key": "vanilla_climate_search_distance_reuse",
+      "mod": "byepregen",
+      "name": "Bye Pregen",
+      "mixin": "com.moepus.byepregen.mixin.climate.ClimateParameterListSearchMixin",
+      "why": "The NeoForge build replaces Climate.ParameterList.findValueIndex with its own search. This control requires the vanilla tree and metric sites, and steps aside while that replacement is active. Confirmed by the 582-JAR conflict audit."
+    },
+    {
+      "key": "vanilla_climate_search_distance_reuse",
+      "mod": "generator_accelerator",
+      "name": "Generator Accelerator",
+      "mixin": "dev.sixik.generator_accelerator.common.biome.mixin.MixinClimate$ParameterList$redirect_vanilla_climate_container_to_custom_implement",
+      "why": "The NeoForge build replaces Climate.ParameterList.findValueIndex with its own search. This control requires the vanilla tree and metric sites, and steps aside while that replacement is active. Confirmed by the 582-JAR conflict audit."
+    }
+  ]
+}

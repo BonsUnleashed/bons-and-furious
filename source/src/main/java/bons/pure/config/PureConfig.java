@@ -284,13 +284,22 @@ public final class PureConfig {
         return end > start ? text.substring(start, end) : "?";
     }
 
+    /**
+     * FML's config directory, else ./config with a WARN. 1.0.46: Forge 47.4.28 returns null here (where 47.4.16 threw)
+     * when FMLPaths was never set up, as in an offline test harness; the game always sets it before any mixin plugin
+     * loads. A null now takes the same fallback as the exception instead of failing the whole configuration load.
+     */
     private static Path configDirectory() {
+        Path dir = null;
+        Throwable why = null;
         try {
-            return net.neoforged.fml.loading.FMLPaths.CONFIGDIR.get();
+            dir = net.neoforged.fml.loading.FMLPaths.CONFIGDIR.get();
         } catch (Throwable t) {
-            Path fallback = Paths.get("config").toAbsolutePath();
-            LOGGER.warn("Bons and Furious: FMLPaths unavailable ({}); using {}", t.toString(), fallback);
-            return fallback;
+            why = t;
         }
+        if (dir != null) return dir;
+        Path fallback = Paths.get("config").toAbsolutePath();
+        LOGGER.warn("Bons and Furious: FMLPaths unavailable ({}); using {}", why != null ? why.toString() : "no config directory set", fallback);
+        return fallback;
     }
 }

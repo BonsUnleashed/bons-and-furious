@@ -1,15 +1,8 @@
 # Bons and Furious — Minecraft 1.21.1 / NeoForge
 
-This is the Minecraft 1.21.1 port of Bons and Furious 1.0.42. It uses mod ID `bons_and_furious`, version
-`1.0.42+mc1.21.1`, and requires Java 21 and NeoForge 21.1.252 or newer. Minecraft is restricted to exactly 1.21.1.
-The tested loader is 21.1.252; later loaders are not automatically qualified.
+This is Bons and Furious 1.0.47 for Minecraft 1.21.1 and NeoForge. The mod ID is `bons_and_furious`, the version is `1.0.47+mc1.21.1`, and it requires Java 21 and NeoForge 21.1.252 or newer. Minecraft is restricted to exactly 1.21.1. The tested loader is 21.1.252; later loaders are not automatically qualified.
 
-This release builds on 1.0.41+mc1.21.1 and adds six controls: spawn-area preload,
-JEI recipe deferral (default off), and four Ben's Sharks optimizations. Sharks targets
-the author's 1.2.6 NeoForge beta, not the Forge 1.3.0 build; its upstream beta warnings
-still apply. No despawn, loot or rarity changes are folded into this port.
-Qualification corrected duplicate initial goal-selector random rolls and clears JEI
-armed state on cancellation. See QUALIFICATION.md for exact scope and limitations.
+This release builds on the published 1.0.42 port. It adds 49 applicable controls from the Forge releases through 1.0.47, including the TerraBlender saved-layer missing-noise fix, and adapts their guards to the actual NeoForge targets. Existing NeoForge fixes for Ben's Sharks random rolls and JEI cancellation are retained. See PORT-COVERAGE.md for every Forge control and QUALIFICATION.md for testing scope.
 
 Historical baseline: 1.0.41 builds on the published 1.0.39+mc1.21.1 (SHA-256
 `0fdf2fb35e7791e1216fbb26605b12e0be0ccf1f9858f2950044189fbb1958ea`) and adds what Forge 1.0.40 and 1.0.41 changed, taken
@@ -28,7 +21,7 @@ release.
 
 ## Install
 
-Put `bons_and_furious-neoforge-1.0.42+mc1.21.1.jar` in the `mods` folder of a Minecraft 1.21.1 NeoForge instance.
+Put `bons_and_furious-neoforge-1.0.47+mc1.21.1.jar` in the `mods` folder of a Minecraft 1.21.1 NeoForge instance.
 Optional target mods are not required; their patches only apply when the relevant targets and method fingerprints
 match. MixinSquared is bundled; NeoForge supplies MixinExtras.
 
@@ -38,10 +31,7 @@ dedicated servers, where client-only target mods should not be installed.
 
 ## Coverage and compatibility
 
-The port ships **211 controls**: 207 switches guarded by 1,959 method or class-shape checks, three legacy mixin
-controls and the Scorched function fix. Bons and Furious 1.0.42 has 313 controls in all; 55 are retired because the
-1.21.1 target changed or already does the work, and 47 depend on target mods with no 1.21.1 NeoForge build.
-[PORT-COVERAGE.md](PORT-COVERAGE.md) accounts for every one of them.
+The port ships **260 controls**: 256 guarded switches, three legacy mixin controls and the Scorched function fix. The Forge release has 384 controls; 64 were retired during porting because the target changed or already does the work, and 60 have no matching target build. [PORT-COVERAGE.md](PORT-COVERAGE.md) accounts for all of them. No existing NeoForge control was removed.
 
 Of the 121 switches that 1.0.28 to 1.0.30 added, 83 are ported, 28 are retired (most because the 1.21.1 build of the
 target already does it: Create 6.0.10, NeoForge's background SavedData writes, Minecraft 1.21.1's own network flush

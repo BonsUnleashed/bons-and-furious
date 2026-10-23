@@ -1,0 +1,74 @@
+{
+  "group": "farmersdelight_basket",
+  "keys": {
+    "farmersdelight_basket_query_direct": {
+      "mod": "farmersdelight",
+      "scripts": [],
+      "since": "1.0.45",
+      "mixins": [
+        "bons.furious.mixin.farmersdelight_basket.BasketCaptureItemsMixin"
+      ],
+      "guard": [
+        {
+          "class": "vectorwing/farmersdelight/common/block/entity/Basket",
+          "method": "getItemsToCollect",
+          "desc": "(Lnet/minecraft/world/level/Level;I)Ljava/util/List;",
+          "note": "the wrapped search: toAabbs, stream, flatMap getEntitiesOfClass(ItemEntity, box moved by getLevelX/Y/Z - 0.5, ENTITY_STILL_ALIVE), collect",
+          "sha256": "07f5dcae5c39983b0fe441c4a5fc254df548f8a50127276a0b2dd32efbbfff97"
+        },
+        {
+          "class": "vectorwing/farmersdelight/common/block/entity/Basket",
+          "method": "collectItems",
+          "desc": "(Lnet/minecraft/world/level/Level;I)Z",
+          "note": "the caller: every query first, then the capture loop",
+          "sha256": "68c7743218297b34799181d25d145253434c2d42ee483cad6ee0d67b4abe1fc3"
+        },
+        {
+          "class": "vectorwing/farmersdelight/common/block/entity/Basket",
+          "method": "getFacingCollectionArea",
+          "desc": "(I)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "note": "default: COLLECTION_AREA_SHAPES[facing]",
+          "sha256": "44d682ed04ad83e85ca77636b1c968fba21971a02a8dc6b1a3dedf2718d7d073"
+        },
+        {
+          "class": "vectorwing/farmersdelight/common/block/entity/Basket",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "the six Block.box collection shapes",
+          "sha256": "04a0d21cd9598c512df9d64fb7cef621be5e53d2b9579e28e6e210c110512a7c"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/VoxelShape",
+          "method": "toAabbs",
+          "desc": "()Ljava/util/List;",
+          "note": "toAabbs: a new list of the shape's boxes (pure for the immutable shape classes the switch remembers)",
+          "sha256": "786f45342e49b6b8db135c48479921b32ba729bfcf3e9886e9da57d49372ea2e"
+        },
+        {
+          "class": "net/minecraft/world/phys/AABB",
+          "method": "move",
+          "desc": "(DDD)Lnet/minecraft/world/phys/AABB;",
+          "note": "move: a new box",
+          "sha256": "49ad4eb826e8e7a01cb3a78a55fd25adf5f057cacdce051fa89df3470a129ef6"
+        },
+        {
+          "class": "net/minecraft/world/level/EntityGetter",
+          "method": "getEntitiesOfClass",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+          "note": "getEntitiesOfClass (default): getEntities(EntityTypeTest.forClass(type), box, test)",
+          "sha256": "45d34338c3479c10eb7733f6281ae56514da55a6533d45e3ae1bc4ffb9a5d5fa"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "getEntities",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+          "note": "getEntities: a new ArrayList per query (returned directly when the shape has one box)",
+          "sha256": "33301a576eb95b679bb5a2ab266d346fd20e608217681faf9d39a5e557c902af"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on BasketBlockEntity.getCaptureItems: the same getFacingCollectionArea call, then per box (remembered per immutable shape object) getLevelX/Y/Z and the same getEntitiesOfClass call in order; one box: the query's own fresh ArrayList, several: their concatenation; no stream, flat map or collector",
+      "license": "Farmer's Delight: MIT (mods.toml). The mixin carries only our own logic (helper bons.furious.patch.farmersdelight_basket.BasketQuery)"
+    }
+  }
+}

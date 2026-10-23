@@ -40,6 +40,13 @@ import org.slf4j.Logger;
  * reads those (StructureTemplateManager uses get/put/remove/clear/computeIfAbsent; the three accessor mixins of
  * Repurposed Structures, Integrated API and Moog's Structure Lib read only the resource manager).
  *
+ * 1.0.46: fixed upstream in ModernFix 5.27.89. That build adds its own @WrapOperation on the same computeIfAbsent call
+ * (dynamic_structure_manager StructureManagerMixin.loadOutsideLock: a plain get first, a miss loads outside the cache
+ * lock), so this switch has nothing left to do there. It stands down by itself: the guard layer's redundant_since marker
+ * (modernfix >= 5.27.89, even with matching fingerprints) keeps the mixin out, and where that cannot be decided (version
+ * unknown, e.g. offline) the helper finds ModernFix's merged handler in StructureTemplateManager and hands every call
+ * through untouched (one INFO line). With ModernFix 5.27.77 and older, or without ModernFix, it works as before.
+ *
  * -Dbons_and_furious.structureTemplateHits=false switches it off at run time.
  * -Dbons_and_furious.structureTemplateHits.shadow=true (verification runs only): every hit also runs the original
  * computeIfAbsent and compares the two results by identity (a difference is possible only around a concurrent clear,
@@ -74,10 +81,44 @@ public final class StructureTemplateHits {
     private StructureTemplateHits() {
     }
 
-    /** StructureTemplateManager.get: its structureRepository.computeIfAbsent(id, this::tryLoad) call. */
+    /** ModernFix's upstream handler on the same call (fixed upstream): its mixin class and handler name. */
+    static final String MODERNFIX_MIXIN = "org.embeddedt.modernfix.common.mixin.perf.dynamic_structure_manager.StructureManagerMixin";
+    static final String MODERNFIX_HANDLER = "loadOutsideLock";
+    private static volatile Boolean upstream;
+
+    /**
+     * 1.0.46: true when ModernFix's own loadOutsideLock handler is merged into StructureTemplateManager (ModernFix 5.27.89
+     * and later): that build already answers hits without the lock and loads misses outside it, so this switch stands down.
+     */
+    static boolean fixedUpstream(Class<?> manager) {
+        Boolean u = upstream;
+        if (u != null) return u;
+        boolean found = false;
+        try {
+            for (java.lang.reflect.Method m : manager.getDeclaredMethods()) {
+                org.spongepowered.asm.mixin.transformer.meta.MixinMerged merged = m.getAnnotation(org.spongepowered.asm.mixin.transformer.meta.MixinMerged.class);
+                if (merged != null && MODERNFIX_MIXIN.equals(merged.mixin()) && m.getName().contains(MODERNFIX_HANDLER)) {
+                    found = true;
+                    break;
+                }
+            }
+        } catch (Throwable t) {
+            // members not listable: keep working as before
+        }
+        if (found) LOGGER.info("Bons and Furious: vanilla_structure_template_hits: fixed upstream in ModernFix ({} serves hits and loads misses outside the cache lock itself), stands down",
+                MODERNFIX_MIXIN.substring(MODERNFIX_MIXIN.lastIndexOf('.') + 1) + "." + MODERNFIX_HANDLER);
+        upstream = found;
+        return found;
+    }
+
+    /** StructureTemplateManager.get (get): its templates.computeIfAbsent(id, this::tryLoad) call. */
+
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static Object get(Map map, Object key, Function loader, Operation<Object> original) {
         if (!enabled || map == null || key == null || !KNOWN.get(map.getClass())) return original.call(map, key, loader);
+        Boolean u = upstream;
+        if (u == null ? fixedUpstream(net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager.class) : u)
+            return original.call(map, key, loader);
         Object value = map.get(key);
         if (value == null) return original.call(map, key, loader);
         if (!announced) {
