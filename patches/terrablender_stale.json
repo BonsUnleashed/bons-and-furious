@@ -1,0 +1,46 @@
+{
+  "group": "terrablender_stale",
+  "keys": {
+    "terrablender_stale_layer_guard": {
+      "mod": "terrablender",
+      "scripts": [],
+      "since": "1.0.47",
+      "mixins": [
+        "bons.furious.mixin.terrablender_stale.NamespacedSourceStaleGuardMixin"
+      ],
+      "guard": [
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;)Lnet/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule;",
+          "note": "builds every namespace entry through sources.entrySet().forEach, then calls base.apply(context) once: the two calls this switch wraps",
+          "sha256": "56b73168020b1ba5bf615dcaf41e1ab3100bbd1353c28f1aa9ef1bc516db80a7"
+        },
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource",
+          "method": "lambda$apply$1",
+          "desc": "(Lcom/google/common/collect/ImmutableMap$Builder;Lnet/minecraft/world/level/levelgen/SurfaceRules$Context;Ljava/util/Map$Entry;)V",
+          "note": "puts key -> value.apply(context): the build that throws for a noise the registry lacks",
+          "sha256": "83a36472fb88645828ff9bc45dd3554b43ea4f572da89b9f557664a32038e0a0"
+        },
+        {
+          "class": "terrablender/worldgen/surface/NamespacedSurfaceRuleSource$NamespacedRule",
+          "method": "m_183550_",
+          "desc": "(III)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "asks the biome namespace's rule and, when it answers null or the namespace has none, the base rule: an entry that answers nothing is the same as no entry (3.0.1.11 keeps the last biome's rule in a field)",
+          "sha256": "e6ac2f4acecc7a669b4786c4426d1a945f84daad3b1e68aed2ecba758cbabbd0",
+          "sha256_also": [
+            {
+              "build": "terrablender-3.0.1.11",
+              "sha256": "4958c2d17103c3a5df286e3f62974c6521c9fdc35485c6536a3d80c0afc47cad"
+            }
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "@WrapOperation of the base.apply(context) call in NamespacedSurfaceRuleSource.apply counts, per thread, the TerraBlender bases being applied; @ModifyArg (priority 900, inside terrablender_lazy_namespace_rules' consumer) of the sources.entrySet().forEach consumer: in an inner layer (a saved copy read back from level.dat; the count is above zero) every entry is passed on as a GuardedSource around the original value. Its build (at once, or at first use when the lazy switch defers it) runs the original call; the IllegalStateException HolderGetter.getOrThrow throws for a noise the registry lacks makes that layer's entry answer nothing from then on (remembered per layer object and namespace, one WARN per namespace and noise); any other exception is rethrown. The outermost layer is never wrapped. Helper bons.furious.patch.terrablender_stale.StaleLayerGuard (runtime flag staleLayerGuard). Fix: a saved layer that needs a noise no installed mod provides any more (VanillaBackport 1.2's minecraft:small_patch after a change to 1.1.7.10) crashed every new chunk of that dimension.",
+      "license": "LGPL-3.0 (TerraBlender 3.0.1.10 / 3.0.1.11): no TerraBlender code is carried; injections at two calls of NamespacedSurfaceRuleSource.apply with our own logic (helper bons.furious.patch.terrablender_stale.StaleLayerGuard)",
+      "kind": "fix"
+    }
+  }
+}

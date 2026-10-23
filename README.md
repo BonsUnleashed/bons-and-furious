@@ -4,7 +4,7 @@
 
 **Your CPU lives its life one tick at a time.**
 
-[**Forge 1.20.1: 1.0.46**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.46) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
+[**Forge 1.20.1: 1.0.47**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.47) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
 
 ## Faster worlds. Smoother busy scenes.
 
@@ -12,7 +12,7 @@ Bons and Furious reduces the repeated work behind terrain generation, loading, r
 
 **In our tested Forge pack: about 9× world-generation throughput, 5½ minutes less waiting to enter a new world, and 17% higher average FPS with 64 animated mobs.**
 
-Those results were measured with **Bons and Furious 1.0.31 on Minecraft 1.20.1**, on 5 October 2026. They are not measurements of the current 1.0.46 release or the NeoForge build.
+Those results were measured with **Bons and Furious 1.0.31 on Minecraft 1.20.1**, on 5 October 2026. They are not measurements of the current 1.0.47 release or the NeoForge build.
 
 ## What you get
 
@@ -80,12 +80,12 @@ The mob warm-up uses about 7 MB more class memory and adds roughly half a second
 
 | Minecraft | Loader | Controls | Requirements |
 | --- | --- | ---: | --- |
-| 1.20.1 | Forge | 383 | Forge 47.3.22 or newer |
+| 1.20.1 | Forge | 384 | Forge 47.3.22 or newer |
 | 1.21.1 | NeoForge | 211 | Java 21; NeoForge 21.1.252 or newer |
 
 Each build uses one JAR for client and server, with no required target mods. Coverage differs between builds; the figures above are Forge 1.20.1 measurements.
 
-The Forge build contains **322 optimizations, 56 fixes and 5 deliberate behaviour changes**. Those five controls include frame pacing and experimental Radium options; their trade-offs are documented individually. All 383 controls are listed in `config/bons_and_furious.properties`. To disable one, set its key to `false` and restart.
+The Forge build contains **322 optimizations, 57 fixes and 5 deliberate behaviour changes**. Those five controls include frame pacing and experimental Radium options; their trade-offs are documented individually. All 384 controls are listed in `config/bons_and_furious.properties`. To disable one, set its key to `false` and restart.
 
 ## Forge 1.20.1 covered mods (all optional)
 
@@ -105,7 +105,7 @@ For Minecraft 1.21.1, use `bons_and_furious-neoforge-1.0.42+mc1.21.1.jar`, Java 
 
 For Minecraft 1.20.1 / Forge:
 
-1. Download `bons_and_furious-1.0.46.jar` from the [1.0.46 release](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.46) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load. The two small mixin libraries it uses, MixinExtras and MixinSquared, are bundled inside it.
+1. Download `bons_and_furious-1.0.47.jar` from the [1.0.47 release](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.47) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load. The two small mixin libraries it uses, MixinExtras and MixinSquared, are bundled inside it.
 2. Start once. The mod writes its config file with its defaults (every switch on except `jei_join_recipe_deferral` and `radium_experimental_tickets_spawning` and `vanilla_background_level_dat`) and logs how many controls are enabled.
 3. To turn one off, set its key to `false` and restart. Client-only patches (renderer, shaders, ambience) never load on a dedicated server.
 
@@ -145,7 +145,7 @@ switch's mixins and guarded methods are listed in `patches/<mod>.json`.
 
 Licensed GPL-3.0-only ([LICENSE](LICENSE)). Upstream attribution is in [NOTICE.md](NOTICE.md); the tested dependency builds are listed in [upstream-credits.json](upstream-credits.json).
 
-The 1.0.46 release JAR was tested in client and dedicated-server copies of the reference pack before release. The whole-pack benchmark above was measured with 1.0.26; its snapshot had 510 client and 471 server mod JARs.
+The 1.0.47 release JAR was tested in client and dedicated-server copies of the reference pack before release. The whole-pack benchmark above was measured with 1.0.26; its snapshot had 510 client and 471 server mod JARs.
 
 ### Upstream pull requests
 

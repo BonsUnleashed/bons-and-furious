@@ -145,3 +145,12 @@ descriptions, changelogs, issue text), never from their code: Moonrise,
 NeoForge, Valkyrien Skies, Flywheel, Create and ModernFix. The "Idea:" line of
 each switch in bons_and_furious.properties says which idea it follows; "ours"
 marks our own designs.
+
+Targets credited from 1.0.47. The two MCreator switches added in 1.0.45 and the
+Under the Moon animation guard also target Born in Chaos (Mongoose_artist, All
+Rights Reserved), Luminous: Beasts (RipleysMods, Apache License version 2.0),
+Rustic Engineer (Mizz, licence not stated) and Under the Moon (Portakal Cevheri,
+licence not stated); the 1.0.45 and 1.0.46 notices did not list them. Those
+switches carry none of their code, only our own injections. 1.0.47's new switch
+changes TerraBlender, credited above. The exact tested JAR digests are in
+upstream-credits.json.
