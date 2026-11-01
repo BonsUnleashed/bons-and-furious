@@ -54,6 +54,12 @@ import org.spongepowered.asm.mixin.transformer.Config;
  * already is found through the names Mixin registered for the environment (MixinEnvironment.getMixinConfigs()) and
  * Config.create(name, environment), which returns Mixin's own handle of a registered config. Every config is selected,
  * and its plugin loaded, before Mixin prepares any config's mixins, which is where our switches decide.
+ *
+ * Since 1.0.48 a row may name a "conflict": the method both patches change in ways that cannot run together (one of them
+ * replaces it with an @Overwrite, the other injects into it at a call: Mixin refuses that injector whatever its require
+ * says, and the game stops when the class loads). The decision is the same as for a patch that makes the same change;
+ * only the log lines say what really happens (Collections Of Optimizations 5.6 TickingTracker.setLevel, Lithoform 2.0.0
+ * NamespacedRule.tryApply).
  */
 final class ForeignPatches {
     private static final Logger LOGGER = LogManager.getLogger("Bons and Furious");
@@ -68,9 +74,12 @@ final class ForeignPatches {
 
     record Asked(Verdict verdict, String detail) {}
 
-    /** One patch of another mod that does what our switch {@code key} does. */
+    /**
+     * One patch of another mod that does what our switch {@code key} does, or (conflict, since 1.0.48: the method, e.g.
+     * "TickingTracker.setLevel") changes the same method in a way that cannot run together with it; null otherwise.
+     */
     record Yield(String key, String mod, String name, String mixin, String config, String master, String option,
-                 boolean byDefault, List<String> unlessMods) {
+                 boolean byDefault, List<String> unlessMods, String conflict) {
         String shortMixin() {
             return mixin.substring(mixin.lastIndexOf('.') + 1);
         }
@@ -78,10 +87,10 @@ final class ForeignPatches {
 
     private ForeignPatches() {}
 
-    /** guard-table line: yield key mod name mixin config master option default unless ("-" = none). */
+    /** guard-table line: yield key mod name mixin config master option default unless [conflict] ("-" = none). */
     static Yield parse(String[] f) {
         return new Yield(f[1], f[2], f[3], f[4], dash(f[5]), dash(f[6]), dash(f[7]), Boolean.parseBoolean(f[8]),
-                f[9].equals("-") ? List.of() : List.of(f[9].split(",")));
+                f[9].equals("-") ? List.of() : List.of(f[9].split(",")), f.length > 10 ? dash(f[10]) : null);
     }
 
     private static String dash(String s) {
@@ -114,11 +123,18 @@ final class ForeignPatches {
             // since 1.0.45: and the other mod's own mixin plugin really applies it (asked once per mixin; see the class comment)
             Asked a = asked(y);
             if (a.verdict() == Verdict.LEFT_OUT) {
-                if (LOGGED.add("left|" + y.key() + "|" + y.mixin()))
-                    LOGGER.info("Bons and Furious: {} applies: {} {}'s own copy ({}) is left out by its mixin plugin ({}), so only this switch's copy runs",
-                            y.key(), y.name(), version, y.shortMixin(), a.detail());
+                if (LOGGED.add("left|" + y.key() + "|" + y.mixin())) {
+                    if (y.conflict() != null)
+                        LOGGER.info("Bons and Furious: {} applies: {} {}'s change to {} ({}) is left out by its mixin plugin ({}), so the two never meet",
+                                y.key(), y.name(), version, y.conflict(), y.shortMixin(), a.detail());
+                    else
+                        LOGGER.info("Bons and Furious: {} applies: {} {}'s own copy ({}) is left out by its mixin plugin ({}), so only this switch's copy runs",
+                                y.key(), y.name(), version, y.shortMixin(), a.detail());
+                }
                 return null;
             }
+            if (y.conflict() != null)
+                return y.name() + " " + version + " also changes " + y.conflict() + " and the two changes cannot run together (" + y.shortMixin() + setting + ")";
             return y.name() + " " + version + " makes the same change (" + y.shortMixin() + setting + ")";
         } catch (Throwable t) {
             LOGGER.warn("Bons and Furious: could not check {}'s {} for {} ({}); {} applies as usual", y.name(), y.shortMixin(), y.key(), t.toString(), y.key());

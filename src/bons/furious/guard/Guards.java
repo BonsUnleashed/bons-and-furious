@@ -35,6 +35,9 @@ import org.spongepowered.asm.service.MixinService;
  *                                the supported version (...); the class is left unchanged"
  *   another mod does the same   "Bons and Furious: KEY steps aside: MOD VERSION makes the same change (MIXIN, option ...
  *                                on); CLASS is left unchanged by this switch"   (see ForeignPatches)
+ *   another mod's change cannot "Bons and Furious: KEY steps aside: MOD VERSION also changes CLASS.METHOD and the two changes
+ *   run together with this one   cannot run together (MIXIN, option ... on); CLASS is left unchanged by this switch"
+ *                                (since 1.0.48, compat.json rows with a "conflict")
  *   another mod refines a mixin "Bons and Furious: KEY steps aside: MOD VERSION (MIXIN) changes FOREIGN_MIXIN, which this
  *   this switch would replace    switch would replace; CLASS is left unchanged by this switch"   (since 1.0.30)
  *   a class one mixin names is   "Bons and Furious: KEY: MIXIN is left out because CLASS is not installed; TARGET is left
@@ -266,9 +269,14 @@ public final class Guards {
         ForeignPatches.Yield y = YIELD_MIXIN.get(foreignMixin);
         if (y != null && ForeignPatches.listedHere(y) && LOGGED.add("cancel|" + foreignMixin)) {
             String leftOut = ForeignPatches.leftOutByPlugin(y);
+            // since 1.0.48: a "conflict" row is not a second copy of our change, so its lines say why it is left out instead
+            String why = y.conflict() == null ? "so only one copy runs" : "since the two changes to " + y.conflict() + " cannot run together";
             if (leftOut != null)
-                LOGGER.warn("Bons and Furious: {} applies; {} {}'s {} reached a class although its mixin plugin had left it out ({}); it is left out here too, so only one copy runs",
-                        key, y.name(), ForeignPatches.modVersion(y.mod()), y.shortMixin(), leftOut);
+                LOGGER.warn("Bons and Furious: {} applies; {} {}'s {} reached a class although its mixin plugin had left it out ({}); it is left out here too, {}",
+                        key, y.name(), ForeignPatches.modVersion(y.mod()), y.shortMixin(), leftOut, why);
+            else if (y.conflict() != null)
+                LOGGER.info("Bons and Furious: {} applies; {} {}'s change to {} ({}{}) is left out, {}",
+                        key, y.name(), ForeignPatches.modVersion(y.mod()), y.conflict(), y.shortMixin(), y.option() == null ? "" : ", option " + y.option() + " off", why);
             else
                 LOGGER.info("Bons and Furious: {} applies; the same change in {} {} ({}{}) is left out, so only one copy runs",
                         key, y.name(), ForeignPatches.modVersion(y.mod()), y.shortMixin(), y.option() == null ? "" : ", option " + y.option() + " off");

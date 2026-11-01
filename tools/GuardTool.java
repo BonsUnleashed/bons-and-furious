@@ -268,8 +268,13 @@ public final class GuardTool {
             if (prev != null && !prev.equals(key)) problems.add(mixin + " is cancelled for " + prev + " and " + key);
             List<String> unless = new ArrayList<>();
             for (JsonElement u : arr(y, "unless_mods")) unless.add(u.getAsString());
-            yieldLines.add(String.join("\t", key, str(y, "mod"), str(y, "name"), mixin, dash(str(y, "config")), dash(str(y, "master")),
-                    dash(str(y, "option")), String.valueOf(y.has("default") && y.get("default").getAsBoolean()), unless.isEmpty() ? "-" : String.join(",", unless)));
+            String line = String.join("\t", key, str(y, "mod"), str(y, "name"), mixin, dash(str(y, "config")), dash(str(y, "master")),
+                    dash(str(y, "option")), String.valueOf(y.has("default") && y.get("default").getAsBoolean()), unless.isEmpty() ? "-" : String.join(",", unless));
+            // since 1.0.48: "conflict" names the method both patches change in ways that cannot run together (a 10th field,
+            // written only for such rows, so every other yield line stays as before)
+            String conflict = str(y, "conflict");
+            if (conflict != null && (conflict.isBlank() || conflict.contains("\t"))) problems.add("yield " + key + ": conflict must name one method");
+            yieldLines.add(conflict == null ? line : line + "\t" + conflict);
         }
         notes.forEach(p -> System.out.println("GUARD NOTE " + p));
         if (!problems.isEmpty()) {
