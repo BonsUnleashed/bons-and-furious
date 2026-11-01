@@ -352,6 +352,19 @@ public final class Guards {
             "bons.furious.mixin.models.BoneLookupMixin", new String[] {"m_233393_", "(Ljava/lang/String;)Ljava/util/Optional;", "bons$partsWithBone"});
 
     /**
+     * Since 1.0.48.1: STAND_DOWN for a redirect with more than one target method (mixin -> handler name, the redirected call's
+     * owner, name and desc, then method and desc pairs). The redirect has require = 0, so a method whose call another mod
+     * changed first (its @Overwrite, its own redirect or wrap of the call, or a call Mixin did not find) is left to it instead
+     * of stopping the game ("Critical injection failure ... (1/2) succeeded", GitHub #4 with 1.0.47); the other methods keep
+     * the change, which works on each call alone. postApply logs one line per method left to another mod.
+     */
+    private static final Map<String, String[]> STAND_DOWN_EACH = Map.of(
+            "bons.furious.mixin.vanilla_c2.EntitySectionXOverflowMixin", new String[] {"bons$columnRange",
+                    "it/unimi/dsi/fastutil/longs/LongSortedSet", "subSet", "(JJ)Lit/unimi/dsi/fastutil/longs/LongSortedSet;",
+                    "m_188362_", "(Lnet/minecraft/world/phys/AABB;Lnet/minecraft/util/AbortableIterationConsumer;)V",
+                    "m_156858_", "(II)Lit/unimi/dsi/fastutil/longs/LongSortedSet;"});
+
+    /**
      * Since 1.0.36: an injector of ours into a Minecraft method that another mod may replace with an @Overwrite (mixin ->
      * method, desc, readable name). Mixin refuses an injector into a method that another mod's mixin of the same or a
      * higher priority has replaced ("cannot inject into ... merged by ... with priority 1000"), before it looks at require,
@@ -384,6 +397,11 @@ public final class Guards {
 
     /** IMixinConfigPlugin.postApply: one line when a STAND_DOWN injector found the method replaced by another mod. */
     public static void checkStandDown(String mixinClass, ClassNode target) {
+        String[] each = STAND_DOWN_EACH.get(mixinClass);
+        if (each != null) {
+            checkStandDownEach(mixinClass, target, each);
+            return;
+        }
         String[] host = HANDLER_HOST.get(mixinClass);
         if (host != null) {
             checkHandlerHost(mixinClass, target, host);
@@ -411,6 +429,62 @@ public final class Guards {
                         key, by, target.name.replace('/', '.'), s[0]);
             return;
         }
+    }
+
+    /** IMixinConfigPlugin.postApply for a STAND_DOWN_EACH redirect (since 1.0.48.1): one line per method our handler is not in. */
+    private static void checkStandDownEach(String mixinClass, ClassNode target, String[] e) {
+        String key = keyOf(mixinClass);
+        if (key == null) return;
+        Map<String, MethodNode> methods = new LinkedHashMap<>();
+        for (MethodNode m : target.methods) methods.put(m.name + m.desc, m);
+        List<String> left = new ArrayList<>();
+        int pairs = (e.length - 4) / 2;
+        for (int i = 4; i + 1 < e.length; i += 2) {
+            MethodNode m = methods.get(e[i] + e[i + 1]);
+            if (m == null) {
+                left.add(e[i] + " (not in the class)");
+                continue;
+            }
+            boolean ours = false;
+            for (AbstractInsnNode n : m.instructions)
+                if (n instanceof MethodInsnNode mi && mi.name.endsWith("$" + e[0])) ours = true;
+            if (!ours) left.add(e[i] + ": " + standDownReason(target, methods, m, e));
+        }
+        String cls = target.name.replace('/', '.');
+        for (String l : left) {
+            if (!LOGGED.add("standdowneach|" + key + "|" + cls + "|" + l)) continue;
+            LOGGER.info("Bons and Furious: {} steps aside in {}.{}; {}", key, cls, l,
+                    left.size() < pairs ? "the other call keeps the fix" : "this switch changes nothing there");
+        }
+    }
+
+    /** Why our handler is not in a STAND_DOWN_EACH method: who replaced it or changed its call, as far as Mixin recorded it. */
+    private static String standDownReason(ClassNode target, Map<String, MethodNode> methods, MethodNode m, String[] e) {
+        String by = CallSites.mergedBy(m);
+        if (by != null && !ownMixin(by)) return mixinName(by) + " replaces the method";
+        String other = null;
+        for (AbstractInsnNode n : m.instructions) {
+            if (!(n instanceof MethodInsnNode mi) || !mi.owner.equals(target.name)) continue;
+            String merged = CallSites.mergedBy(methods.get(mi.name + mi.desc));
+            if (merged == null || ownMixin(merged)) continue;
+            if (mi.desc.contains("L" + e[1] + ";")) return mixinName(merged) + " changes its " + e[2] + " call first";
+            if (other == null) other = merged;
+        }
+        for (AbstractInsnNode n : m.instructions)
+            if (n instanceof MethodInsnNode mi && mi.owner.equals(e[1]) && mi.name.equals(e[2]) && mi.desc.equals(e[3]))
+                return "its " + e[2] + " call is still there but was not changed (a mod that changes how Mixin finds its targets?)";
+        return other != null ? "its " + e[2] + " call is gone; " + mixinName(other) + " also changes the method"
+                : "its " + e[2] + " call is gone";
+    }
+
+    private static boolean ownMixin(String mixin) {
+        return mixin.startsWith("bons.furious.") || mixin.startsWith("bons.pure.") || mixin.startsWith("agentcraft.");
+    }
+
+    /** "NAME VERSION (SimpleMixinName)" of another mod's mixin, or "(SimpleMixinName)" when its mod is not known. */
+    private static String mixinName(String mixin) {
+        String mod = CallSites.modOf(mixin);
+        return (mod == null ? "" : mod + " ") + "(" + simpleName(mixin) + ")";
     }
 
     /** IMixinConfigPlugin.postApply for a HANDLER_HOST mixin (since 1.0.38): one line when the other mod's handler is not in the class. */
