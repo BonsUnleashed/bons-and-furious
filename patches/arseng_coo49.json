@@ -1,0 +1,82 @@
+{
+  "group": "arseng_coo49",
+  "keys": {
+    "arseng_relay_splitter_listener_leak": {
+      "mod": "arseng",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "fix",
+      "mixins": [
+        "bons.furious.mixin.arseng_coo49.ArsEngRelayListenerMixin"
+      ],
+      "guard": [
+        {
+          "class": "gripe/_90/arseng/mixin/RelaySplitterTileMixin",
+          "method": "arseng$processStaleBlockPositions",
+          "desc": "(Ljava/util/ArrayList;Z)V",
+          "note": "the @Unique pass merged into RelaySplitterTile: per listed position getCapability(SOURCE_TILE).ifPresent(transfer) then addListener(-> stale.add(pos)); then the stale list is walked (its iterator is the method's second ArrayList.iterator call) and its positions removed",
+          "sha256": "e4044a480f77914b25f17c5b640906f19ee8c0ba6f144946d600eb3a83f3d3a4"
+        },
+        {
+          "class": "com/hollingsworth/arsnouveau/common/block/tile/RelaySplitterTile",
+          "method": "processToList",
+          "desc": "()V",
+          "note": "replaced at HEAD by Ars Energistique's RelaySplitterTileMixin (its pass with sendSource = true)",
+          "sha256": "4025d660a0410403eaa7dc1f46206cde95db0f80daaed9b698fc28daaf0410d5"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "addListener",
+          "desc": "(Lnet/minecraftforge/common/util/NonNullConsumer;)V",
+          "note": "present: the listener joins the listener set; otherwise it runs at once",
+          "sha256": "06dcedb4edde4806fac4971aa62b5bcd45fb138b7e11d358d4aec86e08356dae"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "isPresent",
+          "desc": "()Z",
+          "note": "supplier != null && isValid: false once invalidate ran",
+          "sha256": "528ff0650ee32736aedfad726cb2cecad9ff733967636cf3f368cb7713d94073"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "invalidate",
+          "desc": "()V",
+          "note": "runs every listener once, then clears the set",
+          "sha256": "b5bcc4e96795e8f2ead91035f320ed53703efe6bf30a7fd235698d49b22c8057"
+        }
+      ],
+      "cancel": [],
+      "conversion": "In the pass Ars Energistique merges into RelaySplitterTile (arseng$processStaleBlockPositions): MixinExtras @WrapOperation on its LazyOptional.addListener call keeps the (optional, listener) pair of a present optional in a reused list per splitter (a @Unique field) instead of adding it (an absent optional runs the original, which runs the listener at once); @Inject before the method's second ArrayList.iterator call (the stale list's walk) runs every kept listener whose optional is no longer present and clears the list (helper bons.furious.patch.arseng_coo49.ArsEngRelays)",
+      "license": "Ars Energistique (LGPL-3.0) and Ars Nouveau: no code carried, the injectors carry only our own logic"
+    },
+    "arseng_generic_inv_wrapper_gate": {
+      "mod": "arseng",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.arseng_coo49.ArsEngInvWrapperGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "gripe/_90/arseng/definition/ArsEngCapabilities",
+          "method": "attach",
+          "desc": "(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V",
+          "note": "source tiles: addCapability(source_tile) + listener; then for every block entity addCapability(generic_inv_wrapper, new ArsEngCapabilities$3(be))",
+          "sha256": "cef0968f5ee272c32e1c2760ab1013e588c05be91985d7b6b5cd41aa3ec9dc46"
+        },
+        {
+          "class": "gripe/_90/arseng/definition/ArsEngCapabilities$3",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "SOURCE_TILE: be.getCapability(AE2 GENERIC_INTERNAL_INV, side).lazyMap(GenericStackSourceStorage::new); any other capability: empty",
+          "sha256": "64fdf4538a75c9e97baa0421311702c893ebcf558270b7291e0255d0ff2a8392"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the second AttachCapabilitiesEvent.addCapability call of ArsEngCapabilities.attach (the generic_inv_wrapper): left out for block entity classes that do not override getCapability (one ClassValue answer per class) (helper bons.furious.patch.arseng_coo49.ArsEngRelays.skipInvWrapper)",
+      "license": "Ars Energistique (LGPL-3.0): no code carried, the wrapper carries only our own logic"
+    }
+  }
+}

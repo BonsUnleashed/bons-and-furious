@@ -14,7 +14,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
 import net.minecraft.core.Holder;
@@ -26,6 +28,9 @@ import net.minecraft.nbt.TagTypes;
 import net.minecraft.resources.DelegatingOps;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.world.level.biome.Climate;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.server.ServerStoppedEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import org.slf4j.Logger;
 
 /**
@@ -64,9 +69,35 @@ public final class ParameterListEncodes {
     /** Smaller lists encode quickly; keeping their bytes is not worth it. */
     public static final int MIN_ENTRIES = 256;
     private static final Field DELEGATE = delegateField();
-    private static volatile boolean announced;
+    private static volatile boolean announced, stopHooked;
+    /**
+     * Since 1.0.49: every wrapped codec, so that the stopped server's kept encodings can be dropped (forget). A kept entry
+     * holds the biome registry's holder owner and the list's holders strongly; only its key is weak, and the map removes a
+     * dead key's entry only on later use of that map, so after a single player world was closed an entry could keep that
+     * world's worldgen registries (and up to 1.5 MB of bytes) for the rest of the session.
+     */
+    private static final Set<Cached<?>> CODECS = Collections.newSetFromMap(new MapMaker().weakKeys().makeMap());
 
     private ParameterListEncodes() {
+    }
+
+    /** Since 1.0.49: ServerStoppedEvent (after the stop's last level.dat save): the kept encodings are dropped. */
+    static void forget() {
+        for (Cached<?> c : CODECS) c.kept.clear();
+    }
+
+    private static void hookStop() {
+        if (stopHooked) return;
+        synchronized (ParameterListEncodes.class) {
+            if (stopHooked) return;
+            stopHooked = true;
+            try {
+                MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, true, ServerStoppedEvent.class, e -> forget());
+            } catch (Throwable t) {
+                LOGGER.warn("Bons and Furious: vanilla_leveldat_encode_reuse could not listen for the server's stop ({}); a closed world's "
+                        + "kept encoding may stay in memory", t.toString());
+            }
+        }
     }
 
     /** The codec Climate.ParameterList.codec returns, wrapped (raw types: the mixin handler sees Codec only). */
@@ -142,6 +173,7 @@ public final class ParameterListEncodes {
 
         Cached(Codec<Climate.ParameterList<T>> delegate) {
             this.delegate = delegate;
+            CODECS.add(this);
         }
 
         @Override
@@ -170,6 +202,7 @@ public final class ParameterListEncodes {
                     && boundReferences(values)) {
                 byte[] b = bytes(t);
                 if (b != null) {
+                    hookStop();
                     this.kept.put(input, new Entry(owner, values, values.toArray(), b, result.lifecycle()));
                     STORED.incrementAndGet();
                     if (!announced) {

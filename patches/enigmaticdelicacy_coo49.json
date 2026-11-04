@@ -1,0 +1,40 @@
+{
+  "group": "enigmaticdelicacy_coo49",
+  "keys": {
+    "enigmaticdelicacy_unset_persistent_data_skip": {
+      "mod": "enigmaticdelicacy",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.enigmaticdelicacy_coo49.EdSlicingPeekMixin"
+      ],
+      "guard": [
+        {
+          "class": "auviotre/enigmatic/delicacy/handlers/EnigmaticDelightEventHandler",
+          "method": "onTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "slicing = entity.getPersistentData().getInt(\"Slicing\"); only a positive value acts (attribute modifiers)",
+          "sha256": "62348ec8251665882a778749f4402e7dca1b08ab61e5b425ca7eb8c7b0549d2f"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "getPersistentData",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "Forge: creates the persistentData compound when it is null",
+          "sha256": "1355a99782fa41f3f4e5ab09b04e4a97f6beee3ef09f2d211b96ccc318e77ba1"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "m_128451_",
+          "desc": "(Ljava/lang/String;)I",
+          "note": "getInt: 0 for an absent key",
+          "sha256": "6683c573bd549d8449de07635d559d41b7e5f1ccc84de9f1c9c3d756f3999f4e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the getPersistentData() and getInt(\"Slicing\") calls of EnigmaticDelightEventHandler.onTick: the entity's compound when it exists, else one shared empty compound that is only read (Forge's persistentData field read through a VarHandle; entity classes with their own getPersistentData are asked through it), and 0 at once for that shared compound. Exact variant: entities that nothing writes ForgeData to no longer save an empty ForgeData tag. Runtime flag enigmaticdelicacyUnsetPersistentDataSkip. Helper bons.furious.patch.enigmaticdelicacy_coo49.SlicingPeek.",
+      "license": "Enigmatic Delicacy (All Rights Reserved): no code carried, the wrappers carry only our own logic; Forge (LGPL-2.1): its field is read only"
+    }
+  }
+}

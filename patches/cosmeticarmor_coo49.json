@@ -1,0 +1,89 @@
+{
+  "group": "cosmeticarmor_coo49",
+  "keys": {
+    "cosmeticarmor_restore_queue_field": {
+      "mod": "cosmeticarmorreworked",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cosmeticarmor_coo49.PlayerRestoreQueueMixin",
+        "bons.furious.mixin.cosmeticarmor_coo49.RenderHandlerCacheMixin"
+      ],
+      "guard": [
+        {
+          "class": "lain/mods/cos/impl/client/PlayerRenderHandler",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;I)V",
+          "note": "the one cache: CacheBuilder.newBuilder().weakKeys().build(new $1(this)) into the private final field cache",
+          "sha256": "86c012dc6c40f049ad23cab1b946d9c1ccbaf11920461e7d09aad8ac573fd0b6"
+        },
+        {
+          "class": "lain/mods/cos/impl/client/PlayerRenderHandler$1",
+          "method": "load",
+          "desc": "(Ljava/lang/Object;)Ljava/util/Deque;",
+          "note": "the loader: a new ArrayDeque per key (what the field path creates on first use)",
+          "sha256": "21bb7a99c76a0f0ae8a54a50b555aa0c7cb7a2e287583cff52be81775a4bf9ba"
+        },
+        {
+          "class": "lain/mods/cos/impl/client/PlayerRenderHandler",
+          "method": "handlePreRenderPlayer_High",
+          "desc": "(Lnet/minecraftforge/client/event/RenderPlayerEvent$Pre;)V",
+          "note": "cache.getUnchecked(event player): restore, queue the armor restores, cosmetic swap; the cache is read only through getUnchecked",
+          "sha256": "12bc3ac27d003e26586a2a2e8d79428315d95f236c41232932f8adb0a5bf5656"
+        },
+        {
+          "class": "lain/mods/cos/impl/client/PlayerRenderHandler",
+          "method": "handlePostRenderPlayer_Low",
+          "desc": "(Lnet/minecraftforge/client/event/RenderPlayerEvent$Post;)V",
+          "note": "restoreItems(cache.getUnchecked(event player))",
+          "sha256": "efd159e4a646664a635c282dfb772236aaeba791239f1162500c1cc4cba9e161"
+        },
+        {
+          "class": "lain/mods/cos/impl/client/PlayerRenderHandler",
+          "method": "handlePreRenderPlayer_LowestCanceled",
+          "desc": "(Lnet/minecraftforge/client/event/RenderPlayerEvent$Pre;)V",
+          "note": "cancelled pre render: restoreItems(cache.getUnchecked(event player))",
+          "sha256": "9b157105ce12830c6188ef0c63125d2de2ce5bd40bc2bd0314a2e989d73adb5b"
+        },
+        {
+          "class": "lain/mods/cos/impl/client/PlayerRenderHandler",
+          "method": "handleRenderHand_High",
+          "desc": "(Lnet/minecraftforge/client/event/RenderHandEvent;)V",
+          "note": "cache.getUnchecked(Minecraft.player): as the pre render",
+          "sha256": "c0f34675b6ed30f03bd6cc02b6a0aa2ec217942e9f747b20a21fc8f0659eb072"
+        },
+        {
+          "class": "lain/mods/cos/impl/client/PlayerRenderHandler",
+          "method": "handleRenderHand_LowestCanceled",
+          "desc": "(Lnet/minecraftforge/client/event/RenderHandEvent;)V",
+          "note": "restoreItems(cache.getUnchecked(Minecraft.player))",
+          "sha256": "d39dc36d9126fd584943f4c4467194513e0da5ba1fa70e90b987d0ac6764e88a"
+        },
+        {
+          "class": "lain/mods/cos/impl/client/PlayerRenderHandler",
+          "method": "handleRenderArm_High",
+          "desc": "(Lnet/minecraftforge/client/event/RenderArmEvent;)V",
+          "note": "cache.getUnchecked(Minecraft.player): as the pre render",
+          "sha256": "40a68c81483838fe43f142219fb7c1524cd5470f2a3b43092b79cea33fe37326"
+        },
+        {
+          "class": "lain/mods/cos/impl/client/PlayerRenderHandler",
+          "method": "handleRenderArm_LowestCanceled",
+          "desc": "(Lnet/minecraftforge/client/event/RenderArmEvent;)V",
+          "note": "restoreItems(cache.getUnchecked(Minecraft.player))",
+          "sha256": "d39dc36d9126fd584943f4c4467194513e0da5ba1fa70e90b987d0ac6764e88a"
+        },
+        {
+          "class": "lain/mods/cos/impl/client/PlayerRenderHandler",
+          "method": "restoreItems",
+          "desc": "(Ljava/util/Deque;)V",
+          "note": "poll and run every queued restore; a throwing restore is logged",
+          "sha256": "2210c4ecba29ab37a63e763502aae4a4195ca889b2ad76e58ad738a707ae3c6d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on CacheBuilder.build in PlayerRenderHandler's constructor: the restore-queue cache is wrapped (RestoreQueues.wrap: getUnchecked of a player answers the queue in a field a duck mixin adds to Player, created on first use; anything else goes to Cosmetic Armor's cache); helper bons.furious.patch.cosmeticarmor_coo49.RestoreQueues",
+      "license": "Minecraft Mod Public License 1.0.1 (Cosmetic Armor Reworked): no Cosmetic Armor code is carried; our wrapper only decides where a player's queue is kept; Minecraft: no code"
+    }
+  }
+}

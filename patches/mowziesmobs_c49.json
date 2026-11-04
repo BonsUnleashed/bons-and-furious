@@ -1,0 +1,94 @@
+{
+  "group": "mowziesmobs_c49",
+  "keys": {
+    "mowziesmobs_chamber_column_memo": {
+      "mod": "mowziesmobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mowziesmobs_c49.ChamberColumnsMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/world/feature/structure/WroughtnautChamberStructure",
+          "method": "tryWroughtChamber",
+          "desc": "(Lnet/minecraft/world/level/chunk/ChunkGenerator;Lnet/minecraft/world/level/LevelHeightAccessor;IIILnet/minecraft/world/level/levelgen/RandomState;)Lorg/apache/commons/lang3/tuple/Pair;",
+          "sha256": "7c51a12f1edf435673bcf16bcb0a9fb934fca904333385065f70051be45313ad"
+        },
+        {
+          "class": "net/minecraft/world/level/NoiseColumn",
+          "method": "m_183556_",
+          "desc": "(I)Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "0b5b944d86e2d302762f3fe0cbc572fcd0c1dd715b237732d0805c4ae32b5c26"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on both ChunkGenerator.getBaseColumn (m_214184_) calls of WroughtnautChamberStructure.tryWroughtChamber (@Share per call): one column per (x, z) for the call's own generator, height accessor and random state (helper bons.furious.patch.mowziesmobs_c49.ChamberColumns)",
+      "license": "Mowzie's Mobs (custom licence): no-copy; the wrapper carries only our own logic (Idea: Collections Of Optimizations mowziesmobsWorldgen.shareChamberColumns, idea text only)"
+    },
+    "mowziesmobs_umvuthana_leader_cache": {
+      "mod": "mowziesmobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.mowziesmobs_c49.UmvuthanaFollowerLeaderMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/entity/umvuthana/EntityUmvuthanaFollower",
+          "method": "getLeader",
+          "desc": "()Lnet/minecraft/world/entity/LivingEntity;",
+          "sha256": "abb6d17afcc7900d97851c54dd66833f8e9694e9d5857636f7035b1d47c321e3"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/entity/umvuthana/EntityUmvuthanaFollower",
+          "method": "getLeaderUUID",
+          "desc": "()Ljava/util/Optional;",
+          "sha256": "abd6ad3d8b2fd8f733e265ac9ee030a8dde1dc0be1ca51248a26d04a9e64abc2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on EntityUmvuthanaFollower.getLeader: the leader the last search found is answered again while it is not removed, in the follower's level, not a spectator, carries the leader id and its box meets the follower's box inflated by 32; otherwise the original search runs and its answer is kept (one @Unique field; helper bons.furious.patch.mowziesmobs_c49.LeaderCache)",
+      "license": "Mowzie's Mobs (custom licence): no-copy; the wrapper carries only our own logic (Idea: Collections Of Optimizations mowziesmobs.cacheUmvuthanaLeader, idea text only)"
+    },
+    "mowziesmobs_elokosa_leader_reuse": {
+      "mod": "mowziesmobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.mowziesmobs_c49.ElokosaFollowerLeaderMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/entity/elokosa/EntityElokosaFollower",
+          "method": "getLeader",
+          "desc": "()Lnet/minecraft/world/entity/LivingEntity;",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "mowziesmobs 1.8.2",
+              "sha256": "663efafe7fff7656ce00f6de136529721c930b2f6fb038aa489f33e24a93def8"
+            }
+          ]
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/entity/elokosa/EntityElokosaFollower",
+          "method": "getLeaderUUID",
+          "desc": "()Ljava/util/Optional;",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "mowziesmobs 1.8.2",
+              "sha256": "e4e1e0d4c7336859d48fa370ec943133b8c418cc96b7b556e8623ed182b1b678"
+            }
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on EntityElokosaFollower.getLeader (Mowzie's Mobs 1.8.2; the class is absent in 1.7.3, where the switch is absent): the leader the last search found is answered again while it is not removed, in the follower's level, not a spectator, carries the leader id and its box meets the follower's box inflated by 32; otherwise the original search runs and its answer is kept (one @Unique field; helper bons.furious.patch.mowziesmobs_c49.LeaderCache)",
+      "license": "Mowzie's Mobs (custom licence): no-copy; the wrapper carries only our own logic (Idea: Collections Of Optimizations mowziesmobs.reuseKnownLeader, idea text only)"
+    }
+  }
+}

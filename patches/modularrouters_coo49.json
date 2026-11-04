@@ -1,0 +1,116 @@
+{
+  "group": "modularrouters_coo49",
+  "keys": {
+    "modularrouters_cached_handler_first": {
+      "mod": "modularrouters",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.modularrouters_coo49.ModuleTargetHandlerMixin"
+      ],
+      "guard": [
+        {
+          "class": "me/desht/modularrouters/logic/ModuleTarget",
+          "method": "getItemHandler",
+          "desc": "()Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "getItemHandlerFor(MiscUtil.getWorldForGlobalPos(gPos)): the world lookup first, then the handler",
+          "sha256": "fdc2636df0028b318459b06fe23e9450e7ebfb043b4b3c3e06b77ee37c6b2c2b"
+        },
+        {
+          "class": "me/desht/modularrouters/logic/ModuleTarget",
+          "method": "getItemHandlerFor",
+          "desc": "(Lnet/minecraft/world/level/Level;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "the remembered handler while present (the world argument unread), else the look-up through the world",
+          "sha256": "e507abb30c72e9bc436fff5153d9ea0c082017893c1095159f9ea35ac280f1b3"
+        },
+        {
+          "class": "me/desht/modularrouters/util/MiscUtil",
+          "method": "getWorldForGlobalPos",
+          "desc": "(Lnet/minecraft/core/GlobalPos;)Lnet/minecraft/server/level/ServerLevel;",
+          "note": "ServerLifecycleHooks.getCurrentServer().getLevel(dimension): a read with no side effect",
+          "sha256": "22f9cc07f8aaaa2f5f402ff4dbda845d3d1f844a424919534276255459feca4d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the MiscUtil.getWorldForGlobalPos call in ModuleTarget.getItemHandler: while the remembered item handler (cachedItemCap) is present the call is left out (answered null, which getItemHandlerFor does not read then), else the original call. Same handler object; runtime flag modularroutersCachedHandlerFirst. Helper bons.furious.patch.modularrouters_coo49.RouterHandlerFirst.",
+      "license": "Modular Routers (MIT): no code carried; the wrapper only decides whether the world lookup runs"
+    },
+    "modularrouters_extruder_side_fast_path": {
+      "mod": "modularrouters",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.modularrouters_coo49.RouterRedstoneMixin"
+      ],
+      "guard": [
+        {
+          "class": "me/desht/modularrouters/block/tile/ModularRouterBlockEntity",
+          "method": "calculateIncomingRedstonePower",
+          "desc": "(Lnet/minecraft/core/BlockPos;)I",
+          "note": "six sides in MiscUtil.DIRECTIONS order: skip a side whose ExtruderDist is above 0, else getSignal(pos.relative(side), side), 15 or more answers at once, else the maximum",
+          "sha256": "3b3e15e4be5da921e6f84bc376ecb2382e054118813198880cf13280e5df6187"
+        },
+        {
+          "class": "me/desht/modularrouters/block/tile/ModularRouterBlockEntity",
+          "method": "getExtensionData",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "the extension compound, created on first use",
+          "sha256": "f9a5e4ebd7afde9e564033f484c1abf73088b9db15796a265366718a52b7ef26"
+        },
+        {
+          "class": "me/desht/modularrouters/block/tile/ModularRouterBlockEntity",
+          "method": "nonNullLevel",
+          "desc": "()Lnet/minecraft/world/level/Level;",
+          "note": "Objects.requireNonNull(level)",
+          "sha256": "6efa2d96bb9c0657ac59ff8ec1bc071c394c2dbc1643ce214d04cc3932135996"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "m_128451_",
+          "desc": "(Ljava/lang/String;)I",
+          "note": "getInt: 0 for a missing key (an empty compound answers 0 for every key)",
+          "sha256": "6683c573bd549d8449de07635d559d41b7e5f1ccc84de9f1c9c3d756f3999f4e"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "m_128456_",
+          "desc": "()Z",
+          "note": "isEmpty: tags.isEmpty()",
+          "sha256": "839af69a1e453c13cff1afeb5422819d53cf4e75bcb5cd0891411c950251c9bf"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of ModularRouterBlockEntity.calculateIncomingRedstonePower: while the router's extension data is empty RouterExtruderSides.power answers it with the same six getExtensionData / nonNullLevel / getSignal calls in the same order, without building and looking up the ExtruderDist keys; with extension data the router's own code runs. Exact; shipped off by default under the speed rule: a router with extension data pays the hook (true stock 191 -> 199 ns, eight fresh JVMs) while every other router answers about twice as fast (136 -> 65 ns). Runtime flag modularroutersExtruderSideFastPath. Helper bons.furious.patch.modularrouters_coo49.RouterExtruderSides.",
+      "license": "Modular Routers (MIT): the method's logic is restated in our helper (MIT permits it); no code copied verbatim"
+    },
+    "modularrouters_vacuum_negative_split_fix": {
+      "mod": "modularrouters",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.modularrouters_coo49.VacuumClampMixin"
+      ],
+      "guard": [
+        {
+          "class": "me/desht/modularrouters/logic/compiled/CompiledVacuumModule",
+          "method": "handleItemMode",
+          "desc": "(Lme/desht/modularrouters/block/tile/ModularRouterBlockEntity;)Z",
+          "note": "room = (regulator > 0 ? min(maxStack, regulator) : maxStack) - buffered; stackOnGround.split(min(itemsPerTick, room)) then insertBuffer",
+          "sha256": "c6b8f287f86ed97825aa9b92cee70d842be020ec13ee58c14a18f4ceb5c93bbe"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41620_",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "note": "split: copyWithCount(min(amount, count)) and shrink by it (a negative amount grows the stack)",
+          "sha256": "c852ee61b935c29cdb0494534cc101ab2f51e77949adca25089735062c230863"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@ModifyArg on the ItemStack.split argument in CompiledVacuumModule.handleItemMode: a negative amount becomes 0 (nothing taken, nothing inserted, no particles), every other amount unchanged. Gameplay fix (off by default): a vacuum module whose buffer already holds more than its regulator amount no longer duplicates the item on the ground; off by default under the speed rule (the hook costs about 2 ns on every vacuumed item: true stock 72.97 -> 75.06 ns per module run, eight fresh JVMs). Runtime flag modularroutersVacuumNegativeSplitFix. Helper bons.furious.patch.modularrouters_coo49.RouterVacuumClamp.",
+      "license": "Modular Routers (MIT): no code carried"
+    }
+  }
+}

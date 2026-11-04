@@ -7,10 +7,11 @@
       "since": "1.0.46",
       "mixins": [
         "bons.furious.mixin.capability_callers.CapabilityProviderCallerStateAccessor",
-        "bons.furious.mixin.capability_callers.LivingEntityCallerHandlesMixin"
+        "bons.furious.mixin.capability_callers.LivingEntityCallerHandlesMixin",
+        "bons.furious.mixin.capability_callers.LevelCallerHandlesMixin"
       ],
       "cancel": [],
-      "conversion": "layer only: @Accessor for CapabilityProvider.valid/capabilities and one volatile @Unique reference field on LivingEntity (the CallerCapabilityHandles table that spawn_capability_handles, botania_capability_handles and clanginghowl_capability_handles keep their answers in); changes no behaviour by itself",
+      "conversion": "layer only: @Accessor for CapabilityProvider.valid/capabilities and one volatile @Unique reference field on LivingEntity (the CallerCapabilityHandles table that spawn_capability_handles, botania_capability_handles and clanginghowl_capability_handles keep their answers in); 1.0.49: the same field on Level (LevelCallerHandlesMixin, lookupLevel) and the facade bons.furious.patch.capability_callers.CapabilityHandleApi for caller switches in other groups; 1.0.49 callers in this group: goety_capability_handles, eeeabsmobs_capability_handles, witherreincarnated_possession_handles, celestisynth_capability_handles, l2hostility_capability_handles, l2library_capability_handles; changes no behaviour by itself",
       "license": "Minecraft/Forge: one field and accessors, no code",
       "guard": [
         {
@@ -464,6 +465,458 @@
           "desc": "",
           "note": "no other method writes isValid or resolved",
           "sha256": "eb3df48d49e75f27db2102a41c1206c592599c5c72b03f6be9d407bdc8977c0e"
+        }
+      ]
+    },
+    "goety_capability_handles": {
+      "mod": "goety",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.capability_callers.SEHelperHandlesMixin",
+        "bons.furious.mixin.capability_callers.LichdomHelperHandlesMixin",
+        "bons.furious.mixin.capability_callers.MiscCapHelperHandlesMixin"
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapMethod on SEHelper / LichdomHelper / MiscCapHelper.getCapability (the kept value while the capabilities are valid, the dispatcher is the same and the optional it came from is still present) and a @Redirect of their orElse / orElseGet call to the same steps plus one line that keeps a present value; @WrapMethod on SEHelper.isAlly(Player, LivingEntity): false at once when both ally sets are empty (helpers bons.furious.patch.capability_callers.GoetyHandles + the forge_capability_handle_layer table CallerCapabilityHandles)",
+      "license": "Goety (MIT): no Goety code is carried, the mixins only wrap the helpers with our own lookup",
+      "guard": [
+        {
+          "class": "com/Polarice3/Goety/utils/SEHelper",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Lcom/Polarice3/Goety/common/capabilities/soulenergy/ISoulEnergy;",
+          "note": "player.getCapability(SEProvider.CAPABILITY).orElse(new SEImp())",
+          "sha256": "7a4bf2ff57447f6a6e98bd5e3d6f2357c7abb930e55184b4bf425ba742ee5c11"
+        },
+        {
+          "class": "com/Polarice3/Goety/utils/SEHelper",
+          "method": "isAlly",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "getAllyEntities(p).contains(e) || getAllyEntityTypes(p).contains(e.getType())",
+          "sha256": "5ab0af5910a3fbd74f7461bd6f49cbfb89fc799a6deb50e50b21bac12a2bd167"
+        },
+        {
+          "class": "com/Polarice3/Goety/utils/SEHelper",
+          "method": "getAllyEntities",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Ljava/util/List;",
+          "note": "a new list; empty when getCapability(p).allyList() is empty",
+          "sha256": "849e348c42ef258417ad8bb0eebaf89a9a1ac3b3a33ce28a63e99c7bab3d732a"
+        },
+        {
+          "class": "com/Polarice3/Goety/utils/SEHelper",
+          "method": "getAllyEntityTypes",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Ljava/util/List;",
+          "note": "a new list; empty when getCapability(p).allyTypeList() is empty",
+          "sha256": "928b42f761910c4b34944e727f2dd060955db7c9ecf53bd7d3e18c8c92f22b6b"
+        },
+        {
+          "class": "com/Polarice3/Goety/utils/LichdomHelper",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Lcom/Polarice3/Goety/common/capabilities/lichdom/ILichdom;",
+          "note": "player.getCapability(LichProvider.CAPABILITY).orElse(new LichImp())",
+          "sha256": "bdea48d8a965b41111d858f2cbc975a71314012e7c0e4f99df3b806425f88d7d"
+        },
+        {
+          "class": "com/Polarice3/Goety/utils/MiscCapHelper",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lcom/Polarice3/Goety/common/capabilities/misc/IMisc;",
+          "note": "entity.getCapability(MiscProvider.CAPABILITY).orElseGet(MiscImp::new)",
+          "sha256": "28fc40d9fcbb45c28dfa36f9799b5a79ca10dd907305a75a307eea7d781aa3fc"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/capabilities/soulenergy/SEProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "cap == CAPABILITY ? LazyOptional.of(() -> instance) : empty()",
+          "sha256": "e49353b93b00e1ba9da08309437ace8e60510b8f70606e292ef4da1e2acf34db"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/capabilities/soulenergy/SEProvider",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "the only write of instance; CAPABILITY is written only by <clinit> (census)",
+          "sha256": "567ea88800bfd22adeea43c85cd9e1f3cd637c5c22e149a455505845e350a088"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/capabilities/lichdom/LichProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "cap == CAPABILITY ? LazyOptional.of(() -> instance) : empty()",
+          "sha256": "373efd1daa824e9bd6a073284d92f317e16fa045fb0f466f7ee3159ef24dfeb5"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/capabilities/lichdom/LichProvider",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "the only write of instance",
+          "sha256": "697fc454d04235e92a0e4cf6d3a3ae1b49d9ef688b9b6b467e6498f817a84e9b"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/capabilities/misc/MiscProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "cap == CAPABILITY ? LazyOptional.of(() -> instance) : empty()",
+          "sha256": "a3d2f358bab986cbb59a98a17eb847146fd54f2b308ec10bda79d486409cb727"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/capabilities/misc/MiscProvider",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "the only write of instance",
+          "sha256": "a582f43a4c501533914fea6addc8d02d02f0236e443960e34fcf1b483e9e3a57"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/capabilities/soulenergy/SEImp",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "the fallback: sets only its own fields",
+          "sha256": "6d9da38257a05301147d00bb3aa51f387b1710245f0509f0fa2e979ab37f8cc2"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/capabilities/soulenergy/SEImp",
+          "method": "allyList",
+          "desc": "()Ljava/util/Set;",
+          "note": "the ally UUID set",
+          "sha256": "595c28c4fea140f042b9ebe33a4053c4f827584c5cfc591954aa627e8feabf55"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/capabilities/soulenergy/SEImp",
+          "method": "allyTypeList",
+          "desc": "()Ljava/util/List;",
+          "note": "the ally type list",
+          "sha256": "73b9105dbfe4eeed0153e91271cf4b07c0e24d52e347292a04c285185e3d6e2f"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/capabilities/lichdom/LichImp",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "the fallback: sets only its own fields",
+          "sha256": "7a3e5152d6860645bf075fa0ec578435f823cf153a6234bda544b04ccaf6f761"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/capabilities/misc/MiscImp",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "the fallback: sets only its own fields",
+          "sha256": "9f4e589eb4dd4c0f67a9ad99357058c081cffbf905c30c548c94ad2aa3b87efd"
+        }
+      ]
+    },
+    "eeeabsmobs_capability_handles": {
+      "mod": "eeeabsmobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.capability_callers.EeeabCapabilityHandlerHandlesMixin"
+      ],
+      "cancel": [],
+      "conversion": "injectors: one @Redirect of both Entity.getCapability(Capability) calls in CapabilityHandler.getCapability(Entity, Capability) to the layer's kept handle (helpers bons.furious.patch.capability_callers.EeeabHandles, HandleCallers + the forge_capability_handle_layer table CallerCapabilityHandles)",
+      "license": "EEEAB's Mobs (LGPL-3.0): the mixin only redirects two calls to our own lookup",
+      "guard": [
+        {
+          "class": "com/eeeab/eeeabsmobs/sever/handler/CapabilityHandler",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraftforge/common/capabilities/Capability;)Ljava/lang/Object;",
+          "note": "null / !isAlive -> null; getCapability(cap).isPresent() ? getCapability(cap).orElseThrow(...) : null",
+          "sha256": "2242c5b4f05582845ffe1e7d501f41bab97f7db3076b9d904ee1cb1c79d91f7f"
+        },
+        {
+          "class": "com/eeeab/eeeabsmobs/sever/handler/CapabilityHandler",
+          "method": "attachEntityCapability",
+          "desc": "(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V",
+          "note": "living entities: stun, frenzy, electricity providers; players also the ability provider",
+          "sha256": "8af9c5c811b1cecc9b01c4355a9c56ce275da99f18099dc97b4420e01ffa576f"
+        },
+        {
+          "class": "com/eeeab/eeeabsmobs/sever/capability/StunCapability$StunCapabilityProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "CAP.orEmpty(cap, instance.cast()): the same final optional",
+          "sha256": "0a7deb35d670865a4c0c2068ef7ddb1e71a556434b7ede085c32192b573ad51d"
+        },
+        {
+          "class": "com/eeeab/eeeabsmobs/sever/capability/StunCapability$StunCapabilityProvider",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "instance = LazyOptional.of(...) (private final)",
+          "sha256": "6e8679a6abd3c92d994b4b94afaa9767bca0cc7f36d04b128c62a74788d6c655"
+        },
+        {
+          "class": "com/eeeab/eeeabsmobs/sever/capability/FrenzyCapability$FrenzyCapabilityProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "CAP.orEmpty(cap, instance.cast()): the same final optional",
+          "sha256": "80faef7725a0d7eb9b66727f72071e1aa39b3edfd20d0d068adcfe9b01a26bb2"
+        },
+        {
+          "class": "com/eeeab/eeeabsmobs/sever/capability/FrenzyCapability$FrenzyCapabilityProvider",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "instance = LazyOptional.of(...) (private final)",
+          "sha256": "d458e5f3b734200bd1ffa18f1769aba1f1b80a26c3157b084f86e7d2ffc6e5f3"
+        },
+        {
+          "class": "com/eeeab/eeeabsmobs/sever/capability/ElectricityCapability$ElectricityCapabilityProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "CAP.orEmpty(cap, instance.cast()): the same final optional",
+          "sha256": "41c090ec66cba57a3c19465d7f009ad813da209bd2b59e32aedaeba663b42c1e"
+        },
+        {
+          "class": "com/eeeab/eeeabsmobs/sever/capability/ElectricityCapability$ElectricityCapabilityProvider",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "instance = LazyOptional.of(...) (private final)",
+          "sha256": "ada704835ef22e5e6e03a561ee850c3af8fc4090d0d1975c0ae459a5a039b7d8"
+        },
+        {
+          "class": "com/eeeab/eeeabsmobs/sever/capability/AbilityCapability$AbilityCapabilityProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "CAP.orEmpty(cap, instance.cast()): the same final optional",
+          "sha256": "e3c6d9debb8569712c481d87a452f8324cd7cd402eacc3d74c0366c2e90742e9"
+        },
+        {
+          "class": "com/eeeab/eeeabsmobs/sever/capability/AbilityCapability$AbilityCapabilityProvider",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "instance = LazyOptional.of(...) (private final)",
+          "sha256": "a839c6f7e09f31c77584167cf5115cb54944e6999f333601f70f9b0e3d841cdc"
+        }
+      ]
+    },
+    "witherreincarnated_possession_handles": {
+      "mod": "witherreincarnated",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.capability_callers.WitherPossessedHandlesMixin"
+      ],
+      "cancel": [],
+      "conversion": "injectors: @Redirect of the Entity.getCapability(Capability) calls of HandlePossessedMobsEvent.lambda$static$0 (the POSSESSED predicate) and the Mob.getCapability(Capability) call of possessedTick to the layer's kept handle; MixinExtras @WrapMethod on possessedTick: returns at once for a Mob whose possession state is idle (its handler changes nothing then) (helpers bons.furious.patch.capability_callers.WitherHandles, HandleCallers + CallerCapabilityHandles)",
+      "license": "Wither Reincarnated (All Rights Reserved): no Wither Reincarnated code is carried, the injections only call our own logic",
+      "guard": [
+        {
+          "class": "com/alexander/witherreincarnated/events/HandlePossessedMobsEvent",
+          "method": "lambda$static$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "e != null && e.getCapability(CAP).isPresent() && e.getCapability(CAP).resolve().get().isPossessed()",
+          "sha256": "b824221f49ce65a28da4d738ee7e5d9046a6e786ccf33c961bba5fc21d644359"
+        },
+        {
+          "class": "com/alexander/witherreincarnated/events/HandlePossessedMobsEvent",
+          "method": "possessedTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "entity instanceof Mob -> mob.getCapability(CAP).ifPresent(lambda$possessedTick$1)",
+          "sha256": "db9411456286eda3fb2476d2ed531ea3f8f7f8e87a0999fbf9fabbfed49bfda3"
+        },
+        {
+          "class": "com/alexander/witherreincarnated/events/HandlePossessedMobsEvent",
+          "method": "lambda$possessedTick$1",
+          "desc": "(Lnet/minecraft/world/entity/Mob;Lcom/alexander/witherreincarnated/capabilities/possessed/PossessedCapability;)V",
+          "note": "idle state: no UUID lookup, tick() rewrites the same values, not possessed, not wasPossessed, no packet without worldLoaded",
+          "sha256": "82e80b8c1fd3e7a7af2ba0de38d3e885b96ade76d07b99fd2f05955e47955add"
+        },
+        {
+          "class": "com/alexander/witherreincarnated/capabilities/possessed/PossessedCapability",
+          "method": "tick",
+          "desc": "()V",
+          "note": "idle state: writes back the values it read",
+          "sha256": "39216ad7ab4e287e46933312e1ce7e2749d03eb97407e3cb561a60d2abbc1e37"
+        },
+        {
+          "class": "com/alexander/witherreincarnated/capabilities/possessed/PossessedCapability",
+          "method": "isPossessed",
+          "desc": "()Z",
+          "note": "possessionTime > 0",
+          "sha256": "99baa42e1fa932964039754e4b27d9a141e3f8947c5ceacb6e34e30fd5a8c709"
+        },
+        {
+          "class": "com/alexander/witherreincarnated/capabilities/possessed/PossessedCapabilityProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "CAP.orEmpty(cap, opt)",
+          "sha256": "0df69008f62ee65f8afc1b122643a1122bb5005ab93a691b342abe2f2eb87447"
+        },
+        {
+          "class": "com/alexander/witherreincarnated/capabilities/possessed/PossessedCapabilityProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "CAP.orEmpty(cap, opt): the same final optional",
+          "sha256": "73247c2e581345e1974ec202e2eab735d3c702b8f15a9ff2a8ddc6b054c9ad0d"
+        },
+        {
+          "class": "com/alexander/witherreincarnated/capabilities/possessed/PossessedCapabilityProvider",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "opt = LazyOptional.of(this::create) (private final); CAP is written only by <clinit> (census)",
+          "sha256": "1df5cea68fdfb89f57c4d8c7cb6241e73dc7aefcff4757c06de82720898c5ca0"
+        }
+      ]
+    },
+    "celestisynth_capability_handles": {
+      "mod": "celestisynth",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.capability_callers.CelestisynthProviderHandlesMixin"
+      ],
+      "cancel": [],
+      "conversion": "injectors: one @Redirect of the LivingEntity.getCapability(Capability) call in CSEntityCapabilityProvider.get(LivingEntity) to the layer's kept handle (helpers bons.furious.patch.capability_callers.CelestisynthHandles, HandleCallers + CallerCapabilityHandles)",
+      "license": "Celestisynth (MIT): the mixin only redirects one call to our own lookup",
+      "guard": [
+        {
+          "class": "org/thecelestialworkshop/celestisynth/common/capabilities/CSEntityCapabilityProvider",
+          "method": "get",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "entity.getCapability(CAPABILITY)",
+          "sha256": "a06ad6555fe1a1fa74beb3696bda0f265fd4bb68cffa90e8b6010c3f45440833"
+        },
+        {
+          "class": "org/thecelestialworkshop/celestisynth/common/capabilities/CSEntityCapabilityProvider",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "the only write of CAPABILITY (census)",
+          "sha256": "128d24810e3e64cceb8b16b346aa0b8374d9d64b9069ca87ad24cac62e8b9f55"
+        },
+        {
+          "class": "dev/_100media/capabilitysyncer/core/CapabilityAttacher$1",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "cap == capability ? storage.cast() : empty(): the same final captured optional",
+          "sha256": "cd6ff6529ed8691e22e881e8d72753ff5f876f77aee2a1e1d44a1d144e86766f"
+        },
+        {
+          "class": "dev/_100media/capabilitysyncer/core/CapabilityAttacher$1",
+          "method": "<init>",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraftforge/common/util/LazyOptional;Lnet/minecraftforge/common/util/INBTSerializable;)V",
+          "note": "final captured capability, storage, impl",
+          "sha256": "89a06e02c2eb3f557a923ee9bde8572b7e3009d72d39431da2a6405a0762918b"
+        },
+        {
+          "class": "dev/_100media/capabilitysyncer/core/CapabilityAttacher$2",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "cap == capability ? storage.cast() : empty(): the same final captured optional",
+          "sha256": "f1f3d9806b3c908683fea516bb8e7fee68e0e77f9da3fb0e367ffbbf51f2a88e"
+        },
+        {
+          "class": "dev/_100media/capabilitysyncer/core/CapabilityAttacher$2",
+          "method": "<init>",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraftforge/common/util/LazyOptional;)V",
+          "note": "final captured capability, storage",
+          "sha256": "808376f217d34b89eba778ef5c652dc230681a086cb602da60c235b6a590619c"
+        }
+      ]
+    },
+    "l2hostility_capability_handles": {
+      "mod": "l2hostility",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.capability_callers.L2HostilityTickHandlesMixin"
+      ],
+      "cancel": [],
+      "conversion": "injectors: one @Redirect of the LivingEntity.getCapability(Capability) call in CapabilityEvents.livingTickEvent to the layer's kept handle (helpers bons.furious.patch.capability_callers.L2HostilityHandles, HandleCallers + CallerCapabilityHandles)",
+      "license": "L2 Hostility (All Rights Reserved): no L2 Hostility code is carried, the injection only calls our own lookup",
+      "guard": [
+        {
+          "class": "dev/xkmc/l2hostility/events/CapabilityEvents",
+          "method": "livingTickEvent",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "every 10 ticks NaN health fix; isAlive -> getCapability(MobTraitCap.CAPABILITY).ifPresent(...)",
+          "sha256": "ec4e848a945d368fe9c6a6068c889633972a09ddadf4f93e9bbd688f380eeb82"
+        },
+        {
+          "class": "dev/xkmc/l2library/capability/entity/GeneralCapabilitySerializer",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "cap == holder.capability ? lo.cast() : empty()",
+          "sha256": "eb93cbf5ad062e540d1bc2b95b1151451619817d7b5b0f1a1701f546edbf2cc8"
+        },
+        {
+          "class": "dev/xkmc/l2library/capability/entity/GeneralCapabilitySerializer",
+          "method": "<init>",
+          "desc": "(Ldev/xkmc/l2library/capability/entity/GeneralCapabilityHolder;)V",
+          "note": "lo = LazyOptional.of(...): the only write of lo (census of every jar)",
+          "sha256": "02ae81b2a9fb51408880b63ca159404f5433c09de26fd2fbc2ec189f0d16845c"
+        },
+        {
+          "class": "dev/xkmc/l2library/capability/entity/GeneralCapabilitySerializer",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: no other method writes lo",
+          "sha256": "70d6738c1921ec83b3a5a7b4d3e46d999a1c6158decbe523ec383ca4b6b757fe"
+        }
+      ]
+    },
+    "l2library_capability_handles": {
+      "mod": "l2library",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.capability_callers.L2GeneralHolderHandlesMixin",
+        "bons.furious.mixin.capability_callers.L2PlayerHolderHandlesMixin"
+      ],
+      "cancel": [],
+      "conversion": "injectors: @Redirect of the ICapabilityProvider.getCapability(Capability) calls in GeneralCapabilityHolder.get / isProper and of the first Player.getCapability(Capability) call in PlayerCapabilityHolder.get to the layer's kept handle for entities (helpers bons.furious.patch.capability_callers.L2LibraryHandles, HandleCallers + CallerCapabilityHandles)",
+      "license": "L2 Library (LGPL-2.1): the mixins only redirect calls to our own lookup",
+      "guard": [
+        {
+          "class": "dev/xkmc/l2library/capability/entity/GeneralCapabilityHolder",
+          "method": "get",
+          "desc": "(Lnet/minecraftforge/common/capabilities/ICapabilityProvider;)Ldev/xkmc/l2library/capability/entity/GeneralCapabilityTemplate;",
+          "note": "e.getCapability(capability).resolve().get().check()",
+          "sha256": "b19cee3682687ee8d47f77083d4c3b25452c20698793bb383543d70349fa2028"
+        },
+        {
+          "class": "dev/xkmc/l2library/capability/entity/GeneralCapabilityHolder",
+          "method": "isProper",
+          "desc": "(Lnet/minecraftforge/common/capabilities/ICapabilityProvider;)Z",
+          "note": "e.getCapability(capability).isPresent()",
+          "sha256": "f57fa874a7fc92e253b98d3b21f40c75e46987af93f76cf5748fe1502165cd8d"
+        },
+        {
+          "class": "dev/xkmc/l2library/capability/player/PlayerCapabilityHolder",
+          "method": "get",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Ldev/xkmc/l2library/capability/player/PlayerCapabilityTemplate;",
+          "note": "first getCapability(capability); empty -> reviveCaps, second getCapability, invalidateCaps (kept as shipped)",
+          "sha256": "c0780d694380cc6c82246cdf9cef1a2ad87c1c3c548b11625fe325b015b9e599"
+        },
+        {
+          "class": "dev/xkmc/l2library/capability/entity/GeneralCapabilitySerializer",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "cap == holder.capability ? lo.cast() : empty()",
+          "sha256": "eb93cbf5ad062e540d1bc2b95b1151451619817d7b5b0f1a1701f546edbf2cc8"
+        },
+        {
+          "class": "dev/xkmc/l2library/capability/entity/GeneralCapabilitySerializer",
+          "method": "<init>",
+          "desc": "(Ldev/xkmc/l2library/capability/entity/GeneralCapabilityHolder;)V",
+          "note": "lo = LazyOptional.of(...): the only write of lo (census of every jar)",
+          "sha256": "02ae81b2a9fb51408880b63ca159404f5433c09de26fd2fbc2ec189f0d16845c"
+        },
+        {
+          "class": "dev/xkmc/l2library/capability/entity/GeneralCapabilitySerializer",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: no other method writes lo",
+          "sha256": "70d6738c1921ec83b3a5a7b4d3e46d999a1c6158decbe523ec383ca4b6b757fe"
+        },
+        {
+          "class": "dev/xkmc/l2library/capability/player/PlayerCapabilitySerializer",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Ldev/xkmc/l2library/capability/player/PlayerCapabilityHolder;)V",
+          "note": "super(holder): GeneralCapabilitySerializer writes lo",
+          "sha256": "e67f81c52a11594e17a78f4d006bbd49ad62415229a8f3fecbec299ba5216d0b"
+        },
+        {
+          "class": "dev/xkmc/l2library/capability/player/PlayerCapabilitySerializer",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: no getCapability of its own",
+          "sha256": "1bdf8212aeb6091a4a2ed63b5bda79bda49add753d26f23535dd34f4cc83d0f9"
         }
       ]
     }

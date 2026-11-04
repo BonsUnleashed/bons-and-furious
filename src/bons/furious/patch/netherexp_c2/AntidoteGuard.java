@@ -1,8 +1,11 @@
 package bons.furious.patch.netherexp_c2;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.ResourceLocationException;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,8 +24,25 @@ import org.apache.logging.log4j.Logger;
  * valid id gives exactly the original effect.
  *
  * Runtime flag: -Dbons_and_furious.netherexpAntidoteEffectGuard=false keeps the original exceptions.
+ *
+ * Since 1.0.49 (idea from Collections Of Optimizations (netherexp.cacheAntidoteEffect), idea text only), two more parts:
+ * (a) a fix: getAntidoteEffect, getColor (the item tint: every drawn antidote, every frame), getDuration, appendHoverText
+ * and getDescriptionId (the item name) read the stack's tag through stack.getOrCreateTag(), which attaches a new empty tag
+ * to a stack that has none, so merely drawing, naming or describing a tagless antidote changed the stack (it then no
+ * longer equals a tagless one: stack comparison, creative moves and recipe viewers' matching differ from the server).
+ * {@link #readTag} hands those reads the stack's own tag, or one shared empty tag that nothing writes when the stack has
+ * none; every one of those call sites only reads (contains, getString, getInt, getBoolean). finishUsingItem is unchanged.
+ * (b) exact: each read parsed the stored id
+ * again (new ResourceLocation(id): validation of every character) and asked the mob-effect registry; both answers are now
+ * remembered (at most 256 ids each, then nothing more is kept): the parse is a pure function of the string, and a found
+ * registry entry never changes once registered (an id that names no effect is asked again every time).
  */
 public final class AntidoteGuard {
+    /** The tag a tagless stack's reads see (never written: every call site of readTag only reads). */
+    private static final CompoundTag EMPTY_READ_ONLY = new CompoundTag();
+    private static final int MEMO_LIMIT = 256;
+    private static final ConcurrentHashMap<String, ResourceLocation> PARSED = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<ResourceLocation, Object> FOUND = new ConcurrentHashMap<>();
     /** Runtime switch (the config switch acts when the class is transformed). */
     public static volatile boolean enabled = !"false".equalsIgnoreCase(System.getProperty("bons_and_furious.netherexpAntidoteEffectGuard", "true"));
     /** Valid, never registered: the registry answers null for it. */
@@ -38,12 +58,42 @@ public final class AntidoteGuard {
     /** The @WrapOperation handler for {@code new ResourceLocation(storedId)} in getAntidoteEffect. */
     public static ResourceLocation parse(String id, Operation<ResourceLocation> original) {
         if (!enabled) return original.call(id);
+        ResourceLocation kept = id == null ? null : PARSED.get(id);
+        if (kept != null) {
+            if (kept == NO_EFFECT) note("malformed antidote effect id '" + id + "'");
+            return kept;
+        }
+        ResourceLocation parsed;
         try {
-            return original.call(id);
+            parsed = original.call(id);
         } catch (ResourceLocationException e) {
             note("malformed antidote effect id '" + id + "'");
-            return NO_EFFECT;
+            parsed = NO_EFFECT;
         }
+        if (id != null && PARSED.size() < MEMO_LIMIT) PARSED.putIfAbsent(id, parsed);
+        return parsed;
+    }
+
+    /** In place of stack.getOrCreateTag() in getAntidoteEffect, getColor and appendHoverText: read without creating. */
+    public static CompoundTag readTag(ItemStack stack) {
+        if (!enabled) return stack.m_41784_();
+        CompoundTag tag = stack.m_41783_();
+        return tag != null ? tag : EMPTY_READ_ONLY;
+    }
+
+    /** The @WrapOperation handler for the mob-effect registry lookup in getAntidoteEffect. */
+    public static Object lookup(net.minecraft.core.Registry<?> registry, ResourceLocation id, Operation<Object> original) {
+        if (!enabled || id == null) return original.call(registry, id);
+        Object kept = FOUND.get(id);
+        if (kept != null) return kept;
+        Object found = original.call(registry, id);
+        if (found != null && FOUND.size() < MEMO_LIMIT) FOUND.putIfAbsent(id, found);
+        return found;
+    }
+
+    /** For the harness: is the shared empty tag still empty. */
+    public static boolean readOnlyTagEmpty() {
+        return EMPTY_READ_ONLY.m_128456_();
     }
 
     /** The @WrapOperation handler for {@code Objects.requireNonNull(effect)} in getAntidoteEffect. */

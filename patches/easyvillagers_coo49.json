@@ -1,0 +1,50 @@
+{
+  "group": "easyvillagers_coo49",
+  "keys": {
+    "easyvillagers_dirty_mark_interval": {
+      "mod": "easy_villagers",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.easyvillagers_coo49.TraderDirtyMarkMixin",
+        "bons.furious.mixin.easyvillagers_coo49.FarmerDirtyMarkMixin",
+        "bons.furious.mixin.easyvillagers_coo49.BreederDirtyMarkMixin",
+        "bons.furious.mixin.easyvillagers_coo49.IronFarmDirtyMarkMixin"
+      ],
+      "guard": [
+        {
+          "class": "de/maxhenkel/easyvillagers/blocks/tileentity/TraderTileentityBase",
+          "method": "tickServer",
+          "desc": "()V",
+          "note": "with a villager: advanceAge (+ sync once grown), then one unconditional setChanged(), then sound / restock",
+          "sha256": "96e82a8bb092e2b485bb07f036c2a4eba10802968eb1df596b7d46702a98994a"
+        },
+        {
+          "class": "de/maxhenkel/easyvillagers/blocks/tileentity/FarmerTileentity",
+          "method": "tickServer",
+          "desc": "()V",
+          "note": "with a villager: sound, advanceAge, the unconditional setChanged() (first of two); the second follows a crop growth",
+          "sha256": "998105efb0fa197dcdf144db0e41f0a96d36219ef7d2e8e55b892239e95ebbe3"
+        },
+        {
+          "class": "de/maxhenkel/easyvillagers/blocks/tileentity/BreederTileentity",
+          "method": "tickServer",
+          "desc": "()V",
+          "note": "advanceAge of both villagers, then setChanged() while either villager is inside, then the breeding check",
+          "sha256": "2d124a673b1029eb8cbe2a2ba36c604e85bb56a8c97bbc828c544251d9d23d31"
+        },
+        {
+          "class": "de/maxhenkel/easyvillagers/blocks/tileentity/IronFarmTileentity",
+          "method": "tick",
+          "desc": "()V",
+          "note": "with a villager: sounds, advanceAge, ++timer, the unconditional setChanged(), then the golem cycle",
+          "sha256": "8e76b56528f149fd7852b0d7fb79519405f50d51110d0fb7e137e75f614bf3a0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapWithCondition on the per-tick setChanged() (m_6596_) call of TraderTileentityBase.tickServer, FarmerTileentity.tickServer (ordinal 0), BreederTileentity.tickServer and IronFarmTileentity.tick: the call runs only when (game time + an offset from the block position) is a multiple of N (value line, default 20 = COO's, range 1-200; 1 = every tick); every other setChanged of these block entities is untouched. Trade-off, off by default: neighbours hear the idle updates up to N-1 ticks late, and a chunk saved between two marks without any other change keeps the villager age counter (and the iron farm timer) up to N-1 ticks behind. Value: PureConfig.intValue(\"easyvillagers_dirty_mark_interval\", 20, 1, 200). Runtime flag easyvillagersDirtyMarkInterval. Helper bons.furious.patch.easyvillagers_coo49.DirtyMarks.",
+      "license": "Easy Villagers (All Rights Reserved): no code carried, the conditions carry only our own logic"
+    }
+  }
+}

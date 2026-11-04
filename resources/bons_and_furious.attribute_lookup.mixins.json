@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.attribute_lookup",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "bons.pure.config.PureMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "AttributeMapFastLookupMixin",
+    "AttributeMapReapplyAccessor",
+    "AttributeMapRefreshAccessor",
+    "LivingEntityEffectRefreshMixin",
+    "MobEffectTemplatesAccessor",
+    "ProjectileDamageReapplyMixin"
+  ]
+}

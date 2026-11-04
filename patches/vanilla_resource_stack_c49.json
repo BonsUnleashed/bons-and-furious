@@ -1,0 +1,106 @@
+{
+  "group": "vanilla_resource_stack_c49",
+  "keys": {
+    "vanilla_resource_stack_miss_cache": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_resource_stack_c49.FallbackResourceManagerViewMixin",
+        "bons.furious.mixin.vanilla_resource_stack_c49.FolderPackViewMixin",
+        "bons.furious.mixin.vanilla_resource_stack_c49.MultiPackResourceStackMixin",
+        "bons.furious.mixin.vanilla_resource_stack_c49.PackEntryViewMixin",
+        "bons.furious.mixin.vanilla_resource_stack_c49.VanillaPackViewMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/server/packs/resources/MultiPackResourceManager",
+          "method": "m_213829_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Ljava/util/List;",
+          "note": "getResourceStack: the namespace's FallbackResourceManager answers, an unknown namespace gives List.of()",
+          "sha256": "6428c77779203aae602ffc93725d5db92f7be313147c690b906e3f34862e0ada"
+        },
+        {
+          "class": "net/minecraft/server/packs/resources/MultiPackResourceManager",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/server/packs/PackType;Ljava/util/List;)V",
+          "note": "every namespace manager is built here; filters come only from pack.mcmeta filter sections",
+          "sha256": "9ca60e4e21842be6e7a6259758da008d52fc4593925d2637ca5aa5f74a7cac76"
+        },
+        {
+          "class": "net/minecraft/server/packs/resources/FallbackResourceManager",
+          "method": "m_213829_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Ljava/util/List;",
+          "note": "Forge-patched walk: each entry top down (its getChildren() or the pack), getResource per pack, a filter stops it; nothing found -> Lists.reverse of an empty ArrayList, a WARN only when a filter matched",
+          "sha256": "73ed2329e4a1b2c39293a01443c9f0a9099e7fca597f3d5d9c94e63e1a50813c"
+        },
+        {
+          "class": "net/minecraft/server/packs/resources/FallbackResourceManager",
+          "method": "*",
+          "desc": "",
+          "note": "the entry list only grows through push / pushFilterOnly, which MultiPackResourceManager calls in its constructor",
+          "sha256": "3b208e60d072e30dcac2624cac0f613b9eb8d1c66c370d58dc013196c96f8867"
+        },
+        {
+          "class": "net/minecraft/server/packs/resources/FallbackResourceManager$PackEntry",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;Lnet/minecraft/server/packs/PackResources;Ljava/util/function/Predicate;)V",
+          "note": "record: name, pack and filter fixed at construction",
+          "sha256": "895e6bb091315d76699a0387a19a84bbc2934acf8e80af06370cffa6f414590b"
+        },
+        {
+          "class": "net/minecraft/server/packs/FilePackResources",
+          "method": "m_214146_",
+          "desc": "(Lnet/minecraft/server/packs/PackType;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/server/packs/resources/IoSupplier;",
+          "note": "a zip entry lookup in the pack's opened zip file",
+          "sha256": "225488860ec0b4ae536c6cef5496dbb544827d52624ffddb54cae68e4247b2c3"
+        },
+        {
+          "class": "net/minecraft/server/packs/PathPackResources",
+          "method": "m_214146_",
+          "desc": "(Lnet/minecraft/server/packs/PackType;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/server/packs/resources/IoSupplier;",
+          "note": "resolves under the root path",
+          "sha256": "395a8c368200cd2c779e776aed3bce338f02fa741bb305b6f9faadd16e8771b8"
+        },
+        {
+          "class": "net/minecraft/server/packs/VanillaPackResources",
+          "method": "m_214146_",
+          "desc": "(Lnet/minecraft/server/packs/PackType;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/server/packs/resources/IoSupplier;",
+          "note": "resolves under the per-type root paths",
+          "sha256": "0a32fa2a6559506161e483cd4ace37ee5bc96f1843c1cc371e8c63e6a1c6a469"
+        },
+        {
+          "class": "net/minecraftforge/resource/PathPackResources",
+          "method": "m_214146_",
+          "desc": "(Lnet/minecraft/server/packs/PackType;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/server/packs/resources/IoSupplier;",
+          "note": "resolve(type folder, namespace, path) then an existence test",
+          "sha256": "050a700406e7590b0669bfaf8ee803a81011e67e749855eafb372634050b91ef"
+        },
+        {
+          "class": "net/minecraftforge/resource/PathPackResources",
+          "method": "getSource",
+          "desc": "()Ljava/nio/file/Path;",
+          "note": "the root path passed to the constructor",
+          "sha256": "95db918449eeb1f76e83bcb317683af56e30fafaf9419f8a41c570e32b1a07fe"
+        },
+        {
+          "class": "net/minecraftforge/resource/ResourcePackLoader$1",
+          "method": "resolve",
+          "desc": "([Ljava/lang/String;)Ljava/nio/file/Path;",
+          "note": "a mod-file pack resolves inside its mod file (IModFile.findResource); its source is the mod file's path",
+          "sha256": "4196bf7953ff7c2f7300d0b32df63fe056aff0e184979675d1e004390a66c8ae"
+        },
+        {
+          "class": "net/minecraftforge/resource/DelegatingPackResources",
+          "method": "getChildren",
+          "desc": "()Ljava/util/Collection;",
+          "note": "the delegate packs given to the constructor",
+          "sha256": "a48aa9472756005c60863480661c6bf833bb784cc2625e73ba4f3c36d15a377e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on MultiPackResourceManager.getResourceStack (m_213829_): remembered misses per namespace FallbackResourceManager when every pack of the namespace is an immutable archive without filters (helper bons.furious.patch.vanilla_resource_stack_c49.ResourceStackMisses); read-only views (duck interfaces in bons.furious.patch.vanilla_resource_stack_c49.RsStackViews) on FallbackResourceManager, its PackEntry record, PathPackResources and VanillaPackResources",
+      "license": "Minecraft (Mojang) and Forge (LGPL-2.1): no game code is carried; the wrapper and the views are ours"
+    }
+  }
+}

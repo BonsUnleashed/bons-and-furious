@@ -1,0 +1,26 @@
+{
+  "group": "integratedvillages_coo49",
+  "keys": {
+    "integratedvillages_workstation_pick_local": {
+      "mod": "integrated_villages",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.integratedvillages_coo49.WorkstationPickLocalMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/craisinlord/integrated_villages/world/processors/WorkstationProcessor",
+          "method": "m_7382_",
+          "desc": "(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructurePlaceSettings;)Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;",
+          "note": "placeholder block -> RandomSource.create(), the type's candidates appended to the outputBlocksString field (generic: composter removed again at >= 2), list.get(random.nextInt(size)); the field is read only here",
+          "sha256": "b19fd298433ca9cb6b1e280e7580a7807ade25f566df1fac4ca479674d0e1858"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on WorkstationProcessor.processBlock's RandomSource.create() call (kept; opens the placement) and on every GETFIELD of outputBlocksString in that method: one placement builds its candidates in the calling thread's own list (emptied per placement), so the mod's own code makes its first-placement list and its own uniform pick every time. Fix: the shared field no longer grows by the candidate set per placement for the server's life and is no longer written by several world generation threads at once; every candidate keeps its chance (the old list was k equal copies). Runtime flag integratedvillagesWorkstationPickLocal. Helper bons.furious.patch.integratedvillages_coo49.WorkstationPicks.",
+      "license": "All Rights Reserved (Integrated Villages): injectors only, no Integrated Villages code is carried"
+    }
+  }
+}

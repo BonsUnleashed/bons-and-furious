@@ -10,6 +10,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.level.LevelEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -58,9 +61,34 @@ public final class DisplayTickBiomes {
     private static Level memoLevel;
     private static BlockPos memoPos;
     private static Holder<Biome> memoBiome;
-    private static volatile boolean announced;
+    private static volatile boolean announced, unloadHooked;
 
     private DisplayTickBiomes() {
+    }
+
+    /** Since 1.0.49: listen for level unloads once, when the memo first holds a level (render thread). */
+    private static void hookUnload() {
+        if (unloadHooked) return;
+        unloadHooked = true;
+        try {
+            MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, true, LevelEvent.Unload.class, DisplayTickBiomes::onLevelUnload);
+        } catch (Throwable t) {
+            LOGGER.warn("Bons and Furious: subtleeffects_display_tick_biome_reuse could not listen for level unloads ({}); a closed world's "
+                    + "level stays in memory until the next world's first biome effect", t.toString());
+        }
+    }
+
+    /**
+     * Since 1.0.49: a client level unloads (leaving a world, or the client's level object replaced): the memo is dropped.
+     * It answers only inside one BiomeEffectsManager.tick call, which never spans an unload, so no answer changes; before,
+     * it kept the closed ClientLevel (its chunks and entities) and a biome holder of its registries reachable until the next
+     * world's first biome effect, on the title screen for good. Server levels and other threads are ignored.
+     */
+    static void onLevelUnload(LevelEvent.Unload event) {
+        if (!event.getLevel().m_5776_() || Thread.currentThread() != owner) return;   // m_5776_ = isClientSide
+        memoLevel = null;
+        memoPos = null;
+        memoBiome = null;
     }
 
     private static MethodHandle uniformHelper() {
@@ -134,6 +162,7 @@ public final class DisplayTickBiomes {
         } else {
             h = lookup(level, pos);
             if (t == o) {
+                if (!unloadHooked) hookUnload();
                 memoLevel = level;
                 memoPos = pos;
                 memoBiome = h;

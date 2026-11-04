@@ -1,0 +1,50 @@
+{
+  "group": "structurify_set_reuse",
+  "keys": {
+    "structurify_set_entries_reuse": {
+      "mod": "structurify",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.structurify_set_reuse.StructureSetEntriesReuseMixin",
+        "bons.furious.mixin.structurify_set_reuse.StructurifyAnswerAccess"
+      ],
+      "guard": [
+        {
+          "class": "com/faboslav/structurify/common/mixin/structure/StructureSetMixin",
+          "method": "structurify$getStructures",
+          "desc": "(Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;)Ljava/util/List;",
+          "sha256": "c892d03ec14bef52e96c25f3f436caeaa452ff64c980847d9cd0211f267ceefc"
+        },
+        {
+          "class": "com/faboslav/structurify/common/mixin/structure/StructureSetMixin",
+          "method": "structurify$setStructureSetId",
+          "desc": "(Ljava/lang/String;)V",
+          "sha256": "3dd0af85612f20a568a8bd22a6532f0e52f68b17c27260e44ea49b0a81769a51"
+        },
+        {
+          "class": "com/faboslav/structurify/common/mixin/structure/StructureSetMixin",
+          "method": "*",
+          "desc": "",
+          "sha256": "637c75c88b25f3ef6e44e7ff49c510f96ed74ee1cafe9b70683aed2e84e88fc2"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/StructureSet",
+          "method": "f_210003_",
+          "desc": "()Ljava/util/List;",
+          "sha256": "8fa0b3fc08ba6e8819a3c0da6c20f4c50c9ea464db5179dd558d1752e4858ce3"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/StructureSet",
+          "method": "*",
+          "desc": "",
+          "sha256": "0493adf664abeadd2307f0ea115d586e37b2e8ce20baedf3a029a6fe0b4da7b0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinSquared @Inject(HEAD, cancellable) into Structurify's structurify$getStructures handler returns its last answer while the record's list is the same immutable object and Structurify's answer field (read through an @Accessor, resolved after Structurify's mixin added the field) is unchanged; MixinExtras @ModifyReturnValue at the handler's RETURN keeps that answer with the record list",
+      "license": "CC BY-NC-ND 4.0 (Structurify): no derivative code; injections into its handler with our own logic only (helper bons.furious.patch.structurify_set_reuse.SetEntries)"
+    }
+  }
+}

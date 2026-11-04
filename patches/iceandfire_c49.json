@@ -1,0 +1,80 @@
+{
+  "group": "iceandfire_c49",
+  "keys": {
+    "iceandfire_entity_data_memo": {
+      "mod": "iceandfire",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.iceandfire_c49.EntityDataProviderMemoMixin",
+        "bons.furious.mixin.iceandfire_c49.LivingEntityDataMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/props/EntityDataProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "sha256": "c7bd564d955ac15bed6aa4609c08ef2a92569d22c2dc4e5b64311052ff0b8e09"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/props/EntityDataProvider",
+          "method": "removeCachedEntry",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "1492026b501320b5edbabeb6e4f4ec49fb9b40e24b8ce3755d2e1b9990856776"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/props/EntityDataProvider",
+          "method": "lambda$getCapability$3",
+          "desc": "(Ljava/util/Map;ILnet/minecraftforge/common/util/LazyOptional;)V",
+          "sha256": "5fd0d0db30b5f8dd6779ea16ac547163521d23ec286215574ec3afde597c4ecc"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/props/EntityDataProvider",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "d5d56261150c18098dddc1f5fefb75e9ebc6a665c9fcb27eebd0695085cfcc28"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/props/EntityDataProvider",
+          "method": "*",
+          "desc": "",
+          "sha256": "78f59213485ac74c000195f6bcfd28f4d69f4613d2bfd2f84060a9838f6199f2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on EntityDataProvider.getCapability(Entity) (a valid per-entity memo answers, otherwise the original runs and its answer is kept when the side map holds it for the id) + @WrapOperation on the three Map.remove calls (removeCachedEntry x2, lambda$getCapability$3) and the Map.clear call (removeCachedEntry), which invalidate the memo of that id / map before running unchanged; one @Unique field on LivingEntity (LivingEntityDataMemoMixin); helper bons.furious.patch.iceandfire_c49.EntityDataMemo",
+      "license": "LGPL-3.0 (Ice and Fire): no Ice and Fire code is carried; the wrappers carry only our own logic (Idea: Collections Of Optimizations iceandfire.fastEntityDataLookup, idea text only)"
+    },
+    "iceandfire_multipart_part_lean": {
+      "mod": "iceandfire",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.iceandfire_c49.MutlipartPartLeanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/EntityMutlipartPart",
+          "method": "collideWithNearbyEntities",
+          "desc": "()V",
+          "sha256": "e506965c614ecf0d8a188581922ba8e343c0bbf58af169614f6ee7fe93735a8f"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/EntityMutlipartPart",
+          "method": "lambda$collideWithNearbyEntities$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;)Z",
+          "sha256": "7643201a5b72544313a5eeee19e93eb06ec70285d9ed54c55f2840c994a16e7d"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/EntityMutlipartPart",
+          "method": "lambda$collideWithNearbyEntities$1",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;)V",
+          "sha256": "168c601c4a06d2e9561564e82bfd18ef8c042cc60e7bfa6a0a4b7379291b14e0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on EntityMutlipartPart.collideWithNearbyEntities: the same getEntities / getParent calls, then a plain loop making the stream's filter and push calls in list order (helper bons.furious.patch.iceandfire_c49.MultipartLean); the runtime flag off runs the original",
+      "license": "LGPL-3.0 (Ice and Fire): the loop is our own code restating the method's stream (LGPL permits carrying it); Idea: Collections Of Optimizations iceandfire.leanMultipartTick, idea text only"
+    }
+  }
+}

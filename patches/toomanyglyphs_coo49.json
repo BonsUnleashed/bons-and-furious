@@ -1,0 +1,26 @@
+{
+  "group": "toomanyglyphs_coo49",
+  "keys": {
+    "toomanyglyphs_ray_particle_budget": {
+      "mod": "toomanyglyphs",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.toomanyglyphs_coo49.TmgRayBudgetMixin"
+      ],
+      "guard": [
+        {
+          "class": "io/github/derringersmods/toomanyglyphs/common/network/PacketRayEffect$ClientHandler",
+          "method": "accept",
+          "desc": "(Lio/github/derringersmods/toomanyglyphs/common/network/PacketRayEffect;Lnet/minecraftforge/network/NetworkEvent$Context;)V",
+          "note": "one ClientLevel.addParticle(glow) per 1/16 (or 1/8 near the player's view) block of the beam, three level.random draws each",
+          "sha256": "c5a2eeea1a3d95f09ff19a1fc3986a6d090fb374f135f17470f0fb88bd7f8e0c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at HEAD (cancellable) of PacketRayEffect$ClientHandler.accept: the beam is skipped once the client tick's beams handed out the budget (PureConfig value, default 1024); MixinExtras @WrapOperation on its ClientLevel.addParticle call counts the particles (helper bons.furious.patch.toomanyglyphs_coo49.TmgRays)",
+      "license": "Too Many Glyphs (LGPL-2.1+): no code carried, the injectors carry only our own logic"
+    }
+  }
+}

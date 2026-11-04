@@ -1,0 +1,113 @@
+{
+  "group": "mekaweapons_coo49",
+  "keys": {
+    "mekaweapons_gun_sound_client_only": {
+      "mod": "mekaweapons",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mekaweapons_coo49.MekaGunSidesMixin"
+      ],
+      "guard": [
+        {
+          "class": "meranha/mekaweapons/items/ItemMekaGun",
+          "method": "m_7203_",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+          "note": "use: one SoundHandler.playSound(MekanismSounds.LASER) call on both sides (absent in 3.0: no Meka-Gun; sha256_also = 4.2.1)",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "mekaweapons-4.2.1",
+              "sha256": "612b07e0b6c80039d7e5b3016ebfa8ceaaa5321d834da91eea353954712af7e6"
+            }
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation (+ @Local level) on the one mekanism.client.sound.SoundHandler.playSound(SoundEventRegistryObject) call in ItemMekaGun.use: runs only when level.isClientSide (the shooter's client); on a dedicated server the client class is never reached (no NoClassDefFoundError crash), in singleplayer the integrated server no longer plays the sound a second time. String target + @Pseudo: no 4.x-only class is named, the key is ABSENT with Mekanism Weapons 3.0. Runtime flag mekaweaponsGunSoundClientOnly. Helper bons.furious.patch.mekaweapons_coo49.MekaWeaponsFixes.",
+      "license": "Mekanism Weapons (MIT): no code carried; the wrapper decides whether Mekanism's own call runs"
+    },
+    "mekaweapons_gun_laser_server_only": {
+      "mod": "mekaweapons",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mekaweapons_coo49.MekaGunLaserMixin"
+      ],
+      "guard": [
+        {
+          "class": "meranha/mekaweapons/items/ItemMekaGun",
+          "method": "fireLaser",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;",
+          "note": "private: entity box query, ignite + hurt the hit entity, returns `to` when nothing is hit (absent in 3.0)",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "mekaweapons-4.2.1",
+              "sha256": "652e7989668a3acc85914b17de0b3c2bb5e351348e1500e59c27996d10f252da"
+            }
+          ]
+        },
+        {
+          "class": "meranha/mekaweapons/items/ItemMekaGun",
+          "method": "m_7203_",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+          "note": "the only fireLaser caller: its result only builds the particle data for sendLaserDataToPlayers",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "mekaweapons-4.2.1",
+              "sha256": "612b07e0b6c80039d7e5b3016ebfa8ceaaa5321d834da91eea353954712af7e6"
+            }
+          ]
+        },
+        {
+          "class": "meranha/mekaweapons/items/ItemMekaGun",
+          "method": "sendLaserDataToPlayers",
+          "desc": "(Lnet/minecraft/world/level/Level;Lmeranha/mekaweapons/particle/MekaGunLaserParticleData;Lnet/minecraft/world/phys/Vec3;)V",
+          "note": "acts only when the level is a ServerLevel",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "mekaweapons-4.2.1",
+              "sha256": "6482faa873f41fe7ec8ccd9baf002bda1818251a65f4771f843b74d0cee03168"
+            }
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of the private ItemMekaGun.fireLaser: on a client-side level it returns `to` (the method's own no-hit answer) without the box query, the local ignite and the client hurt; the server's laser is unchanged. String target + @Pseudo, ABSENT with 3.0. Runtime flag mekaweaponsGunLaserServerOnly. Helper bons.furious.patch.mekaweapons_coo49.MekaWeaponsFixes.",
+      "license": "Mekanism Weapons (MIT): no code carried; the injection holds only our side test"
+    },
+    "mekaweapons_bow_offhand_arrow": {
+      "mod": "mekaweapons",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mekaweapons_coo49.MekaBowOffhandArrowMixin"
+      ],
+      "guard": [
+        {
+          "class": "meranha/mekaweapons/items/ItemMekaBow",
+          "method": "customArrow",
+          "desc": "(Lnet/minecraft/world/entity/projectile/AbstractArrow;)Lnet/minecraft/world/entity/projectile/AbstractArrow;",
+          "note": "weapon = owner instanceof Player ? player.getMainHandItem() : EMPTY; new MekaArrowEntity(arrow, ARROW, weapon)",
+          "sha256": "6e161ac9e7e87ac9080fb9c98ec0035ef7389839c5ff8c857f7a7ddc93ed95ba"
+        },
+        {
+          "class": "meranha/mekaweapons/items/ItemMekaBow",
+          "method": "m_5551_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+          "note": "releaseUsing: calls customArrow while the bow is still the player's use item",
+          "sha256": "8389e24f3cba98c4e04c40299535fd7d02bc376e1bb678d40afca278b216b2e2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the one Player.getMainHandItem() call in ItemMekaBow.customArrow: the player's use item when that is a Meka-Bow (the bow being released, either hand), else the original. Gameplay fix, off by default. Runtime flag mekaweaponsBowOffhandArrow. Helper bons.furious.patch.mekaweapons_coo49.MekaWeaponsFixes.",
+      "license": "Mekanism Weapons (MIT): no code carried; the wrapper picks between two vanilla reads"
+    }
+  }
+}

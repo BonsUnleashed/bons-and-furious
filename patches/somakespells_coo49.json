@@ -1,0 +1,131 @@
+{
+  "group": "somakespells_coo49",
+  "keys": {
+    "somakespells_balance_uuid_memo": {
+      "mod": "somakespells",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.somakespells_coo49.SomakeBalanceUuidMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/somakespells/event/AttributeBalanceHandler",
+          "method": "uuid",
+          "desc": "(Ljava/lang/String;)Ljava/util/UUID;",
+          "note": "uuid(key) = UUID.nameUUIDFromBytes(key.getBytes(UTF_8)): a pure function of the key (the wrapped method)",
+          "sha256": "6ba8dfcff03e13859b06c3a5b0fec9581fe90773c33694005204dd31157375bf"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Exact variant: MixinExtras @WrapMethod on AttributeBalanceHandler.uuid(String): a key seen before is answered with the UUID the original computed for it (an equal value), a new key runs the original and is kept (at most 4,096 keys); the one internal difference is one UUID object per key instead of a new equal one per call. Runtime flag somakespellsBalanceUuidMemo, shadow somakespellsBalanceUuidMemo.shadow. Helper bons.furious.patch.somakespells_coo49.SomakeUuids.",
+      "license": "Somake Spells (All Rights Reserved): no Somake Spells code is carried; the wrapper keeps the original's answers"
+    },
+    "somakespells_connection_tick_precheck": {
+      "mod": "somakespells",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.somakespells_coo49.SomakeConnectionTickMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/somakespells/event/ConnectionEventHandler",
+          "method": "onLivingTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "entity = event.getEntity(); level = entity.level() (the wrapped call, its value only feeds the instanceof ServerLevel test that returns); ServerPlayer: getPendingCastData, clear + set only when it has a target that expired; processPendingTransfers; getLinkData, return when it has no link",
+          "sha256": "713614b7ed86bc606fb013905bb592509216c5c2adee00ba9a0e7a68534f5b81"
+        },
+        {
+          "class": "com/somakespells/event/ConnectionEventHandler",
+          "method": "processPendingTransfers",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "getTransferQueueData, returns before any write when the queue has no pending transfers",
+          "sha256": "6e9c56ab81df86a745d3c801aa23bf6b3c1d8a2c7ba9147a122b6ba8cc722bc5"
+        },
+        {
+          "class": "com/somakespells/capabilities/ConnectionDataHelper",
+          "method": "getPendingCastData",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Lcom/somakespells/capabilities/ConnectionPendingCastData;",
+          "note": "new data; getPersistentData().getCompound(SomakeConnectionPendingCast); deserialize only a non-empty compound",
+          "sha256": "0fd7c6075fb22da09ec98b9f2d3f922f59ac907df91c6ea8873f45aa08e579bb"
+        },
+        {
+          "class": "com/somakespells/capabilities/ConnectionDataHelper",
+          "method": "getTransferQueueData",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lcom/somakespells/capabilities/ConnectionTransferQueueData;",
+          "note": "new data; getPersistentData().getCompound(SomakeConnectionTransferQueue); deserialize only a non-empty compound",
+          "sha256": "7a6110be18c0e6f490a90b3cbed319cab7fb84297e9c496801f7c4eab4667de8"
+        },
+        {
+          "class": "com/somakespells/capabilities/ConnectionDataHelper",
+          "method": "getLinkData",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lcom/somakespells/capabilities/ConnectionLinkData;",
+          "note": "new data; getPersistentData().getCompound(SomakeConnectionLink); deserialize only a non-empty compound",
+          "sha256": "b3a26da585f198767d04dcc5d0e31ef6cd2ecbde5b1097e7ecaeb5693702c984"
+        },
+        {
+          "class": "com/somakespells/capabilities/ConnectionPendingCastData",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "no side effect",
+          "sha256": "d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f"
+        },
+        {
+          "class": "com/somakespells/capabilities/ConnectionPendingCastData",
+          "method": "hasPendingTarget",
+          "desc": "()Z",
+          "note": "firstTargetUuid and kind set: false for a new object",
+          "sha256": "e09b1cb8ae840433e938ab473d0ce3e7ae150fd4fdc589bba4cc50cd58493075"
+        },
+        {
+          "class": "com/somakespells/capabilities/ConnectionTransferQueueData",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "a new empty list, no side effect",
+          "sha256": "d4deaab3c7bca5e698100b6d8a4941f71cf795a13bd747ee29733397538f6fe3"
+        },
+        {
+          "class": "com/somakespells/capabilities/ConnectionTransferQueueData",
+          "method": "hasPendingTransfers",
+          "desc": "()Z",
+          "note": "the list is not empty: false for a new object",
+          "sha256": "28e86476efe3a48bbc38bc0858ae9094cc4b1ccb7be685f3821df6bff42a6d72"
+        },
+        {
+          "class": "com/somakespells/capabilities/ConnectionLinkData",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "a new empty EnumMap, no side effect",
+          "sha256": "fa4a3816ea98a01e1effc6a5742bb9c3692a80eef6df40b233be98937a058c22"
+        },
+        {
+          "class": "com/somakespells/capabilities/ConnectionLinkData",
+          "method": "hasLink",
+          "desc": "()Z",
+          "note": "the map is not empty: false for a new object",
+          "sha256": "8493e2fd5b5c845369f1dd7082f677fc84ad89c8ad4fc699dcf6c47a10679a53"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "m_128469_",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "getCompound: the stored compound, else a new empty one (nothing written)",
+          "sha256": "fa6f576ec439f422a5ba594988988da5a710a9c345f06dec5a6eb9fa17d7ba42"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "m_128441_",
+          "desc": "(Ljava/lang/String;)Z",
+          "note": "contains(key): any tag type (the switch's test)",
+          "sha256": "4fd0996fa77425ebc7b6da317cae7cc3ec5fd70b537e987b11445ca0e27caae5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the first LivingEntity.level() (m_9236_) call of ConnectionEventHandler.onLivingTick: on a server level, when the entity's persistent data (getPersistentData(), which creates ForgeData as the mod's getters do) holds none of SomakeConnectionTransferQueue, SomakeConnectionLink and (ServerPlayer only) SomakeConnectionPendingCast, the value is null, so the handler's instanceof ServerLevel test returns at once; otherwise the original value. Runtime flag somakespellsConnectionTickPrecheck, shadow somakespellsConnectionTickPrecheck.shadow. Helper bons.furious.patch.somakespells_coo49.SomakeConnections.",
+      "license": "Somake Spells (All Rights Reserved): no Somake Spells code is carried; the wrapper decides from three tag lookups"
+    }
+  }
+}

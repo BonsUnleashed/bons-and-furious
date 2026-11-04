@@ -3,6 +3,7 @@ package bons.furious.mixin.emf_render;
 import bons.furious.patch.emf_render.EmfRender;
 import java.util.Map;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import traben.entity_model_features.models.animation.EMFAnimationEntityContext;
@@ -18,7 +19,13 @@ import traben.entity_model_features.models.animation.EMFAnimationEntityContext;
  *
  * This redirects that first put (ordinal 0, the anger-ended branch) to remove(uuid): the same value for every later read,
  * and the map no longer grows with mobs that are not angry. The second put (a new highest anger time) is unchanged.
+ *
+ * 1.0.49: the key now also covers EMF 3.3.x (EmfMathAngerMapMixin, EMFMath.getAngerTime), where this class no longer
+ * exists. The group's plugin (bons.furious.patch.emf_render.EmfRenderPlugin) offers this mixin to Mixin only when the
+ * guard matched the tested 3.2.4 classes, and the 3.3.x mixin only when it matched an EMF 3.3 build, so exactly one of the
+ * two applies; @Pseudo is a backstop only. Nothing changes on EMF 3.2.x.
  */
+@Pseudo
 @Mixin(value = EMFAnimationEntityContext.class, remap = false)
 public abstract class EmfAngerMapMixin {
     @Redirect(method = "getAngerTime", at = @At(value = "INVOKE", target = "Ljava/util/Map;put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;",

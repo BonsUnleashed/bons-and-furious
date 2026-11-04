@@ -1,0 +1,89 @@
+{
+  "group": "bowenchants_coo49",
+  "keys": {
+    "bowenchants_draw_speed_bows_only": {
+      "mod": "bowenchants",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.bowenchants_coo49.BowDrawSpeedMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/doug/bowenchants/events/BowEnchantsEvents",
+          "method": "applyDrawSpeedAdjustment",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEntityUseItemEvent$Tick;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)I",
+          "note": "enchantment bonus x external draw-speed multiplier; no bonus -> event.getDuration(); else the duration shortened by the extra ticks; no item check",
+          "sha256": "a64d21aaca0137ceb831769838a9786f2f6db456ff415a16507c374834dfaf0f"
+        },
+        {
+          "class": "com/doug/bowenchants/events/BowEnchantsEvents",
+          "method": "onLivingEntityUseItemTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEntityUseItemEvent$Tick;)V",
+          "note": "players' main-hand uses: the machine-draw branch (untouched), else event.setDuration(applyDrawSpeedAdjustment(...))",
+          "sha256": "49c6e218cb11efa185f280fc674763d8ea28c37bec41bd34fbb4e1a8cfd7b639"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41780_",
+          "desc": "()Lnet/minecraft/world/item/UseAnim;",
+          "note": "getUseAnimation: the item's use animation",
+          "sha256": "532278c9058c2dda472c9871d152b12a895721995a8bb5e1d2f14d952e6a668d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at the RETURNs of BowEnchantsEvents.applyDrawSpeedAdjustment (cancellable): an item whose use animation is neither BOW nor CROSSBOW gets event.getDuration() back; helper bons.furious.patch.bowenchants_coo49.BowFixes",
+      "license": "All Rights Reserved (Advanced Bow Enchantments): no Advanced Bow Enchantments code is carried; our injector only replaces the returned duration"
+    },
+    "bowenchants_strict_enhanced_power": {
+      "mod": "bowenchants",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.bowenchants_coo49.BowEnhancedPowerMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/doug/bowenchants/events/BowEnchantsEvents",
+          "method": "onEntityJoinLevel",
+          "desc": "(Lnet/minecraftforge/event/entity/EntityJoinLevelEvent;)V",
+          "note": "server joins of projectiles with a living owner: reality-fracture tag (players), then the owner's main-hand Enhanced Power level (the one read we answer); level > 0 -> the multiplier tag, an arrow's base damage multiplied and the done mark written",
+          "sha256": "110e92415955b9cd027702960d83ea47dd8e93bfdd3438dbd80058ca3f3c357e"
+        },
+        {
+          "class": "net/minecraftforge/event/entity/EntityJoinLevelEvent",
+          "method": "loadedFromDisk",
+          "desc": "()Z",
+          "note": "true for an entity a chunk load brings back",
+          "sha256": "50717759247e1e6e4e030a17b03557f8a46b054ab6cafb07e7fece68a679e07c"
+        },
+        {
+          "class": "net/minecraft/world/entity/projectile/Projectile",
+          "method": "m_19749_",
+          "desc": "()Lnet/minecraft/world/entity/Entity;",
+          "note": "getOwner: the cached owner or a lookup by UUID (the handler made the same call first)",
+          "sha256": "7b0f7f5d76b2f5df556c807ce5e1ee795a7135b5faac7aa1eaf2da8945663ddc"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_6117_",
+          "desc": "()Z",
+          "note": "isUsingItem: the living-entity flags byte",
+          "sha256": "f1976f8dad9e915489bad7c2ba401746eaa8fdb2f390b1c26409ff2e77a975d0"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21211_",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "getUseItem: the stack being used",
+          "sha256": "bd2b08a165c42cc4f7353befb7c970cadf6f38ad7ae27d8f756f31e696a8eeb1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation of EnchantmentHelper.getItemEnchantmentLevel(ENHANCED_POWER, mainhand) in BowEnchantsEvents.onEntityJoinLevel (the event captured): 0 for a projectile loaded from disk, an arrow carrying the done mark, or a non-arrow projectile whose owner is not drawing that item; helper bons.furious.patch.bowenchants_coo49.BowFixes",
+      "license": "All Rights Reserved (Advanced Bow Enchantments): no Advanced Bow Enchantments code is carried; our wrapper only answers the level read"
+    }
+  }
+}

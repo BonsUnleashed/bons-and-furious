@@ -1,0 +1,159 @@
+{
+  "group": "soulsweapons_coo49",
+  "keys": {
+    "soulsweapons_despawn_timer_no_write": {
+      "mod": "soulsweapons",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.soulsweapons_coo49.SoulsDespawnTimerMixin",
+        "bons.furious.mixin.soulsweapons_coo49.SoulsEntityPeekMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/soulsweaponry/entitydata/DespawnTimerData",
+          "method": "getDespawnTicks",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)I",
+          "note": "instanceof Player -> 0; else getPersistentData().contains(despawn_timer) or putInt(despawn_timer, 0); getInt(despawn_timer)",
+          "sha256": "6d2a1e63351bacc824447c371f68bc6a496ace63fa0b2ec88057ae4c2f685f32"
+        },
+        {
+          "class": "net/soulsweaponry/entitydata/DespawnTimerData",
+          "method": "addDespawnTicks",
+          "desc": "(Lnet/minecraft/world/entity/Entity;I)I",
+          "note": "the other reader: a missing key reads as 0 (putInt 0 first), the same as a stored 0",
+          "sha256": "bba4d1fa78d136fff64662d6ea96f6cb3cc1a8298e76d733db7b635c68c81827"
+        },
+        {
+          "class": "net/soulsweaponry/entitydata/DespawnTimerData",
+          "method": "setDespawnTicks",
+          "desc": "(Lnet/minecraft/world/entity/Entity;I)I",
+          "note": "the only writer of a non-zero timer (Chungus Tonic)",
+          "sha256": "baec5a17df349bcae741cb0ba4523f318ce52f7ae66f278774b65578ce978d45"
+        },
+        {
+          "class": "net/soulsweaponry/entitydata/DespawnTimerData",
+          "method": "*",
+          "desc": "",
+          "note": "declared members: the three methods above and the DESPAWN_ID constant",
+          "sha256": "36d1196932412018a7b64d9272572b860f6f2263ef6da8df41304350090e32c2"
+        },
+        {
+          "class": "net/soulsweaponry/mixin/EntityMixin",
+          "method": "tick",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "Soulslike's Entity.tick HEAD hook: server only, getDespawnTicks(entity) > 0 decides; the answer feeds nothing else",
+          "sha256": "16c0afe4641900f588f5d80407e745c099218780f13c4dea1875a546b9e2342e"
+        },
+        {
+          "class": "net/soulsweaponry/entity/effect/ChungusTonic",
+          "method": "m_6385_",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/ai/attributes/AttributeMap;I)V",
+          "note": "the other caller: getDespawnTicks(entity) == 0 decides",
+          "sha256": "4875f77369d69102aa658f13d6aede8769380d052c8cf995aafc104afb2c068f"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "getPersistentData",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "Forge's getter: the persistentData field, created when null (the field the accessor reads)",
+          "sha256": "1355a99782fa41f3f4e5ab09b04e4a97f6beee3ef09f2d211b96ccc318e77ba1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Exact variant. @Inject at HEAD (cancellable) of DespawnTimerData.getDespawnTicks: for a non-player entity whose class uses Forge's own getPersistentData, the answer is read from the persistentData field through SoulsEntityPeekMixin without creating it (the class check kept per entity) or writing despawn_timer: 0 (field missing or key missing -> 0, else getInt's answer from one lookup); anything else runs the getter as shipped. Runtime flag soulsweaponsDespawnTimerNoWrite. Helper bons.furious.patch.soulsweapons_coo49.SoulsDespawnPeek.",
+      "license": "Soulslike Weaponry (CC0-1.0): no code carried; the read is ours"
+    },
+    "soulsweapons_idle_posture_max_skip": {
+      "mod": "soulsweapons",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.soulsweapons_coo49.SoulsPostureIdleMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/soulsweaponry/events/ModEvents",
+          "method": "onLivingEntityTicks",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "posture = getPosture(e); bleed, frost reads; !isPostureDisabled(e) && posture >= getMaxPostureLoss(e) (the wrapped first call) && getMaxPostureLoss(e) != 0 -> posture break",
+          "sha256": "884f332674edcc1151b973af1ad34ca1b22a8d7dd8698d7e1a19b2885592e680"
+        },
+        {
+          "class": "net/soulsweaponry/entitydata/PostureData",
+          "method": "getPosture",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)I",
+          "note": "read again by the wrapper: the key exists after the handler's first read",
+          "sha256": "17fc1c6c2c8201d5ed93c0964f2991f0c77780c02a1ef0c2ceacea2539447353"
+        },
+        {
+          "class": "net/soulsweaponry/api/entitystats/EntityPosture",
+          "method": "getMaxPostureLoss",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)I",
+          "note": "the skipped computation (stats, BASE_POSTURE_INCREASE, dimensions; updateMaxPosture for players)",
+          "sha256": "fe2ea61b116a41d02432412c49d5df8f01cd190cfba851a01cea460900a08746"
+        },
+        {
+          "class": "net/soulsweaponry/api/entitystats/EntityPosture",
+          "method": "isPostureDisabled",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "between the two posture reads: stats and config only",
+          "sha256": "044896f2ca4c23160216f93db3563ae9bd51ede1910c447a87752e8b12d36c66"
+        },
+        {
+          "class": "net/soulsweaponry/entitydata/BleedData",
+          "method": "getBleed",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)I",
+          "note": "between the two posture reads: writes only its own bleed key",
+          "sha256": "837cfabb23463d63b50799b9e103d5741da2b9365c80506a9db2002458e91e1b"
+        },
+        {
+          "class": "net/soulsweaponry/entitydata/FrostData",
+          "method": "getFrost",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)I",
+          "note": "between the two posture reads: writes only its own frost key",
+          "sha256": "fa587f07dd222404e9f822bd8f15413bc113bd18612b87357c4570bf27f172e6"
+        },
+        {
+          "class": "net/soulsweaponry/entitydata/FrostData",
+          "method": "isFrostCoolingDown",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "between the two posture reads: writes only its own key",
+          "sha256": "452e981b577c49a6e7be50d57a654a4ec5dfba51bc655331ad5895b67a4abf48"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Trade-off (off by default). MixinExtras @WrapOperation on the first EntityPosture.getMaxPostureLoss call of ModEvents.onLivingEntityTicks: Integer.MAX_VALUE (the posture test false, the second call skipped) while the entity's posture is 0 or below, else the call. Runtime flag soulsweaponsIdlePostureMaxSkip. Helper bons.furious.patch.soulsweapons_coo49.SoulsPostureIdle.",
+      "license": "Soulslike Weaponry (CC0-1.0): no code carried; the wrapper decides when the mod's own computation runs"
+    },
+    "soulsweapons_mod_presence_memo": {
+      "mod": "soulsweapons",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.soulsweapons_coo49.SoulsModPresenceMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/soulsweaponry/util/WeaponUtil",
+          "method": "isModLoaded",
+          "desc": "(Ljava/lang/String;)Z",
+          "note": "FMLLoader.getLoadingModList().getModFileById(id) != null",
+          "sha256": "efe068b2b8a84a0ff63e2324e40abce1db6485c3e883ec5b7650b80c4779ef28"
+        },
+        {
+          "class": "net/soulsweaponry/util/WeaponUtil",
+          "method": "isFightModLoaded",
+          "desc": "()Z",
+          "note": "isModLoaded(bettercombat) || isModLoaded(epicfight)",
+          "sha256": "93fb477ddb479c8f3bc2e9c03a3ed5d3586add7478fbf3f9bb9e602aa196fa85"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on WeaponUtil.isModLoaded(String) and isFightModLoaded(): answers kept per id string object (direct-mapped by identity hash) and once for the fight-mod question, each with the LoadingModList object it came from, used while FMLLoader.getLoadingModList() is that object; else the original. Runtime flag soulsweaponsModPresenceMemo. Helper bons.furious.patch.soulsweapons_coo49.SoulsModPresence.",
+      "license": "Soulslike Weaponry (CC0-1.0): no code carried; the memo is ours"
+    }
+  }
+}

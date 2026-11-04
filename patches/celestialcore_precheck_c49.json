@@ -1,0 +1,150 @@
+{
+  "group": "celestialcore_precheck_c49",
+  "keys": {
+    "celestialcore_transform_lookup_precheck": {
+      "mod": "celestial_core",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.celestialcore_precheck_c49.CelestialTransformPrecheckMixin",
+        "bons.furious.mixin.celestialcore_precheck_c49.RecipeManagerByTypeAccess"
+      ],
+      "guard": [
+        {
+          "class": "com/xiaoyue/celestial_core/mixin/ItemEntityMixin",
+          "method": "celestial_core$tick$recipe",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "the handler: return while removed or isClientSide; a 9-slot container; getRecipeFor(RT_TRANSFORMATION, container, level).ifPresent(lambda)",
+          "sha256": "7e5b843de9167695f152c905725e65dbe39d29c4948da2957efa508f29316438",
+          "sha256_also": [
+            {
+              "build": "celestial_core 1.5.8",
+              "sha256": "9c05c745e3cc9da53f792e734a65850e82d80c117fb60add9b52d6f56ec1b8b1"
+            }
+          ]
+        },
+        {
+          "class": "com/xiaoyue/celestial_core/mixin/ItemEntityMixin",
+          "method": "lambda$celestial_core$tick$recipe$0",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/item/ItemEntity;Lcom/xiaoyue/celestial_core/content/recipes/FluidTransformationRecipe$Inv;Lcom/xiaoyue/celestial_core/content/recipes/FluidTransformationRecipe;)V",
+          "note": "1.6.x: getBlockState(getOnPos()), return unless it is the recipe's fluid block; then the item work",
+          "sha256": "cfb01eadd9543029087556de291fff40e077588bda3f123337781d26621262a9",
+          "sha256_also": [
+            {
+              "build": "celestial_core 1.5.8",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "com/xiaoyue/celestial_core/mixin/ItemEntityMixin",
+          "method": "lambda$celestial_core$tick$recipe$0",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/level/Level;Lcom/xiaoyue/celestial_core/content/recipes/TransformationRecipe$Inv;Lcom/xiaoyue/celestial_core/content/recipes/TransformationRecipe;)V",
+          "note": "1.5.x: getOnPos() then getOnPos().below(), return unless one is the recipe's stat block; then the item work and the after block",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "celestial_core 1.5.8",
+              "sha256": "395f10d1b845e1d65856f312c672af0868eba11dd550348f9aef1d0fd8e993b0"
+            }
+          ]
+        },
+        {
+          "class": "com/xiaoyue/celestial_core/content/recipes/FluidTransformationRecipe",
+          "method": "matches",
+          "desc": "(Lcom/xiaoyue/celestial_core/content/recipes/FluidTransformationRecipe$Inv;Lnet/minecraft/world/level/Level;)Z",
+          "note": "1.6.x: always true (the lookup answers the first recipe)",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89",
+          "sha256_also": [
+            {
+              "build": "celestial_core 1.5.8",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "com/xiaoyue/celestial_core/content/recipes/TransformationRecipe",
+          "method": "matches",
+          "desc": "(Lcom/xiaoyue/celestial_core/content/recipes/TransformationRecipe$Inv;Lnet/minecraft/world/level/Level;)Z",
+          "note": "1.5.x: always true",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "celestial_core 1.5.8",
+              "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+            }
+          ]
+        },
+        {
+          "class": "net/minecraft/world/item/crafting/RecipeManager",
+          "method": "m_44015_",
+          "desc": "(Lnet/minecraft/world/item/crafting/RecipeType;Lnet/minecraft/world/Container;Lnet/minecraft/world/level/Level;)Ljava/util/Optional;",
+          "note": "getRecipeFor: byType(type).values() filtered by matches, findFirst",
+          "sha256": "05ab8288d843c06c7ce03bd807319bc05dccdef04a57e8828971889a478d53cb"
+        },
+        {
+          "class": "net/minecraft/world/item/crafting/RecipeManager",
+          "method": "m_44054_",
+          "desc": "(Lnet/minecraft/world/item/crafting/RecipeType;)Ljava/util/Map;",
+          "note": "byType: recipes.getOrDefault(type, emptyMap()), the map the precheck keeps its block set for",
+          "sha256": "d4aea543ef520f1b7f1aa3a6fc9f04a3e260c69fa1cab62e546d8cb238e1d111"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_8055_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "getBlockState: the read the lambda makes and the precheck repeats",
+          "sha256": "cb0e4f7ff3d67591f62963ba1937adb91261c87b4c5adc352a50f532b8f8aa1b"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_20097_",
+          "desc": "()Lnet/minecraft/core/BlockPos;",
+          "note": "getOnPos(): getOnPos(0.2F)",
+          "sha256": "c6a73d8d99cd43553809b6138dcde0741343b21315c79257c5dfcad483b80ce0"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_216986_",
+          "desc": "(F)Lnet/minecraft/core/BlockPos;",
+          "note": "getOnPos(offset): the supporting block (one getBlockState) or the position below the feet; no other effect",
+          "sha256": "d2fef2cc114a669fdf6420bb7adb537e44d344c44082cd1b8c898bed15056954"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase",
+          "method": "m_60713_",
+          "desc": "(Lnet/minecraft/world/level/block/Block;)Z",
+          "note": "is(block): getBlock() == block, the lambda's test",
+          "sha256": "a26a4f6803d2d56e746455eb4989b9a1b93b811523b7a9b1cd61c8ae487b92b1"
+        },
+        {
+          "class": "org/betterx/bclib/mixin/common/RecipeManagerMixin",
+          "method": "bcl_sort",
+          "desc": "(Lnet/minecraft/world/item/crafting/RecipeType;Lnet/minecraft/world/Container;Lnet/minecraft/world/level/Level;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "audited hook on getRecipeFor (BCLib 20.0.16): picks among byType's recipes by id, matches() only; nothing else",
+          "audit": true,
+          "sha256": "16a1a31355ccfb452ecbee26bef68520c40e48b69d571788265119a3be360313"
+        },
+        {
+          "class": "snownee/kiwi/mixin/customization/family/RecipeManagerMixin",
+          "method": "kiwi$injectFakeStonecutterRecipe",
+          "desc": "(Ljava/util/Optional;Lnet/minecraft/world/item/crafting/RecipeType;Lnet/minecraft/world/Container;Lnet/minecraft/world/level/Level;)Ljava/util/Optional;",
+          "note": "audited hook on getRecipeFor (Kiwi 11.8.28): acts for the stonecutting type only",
+          "audit": true,
+          "sha256": "9217e2c2081c3684183b287ae81e92247f564fcd896df221447effeae4b67c0e"
+        },
+        {
+          "class": "com/illusivesoulworks/polymorph/mixin/core/MixinRecipeManager",
+          "method": "polymorph$getRecipe",
+          "desc": "(Lnet/minecraft/world/item/crafting/RecipeType;Lnet/minecraft/world/Container;Lnet/minecraft/world/level/Level;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "audited hook on getRecipeFor (Polymorph 0.49.10): acts for block-entity containers only",
+          "audit": true,
+          "sha256": "519f3a6c3b0c73b7b2807a41e218c0e29c0dd9e10388a27056107036e46bf1fd"
+        }
+      ],
+      "cancel": [],
+      "conversion": "targethandler (MixinSquared @ModifyExpressionValue of Level.isClientSide() at the first return of Celestial Core's ItemEntityMixin.celestial_core$tick$recipe; helper bons.furious.patch.celestialcore_precheck_c49.TransformPrecheck) + an @Invoker of RecipeManager.byType",
+      "license": "LGPL-2.1 (Celestial Core): no Celestial Core code is carried; Minecraft (Mojang): no-copy"
+    }
+  }
+}

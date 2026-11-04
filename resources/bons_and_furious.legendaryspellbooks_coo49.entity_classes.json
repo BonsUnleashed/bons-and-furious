@@ -1,0 +1,13 @@
+{
+  "layer": "vanilla_entity_class_count_layer",
+  "entries": [
+    {"class": "net.miauczel.legendary_monsters.entity.AnimatedMonster.Projectile.Tornado", "key": "legendary_spellbooks_tornado_presence_gate", "mod": "legendary_spellbooks",
+     "why": "Legendary Spellbooks 0.4.1 TornadoEntityHandler.onLivingUpdate searches Legendary Monsters' Tornado around every living entity every server tick; counted only while Legendary Spellbooks is installed"},
+    {"class": "io.redspace.ironsspellbooks.api.entity.IMagicEntity", "key": "legendary_spellbooks_drift_scan_gate", "mod": "legendary_spellbooks",
+     "why": "Legendary Spellbooks 0.4.1 FlamebornDriftSpellHandler.onPlayerTick: only Players and Iron's IMagicEntity mobs can drift (an INTERFACE entry; part entities are never LivingEntity)"},
+    {"class": "net.minecraft.world.entity.player.Player", "key": "legendary_spellbooks_drift_scan_gate", "mod": "legendary_spellbooks",
+     "why": "Legendary Spellbooks 0.4.1 drift gate: the Player count must equal the AbstractClientPlayer count (every player of the sections is in level.players()); counted only while Legendary Spellbooks is installed"},
+    {"class": "net.minecraft.client.player.AbstractClientPlayer", "key": "legendary_spellbooks_drift_scan_gate", "mod": "legendary_spellbooks",
+     "why": "Legendary Spellbooks 0.4.1 drift gate: client players (ClientLevel's tracking callbacks keep each of them in level.players()); no such class on a dedicated server"}
+  ]
+}

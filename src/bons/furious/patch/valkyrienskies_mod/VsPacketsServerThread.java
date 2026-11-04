@@ -81,7 +81,11 @@ public final class VsPacketsServerThread {
         }
         try {
             hooks.onReceiveServer(copy, VSGameUtilsKt.getPlayerWrapper(sender));
-        } catch (RuntimeException e) {
+        } catch (Throwable e) {
+            // since 1.0.49 any Throwable: the server's task loop (BlockableEventLoop.doRunTask) catches only Exception, so an
+            // Error from the handler (a LinkageError, an AssertionError, a StackOverflowError ...) stopped the whole server,
+            // where on the Netty thread it only closed that player's connection. Out of memory and other JVM failures go on.
+            if (e instanceof VirtualMachineError && !(e instanceof StackOverflowError)) throw (VirtualMachineError) e;
             long n = FAILED.incrementAndGet();
             if (n <= 5) {
                 LOGGER.error("Bons and Furious: valkyrien_packets_server_thread: Valkyrien Skies could not handle a packet from {} "

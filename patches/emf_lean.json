@@ -1,0 +1,231 @@
+{
+  "group": "emf_lean",
+  "keys": {
+    "emf_nbt_tick_memo": {
+      "mod": "entity_model_features",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.emf_lean.EmfNbtTickMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "traben/entity_model_features/models/animation/math/methods/emf/NBTMethod",
+          "method": "nbtMethodStatic",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)Z",
+          "note": "CACHE.computeIfAbsent(key + \"_\" + query); NULL or no entity -> false; else propertyTester.testEntity(state, false) (the wrapped call)",
+          "sha256": "eb608fe784e0f9781eaf77da30698afd245c886c4aaa18d2a7da739aa7a2ff71",
+          "sha256_also": [
+            {
+              "build": "emf-3.3.10",
+              "sha256": "23898f7fbb131f632dcfc13d8379eccd43d740a1b99dee48f5cbefa08a8a648a"
+            },
+            {
+              "build": "emf-3.3.12",
+              "sha256": "23898f7fbb131f632dcfc13d8379eccd43d740a1b99dee48f5cbefa08a8a648a"
+            }
+          ]
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/methods/emf/NBTMethod",
+          "method": "lambda$new$0",
+          "desc": "(Ltraben/entity_texture_features/features/property_reading/properties/optifine_properties/NBTProperty;)F",
+          "note": "the interpreted path: no entity -> -Infinity; else MathValue.fromBoolean(propertyTester.testEntity(state, false)) (the wrapped call)",
+          "sha256": "e51b1a79c53e6d3b57ef7d3c468ff69fbd6a54eb3abf1a55277ad5d35b9f95e1",
+          "sha256_also": [
+            {
+              "build": "emf-3.3.10",
+              "sha256": "a6a73f47b4a90879d75ce800579394c4bf6879615cc2d9fab85cad1933cbe4e8"
+            },
+            {
+              "build": "emf-3.3.12",
+              "sha256": "a6a73f47b4a90879d75ce800579394c4bf6879615cc2d9fab85cad1933cbe4e8"
+            }
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation of NBTProperty.testEntity(ETFEntityRenderState, boolean) in NBTMethod.nbtMethodStatic and NBTMethod.lambda$new$0 (require = 0): the first result per (NBTProperty, entity UUID) of the current client tick is reused by that tick's later calls (helper bons.furious.patch.emf_lean.EmfNbtTickMemo); EMF 3.3.10 and 3.3.12 accepted as sha256_also builds; shadow mode -Dbons_and_furious.emfNbtTickMemo.shadow=true",
+      "license": "EMF and ETF are LGPL-3.0: no code of either is carried (the wrapper calls ETF's own testEntity or returns its earlier result)"
+    },
+    "emf_listed_resource_misses": {
+      "mod": "entity_model_features",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.emf_lean.EmfListedMissesMixin"
+      ],
+      "guard": [
+        {
+          "class": "traben/entity_model_features/utils/EMFResourceCaching",
+          "method": "resourceExists",
+          "desc": "(Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/resources/ResourceLocation;)Z",
+          "note": "cache get, populate, getResource(loc).isPresent(), cache put",
+          "sha256": "79e927134c77f2b4f9b127440b44ac7a86086a60d0f831005e38f6b474d6e464"
+        },
+        {
+          "class": "traben/entity_model_features/utils/EMFResourceCaching",
+          "method": "scanPrefix",
+          "desc": "(Lnet/minecraft/server/packs/resources/ResourceManager;Ljava/lang/String;)V",
+          "note": "listResources(prefix, p -> true): every listed key cached TRUE; exceptions recorded",
+          "sha256": "f99aa30068b1dde117af06dfe8ccd12f897484088fd3aa9371063d6e53dce1c8"
+        },
+        {
+          "class": "traben/entity_model_features/utils/EMFResourceCaching",
+          "method": "populateCacheIfNeeded",
+          "desc": "(Lnet/minecraft/server/packs/resources/ResourceManager;)V",
+          "note": "scanPrefix emf/cem and optifine/cem once per cache lifetime",
+          "sha256": "af83b75d7e7268bc9651f8523d2ceae1fcbfb506c21a3a759122df63c86cf9d6"
+        },
+        {
+          "class": "traben/entity_model_features/utils/EMFResourceCaching",
+          "method": "clearCache",
+          "desc": "()V",
+          "note": "clears the cache and the populated flag",
+          "sha256": "d3220313a05f8101ed5d019cb84025b9d17b8d5ef3b2b51530564c1062668769"
+        },
+        {
+          "class": "traben/entity_model_features/EMFManager",
+          "method": "resetInstance",
+          "desc": "()V",
+          "note": "calls clearCache on every reload",
+          "sha256": "8f3ff1fc27bafb75a797397e45e628919690869474e0d745c56fc809a6903c52",
+          "sha256_also": [
+            {
+              "build": "emf-3.3.10",
+              "sha256": "9e47106bf07990f223437ab8764fdbbeea4ab8a713eb3eeba5996b1b8b7e1120"
+            },
+            {
+              "build": "emf-3.3.12",
+              "sha256": "9e47106bf07990f223437ab8764fdbbeea4ab8a713eb3eeba5996b1b8b7e1120"
+            }
+          ]
+        },
+        {
+          "class": "net/minecraft/server/packs/resources/FallbackResourceManager",
+          "method": "m_213713_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Ljava/util/Optional;",
+          "note": "top pack down: first pack serving it wins; a filtering pack ends the search (WARN)",
+          "sha256": "713c5ae7610b8c39bc25f2a71b51461e560ca845969a5bb24f62e1d64fdf42d4"
+        },
+        {
+          "class": "net/minecraft/server/packs/resources/FallbackResourceManager",
+          "method": "m_214159_",
+          "desc": "(Ljava/lang/String;Ljava/util/function/Predicate;)Ljava/util/Map;",
+          "note": "bottom pack up: each pack filter removes lower entries, then the pack adds its files",
+          "sha256": "4d966aacb84b53833143e6ba037ddf9829b8ede87be02bf151e552b0177b9669"
+        },
+        {
+          "class": "net/minecraft/server/packs/resources/MultiPackResourceManager",
+          "method": "m_213713_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Ljava/util/Optional;",
+          "sha256": "6ccbb561973c3b0ceafec2cdd00a8c577b261a99fd22558077a8fb71a61787e6"
+        },
+        {
+          "class": "net/minecraft/server/packs/resources/MultiPackResourceManager",
+          "method": "m_214159_",
+          "desc": "(Ljava/lang/String;Ljava/util/function/Predicate;)Ljava/util/Map;",
+          "sha256": "0c7a1fce23b1caba9aba978eee07d8039545953039cc5022b0e1058f01719b5c"
+        },
+        {
+          "class": "net/minecraft/server/packs/resources/MultiPackResourceManager",
+          "method": "m_7536_",
+          "desc": "()Ljava/util/stream/Stream;",
+          "sha256": "44719b7a4773e55c6a2615d71c076f9c2e92a97d1a9eac9f290f2d878b521481"
+        },
+        {
+          "class": "net/minecraft/server/packs/resources/ReloadableResourceManager",
+          "method": "m_213713_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Ljava/util/Optional;",
+          "sha256": "8628618a656db276b088970e88d202228c8d2f6327e67e4cbef728192848961c"
+        },
+        {
+          "class": "net/minecraft/server/packs/resources/ReloadableResourceManager",
+          "method": "m_214159_",
+          "desc": "(Ljava/lang/String;Ljava/util/function/Predicate;)Ljava/util/Map;",
+          "sha256": "5209ee8036e5780d4a63644c8eb218c98559a21cce60efaecb306e6ce128f976"
+        },
+        {
+          "class": "net/minecraft/server/packs/resources/ReloadableResourceManager",
+          "method": "m_7536_",
+          "desc": "()Ljava/util/stream/Stream;",
+          "sha256": "06552861f8fd78479413e59a51459847cdcf11f1481be0277edf5e073958a484"
+        },
+        {
+          "class": "net/minecraft/server/packs/FilePackResources",
+          "method": "m_214146_",
+          "desc": "(Lnet/minecraft/server/packs/PackType;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/server/packs/resources/IoSupplier;",
+          "note": "zip entry lookup (also matches a directory entry \"name/\")",
+          "sha256": "225488860ec0b4ae536c6cef5496dbb544827d52624ffddb54cae68e4247b2c3"
+        },
+        {
+          "class": "net/minecraft/server/packs/FilePackResources",
+          "method": "m_8031_",
+          "desc": "(Lnet/minecraft/server/packs/PackType;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/server/packs/PackResources$ResourceOutput;)V",
+          "note": "zip entries under the prefix, files only",
+          "sha256": "0bfbe9cc68bc46fe315af6a62422f189dbcad236887f1e9b52f9a356d741a765"
+        },
+        {
+          "class": "net/minecraft/server/packs/VanillaPackResources",
+          "method": "m_214146_",
+          "desc": "(Lnet/minecraft/server/packs/PackType;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/server/packs/resources/IoSupplier;",
+          "sha256": "0a32fa2a6559506161e483cd4ace37ee5bc96f1843c1cc371e8c63e6a1c6a469"
+        },
+        {
+          "class": "net/minecraft/server/packs/VanillaPackResources",
+          "method": "m_8031_",
+          "desc": "(Lnet/minecraft/server/packs/PackType;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/server/packs/PackResources$ResourceOutput;)V",
+          "sha256": "47906fca625ffc4cd1ddc67b651f0d6d84d2b8acf5fa58da45a2d06f3444d021"
+        },
+        {
+          "class": "net/minecraftforge/resource/PathPackResources",
+          "method": "m_214146_",
+          "desc": "(Lnet/minecraft/server/packs/PackType;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/server/packs/resources/IoSupplier;",
+          "sha256": "050a700406e7590b0669bfaf8ee803a81011e67e749855eafb372634050b91ef"
+        },
+        {
+          "class": "net/minecraftforge/resource/PathPackResources",
+          "method": "m_8031_",
+          "desc": "(Lnet/minecraft/server/packs/PackType;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/server/packs/PackResources$ResourceOutput;)V",
+          "sha256": "e7dcecfd94276590e27d6b30ac3c4a5beeb9b5fd3876f7728a82ac51cf90809b"
+        },
+        {
+          "class": "net/minecraftforge/resource/PathPackResources",
+          "method": "getSource",
+          "desc": "()Ljava/nio/file/Path;",
+          "sha256": "95db918449eeb1f76e83bcb317683af56e30fafaf9419f8a41c570e32b1a07fe"
+        },
+        {
+          "class": "net/minecraftforge/resource/ResourcePackLoader$1",
+          "method": "resolve",
+          "desc": "([Ljava/lang/String;)Ljava/nio/file/Path;",
+          "note": "a mod jar's file through its mod file",
+          "sha256": "4196bf7953ff7c2f7300d0b32df63fe056aff0e184979675d1e004390a66c8ae"
+        },
+        {
+          "class": "net/minecraftforge/resource/DelegatingPackResources",
+          "method": "m_214146_",
+          "desc": "(Lnet/minecraft/server/packs/PackType;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/server/packs/resources/IoSupplier;",
+          "sha256": "ef37ebf35d9a6a8888621e30202b640ee003035a9159597fd827eb4f4c265245"
+        },
+        {
+          "class": "net/minecraftforge/resource/DelegatingPackResources",
+          "method": "m_8031_",
+          "desc": "(Lnet/minecraft/server/packs/PackType;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/server/packs/PackResources$ResourceOutput;)V",
+          "sha256": "33dacd3f7e569b81fd5516a3c9d3a775a2256f7a605f1883e2a1634c0a861914"
+        },
+        {
+          "class": "net/minecraftforge/resource/DelegatingPackResources",
+          "method": "getChildren",
+          "desc": "()Ljava/util/Collection;",
+          "sha256": "a48aa9472756005c60863480661c6bf833bb784cc2625e73ba4f3c36d15a377e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation of ResourceManager.listResources in EMFResourceCaching.scanPrefix (notes a listing that returned normally) and of ResourceManager.getResource in EMFResourceCaching.resourceExists (a miss under emf/cem/ or optifine/cem/ that EMF's own listing does not name is answered absent while every pack of the stack is the vanilla pack, a zip pack or a Forge mod-jar pack; otherwise EMF's call), @Inject at the head of clearCache (a new listing); require = 0; helper bons.furious.patch.emf_lean.EmfListedMisses; shadow mode -Dbons_and_furious.emfListedResourceMisses.shadow=true",
+      "license": "EMF is LGPL-3.0: no EMF code is carried (the wrappers call EMF's own listResources / getResource or answer a miss from the listing EMF made); Minecraft and Forge: no code"
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "group": "biolith_c49",
+  "keys": {
+    "biolith_biome_entries_lock_free": {
+      "mod": "biolith",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.biolith_c49.BiolithEntriesLockFreeMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/terraformersmc/biolith/impl/mixin/MixinMultiNoiseBiomeSource",
+          "method": "biolith$injectEntries",
+          "desc": "(Lcom/mojang/datafixers/util/Either;Ljava/util/function/Function;Ljava/util/function/Function;Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;)Ljava/lang/Object;",
+          "note": "synchronized(this): build biolith$biomeEntries once (overworld / nether: + Biolith's entries; else the original list), return it",
+          "sha256": "9f371c687141bb30ae50686fc10ec4131af7b2ecc9603c4e6fddd1ad78289e6d"
+        },
+        {
+          "class": "com/terraformersmc/biolith/impl/mixin/MixinMultiNoiseBiomeSource",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: the field is written only by that handler and never cleared",
+          "sha256": "d8f7232e6cf18b2da200e25b39a7e6831371560dbe5c206c7c438ff1aec2cc7a"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/MultiNoiseBiomeSource",
+          "method": "m_274409_",
+          "desc": "()Lnet/minecraft/world/level/biome/Climate$ParameterList;",
+          "note": "parameters = this.parameters.map(...): the call both wrappers sit on",
+          "sha256": "2cbdf4031eeb0716b28d7072c01383b0863cd2b843c1e6b80f20aaf4e8f72a40"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$ParameterList",
+          "method": "<init>",
+          "desc": "(Ljava/util/List;)V",
+          "note": "final fields values and index: safe publication without the lock",
+          "sha256": "c12df5c6009661c0131ac1d2c8d2777fe2d853b502fc8bed1511c090286ea6dd"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Either.map call in MultiNoiseBiomeSource.parameters() (m_274409_), priority 1500 = outside Biolith's own wrapper there: the list Biolith's handler returned the first time (it builds it once and always returns that object) is kept in a @Unique field and returned without Biolith's monitor (helper bons.furious.patch.biolith_c49.BiolithLean)",
+      "license": "LGPL-3.0 (Biolith): no Biolith code is carried; Minecraft (Mojang): no-copy"
+    },
+    "biolith_early_registry_capture": {
+      "mod": "biolith",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.biolith_c49.BiolithEarlyRegistryMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/terraformersmc/biolith/impl/mixin/MixinSaveLoader",
+          "method": "biolith$earlyCaptureRegistries",
+          "desc": "(Lnet/minecraft/server/packs/resources/CloseableResourceManager;Lnet/minecraft/server/ReloadableServerResources;Lnet/minecraft/core/LayeredRegistryAccess;Lnet/minecraft/world/level/storage/WorldData;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "Biolith's own capture at the TAIL of WorldStem.<init>: setRegistryManager(registries)",
+          "sha256": "e35e3aefa7ff5e3ae91081bf95aafc93daca20325583a8684abaaa0fb52ce837"
+        },
+        {
+          "class": "com/terraformersmc/biolith/impl/biome/BiomeCoordinator",
+          "method": "setRegistryManager",
+          "desc": "(Lnet/minecraft/core/LayeredRegistryAccess;)V",
+          "note": "registryManager = registries.compositeAccess(): a plain assignment",
+          "sha256": "7161cdf07aec57d28762d92b4710794c6e7196a0b36245308917f9be8f255491"
+        },
+        {
+          "class": "com/terraformersmc/biolith/impl/biome/BiomeCoordinator",
+          "method": "getBiomeLookupOrThrow",
+          "desc": "()Lnet/minecraft/core/HolderGetter;",
+          "note": "throws while registryManager is null (the crash)",
+          "sha256": "629a76f9ed683e0c990e44232d97095989301fb650f4ddd284c1bfd73e93da23"
+        },
+        {
+          "class": "net/minecraft/server/WorldStem",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/server/packs/resources/CloseableResourceManager;Lnet/minecraft/server/ReloadableServerResources;Lnet/minecraft/core/LayeredRegistryAccess;Lnet/minecraft/world/level/storage/WorldData;)V",
+          "note": "the record's canonical constructor: super(), then the four fields",
+          "sha256": "a10c86a29afd512f5d53f9ec7fdffefd1996cb2eab6729af6947f7489035b0c3"
+        },
+        {
+          "class": "net/minecraft/core/LayeredRegistryAccess",
+          "method": "m_247579_",
+          "desc": "()Lnet/minecraft/core/RegistryAccess$Frozen;",
+          "note": "compositeAccess(): the composite built in the constructor, the same object on every call",
+          "sha256": "fbd2b65e0a32ea8b6975ef19e81ceef2e2c7365f45805dd8ad22278e19f34fee"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix: @ModifyVariable (argsOnly, unchanged return) right after the record's super() call in WorldStem.<init>, priority 1000 (applied before BCLib's WorldStem_Mixin, 1500, so it runs first at the same instruction): BiomeCoordinator.setRegistryManager(registries) (helper bons.furious.patch.biolith_c49.BiolithLean)",
+      "license": "LGPL-3.0 (Biolith): no Biolith code is carried; Minecraft (Mojang): no-copy"
+    }
+  }
+}

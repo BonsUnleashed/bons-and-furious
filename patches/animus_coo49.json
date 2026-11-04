@@ -1,0 +1,39 @@
+{
+  "group": "animus_coo49",
+  "keys": {
+    "animus_equivalency_preview_memo": {
+      "mod": "animus",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.animus_coo49.EquivalencyPreviewMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/teamdman/animus/client/SigilEquivalencyRenderer",
+          "method": "findMatchingBlocksInRadius",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/Block;ILnet/minecraft/core/Direction;)Ljava/util/List;",
+          "note": "BFS over the clicked face's plane within radius: HashSet + LinkedList FIFO; per polled position getBlockState(pos).getBlock() == target; matches add current.immutable() and queue unseen plane neighbours in face order; stops at (2r+1)^2 matches",
+          "sha256": "d80093ea39e6f2c42aaa3cef10c58b1e57ac656f924a22c312288df9d634717f"
+        },
+        {
+          "class": "com/teamdman/animus/client/SigilEquivalencyRenderer",
+          "method": "isOnSamePlaneAndInRadius",
+          "desc": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;ILnet/minecraft/core/Direction;)Z",
+          "note": "the plane and radius test the search repeats",
+          "sha256": "ffd061dee8a2f1b33be567b81ad0896f92736c680411780f59e0b216c4f32001"
+        },
+        {
+          "class": "com/teamdman/animus/client/SigilEquivalencyRenderer",
+          "method": "onRenderLevelStage",
+          "desc": "(Lnet/minecraftforge/client/event/RenderLevelStageEvent;)V",
+          "note": "the only caller: iterates the result (isEmpty, for each position a translated outline)",
+          "sha256": "1f3cee8c87643f3f499b4f76edfe0c38c1445702f560b1a91c5f53819aeddedd"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on SigilEquivalencyRenderer.findMatchingBlocksInRadius: the last search's polled positions and outcomes are kept (key: level, aimed position, target block, radius, face); the next frame with the same key re-reads them in order and returns the kept matches in a new list while every outcome is unchanged, else continues the search from the first change (queue and seen set rebuilt from the kept outcomes, each position read once, in the original's order). Same reads, same result. Runtime flag animusEquivalencyPreviewMemo, shadow mode animusEquivalencyPreviewMemo.shadow. Helper bons.furious.patch.animus_coo49.EquivalencyPreviews.",
+      "license": "MIT (Animus): the search order is reimplemented from its bytecode, no Animus code is carried"
+    }
+  }
+}

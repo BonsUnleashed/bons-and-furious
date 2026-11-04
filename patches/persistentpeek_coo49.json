@@ -1,0 +1,105 @@
+{
+  "group": "persistentpeek_coo49",
+  "keys": {
+    "industrialforegoing_stasis_filter_peek": {
+      "mod": "industrialforegoing",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.persistentpeek_coo49.PpStasisEntityMixin",
+        "bons.furious.mixin.persistentpeek_coo49.PpStasisFilterMixin"
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of LivingEntity.getPersistentData() in ModuleMisc.lambda$generateFeatures$21 (the Stasis Chamber's LivingTickEvent filter, whose compound is only asked contains(\"StasisChamberTime\")): the entity's own compound, else null, and @Redirect of that contains(key) (CompoundTag.m_128441_ ordinal 0), false for null; an entity class that declares its own getPersistentData() is asked through it (class state kept per entity: @Shadow of Forge's persistentData field + one @Unique byte on Entity). Helper bons.furious.patch.persistentpeek_coo49.PersistentPeek.",
+      "license": "Industrial Foregoing (MIT): no code carried, the redirect carries only our own logic; Forge: its field is read",
+      "guard": [
+        {
+          "class": "com/buuz135/industrial/module/ModuleMisc",
+          "method": "lambda$generateFeatures$21",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)Z",
+          "note": "entity instanceof Mob && entity.getPersistentData().contains(\"StasisChamberTime\"): the compound is only read",
+          "sha256": "ea65c3126b9d63088b0f970ca3f4bcc09dc468d7f6987014ce10dd62ba99374b"
+        },
+        {
+          "class": "com/buuz135/industrial/module/ModuleMisc",
+          "method": "lambda$generateFeatures$22",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "the processor, run only when the filter passed (the compound exists then)",
+          "sha256": "f78391f5ab3e8bbf178b96348668ea512d0a8caa3ee0ef7a2e50f4e5af2eb981"
+        },
+        {
+          "class": "com/buuz135/industrial/module/ModuleMisc",
+          "method": "generateFeatures",
+          "desc": "(Lcom/hrznstudio/titanium/module/DeferredRegistryHelper;)V",
+          "note": "EventManager.forge(LivingTickEvent).filter(lambda 21).process(lambda 22)",
+          "sha256": "c407199617295808531607a8735f881b6e143bb5fae547b6d7c741cf27d3fd7a"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "getPersistentData",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "persistentData == null -> new CompoundTag(); return persistentData",
+          "sha256": "1355a99782fa41f3f4e5ab09b04e4a97f6beee3ef09f2d211b96ccc318e77ba1"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_20240_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "saveWithoutId: ForgeData written only when persistentData != null",
+          "sha256": "afa292c4decc677d7442efb7aa44468b83132e30b5294e1f463c2e65de7157ec"
+        }
+      ]
+    },
+    "mobgrindingutils_chicken_tag_peek": {
+      "mod": "mob_grinding_utils",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.persistentpeek_coo49.PpChickenEntityMixin",
+        "bons.furious.mixin.persistentpeek_coo49.PpChickenFuseMixin",
+        "bons.furious.mixin.persistentpeek_coo49.PpChickenSwellMixin"
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the first LivingEntity.getPersistentData() call in ChickenFuseEvent.startChickenFuse (server) and RenderChickenSwell.renderChickenSwell (client), whose compound is asked contains(\"shouldExplode\") before the method returns when false (every later read or write sits behind that test): the entity's own compound, else a shared empty compound that nothing writes (the fuse, which keeps it in a local) or null with a @Redirect of that first contains(key) (CompoundTag.m_128441_ ordinal 0), false for null (the renderer); an entity class that declares its own getPersistentData() is asked through it (class state kept per entity: @Shadow of Forge's persistentData field + one @Unique byte on Entity). Helper bons.furious.patch.persistentpeek_coo49.PersistentPeek.",
+      "license": "Mob Grinding Utils (All Rights Reserved): no code carried, the redirects carry only our own logic; Forge: its field is read",
+      "guard": [
+        {
+          "class": "mob_grinding_utils/events/ChickenFuseEvent",
+          "method": "startChickenFuse",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent;)V",
+          "note": "chicken, server: tag = getPersistentData(); if !tag.contains(\"shouldExplode\") return; every other use behind that test",
+          "sha256": "1002a8d10418504989febb375348de252684a6c839013006be980cf0c374990a"
+        },
+        {
+          "class": "mob_grinding_utils/events/RenderChickenSwell",
+          "method": "renderChickenSwell",
+          "desc": "(Lnet/minecraftforge/client/event/RenderLivingEvent$Post;)V",
+          "note": "chicken: if getPersistentData().contains(\"shouldExplode\") ...; the second read only inside",
+          "sha256": "a702500ba1a8a27ae26264d6c8cc52b3bdfb54d24d03387211878c68947cf38f",
+          "sha256_also": [
+            {
+              "build": "dedicated_server",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "getPersistentData",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "persistentData == null -> new CompoundTag(); return persistentData",
+          "sha256": "1355a99782fa41f3f4e5ab09b04e4a97f6beee3ef09f2d211b96ccc318e77ba1"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_20240_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "saveWithoutId: ForgeData written only when persistentData != null",
+          "sha256": "afa292c4decc677d7442efb7aa44468b83132e30b5294e1f463c2e65de7157ec"
+        }
+      ]
+    }
+  }
+}

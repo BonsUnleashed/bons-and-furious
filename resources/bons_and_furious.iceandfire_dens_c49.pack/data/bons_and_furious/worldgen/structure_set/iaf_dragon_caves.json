@@ -1,0 +1,22 @@
+{
+  "structures": [
+    {
+      "structure": "bons_and_furious:iaf_fire_cave",
+      "weight": 1
+    },
+    {
+      "structure": "bons_and_furious:iaf_ice_cave",
+      "weight": 1
+    },
+    {
+      "structure": "bons_and_furious:iaf_lightning_cave",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 48,
+    "separation": 32,
+    "salt": 1049021761
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "group": "darkdoppelganger_coo49",
+  "keys": {
+    "darkdoppelganger_boss_bar_prefix_check": {
+      "mod": "darkdoppelganger",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.darkdoppelganger_coo49.BossBarNamePrefixMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/bandit/darkdoppelganger/event/ClientEvents",
+          "method": "onCustomizeBossBar",
+          "desc": "(Lnet/minecraftforge/client/event/CustomizeGuiOverlayEvent$BossEventProgress;)V",
+          "note": "name = event.getBossEvent().getName(); name.getString() (the wrapped call) is only asked startsWith(\"Dark Doppelganger\"); true -> DarkDoppelBossBar.INSTANCE.renderBossBar(event)",
+          "sha256": "4f3de877fae6fcae31b30ed7a3d0e550d17af2cbb142913ed06c8c6fd2dbc5f8"
+        },
+        {
+          "class": "net/minecraft/network/chat/Component",
+          "method": "getString",
+          "desc": "()Ljava/lang/String;",
+          "note": "FormattedText's getString: append every piece of visit(ContentConsumer)",
+          "sha256": "68dffa1b8a8941ef4ffb8dcfcb283215956845f7c1d0a62fd09244d15f7676b8"
+        },
+        {
+          "class": "net/minecraft/network/chat/FormattedText",
+          "method": "getString",
+          "desc": "()Ljava/lang/String;",
+          "note": "a StringBuilder filled by visit(ContentConsumer), no early stop",
+          "sha256": "a8adc52a50cf45888ca5d0c3b0d855d5d232201f8394da86f7b308080751faf8"
+        },
+        {
+          "class": "net/minecraft/network/chat/Component",
+          "method": "m_5651_",
+          "desc": "(Lnet/minecraft/network/chat/FormattedText$ContentConsumer;)Ljava/util/Optional;",
+          "note": "visit: contents first, then every sibling in order, stop at the first present answer (MutableComponent does not override it)",
+          "sha256": "68c73108e1c33846a611f79729e68492ad6a6071ab30dc392b942e5c4acc4b69"
+        },
+        {
+          "class": "net/minecraft/network/chat/contents/TranslatableContents",
+          "method": "m_213874_",
+          "desc": "(Lnet/minecraft/network/chat/FormattedText$ContentConsumer;)Ljava/util/Optional;",
+          "note": "decompose (a cache per language), then visit the parts in order",
+          "sha256": "8a946f55f71682f0450d0ff1824d2c8c4e04e5683730286d69132c7c5a181de2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Component.getString() call in ClientEvents.onCustomizeBossBar: for a plain vanilla component tree the same visit with a consumer that compares against \"Dark Doppelganger\" and stops at the first difference or the 17th character; answers that prefix or \"\" (only startsWith is asked); other trees the original call. Runtime flag darkdoppelgangerBossBarPrefixCheck. Helper bons.furious.patch.darkdoppelganger_coo49.DoppelNamePrefix.",
+      "license": "Dark Doppelganger (All Rights Reserved): no code carried; the comparison is ours on vanilla's component visit"
+    },
+    "darkdoppelganger_single_minion_add": {
+      "mod": "darkdoppelganger",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.darkdoppelganger_coo49.SingleMinionAddMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/bandit/darkdoppelganger/entity/DarkDoppelgangerEntity",
+          "method": "summonMinions",
+          "desc": "()V",
+          "note": "per minion (at most 2): create, position from 2 random draws, setBossMinion, summoner skin, then twice: addTag, setCustomName(Minion), setCustomNameVisible, SpawnWeak, level().addFreshEntity (the two wrapped calls, answers popped); then activeMinionUUIDs.add, setTarget, setLastHurtByMob; cooldown 600",
+          "sha256": "d8f5070285ad6c42c464ed0f7d19b86803e23c6d7100560078c0b76b83fcf705"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157538_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;Z)Z",
+          "note": "Forge 47.4.28 addEntity: EntityJoinLevelEvent is posted before the UUID check, so a second add of the same entity fires the event again, then warns and returns false",
+          "sha256": "7b5334759592ca4715f2f01d0eb5b321e47eaaa68b6b963b303f0f44318ffb79"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Gameplay fix, off by default: MixinExtras @WrapOperation on both Level.addFreshEntity calls in DarkDoppelgangerEntity.summonMinions: the first runs and remembers a successful minion (@Unique field), the second add of that minion is left out and answers false; a failed first add keeps its second attempt. Runtime flag darkdoppelgangerSingleMinionAdd. Helper bons.furious.patch.darkdoppelganger_coo49.DoppelMinions.",
+      "license": "Dark Doppelganger (All Rights Reserved): no code carried; the hook decides whether a duplicated call runs"
+    }
+  }
+}

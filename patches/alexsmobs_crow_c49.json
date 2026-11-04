@@ -1,0 +1,81 @@
+{
+  "group": "alexsmobs_crow_c49",
+  "keys": {
+    "alexsmobs_crow_crop_scan_palette_check": {
+      "mod": "alexsmobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.alexsmobs_crow_c49.CrowCropSearchMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/alexsmobs/entity/ai/CrowAICircleCrops",
+          "method": "m_6465_",
+          "desc": "(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "isValidTarget: level.getBlockState(pos).is(AMTagRegistry.CROW_FOODBLOCKS), nothing else",
+          "sha256": "51bdc42aa82f40e0ebe3accc89ad41f86e2c61b71d7a97b82080eab21e9053a7"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/goal/MoveToBlockGoal",
+          "method": "m_25626_",
+          "desc": "()Z",
+          "note": "findNearestBlock: layers k = start, k > 0 ? -k : 1 - k up to the vertical range, rings 0..range-1, isWithinRestriction then isValidTarget(mob.level(), mutable), blockPos = mutable",
+          "sha256": "ca97e13c73e2d595daea879ec995164fb5f8cd27a092566626ae4743f6eb39d6"
+        },
+        {
+          "class": "net/minecraft/world/entity/Mob",
+          "method": "m_21444_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Z",
+          "note": "isWithinRestriction: true without a restriction, else distSqr to the centre (pure)",
+          "sha256": "a5bc13c5142b39bc25ec4faeb1f1dbebcf0442090df78a97a52f07e56eae463e"
+        },
+        {
+          "class": "net/minecraft/world/entity/Mob",
+          "method": "m_21536_",
+          "desc": "()Z",
+          "note": "hasRestriction: restrictRadius != -1",
+          "sha256": "601e6cab44b0bf1776539386c6462d27286c81f91f8301b6046c5ba1bd75fba7"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_8055_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "getBlockState: VOID_AIR outside the build height, else getChunk(x >> 4, z >> 4).getBlockState(pos)",
+          "sha256": "cb0e4f7ff3d67591f62963ba1937adb91261c87b4c5adc352a50f532b8f8aa1b"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_6325_",
+          "desc": "(II)Lnet/minecraft/world/level/chunk/LevelChunk;",
+          "note": "getChunk(x, z): getChunk(x, z, FULL) (a loading lookup), the call the search makes on each change of chunk",
+          "sha256": "c048935fcc3a6dec55807fcd484505752f9c29e076561b22117f453fee2f9d8e"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunk",
+          "method": "m_8055_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "the section's state, AIR for a section holding only air or outside the section array",
+          "sha256": "d5a3f2bd5d95ad50a1dc4d8e118af704a17b2c9eb7dad1450788b33624d17fc8"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunkSection",
+          "method": "m_62982_",
+          "desc": "(III)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "getBlockState(x, y, z): the states container's entry",
+          "sha256": "a0a3a4d31019eef9394ff35797f75f77b563d54a8a3b30d9c8783e668960dd8a"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/PalettedContainer",
+          "method": "m_63087_",
+          "desc": "(III)Ljava/lang/Object;",
+          "note": "get(x, y, z): an entry of the data's palette",
+          "sha256": "74a7d924416184bc08af48a9b38b0950c5a845f755a9b9a293c45aeb3307a030"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: @WrapMethod of MoveToBlockGoal.findNearestBlock (m_25626_) for the exact class CrowAICircleCrops (helper bons.furious.patch.alexsmobs_crow_c49.CrowCropSearch); a duck method on MoveToBlockGoal for the goal's own isValidTarget",
+      "license": "LGPL (Alex's Mobs, mods.toml \"GNU LESSER GENERAL PUBLIC LICENSE\"): no Alex's Mobs code is carried; Minecraft (Mojang): no-copy, the search is our own code"
+    }
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "group": "snuffles_coo49",
+  "keys": {
+    "snuffles_fluff_regrow_server_only": {
+      "mod": "snuffles",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.snuffles_coo49.SnuffleFluffRegrowMixin"
+      ],
+      "guard": [
+        {
+          "class": "mod/schnappdragon/snuffles/common/entity/animal/Snuffle",
+          "method": "m_8119_",
+          "desc": "()V",
+          "note": "tick: super.tick; frosty particles; then if (!hasFluff() && !isBaby()) { fluffGrowTime > 0 ? fluffGrowTime-- : setFluff(true) } (the wrapped hasFluff call is the only one in tick)",
+          "sha256": "923ab3c26404a38c3efb2afb1f8f7cb058c7029f165b599490de40c39538e747"
+        },
+        {
+          "class": "mod/schnappdragon/snuffles/common/entity/animal/Snuffle",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: fluffGrowTime is used only by the constructor (18000 + random 6000), tick, save / load and onSheared",
+          "sha256": "f6f64e0a3f6226337da1c805d5501afc8d248b280e123538e6cfc107f792ddd4"
+        },
+        {
+          "class": "mod/schnappdragon/snuffles/common/entity/animal/Snuffle",
+          "method": "onSheared",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;ILnet/minecraft/sounds/SoundSource;)Ljava/util/List;",
+          "note": "setFluff(false); fluffGrowTime = 18000 + random 6000: the only reset of the timer",
+          "sha256": "a4d5bd3a8508ab0131fac0807ee11e6eb5a4d4cd47ff4ec5d249a88a759746b2"
+        },
+        {
+          "class": "mod/schnappdragon/snuffles/common/entity/animal/Snuffle",
+          "method": "m_7350_",
+          "desc": "(Lnet/minecraft/network/syncher/EntityDataAccessor;)V",
+          "note": "onSyncedDataUpdated reacts only to DATA_BOOST_TIME (client steering), then super",
+          "sha256": "f287603d87f6557afee3687311c0cecf4062da799443f91e1d12e68cc49d136d"
+        },
+        {
+          "class": "net/minecraft/world/item/ShearsItem",
+          "method": "m_6880_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;",
+          "note": "Forge's interactLivingEntity: an IForgeShearable on a client level returns SUCCESS before onSheared, so the client never resets its copy of the timer",
+          "sha256": "dc4427c91f630e09b981e61dff2b9a0a0a0b243af4ab774cdddb80db854cea43"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix: MixinExtras @ModifyExpressionValue on the hasFluff() call guarding the regrow block of Snuffle.tick answers true on a client level (helper bons.furious.patch.snuffles_coo49.SnufflesCoo49, flag snufflesFluffRegrowServerOnly): the client neither counts its unsynced regrow timer down nor writes DATA_FLUFF; server levels run the original",
+      "license": "MIT (Snuffles): no Snuffles code is carried; the hook answers one expression"
+    },
+    "snuffles_model_parts_reuse": {
+      "mod": "snuffles",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.snuffles_coo49.SnuffleModelPartsMixin"
+      ],
+      "guard": [
+        {
+          "class": "mod/schnappdragon/snuffles/client/model/SnuffleModel",
+          "method": "m_5608_",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "bodyParts: ImmutableList.of(body, rightFrontLeg, leftFrontLeg, rightHindLeg, leftHindLeg) (the redirected call)",
+          "sha256": "095bd56a0680a33ebc033898d456ae82bc90982fe7e0bf59799e810fce591ffa"
+        },
+        {
+          "class": "mod/schnappdragon/snuffles/client/model/SnuffleModel",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/model/geom/ModelPart;)V",
+          "note": "the five parts are private final fields set here",
+          "sha256": "4d89498caea61728b6e8191e771a5f5c44aa2a8ae7e5306b0f08bad07cc69ebe"
+        },
+        {
+          "class": "net/minecraft/client/model/AgeableListModel",
+          "method": "m_7695_",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V",
+          "note": "renderToBuffer: only iterates headParts() / bodyParts() (forEach)",
+          "sha256": "6dcc7be5b3e3e40194ea2b33f5b2097e48e52812e04a697a8fc884b115534229"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Exact variant: @Redirect of the ImmutableList.of call in SnuffleModel.bodyParts; the model keeps the list (a @Unique field) and returns it while its five elements are the very parts asked for (identity), else a new list as the original (helper bons.furious.patch.snuffles_coo49.SnufflesCoo49, flag snufflesModelPartsReuse)",
+      "license": "MIT (Snuffles): no Snuffles code is carried; the redirect returns a kept list of the same parts"
+    }
+  }
+}

@@ -17,6 +17,7 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.spongepowered.asm.service.MixinService;
@@ -46,6 +47,8 @@ import org.spongepowered.asm.service.MixinService;
  *   the switch changes           this switch changes; CLASS is left unchanged by this switch"   (since 1.0.38)
  *   the target mod fixed it      "Bons and Furious: KEY: fixed upstream in MOD VERSION, stands down (installed MOD VERSION;
  *   upstream (redundant_since)    NOTE); CLASS is left unchanged"   (since 1.0.46)
+ *   another mod's mixin relies   "Bons and Furious: MOD VERSION's MIXIN is left out: it relies on COMPANION, and its own mixin
+ *   on a companion it left out    plugin leaves COMPANION out (...); KEY makes the same change"   (since 1.0.49, "orphan" lines)
  *
  * The decision is all or nothing per switch, so a patch spread over several classes never applies halfway.
  *
@@ -57,7 +60,12 @@ import org.spongepowered.asm.service.MixinService;
  * version, even-if-matching flag, note): on that mod at or above that version it stands down with an INFO line instead
  * of the mismatch WARN (with the flag set also while every fingerprint matches). A guard line listed as "audit" checks
  * another mod's side effect only (its hook on code the switch changes was audited): while that mod is not installed (the
- * class's package is in no module of the game) the line is satisfied; installed, it must match as any other line.
+ * class's package is in no module of the game) the line is satisfied; installed, it must match as any other line. Since
+ * 1.0.49 an audit line never counts as one of the target mod's own classes: "target mod not installed" (ABSENT) looks at
+ * the other lines only. Also since 1.0.49: a non-audit line on a class whose whole package no installed mod provides (a
+ * mod the switch needs is not installed: its target mod, a library of it, or a second mod it works with) makes the
+ * switch ABSENT ("a mod it also needs is not installed (package P)") whatever its other lines show, so a pack without
+ * that mod never gets a WARN about another mod's version; the other differences go into one DEBUG line.
  */
 public final class Guards {
     public static final String RESOURCE = "/bons_and_furious.guards.tsv";
@@ -75,9 +83,13 @@ public final class Guards {
 
     private record Redundant(String mod, String version, boolean evenIfMatching, String note) {}
     private static final Map<String, String> MOD = new LinkedHashMap<>();
-    private static final Map<String, String> CANCEL = new LinkedHashMap<>();           // another mod's mixin -> key
+    /** Another mod's mixin -> the switches that leave it out (since 1.0.49 one mixin may be named by several switches). */
+    private static final Map<String, List<String>> CANCEL = new LinkedHashMap<>();
     private static final Map<String, List<ForeignPatches.Yield>> YIELDS = new LinkedHashMap<>();   // key -> the same patch in other mods
-    private static final Map<String, ForeignPatches.Yield> YIELD_MIXIN = new LinkedHashMap<>();    // that mod's mixin -> its entry
+    /** That mod's mixin -> its compat rows, one per switch (since 1.0.49 several). */
+    private static final Map<String, List<ForeignPatches.Yield>> YIELD_MIXIN = new LinkedHashMap<>();
+    /** Since 1.0.49 (compat.json "orphan_of"): another mod's mixin -> the companion it relies on (ForeignPatches.Orphan). */
+    private static final Map<String, ForeignPatches.Orphan> ORPHAN = new LinkedHashMap<>();
     /** The switches whose mixins predate the guard table (PureMixinPlugin.MIXIN_KEYS): no fingerprints, the switch alone. */
     private static final Set<String> UNGUARDED = Set.of("frame_pacing", "terrain_density_memo", "vanilla_data_merge_unchanged");
     private static final Map<String, Decision> DECISIONS = new ConcurrentHashMap<>();
@@ -132,6 +144,24 @@ public final class Guards {
                     "(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/client/renderer/entity/EntityRenderer;",
                     "bons/furious/patch/cofh/TranslucentRenderers", "renderer"});
     private static volatile boolean loaded;
+    /**
+     * Since 1.0.49: why the guard table could not be read (null = it loaded). A table that cannot be read FAILS CLOSED:
+     * no switch applies, the switches that predate the table step aside too, nothing of another mod is cancelled for a
+     * switch, and one ERROR line names the bad line. (Before 1.0.49 a bad line cleared every table, so knows() was false
+     * for every mixin and PureMixinPlugin applied them all unguarded, disabled switches included.)
+     */
+    private static volatile String tableFailure;
+    /** Since 1.0.49: the fewest tab-separated fields each line type has (a shorter line makes the table unreadable). */
+    private static final Map<String, Integer> FIELDS = Map.of("mixin", 3, "mod", 3, "guard", 6, "redundant", 5, "audit", 5,
+            "cancel", 3, "yield", 10, "orphan", 6, "standdown", 7);
+    /**
+     * Since 1.0.49 ("standdown" lines, patches "sha256_standdown"): key -> a known other build of the target the switch
+     * stands down on -> "class|method|desc" of a guard line -> the fingerprint that build has there ("-" = absent; a guard
+     * line the build does not list has the tested fingerprint). When one such build matches every guard line, the switch is
+     * ABSENT with one DEBUG line and is never applied; checked before the tested build and its accepted alternatives, so
+     * the known build never WARNs and never applies, while an unknown build still WARNs (MISMATCH) as before.
+     */
+    private static final Map<String, Map<String, Map<String, String>>> STANDDOWN = new LinkedHashMap<>();
 
     public enum State { APPLY, DISABLED, ABSENT, MISMATCH, YIELD, REDUNDANT }
 
@@ -142,16 +172,23 @@ public final class Guards {
     public static synchronized void load() {
         if (loaded) return;
         loaded = true;
+        int lineNo = 0;
+        String line = null;
         try (InputStream in = Guards.class.getResourceAsStream(RESOURCE)) {
             if (in == null) {
-                LOGGER.error("Bons and Furious: {} is missing from the jar; no patch will be applied", RESOURCE);
+                tableFailure = RESOURCE + " is missing from the jar";
+                LOGGER.error("Bons and Furious: {} is missing from the jar; no patch will be applied (every switch stands down)", RESOURCE);
                 return;
             }
             BufferedReader r = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-            String line;
             while ((line = r.readLine()) != null) {
+                lineNo++;
                 if (line.isBlank() || line.startsWith("#")) continue;
-                String[] f = line.split("\t");
+                // since 1.0.49: -1 keeps trailing empty fields (an "audit" line of a "*" guard ends in its empty desc)
+                String[] f = line.split("\t", -1);
+                Integer need = FIELDS.get(f[0]);
+                if (need != null && f.length < need)
+                    throw new IllegalStateException("a " + f[0] + " line has " + f.length + " fields, " + need + " expected");
                 switch (f[0]) {
                     case "mixin" -> MIXIN_KEY.put(f[1], f[2]);
                     case "mod" -> MOD.put(f[1], f[2]);
@@ -159,35 +196,50 @@ public final class Guards {
                         GUARD.computeIfAbsent(f[1], k -> new ArrayList<>()).add(new String[] {f[2], f[3], f[4], f[5], f.length > 6 ? f[6] : ""});
                         WANTED.computeIfAbsent(f[2], k -> new java.util.LinkedHashSet<>()).add(f[3].equals("*") ? "*" : f[3] + f[4]);
                     }
+                    // since 1.0.49 GuardTool writes an empty note / an empty desc as "-" (no line ends in an empty field)
                     case "redundant" -> REDUNDANT_SINCE.computeIfAbsent(f[1], k -> new ArrayList<>())
-                            .add(new Redundant(f[2], f[3], Boolean.parseBoolean(f[4]), f.length > 5 ? f[5] : ""));
-                    case "audit" -> AUDIT.add(f[1] + "|" + f[2] + "|" + f[3] + "|" + f[4]);
-                    case "cancel" -> CANCEL.put(f[1], f[2]);
+                            .add(new Redundant(f[2], f[3], Boolean.parseBoolean(f[4]), f.length > 5 && !f[5].equals("-") ? f[5] : ""));
+                    case "audit" -> AUDIT.add(f[1] + "|" + f[2] + "|" + f[3] + "|" + (f[4].equals("-") ? "" : f[4]));
+                    // since 1.0.49: standdown <key> <build label> <class> <method> <desc or -> <fingerprint or ->
+                    case "standdown" -> STANDDOWN.computeIfAbsent(f[1], k -> new LinkedHashMap<>()).computeIfAbsent(f[2], k -> new LinkedHashMap<>())
+                            .put(f[3] + "|" + f[4] + "|" + (f[5].equals("-") ? "" : f[5]), f[6]);
+                    case "cancel" -> {
+                        List<String> keys = CANCEL.computeIfAbsent(f[1], k -> new ArrayList<>());
+                        if (!keys.contains(f[2])) keys.add(f[2]);
+                    }
                     case "yield" -> {
                         ForeignPatches.Yield y = ForeignPatches.parse(f);
                         YIELDS.computeIfAbsent(y.key(), k -> new ArrayList<>()).add(y);
-                        YIELD_MIXIN.put(y.mixin(), y);
+                        YIELD_MIXIN.computeIfAbsent(y.mixin(), k -> new ArrayList<>()).add(y);
+                    }
+                    case "orphan" -> {
+                        ForeignPatches.Orphan o = ForeignPatches.parseOrphan(f);
+                        ORPHAN.put(o.mixin(), o);
                     }
                     default -> LOGGER.warn("Bons and Furious: unknown line in {}: {}", RESOURCE, line);
                 }
             }
         } catch (Exception e) {
-            LOGGER.error("Bons and Furious could not read {}; no patch will be applied", RESOURCE, e);
-            MIXIN_KEY.clear();
-            GUARD.clear();
-            REDUNDANT_SINCE.clear();
-            AUDIT.clear();
-            WANTED.clear();
-            CANCEL.clear();
-            YIELDS.clear();
-            YIELD_MIXIN.clear();
+            // since 1.0.49: FAIL CLOSED (tableFailure): the tables read so far stay, but no switch applies
+            tableFailure = "line " + lineNo + (line == null ? "" : " \"" + line + "\"") + ": " + e;
+            LOGGER.error("Bons and Furious could not read {} ({}); no patch will be applied (every switch stands down)", RESOURCE, tableFailure);
         }
     }
 
-    /** True when the mixin class belongs to a guarded switch (every mixin added in 1.0.20 does). */
+    /** Since 1.0.49: why the guard table could not be read, or null when it loaded. */
+    public static String tableFailure() {
+        load();
+        return tableFailure;
+    }
+
+    /**
+     * True when the mixin class belongs to a guarded switch (every mixin added in 1.0.20 does). Since 1.0.49 also true for
+     * every mixin while the table cannot be read, so PureMixinPlugin hands it to shouldApply, which leaves it out: the
+     * "no switch, always applies" answer holds only for a table that loaded.
+     */
     public static boolean knows(String mixinClass) {
         load();
-        return MIXIN_KEY.containsKey(mixinClass);
+        return tableFailure != null || MIXIN_KEY.containsKey(mixinClass);
     }
 
     public static String keyOf(String mixinClass) {
@@ -198,6 +250,10 @@ public final class Guards {
     /** IMixinConfigPlugin.shouldApplyMixin for a guarded mixin. */
     public static boolean shouldApply(String mixinClass, String targetClass) {
         String key = keyOf(mixinClass);
+        if (tableFailure != null) {   // since 1.0.49: fail closed (the ERROR line was written by load)
+            LOGGER.debug("Bons and Furious: {} is not applied to {}: the guard table could not be read", mixinClass, targetClass);
+            return false;
+        }
         if (key == null) return false;
         Decision d = decide(key);
         String target = targetClass.replace('/', '.');
@@ -245,6 +301,7 @@ public final class Guards {
      */
     public static boolean stepsAside(String key, String targetClass) {
         load();
+        if (tableFailure != null) return true;   // since 1.0.49: fail closed, the switches that predate the table too
         Decision d = decide(key);
         if (d.state() != State.YIELD) return false;
         logYield(key, targetClass.replace('/', '.'), d);
@@ -260,28 +317,70 @@ public final class Guards {
      * MixinSquared's canceller: another mod's mixin is cancelled only while the switch that replaces it applies. Since
      * 1.0.45 a switch also applies when the other mod's own mixin plugin leaves that mixin out (ForeignPatches); such a
      * mixin never reaches a class, so this is not asked about it. If it reaches one anyway (the plugin answered Mixin
-     * differently than it answered us), it is cancelled as before and the line says why, as a WARN.
+     * differently than it answered us), it is cancelled as before and the line says why, as a WARN. Since 1.0.49 several
+     * switches may name one mixin (guard table: one cancel line per switch); cancellingKey says when it is left out then.
+     * Also since 1.0.49: a mixin that relies on a companion mixin of its own mod (guard table "orphan" line) is left out
+     * whenever that mod's own plugin leaves the companion out, whatever our switches decide (ForeignPatches.orphaned).
      */
     public static boolean shouldCancel(String foreignMixin) {
         load();
-        String key = CANCEL.get(foreignMixin);
-        if (key == null || decide(key).state() != State.APPLY) return false;
-        ForeignPatches.Yield y = YIELD_MIXIN.get(foreignMixin);
+        ForeignPatches.Orphan orphan = ORPHAN.get(foreignMixin);
+        if (orphan != null && ForeignPatches.orphaned(orphan)) return true;
+        List<String> keys = CANCEL.get(foreignMixin);
+        if (keys == null) return false;
+        String key = cancellingKey(foreignMixin, keys, k -> decide(k).state() == State.APPLY);
+        if (key == null) return false;
+        ForeignPatches.Yield y = yieldOf(foreignMixin, key);
         if (y != null && ForeignPatches.listedHere(y) && LOGGED.add("cancel|" + foreignMixin)) {
+            // since 1.0.49: every switch that names the mixin and applies (one name when only one switch names it, as before)
+            String who = keys.size() == 1 ? key : String.join(", ", keys.stream().filter(k -> decide(k).state() == State.APPLY).toList());
             String leftOut = ForeignPatches.leftOutByPlugin(y);
             // since 1.0.48: a "conflict" row is not a second copy of our change, so its lines say why it is left out instead
             String why = y.conflict() == null ? "so only one copy runs" : "since the two changes to " + y.conflict() + " cannot run together";
             if (leftOut != null)
                 LOGGER.warn("Bons and Furious: {} applies; {} {}'s {} reached a class although its mixin plugin had left it out ({}); it is left out here too, {}",
-                        key, y.name(), ForeignPatches.modVersion(y.mod()), y.shortMixin(), leftOut, why);
+                        who, y.name(), ForeignPatches.modVersion(y.mod()), y.shortMixin(), leftOut, why);
             else if (y.conflict() != null)
                 LOGGER.info("Bons and Furious: {} applies; {} {}'s change to {} ({}{}) is left out, {}",
-                        key, y.name(), ForeignPatches.modVersion(y.mod()), y.conflict(), y.shortMixin(), y.option() == null ? "" : ", option " + y.option() + " off", why);
+                        who, y.name(), ForeignPatches.modVersion(y.mod()), y.conflict(), y.shortMixin(), y.option() == null ? "" : ", option " + y.option() + " off", why);
             else
                 LOGGER.info("Bons and Furious: {} applies; the same change in {} {} ({}{}) is left out, so only one copy runs",
-                        key, y.name(), ForeignPatches.modVersion(y.mod()), y.shortMixin(), y.option() == null ? "" : ", option " + y.option() + " off");
+                        who, y.name(), ForeignPatches.modVersion(y.mod()), y.shortMixin(), y.option() == null ? "" : ", option " + y.option() + " off");
         }
         return true;
+    }
+
+    /**
+     * Since 1.0.49: the switch whose decision leaves another mod's mixin out, or null when the mixin stays. One switch naming
+     * the mixin (every row before 1.0.49): it is left out while that switch applies, exactly as before. Several switches
+     * naming it (one Collections Of Optimizations mixin serving several of its options, each made by another switch of ours):
+     * it is left out while a switch applies that cannot run next to it (a compat row with a "conflict", or a mixin the
+     * switch replaces, its patches "cancel" list), or while every switch that names it applies; otherwise it stays, because a
+     * switch that stepped aside for it relies on its copy, and the switches that apply next to it make other changes than the
+     * ones it makes there (their rows' options are off, or the other mod's plugin would have made them step aside as well).
+     */
+    static String cancellingKey(String foreignMixin, List<String> keys, java.util.function.Predicate<String> applies) {
+        if (keys.size() == 1) return applies.test(keys.get(0)) ? keys.get(0) : null;
+        String first = null;
+        boolean all = true;
+        for (String k : keys) {
+            if (!applies.test(k)) {
+                all = false;
+                continue;
+            }
+            if (first == null) first = k;
+            ForeignPatches.Yield y = yieldOf(foreignMixin, k);
+            if (y == null || y.conflict() != null) return k;   // replaced by it (cancel list) or cannot run next to it
+        }
+        return all ? first : null;
+    }
+
+    /** Since 1.0.49: the compat row of this switch for that mixin, or null (the mixin is in the switch's cancel list). */
+    private static ForeignPatches.Yield yieldOf(String foreignMixin, String key) {
+        List<ForeignPatches.Yield> rows = YIELD_MIXIN.get(foreignMixin);
+        if (rows == null) return null;
+        for (ForeignPatches.Yield y : rows) if (y.key().equals(key)) return y;
+        return null;
     }
 
     public static Decision decide(String key) {
@@ -362,7 +461,24 @@ public final class Guards {
             "bons.furious.mixin.vanilla_c2.EntitySectionXOverflowMixin", new String[] {"bons$columnRange",
                     "it/unimi/dsi/fastutil/longs/LongSortedSet", "subSet", "(JJ)Lit/unimi/dsi/fastutil/longs/LongSortedSet;",
                     "m_188362_", "(Lnet/minecraft/world/phys/AABB;Lnet/minecraft/util/AbortableIterationConsumer;)V",
-                    "m_156858_", "(II)Lit/unimi/dsi/fastutil/longs/LongSortedSet;"});
+                    "m_156858_", "(II)Lit/unimi/dsi/fastutil/longs/LongSortedSet;"},
+            // 1.0.49 (fifth freeze): GeckoLibOculusCompat 1.0.1 @Overwrites GeoModel.handleAnimations; our wrap of its
+            // tickAnimation call (priority 1100, require = 0) then finds nothing there and the method is left to that mod
+            "bons.furious.mixin.geckolib_lean.GeoModelPoseHoldMixin", new String[] {"bons$holdDistantPose",
+                    "software/bernie/geckolib/core/animation/AnimationProcessor", "tickAnimation",
+                    "(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/core/animatable/model/CoreGeoModel;Lsoftware/bernie/geckolib/core/animation/AnimatableManager;DLsoftware/bernie/geckolib/core/animation/AnimationState;Z)V",
+                    "handleAnimations", "(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;JLsoftware/bernie/geckolib/core/animation/AnimationState;)V"},
+            // 1.0.49 (fifth freeze, bug hunt F10): the CONSTANT form: "constants", then per @ModifyConstant handler (require =
+            // 0, priority 900: Mixin gives a constant two such injectors find to the higher priority and skips the other) its
+            // name, method, desc, constant and what it changes. Too Fast 0.4.3.5 sets the three speed caps itself (largest
+            // value) and leaves the two moved-wrongly tolerances alone: those keep this switch's slack, the caps are left to
+            // it, one line each
+            "bons.furious.mixin.vanilla_move_checks.MovementSlackMixin", new String[] {"constants",
+                    "bons$elytraSpeedCap", "m_7185_", "(Lnet/minecraft/network/protocol/game/ServerboundMovePlayerPacket;)V", "F300.0", "the elytra speed cap 300.0",
+                    "bons$playerSpeedCap", "m_7185_", "(Lnet/minecraft/network/protocol/game/ServerboundMovePlayerPacket;)V", "F100.0", "the speed cap 100.0",
+                    "bons$playerTolerance", "m_7185_", "(Lnet/minecraft/network/protocol/game/ServerboundMovePlayerPacket;)V", "D0.0625", "the moved-wrongly tolerance 0.0625",
+                    "bons$vehicleSpeedCap", "m_5659_", "(Lnet/minecraft/network/protocol/game/ServerboundMoveVehiclePacket;)V", "D100.0", "the vehicle speed cap 100.0",
+                    "bons$vehicleTolerance", "m_5659_", "(Lnet/minecraft/network/protocol/game/ServerboundMoveVehiclePacket;)V", "D0.0625", "the vehicle moved-wrongly tolerance 0.0625"});
 
     /**
      * Since 1.0.36: an injector of ours into a Minecraft method that another mod may replace with an @Overwrite (mixin ->
@@ -433,6 +549,10 @@ public final class Guards {
 
     /** IMixinConfigPlugin.postApply for a STAND_DOWN_EACH redirect (since 1.0.48.1): one line per method our handler is not in. */
     private static void checkStandDownEach(String mixinClass, ClassNode target, String[] e) {
+        if ("constants".equals(e[0])) {
+            checkStandDownConstants(mixinClass, target, e);
+            return;
+        }
         String key = keyOf(mixinClass);
         if (key == null) return;
         Map<String, MethodNode> methods = new LinkedHashMap<>();
@@ -456,6 +576,55 @@ public final class Guards {
             LOGGER.info("Bons and Furious: {} steps aside in {}.{}; {}", key, cls, l,
                     left.size() < pairs ? "the other call keeps the fix" : "this switch changes nothing there");
         }
+    }
+
+    /**
+     * STAND_DOWN_EACH, constant form (since 1.0.49): groups of handler, method, desc, constant ("F300.0" = float, "D0.0625" =
+     * double) and what it changes. A @ModifyConstant handler with require = 0 whose call is not in its method found its
+     * constant changed first by another mod; one line per such handler names that mod (its constant modifier of the same
+     * type in the method). The handlers that found their constant keep the change.
+     */
+    private static void checkStandDownConstants(String mixinClass, ClassNode target, String[] e) {
+        String key = keyOf(mixinClass);
+        if (key == null) return;
+        Map<String, MethodNode> methods = new LinkedHashMap<>();
+        for (MethodNode m : target.methods) methods.put(m.name + m.desc, m);
+        List<String[]> left = new ArrayList<>();
+        int applied = 0;
+        for (int i = 1; i + 4 < e.length; i += 5) {
+            MethodNode m = methods.get(e[i + 1] + e[i + 2]);
+            boolean ours = false;
+            if (m != null)
+                for (AbstractInsnNode n : m.instructions)
+                    if (n instanceof MethodInsnNode mi && mi.name.endsWith("$" + e[i])) ours = true;
+            if (ours) applied++;
+            else left.add(new String[] {e[i], e[i + 1], e[i + 4], m == null ? "the method is not in the class" : constantReason(target, methods, m, e[i + 3])});
+        }
+        String cls = target.name.replace('/', '.');
+        for (String[] l : left) {
+            if (!LOGGED.add("standdownconst|" + key + "|" + cls + "|" + l[0])) continue;
+            LOGGER.info("Bons and Furious: {} steps aside for {} in {}.{}: {}; {}", key, l[2], cls, l[1], l[3],
+                    applied > 0 ? "the thresholds it leaves alone keep this switch's change" : "this switch changes nothing there");
+        }
+    }
+
+    /** Who changed a constant first: another mod's constant modifier of the same type in the method, as far as Mixin recorded it. */
+    private static String constantReason(ClassNode target, Map<String, MethodNode> methods, MethodNode m, String constant) {
+        String type = constant.substring(0, 1), handlerDesc = "(" + type + ")" + type;
+        String other = null;
+        for (AbstractInsnNode n : m.instructions) {
+            if (!(n instanceof MethodInsnNode mi) || !mi.owner.equals(target.name)) continue;
+            String merged = CallSites.mergedBy(methods.get(mi.name + mi.desc));
+            if (merged == null || ownMixin(merged)) continue;
+            if (mi.desc.equals(handlerDesc)) return mixinName(merged) + " changes that constant itself";
+            if (other == null) other = merged;
+        }
+        double value = Double.parseDouble(constant.substring(1));
+        for (AbstractInsnNode n : m.instructions)
+            if (n instanceof LdcInsnNode ldc && ldc.cst instanceof Number num && ("F".equals(type) ? ldc.cst instanceof Float : ldc.cst instanceof Double)
+                    && num.doubleValue() == value)
+                return "the constant is still there but was not changed (a mod that changes how Mixin finds its targets?)";
+        return other != null ? "the constant is gone; " + mixinName(other) + " also changes the method" : "the constant is gone";
     }
 
     /** Why our handler is not in a STAND_DOWN_EACH method: who replaced it or changed its call, as far as Mixin recorded it. */
@@ -528,12 +697,12 @@ public final class Guards {
      */
     private static Decision handlerDecision(String key) {
         Map<String, String> owners = new LinkedHashMap<>();   // every mixin a switch may cancel -> the mod that ships it
-        for (Map.Entry<String, String> c : CANCEL.entrySet()) {
-            ForeignPatches.Yield y = YIELD_MIXIN.get(c.getKey());
-            owners.put(c.getKey(), y != null ? y.mod() : MOD.getOrDefault(c.getValue(), "?"));
+        for (Map.Entry<String, List<String>> c : CANCEL.entrySet()) {
+            List<ForeignPatches.Yield> rows = YIELD_MIXIN.get(c.getKey());
+            owners.put(c.getKey(), rows != null && !rows.isEmpty() ? rows.get(0).mod() : MOD.getOrDefault(c.getValue().get(0), "?"));
         }
-        for (Map.Entry<String, String> c : CANCEL.entrySet()) {
-            if (!c.getValue().equals(key)) continue;
+        for (Map.Entry<String, List<String>> c : CANCEL.entrySet()) {
+            if (!c.getValue().contains(key)) continue;
             String user = ForeignPatches.handlerUser(c.getKey(), owners);
             if (user != null) return new Decision(State.YIELD, user + " changes " + c.getKey() + ", which this switch would replace");
         }
@@ -541,6 +710,9 @@ public final class Guards {
     }
 
     private static Decision compute(String key) {
+        load();
+        // since 1.0.49: a table that cannot be read fails closed (every helper that asks decide() sees no APPLY either)
+        if (tableFailure != null) return new Decision(State.MISMATCH, "the guard table could not be read: " + tableFailure);
         if (!PureConfig.isEnabled(key)) return new Decision(State.DISABLED, "disabled by config");
         List<String[]> guard = GUARD.getOrDefault(key, List.of());
         if (guard.isEmpty()) {
@@ -552,9 +724,12 @@ public final class Guards {
         }
         // since 1.0.32: the target mod's own classes first; when all of them are missing the switch is ABSENT exactly as in
         // the full pass below (modded > 0 && moddedAbsent == modded), so the Minecraft classes it also guards are not read
+        // since 1.0.49: an audit line (another mod's side effect, satisfied while that mod is absent) is not the target mod's
+        // own class: it counts neither here nor in modded / moddedAbsent below (with only audit lines besides Minecraft's,
+        // vanilla_camera_fluid_memo was ABSENT in every pack without any of the mods it audits)
         int moddedFirst = 0, moddedFirstAbsent = 0;
         for (String[] g : guard) {
-            if (isGameClass(g[0])) continue;
+            if (isGameClass(g[0]) || AUDIT.contains(key + "|" + g[0] + "|" + g[1] + "|" + g[2])) continue;
             moddedFirst++;
             if (prints(g[0]) == null) moddedFirstAbsent++;
         }
@@ -571,13 +746,14 @@ public final class Guards {
         for (int i = 0; i < guard.size(); i++) {
             String[] g = guard.get(i);
             boolean game = isGameClass(g[0]);
-            if (!game) modded++;
+            boolean audited = !game && AUDIT.contains(key + "|" + g[0] + "|" + g[1] + "|" + g[2]);   // since 1.0.49: not counted
+            if (!game && !audited) modded++;
             ClassPrints prints = prints(g[0]);
             if (prints == null) {
                 absent++;
-                if (!game) moddedAbsent++;
+                if (!game && !audited) moddedAbsent++;
                 if (g[3].equals(ABSENT_PRINT)) continue;   // the tested build has no such class either
-                if (!game && AUDIT.contains(key + "|" + g[0] + "|" + g[1] + "|" + g[2]) && packageAbsent(g[0])) {
+                if (audited && packageAbsent(g[0])) {
                     found[i] = AUDITED_MOD_ABSENT;   // the audited mod is not installed: its side effect cannot exist
                     continue;
                 }
@@ -599,6 +775,12 @@ public final class Guards {
             if (fp == null) { problems.add(g[0].replace('/', '.') + "." + g[1] + " missing"); continue; }
             if (!fp.equals(g[3])) problems.add(g[0].replace('/', '.') + "." + g[1] + " differs");
         }
+        // since 1.0.49: a known other build the switch stands down on (checked first: such a build never applies, never WARNs)
+        String standdown = standdownBuild(key, guard, found);
+        if (standdown != null) {
+            if (LOGGED.add("standdown|" + key)) LOGGER.debug("Bons and Furious: {} stands down: {} is installed", key, standdown);
+            return new Decision(State.ABSENT, standdown + " is installed, a build this switch stands down on");
+        }
         // since 1.0.46: the tested build's fingerprints do not all match: one accepted alternative build may match them all
         String matched = problems.isEmpty() ? "" : alternativeBuild(guard, found);
         if (matched == null) {
@@ -606,8 +788,21 @@ public final class Guards {
             // class of the target mod is missing (the mod is not installed; nothing about its version is wrong)
             if (absent == guard.size() || modded > 0 && moddedAbsent == modded)
                 return new Decision(State.ABSENT, "target mod " + MOD.getOrDefault(key, "?") + " is not installed");
-            if (!uninstalled.isEmpty() && problems.size() == uninstalled.size()) {
+            // since 1.0.49: a mod the switch needs is not installed (a non-audit row on a class whose whole package is absent
+            // from the game: no installed mod provides it): ABSENT whatever the other rows show. The switch cannot run without that mod, so a
+            // WARN about another mod's drift (a library of an absent target, or the target next to an absent second mod it
+            // needs) only repeated on every start; the other rows' differences go into one DEBUG line. ABSENT and MISMATCH
+            // both leave the switch unapplied. Offline (package list unknown) packageAbsent() is false: nothing changes.
+            if (!uninstalled.isEmpty()) {
                 String pkg = uninstalled.get(0).substring(0, Math.max(0, uninstalled.get(0).lastIndexOf('/'))).replace('/', '.');
+                if (problems.size() > uninstalled.size() && LOGGED.add("absentdrift|" + key)) {
+                    Set<String> notInstalled = new java.util.HashSet<>();
+                    for (String c : uninstalled) notInstalled.add(c.replace('/', '.') + " not found");
+                    List<String> other = new ArrayList<>();
+                    for (String p : problems) if (!notInstalled.contains(p)) other.add(p);
+                    LOGGER.debug("Bons and Furious: {} is off because a mod it needs is not installed (package {}); where installed it "
+                            + "also differs: {}", key, pkg, String.join(", ", other.subList(0, Math.min(3, other.size()))));
+                }
                 return new Decision(State.ABSENT, "a mod it also needs is not installed (package " + pkg + ")");
             }
             Decision r = redundantDecision(key, false);
@@ -661,6 +856,26 @@ public final class Guards {
                 all = want.equals(ABSENT_PRINT) ? found[i] == null : want.equals(found[i]);
             }
             if (all) return label;
+        }
+        return null;
+    }
+
+    /**
+     * Since 1.0.49: the first stand-down build of the key (table order) whose fingerprints equal what every guard line found
+     * here (a line the build does not list expects the tested fingerprint; absent = "-"), or null.
+     */
+    static String standdownBuild(String key, List<String[]> guard, String[] found) {
+        Map<String, Map<String, String>> builds = STANDDOWN.get(key);
+        if (builds == null) return null;
+        for (Map.Entry<String, Map<String, String>> b : builds.entrySet()) {
+            boolean all = true;
+            for (int i = 0; i < guard.size() && all; i++) {
+                if (found[i] == AUDITED_MOD_ABSENT) continue;
+                String[] g = guard.get(i);
+                String want = b.getValue().getOrDefault(g[0] + "|" + g[1] + "|" + g[2], g[3]);
+                all = want.equals(ABSENT_PRINT) ? found[i] == null : want.equals(found[i]);
+            }
+            if (all) return b.getKey();
         }
         return null;
     }

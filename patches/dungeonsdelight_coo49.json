@@ -1,0 +1,117 @@
+{
+  "group": "dungeonsdelight_coo49",
+  "keys": {
+    "dungeonsdelight_tenacity_zero_interval_guard": {
+      "mod": "dungeonsdelight",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.dungeonsdelight_coo49.TenacityZeroIntervalMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/yirmiri/dungeonsdelight/common/effect/TenacityEffect",
+          "method": "m_6584_",
+          "desc": "(II)Z",
+          "note": "isDurationEffectTick: duration % (this.applyInterval - amplifier * 2) == 0 (ArithmeticException when the divisor is 0)",
+          "sha256": "be0bfe4c62dff9034637f6f7d7da33f1d63e7861c2bbc8e73feae81c42390246"
+        },
+        {
+          "class": "net/yirmiri/dungeonsdelight/common/effect/TenacityEffect",
+          "method": "getInterval",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)I",
+          "note": "food * 3, or 1 at food 0: the shared applyInterval's values",
+          "sha256": "97f6a5587d40ced2c65f6b7cc8a005fa3fd72912ad457a01e178cc66ffbc6202"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of TenacityEffect.isDurationEffectTick: true when applyInterval - amplifier * 2 == 0 (the input that throws ArithmeticException out of MobEffectInstance.tick and crashes the tick), else the original. Runtime flag dungeonsdelightTenacityZeroGuard. Helper bons.furious.patch.dungeonsdelight_coo49.TenacityGuard.",
+      "license": "Dungeons Delight (custom licence, treated as All Rights Reserved): no code carried; the injection holds only our own test"
+    },
+    "dungeonsdelight_monster_effect_lookup": {
+      "mod": "dungeonsdelight",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.dungeonsdelight_coo49.MonsterEffectLookupMixin",
+        "bons.furious.mixin.dungeonsdelight_coo49.LivingEntityEffectsAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/yirmiri/dungeonsdelight/common/effect/MonsterEffect",
+          "method": "m_6742_",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;I)V",
+          "note": "applyEffectTick: for every active effect equal to normalVariant: DDUtil.applyEffectSwap + removeEffect; nothing else",
+          "sha256": "19e93ccfc4ab0d32740d862ac3e23a743a61257379f580386020eb79cf66d182"
+        },
+        {
+          "class": "net/yirmiri/dungeonsdelight/common/effect/MonsterEffect",
+          "method": "m_6584_",
+          "desc": "(II)Z",
+          "note": "isDurationEffectTick: always true (applyEffectTick runs every tick)",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21220_",
+          "desc": "()Ljava/util/Collection;",
+          "note": "getActiveEffects = activeEffects.values(): the map the switch reads",
+          "sha256": "44604c235c1bcf915e7b0f26132feb6206c0719266772489c7fa67c8d42fbcc0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of MonsterEffect.applyEffectTick: returns when the holder's activeEffects map (read through an @Accessor on LivingEntity.f_20945_, not hasEffect) has no key equal to the normal variant and the holder's class does not override getActiveEffects (ClassValue); otherwise the original runs (swap and its swallowed ConcurrentModificationException included). Runtime flag dungeonsdelightMonsterEffectLookup, shadow mode .shadow. Helper bons.furious.patch.dungeonsdelight_coo49.MonsterEffectLookup.",
+      "license": "Dungeons Delight (custom licence, treated as All Rights Reserved): no code carried; the injection holds only our own test"
+    },
+    "dungeonsdelight_tenacity_per_player_interval": {
+      "mod": "dungeonsdelight",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.dungeonsdelight_coo49.TenacityIntervalRecordMixin",
+        "bons.furious.mixin.dungeonsdelight_coo49.MobEffectInstanceTenacityMixin",
+        "bons.furious.mixin.dungeonsdelight_coo49.LivingEntityTenacityIntervalMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/yirmiri/dungeonsdelight/common/effect/TenacityEffect",
+          "method": "m_6742_",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;I)V",
+          "note": "server, players: heal 1, food tick, applyInterval = getInterval(player); then MonsterEffect's swap scan",
+          "sha256": "f8020c0873a7f068853681ef6578c426417281759589895ff3e71761836ab235"
+        },
+        {
+          "class": "net/yirmiri/dungeonsdelight/common/effect/TenacityEffect",
+          "method": "m_6385_",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/ai/attributes/AttributeMap;I)V",
+          "note": "server, players: applyInterval = getInterval(player) when the effect starts",
+          "sha256": "7a79d4273b04084ea79459bb4ab7fd77291ffeb75b72972ea50e32e4e49d0d4c"
+        },
+        {
+          "class": "net/yirmiri/dungeonsdelight/common/effect/TenacityEffect",
+          "method": "m_6584_",
+          "desc": "(II)Z",
+          "sha256": "be0bfe4c62dff9034637f6f7d7da33f1d63e7861c2bbc8e73feae81c42390246"
+        },
+        {
+          "class": "net/yirmiri/dungeonsdelight/common/effect/TenacityEffect",
+          "method": "getInterval",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)I",
+          "sha256": "97f6a5587d40ced2c65f6b7cc8a005fa3fd72912ad457a01e178cc66ffbc6202"
+        },
+        {
+          "class": "net/minecraft/world/effect/MobEffectInstance",
+          "method": "m_19552_",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Ljava/lang/Runnable;)Z",
+          "note": "tick: if (effect.isDurationEffectTick(duration or tickCount, amplifier)) applyEffect(entity)",
+          "sha256": "8eb6831045255321296e75f1b1b0db80eabc6847a0cad4f51914cb66a6cc06fe"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on both TenacityEffect.getInterval(Player) calls (applyEffectTick, addAttributeModifiers): the value is also stored on that player (an int added to LivingEntity, TenacityIntervalHolder); @WrapOperation on MobEffect.isDurationEffectTick in MobEffectInstance.tick(LivingEntity, Runnable): for a TenacityEffect on an entity with its own interval, duration % (own - amplifier * 2) == 0 (true when that divisor is 0); otherwise the original. Gameplay fix, off by default. Runtime flag dungeonsdelightTenacityPerPlayer. Helper bons.furious.patch.dungeonsdelight_coo49.TenacityIntervals.",
+      "license": "Dungeons Delight (custom licence, treated as All Rights Reserved): no code carried; the wrappers call Dungeons Delight's own methods and our own interval test"
+    }
+  }
+}

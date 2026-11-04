@@ -1,0 +1,147 @@
+{
+  "group": "uniqueaccessories_coo49",
+  "keys": {
+    "uniqueaccessories_waist_warmer_frozen_first": {
+      "mod": "uniqueaccessories",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.uniqueaccessories_coo49.UaWaistWarmerGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/genzyuro/uniqueaccessories/system/WaistWarmerEvents",
+          "method": "onLivingTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "client returns; !hasWaistWarmer returns; ticksFrozen > 0 -> setTicksFrozen(0); nothing else",
+          "sha256": "e1534ee16eeb074ed49644bbde649472de1b4a5945f6cd8acb5075619b5a0ddf"
+        },
+        {
+          "class": "net/genzyuro/uniqueaccessories/system/WaistWarmerEvents",
+          "method": "hasWaistWarmer",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "CuriosApi.getCuriosInventory(e).map(lambda$1).orElse(false): false without an inventory",
+          "sha256": "6f2d3b367316c39412f58a7d9da49c9af197e46fd55b92dce203289558f60daa"
+        },
+        {
+          "class": "net/genzyuro/uniqueaccessories/system/WaistWarmerEvents",
+          "method": "lambda$hasWaistWarmer$1",
+          "desc": "(Ltop/theillusivec4/curios/api/type/capability/ICuriosItemHandler;)Ljava/lang/Boolean;",
+          "note": "!inv.findCurios(lambda$0).isEmpty()",
+          "sha256": "86cb0d08e9897f97cc4be16c3a73d09d32b21da86d8c1f0eb5df85d898318f4e"
+        },
+        {
+          "class": "net/genzyuro/uniqueaccessories/system/WaistWarmerEvents",
+          "method": "lambda$hasWaistWarmer$0",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "note": "stack.is(WAIST_WARMER.get())",
+          "sha256": "dcf72d196d924567e9801c8f8d4eb9007a814d64c406546e1ccf93d1ec3dd4ed"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$CurioInventoryWrapper",
+          "method": "findCurios",
+          "desc": "(Ljava/util/function/Predicate;)Ljava/util/List;",
+          "note": "walks getCurios() and getStacks() per type (Unique Accessories needs Curios: not an audit row)",
+          "sha256": "a6764d14e407b4b25833ce178cd67ee06f4fddc79c32142551b6ee6967a18b0a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on WaistWarmerEvents.onLivingTick's hasWaistWarmer call (the mod's other callers are untouched), with the method's own single inventory lookup: no Curios inventory -> false (the method's answer); Curios' own wrapper whose walk the shared Curios layer calls read-only (CuriosPresence.quiet(ICuriosItemHandler), reached by name) -> false when ticksFrozen is not above zero (the handler then ends where it would end with either answer), and for a frozen entity the layer's CuriosPresence.worn(entity, WAIST_WARMER) (the same answer as the method's walk, scanned without its result list); otherwise the method's own question on the same handler, !findCurios(stack is the Waist Warmer).isEmpty() (the same call and per-stack test as its walk). Runtime flag uniqueaccessoriesWaistWarmerFrozenFirst. Helper bons.furious.patch.uniqueaccessories_coo49.UaWaistWarmer.",
+      "license": "All Rights Reserved (Unique Accessories): no Unique Accessories code is carried; the check is ours"
+    },
+    "uniqueaccessories_rose_cleanup_candidates": {
+      "mod": "uniqueaccessories",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.uniqueaccessories_coo49.UaRoseCleanupMixin",
+        "bons.furious.mixin.uniqueaccessories_coo49.UaEntityLoadRoseMixin",
+        "bons.furious.mixin.uniqueaccessories_coo49.UaRoseDataAccessor",
+        "bons.furious.mixin.uniqueaccessories_coo49.UaServerLevelRoseMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/genzyuro/uniqueaccessories/system/RoseOfTemptationEvents",
+          "method": "cleanupAroundPlayer",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/player/Player;D)V",
+          "note": "isHoldingOrEquipped (answer unused), then the Mob box scan: acts only on a mob whose ua_rose_applied_until is above zero and past",
+          "sha256": "028ea1785ec3f0d62a1db9898b541964a57b9775efe1cf1f93caa959fda373af"
+        },
+        {
+          "class": "net/genzyuro/uniqueaccessories/system/RoseOfTemptationEvents",
+          "method": "applyUniformSpeedWithTTL",
+          "desc": "(Lnet/minecraft/world/entity/Mob;J)V",
+          "note": "the only writer of ua_rose_applied_until (putLong now + 2); an allay returns first",
+          "sha256": "4ef4c3c9756e66007dc4a8795dd4e1e315895560fea426fd128a6a30d54a6e21"
+        },
+        {
+          "class": "net/genzyuro/uniqueaccessories/system/RoseOfTemptationEvents",
+          "method": "isHoldingOrEquipped",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Z",
+          "note": "hand reads and a Curios findCurios walk",
+          "sha256": "31262efe8bdee8b7ebca30b5ed93105c8c672ce4eadb248b3f905869161a04e4"
+        },
+        {
+          "class": "net/genzyuro/uniqueaccessories/system/RoseOfTemptationEvents",
+          "method": "lambda$isHoldingOrEquipped$2",
+          "desc": "(Ltop/theillusivec4/curios/api/type/capability/ICuriosItemHandler;)Ljava/lang/Boolean;",
+          "note": "!inv.findCurios(lambda$1).isEmpty()",
+          "sha256": "4e1b7470f7c4fdf405410a4a37f7799ccf00a09476c97f0353b181904bcda0a4"
+        },
+        {
+          "class": "net/genzyuro/uniqueaccessories/system/RoseOfTemptationEvents",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: the value is written by applyUniformSpeedWithTTL only (census: no other class names it)",
+          "sha256": "b981209bfd6aca7890c2b8305f3b0a44bcc3cdc0f2002e1c9d60e435791b3c9b"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_20258_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "load: Forge reads ForgeData into persistentData here",
+          "sha256": "729f127adb1d739e34e9c1d885bddcc08543cd433266afa5e8046a91b5659790"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$CurioInventoryWrapper",
+          "method": "findCurios",
+          "desc": "(Ljava/util/function/Predicate;)Ljava/util/List;",
+          "note": "the walk isHoldingOrEquipped makes (Unique Accessories needs Curios: not an audit row)",
+          "sha256": "a6764d14e407b4b25833ce178cd67ee06f4fddc79c32142551b6ee6967a18b0a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at RETURN of RoseOfTemptationEvents.applyUniformSpeedWithTTL and of Entity.load notes, per ServerLevel (a field on ServerLevel; each mob marks the set it is in with a field on Entity, so a repeated boost costs two field reads), the mobs that may carry the Rose boost value (read through an @Accessor of Entity.persistentData, never creating it); a cancellable @Inject at HEAD of cleanupAroundPlayer returns when the player's level holds no such mob (entries pruned when checked) and the shared Curios layer says the dead isHoldingOrEquipped walk would only read; otherwise the shipped scan (the last live candidate is kept as a hint and checked first without the lock: while a lured mob is around the shipped scan starts after one check). Runtime flag uniqueaccessoriesRoseCleanupCandidates. Helper bons.furious.patch.uniqueaccessories_coo49.UaRoseCandidates.",
+      "license": "All Rights Reserved (Unique Accessories): no Unique Accessories code is carried; the index is ours"
+    },
+    "uniqueaccessories_rose_repath_interval": {
+      "mod": "uniqueaccessories",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.uniqueaccessories_coo49.UaRoseRepathMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/genzyuro/uniqueaccessories/system/RoseOfTemptationEvents",
+          "method": "onPlayerTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "per lured mob farther than 1.5 blocks: getNavigation().moveTo(player, 1.1), result dropped",
+          "sha256": "81988520e407b0d3f24b7821b24b084af9a1a963902ecfbe41c807c09dfc5c7a"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/navigation/PathNavigation",
+          "method": "m_26571_",
+          "desc": "()Z",
+          "note": "isDone: no path or the path finished",
+          "sha256": "a2849b3d6677ba94515e3626e5780172bd67c231243e8fecb32f3957d64e7e33"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on onPlayerTick's PathNavigation.moveTo(Entity, double) call: a lured mob gets a new path when its navigation is done or has no path, or when the configured number of ticks has passed since its last one (value uniqueaccessories_rose_repath_interval.value, default 10, 1 = shipped). Runtime flag uniqueaccessoriesRoseRepathInterval. Helper bons.furious.patch.uniqueaccessories_coo49.UaRepath.",
+      "license": "All Rights Reserved (Unique Accessories): no Unique Accessories code is carried; the interval is ours"
+    }
+  }
+}

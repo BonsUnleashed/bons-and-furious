@@ -1,0 +1,262 @@
+{
+  "group": "summonity_coo49",
+  "keys": {
+    "summonity_drone_modifier_id_memo": {
+      "mod": "summonity",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.summonity_coo49.SummonityDroneIdMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/fevzi/summonity/entity/SummonedCopperDroneEntity",
+          "method": "modifierId",
+          "desc": "(Ljava/lang/String;)Ljava/util/UUID;",
+          "note": "UUID.nameUUIDFromBytes((String.valueOf(getUUID()) + \":\" + bonus).getBytes(UTF_8)): depends only on the UUID and the name",
+          "sha256": "ce1996ecfd0d0491b96b6a50e0db04786d74929c0882f8d335276102754f8d48"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_20148_",
+          "desc": "()Ljava/util/UUID;",
+          "note": "getUUID: the plain field read",
+          "sha256": "bbbd0373f01be78d24dbb5ba0f06ac085a2f0140deef3c88cad277418b23bcfa"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on SummonedCopperDroneEntity.modifierId: the answers for \"armor\" and \"speed\" are kept per drone (three @Unique fields) with the UUID object they were made from and handed out again while getUUID() returns that same object; other names and a changed UUID run the method as shipped. Runtime flag summonityDroneModifierIdMemo, shadow summonityDroneModifierIdMemo.shadow. Helper bons.furious.patch.summonity_coo49.DroneIds.",
+      "license": "Summonity (All Rights Reserved): no code carried, the wrapper carries only our own logic"
+    },
+    "summonity_owned_minions_tick_memo": {
+      "mod": "summonity",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.summonity_coo49.SummonityOwnedMinionsMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/fevzi/summonity/entity/MinionHelper",
+          "method": "getOwnedMinions",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/player/Player;)Ljava/util/List;",
+          "note": "getEntitiesOfClass(Mob, owner box grown by 128, SummonedMinion with the owner UUID), sorted by entity id, toList (an immutable list)",
+          "sha256": "e0025cbf3115e8e4c3f89e59c37479783feeafc6bfa3a8f6092883abd1596bfd"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on MinionHelper.getOwnedMinions: within one server tick (same level, same game time) an owner gets the list the first ask of that tick computed; a tick in which a summoned minion joined or left the level (Forge EntityJoinLevelEvent / EntityLeaveLevelEvent, highest priority, cancelled events included) keeps nothing. Trade-off, off by default: a minion or owner crossing the 128-block edge, a minion changing owner, or a minion becoming visible by chunk loading within a tick is seen at the next tick. Runtime flag summonityOwnedMinionsTickMemo. Helper bons.furious.patch.summonity_coo49.OwnedMinions.",
+      "license": "Summonity (All Rights Reserved): no code carried, the wrappers carry only our own logic"
+    },
+    "summonity_dragon_parts_memo": {
+      "mod": "summonity",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.summonity_coo49.SummonityDragonPartsMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/fevzi/summonity/entity/SummonedStardustDragonEntity",
+          "method": "getDragonParts",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;)Ljava/util/List;",
+          "note": "getEntitiesOfClass(SummonedStardustDragonEntity, head box grown by 64, not a head and this head UUID)",
+          "sha256": "edf0e680ba79c40c41831683d9963345b03c9609026954d858380076b0def451"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedStardustDragonEntity",
+          "method": "updateBodyFromPath",
+          "desc": "()V",
+          "note": "positions every listed part from the path history (reads the list)",
+          "sha256": "76173dc68df6a5d0d61926631cc22768d9167175b36cca6c4dba938c958a79f3"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedStardustDragonEntity",
+          "method": "tickBodyAttack",
+          "desc": "()V",
+          "note": "swept attack bounds of the listed parts, damage calls per part (reads the list)",
+          "sha256": "017eaaa62b20718130e4c2a26ab5d00e19ce624b9ebd57234e16ebe77a609393"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedStardustDragonEntity",
+          "method": "ensureBodyChain",
+          "desc": "()V",
+          "note": "the chain repair: spawns missing segments / tail, discards extra ones (reads the list)",
+          "sha256": "1aa5f8f0526ef5d8342b6dadfe8ea99f2610971a73ce6da5e8302e624faccde6"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedStardustDragonEntity",
+          "method": "spawnPart",
+          "desc": "(II)V",
+          "note": "adds a part to the level",
+          "sha256": "89ed3825208c6b3f51cf25f65a8764c1ebd2fb2b67033d329346a47c2acdcb1e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the getDragonParts calls of SummonedStardustDragonEntity: the chain repair (ensureBodyChain) searches as shipped and keeps the list on the head (two @Unique fields); the calls in updateBodyFromPath and tickBodyAttack reuse it for up to 5 ticks while every kept part is still in the world; @Inject at the start of spawnPart drops it. Trade-off, off by default: for up to 4 ticks a part leaving the 64-block box or added by other means is seen later, and the parts keep their list order. Runtime flag summonityDragonPartsMemo. Helper bons.furious.patch.summonity_coo49.DragonParts.",
+      "license": "Summonity (All Rights Reserved): no code carried, the wrappers carry only our own logic"
+    },
+    "summonity_idle_target_scan_interval": {
+      "mod": "summonity",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.summonity_coo49.SummonityIdleScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/fevzi/summonity/entity/SummonedCherryBlossomSwarmEntity",
+          "method": "findTarget",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "commanded target, then the current valid target, then (idle) one getEntitiesOfClass(Mob, minion range around the owner, the minion predicate) and the nearest",
+          "sha256": "a0996854513600c73773364a53db18e588b0f92c6778f54e75dcdfcf6511b778"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedCopperGolemEntity",
+          "method": "getActiveTarget",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "commanded target, then the current valid target, then (idle) one getEntitiesOfClass(Mob, minion range around the owner, the minion predicate) and the nearest",
+          "sha256": "8b7511aa44e80842986fdeea9bab6136ffc1da6add0cc9efb4a0d53cbfd8be70"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedCrystalWispEntity",
+          "method": "findTarget",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "commanded target, then the current valid target, then (idle) one getEntitiesOfClass(Mob, minion range around the owner, the minion predicate) and the nearest",
+          "sha256": "e26eaf699b64eb6c66ae5ce9b6b1e9b6be95ca9dab117b48642c05da709ff6e0"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedGnomeEntity",
+          "method": "getActiveTarget",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "commanded target, then the current valid target, then (idle) one getEntitiesOfClass(Mob, minion range around the owner, the minion predicate) and the nearest",
+          "sha256": "c3be352fa9fb3bfd7c6cb656708e4de6c2a6900b0c7a9e9db862828f6304ee6f"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedImpEntity",
+          "method": "getActiveTarget",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "commanded target, then the current valid target, then (idle) one getEntitiesOfClass(Mob, minion range around the owner, the minion predicate) and the nearest",
+          "sha256": "57d1f42148b543e6388f615f37e8429537d4bf9edc8bbe8a0ddabbbf34c38463"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedMagicMirrorEntity",
+          "method": "findTarget",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "commanded target, then the current valid target, then (idle) one getEntitiesOfClass(Mob, minion range around the owner, the minion predicate) and the nearest",
+          "sha256": "820577e85ce0da04de675b29d01be8616bfddc0242fa9bc6be86c3113497536f"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedMiniatureSunEntity",
+          "method": "getActiveTarget",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "commanded target, then the current valid target, then (idle) one getEntitiesOfClass(Mob, minion range around the owner, the minion predicate) and the nearest",
+          "sha256": "14e328bb2ab7d8d788919ee27dfdf23a1051041036764007a7d3fbd7c0271058"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedParrotEntity",
+          "method": "getActiveTarget",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "commanded target, then the current valid target, then (idle) one getEntitiesOfClass(Mob, minion range around the owner, the minion predicate) and the nearest",
+          "sha256": "b17e23ad861af0b8c7db05c9b746447d44bb9f4df232d298324e5cca5fbbe74a",
+          "sha256_also": [
+            {
+              "build": "summonity 0.1.7",
+              "sha256": "fc6d9c8819fe2326afc07b6c88980bdd8157c11aa84a52020874f586ba6e8e12"
+            }
+          ]
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedPrismaticLanternEntity",
+          "method": "findTarget",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "commanded target, then the current valid target, then (idle) one getEntitiesOfClass(Mob, minion range around the owner, the minion predicate) and the nearest",
+          "sha256": "09a0b1839a8f726db90613b3e4ff4f39399def94899f2663026641e948e3ef18"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedSanguineBatEntity",
+          "method": "findTarget",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "commanded target, then the current valid target, then (idle) one getEntitiesOfClass(Mob, minion range around the owner, the minion predicate) and the nearest",
+          "sha256": "de6e3028bbe554b1b65274e4b78ee803442cae819894f373089d5917143dd740"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedSculkMiteEntity",
+          "method": "getActiveTarget",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "commanded target, then the current valid target, then (idle) one getEntitiesOfClass(Mob, minion range around the owner, the minion predicate) and the nearest",
+          "sha256": "cdd7021dbd7d1118da65a62c39477e0f154887bf13c3a82aefe1a2b9c26f2b17"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedShulklingEntity",
+          "method": "findTarget",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "commanded target, then the current valid target, then (idle) one getEntitiesOfClass(Mob, minion range around the owner, the minion predicate) and the nearest",
+          "sha256": "6a2563697048ee9aceaf816d429950d5cbae7693cca560408b69296af5a20759"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedSimpleTurretEntity",
+          "method": "getActiveTarget",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "commanded target, then the current valid target, then (idle) one getEntitiesOfClass(Mob, minion range around the owner, the minion predicate) and the nearest",
+          "sha256": "aafbee3f592c78e84cf741c2730c49f753f4e405f22bc47f5c0d1abdf9b4d988"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedSlimeEntity",
+          "method": "getActiveTarget",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "commanded target, then the current valid target, then (idle) one getEntitiesOfClass(Mob, minion range around the owner, the minion predicate) and the nearest",
+          "sha256": "99eccc7db1e30ec4b292587c3ec3b73be5e8f7001d9e087fedac8347a31fa49c"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedSpiderEntity",
+          "method": "getActiveTarget",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "commanded target, then the current valid target, then (idle) one getEntitiesOfClass(Mob, minion range around the owner, the minion predicate) and the nearest",
+          "sha256": "c35e0be3da8f3c90dfa100c12bf732405297275cc15a2a345537f72f70830b2a"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedStardustDragonEntity",
+          "method": "findTarget",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "commanded target, then the current valid target, then (idle) one getEntitiesOfClass(Mob, minion range around the owner, the minion predicate) and the nearest",
+          "sha256": "0b55f1ae5d146ce4b95ef7c4e6f5fd32d64e7d1993ee732694f9f50a9bd86552"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedTarotCardEntity",
+          "method": "findTarget",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "commanded target, then the current valid target, then (idle) one getEntitiesOfClass(Mob, minion range around the owner, the minion predicate) and the nearest",
+          "sha256": "08ee28b8d26bc75e0229a20cb758051d53f900c9bbec6a04888fa065e893862b"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedUltraSnifferEntity",
+          "method": "getActiveTarget",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "commanded target, then the current valid target, then (idle) one getEntitiesOfClass(Mob, minion range around the owner, the minion predicate) and the nearest",
+          "sha256": "b2c6190ad1d8f98e4dcb3382de1c8124b7fcc43326c78fc0da72e110baf21200"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedVirentiumCubeEntity",
+          "method": "getActiveTarget",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "commanded target, then the current valid target, then (idle) one getEntitiesOfClass(Mob, minion range around the owner, the minion predicate) and the nearest",
+          "sha256": "703c39dfbdd48ce4cdd9799c70842ed8f2b311b9ec2d2ec5b500030eca3c8d0d"
+        },
+        {
+          "class": "com/fevzi/summonity/entity/SummonedWarriorsArsenalEntity",
+          "method": "findTarget",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;D)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "commanded target, then the current valid target, then (idle) one getEntitiesOfClass(Mob, minion range around the owner, the minion predicate) and the nearest",
+          "sha256": "7f9cd3a7f22d4a26eda313081f3329d26f4cba5a61636e575630f7000b20b10e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the idle target search (the getEntitiesOfClass call of getActiveTarget / findTarget) of 20 summoned minion classes: the search runs only when (game time + entity id) is a multiple of N and answers an empty list on other ticks. Value: PureConfig.intValue(\"summonity_idle_target_scan_interval\", 4, 1, 100). Trade-off, off by default: an idle minion reacts to a new target up to N-1 ticks later. Runtime flag summonityIdleTargetScanInterval. Helper bons.furious.patch.summonity_coo49.IdleScans.",
+      "license": "Summonity (All Rights Reserved): no code carried, the wrappers carry only our own logic"
+    }
+  }
+}

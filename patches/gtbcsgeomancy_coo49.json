@@ -1,0 +1,60 @@
+{
+  "group": "gtbcsgeomancy_coo49",
+  "keys": {
+    "gtbcs_geomancy_caster_effect_precheck": {
+      "mod": "gtbcs_geomancy_plus",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.gtbcsgeomancy_coo49.GeomancyCastingPrecheckMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/gametechbc/gtbcs_geomancy_plus/effects/Casting/CastingHandler",
+          "method": "onEntityCast",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "living tick: hasEffect(CASTING_EFFECT) stored first (the wrapped call), read only inside the instanceof AbstractSpellCastingMob branch (cancelCast on a server level)",
+          "sha256": "eb53a81d59d4e4339bcd985846119c27a5b961827929965a5dfcea1e87872123"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21023_",
+          "desc": "(Lnet/minecraft/world/effect/MobEffect;)Z",
+          "note": "hasEffect = a read of the entity's effect map (the skipped call has no side effect)",
+          "sha256": "3032c33ad02513f51f8c3e3ab5699b7eb0ad0dfc215062fbc1f20892906660a2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the LivingEntity.hasEffect (m_21023_) call in CastingHandler.onEntityCast: for an entity that is not an Iron's AbstractSpellCastingMob (whose answer the handler never reads) it answers false without the call; spell casting mobs (and a null entity) run the call as shipped. Runtime flag gtbcsGeomancyCasterEffectPrecheck. Helper bons.furious.patch.gtbcsgeomancy_coo49.GeomancyGates.",
+      "license": "GTBC's Geomancy Plus (All Rights Reserved): no code carried, the wrapper carries only our own logic"
+    },
+    "gtbcs_geomancy_grandmaster_spawn_presence_gate": {
+      "mod": "gtbcs_geomancy_plus",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.gtbcsgeomancy_coo49.GeomancyGrandmasterSpawnGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/gametechbc/gtbcs_geomancy_plus/entity/mobs/geo_grandmaster/GeoGrandmasterEntity",
+          "method": "checkGrandmasterSpawnRules",
+          "desc": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;)Z",
+          "note": "spawn rule: sky visible, daytime, then getEntitiesOfClass(GeoGrandmasterEntity, pos box grown by 64) (the wrapped call); a non-empty list refuses the spawn, an empty one goes on to the block check",
+          "sha256": "dafad8b967a270dad24895364b51a396264352a8e9a42cdd82f36907349b7ed9"
+        },
+        {
+          "class": "net/minecraft/world/level/EntityGetter",
+          "method": "m_45976_",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;",
+          "note": "getEntitiesOfClass(class, box) = getEntitiesOfClass(class, box, NO_SPECTATORS): the class search the walk mark applies to",
+          "sha256": "02b741b674cda0ec6d8bfa9662b11dd0e9065674d64257adc716432fd5c3b338"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the ServerLevel.getEntitiesOfClass (m_45976_) call in GeoGrandmasterEntity.checkGrandmasterSpawnRules: while vanilla_entity_class_count_layer says the level holds no GeoGrandmasterEntity (registration bons_and_furious.gtbcsgeomancy_coo49.entity_classes.json, counted while Geomancy Plus is installed and this switch is on) a search for exactly GeoGrandmasterEntity.class is marked EMPTY, so vanilla_entity_walk_skip leaves out its section walk; the call and the rest of the rule run unchanged. Runtime flag gtbcsGeomancyGrandmasterSpawnPresenceGate, shadow gtbcsGeomancyGrandmasterSpawnPresenceGate.shadow. Helper bons.furious.patch.gtbcsgeomancy_coo49.GeomancyGates.",
+      "license": "GTBC's Geomancy Plus (All Rights Reserved): no code carried, the wrapper carries only our own logic"
+    }
+  }
+}

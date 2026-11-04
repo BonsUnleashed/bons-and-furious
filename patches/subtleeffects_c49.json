@@ -1,0 +1,118 @@
+{
+  "group": "subtleeffects_c49",
+  "keys": {
+    "subtleeffects_display_tick_state_plan": {
+      "mod": "subtle_effects",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.subtleeffects_c49.DisplayTickStateCaptureMixin",
+        "bons.furious.mixin.subtleeffects_c49.SubtleDisplayTickPlanMixin"
+      ],
+      "guard": [
+        {
+          "class": "einstein/subtle_effects/mixin/client/ClientLevelMixin",
+          "method": "animateTick",
+          "desc": "(IIIILnet/minecraft/util/RandomSource;Lnet/minecraft/world/level/block/Block;Lnet/minecraft/core/BlockPos$MutableBlockPos;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "the handler: immutable pos, getBlockState(pos) once, fire/end-crystal check, Firefly and BiomeEffects ticks, then for non-air states the ticker, GeyserManager.tick, chest, fluid, special and spark steps",
+          "sha256": "e54ad01d69c24463c8bb782a24d47503c840b9af5b627796d4252d7ba7147242"
+        },
+        {
+          "class": "einstein/subtle_effects/ticking/GeyserManager",
+          "method": "tick",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)V",
+          "note": "for each GeyserType: nothing unless isSpawnableBlock; then the nether-only check, a seeded random and maybe trySpawn",
+          "sha256": "a3801e577e8f8bd489cad52a9cb3280f8dae0f248ba4f1ffb1fff726b4092da5"
+        },
+        {
+          "class": "einstein/subtle_effects/ticking/tickers/geyser/GeyserTicker",
+          "method": "isSpawnableBlock",
+          "desc": "(Leinstein/subtle_effects/ticking/tickers/geyser/GeyserType;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/SupportType;)Z",
+          "note": "(list contains the block and the face is sturdy) or list contains the fluid's legacy block",
+          "sha256": "49d216f7d7b6c5d0e6f209dfb0e03157ff901fb0d055bbba8b049b708d13e3e7"
+        },
+        {
+          "class": "einstein/subtle_effects/ticking/tickers/geyser/GeyserType",
+          "method": "*",
+          "desc": "",
+          "note": "the enum's declared methods (spawnableBlocks is read as a public final field)",
+          "sha256": "27cae9817386b56335c990ba7578f6a1801c242fd64c891e4887a8b0189fe66a"
+        },
+        {
+          "class": "einstein/subtle_effects/ticking/FireflyManager",
+          "method": "tick",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/util/RandomSource;)V",
+          "note": "runs between the handler's state read and the geyser call; places no block",
+          "sha256": "94b06bca6a4d56f61cf808caabaf8902675ff09df9966c19098650b5975a50bb"
+        },
+        {
+          "class": "einstein/subtle_effects/ticking/BiomeEffectsManager",
+          "method": "tick",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/util/RandomSource;)V",
+          "note": "runs between the handler's state read and the geyser call; places no block",
+          "sha256": "f9b5e08c07f9ec45e70297546351645772fdfd974430c0c48ba23fc35547c352"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel",
+          "method": "m_233612_",
+          "desc": "(IIIILnet/minecraft/util/RandomSource;Lnet/minecraft/world/level/block/Block;Lnet/minecraft/core/BlockPos$MutableBlockPos;)V",
+          "note": "doAnimateTick: getBlockState(pos) into a local, then Block.animateTick with it (the point both handlers run at)",
+          "sha256": "6c875befbbe3b5c71663eebc94e0f5db425bc0de2a0a528768c6553dea68d176"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: @Inject (priority 999) before Block.animateTick in ClientLevel.doAnimateTick remembering the state read there; MixinSquared @TargetHandler @WrapOperation of the getBlockState and of the GeyserManager.tick call inside Subtle Effects' ClientLevelMixin.animateTick handler (helper bons.furious.patch.subtleeffects_c49.DisplayTickPlan)",
+      "license": "All Rights Reserved (Subtle Effects): no Subtle Effects code is carried; Minecraft (Mojang): no-copy; the mixins carry only our own logic"
+    },
+    "subtleeffects_display_tick_state_cache": {
+      "mod": "subtle_effects",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.subtleeffects_c49.SubtleDisplayTickCacheMixin",
+        "bons.furious.mixin.subtleeffects_c49.TickerInitCacheResetMixin"
+      ],
+      "guard": [
+        {
+          "class": "einstein/subtle_effects/mixin/client/ClientLevelMixin",
+          "method": "animateTick",
+          "desc": "(IIIILnet/minecraft/util/RandomSource;Lnet/minecraft/world/level/block/Block;Lnet/minecraft/core/BlockPos$MutableBlockPos;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "the handler: immutable pos, getBlockState(pos) once, fire/end-crystal check, Firefly and BiomeEffects ticks, then for non-air states the ticker, GeyserManager.tick, chest, fluid, special and spark steps",
+          "sha256": "e54ad01d69c24463c8bb782a24d47503c840b9af5b627796d4252d7ba7147242"
+        },
+        {
+          "class": "einstein/subtle_effects/init/ModBlockTickers",
+          "method": "init",
+          "desc": "()V",
+          "note": "clears REGISTERED and REGISTERED_SPECIAL, then registers every ticker whose setting is on",
+          "sha256": "bcf41a94f7eec8ef3192cec10f36f2b58d2258605e63c0679e261b09d76c16cb"
+        },
+        {
+          "class": "einstein/subtle_effects/init/ModBlockTickers",
+          "method": "*",
+          "desc": "",
+          "note": "the declared methods, the special-ticker predicate lambdas among them",
+          "sha256": "bd60fed023dfe1159c8da9acef89d05787ce031a9703c3a7f318107597da193a"
+        },
+        {
+          "class": "einstein/subtle_effects/configs/ModBlockConfigs",
+          "method": "onUpdateClient",
+          "desc": "()V",
+          "note": "a save of the block settings runs ModBlockTickers.init",
+          "sha256": "6e8b81eee1f2df7053d8353064971893843df08a56de69e48e7a4adacb210568"
+        },
+        {
+          "class": "einstein/subtle_effects/ticking/tickers/ChestBlockEntityTicker",
+          "method": "trySpawn",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V",
+          "note": "two settings, the left-chest test, then level.getBlockEntity(pos): nothing unless it is a chest block entity",
+          "sha256": "4e42e021f480f4115dc7d0a7112ded3335098d074ca16030c952790513613266"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinSquared @TargetHandler @WrapOperation of the air test, the REGISTERED_SPECIAL forEach and the ChestBlockEntityTicker.trySpawn call inside Subtle Effects' ClientLevelMixin.animateTick handler; @Inject at the head of ModBlockTickers.init (helper bons.furious.patch.subtleeffects_c49.DisplayTickStateCache)",
+      "license": "All Rights Reserved (Subtle Effects): no Subtle Effects code is carried; the mixins carry only our own logic"
+    }
+  }
+}

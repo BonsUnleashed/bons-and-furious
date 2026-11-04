@@ -1,0 +1,80 @@
+{
+  "group": "vanilla_glyph_fonts",
+  "keys": {
+    "vanilla_glyph_font_set_memo": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_glyph_fonts.StringRenderOutputFontSetMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/gui/Font$StringRenderOutput",
+          "method": "m_6411_",
+          "desc": "(ILnet/minecraft/network/chat/Style;I)Z",
+          "note": "accept: the first call is Font.getFontSet(style.getFont()); the rest of the glyph's work uses that FontSet",
+          "sha256": "28c42607bc9c37b237ca2c9e2bdcd0970a20833f0ed30d7423de5fed6dfaea66"
+        },
+        {
+          "class": "net/minecraft/client/gui/Font",
+          "method": "m_92863_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/gui/font/FontSet;",
+          "note": "getFontSet = this.fonts.apply(id)",
+          "sha256": "a4a9fe243df072b4ccad915ad9b4a17eb84d8d5285080a54734910a8f1c6d7f1"
+        },
+        {
+          "class": "net/minecraft/client/gui/Font",
+          "method": "<init>",
+          "desc": "(Ljava/util/function/Function;Z)V",
+          "note": "the fonts function is a final field",
+          "sha256": "e099f9d098b484f1f86da5e57ab37a60306e8994f671988f002171af59507afe"
+        },
+        {
+          "class": "net/minecraft/client/gui/font/FontManager",
+          "method": "m_95006_",
+          "desc": "()Lnet/minecraft/client/gui/Font;",
+          "note": "createFont: new Font(id -> fontSets.getOrDefault(getActualId(id), missingFontSet), false)",
+          "sha256": "044aff49fac4b0e92c7274f5455d284225b9153f51896c47e55427094400f101"
+        },
+        {
+          "class": "net/minecraft/client/gui/font/FontManager",
+          "method": "m_243082_",
+          "desc": "()Lnet/minecraft/client/gui/Font;",
+          "note": "createFontFilterFishy: the same lookup",
+          "sha256": "9e558c44cd675165fe9518289d7c6a7bbb46a499682595b5f84919f720f18124"
+        },
+        {
+          "class": "net/minecraft/client/gui/font/FontManager",
+          "method": "m_283960_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/gui/font/FontSet;",
+          "note": "the lookup lambda: two map reads",
+          "sha256": "94642e85fefbd99cb65ab57e6a8017fc299c4a694f65d266206ea143c1616e62"
+        },
+        {
+          "class": "net/minecraft/client/gui/font/FontManager",
+          "method": "m_283955_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/gui/font/FontSet;",
+          "sha256": "94642e85fefbd99cb65ab57e6a8017fc299c4a694f65d266206ea143c1616e62"
+        },
+        {
+          "class": "net/minecraft/client/gui/font/FontManager",
+          "method": "m_284164_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "getActualId: the renames map",
+          "sha256": "281d3e9bf1617ef6d0f8de531067414ef826cee67031e1f477cbf0d5b8d99448"
+        },
+        {
+          "class": "net/minecraft/client/gui/font/FontManager",
+          "method": "m_95011_",
+          "desc": "(Ljava/util/Map;)V",
+          "note": "setRenames: only from the unicode-font option, on the render thread between frames",
+          "sha256": "e01825562d201fc43eedcbafb8494e156e244ca777d3f53d666abb9854f6f112"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation of the Font.getFontSet call (m_92863_) in Font$StringRenderOutput.accept (m_6411_), require = 0: the output object remembers the last font id (identity) and FontSet; stands aside at run time while ImmediatelyFast's fast_text_lookup redirect is in the class; helper bons.furious.patch.vanilla_glyph_fonts.GlyphFontSets. The other mods' getFontSet / accept hooks checked by hand (notes/vanilla_glyph_fonts.md: Supplementaries FontRendererMixin.getFontSet and BlockEntityRendererDispatcherMixin, Biomancy FontMixin.onGetFontSet, Jade StringRenderOutputMixin, ImmediatelyFast MixinTextRenderer_Drawer) carry no audit line on purpose: Guards counts audit lines in its first absent-mod check, so with none of those four mods installed the switch would be switched off",
+      "license": "Minecraft (Mojang): no-copy, the injector carries only our logic"
+    }
+  }
+}

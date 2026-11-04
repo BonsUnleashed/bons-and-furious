@@ -1,0 +1,54 @@
+{
+  "group": "createaddition_c49",
+  "keys": {
+    "createaddition_ambient_sound_toggle_fix": {
+      "mod": "createaddition",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.createaddition_c49.CASoundScapesToggleMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/mrh0/createaddition/sound/CASoundScapes",
+          "method": "tick",
+          "desc": "()V",
+          "note": "every scape ticked; every 5th animation tick: disable = Create's enableAmbientSounds (the only Boolean.booleanValue, inside a catch-all), then every loop ended when disable or no machine of its group and pitch reported, then every report set cleared",
+          "sha256": "32bd7545ea8a222044d93d09954d0f26005a865bbfc76dc2fa3ce5ce5736c6ae"
+        },
+        {
+          "class": "com/mrh0/createaddition/sound/CASoundScapes",
+          "method": "*",
+          "desc": "",
+          "note": "play returns before reporting when ambient sounds are off; addSound records the report and starts a loop per group and pitch",
+          "sha256": "3d24a58f083bd68608b3d413157e2df0267af2ebb71fd59b48c0bb2a5b9937a3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on the Boolean.booleanValue() in CASoundScapes.tick(): the prune's disable becomes !enableAmbientSounds (helper bons.furious.patch.createaddition_c49.CaSoundFixes)",
+      "license": "MIT (Create Crafts & Additions): no Create Crafts & Additions code is carried"
+    },
+    "createaddition_soundscape_end_phase": {
+      "mod": "createaddition",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.createaddition_c49.ClientEventHandlerEndPhaseMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/mrh0/createaddition/event/ClientEventHandler",
+          "method": "tickSoundscapes",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$ClientTickEvent;)V",
+          "note": "calls CASoundScapes.tick() for every phase of the client tick event",
+          "sha256": "969c611fce2ea69ff6bd10ff8e9a07527b74725bbddd049c7a36ad3e99807915"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on ClientEventHandler.tickSoundscapes: returns for the START phase (helper bons.furious.patch.createaddition_c49.CaSoundFixes)",
+      "license": "MIT (Create Crafts & Additions): no Create Crafts & Additions code is carried"
+    }
+  }
+}

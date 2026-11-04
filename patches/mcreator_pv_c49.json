@@ -1,0 +1,47 @@
+{
+  "group": "mcreator_pv_c49",
+  "keys": {
+    "mcreator_shared_default_player_variables": {
+      "mod": "mcreator",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mcreator_pv_c49.AnotherflashlightmodportPvCarrier",
+        "bons.furious.mixin.mcreator_pv_c49.BenssharksPvCarrier",
+        "bons.furious.mixin.mcreator_pv_c49.BloblingsGenesisPvCarrier",
+        "bons.furious.mixin.mcreator_pv_c49.BloblingsPvCarrier",
+        "bons.furious.mixin.mcreator_pv_c49.BornInChaosV1PvCarrier",
+        "bons.furious.mixin.mcreator_pv_c49.CallOfYucutanPvCarrier",
+        "bons.furious.mixin.mcreator_pv_c49.CosmosPvCarrier",
+        "bons.furious.mixin.mcreator_pv_c49.GoblinsTyrannyPvCarrier",
+        "bons.furious.mixin.mcreator_pv_c49.LuminousBeastsPvCarrier",
+        "bons.furious.mixin.mcreator_pv_c49.ParticlepresetsPvCarrier",
+        "bons.furious.mixin.mcreator_pv_c49.RealmrpgQuestsPvCarrier"
+      ],
+      "target_mods": [
+        "anotherflashlightmodport",
+        "benssharks",
+        "bloblings",
+        "bloblings_genesis",
+        "born_in_chaos_v1",
+        "call_of_yucutan",
+        "cosmos",
+        "goblins_tyranny",
+        "luminous_beasts",
+        "particlepresets",
+        "realmrpg_quests"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "orElse",
+          "desc": "(Ljava/lang/Object;)Ljava/lang/Object;",
+          "sha256": "28cc736150f375e63b5bb2b18a75e6a6fd4174c63e31bee4e8bc428c049cb292"
+        }
+      ],
+      "cancel": [],
+      "conversion": "config plugin (bons.furious.patch.mcreator_pv_c49.SharedDefaultsPlugin): one empty carrier mixin per MCreator mod (targets = the classes with accepted read sites, build census tools/mixedproof/McreatorPvC49Census.py); preApply re-checks every NEW PlayerVariables site of the class and turns each accepted one (NEW; DUP; INVOKESPECIAL <init>; INVOKEVIRTUAL LazyOptional.orElse; CHECKCAST; GETFIELD of a constant-initialised field) into an invokedynamic linked to one shared default per PlayerVariables class (bons.furious.patch.mcreator_pv_c49.SharedDefaults, PvRewrite); every other site keeps allocating. Per-mod check instead of fingerprints: the PlayerVariables constructor's shape and each site's shape are proven at apply time",
+      "license": "MCreator-generated code of 11 mods (All Rights Reserved / various): no mod code is carried; the rewrite only replaces the default's construction at proven read sites with our own call (Idea: Collections Of Optimizations mcreator.shareDefaultPlayerVariables, idea text only)"
+    }
+  }
+}

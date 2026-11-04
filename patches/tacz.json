@@ -260,8 +260,14 @@
           "class": "com/tacz/guns/mixin/common/LivingEntityMixin",
           "method": "*",
           "desc": "",
-          "note": "since 1.0.30: declared-method set of the class this switch replaces (TaCZ 1.1.5-1.1.7); TaCZ 1.1.8 adds shoot(Supplier,Supplier,long,float), which the copy lacks",
-          "sha256": "6ea6f3de624fa7f22b4165b84ea8b76829313cb5b72604724e944bcd9bdaaf94"
+          "note": "since 1.0.30: declared-method set of the class this switch replaces (TaCZ 1.1.5-1.1.7); since 1.0.49 also TaCZ 1.1.8 (sha256_also), which adds shoot(Supplier,Supplier,long,float): the copy carries it",
+          "sha256": "6ea6f3de624fa7f22b4165b84ea8b76829313cb5b72604724e944bcd9bdaaf94",
+          "sha256_also": [
+            {
+              "build": "tacz-1.1.8-hotfix2",
+              "sha256": "1dfbbe197e5082f8674d30c974346a428ec4f3e345a944b96d124b0eee1d0e4a"
+            }
+          ]
         }
       ],
       "cancel": [

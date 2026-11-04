@@ -1,0 +1,181 @@
+{
+  "group": "goal_presence_gates",
+  "keys": {
+    "vanilla_goal_class_presence_gate": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goal_presence_gates.AvoidEntityGoalPresenceMixin",
+        "bons.furious.mixin.goal_presence_gates.TargetGoalPresenceMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/ai/goal/AvoidEntityGoal",
+          "method": "m_8036_",
+          "desc": "()Z",
+          "note": "canUse: getEntitiesOfClass(avoidClass, box) -> getNearestEntity -> toAvoid; null -> false (wrapped, the search marked EMPTY for vouched goals)",
+          "sha256": "3ca043944b0b2d25d505709a83069bb16dd6d9f1da6a772fd4e3c9663bc04fbd"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal",
+          "method": "m_26073_",
+          "desc": "()V",
+          "note": "findTarget: non-player target types search getEntitiesOfClass(targetType, area) -> getNearestEntity -> target (wrapped)",
+          "sha256": "cf99316852c2181605c44899eff2400581b8d669544244e3fda8ad7fe2079a86"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal",
+          "method": "m_8036_",
+          "desc": "()Z",
+          "note": "canUse: the randomInterval draw happens before findTarget, untouched",
+          "sha256": "c9cbba1fbbda735244cd62157eaac23f6c83e1407c8076719c9ec2a5db151e14"
+        },
+        {
+          "class": "net/minecraft/world/level/EntityGetter",
+          "method": "m_45982_",
+          "desc": "(Ljava/util/List;Lnet/minecraft/world/entity/ai/targeting/TargetingConditions;Lnet/minecraft/world/entity/LivingEntity;DDD)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "getNearestEntity: an empty list gives null without testing the conditions",
+          "sha256": "a531b4e66a1253503c5ca3a3d304b27aa1872c3b0361f899e18ecdc33c44e931"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on AvoidEntityGoal.canUse (m_8036_) and NearestAttackableTargetGoal.findTarget (m_26073_) plus one @Unique int per goal (the vouch): for a goal a caller key vouched for whose level holds none of its class (vanilla_entity_class_count_layer), the original runs with its search marked EMPTY so vanilla_entity_walk_skip leaves out the empty section walk; unvouched goals run the original directly (helper bons.furious.patch.goal_presence_gates.GoalPresenceGates)",
+      "license": "Minecraft (Mojang): no-copy; the wrappers carry only our own logic and call the original methods"
+    },
+    "alexsmobs_creeper_avoid_presence_gate": {
+      "mod": "alexsmobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goal_presence_gates.AlexsMobsCreeperAvoidVouchMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/alexsmobs/event/ServerEvents",
+          "method": "onEntityFinalizeSpawn",
+          "desc": "(Lnet/minecraftforge/event/entity/living/MobSpawnEvent$FinalizeSpawn;)V",
+          "note": "creepers: two new AvoidEntityGoal(PathfinderMob, Class, F, D, D) for EntitySnowLeopard and EntityTiger",
+          "sha256": "2a95e37927d48cd3d7f0bbb3c13533bb72475b5a96b2563b7e04f6931c7a4240"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the two NEW AvoidEntityGoal(PathfinderMob, Class, F, D, D) in ServerEvents.onEntityFinalizeSpawn: the goal for EntitySnowLeopard / EntityTiger is vouched for (vanilla_goal_class_presence_gate); the goals themselves are unchanged (helper bons.furious.patch.goal_presence_gates.GoalPresenceGates)",
+      "license": "Alex's Mobs (LGPL-3.0): no code carried, the wrapper carries only our own logic"
+    },
+    "alexsmobs_spider_fly_presence_gate": {
+      "mod": "alexsmobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goal_presence_gates.AlexsMobsSpiderFlyVouchMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/alexsmobs/event/ServerEvents",
+          "method": "onEntityFinalizeSpawn",
+          "desc": "(Lnet/minecraftforge/event/entity/living/MobSpawnEvent$FinalizeSpawn;)V",
+          "note": "spiders: new NearestAttackableTargetGoal(Mob, Class, I, Z, Z, Predicate) for EntityFly, randomInterval 1 (four such constructions in the method)",
+          "sha256": "2a95e37927d48cd3d7f0bbb3c13533bb72475b5a96b2563b7e04f6931c7a4240"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the four NEW NearestAttackableTargetGoal(Mob, Class, I, Z, Z, Predicate) in ServerEvents.onEntityFinalizeSpawn: only the EntityFly goal is vouched for (vanilla_goal_class_presence_gate); every goal itself is unchanged (helper bons.furious.patch.goal_presence_gates.GoalPresenceGates)",
+      "license": "Alex's Mobs (LGPL-3.0): no code carried, the wrapper carries only our own logic"
+    },
+    "dummmmmmy_scarecrow_presence_gate": {
+      "mod": "dummmmmmy",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goal_presence_gates.DummmmmmyScarecrowVouchMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mehvahdjukaar/dummmmmmy/common/ModEvents",
+          "method": "onEntityJoinWorld",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "new AvoidEntityGoal(PathfinderMob, Class, F, D, D, Predicate) and new NearestAttackableTargetGoal(Mob, Class, I, Z, Z, Predicate) for TargetDummyEntity",
+          "sha256": "362c22db2fce7d6d1b5b80e6a9856eb1413cea104e0d6c0d6d2d5cee8b3d1df4"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the NEW AvoidEntityGoal (scarecrow) and NEW NearestAttackableTargetGoal (decoy) in ModEvents.onEntityJoinWorld: both TargetDummyEntity goals are vouched for (vanilla_goal_class_presence_gate); the goals themselves are unchanged (helper bons.furious.patch.goal_presence_gates.GoalPresenceGates)",
+      "license": "dummmmmmy (Supplementaries Team License v1.5): no code carried, the wrappers carry only our own logic"
+    },
+    "primitivemobs_avoid_presence_gate": {
+      "mod": "primitive_mobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goal_presence_gates.PrimitiveMobsGoblinVouchMixin",
+        "bons.furious.mixin.goal_presence_gates.PrimitiveMobsSheepmanVouchMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/misanthropy/primitive_mobs/core/PrimitiveMobsEvents",
+          "method": "onEntityJoin",
+          "desc": "(Lnet/minecraftforge/event/entity/EntityJoinLevelEvent;)V",
+          "note": "villagers: new AvoidEntityGoal(PathfinderMob, Class, F, D, D) for Goblin",
+          "sha256": "67af184e031916515fb9a38400b765a896ddf964132c0c696657b54f4dfcb92d"
+        },
+        {
+          "class": "com/misanthropy/primitive_mobs/entity/passive/Sheepman",
+          "method": "m_8099_",
+          "desc": "()V",
+          "note": "registerGoals: new AvoidEntityGoal(PathfinderMob, Class, F, D, D) for ZombifiedPiglin",
+          "sha256": "95ea3ee38e3bd94dbb078c052833401f2dcc11eecca35ddb1715f2d3a1ab2cc9"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the NEW AvoidEntityGoal in PrimitiveMobsEvents.onEntityJoin (Goblin) and Sheepman.registerGoals (ZombifiedPiglin): those goals are vouched for (vanilla_goal_class_presence_gate); the goals themselves are unchanged (helper bons.furious.patch.goal_presence_gates.GoalPresenceGates)",
+      "license": "Primitive Mobs Revived (CC BY 3.0): no code carried, the wrappers carry only our own logic"
+    },
+    "crittersandcompanions_koi_luck_presence_gate": {
+      "mod": "crittersandcompanions",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goal_presence_gates.CacKoiLuckGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/eterdelta/crittersandcompanions/handler/PlayerHandler",
+          "method": "onPlayerTick",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "note": "2.3.5: server: getEntitiesOfClass(KoiFishEntity, player box +-10, alive) and Luck at three",
+          "sha256": "9994db81280a1717c7fe9f00390e64dcd1139ae47e4bc4571853c384a2ef179e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass (m_6443_) call in PlayerHandler.onPlayerTick: while vanilla_entity_class_count_layer says the level holds no KoiFishEntity, the call is marked EMPTY so that vanilla_entity_walk_skip leaves out its empty section walk; the call itself runs (helper bons.furious.patch.goal_presence_gates.GoalPresenceGates)",
+      "license": "Critters and Companions 2.3.5 (MIT): no code carried, the wrapper carries only our own logic"
+    },
+    "crittersandcompanions271_koi_luck_presence_gate": {
+      "mod": "crittersandcompanions",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goal_presence_gates.CacKoiLuck271GateMixin"
+      ],
+      "guard": [
+        {
+          "class": "io/github/bonsaistudi0s/crittersandcompanions/common/handler/PlayerHandler",
+          "method": "onPlayerTick",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "note": "2.7.1 (COO's build; not in this pack: the tested build has no such class): getEntitiesOfClass(KoiFishEntity, player box +-10, alive) and Luck at three",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "2.7.1",
+              "sha256": "c36e58c053fd1e1eb8b17cea440505301b9863984ff43badb3e35677b791bd54"
+            }
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass (m_6443_) call in the 2.7.1 PlayerHandler.onPlayerTick: while vanilla_entity_class_count_layer says the level holds no 2.7.1 KoiFishEntity, the call is marked EMPTY so that vanilla_entity_walk_skip leaves out its empty section walk; the call itself runs (helper bons.furious.patch.goal_presence_gates.GoalPresenceGates)",
+      "license": "Critters and Companions 2.7.1 (all rights reserved): no code carried, the wrapper carries only our own logic"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "group": "ftbxmodcompat_c49",
+  "keys": {
+    "ftbxmodcompat_waystone_map_icons_off": {
+      "mod": "ftbxmodcompat",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.ftbxmodcompat_c49.WaystoneMapIconsOffMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/ftb/mods/ftbxmodcompat/ftbchunks/waystones/WaystonesCommon",
+          "method": "mapWidgets",
+          "desc": "(Ldev/ftb/mods/ftbchunks/api/client/event/MapIconEvent;)V",
+          "note": "adds every known waystone of the event's dimension to the icon list",
+          "sha256": "aa041b8ea6f7709a761d4439c64015a2a21159e09d31472ad73915c28670d503"
+        },
+        {
+          "class": "dev/ftb/mods/ftbxmodcompat/ftbchunks/waystones/WaystonesCommon",
+          "method": "init",
+          "desc": "()V",
+          "note": "registers mapWidgets on FTB Chunks' MINIMAP and LARGE_MAP icon events",
+          "sha256": "af735e65b196c20a3c2c6fb9b937a386629dab48c915de018be49ae907a98e2a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "cancellable @Inject at the HEAD of WaystonesCommon.mapWidgets(MapIconEvent): with the switch on it returns at once (helper bons.furious.patch.ftbxmodcompat_c49.WaystoneMapIconsOff)",
+      "license": "FTB XMod Compat is All Rights Reserved: none of its code is carried; the inject only returns early"
+    }
+  }
+}

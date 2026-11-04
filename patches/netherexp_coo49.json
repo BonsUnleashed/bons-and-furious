@@ -1,0 +1,81 @@
+{
+  "group": "netherexp_coo49",
+  "keys": {
+    "netherexp_compass_tooltip_no_tag_write": {
+      "mod": "netherexp",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.netherexp_coo49.SanctumCompassTooltipMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/jadenxgamer/netherexp/registry/item/custom/SanctumCompassItem",
+          "method": "m_7373_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Ljava/util/List;Lnet/minecraft/world/item/TooltipFlag;)V",
+          "note": "appendHoverText: nbt = stack.getOrCreateTag(); reads TrackedStructure and IsActive only, adds up to four lines",
+          "sha256": "a0dbc9b121635df35af4e670e84d51e0e244d12489e3d80da87c5d44edb67a8c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the one ItemStack.getOrCreateTag() call in SanctumCompassItem.appendHoverText: the stack's own tag, or a detached new CompoundTag when it has none (the method only reads it), so hovering no longer attaches an empty tag to the client copy. Runtime flag netherexpCompassTooltipNoTagWrite. Helper bons.furious.patch.netherexp_coo49.NetherExpFixes.",
+      "license": "Nether Expansion (CC-BY-NC-SA-4.0): no code carried; the wrapper picks between the stack's tag and a detached one"
+    },
+    "netherexp_candle_effect_refresh_half": {
+      "mod": "netherexp",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.netherexp_coo49.TreacherousCandleRefreshMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/jadenxgamer/netherexp/registry/block/entity/TreacherousCandleBlockEntity",
+          "method": "updateBossBarPlayers",
+          "desc": "(Lnet/jadenxgamer/netherexp/registry/block/entity/TreacherousCandleBlockEntity;Ljava/util/List;Lnet/minecraft/world/level/Level;)V",
+          "note": "per living player in range: addEffect(Betrayed, 200, 0) every tick (the wrapped call), boss bar add; players gone: effect removed",
+          "sha256": "2f25d48328d56a0dbba03f5a6e6c86be48416c301a918dd1c3d7b6098bc7842e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the one ServerPlayer.addEffect(MobEffectInstance) call in TreacherousCandleBlockEntity.updateBossBarPlayers: skipped (false) while the player's Betrayed is level I, not ambient, with 100 or more ticks left; otherwise the original. Trade-off, off by default. Runtime flag netherexpCandleEffectRefreshHalf. Helper bons.furious.patch.netherexp_coo49.NetherExpFixes.",
+      "license": "Nether Expansion (CC-BY-NC-SA-4.0): no code carried; the wrapper decides whether Nether Expansion's own call runs"
+    },
+    "netherexp_candle_player_scan_lean": {
+      "mod": "netherexp",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.netherexp_coo49.TreacherousCandlePlayerScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/jadenxgamer/netherexp/registry/block/entity/TreacherousCandleBlockEntity",
+          "method": "getPlayersInRadius",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Ljava/util/List;",
+          "note": "level.getEntitiesOfClass(ServerPlayer, new AABB(pos).inflate(16)) (the wrapped search; spectators excluded)",
+          "sha256": "1c311cc7f912ee01f2e87df9124bc9f6440c43fc0aa21627b7c89193928ca24c"
+        },
+        {
+          "class": "net/jadenxgamer/netherexp/registry/block/entity/TreacherousCandleBlockEntity",
+          "method": "updateBossBarPlayers",
+          "desc": "(Lnet/jadenxgamer/netherexp/registry/block/entity/TreacherousCandleBlockEntity;Ljava/util/List;Lnet/minecraft/world/level/Level;)V",
+          "note": "the list's only consumer: per listed player effect + boss bar, per boss bar player not listed (List.contains) effect and boss bar removed: order-insensitive",
+          "sha256": "2f25d48328d56a0dbba03f5a6e6c86be48416c301a918dd1c3d7b6098bc7842e"
+        },
+        {
+          "class": "net/jadenxgamer/netherexp/registry/block/entity/TreacherousCandleBlockEntity",
+          "method": "tick",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/jadenxgamer/netherexp/registry/block/entity/TreacherousCandleBlockEntity;)V",
+          "note": "lit: getPlayersInRadius -> straight into updateBossBarPlayers (the list goes nowhere else)",
+          "sha256": "1added5fe02fee8c3a7a5ee49067ddee488648b6a2ef44b8fef200895420c908"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass(ServerPlayer, box) call in TreacherousCandleBlockEntity.getPlayersInRadius: the same players from ServerLevel.players() (not spectating, box intersecting, feet section inside vanilla's walk range), in player-list order; the list's only consumer is order-insensitive. Stands down when Valkyrien Skies is installed (it changes entity box searches near ships). Runtime flag netherexpCandlePlayerScanLean. Helper bons.furious.patch.netherexp_coo49.CandlePlayerScan.",
+      "license": "Nether Expansion (CC-BY-NC-SA-4.0): no code carried; the wrapper answers the same players from the player list"
+    }
+  }
+}

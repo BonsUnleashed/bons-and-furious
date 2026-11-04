@@ -1,0 +1,75 @@
+{
+  "group": "tact_coo49",
+  "keys": {
+    "tact_compendium_unlock_single_save": {
+      "mod": "tact",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.tact_coo49.CompendiumSingleSaveMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/telepathicgrunt/tact/CompendiumUnlock",
+          "method": "playerLoggedIn",
+          "desc": "(Lnet/minecraftforge/event/entity/player/PlayerEvent$PlayerLoggedInEvent;)V",
+          "note": "unlockAllCompendiumInfo off -> return; else one CaveBookProgress object, per Alex's Caves biome 6 x (unlockNextFor, saveCaveBookProgress): the wrapped call",
+          "sha256": "d8badc666c86b7e525b5f88bbb50b657c09f36afe7708241ed7cf83f42e21b73"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/server/misc/CaveBookProgress",
+          "method": "saveCaveBookProgress",
+          "desc": "(Lcom/github/alexmodguy/alexscaves/server/misc/CaveBookProgress;Lnet/minecraft/world/entity/player/Player;)V",
+          "note": "progress.save() into the player's Citadel tag (setCitadelTag), then PropertiesMessage(CitadelTagUpdate) to all players (server) or the server (client)",
+          "sha256": "63092271be492d2bc1985934918a078569a40df1b84b6c1cff0ba43ac9bb41cd"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/server/misc/CaveBookProgress",
+          "method": "unlockNextFor",
+          "desc": "(Ljava/lang/String;)Z",
+          "note": "in-memory only: reads and writes the progress object's unlockedPages, never the Citadel tag",
+          "sha256": "07f949e4fd19d8d78b574fc010d54bf020be9641355d22afc092d14c23a7e781"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on CompendiumUnlock.playerLoggedIn plus @WrapOperation on its one CaveBookProgress.saveCaveBookProgress call: inside the method the saves are held (the last progress and player kept); in a finally block one save runs with them. Exact variant: the player's Citadel tag and the last broadcast are the original's; the 35 superseded intermediate writes and broadcasts are not done. Runtime flag tactCompendiumUnlockSingleSave. Helper bons.furious.patch.tact_coo49.CompendiumSaves.",
+      "license": "TACT (LGPL-3.0) / Alex's Caves (All Rights Reserved): no code carried; the hooks decide when Alex's Caves' own save runs"
+    },
+    "tact_subterranodon_meter_clamp": {
+      "mod": "tact",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.tact_coo49.SubterranodonMeterClampMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/telepathicgrunt/tact/mixin/SubterranodonEntityMixin",
+          "method": "tact_subterranodonFlight",
+          "desc": "(F)F",
+          "note": "TACT's @ModifyVariable handler (HEAD of setMeterAmount, argsOnly): step = asked - current, x recharge (step > 0) or x usage multiplier, returns current + step (the value MixinSquared's @TargetHandler hook clamps)",
+          "sha256": "366b09a8fc925c45fee857517228359468cbb08ec2e5862c202405483db8927c"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/server/entity/living/SubterranodonEntity",
+          "method": "setMeterAmount",
+          "desc": "(F)V",
+          "note": "stores the value in METER_AMOUNT (synced data); every Alex's Caves caller clamps it to 0..1 first",
+          "sha256": "5ed7f60a12f91fad2161b2cef3a2e8a3304d6a80c4f0698cec1408c62766e0bf"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/server/entity/living/SubterranodonEntity",
+          "method": "getMeterAmount",
+          "desc": "()F",
+          "note": "reads METER_AMOUNT",
+          "sha256": "9d9a3d859aff129ce94e027a8d714446630e83136e3f881d01796e4103648277"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinSquared @TargetHandler on TACT's SubterranodonEntityMixin.tact_subterranodonFlight with MixinExtras @ModifyReturnValue: its result is held to [min(0, asked), max(1, asked)], asked = the value Alex's Caves passed (@Local argsOnly). Gameplay fix, off by default. Runtime flag tactSubterranodonMeterClamp. Helper bons.furious.patch.tact_coo49.MeterClamp.",
+      "license": "TACT (LGPL-3.0) / Alex's Caves (All Rights Reserved): no code carried; the hook clamps TACT's returned value"
+    }
+  }
+}

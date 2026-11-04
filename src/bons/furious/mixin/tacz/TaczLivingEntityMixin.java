@@ -34,9 +34,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * tacz_sync_scope (TaCZ 1.1.5), part 2 of 2; part 1 is SyncedEntityDataMixin.
+ * tacz_sync_scope (TaCZ 1.1.5; since 1.0.49 also 1.1.8, guard row sha256_also "tacz-1.1.8-hotfix2"), part 2 of 2; part 1 is
+ * SyncedEntityDataMixin.
  *
- * TaCZ 1.1.5's own com.tacz.guns.mixin.common.LivingEntityMixin (GPL-3.0), member for member, except onTickServerSide:
+ * TaCZ 1.1.5's own com.tacz.guns.mixin.common.LivingEntityMixin (GPL-3.0), member for member, plus the one member TaCZ
+ * 1.1.8 adds (shoot with the charge progress; 1.1.8's other members are byte-identical to 1.1.5's), except onTickServerSide:
  * its eight synced-data writes run inside TaCZScope.begin(shooter) / try / finally TaCZScope.end(), so the holder is
  * looked up once instead of eight times and the scope closes even when a write throws. While this switch applies,
  * MixinSquared cancels TaCZ's class (patches/tacz.json) and this copy takes its place. A replacement is needed because
@@ -156,6 +158,16 @@ public abstract class TaczLivingEntityMixin extends Entity implements IGunOperat
     @Unique
     public ShootResult shoot(Supplier<Float> pitch, Supplier<Float> yaw, long timestamp) {
         return this.tacz$shoot.shoot(pitch, yaw, timestamp);
+    }
+
+    /**
+     * Since 1.0.49: TaCZ 1.1.8's overload with the charge progress, member for member as TaCZ 1.1.8's LivingEntityMixin has
+     * it (it overrides IGunOperator's default, which would drop the charge progress). TaCZ 1.1.5-1.1.7 declare no such
+     * method in IGunOperator and never call it: there it is an unused extra method.
+     */
+    @Unique
+    public ShootResult shoot(Supplier<Float> pitch, Supplier<Float> yaw, long timestamp, float chargeProgress) {
+        return this.tacz$shoot.shoot(pitch, yaw, timestamp, chargeProgress);
     }
 
     @Unique

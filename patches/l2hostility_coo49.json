@@ -1,0 +1,62 @@
+{
+  "group": "l2hostility_coo49",
+  "keys": {
+    "l2hostility_trait_attribute_unchanged_skip": {
+      "mod": "l2hostility",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.l2hostility_coo49.L2TraitAttributeMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/xkmc/l2hostility/content/logic/TraitManager",
+          "method": "addAttribute",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/ai/attributes/Attribute;Ljava/lang/String;DLnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;)V",
+          "note": "ins = le.getAttribute(attr), return if null; modifier(getUUIDFromString(name), name, factor, op); hasModifier -> removeModifier(uuid); addPermanentModifier(modifier); nothing else",
+          "sha256": "9cf95259e1e6fc39ab46a31102a27785fa65b9d895662684b6647c940e150f71"
+        },
+        {
+          "class": "dev/xkmc/l2library/util/math/MathHelper",
+          "method": "getUUIDFromString",
+          "desc": "(Ljava/lang/String;)Ljava/util/UUID;",
+          "note": "a pure function of the name (kept per name)",
+          "sha256": "e4987bbf8a9d6e6f024e8e1b67f2640483502f409b497f97a78ae85a1d5b6e72",
+          "audit": true
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22109_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)Z",
+          "note": "hasModifier: a modifier with that UUID is held",
+          "sha256": "69a69d6346248a6372c62fdc83be92b25a5382b4220994609aa3b14951bb87ec"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22120_",
+          "desc": "(Ljava/util/UUID;)V",
+          "note": "removeModifier(UUID): removes the held modifier (from its operation set, the id map and the permanent set) and marks dirty",
+          "sha256": "55f6e5482ef6bb9694021818f9bd11ad23273ea9092fd0c29a57a6b52d08a8e8"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22125_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "note": "addPermanentModifier: add (operation set + id map, dirty) and record it permanent",
+          "sha256": "dd565b98501db203b5f4ab67f0bd34049c4f5e4072b9798f39ce588047ce4cb8"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22111_",
+          "desc": "(Ljava/util/UUID;)Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;",
+          "note": "getModifier(UUID): the id map read the check uses",
+          "sha256": "7a9e9d9c7855dd3f342c69a5deea906a408d045960683bb81281e5813a135607"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on le.getAttribute(attr) (m_21051_) at the head of TraitManager.addAttribute (with the name, factor and operation arguments): null is answered (the method's own early return) when the instance already holds a permanent modifier with L2 Library's UUID for the name and the same name, amount bits and operation, so the remove + add pair that would leave the modifiers equal does not run; otherwise the instance and the method as shipped. Exact variant: no dirty mark for an unchanged re-apply. Runtime flag l2hostilityTraitAttributeUnchangedSkip. Helpers bons.furious.patch.l2hostility_coo49.L2TraitReapply + bons.furious.patch.attribute_lookup.AttributeReapply (method handle).",
+      "license": "L2 Hostility / L2 Library (mods.toml All Rights Reserved): no code carried, the wrapper carries only our own logic and calls L2 Library's public MathHelper; Minecraft: read only"
+    }
+  }
+}

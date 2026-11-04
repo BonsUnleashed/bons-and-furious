@@ -1,0 +1,33 @@
+{
+  "group": "mekanism_mop49",
+  "keys": {
+    "mekanism_transmitter_render_box_keep": {
+      "mod": "mekanism",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mekanism_mop49.TransmitterRenderBoxMixin"
+      ],
+      "guard": [
+        {
+          "class": "mekanism/common/tile/transmitter/TileEntityTransmitter",
+          "method": "getRenderBoundingBox",
+          "desc": "()Lnet/minecraft/world/phys/AABB;",
+          "note": "new AABB(worldPosition, worldPosition.offset(1, 1, 1)): reads only the final position",
+          "sha256": "93223188d4574d883b8a33b948c8964cdcce54b8b5362a9a68453ea139291f90"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/BlockEntity",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/block/entity/BlockEntityType;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V",
+          "note": "worldPosition = pos.immutable(), a final field",
+          "sha256": "f4a975e542cc2f948714a774490b12e08d36cf25a84088a704f3c81f0e36ea9d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on TileEntityTransmitter.getRenderBoundingBox (priority 1100): the first box is kept in an @Unique field of the transmitter and returned on later calls; helper bons.furious.patch.mekanism_mop49.TransmitterBoxes (flag, SHADOW)",
+      "license": "Mekanism (MIT): no Mekanism code is carried; the wrap keeps the box the original returns"
+    }
+  }
+}

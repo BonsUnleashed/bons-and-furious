@@ -90,12 +90,21 @@ public final class BiomeCodecMemo {
         }
         Codec codec = original.call(registry);
         last = new Memo(registry, plains, codec);
+        CodecMemoLifecycle.hook();   // since 1.0.49: the memo is let go when its server stops
         if (!announced) {
             announced = true;
             LOGGER.info("Bons and Furious: vanilla_chunk_biome_codec_memo applies (the biome section codec is built once per registry, not once per chunk){}",
                     SHADOW ? " - shadow verification on" : "");
         }
         return codec;
+    }
+
+    /**
+     * Since 1.0.49 (ServerStoppedEvent, CodecMemoLifecycle): the stopped server's codec and registry are let go. The next
+     * call builds a new codec, as any call for another registry did; until then the memo kept the closed world's registries.
+     */
+    static void forget() {
+        last = null;
     }
 
     /** The registry the given codec was built for, when it is the codec this memo keeps; null otherwise (vanilla_chunk_palette_direct_nbt). */

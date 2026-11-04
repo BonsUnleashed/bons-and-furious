@@ -1,0 +1,32 @@
+{
+  "group": "fromtheshadows_coo49",
+  "keys": {
+    "fromtheshadows_mask_tick_precheck": {
+      "mod": "fromtheshadows",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.fromtheshadows_coo49.FtsMaskTickMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/sonmok14/fromtheshadows/server/utils/event/ServerEvents",
+          "method": "onLivingUpdateEvent",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "getEntity() instanceof LivingEntity (the wrapped first call feeds only this test); dead list of getAllSlots items; per slot: armour slots add getItemBySlot(slot).getItem() to the armour list; armourList.containsAll(asList(PLAGUE_DOCTOR_MASK.get())) && !isClientSide -> plague cure, curable harmful effect removal, mask cooldown and wear; nothing else",
+          "sha256": "82304f189d16418fd86db94b4f7ab8bcdbd0da7fd9800f598eb83faa5da00448"
+        },
+        {
+          "class": "net/sonmok14/fromtheshadows/server/items/PlagueDoctorMaskItem",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: no equals override (containsAll compares the mask item by identity)",
+          "sha256": "52dead1b1245fd485c10e847847e45adfdf028810d7e71d6159a798a7b00b519"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on the first LivingTickEvent.getEntity() call of ServerEvents.onLivingUpdateEvent (its value feeds only the instanceof test): null when the handler cannot act (client level, or no plague doctor mask item in the feet, legs, chest or head slot), so the handler returns at once; otherwise the original value. Runtime flag fromtheshadowsMaskTickPrecheck. Helper bons.furious.patch.fromtheshadows_coo49.FtsMask.",
+      "license": "From The Shadows Reborn (All Rights Reserved): no code carried; the check is ours"
+    }
+  }
+}

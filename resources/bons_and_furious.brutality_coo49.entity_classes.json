@@ -1,0 +1,11 @@
+{
+  "layer": "vanilla_entity_class_count_layer",
+  "entries": [
+    {"class": "net.goo.brutality.entity.projectile.generic.BlackHole", "key": "brutality_proximity_scan_presence_gate",
+     "why": "Brutality 0.8.5: ForgeClientPlayerStateHandler.onClientTick walks every client entity for a black hole within 10 blocks every client tick"},
+    {"class": "net.goo.brutality.entity.projectile.ray.ExplosionRay", "key": "brutality_proximity_scan_presence_gate",
+     "why": "Brutality 0.8.5: the same handler walks every client entity for an explosion ray within 50 blocks every client tick"},
+    {"class": "net.minecraft.world.entity.player.Player", "key": "brutality_proximity_scan_presence_gate", "mod": "brutality",
+     "why": "Brutality 0.8.5: the Blade of the Ruined King walk looks at ClientLevel.players() only while the level's Player count equals that list's size; counted only while Brutality is installed"}
+  ]
+}

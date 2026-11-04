@@ -1,0 +1,103 @@
+{
+  "group": "torchmaster_coo49",
+  "keys": {
+    "torchmaster_level_registry_handle": {
+      "mod": "torchmaster",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.torchmaster_coo49.TorchmasterRegistryHandleMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/xalcon/torchmaster/common/logic/entityblocking/EntityBlockingEventHandler",
+          "method": "shouldBlockEntity",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "entity.getCommandSenderWorld().getCapability(TEB_REGISTRY).map(reg -> reg.shouldBlockEntity(entity, pos)).orElse(false)",
+          "sha256": "eec897ffe5a84a27a8d53772b3ee0cd98c30a15b2aa0cb953fb191736619491f"
+        },
+        {
+          "class": "net/xalcon/torchmaster/common/logic/entityblocking/EntityBlockingEventHandler",
+          "method": "lambda$shouldBlockEntity$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/core/BlockPos;Lnet/xalcon/torchmaster/common/logic/entityblocking/ITEBLightRegistry;)Ljava/lang/Boolean;",
+          "note": "the mapper: Boolean.valueOf(reg.shouldBlockEntity(entity, pos)), never null",
+          "sha256": "24322f14e73ce0473199cf171408654912dbe45b0ca218eb624ac3dd06cd3db1"
+        },
+        {
+          "class": "net/xalcon/torchmaster/common/logic/entityblocking/EntityBlockingEventHandler",
+          "method": "onWorldAttachCapabilityEvent",
+          "desc": "(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V",
+          "note": "every level gets a new LightsRegistryCapability",
+          "sha256": "e9193f86899841850415fcf766f23176d7c47a24c301a8db2ff2cf984cd7811d"
+        },
+        {
+          "class": "net/xalcon/torchmaster/common/logic/entityblocking/LightsRegistryCapability",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "TEB_REGISTRY -> this.optional (one field), else LazyOptional.empty()",
+          "sha256": "09432b35e1e3da2fcfbb8eee69eb73519b11a09bf835c28bbdcdd1ae950f8df2"
+        },
+        {
+          "class": "net/xalcon/torchmaster/common/logic/entityblocking/LightsRegistryCapability",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "the only writes of container and optional (field census of the jar): container = new RegistryContainer(), optional = LazyOptional.of(() -> container)",
+          "sha256": "4a6dc249a830ea8516c6b07bcf4031e6365e852841f8e9f97c32499e075a8152"
+        },
+        {
+          "class": "net/xalcon/torchmaster/common/logic/entityblocking/LightsRegistryCapability",
+          "method": "lambda$new$0",
+          "desc": "()Lnet/xalcon/torchmaster/common/logic/entityblocking/ITEBLightRegistry;",
+          "note": "the optional's supplier: this.container",
+          "sha256": "ce2ec684114c124956c266fcc09ecd3898410f03f7e52a6da06e7c1552072087"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of EntityBlockingEventHandler.shouldBlockEntity (exact answers; kind change, off by default, because its speed measured 0.91-1.17x of the original depending on the JIT run and the lights in the registry): getCommandSenderWorld(), the TEB_REGISTRY capability through forge_capability_handle_layer's Level table (CapabilityHandleApi.lookupLevel, reached by MethodHandle; the level itself without the layer), then isPresent() ? registry.shouldBlockEntity(entity, pos) : false (= map(f).orElse(false)). Runtime flag torchmasterLevelRegistryHandle; shadow mode torchmasterLevelRegistryHandle.shadow (the layer re-asks the level on every hand-out). Helper bons.furious.patch.torchmaster_coo49.TorchmasterRegistryHandle.",
+      "license": "Torchmaster (All Rights Reserved): no code carried, the hook carries only our own logic"
+    },
+    "torchmaster_megatorch_range_first": {
+      "mod": "torchmaster",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.torchmaster_coo49.TorchmasterMegatorchRangeMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/xalcon/torchmaster/common/logic/entityblocking/megatorch/MegatorchEntityBlockingLight",
+          "method": "shouldBlockEntity",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "MegaTorchFilterRegistry.containsEntity(EntityType.getKey(entity.getType())) && DistanceLogics.Cubic.isPositionInRange(x, y, z, this.pos, megaTorchRadius)",
+          "sha256": "8f90f27d1dddbf1d846ceb70a548cf0de31b86fe8f20195b4b419c8916704d3e"
+        },
+        {
+          "class": "net/xalcon/torchmaster/common/EntityFilterRegistry",
+          "method": "containsEntity",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Z",
+          "note": "a set probe: pure",
+          "sha256": "3fab35c2740f4b61ff19de78272427d629530139b33c160ecfcb83f7fd6307bb"
+        },
+        {
+          "class": "net/xalcon/torchmaster/common/logic/DistanceLogics",
+          "method": "lambda$static$0",
+          "desc": "(DDDLnet/minecraft/core/BlockPos;I)Z",
+          "note": "the cubic test: arithmetic only",
+          "sha256": "11156ae73cfcba80c0096e9efd04af7092cb378edf72c45e541757a7be4dc49e"
+        },
+        {
+          "class": "net/xalcon/torchmaster/common/logic/DistanceLogics",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "Cubic = the cubic test, Cylinder = the cylinder test",
+          "sha256": "cbabf686ae868cc61a6ee22a2bb1c8206bdd6cbadf60ade907b97c8b6be54d01"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of MegatorchEntityBlockingLight.shouldBlockEntity (exact answers; kind change, off by default, because a torch in range of an unlisted entity type is slower: the distance test now runs before the block list instead of not at all): DistanceLogics.Cubic.isPositionInRange(spawn, this.pos, megaTorchRadius) && MegaTorchFilterRegistry.containsEntity(EntityType.getKey(entity.getType())) (the same two pure tests in the other order, each asked at most once). Runtime flag torchmasterMegatorchRangeFirst. Helper bons.furious.patch.torchmaster_coo49.TorchmasterMegatorchRange.",
+      "license": "Torchmaster (All Rights Reserved): no code carried, the hook carries only our own logic"
+    }
+  }
+}

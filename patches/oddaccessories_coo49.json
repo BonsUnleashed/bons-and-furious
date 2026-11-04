@@ -1,0 +1,236 @@
+{
+  "group": "oddaccessories_coo49",
+  "keys": {
+    "oddaccessories_bag_reward_pool_memo": {
+      "mod": "oddaccessories",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.oddaccessories_coo49.OddBagPoolMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/oddaccessories/item/SuspiciousBagItem",
+          "method": "rollReward",
+          "desc": "(Lnet/minecraft/util/RandomSource;)Lnet/minecraft/world/item/Item;",
+          "note": "BAGBLACKLIST.get() into a local, ForgeRegistries.ITEMS.getEntries().stream() through four filters and map(getValue) into toList(); the list is only asked isEmpty / size / get for the draws",
+          "sha256": "183032fefd45c937c8a8c9c680d21ea7d9f36724466c05392bb78bd31f34c33c"
+        },
+        {
+          "class": "net/oddaccessories/item/SuspiciousBagItem",
+          "method": "lambda$rollReward$0",
+          "desc": "(Ljava/util/Map$Entry;)Z",
+          "note": "filter: the key's namespace is oddaccessories (pure)",
+          "sha256": "3af02e21c5e22b65c9378efce93d65751caad5a4b0dd90a2dfeb2273878f4b95"
+        },
+        {
+          "class": "net/oddaccessories/item/SuspiciousBagItem",
+          "method": "lambda$rollReward$1",
+          "desc": "(Ljava/util/Map$Entry;)Z",
+          "note": "filter: the key's path is not in the static EXCLUDED set (pure)",
+          "sha256": "b3ac542b52a0e63a25a5740034201d0222d4f10c38da6d28284b943b031e3e1c"
+        },
+        {
+          "class": "net/oddaccessories/item/SuspiciousBagItem",
+          "method": "lambda$rollReward$2",
+          "desc": "(Ljava/util/List;Ljava/util/Map$Entry;)Z",
+          "note": "filter: the captured blacklist does not contain the key's id (reads the list)",
+          "sha256": "f1226ba34f0ba40b1c0dcbc11e05b29016ae05ca57c54296c37a585953a84e3c"
+        },
+        {
+          "class": "net/oddaccessories/item/SuspiciousBagItem",
+          "method": "lambda$rollReward$3",
+          "desc": "(Ljava/util/Map$Entry;)Z",
+          "note": "filter: !ConfigConfiguration.isDisabled(value)",
+          "sha256": "4cb89f927010afee8316c94b69853908a8fb8868b9ee7acfe92d995b12da2d7c"
+        },
+        {
+          "class": "net/oddaccessories/configuration/ConfigConfiguration",
+          "method": "isDisabled",
+          "desc": "(Lnet/minecraft/world/item/Item;)Z",
+          "note": "false while SPEC is not loaded; else resolveDisabled() and the registry key of the item",
+          "sha256": "ab4a7a54cce5870ee7a8a3747507ad2054588d36c6654be04a3ab6671cfedb26"
+        },
+        {
+          "class": "net/oddaccessories/configuration/ConfigConfiguration",
+          "method": "resolveDisabled",
+          "desc": "()Ljava/util/Set;",
+          "note": "the kept set for the identity of DISABLEDCURIOS.get(); rebuilt only when that list object changes",
+          "sha256": "5729a8f735ba1bbee0a7fe5d67fb66ada6511f1a9ad3d20cc785ce1fd61f5acc"
+        },
+        {
+          "class": "net/minecraftforge/registries/ForgeRegistry",
+          "method": "getEntries",
+          "desc": "()Ljava/util/Set;",
+          "note": "an unmodifiable view of the keys BiMap's entries",
+          "sha256": "1ee113ad1cc98a093e87cc9c9bc1afffc3285f41c9cbc36185878c2823a61b0e"
+        },
+        {
+          "class": "net/minecraftforge/registries/GameData",
+          "method": "fireRemapEvent",
+          "desc": "(Ljava/util/Map;Z)V",
+          "note": "posts IdMappingEvent on MinecraftForge.EVENT_BUS (called by freezeData, revertTo and injectSnapshot after the registries were rebuilt)",
+          "sha256": "4c78ae1ec4c3608d7ffff14a9652a9e9844cda3155a6e3b23cd5ae3039bfffc2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Stream.toList() call of SuspiciousBagItem.rollReward (with the captured blacklist local): the last built pool is answered while the item registry generation (bumped by every IdMappingEvent) and size, ConfigConfiguration.SPEC.isLoaded(), the DISABLEDCURIOS list identity (read only while loaded) and the blacklist's identity and contents are unchanged; otherwise the stream runs as shipped and its list is kept. Runtime flag oddaccessoriesBagRewardPoolMemo, shadow oddaccessoriesBagRewardPoolMemo.shadow. Helper bons.furious.patch.oddaccessories_coo49.OddBagPool.",
+      "license": "Odd Accessories (All Rights Reserved): no code carried, the wrapper carries only our own logic; Forge (LGPL-2.1): read through its public API only"
+    },
+    "oddaccessories_cloak_action_bar_interval": {
+      "mod": "oddaccessories",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.oddaccessories_coo49.OddCloakActionBarMixin",
+        "bons.furious.mixin.oddaccessories_coo49.OddCloakBarStateMixin"
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the two Player.displayClientMessage(text, true) (m_5661_) calls of FiberglassCloakItem.onCurioTick (the cloak indicator \"(⭘)\" (too many mobs near) / \"(-)\" (cloaked) sent every tick): an indicator that differs from the one last sent to the player is sent at once, the same one again only when at least N ticks have passed (per player: @Unique last indicator + game time on Player). Value: PureConfig.intValue(\"oddaccessories_cloak_action_bar_interval\", 10, 1, 100). Trade-off, off by default: after another action-bar text replaced it the indicator can come back up to N-1 ticks late, and it fades up to N-1 ticks earlier after the cloak stops. Helper bons.furious.patch.oddaccessories_coo49.OddScans.",
+      "license": "Odd Accessories (All Rights Reserved): no code carried, the wrappers carry only our own logic; Minecraft: read only",
+      "guard": [
+        {
+          "class": "net/oddaccessories/item/FiberglassCloakItem",
+          "method": "onCurioTick",
+          "desc": "(Ltop/theillusivec4/curios/api/SlotContext;Lnet/minecraft/world/item/ItemStack;)V",
+          "note": "player.displayClientMessage(literal(\"(⭘)\") / literal(\"(-)\"), true) every tick",
+          "sha256": "b1b477386d1a26342849cf4733bc72c46159645c82ea6161d785b0ea5c45b841"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerPlayer",
+          "method": "m_5661_",
+          "desc": "(Lnet/minecraft/network/chat/Component;Z)V",
+          "note": "displayClientMessage: one system chat packet (overlay) per call",
+          "sha256": "0f560e4ccf718a126831dd3ffdd6fe440abe73bb88c1e4acf232aaabb1c4df9d"
+        }
+      ]
+    },
+    "oddaccessories_cloak_aggro_scan_interval": {
+      "mod": "oddaccessories",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.oddaccessories_coo49.OddCloakAggroIntervalMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/oddaccessories/item/FiberglassCloakItem",
+          "method": "onCurioTick",
+          "desc": "(Ltop/theillusivec4/curios/api/SlotContext;Lnet/minecraft/world/item/ItemStack;)V",
+          "note": "server only; the 4-block Mob count decides eligibility; when eligible: cloakedAt, invisibility, then the 12-block Mob search whose list feeds only the clearAggroToward loop, then the action-bar message",
+          "sha256": "b1b477386d1a26342849cf4733bc72c46159645c82ea6161d785b0ea5c45b841"
+        },
+        {
+          "class": "net/oddaccessories/item/FiberglassCloakItem",
+          "method": "clearAggroToward",
+          "desc": "(Lnet/minecraft/world/entity/Mob;Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "the loop body: target, last attacker, anger and brain memories toward the wearer",
+          "sha256": "0334222326aa40ec50941181491117af91e09cbd9df24f92b858f5cdb959f6f3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the second Level.getEntitiesOfClass (m_45976_) call of FiberglassCloakItem.onCurioTick (the 12-block clear-aggro search, with the wearer local): it runs when (game time + the wearer's entity id) is a multiple of N, else it answers an empty list. Value: PureConfig.intValue(\"oddaccessories_cloak_aggro_scan_interval\", 4, 1, 100). Trade-off, off by default: a mob can keep targeting the cloaked wearer up to N-1 ticks longer. Runtime flag oddaccessoriesCloakAggroScanInterval. Helper bons.furious.patch.oddaccessories_coo49.OddScans.",
+      "license": "Odd Accessories (All Rights Reserved): no code carried, the wrapper carries only our own logic"
+    },
+    "oddaccessories_meal_toy_scan_gate": {
+      "mod": "oddaccessories",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.oddaccessories_coo49.OddMealToyGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/oddaccessories/item/CollectibleMealToyItem",
+          "method": "onCurioTick",
+          "desc": "(Ltop/theillusivec4/curios/api/SlotContext;Lnet/minecraft/world/item/ItemStack;)V",
+          "note": "server only; particleTick = globalPulse(level), repath = repathTick(wearer), then the Mob search over the toy range whose list feeds only the baby-undead loop (Weakness 20 ticks, repath when repath, setTarget(null), look + particle when particleTick)",
+          "sha256": "6acda63cead5a54fef6cfacd9c5c363d6aeaee2fe86ce1aaf9ff8b5b9284c207"
+        },
+        {
+          "class": "net/oddaccessories/network/OddaccessoriesModData",
+          "method": "globalPulse",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;)Z",
+          "note": "level game time % 80 == 0 (pure)",
+          "sha256": "8241059abeb570f5cb88990dec7fe453cd0bdb647f79debf4081fed9eb01ea4e"
+        },
+        {
+          "class": "net/oddaccessories/network/OddaccessoriesModData",
+          "method": "repathTick",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "(game time + entity id) % 10 == 0 (pure)",
+          "sha256": "3940c878bf1941a889a74d97b0b466ce14eb11ea72f5d57d5e9cf49c62a1ea68"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass (m_45976_) call of CollectibleMealToyItem.onCurioTick (with the method's particleTick and repath locals): the search runs on pulse or repath ticks, else it answers an empty list. Trade-off, off by default: between those ticks baby undead keep their target up to 9 ticks longer and their Weakness is refreshed every 10 ticks instead of every tick. Runtime flag oddaccessoriesMealToyScanGate. Helper bons.furious.patch.oddaccessories_coo49.OddScans.",
+      "license": "Odd Accessories (All Rights Reserved): no code carried, the wrapper carries only our own logic"
+    },
+    "oddaccessories_name_update_memo": {
+      "mod": "oddaccessories",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.oddaccessories_coo49.OddGutsNameMixin",
+        "bons.furious.mixin.oddaccessories_coo49.OddClayVesselNameMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/oddaccessories/item/GutsItem",
+          "method": "updateName",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "ServerPlayer only; suffix from the deaths stat and two config doubles (String.format of one Double below the cap), name = prefix + suffix; if !name.equals(stack.getHoverName().getString()) then setHoverName(Component.literal(name))",
+          "sha256": "7c21cf98110488cc0be3c07c4c617d913cf7123c51a2de050654e8a6238004b2"
+        },
+        {
+          "class": "net/oddaccessories/item/ClayVesselItem",
+          "method": "updateName",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "LivingEntity only; name from the stored vessel food; if !name.equals(stack.getHoverName().getString()) then setHoverName(Component.literal(name))",
+          "sha256": "54fffcaac557802fda56c005584175088c47d57cdda7f1b2e0f24bc99bcb2d34"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41786_",
+          "desc": "()Lnet/minecraft/network/chat/Component;",
+          "note": "getHoverName: display.Name parsed with Component.Serializer.fromJson (a broken one is removed), else the item's name",
+          "sha256": "fcd22de56dabc604ff0c5e65918475d176ce711920b6b86f79817060dd47335b"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41714_",
+          "desc": "(Lnet/minecraft/network/chat/Component;)Lnet/minecraft/world/item/ItemStack;",
+          "note": "setHoverName: display.Name = Component.Serializer.toJson(name)",
+          "sha256": "d217a9a63f09ca1ef871316c922915ce89eebbe646daba82ee34790292426780"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41737_",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "getTagElement: a read of the stack's tag",
+          "sha256": "1e3952f9d4ee0ef5718918e2cee5a79b7a5e6578a52426118047a78e7398baa9"
+        },
+        {
+          "class": "net/minecraft/network/chat/Component$Serializer",
+          "method": "m_130703_",
+          "desc": "(Lnet/minecraft/network/chat/Component;)Ljava/lang/String;",
+          "note": "toJson: the string setHoverName stores",
+          "sha256": "b454e639fe35f5e6ac43be1881c89c54dfe771aa57f84d4570ddd5414abb6a06"
+        },
+        {
+          "class": "net/minecraft/network/chat/Component$Serializer",
+          "method": "m_130701_",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;",
+          "note": "fromJson: what getHoverName parses the stored string with",
+          "sha256": "92793be17de27688f142efc155202e3975965224d9c145fcd4af8ebbc3ec7199"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on ItemStack.getHoverName() (m_41786_) in GutsItem.updateName and ClayVesselItem.updateName (with the wanted name local): when display.Name is exactly Component.Serializer.toJson(Component.literal(name)) a literal component of name is answered (the method compares equal and writes nothing, as shipped); otherwise getHoverName runs. A second @WrapOperation answers GutsItem's String.format(pattern, Double) from the last call with the same pattern, value bits and default FORMAT locale. Runtime flag oddaccessoriesNameUpdateMemo, shadow oddaccessoriesNameUpdateMemo.shadow. Helper bons.furious.patch.oddaccessories_coo49.OddNames.",
+      "license": "Odd Accessories (All Rights Reserved): no code carried, the wrappers carry only our own logic; Minecraft: read only"
+    }
+  }
+}

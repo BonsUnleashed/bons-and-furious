@@ -1,0 +1,21 @@
+{
+  "layer": "vanilla_entity_class_count_layer",
+  "entries": [
+    {"class": "com.github.dodo.dodosmobs.entity.effect.ScreenShake_Entity", "key": "dodosmobs_shake_scan_presence_gate",
+     "why": "Dodo's Mobs 1.0.1 beta ClientEvent.onCameraSetup searches it +-20 blocks around the player every frame"},
+    {"class": "com.eeeab.eeeabsmobs.sever.entity.effect.EntityCameraShake", "key": "eeeabsmobs_shake_scan_presence_gate",
+     "why": "EEEAB's Mobs 0.98.1 ClientEventHandler.onSetupCamera searches it +-20 blocks around the player every frame"},
+    {"class": "net.sonmok14.fromtheshadows.server.entity.projectiles.ScreenShakeEntity", "key": "fromtheshadows_shake_scan_presence_gate",
+     "why": "From The Shadows 2.9 ClientEvents.onCameraSetup searches it +-20 blocks around the player every frame"},
+    {"class": "com.ovinter.mythsandlegends.entity.effects.EffectScreenShake", "key": "mythsandlegends_shake_scan_presence_gate",
+     "why": "Myths and Legends 1.0.6 ClientEvents.onCameraSetup searches it +-20 blocks every frame"},
+    {"class": "com.ovinter.mythsandlegends.entity.effects.EffectScreenShake", "key": "mythsandlegends_legacy_shake_scan_presence_gate",
+     "why": "Myths and Legends 0.0.8.8 EventBusClientEvents.onCameraSetup: the same search (the entry is counted once while either key is on)"},
+    {"class": "net.imasillylittleguy.cnc.entity.WechugeEntity", "key": "cnc_wechuge_fog_scan_presence_gate",
+     "why": "Critters n' Crawlers 2.2.5 fog colour / fog distance procedures search it in a 24 and a 12 block box per fog event"},
+    {"class": "com.leon.saintsdragons.server.entity.interfaces.ShakesScreen", "key": "saintsdragons_shake_scan_presence_gate",
+     "why": "interface: Saint's Dragons 0.9.88 ClientEventHandler.onComputeCamera searches every Mob +-64 for implementors every frame"},
+    {"class": "com.leon.saintsdragons.server.entity.dragons.ignivorus.Ignivorus", "key": "saintsdragons_skyfall_scan_presence_gate",
+     "why": "Saint's Dragons 0.9.88 IgnivorusSkyfallScreenEffects.sample loops over every client entity for one, 2-3 times per frame"}
+  ]
+}

@@ -8,7 +8,8 @@
     "defaultRequire": 1
   },
   "mixins": [
-    "TextAnimatorIterateMixin"
+    "TextAnimatorIterateMixin",
+    "TextAnimatorTypewriterMixin"
   ],
   "client": [
     "AzureMolangPrecheckMixin",

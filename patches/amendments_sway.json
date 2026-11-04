@@ -1,0 +1,60 @@
+{
+  "group": "amendments_sway",
+  "keys": {
+    "amendments_idle_sway_packet_skip": {
+      "mod": "amendments",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.amendments_sway.WallLanternSwayMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mehvahdjukaar/amendments/common/block/WallLanternBlock",
+          "method": "m_7892_",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "entityInside: client -> the tile's animation.hitByEntity; server -> game event when xo/zo/yo differ, then always CHANNEL.sentToAllClientPlayersTrackingEntity(entity, new ClientBoundEntityHitSwayingBlockMessage(pos, id))",
+          "sha256": "b0f172414396563365de49f1515b313f5b06e48a1e3b726efe52cf65b5a0b8b1"
+        },
+        {
+          "class": "net/mehvahdjukaar/amendments/common/network/ClientBoundEntityHitSwayingBlockMessage",
+          "method": "doOnClient",
+          "desc": "()V",
+          "note": "the message's only effect: animation.hitByEntity(client copy of the entity, state, pos) on the client",
+          "sha256": "3310802a834d03b01774716ce6f7183d400cf3c717c8c28848b688300addf4ff",
+          "sha256_also": [
+            {
+              "build": "dedicated_server",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "net/mehvahdjukaar/amendments/common/PendulumAnimation",
+          "method": "hitByEntity",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "reacts only to client-side motion of length >= 0.01 (immunity 10 ticks after a hit)",
+          "sha256": "712b18f91dffabf6c674481ea6bb1e26953ff48a69f121007584a1be46aa3830"
+        },
+        {
+          "class": "net/mehvahdjukaar/amendments/common/SwayingAnimation",
+          "method": "hitByEntity",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "reacts only to client-side motion of length > 0.05",
+          "sha256": "aadab49b349d350d42bfe9f66f25a8ff52f765eebd91e39cc9f0859bdbe17bef"
+        },
+        {
+          "class": "net/mehvahdjukaar/moonlight/api/platform/network/forge/ChannelHandlerImpl",
+          "method": "sentToAllClientPlayersTrackingEntity",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/mehvahdjukaar/moonlight/api/platform/network/Message;)V",
+          "note": "Moonlight's Forge channel: server side -> SimpleChannel.send(TRACKING_ENTITY.with(entity), message); nothing else",
+          "sha256": "dc5c69b7745965843bcf64f438f279772cf38856c352025c66e852cde60fe933"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the ChannelHandler.sentToAllClientPlayersTrackingEntity call in WallLanternBlock.entityInside (m_7892_), require = 0, allow = 1: the call runs only when the entity's position changed this tick; helper bons.furious.patch.amendments_sway.AmendmentsSway",
+      "license": "Supplementaries Team License v1.3 (Amendments) and Moonlight: none of their code is carried; our wrapper only decides whether the unchanged call runs; Minecraft: no code"
+    }
+  }
+}

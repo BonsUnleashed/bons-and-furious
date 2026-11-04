@@ -1,0 +1,54 @@
+{
+  "group": "mob_refresh_c49",
+  "keys": {
+    "mob_tick_dimension_refresh_always_skip": {
+      "mod": "minecraft",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mob_refresh_c49.RefreshSkipAlwaysMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_6210_",
+          "desc": "()V",
+          "note": "refreshDimensions: pose, getDimensions, getEyeHeight, ForgeEventFactory.getEntitySizeForge, store size and eye height, reapplyPosition, the grow-only free-position search",
+          "sha256": "745ced7facd184c22ab6153b3ce09d3012e3d5d96c7e204f85d1ce1909e7f63d"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_20090_",
+          "desc": "()V",
+          "note": "reapplyPosition: setPos(position)",
+          "sha256": "21e1f2a1899a2a140af88e4a19e1a5981eac312e2a507f6f4b1d449092d62e04"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_6034_",
+          "desc": "(DDD)V",
+          "note": "setPos: setPosRaw, then setBoundingBox(makeBoundingBox())",
+          "sha256": "1679272d251ed4a610f003567f2fa9a8b87db2ea253360e28ed718e4920635f7"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_142242_",
+          "desc": "()Lnet/minecraft/world/phys/AABB;",
+          "note": "makeBoundingBox: dimensions.makeBoundingBox(position)",
+          "sha256": "9c1c93b77e36a04ba5f365d4fb423f77be1718c93a077620144a162340c63500"
+        },
+        {
+          "class": "net/minecraftforge/event/ForgeEventFactory",
+          "method": "getEntitySizeForge",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Pose;Lnet/minecraft/world/entity/EntityDimensions;Lnet/minecraft/world/entity/EntityDimensions;F)Lnet/minecraftforge/event/entity/EntityEvent$Size;",
+          "note": "new EntityEvent.Size(...), posted on MinecraftForge.EVENT_BUS",
+          "sha256": "696ea21f762f67b5b8c6d7d220d03134afbb0d4cb6b965ae51fb7c61b9fc7519"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapOperation of ForgeEventFactory.getEntitySizeForge and of reapplyPosition (m_20090_) in Entity.refreshDimensions (m_6210_), sharing the decision through a @Share local; for Born in Chaos and Critters n' Crawlers mobs (class name scope, never players) the Size event is built as Forge builds it but not posted and the re-apply left out when the refresh changes nothing (helper bons.furious.patch.mob_refresh_c49.RefreshSkip)",
+      "license": "Minecraft (Mojang), Forge: no-copy; no Born in Chaos or Critters n' Crawlers code is carried (their classes are matched by package name)"
+    }
+  }
+}

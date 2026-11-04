@@ -1,0 +1,79 @@
+{
+  "group": "structurify_height_c49",
+  "keys": {
+    "structurify_height_cache_primitive": {
+      "mod": "structurify",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.structurify_height_c49.HeightCacheHandlerMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/faboslav/structurify/common/mixin/ChunkGeneratorMixin",
+          "method": "structurify$getFirstFreeHeight",
+          "desc": "(IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;)I",
+          "note": "the handler we inject into: cache get, on null the original and a cache put",
+          "sha256": "096c11af5fbbb95da9c4b7322dcc038fe55677b5dbd95a056c9e48ad733e5832"
+        },
+        {
+          "class": "com/faboslav/structurify/common/mixin/ChunkGeneratorMixin",
+          "method": "structurify$getFirstOccupiedHeight",
+          "desc": "(IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;)I",
+          "note": "the occupied handler: same shape",
+          "sha256": "35720be25d305a381dc11440d6108b216a69d772be14f335019502af93328c2c"
+        },
+        {
+          "class": "com/faboslav/structurify/common/world/level/chunk/ChunkGeneratorHeightCache",
+          "method": "getFirstOccupiedHeight",
+          "desc": "(Lnet/minecraft/world/level/chunk/ChunkGenerator;IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)Ljava/lang/Integer;",
+          "note": "occupied answered as the shared entry - 1",
+          "sha256": "7d3c77385c2de725ad229bce962699885fa5489c43ff355472d963860a3b5566"
+        },
+        {
+          "class": "com/faboslav/structurify/common/world/level/chunk/ChunkGeneratorHeightCache",
+          "method": "putFirstOccupiedHeight",
+          "desc": "(Lnet/minecraft/world/level/chunk/ChunkGenerator;IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;I)V",
+          "note": "occupied stored as height + 1 in the shared entry",
+          "sha256": "9e86761e66d9fcb60e7dba8a80af790301d8c5d2a22fe00199fa2c53663880f7"
+        },
+        {
+          "class": "com/faboslav/structurify/common/world/level/chunk/ChunkGeneratorHeightCache",
+          "method": "getFirstFreeHeight",
+          "desc": "(Lnet/minecraft/world/level/chunk/ChunkGenerator;IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)Ljava/lang/Integer;",
+          "sha256": "7d19373acd91bb19054c3c40815d8555b0185fd7302ccf9065e8ce45e3766006"
+        },
+        {
+          "class": "com/faboslav/structurify/common/world/level/chunk/ChunkGeneratorHeightCache",
+          "method": "putFirstFreeHeight",
+          "desc": "(Lnet/minecraft/world/level/chunk/ChunkGenerator;IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;I)V",
+          "sha256": "b7c9776e39382ed94629bd54c15a4198dc45828467123c9536f20a1490157560"
+        },
+        {
+          "class": "com/faboslav/structurify/common/world/level/chunk/ChunkGeneratorHeightCacheKey",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "note": "generator, accessor and random state compared by identity, x / z / type by value: the same rule the table uses",
+          "sha256": "f7298983078d6a21bf4da9ca46c38d25c5e59f67f9786dd11f546cc0cc05b48f"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/ChunkGenerator",
+          "method": "m_223221_",
+          "desc": "(IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)I",
+          "note": "getFirstFreeHeight = getBaseHeight (the original the handler calls on a miss)",
+          "sha256": "2b1f165412e9bfabbad16d5ec7ed1832e907acf65262d016affcceb7b666b592"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/ChunkGenerator",
+          "method": "m_223235_",
+          "desc": "(IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)I",
+          "note": "getFirstOccupiedHeight = getBaseHeight - 1: free and occupied agree, so the shared entry is consistent",
+          "sha256": "69eacd0f56afc18eb0be7ab19aab30762b7a047fb6a1a569f2b29e1e28fb5eb8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinSquared @TargetHandler + MixinExtras @WrapOperation (x4, require = 0) on the four ChunkGeneratorHeightCache calls inside Structurify's ChunkGeneratorMixin handlers structurify$getFirstFreeHeight / structurify$getFirstOccupiedHeight (merged into ChunkGenerator m_223221_ / m_223235_), answered by a primitive per-thread 4-way table (helper bons.furious.patch.structurify_height_c49.HeightTable); priority 1500",
+      "license": "CC BY-NC-ND 4.0 (Structurify, no derivatives): no Structurify code in our source; the mixin only wraps four calls inside its handlers and answers them from our own table; Minecraft (Mojang): no-copy"
+    }
+  }
+}

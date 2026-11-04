@@ -1,0 +1,46 @@
+{
+  "group": "relics_c49",
+  "keys": {
+    "relics_essence_speed_cap": {
+      "mod": "relics",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.relics_c49.EssenceArcSpeedMixin"
+      ],
+      "guard": [
+        {
+          "class": "it/hurts/sskirillss/relics/entities/DeathEssenceEntity",
+          "method": "moveTowardsTargetInArc",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "targetPos (first local) = target centre; speed = position.distanceTo(targetPos) * (tickCount * 0.005f)",
+          "sha256": "ed966f14d445725acb0a7132846b2362d5cba042f71d3dd1784b0757cd6dbb46"
+        },
+        {
+          "class": "it/hurts/sskirillss/relics/entities/LifeEssenceEntity",
+          "method": "moveTowardsTargetInArc",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "the same shape",
+          "sha256": "e9ff43ceb9525b9333ca545e95c8b64aa87caedc5950614d05e788fd6c5c2984"
+        },
+        {
+          "class": "it/hurts/sskirillss/relics/entities/DeathEssenceEntity",
+          "method": "m_8119_",
+          "desc": "()V",
+          "note": "tick: moveTowardsTargetInArc each tick while a target is set; hit at distance <= 1",
+          "sha256": "cdf2fc29b09050ecd655bb0bfccdfdc98b381a12ae97908f330e28eb3851c9fc"
+        },
+        {
+          "class": "it/hurts/sskirillss/relics/entities/LifeEssenceEntity",
+          "method": "m_8119_",
+          "desc": "()V",
+          "sha256": "713bcbf97487121d4a6daf980c7c4a6993f06c2b7246f59772c02b11b373772f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Gameplay fix (off by default): @ModifyArg on the Vec3.scale (m_82490_) argument in DeathEssenceEntity / LifeEssenceEntity.moveTowardsTargetInArc, with MixinExtras @Local(ordinal = 0) of the target point: min(Relics' speed, cap, remaining distance); cap = PureConfig.doubleValue(\"relics_essence_speed_cap\", 4.0, 0.1, 64.0) (helper bons.furious.patch.relics_c49.EssenceSpeed)",
+      "license": "All Rights Reserved (Relics): injector only, no Relics code is carried; Minecraft (Mojang): no-copy"
+    }
+  }
+}

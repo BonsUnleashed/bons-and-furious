@@ -204,7 +204,8 @@
         "bons.furious.mixin.cataclysm.AshenBreathScanMixin",
         "bons.furious.mixin.cataclysm.EarthQuakeScanMixin",
         "bons.furious.mixin.cataclysm.PhantomHalberdScanMixin",
-        "bons.furious.mixin.cataclysm.VoidRuneScanMixin"
+        "bons.furious.mixin.cataclysm.VoidRuneScanMixin",
+        "bons.furious.mixin.cataclysm.FlameStrikeScanMixin"
       ],
       "guard": [
         {
@@ -303,10 +304,31 @@
           "method": "getCaster",
           "desc": "()Lnet/minecraft/world/entity/LivingEntity;",
           "sha256": "ac561e7a2082fe1748b9a3061ecac3282ac5269b85f3335d31de2e1d4bf78a4c"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/effect/Flame_Strike_Entity",
+          "method": "m_8119_",
+          "desc": "()V",
+          "note": "since 1.0.49: when not waiting and tickCount % 5 == 0, for (living : getEntitiesOfClass) damage(living); the list is read by that loop only",
+          "sha256": "6ed9108009d4c16d22d81fade4ec8c2a490c8a2f6c317613b1c2407100972e3b"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/effect/Flame_Strike_Entity",
+          "method": "damage",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "since 1.0.49: getOwner(), pure checks, then tickCount % 2 == 0 before any hurt",
+          "sha256": "3db39174d2a81f3f05a213fb7251a008f7c97d653b0f391f8b7eb546f07fbacf"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/effect/Flame_Strike_Entity",
+          "method": "getOwner",
+          "desc": "()Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "since 1.0.49: resolves the owner from ownerUUID only on a server level and only while the owner field is null",
+          "sha256": "46d7c464ce4fd7a1d06fc382552aab559bb36d2610bcc1475333a7b27f75dc00"
         }
       ],
       "cancel": [],
-      "conversion": "MixinExtras @WrapOperation on the entity query of five Cataclysm area attacks (Level.getEntitiesOfClass / Ashen_Breath_Entity.getEntityLivingBaseNearby): an empty list on ticks where the attack cannot hurt (and, for attacks that look up their caster, while that lookup is settled); helper bons.furious.patch.cataclysm.CataclysmWorldScans",
+      "conversion": "MixinExtras @WrapOperation on the entity query of six Cataclysm area attacks (Level.getEntitiesOfClass / Ashen_Breath_Entity.getEntityLivingBaseNearby; the Flame Strike since 1.0.49): an empty list on ticks where the attack cannot hurt (and, for attacks that look up their caster, while that lookup is settled); helper bons.furious.patch.cataclysm.CataclysmWorldScans",
       "license": "CC-BY-NC-ND-4.0 (L_Ender's Cataclysm): no Cataclysm code is carried; the wraps only decide whether a query inside Cataclysm's unchanged code is made"
     },
     "cataclysm_beam_client_scans": {

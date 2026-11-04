@@ -1,0 +1,117 @@
+{
+  "group": "cataclysm_c49",
+  "keys": {
+    "cataclysm_deepling_swim_refresh_skip": {
+      "mod": "cataclysm",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cataclysm_c49.DeeplingSwimRefreshMixin",
+        "bons.furious.mixin.cataclysm_c49.CataclysmEntityDimensionsAccessor"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/Deepling/AbstractDeepling",
+          "method": "m_8119_",
+          "desc": "()V",
+          "sha256": "58b1dba524aef98f4531d7ca58c31ee6ec7628cdabe341d33609c49c1c31fbc5",
+          "sha256_also": [
+            {
+              "build": "cataclysm 3.31",
+              "sha256": "9607e545ca3c5941c6eac425da488f72ddd027f28c5510d5b8e35be48c0536eb"
+            }
+          ]
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/Deepling/AbstractDeepling",
+          "method": "m_6972_",
+          "desc": "(Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;",
+          "note": "the size the pose gives",
+          "sha256": "edb0dc7839b1aa034abe0f36471417025249a7803eadf7aeb94a9b2bfe85ff63"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/Deepling/AbstractDeepling",
+          "method": "getDeeplingSwim",
+          "desc": "()Z",
+          "sha256": "07575f1711a66a89b4482a2d539a640a572af830a3e68ac705f34f165b1591c9"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/Deepling/AbstractDeepling",
+          "method": "setDeeplingSwim",
+          "desc": "(Z)V",
+          "sha256": "6667b83cba34f3dc4d3479666dbdd4753811d9b9b8f8955d955b71fefd8a2398"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_6210_",
+          "desc": "()V",
+          "note": "refreshDimensions: what a skipped tick leaves out",
+          "sha256": "745ced7facd184c22ab6153b3ce09d3012e3d5d96c7e204f85d1ce1909e7f63d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the two Level.noCollision calls of AbstractDeepling.tick (ordinal 0 in water, 1 out of water): \"not free\" when the swim flag and the size are already what that branch would set, else the original (helper bons.furious.patch.cataclysm_c49.DeeplingSwim; Entity size accessor CataclysmEntityDimensionsAccessor)",
+      "license": "L_Ender's Cataclysm (CC-BY-NC-ND-4.0): no Cataclysm code is carried; the injectors carry only our own logic (Idea: Collections Of Optimizations cataclysm.leanDeeplingSwimRefresh, idea text only)"
+    },
+    "cataclysm_missile_fuse_unsynced": {
+      "mod": "cataclysm",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cataclysm_c49.MissileFuseMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Wither_Homing_Missile_Entity",
+          "method": "m_8119_",
+          "desc": "()V",
+          "sha256": "717989e72de32933116bd4f0c9b47b12691832edce78cb00cdc5e29a1007fc6b"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Wither_Homing_Missile_Entity",
+          "method": "getFuse",
+          "desc": "()I",
+          "sha256": "4b95e2ab7a1ee919639dfb54565dc60bd12a21c3e75d8de640f58f8e64927598"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Wither_Homing_Missile_Entity",
+          "method": "setFuse",
+          "desc": "(I)V",
+          "sha256": "f7b01861e9c7e1188b7ee988e46bcff8cac9f1617f8c467290d78579da8ee5f1"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Wither_Homing_Missile_Entity",
+          "method": "m_7380_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "the save: its getFuse is wrapped",
+          "sha256": "06b38d44aca0427973cf7d9d556bdc6d567aa7061590552114836c340bc11f7a"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Wither_Homing_Missile_Entity",
+          "method": "m_7378_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "the load writes the synced fuse (the countdown restarts from it)",
+          "sha256": "62d9192c2c314932675ac0e6b7b89ac2d204aa586d8da8ee74336121c8644771"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Wither_Homing_Missile_Entity",
+          "method": "*",
+          "desc": "",
+          "note": "no other method reads the fuse",
+          "sha256": "5b2cd1613ad2942df96315740ffc1b957b53f2a4d62939a255141532eb286f0d",
+          "sha256_also": [
+            {
+              "build": "cataclysm 3.31",
+              "sha256": "1c532bddbf11a03c84b9e1e7cf53dd0e18fa65db08b885c9b474a1d4532dfc4e"
+            }
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on getFuse in tick and in addAdditionalSaveData and on setFuse in tick: on server levels a countdown of the missile's own (@Unique), taken from the synced fuse at the start and whenever that changes from outside; the synced fuse is not written by the countdown (helper bons.furious.patch.cataclysm_c49.MissileFuse)",
+      "license": "L_Ender's Cataclysm (CC-BY-NC-ND-4.0): no Cataclysm code is carried; the injectors carry only our own logic (Idea: Collections Of Optimizations cataclysm.unsyncedMissileFuse, idea text only)"
+    }
+  }
+}

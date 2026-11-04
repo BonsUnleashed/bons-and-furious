@@ -1,0 +1,21 @@
+{
+  "layer": "vanilla_entity_class_count_layer",
+  "entries": [
+    {"class": "com.github.alexthe666.alexsmobs.entity.EntitySnowLeopard", "key": "alexsmobs_creeper_avoid_presence_gate",
+     "why": "Alex's Mobs 1.22.9: every creeper's AvoidEntityGoal (ServerEvents.onEntityFinalizeSpawn)"},
+    {"class": "com.github.alexthe666.alexsmobs.entity.EntityTiger", "key": "alexsmobs_creeper_avoid_presence_gate",
+     "why": "Alex's Mobs 1.22.9: every creeper's AvoidEntityGoal (ServerEvents.onEntityFinalizeSpawn)"},
+    {"class": "com.github.alexthe666.alexsmobs.entity.EntityFly", "key": "alexsmobs_spider_fly_presence_gate",
+     "why": "Alex's Mobs 1.22.9: every spider's NearestAttackableTargetGoal, randomInterval 1 (ServerEvents.onEntityFinalizeSpawn)"},
+    {"class": "net.mehvahdjukaar.dummmmmmy.common.TargetDummyEntity", "key": "dummmmmmy_scarecrow_presence_gate",
+     "why": "dummmmmmy 2.0.12: the animals' scarecrow AvoidEntityGoal and the monsters' decoy NearestAttackableTargetGoal (ModEvents.onEntityJoinWorld)"},
+    {"class": "com.misanthropy.primitive_mobs.entity.monster.Goblin", "key": "primitivemobs_avoid_presence_gate",
+     "why": "Primitive Mobs Revived 1.0.4: every villager's AvoidEntityGoal (PrimitiveMobsEvents.onEntityJoin)"},
+    {"class": "net.minecraft.world.entity.monster.ZombifiedPiglin", "key": "primitivemobs_avoid_presence_gate", "mod": "primitive_mobs",
+     "why": "Primitive Mobs Revived 1.0.4: every sheepman's AvoidEntityGoal (Sheepman.registerGoals); a common vanilla mob, so counted only with that mod"},
+    {"class": "com.github.eterdelta.crittersandcompanions.entity.KoiFishEntity", "key": "crittersandcompanions_koi_luck_presence_gate",
+     "why": "Critters and Companions 2.3.5 PlayerHandler.onPlayerTick: a koi search around every player each server tick"},
+    {"class": "io.github.bonsaistudi0s.crittersandcompanions.common.entity.KoiFishEntity", "key": "crittersandcompanions271_koi_luck_presence_gate",
+     "why": "Critters and Companions 2.7.1 PlayerHandler.onPlayerTick: the same koi search"}
+  ]
+}

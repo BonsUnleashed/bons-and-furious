@@ -1,0 +1,128 @@
+{
+  "group": "revelationfix_coo49",
+  "keys": {
+    "revelationfix_hurt_by_target_event_skip": {
+      "mod": "revelationfix",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.revelationfix_coo49.RfHurtByTargetEventSkipMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/mega/revelationfix/mixin/HurtByTargetGoalMixin",
+          "method": "canUse$head",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "HurtByTargetGoal.canUse HEAD handler: a new LivingHurtByTargetGoalEvent.CanUse from the goal's fields (phase HEAD), posted on MinecraftForge.EVENT_BUS, timestamp / alertSameType / toIgnoreAlert written back, DENY = false, ALLOW = true",
+          "sha256": "0f96c1a0d8d28859248f7c2a4b5bcee7c6f099f751faf746bb34da36288b1f50"
+        },
+        {
+          "class": "com/mega/revelationfix/mixin/HurtByTargetGoalMixin",
+          "method": "canUse$beforeIgnore",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "the same before the toIgnoreDamage loop (phase BEFORE_IGNORE)",
+          "sha256": "465c053edb57ba210072a7d9df1b09cacc112ce7adb35a71aa0bf36b8ca15799"
+        },
+        {
+          "class": "com/mega/revelationfix/mixin/HurtByTargetGoalMixin",
+          "method": "canUse$tail",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "the same before canAttack (phase TAIL)",
+          "sha256": "79b5ae1881523adf594e4e011e4efdfbaf97e6c7667d51b20969930744f946f9"
+        },
+        {
+          "class": "com/mega/revelationfix/common/event/handler/ArmorEventsHandler",
+          "method": "hurtByTargetCanUse",
+          "desc": "(Lcom/mega/revelationfix/api/event/entity/LivingHurtByTargetGoalEvent$CanUse;)V",
+          "note": "the event's only listener in the Goety family: DENY only in phase TAIL when the goal's mob is a Spider and the attacker wears the full Spider Darkmage set, otherwise nothing",
+          "sha256": "9ee9e3c763a5a9ff266fa392c6d4e17e2234899e537d3147218212039b177e3e"
+        },
+        {
+          "class": "com/mega/revelationfix/api/event/entity/LivingHurtByTargetGoalEvent",
+          "method": "*",
+          "desc": "",
+          "note": "the constructor stores the values, the getters return them (an untouched event writes back what it was built from)",
+          "sha256": "81d69bb5857b7336335adfb0bf4ac26c89e1a398e3bc6ff0ff871603028b4552"
+        },
+        {
+          "class": "com/mega/revelationfix/api/event/entity/LivingHurtByTargetGoalEvent$CanUse",
+          "method": "*",
+          "desc": "",
+          "note": "the phase is stored and returned",
+          "sha256": "e27d9a9472926fd629e4647b3f19ab2119f71652240b4fddf3972312f0a3a5e4"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/goal/target/HurtByTargetGoal",
+          "method": "m_8036_",
+          "desc": "()Z",
+          "note": "canUse: RevelationFix's three injection points (HEAD, the toIgnoreDamage read, the canAttack call)",
+          "sha256": "991900b0dcccc39e93c0e0eb845e704f35a1b8d06b31690ada09e92da7b64913"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinSquared @TargetHandler @Inject at HEAD (cancellable) of RevelationFix's HurtByTargetGoalMixin handlers canUse$head / canUse$beforeIgnore / canUse$tail merged into HurtByTargetGoal: return before the event is built when the live listener census of MinecraftForge.EVENT_BUS (forge_listener_guard's ListenerCensus, allow-list ArmorEventsHandler.hurtByTargetCanUse) answers 0 or 1 and either the phase is not TAIL or the goal's mob is not a Spider; after an answer of 'another listener' the census is asked again every 256 calls (helper bons.furious.patch.revelationfix_coo49.RfEvents)",
+      "license": "RevelationFix (All Rights Reserved): no code carried, the injectors carry only our own logic"
+    },
+    "revelationfix_outline_precheck": {
+      "mod": "revelationfix",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.revelationfix_coo49.RfOutlineScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/mega/revelationfix/mixin/gr/FontMixin",
+          "method": "drawOutLine",
+          "desc": "(Lnet/minecraft/client/gui/Font;Lnet/minecraft/util/FormattedCharSequence;FFIZLorg/joml/Matrix4f;Lnet/minecraft/client/renderer/MultiBufferSource;Lnet/minecraft/client/gui/Font$DisplayMode;IILcom/llamalad7/mixinextras/injector/wrapoperation/Operation;)I",
+          "note": "Font.drawInBatch(FormattedCharSequence, ...) drawInternal wrapper: TextColorUtils.getColorChars(sequence), then revelationfix$hasGR(map): MinecraftFont.drawInBatchF with that map when true, the original drawInternal otherwise",
+          "sha256": "9508713597bc6af3d69ff68d1ebbb48d127eb8417c4daa2a03c5646d6ef35fcb"
+        },
+        {
+          "class": "com/mega/revelationfix/mixin/gr/FontMixin",
+          "method": "revelationfix$hasGR",
+          "desc": "(Lit/unimi/dsi/fastutil/ints/Int2CharOpenHashMap;)Z",
+          "note": "true when a value of the map is ModChatFormatting.APOLLYON's or EDEN's code (an empty map: false)",
+          "sha256": "53861258b7d98be42e7fb9f15583f3215eb4e3cd7e5a43ca3cd518aad606cb58"
+        },
+        {
+          "class": "com/mega/endinglib/api/client/text/TextColorUtils",
+          "method": "getColorChars",
+          "desc": "(Lnet/minecraft/util/FormattedCharSequence;)Lit/unimi/dsi/fastutil/ints/Int2CharOpenHashMap;",
+          "note": "a new Int2CharOpenHashMap filled by one sequence.accept pass",
+          "sha256": "746edf30b5b437a736f8726a01f8c0ab7d1b771e47aec469f01918aff1c3405e",
+          "audit": true
+        },
+        {
+          "class": "com/mega/endinglib/api/client/text/TextColorUtils",
+          "method": "lambda$getColorChars$2",
+          "desc": "(Lit/unimi/dsi/fastutil/ints/Int2CharOpenHashMap;ILnet/minecraft/network/chat/Style;I)Z",
+          "note": "the sink: Optional.ofNullable(style.getColor()).ifPresent(...), then true (every character visited)",
+          "sha256": "0ff58569c9321119c17553ae844d17b2f3685632f17a985a8a69643bf43c6bf9",
+          "audit": true
+        },
+        {
+          "class": "com/mega/endinglib/api/client/text/TextColorUtils",
+          "method": "lambda$getColorChars$1",
+          "desc": "(Lit/unimi/dsi/fastutil/ints/Int2CharOpenHashMap;ILnet/minecraft/network/chat/TextColor;)V",
+          "note": "map.put(index, colour's EndingLib code)",
+          "sha256": "dc5de5b3b5c408b9f06f86ac757b35672226df6612758273a859d18fb97c05e1",
+          "audit": true
+        },
+        {
+          "class": "com/mega/endinglib/mixin/advanced/client/custom_style/TextColorMixin",
+          "method": "endinglib$getCode",
+          "desc": "()C",
+          "note": "the colour's code: a plain field read",
+          "sha256": "6531a06a63bc3c3fbb8cb213e7e57f77f77692c81cc5a631376aae5f3631c9f4",
+          "audit": true
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinSquared @TargetHandler + MixinExtras @WrapOperation on the TextColorUtils.getColorChars call inside RevelationFix's gr.FontMixin.drawOutLine handler merged into Font: one pass with a reusable sink keeps every coloured character's (index, EndingLib code) until the first APOLLYON / EDEN code; none = an empty map (RevelationFix's own test then answers no, as for the full map), found = a new map with the kept pairs and then every later coloured character, the same puts in the same order as getColorChars, an equal map (helper bons.furious.patch.revelationfix_coo49.RfOutline)",
+      "license": "RevelationFix (All Rights Reserved), EndingLib (MIT): no code carried, the wrapper carries only our own logic"
+    }
+  }
+}

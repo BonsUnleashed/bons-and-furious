@@ -1,0 +1,180 @@
+{
+  "group": "timm_c49",
+  "keys": {
+    "timm_debug_log_level": {
+      "mod": "timm",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "fix",
+      "mixins": [
+        "bons.furious.mixin.timm_c49.TimmDebugLevelMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/charlyb01/timm/Timm",
+          "method": "debugLog",
+          "desc": "(Ljava/lang/String;)V",
+          "note": "LOGGER.info(debugString), its only statement: the wrapped call",
+          "sha256": "91809631ed98e7f54da773ecf76ee7907b45c1efd802bdf8e2b2c92b8b53387d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Logger.info(String) call in Timm.debugLog: the same message to the same logger at DEBUG level. Runtime flag timmDebugLogLevel. Helper bons.furious.patch.timm_c49.TimmLogLevel.",
+      "license": "GPL-3.0 (The Immersive Music Mod): no TIMM code is carried, the wrapper only picks the log level"
+    },
+    "timm_stream_music": {
+      "mod": "timm",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "fix",
+      "mixins": [
+        "bons.furious.mixin.timm_c49.TimmSoundStreamMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/charlyb01/timm/registry/SoundEventRegistry",
+          "method": "register",
+          "desc": "(Ljava/lang/String;)V",
+          "note": "registers TIMM's sound events (timm:<event>), whose sounds.json entries name the songs timm:music/<file>, none streamed",
+          "sha256": "1756da2f7d10400ea89ba9db58b3b1fe8ad811b03878e3b334b6c80ed38a2b1a"
+        },
+        {
+          "class": "net/minecraft/client/resources/sounds/Sound",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;Lnet/minecraft/util/valueproviders/SampledFloat;Lnet/minecraft/util/valueproviders/SampledFloat;ILnet/minecraft/client/resources/sounds/Sound$Type;ZZI)V",
+          "note": "location = new ResourceLocation(location), then the fields from the arguments: f_119775_ = stream (what shouldStream returns)",
+          "sha256": "bdae47380dd969970409a12fbccb06bfc88d0f946cf3a0157f703c13a555839f"
+        },
+        {
+          "class": "net/minecraft/client/resources/sounds/Sound",
+          "method": "m_119796_",
+          "desc": "()Z",
+          "note": "shouldStream: returns the stream flag; the switch modifies its return value",
+          "sha256": "451080fcc9078f11e93724e9554a32ad21da564357b8936876b6163f1737ed7c"
+        },
+        {
+          "class": "net/minecraft/client/sounds/SoundEngine",
+          "method": "m_120312_",
+          "desc": "(Lnet/minecraft/client/resources/sounds/SoundInstance;)V",
+          "note": "play: shouldStream picks the STREAMING channel pool and SoundInstance.getStream (a stream decoded a second at a time) instead of getCompleteBuffer (a cached whole decode)",
+          "sha256": "b2012b224165a305123c4880001fba1dc1fdab321d3a2756abc933142d407ebe"
+        },
+        {
+          "class": "net/minecraft/client/sounds/SoundBufferLibrary",
+          "method": "m_120202_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Ljava/util/concurrent/CompletableFuture;",
+          "note": "getCompleteBuffer: decodes the whole file and keeps the buffer in its cache until clear() (resource reload): the growth the switch avoids",
+          "sha256": "f574cfbc736ce20725acc78789739ac9f7864c7484e7af62c87e3f39a49ffe23"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at the return of Sound's constructor with the stream flag f_119775_ @Mutable: set for a sound located in the timm namespace under music/ (TIMM's songs); every other sound keeps the flag its definition gave it, and shouldStream() (m_119796_) stays the shipped field read. Runtime flag timmStreamMusic. Helper bons.furious.patch.timm_c49.TimmStreamMusic.",
+      "license": "GPL-3.0 (The Immersive Music Mod) and Minecraft: no code carried"
+    },
+    "timm_structure_scan_idle_skip": {
+      "mod": "timm",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.timm_c49.TimmStructureIdleMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/charlyb01/timm/mixin/ServerPlayerMixin",
+          "method": "onTick",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "HEAD of ServerPlayer.doTick: creative and once-a-second tests, then structure lookups around the player; a structure leads past the 'not registered' log line only with an entry in StructurePlaylist.DISTANCE_FROM_STRUCTURE",
+          "sha256": "46ed348b917329d75369898f1b54899937d0f3d2cb1134ab3ced97f52b7ca16f"
+        },
+        {
+          "class": "com/github/charlyb01/timm/mixin/ServerPlayerMixin",
+          "method": "timm$getStructuresAroundPlayer",
+          "desc": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/StructureManager;)Ljava/util/HashMap;",
+          "note": "25 StructureManager.getAllStructuresAt lookups (5 x 5 chunks) into a new HashMap",
+          "sha256": "c5c5eb9f01e7e5f245618274f00629d3f666e5a1bbc70a428a36e6f8e8310118"
+        },
+        {
+          "class": "com/github/charlyb01/timm/mixin/ServerPlayerMixin",
+          "method": "timm$getStructureName",
+          "desc": "(Lnet/minecraft/tags/TagKey;)Ljava/lang/String;",
+          "note": "the tag's last path segment: a pure string split",
+          "sha256": "789f029fba9b1613d8bb927f7bc1f9d6d9e7ed846258755f53e76f275b5ca584"
+        },
+        {
+          "class": "com/github/charlyb01/timm/Timm",
+          "method": "debugLog",
+          "desc": "(Ljava/lang/String;)V",
+          "note": "the 'not registered' line: a log call only",
+          "sha256": "91809631ed98e7f54da773ecf76ee7907b45c1efd802bdf8e2b2c92b8b53387d"
+        },
+        {
+          "class": "net/minecraft/world/level/StructureManager",
+          "method": "m_220522_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Ljava/util/Map;",
+          "note": "getAllStructuresAt: level.getChunk(x, z, STRUCTURE_REFERENCES).getAllReferences(): a chunk lookup (it loads a chunk that is not loaded yet) and a read",
+          "sha256": "5ad8046d0933ab250a928ae07d6d2ca1ce2c3cef331a5a5a4b6e868dedf91825"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinSquared @TargetHandler + cancellable @Inject (priority 1500, require = 0, expect = 0) in TIMM's ServerPlayerMixin.onTick handler, before its ServerLevel.structureManager() call: return while StructurePlaylist.DISTANCE_FROM_STRUCTURE is empty. Runtime flag timmStructureScanIdleSkip. Helper bons.furious.patch.timm_c49.TimmStructureIdle.",
+      "license": "GPL-3.0 (The Immersive Music Mod): no TIMM code is carried, the injection only decides whether its unchanged lookups run"
+    },
+    "timm_creative_biome_playlist": {
+      "mod": "timm",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.timm_c49.TimmCreativeBiomeMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/charlyb01/timm/mixin/MinecraftMixin",
+          "method": "updateCreativeMusic",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "getSituationalMusic at Musics.CREATIVE: player != null -> getCreativeMusic(player.getRandom()), a non-null song becomes the answer",
+          "sha256": "8a9d07abc78ecbcbc32371ab98ef1b38f899f9eb039a724701b55d0e9b6eee48"
+        },
+        {
+          "class": "com/github/charlyb01/timm/mixin/MinecraftMixin",
+          "method": "updateBiomeMusic",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "TIMM's survival answer the switch reuses in creative: biome key of the player's position -> getMusicSound(key, player.getRandom())",
+          "sha256": "acd8dc4c953727e7601716e9840a0ef1e2a863fbfaf7c500708c5af131676bd5"
+        },
+        {
+          "class": "com/github/charlyb01/timm/music/BiomePlaylist",
+          "method": "getMusicSound",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/util/RandomSource;)Lnet/minecraft/sounds/Music;",
+          "note": "biome playlist song, sets CURRENT_BIOME_EVENT (the song, or undefined without one)",
+          "sha256": "4e8bc78e73adbfdfa2e922f852b68a91a00d0fb55490b8dc26c3131c6b98dbd4"
+        },
+        {
+          "class": "com/github/charlyb01/timm/music/BiomePlaylist",
+          "method": "getCreativeMusic",
+          "desc": "(Lnet/minecraft/util/RandomSource;)Lnet/minecraft/sounds/Music;",
+          "note": "creative playlist song; leaves CURRENT_BIOME_EVENT as it was",
+          "sha256": "6e0fd1384db0fcf97c5d5541e12a2a8a80dfad1d4632e88c26e7cd8b150c1917"
+        },
+        {
+          "class": "com/github/charlyb01/timm/mixin/MusicManagerMixin",
+          "method": "timm$biomeSwitch",
+          "desc": "()Z",
+          "note": "fade test: the stored biome event of the playing song against the current biome's playlist (no fade for undefined)",
+          "sha256": "eaeafd0a7e5999ae0182ec9c0f7e69e070b0ad5c3be2856a6760718104983273"
+        },
+        {
+          "class": "com/github/charlyb01/timm/mixin/MusicManagerMixin",
+          "method": "saveCurrentBiome",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "startPlaying HEAD: stores CURRENT_BIOME_EVENT for the song that starts",
+          "sha256": "af5d730f6b74030ba5f0ab24d7b9dbbd88032c7ceb5bf602fc2d51d50c4c0797"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinSquared @TargetHandler + MixinExtras @WrapOperation (priority 1500, require = 0, expect = 0) on the BiomePlaylist.getCreativeMusic call in TIMM's MinecraftMixin.updateCreativeMusic handler: BiomePlaylist.getMusicSound for the player's biome first, the creative playlist when it has no song. Runtime flag timmCreativeBiomePlaylist. Helper bons.furious.patch.timm_c49.TimmCreativePlaylist.",
+      "license": "GPL-3.0 (The Immersive Music Mod): no TIMM code is carried, the wrapper calls TIMM's own playlist methods"
+    }
+  }
+}

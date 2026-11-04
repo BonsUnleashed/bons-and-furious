@@ -1,0 +1,286 @@
+{
+  "group": "compositematerial_coo49",
+  "keys": {
+    "compositematerial_heal_scan_player_gate": {
+      "mod": "composite_material",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.compositematerial_coo49.HealScanGateMixin",
+        "bons.furious.mixin.compositematerial_coo49.PlayerAddWatchMixin"
+      ],
+      "guard": [
+        {
+          "class": "io/github/rcneg/compositematerial/common/events/HealEvents",
+          "method": "onLivingHeal",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingHealEvent;)V",
+          "note": "getEntitiesOfClass(LivingEntity, the healed entity's position inflated by 16); per element only a Player with the Dungeon Shield in a hand, isUsingItem and the shield as use item acts, unless the healed entity is such a player: heal it by the amount, sound, setCanceled; then the Degeneration check",
+          "sha256": "f5822507de47e5a3a3c510b344d715d314600ea116342e277c7e1551df9a9e7b"
+        },
+        {
+          "class": "net/minecraft/world/level/EntityGetter",
+          "method": "m_45976_",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;",
+          "note": "getEntitiesOfClass(Class, AABB) -> getEntitiesOfClass(Class, AABB, NO_SPECTATORS)",
+          "sha256": "02b741b674cda0ec6d8bfa9662b11dd0e9065674d64257adc716432fd5c3b338"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_142425_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+          "note": "getEntities: the profiler's \"getEntities\" counter, then the walk into a new list (what the skipped search does)",
+          "sha256": "f19100e812512ca77f0e46444b8eae9a444752b14c71779440b88a3270c8c94e"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "m_6907_",
+          "desc": "()Ljava/util/List;",
+          "note": "players(): the level's player list (changed only by the entity callbacks below)",
+          "sha256": "28da00f44ac7ac45b3d9d12f84a4e32075f030e57f3a0610c426417cfda79b6b"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel$EntityCallbacks",
+          "method": "m_141985_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "onTrackingStart: chunk-map tracking first, then a ServerPlayer joins the player list",
+          "sha256": "c595ca5143592d34d61d2e76a7cd6f8be1aadc2f0b118de9b913d396440e194c"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel$EntityCallbacks",
+          "method": "m_141981_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "onTrackingEnd: a ServerPlayer leaves the player list",
+          "sha256": "23408d97f21a037c2c6a1545a5bc43e5e259546308bf0c18495a8eb5b39d8c4f"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "addEntityWithoutEvent",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;Z)Z",
+          "note": "the one way into the storage (addNewEntity, addNewEntityWithoutEvent, chunk loads): section add, then startTracking when the effective status is accessible (always for an always-ticking entity)",
+          "sha256": "9f249a76b2d687d1b14c6249858fcd2caf8ac2674614d08c7c50b2a27f9b0039"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel$EntityCallbacks",
+          "method": "m_141989_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "onCreated: empty (between the section add and the tracking start only vanilla bookkeeping runs)",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/minecraft/util/ClassInstanceMultiMap",
+          "method": "m_13533_",
+          "desc": "(Ljava/lang/Class;)Ljava/util/Collection;",
+          "note": "find: the per-class list, filtered from the one insertion-ordered list on first use",
+          "sha256": "a49de841cb1459b26864ff7fa940d4f489408b4ee3e9a867f37ef55c6c47b25b"
+        },
+        {
+          "class": "net/minecraft/util/ClassInstanceMultiMap",
+          "method": "add",
+          "desc": "(Ljava/lang/Object;)Z",
+          "note": "add: appended to the list and to every per-class list it is an instance of (the order kept)",
+          "sha256": "52cc5bb96ff1cfbb048bc7db4b49b913c05e16e0546b8ee8add05e2bc21416b6"
+        },
+        {
+          "class": "net/minecraft/util/ClassInstanceMultiMap",
+          "method": "remove",
+          "desc": "(Ljava/lang/Object;)Z",
+          "note": "remove: from the list and from every per-class list",
+          "sha256": "0e9752c3987c15142378127ad72913253ab7b8d7832750e5c21ff14673aed843"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntitySection",
+          "method": "m_188348_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/world/phys/AABB;Lnet/minecraft/util/AbortableIterationConsumer;)Lnet/minecraft/util/AbortableIterationConsumer$Continuation;",
+          "note": "getEntities(test, box, consumer): find(the test's base class), tryCast, box test, in list order (a Player search sees the players of the LivingEntity search in its order)",
+          "sha256": "aef08856b2685fedfb6113b519ef7409cd7e289239f24bb04f1965c44db5ca11"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/mixin/collections/entity_filtering/TypeFilterableListMixin",
+          "method": "m_13533_",
+          "desc": "(Ljava/lang/Class;)Ljava/util/Collection;",
+          "note": "audited (Radium 0.14.3): ClassInstanceMultiMap.find overwrite: the kept per-class list or createAllOfType; no other effect",
+          "audit": true,
+          "sha256": "3856015bd875d4581a041adb91c60b687d65ab7336335210fadc2ac82b995ccb"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/mixin/collections/entity_filtering/TypeFilterableListMixin",
+          "method": "createAllOfType",
+          "desc": "(Ljava/lang/Class;)Ljava/util/Collection;",
+          "note": "audited: a new list of the insertion-ordered list's instances of the class, kept per class (the same order as vanilla's)",
+          "audit": true,
+          "sha256": "7b3c6f4764202d9de694d4922d56587e53c9f2d85c27cd0c6323138f70e36bca"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157535_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;Lnet/minecraft/world/level/entity/Visibility;)Lnet/minecraft/world/level/entity/Visibility;",
+          "note": "getEffectiveStatus: TICKING for an always-ticking entity",
+          "sha256": "aa2e35c96a8e70e5a97a05848109a364a52ba4cde46da20fa901bb361b6f3b9e"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157575_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)V",
+          "note": "startTracking: entity lookup add, then onTrackingStart",
+          "sha256": "79a3fdf93142494d7daf8f10eaab0b19249ec3fd0c518a5d4a355db5ebb6ce99"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157580_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)V",
+          "note": "stopTracking: onTrackingEnd, then entity lookup remove",
+          "sha256": "345e044baecdd13fde3ae6609100b0908fab13a59fe5cb457e886702845e97b3"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157543_",
+          "desc": "(Lnet/minecraft/world/level/entity/Visibility;Lnet/minecraft/world/level/entity/EntitySection;)V",
+          "note": "a section's chunk status change: tracking and ticking start or stop only for entities that are not always ticking (the four filters below)",
+          "sha256": "73470f4311931346295585d6f02d423648580171d6b992f6904ccf27d2cfe880"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157596_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)Z",
+          "note": "filter: !isAlwaysTicking()",
+          "sha256": "c12e930be69fe2631bd589e750dffe2b4616deb3fad0565f878065bb78175863"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157598_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)Z",
+          "note": "filter: !isAlwaysTicking()",
+          "sha256": "c12e930be69fe2631bd589e750dffe2b4616deb3fad0565f878065bb78175863"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157600_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)Z",
+          "note": "filter: !isAlwaysTicking()",
+          "sha256": "c12e930be69fe2631bd589e750dffe2b4616deb3fad0565f878065bb78175863"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157602_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)Z",
+          "note": "filter: !isAlwaysTicking()",
+          "sha256": "c12e930be69fe2631bd589e750dffe2b4616deb3fad0565f878065bb78175863"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager$Callback",
+          "method": "m_142472_",
+          "desc": "(Lnet/minecraft/world/entity/Entity$RemovalReason;)V",
+          "note": "onRemove: the section removal comes before stopTracking",
+          "sha256": "377482e87cedb2c805abe66b559e7c7c0160dd2d99a062515e634cc099f8d4ac"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager$Callback",
+          "method": "m_157620_",
+          "desc": "(Lnet/minecraft/world/level/entity/Visibility;Lnet/minecraft/world/level/entity/Visibility;)V",
+          "note": "updateStatus (section moves): tracking changes only when the effective status changes, never for an always-ticking entity",
+          "sha256": "56944e613dfccd0bd6f20cc9148106abeb4c0fd672efbf23bc2660d9e2a622d5"
+        },
+        {
+          "class": "net/minecraft/world/entity/player/Player",
+          "method": "m_142389_",
+          "desc": "()Z",
+          "note": "isAlwaysTicking: true for every player",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/minecraft/world/entity/player/Player",
+          "method": "m_6844_",
+          "desc": "(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;",
+          "note": "getItemBySlot: reads the inventory",
+          "sha256": "705bc937e6ec3e8321b1ac4ee87b9c4105b907ed7525d3ce5d11ef9c5f62c954"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_6117_",
+          "desc": "()Z",
+          "note": "isUsingItem: the living-entity flags byte",
+          "sha256": "f1976f8dad9e915489bad7c2ba401746eaa8fdb2f390b1c26409ff2e77a975d0"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21211_",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "getUseItem: the useItem field",
+          "sha256": "bd2b08a165c42cc4f7353befb7c970cadf6f38ad7ae27d8f756f31e696a8eeb1"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_150930_",
+          "desc": "(Lnet/minecraft/world/item/Item;)Z",
+          "note": "is(Item): getItem() == item",
+          "sha256": "c86f1f6d54703519c2d4d8c5537a9020c76acc703dd19a491c36d3dbcbf84eea"
+        },
+        {
+          "class": "net/minecraftforge/registries/RegistryObject",
+          "method": "get",
+          "desc": "()Ljava/lang/Object;",
+          "note": "the value, or NullPointerException while the object is not registered",
+          "sha256": "fca6e41a830dbc70c673eb72f4c2a3f21ca6007db3223708c95e3046db89ee3f"
+        },
+        {
+          "class": "net/minecraftforge/registries/RegistryObject",
+          "method": "isPresent",
+          "desc": "()Z",
+          "note": "value != null",
+          "sha256": "147854b0b7fc5ee77b48f34522f3cab3b6b0cc1a1b46bd919ec12b8a83ceeed7"
+        },
+        {
+          "class": "net/bettercombat/mixin/PlayerEntityMixin",
+          "method": "getEquippedStack_Pre",
+          "desc": "(Lnet/minecraft/world/entity/EquipmentSlot;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "audited (Better Combat 1.8.6, our pack's only hook on getItemBySlot): reads the hand stacks and the weapon registry, answers an empty off hand for two-handed weapons; no other effect",
+          "audit": true,
+          "sha256": "714fe8a5fbeab7d700be58df7e513f85d7760e1ed6b8dd6b11839d6b0fd4fc36"
+        },
+        {
+          "class": "forge/me/thosea/badoptimizations/mixin/entitydata/MixinLivingEntity",
+          "method": "m_6117_",
+          "desc": "()Z",
+          "note": "audited (BadOptimizations 2.4.1, client pack): its isUsingItem overwrite reads its cached flag; no other effect",
+          "audit": true,
+          "sha256": "01a8f8e1890849b578728881e2c53ea6b4de2c7f90b9953b3417f17a1b75d3a3"
+        },
+        {
+          "class": "org/betterx/bclib/mixin/common/ItemStackMixin",
+          "method": "bclib_replaceFunction",
+          "desc": "(Lnet/minecraft/world/item/Item;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "audited (BCLib 20.0.16): HEAD of ItemStack.is(Item): MethodReplace.getItemReplace(item); a replacement answers only for the item it was armed for",
+          "audit": true,
+          "sha256": "980b51a2a341504ea72e727c25d7eddbaf963f76f00d5e3ed76f4e87501c2fc2"
+        },
+        {
+          "class": "org/betterx/bclib/util/MethodReplace",
+          "method": "getItemReplace",
+          "desc": "(Lnet/minecraft/world/item/Item;)Ljava/util/function/Function;",
+          "note": "audited: null (no effect) unless the item is the armed one, which it then consumes; BCLib arms it only with Items.SHEARS (its six shears mixins), never the Dungeon Shield",
+          "audit": true,
+          "sha256": "95a7e6ea168cf6c4b5872a86026667fabbc41595deb7b7a6bc7055899466511f"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/forge_registry_lambda/RegistryObjectMixin",
+          "method": "get",
+          "desc": "()Ljava/lang/Object;",
+          "note": "audited (ModernFix 5.27.89): RegistryObject.get overwrite: the value or the same NullPointerException, without the lambda; no other effect",
+          "audit": true,
+          "sha256": "946a1d668294edb553f2e1fde959df2b35aff83292b5e736a3d138b400f0749b"
+        },
+        {
+          "class": "me/jellysquid/mods/lithium/mixin/chunk/entity_status_iteration/ServerEntityManagerMixin",
+          "method": "iterateSnapshot",
+          "desc": "(Lnet/minecraft/world/level/entity/EntitySection;)Ljava/util/stream/Stream;",
+          "note": "audited (Radium 0.14.3): the chunk status change walks a snapshot of the section's entities; the always-ticking filters are kept",
+          "audit": true,
+          "sha256": "dc1b902a43727385a5294faa5349f301865020bd45c14cd367fe86803e2b2240"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of level.getEntitiesOfClass(LivingEntity.class, box) in HealEvents.onLivingHeal (the event captured from the handler's argument): on a ServerLevel (exact class) whose player list holds no player whose use item is the Dungeon Shield, or when the healed entity is a player blocking with it, an empty list without the search; while one uses it, the same search for Player.class (the loop acts on players only: the same players in the same order), which also answers client levels, a player's tracking start in progress and a stepped-aside session; the search as shipped only with the flag off or the shield unregistered. @Redirect (require 0) of the startTracking call in Forge's PersistentEntitySectionManager.addEntityWithoutEvent: for a player the gate steps aside during it, and for good when the player is not on its level's player list afterwards or it throws; the gate also stands aside until that redirect has run once, so it stands aside when another mod redirects Forge's entity-tracking call (Mixin keeps one redirect, the one of higher priority: ours has priority 500, so another mod's at the default 1000 or above makes it skip ours with a \"@Redirect conflict\" warning, and with require 0 / expect 0 the game starts); helper bons.furious.patch.compositematerial_coo49.HealScanGate",
+      "license": "MIT (Composite Material): no Composite Material code is carried; the gate repeats its one-line blocking test on the level's player list"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "group": "vanilla_render_tradeoffs",
+  "keys": {
+    "vanilla_armor_layer_bake_reuse": {
+      "mod": "minecraft",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_render_tradeoffs.ArmorModelDepthMixin",
+        "bons.furious.mixin.vanilla_render_tradeoffs.EntityModelSetBakeReuseMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraftforge/client/ForgeHooksClient",
+          "method": "getArmorModel",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/client/model/HumanoidModel;)Lnet/minecraft/client/model/Model;",
+          "note": "IClientItemExtensions.of(stack).getGenericArmorModel(...)",
+          "sha256": "bafcf904d42b8fcfcf71d54db83383a9604c7f1146d7c5586561e0ac5c53e4c7"
+        },
+        {
+          "class": "net/minecraftforge/client/extensions/common/IClientItemExtensions",
+          "method": "getGenericArmorModel",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/client/model/HumanoidModel;)Lnet/minecraft/client/model/Model;",
+          "note": "getHumanoidArmorModel, then copyModelProperties when it differs from the default",
+          "sha256": "b7cddf9d540880d096402e160a02b65451d24621e4915a08b21373f549e7f2e4"
+        },
+        {
+          "class": "net/minecraftforge/client/ForgeHooksClient",
+          "method": "copyModelProperties",
+          "desc": "(Lnet/minecraft/client/model/HumanoidModel;Lnet/minecraft/client/model/HumanoidModel;)V",
+          "note": "copies the pose and the visibility of the seven top-level humanoid parts only (the documented carry-over below them)",
+          "sha256": "27101a6b57f0ba9abac6944d91a3cfd67bdc18d41916a8ce8e5fd0c8fbc78ff2"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/EntityModelSet",
+          "method": "m_171103_",
+          "desc": "(Lnet/minecraft/client/model/geom/ModelLayerLocation;)Lnet/minecraft/client/model/geom/ModelPart;",
+          "note": "bakeLayer: roots.get(layer) or IllegalArgumentException, then LayerDefinition.bakeRoot()",
+          "sha256": "df4bd904321802b62266039d6835e258746f9129af39614b7c8d97d30d497a48"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/EntityModelSet",
+          "method": "m_6213_",
+          "desc": "(Lnet/minecraft/server/packs/resources/ResourceManager;)V",
+          "note": "onResourceManagerReload: roots = copyOf(LayerDefinitions.createRoots())",
+          "sha256": "41beee396559b4b9d19e2fd3d3b9d48ce85eb6d9d7d7840f73692ec6b7d026b2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod around ForgeHooksClient.getArmorModel (depth counter on the render thread) and around EntityModelSet.bakeLayer (m_171103_: the layer's first tree handed back while the depth is above 0); @Inject HEAD and RETURN of EntityModelSet.onResourceManagerReload (m_6213_) drop the memo; helper bons.furious.patch.vanilla_render_tradeoffs.ArmorBakeReuse",
+      "license": "Minecraft (Mojang) and Forge (LGPL-2.1): no code carried; our wrappers only decide whether the unchanged methods run"
+    },
+    "vanilla_item_entity_render_cap": {
+      "mod": "minecraft",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_render_tradeoffs.ItemEntityRenderCapMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/renderer/entity/ItemEntityRenderer",
+          "method": "m_115042_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "note": "getRenderAmount: 1 / 2 (>1) / 3 (>16) / 4 (>32) / 5 (>48)",
+          "sha256": "e714c6f55b65a4e8169215e7d40d36dd5d0b601cc9341a79787b1a99895510f6"
+        },
+        {
+          "class": "net/minecraft/client/renderer/entity/ItemEntityRenderer",
+          "method": "m_7392_",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+          "note": "render: reseeds its random from the item before the copy loop, so fewer copies change nothing else",
+          "sha256": "26ad84812d85766a110d5af694706a61a278d3c9ed088374e9d17a70b5ed76ff"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyReturnValue on ItemEntityRenderer.getRenderAmount (m_115042_): min(vanilla_item_entity_render_cap.value, vanilla's count); helper bons.furious.patch.vanilla_render_tradeoffs.ItemRenderCap",
+      "license": "Minecraft (Mojang): no code carried"
+    }
+  }
+}

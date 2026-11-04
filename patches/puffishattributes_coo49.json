@@ -1,0 +1,83 @@
+{
+  "group": "puffishattributes_coo49",
+  "keys": {
+    "puffish_attributes_empty_modifier_fast_path": {
+      "mod": "puffish_attributes",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.puffishattributes_coo49.PuffishModificationMixin",
+        "bons.furious.mixin.puffishattributes_coo49.PuffishModifierMapAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/puffish/attributesmod/util/DynamicModificationImpl",
+          "method": "with",
+          "desc": "(Lnet/puffish/attributesmod/util/Signed;)Lnet/puffish/attributesmod/api/DynamicModification;",
+          "note": "attributes.add(signed); return this (every entry goes into the list the fast path reads, null instances too)",
+          "sha256": "b576079d61e6b2e73d13b6bfb5c7168f73796fa38eb327920df562f1f90db22b"
+        },
+        {
+          "class": "net/puffish/attributesmod/util/DynamicModificationImpl",
+          "method": "with",
+          "desc": "(Lnet/puffish/attributesmod/util/Sign;Lnet/minecraft/world/entity/ai/attributes/Attribute;Lnet/minecraft/world/entity/LivingEntity;)Lnet/puffish/attributesmod/api/DynamicModification;",
+          "note": "non-dynamic attribute throws; with(sign.wrap(entity.getAttribute(attribute))): the entry is built before the add",
+          "sha256": "77c4b1486c26f03aba72ce098e8bfeb612666b8f32d7eee575d1e2bc0508789d"
+        },
+        {
+          "class": "net/puffish/attributesmod/util/DynamicModificationImpl",
+          "method": "applyTo",
+          "desc": "(D)D",
+          "note": "four passes over the list (ADDITION, MULTIPLY_BASE, MULTIPLY_TOTAL through the invoker, then sanitizeValue), each skipping entries with a null value",
+          "sha256": "fcf04b8938eaae2684ac0f7a0e4067a66dc2fa4377431ae1843e75e54723d834"
+        },
+        {
+          "class": "net/puffish/attributesmod/util/DynamicModificationImpl",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: only <init>, with(Signed) and applyTo(D) touch the private list (the other applyTo / relativeTo forms call applyTo(D))",
+          "sha256": "0a1b0b2d5f5afc8603b2048ed31997d50866fb73e14c0f0d85894271b6ff4b2c"
+        },
+        {
+          "class": "net/puffish/attributesmod/util/Sign",
+          "method": "wrap",
+          "desc": "(Ljava/lang/Object;)Lnet/puffish/attributesmod/util/Signed;",
+          "note": "new Signed(this, value)",
+          "sha256": "e82d9da64c9f73f578969ba8125aabc1002bd6bfe3fcb3caa91dcf977557bd30"
+        },
+        {
+          "class": "net/puffish/attributesmod/util/Signed",
+          "method": "value",
+          "desc": "()Ljava/lang/Object;",
+          "note": "record accessor",
+          "sha256": "4041a7cd27e7be2a318da84b00248f9cd3a4094de19389bb8a5aba6e9db3ed0b"
+        },
+        {
+          "class": "net/puffish/attributesmod/mixin/EntityAttributeInstanceInvoker",
+          "method": "*",
+          "desc": "",
+          "note": "the mod's invoker of AttributeInstance.getModifiersOrEmpty (refmap m_22116_), the only collection read the fast path makes",
+          "sha256": "e1f3ca2995d31e54f23c594e8cd947d53182e26443e18764f60d262852b2151d"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22116_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;)Ljava/util/Collection;",
+          "note": "getModifiersOrEmpty: modifiersByOperation.getOrDefault(op, emptySet()), a pure read",
+          "sha256": "17012668c5189308df62ff4870f74b099c2a4d46facaa9bcad5c6cdde37f67f2"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/Attribute;Ljava/util/function/Consumer;)V",
+          "note": "modifierById (f_22090_, read by the accessor): an Object2ObjectArrayMap made with the instance; a modifier in it sends the call to the original",
+          "sha256": "92a5f5371f630cb1e2c6d3b5a1acf214d772a2ae9f5978634ce76df88fe6db73"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Cancellable @Inject at the HEAD of DynamicModificationImpl.applyTo(double): when no entry has an ADDITION, MULTIPLY_BASE or MULTIPLY_TOTAL modifier (each instance's modifier map read first through the accessor PuffishModifierMapAccessor, a modifier there ends the test; then the three operation sets through the mod's own invoker, what its passes read) the answer is the sanitizeValue chain alone, the value the original's four passes compute then; otherwise the original. Entries with a null instance are skipped as the passes skip them. Trade-off (off by default): same results, but against the mod's own class (each path in its own JVM) a stealth check of a target with a modifier runs 0.963x (the six-attribute hook with one modifier 1.000x), while modifier-free hooks run 1.06-1.37x faster. Runtime flag puffishAttributesEmptyModifierFastPath. Helper bons.furious.patch.puffishattributes_coo49.PuffishLean.",
+      "license": "Pufferfish's Attributes (LGPL-3.0): no code carried; the test is ours"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "group": "vanilla_report_reuse",
+  "keys": {
+    "vanilla_system_report_hardware_reuse": {
+      "mod": "minecraft",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_report_reuse.SystemReportHardwareMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/SystemReport",
+          "method": "m_143535_",
+          "desc": "(Loshi/SystemInfo;)V",
+          "sha256": "816248004e82f6b710ae269294a71ab0dca714e7a6f3fd1d4ed564f0893408fa"
+        },
+        {
+          "class": "net/minecraft/SystemReport",
+          "method": "m_143541_",
+          "desc": "(Loshi/hardware/GlobalMemory;)V",
+          "sha256": "ba8be59d32fa4de3dd581a3b9a267445a1a2a8864e3af8e2b4eea74044499111"
+        },
+        {
+          "class": "net/minecraft/SystemReport",
+          "method": "m_143516_",
+          "desc": "(Ljava/lang/String;Ljava/lang/Runnable;)V",
+          "sha256": "1c846e7b6d05c0f1cf4e637e998193efcbaefff220ecbf76bbdec0e384c16f44"
+        },
+        {
+          "class": "net/minecraft/SystemReport",
+          "method": "m_143519_",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)V",
+          "sha256": "6422e343dc0ecab9347ef6db27811e50deefc0db4213545eb197f90f718260c5"
+        },
+        {
+          "class": "net/minecraft/SystemReport",
+          "method": "m_143522_",
+          "desc": "(Ljava/lang/String;Ljava/util/function/Supplier;)V",
+          "sha256": "e31669162664e3e7018d6ddc961f9ca4387fd483500e2dbb36c803fbe13a87c7"
+        },
+        {
+          "class": "net/minecraft/SystemReport",
+          "method": "*",
+          "desc": "",
+          "sha256": "15603f758dd7584fdf7dd385e6f8799a32b2d3fce62cddab220c0570141509d6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the ignoreErrors (m_143516_) calls of putHardware (m_143535_) and putMemory (m_143541_): the first successful processor / graphics / physical memory group's detail lines are kept and written again (setDetail m_143519_, same order) by later reports instead of querying OSHI",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_report_reuse.HardwareLines)"
+    }
+  }
+}

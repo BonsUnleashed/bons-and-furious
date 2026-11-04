@@ -15,15 +15,20 @@ import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.transformer.meta.MixinMerged;
 
 /**
- * Bons and Furious switch forge_render_layer_memo (Forge 47.4.16 with Oculus 1.8.0, client).
+ * Bons and Furious switch forge_render_layer_memo (Forge 47.4.28, with or without Oculus 1.8.0, client).
  *
- * Chunk meshing asks ItemBlockRenderTypes.getRenderLayers(state) for every block. Oculus's mixin first looks the block up
- * in the shader pack's block-type map, then Forge looks it up in its render-type map; both lookups go through the block's
- * registry delegate and a hash map. For every block except leaves the answer depends only on the block, the map object
- * Oculus holds (a shader reload replaces it) and Forge's map (written only by setRenderLayer, while the client loads), so
- * each block now remembers its answer together with the Oculus map and a version that advances at the start and at the
- * return of setRenderLayer. A remembered answer is used only while both are unchanged; anything else runs the whole
- * original method, Oculus's lookup and every other mod's hook included (the mixin wraps the method, it does not replace it).
+ * Chunk meshing asks ItemBlockRenderTypes.getRenderLayers(state) for every block. Forge looks the block up in its
+ * render-type map through the block's registry delegate and a hash map; with Oculus installed, Oculus's mixin first looks
+ * the block up in the shader pack's block-type map the same way. For every block except leaves the answer depends only on
+ * the block, Forge's map (written only by setRenderLayer, while the client loads) and, with Oculus, the map object Oculus
+ * holds (a shader reload replaces it). So each block remembers its answer together with that Oculus map (a fixed marker
+ * when Oculus is not installed: there is no such map then) and a version that advances at the start and at the return of
+ * setRenderLayer. A remembered answer is used only while both are unchanged; anything else runs the whole original
+ * method, Oculus's lookup and every other mod's hook included (the mixin wraps the method, it does not replace it).
+ *
+ * Without Oculus nothing else changes: the same per-block slot, the same version rule, the same leaves rule. Oculus's
+ * classes are touched only when Oculus is installed (the lookup sits in its own nested class, so this class loads and
+ * runs without them).
  *
  * Leaves are never remembered: their answer follows the fancy-graphics flag, which Embeddium redirects to its own leaves
  * quality setting. And the memo stays off when ItemBlockRenderTypes carries a mixin this switch does not know (its hook
@@ -65,7 +70,7 @@ public final class RenderLayerMemo {
     public static ChunkRenderTypeSet layers(BlockState state, Operation<ChunkRenderTypeSet> original) {
         Block block = state.m_60734_();
         if (!enabled || block instanceof LeavesBlock || !neighboursKnown()) return original.call(state);
-        Object shaderMap = WorldRenderingSettings.INSTANCE.getBlockTypeIds();
+        Object shaderMap = ShaderPackMap.current();
         int version = VERSION.get();
         Remembered r = (Remembered) block;
         if (r.bons$renderLayers() instanceof Entry e && e.version() == version && e.shaderMap() == shaderMap) return e.layers();
@@ -81,6 +86,11 @@ public final class RenderLayerMemo {
 
     public static int version() {
         return VERSION.get();
+    }
+
+    /** True when Oculus's block-type map is part of the answer (Oculus is installed). */
+    public static boolean shaderPackMapInUse() {
+        return ShaderPackMap.OCULUS;
     }
 
     private static boolean neighboursKnown() {
@@ -103,5 +113,34 @@ public final class RenderLayerMemo {
             neighbours = n;
         }
         return n == 1;
+    }
+
+    /**
+     * The shader pack's block-type map object Oculus holds, or NO_SHADER_PACK_MAP when Oculus is not installed. Whether
+     * Oculus is there is decided once, the first time a block is asked, without initialising any Oculus class.
+     */
+    private static final class ShaderPackMap {
+        static final Object NO_SHADER_PACK_MAP = new Object();
+        static final boolean OCULUS = present("net.irisshaders.iris.shaderpack.materialmap.WorldRenderingSettings");
+
+        static Object current() {
+            return OCULUS ? OculusBlockTypes.map() : NO_SHADER_PACK_MAP;
+        }
+
+        private static boolean present(String name) {
+            try {
+                Class.forName(name, false, RenderLayerMemo.class.getClassLoader());
+                return true;
+            } catch (ClassNotFoundException | LinkageError e) {
+                return false;
+            }
+        }
+    }
+
+    /** Oculus's map (the same call as before 1.0.49); loaded only when Oculus is installed. */
+    private static final class OculusBlockTypes {
+        static Object map() {
+            return WorldRenderingSettings.INSTANCE.getBlockTypeIds();
+        }
     }
 }

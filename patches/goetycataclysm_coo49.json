@@ -1,0 +1,149 @@
+{
+  "group": "goetycataclysm_coo49",
+  "keys": {
+    "goety_cataclysm_golem_types_once": {
+      "mod": "goety_cataclysm",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "fix",
+      "mixins": [
+        "bons.furious.mixin.goetycataclysm_coo49.GcGolemTypesOnceMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/Polarice3/goety_cataclysm/init/GCGolemTypes",
+          "method": "addGolems",
+          "desc": "()V",
+          "note": "five addGolem calls (ENDER_GOLEM, CORAL_GOLEM, CORALSSUS_FIRE / HORN / TUBE), each with a new stateless mold",
+          "sha256": "72b633c839a7e8bb77f0974af656c0f9126629387606a44056020468fc05806d"
+        },
+        {
+          "class": "com/Polarice3/goety_cataclysm/init/GCGolemTypes",
+          "method": "addGolem",
+          "desc": "(Ljava/lang/String;Ljava/util/function/Supplier;Lcom/Polarice3/Goety/api/magic/IMold;)Lcom/Polarice3/Goety/api/magic/GolemType;",
+          "note": "GolemType.create(name, state, mold) + NEW_GOLEM_TYPES.add",
+          "sha256": "0915fcb99153ae5b4361cb549bf4a21292633bf3237f9fe38afcaa8c1ecfb7fc"
+        },
+        {
+          "class": "com/Polarice3/goety_cataclysm/common/events/GCEvents",
+          "method": "worldLoad",
+          "desc": "(Lnet/minecraftforge/event/level/LevelEvent$Load;)V",
+          "note": "the only caller: every LevelEvent.Load",
+          "sha256": "50eba43ae5e2231170d48ad07ec072a1fc718dc0c9d94aa4ab0f0c484d0d38a6"
+        },
+        {
+          "class": "com/Polarice3/Goety/api/magic/GolemType",
+          "method": "getMolds",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;)Ljava/util/List;",
+          "note": "walks values() in order: the first-registered mold of a state comes first either way",
+          "sha256": "d8c213b75ee740ff0fb87695bc2825893641020a217ef36170e732471abcd37f",
+          "sha256_also": [
+            {
+              "build": "gc 1.7.0 + goety 2.5.58.4",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "com/Polarice3/Goety/api/magic/GolemType",
+          "method": "getGolemList",
+          "desc": "()Ljava/util/Map;",
+          "note": "state -> mold over values(): with duplicates a later mold object of the same stateless class",
+          "sha256": "76dbeff4b5454e75369266428e158bb1470b1527197ea0e74840da0ecf91d7e8"
+        },
+        {
+          "class": "com/Polarice3/Goety/api/magic/GolemType",
+          "method": "spawnServant",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "first mold with a valid structure, else the first mold: the same class either way",
+          "sha256": "924c4345b870a2cad76860f4ca5041d94b9b9a0a3d93450435bfd7a18eca1112",
+          "sha256_also": [
+            {
+              "build": "gc 1.7.0 + goety 2.5.58.4",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "com/Polarice3/goety_cataclysm/common/magic/construct/EnderGolemMold",
+          "method": "*",
+          "desc": "",
+          "note": "stateless: only static final fields",
+          "sha256": "3681d3c0350785060ed516ce6d418536f2953937eb778c3b61a5401a7183688d"
+        },
+        {
+          "class": "com/Polarice3/goety_cataclysm/common/magic/construct/CoralGolemMold",
+          "method": "*",
+          "desc": "",
+          "note": "stateless: only static final fields",
+          "sha256": "c583392c20ce79fb36f3a95ee44d820a35c0869df4120306750c144b7cb4f81f"
+        },
+        {
+          "class": "com/Polarice3/goety_cataclysm/common/magic/construct/CoralssusMold",
+          "method": "*",
+          "desc": "",
+          "note": "stateless: only static final fields",
+          "sha256": "df2d888ce14316ed3fdb3ab8fe444b68f7e74e2d7c953967e6e7f3101a994cfa"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on GCGolemTypes.addGolems: the first call that completes runs the original (five GolemType.create + NEW_GOLEM_TYPES entries), later calls (every further LevelEvent.Load) are skipped (helper bons.furious.patch.goetycataclysm_coo49.GcGolems)",
+      "license": "Goety Cataclysm (all rights reserved): no code carried, the wrapper carries only our own logic"
+    },
+    "goety_cataclysm_golem_unload_skip": {
+      "mod": "goety_cataclysm",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goetycataclysm_coo49.GcGolemUnloadSkipMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/Polarice3/goety_cataclysm/common/events/GCEvents",
+          "method": "worldUnload",
+          "desc": "(Lnet/minecraftforge/event/level/LevelEvent$Unload;)V",
+          "note": "values() clone; per constant NEW_GOLEM_TYPES.contains and an ArrayUtils.remove copy whose result is discarded; no field writes",
+          "sha256": "2ad20486594f95b14543f1483667b2b458c37a52cbd638f4f0656fc2b009d0b1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at HEAD (cancellable) of GCEvents.worldUnload: returns at once (helper bons.furious.patch.goetycataclysm_coo49.GcGolems.skipSweep)",
+      "license": "Goety Cataclysm (all rights reserved): no code carried, the injector carries only our own logic"
+    },
+    "goety_cataclysm_want_looting_key_check": {
+      "mod": "goety_cataclysm",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.goetycataclysm_coo49.GcWantLootingKeyMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/Polarice3/goety_cataclysm/common/events/GCEvents",
+          "method": "LootEvents",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LootingLevelEvent;)V",
+          "note": "direct.getType().getDescription().getString().contains(\"cataclysm\") || ...contains(\"goety_cataclysm\"): the two wrapped reads feed only these tests",
+          "sha256": "55bd9c8e3cae5f7ecfa44a2e2e92190e927c96449cbcec6e54545ed6fd2b9625"
+        },
+        {
+          "class": "net/minecraft/world/entity/EntityType",
+          "method": "m_20676_",
+          "desc": "()Lnet/minecraft/network/chat/Component;",
+          "note": "getDescription = Component.translatable(getDescriptionId()), kept",
+          "sha256": "878560eeacd37b73c51c76652152af0fd226aa07f561d661fc4f039116a1077c"
+        },
+        {
+          "class": "net/minecraft/world/entity/EntityType",
+          "method": "m_20675_",
+          "desc": "()Ljava/lang/String;",
+          "note": "getDescriptionId = entity.<namespace>.<path>",
+          "sha256": "179c8c15e008ce77e9d3bfc5781bc3e27c4e5b4d616e1a82482735f28e9dc144"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Component.getString() calls of GCEvents.LootEvents (require 1, allow 2): for a translatable type description its key, otherwise the original text (helper bons.furious.patch.goetycataclysm_coo49.GcGolems.lootName)",
+      "license": "Goety Cataclysm (all rights reserved): no code carried, the wrapper carries only our own logic"
+    }
+  }
+}

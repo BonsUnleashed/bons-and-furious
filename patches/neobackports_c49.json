@@ -1,0 +1,54 @@
+{
+  "group": "neobackports_c49",
+  "keys": {
+    "neobackports_component_defaults_memo": {
+      "mod": "neobackports",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.neobackports_c49.DataDefaultMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/nikdo53/neobackports/io/components/DataDefault",
+          "method": "getDefaults",
+          "desc": "()Ljava/util/Map;",
+          "note": "ImmutableMap.copyOf(DEFAULT_DATA_COMPONENTS_REGISTERED); byte-identical in 1.4.2 (Starcatcher 3.3.10, nested twice)",
+          "sha256": "008ade949f0cffa2fed786cd33859fd0ecd34a06a39d79350ac8f283c26c49c9"
+        },
+        {
+          "class": "net/nikdo53/neobackports/io/components/DataDefault",
+          "method": "overrideDefault",
+          "desc": "(Lnet/minecraft/world/item/Item;Lnet/nikdo53/neobackports/io/components/DataDefault;)V",
+          "note": "the only writer: computeIfAbsent(item, new HashMap).put(component, data)",
+          "sha256": "90f4e75200bacbeb2b291e94c88ee069f57393fa1488396d8799bcea1d02273b"
+        },
+        {
+          "class": "net/nikdo53/neobackports/io/components/DataDefault",
+          "method": "registerDefault",
+          "desc": "(Lnet/minecraft/world/item/Item;Lnet/nikdo53/neobackports/io/components/DataDefault;)V",
+          "note": "reads, then overrideDefault",
+          "sha256": "69b4f26ca6d0f2d6aa2c6df6c189829328060195c0269bce153c8c6ac7493efc"
+        },
+        {
+          "class": "net/nikdo53/neobackports/io/components/DataDefault",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: every write path funnels into overrideDefault; no other class names the field (jar scan)",
+          "sha256": "0c68646e8533eccf271e37252e23d96b302186cff3c9c467fab56eaa3bd56739"
+        },
+        {
+          "class": "net/nikdo53/neobackports/io/components/DataDefault",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "DEFAULT_DATA_COMPONENTS_REGISTERED = new HashMap() (private static final)",
+          "sha256": "d550e5dfa836c254658d137a0a241dce2aa95d6e6df62e1226de20e50bc53383"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on ImmutableMap.copyOf in DataDefault.getDefaults (the copy kept while the generation is unchanged, helper bons.furious.patch.neobackports_c49.DefaultsCopy); @Inject HEAD+RETURN of the private overrideDefault(Item, DataDefault) bumps the generation",
+      "license": "LGPL-2.1 (NeoBackports): injectors only, no NeoBackports code is carried"
+    }
+  }
+}

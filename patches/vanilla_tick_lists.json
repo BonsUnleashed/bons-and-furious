@@ -1,0 +1,193 @@
+{
+  "group": "vanilla_tick_lists",
+  "keys": {
+    "vanilla_block_entity_ticker_compaction": {
+      "mod": "minecraft",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_tick_lists.LevelTickerCompactionMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_46463_",
+          "desc": "()V",
+          "sha256": "52244095a04c365ca7c406f024cbad7f891259a937fa20fcad98115fd87e484d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect (require 0) of the walk's List.iterator() call in Level.tickBlockEntities (m_46463_): the list's own list iterator when the switch is on and the list is exactly an ArrayList; @Redirect (require 0) of its Iterator.remove() call keeps the position (ListIterator.previousIndex) and the ticker instead of removing; @Inject at RETURN cuts the kept positions out in one pass (each position checked to still hold its ticker, else removal by identity)",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_tick_lists.TickerCompaction)"
+    },
+    "vanilla_level_ticks_blocked_park": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_tick_lists.LevelTicksParkMixin",
+        "bons.furious.mixin.vanilla_tick_lists.ServerLevelTickParkMixin",
+        "bons.furious.mixin.vanilla_tick_lists.TickingTrackerParkMixin",
+        "bons.furious.mixin.vanilla_tick_lists.EntityManagerParkMixin",
+        "bons.furious.mixin.vanilla_tick_lists.ChunkMapParkMixin",
+        "bons.furious.mixin.vanilla_tick_lists.DistanceManagerParkMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/ticks/LevelTicks",
+          "method": "m_193216_",
+          "desc": "(J)V",
+          "sha256": "64de5d86b950207c108d98d56c7c18def3dd2e81e6aeb5c37fff0c0b7e34538a"
+        },
+        {
+          "class": "net/minecraft/world/ticks/LevelTicks",
+          "method": "m_193221_",
+          "desc": "(JILnet/minecraft/util/profiling/ProfilerFiller;)V",
+          "sha256": "9410cd91962ffd11f0b4f9bf8fca68fab992260ea0d01635d780ba6faf6fd05e"
+        },
+        {
+          "class": "net/minecraft/world/ticks/LevelTicks",
+          "method": "m_193231_",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/ticks/LevelChunkTicks;)V",
+          "sha256": "108eefb9f4a43269e1366c47bf80230c2f53ff2fdec45e8ab7227e1110b63330"
+        },
+        {
+          "class": "net/minecraft/world/ticks/LevelTicks",
+          "method": "m_193229_",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;)V",
+          "sha256": "dcb577871072e2059fa87070943c467df695706f2acba27a3ab9223024d63db6"
+        },
+        {
+          "class": "net/minecraft/world/ticks/LevelTicks",
+          "method": "m_193279_",
+          "desc": "(Lnet/minecraft/world/ticks/ScheduledTick;)V",
+          "sha256": "746cb73c3a826cfc0c612949ab5ceaf79eca0e971b7fd990275003db7cc3deaf"
+        },
+        {
+          "class": "net/minecraft/world/ticks/LevelTicks",
+          "method": "m_193234_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)V",
+          "sha256": "e55a215d4a16e1cbf688a604cf25db15a71e4595af36fa473bd6e757a15c1d31"
+        },
+        {
+          "class": "net/minecraft/world/ticks/LevelTicks",
+          "method": "m_193248_",
+          "desc": "(Lnet/minecraft/world/ticks/LevelChunkTicks;Lnet/minecraft/world/ticks/ScheduledTick;)V",
+          "sha256": "d34feb22effd87e0faa994945c582df9b1e5bd804624cf4c4e966cd0b5cb6436"
+        },
+        {
+          "class": "net/minecraft/world/ticks/LevelTicks",
+          "method": "*",
+          "desc": "",
+          "sha256": "3f1618e7e3308f99503929ffdd12fb52588bc8a83a8acf569020abe2f8285995"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "m_184110_",
+          "desc": "(J)Z",
+          "sha256": "91ce6f404f237f8f2da9bcbfd793c0fe1749efdc0db554d56a2d95b55b893d5b"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "m_143319_",
+          "desc": "(J)Z",
+          "sha256": "08432caf1af83aadfc63f252dde57b750b0c67185f32fae3ae0af6ba5b5a7330"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "m_183438_",
+          "desc": "(J)Z",
+          "sha256": "e71f76e6377cc621d89ec088a28e8349be746d84cc414518dc51f93cef3d252a"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "m_184102_",
+          "desc": "(Lnet/minecraft/world/level/chunk/LevelChunk;)V",
+          "sha256": "c73e4f3c5eba46d6381c21cf229ba215f7e399cc96f26a4c7a64e5a43f8ffd09"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerChunkCache",
+          "method": "m_143239_",
+          "desc": "(J)Z",
+          "sha256": "e94b2b82cc438075d30e19e988cc93941b0442f7137415eb1105c4ca585b3780"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap",
+          "method": "m_140327_",
+          "desc": "(J)Lnet/minecraft/server/level/ChunkHolder;",
+          "sha256": "632c8cc4e84b37c66df4f0db4868490b814b824dc8d44128039dca2cee72176a"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap",
+          "method": "m_140324_",
+          "desc": "()Z",
+          "sha256": "3c53d5bea7f42f4a3483c4f6e09d3ec046cc420e9a660334d93747bda463fbcd"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap",
+          "method": "m_143053_",
+          "desc": "(Lnet/minecraft/server/level/ChunkHolder;)Ljava/util/concurrent/CompletableFuture;",
+          "sha256": "cba0557c9304c0f1ddbecaa00cf8f7cb88dde3e21e8cb50227b1df78f22b5c36"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap",
+          "method": "m_214959_",
+          "desc": "(Lnet/minecraft/world/level/chunk/LevelChunk;)V",
+          "sha256": "cb4c3d9a62fa12c6d3e993c32d0a017581801dab2afe5fd8688e483149274f1e"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkHolder",
+          "method": "m_140026_",
+          "desc": "()Ljava/util/concurrent/CompletableFuture;",
+          "sha256": "733dcba7bff6835e8310ff812990e1972b09e5641d4d1897de88f21be60e6627"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkHolder",
+          "method": "m_143003_",
+          "desc": "(Lnet/minecraft/server/level/ChunkMap;Ljava/util/concurrent/Executor;)V",
+          "sha256": "50e15b9892e246b0a546b93797de24bfa18576c064a59eef279d1e13ee3e5c82"
+        },
+        {
+          "class": "net/minecraft/server/level/DistanceManager",
+          "method": "m_183916_",
+          "desc": "(J)Z",
+          "sha256": "bf64970186c49a81ec553bd2c0c9464b5c9dd1a40ca7d7c5fea191ae397a2020"
+        },
+        {
+          "class": "net/minecraft/server/level/TickingTracker",
+          "method": "m_7351_",
+          "desc": "(JI)V",
+          "sha256": "4cfea170c81f993e90a53d5960c22922021f94400685c1daf691884b6169d89f"
+        },
+        {
+          "class": "net/minecraft/server/level/TickingTracker",
+          "method": "m_6172_",
+          "desc": "(J)I",
+          "sha256": "9b155e0cc0829b3b48cc625935adeebe2d11f05254b768a9846aab081dbe8de0"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157507_",
+          "desc": "(J)Z",
+          "sha256": "578b9e621c2105f1e7efcdf91191cd715c76bee37b6a227b9a7875814426a6a7"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157582_",
+          "desc": "()V",
+          "sha256": "3493803216fbeeacfc3bc2cecc48bfb92fc8b533f18c8a0fab2b756712da250c"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkLevel",
+          "method": "m_287283_",
+          "desc": "(I)Z",
+          "sha256": "34dd4f7c7c495e83fafa5ec4f362af290f9958904db9bc92399835060645de1c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: LevelTicks.sortContainersToTick HEAD (unpark) + @Redirect of its LongPredicate.test call (park in place: a put of a marker value on the walk's current, existing key; Long2LongOpenHashMap only); HEAD injects in addContainer / removeContainer / updateContainerScheduling; change hooks: TickingTracker.setLevel HEAD, ServerLevel.startTickingChunk HEAD, ChunkMap.promoteChunkMap RETURN, @WrapOperation of the LOADED put in PersistentEntitySectionManager.processPendingLoads; wiring at the ServerLevel constructor RETURN (exact vanilla classes only)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helpers bons.furious.patch.vanilla_tick_lists.TickPark, TickParkAttach)"
+    }
+  }
+}

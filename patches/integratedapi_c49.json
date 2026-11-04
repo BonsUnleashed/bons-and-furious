@@ -1,0 +1,158 @@
+{
+  "group": "integratedapi_c49",
+  "keys": {
+    "integratedapi_beardifier_influence_bounds": {
+      "mod": "integrated_api",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.integratedapi_c49.IapiBoundsMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/craisinlord/integrated_api/mixins/structures/BeardifierMixin",
+          "method": "intapi_calculateDensity",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "RETURN handler of Beardifier.compute: value = computeDensity(ctx, value, this), set as the return value",
+          "sha256": "e545cfddf19cc14a59ff24cd74117ea4ae925a9897336c3e7e0d0b37c41f321d"
+        },
+        {
+          "class": "com/craisinlord/integrated_api/mixins/structures/BeardifierMixin",
+          "method": "getEnhancedRigidIterator",
+          "desc": "()Lit/unimi/dsi/fastutil/objects/ObjectListIterator;",
+          "note": "plain getter of the rigid slot (the views are swapped in and out through the setter)",
+          "sha256": "87222eb7cd1d970baa3e7ef2c9e34a3b904492d5c85116c4d23a1c097cc223e6"
+        },
+        {
+          "class": "com/craisinlord/integrated_api/mixins/structures/BeardifierMixin",
+          "method": "setEnhancedRigidIterator",
+          "desc": "(Lit/unimi/dsi/fastutil/objects/ObjectListIterator;)V",
+          "note": "plain setter of the rigid slot",
+          "sha256": "91c9800a45749c1d0f3ea61f0e2a523b2251b028dd64c55bf290647a0c32c1e2"
+        },
+        {
+          "class": "com/craisinlord/integrated_api/mixins/structures/BeardifierMixin",
+          "method": "getEnhancedJunctionIterator",
+          "desc": "()Lit/unimi/dsi/fastutil/objects/ObjectListIterator;",
+          "note": "plain getter of the junction slot",
+          "sha256": "cf9796dcd5cced20cb0e5d381b016a2270ba288d84963cecbbf25446cb80778d"
+        },
+        {
+          "class": "com/craisinlord/integrated_api/mixins/structures/BeardifierMixin",
+          "method": "setEnhancedJunctionIterator",
+          "desc": "(Lit/unimi/dsi/fastutil/objects/ObjectListIterator;)V",
+          "note": "plain setter of the junction slot",
+          "sha256": "6217837cbd3bc2820b10bd15ae2c318409bbc43ce7b38a999257e75acba16077"
+        },
+        {
+          "class": "com/craisinlord/integrated_api/world/terrainadaptation/beardifier/EnhancedBeardifierHelper",
+          "method": "computeDensity",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;DLcom/craisinlord/integrated_api/world/terrainadaptation/beardifier/EnhancedBeardifierData;)D",
+          "note": "adds, in list order, factor(box distances) * 0.8 per rigid (0.0 for NONE) and factor(junction offsets) * 0.4 per junction, then rewinds both slots",
+          "sha256": "f156df3159d343545f853d0768a827b909b7610cfed5000ad4551de5bf9068b2"
+        },
+        {
+          "class": "com/craisinlord/integrated_api/world/terrainadaptation/EnhancedTerrainAdaptation",
+          "method": "computeDensityFactor",
+          "desc": "(IIII)D",
+          "note": "the literal 0.0 unless every axis index (distance + size / 2) is inside [0, size): the reach the plan uses",
+          "sha256": "d7f732b866a6b97d082c39251ec7e80caeebaca7d52b2fbc21d9eb352b3c7c19"
+        },
+        {
+          "class": "com/craisinlord/integrated_api/world/terrainadaptation/EnhancedTerrainAdaptation",
+          "method": "getKernelRadius",
+          "desc": "()I",
+          "note": "kernelSize / 2",
+          "sha256": "2f792e636d9d5b3a18e4f28468c8215b9564a137084f48c04f03b6342af16100"
+        },
+        {
+          "class": "com/craisinlord/integrated_api/world/terrainadaptation/EnhancedTerrainAdaptation",
+          "method": "getKernelSize",
+          "desc": "()I",
+          "note": "the kernelSize field",
+          "sha256": "a1753ab7bdb9419e4e1e14fb4b23344b2ef34d610b779605fab4fb68168a8f15"
+        },
+        {
+          "class": "com/craisinlord/integrated_api/world/terrainadaptation/EnhancedTerrainAdaptation",
+          "method": "isInKernelRange",
+          "desc": "(I)Z",
+          "note": "i >= 0 && i < kernelSize",
+          "sha256": "10cee07115fe39588d2c600443be2ad08c6bfa870d264953930b4a64557c77fc"
+        },
+        {
+          "class": "com/craisinlord/integrated_api/world/terrainadaptation/EnhancedTerrainAdaptation",
+          "method": "direction",
+          "desc": "()Lcom/craisinlord/integrated_api/world/terrainadaptation/TerrainAdaptationDirection;",
+          "note": "the direction field (UP mirrors the junction y offset)",
+          "sha256": "abcea61535a202b9c7ee183f412fa2eafb591a40df3cfda1b7b59646d4614fc5"
+        },
+        {
+          "class": "com/craisinlord/integrated_api/world/terrainadaptation/NoneAdaptation",
+          "method": "computeDensityFactor",
+          "desc": "(IIII)D",
+          "note": "always the literal 0.0",
+          "sha256": "f4ad94daccf7ed9963c0f2b8f7089292a9b358d82c84c0e57ee062b4cc9866a7"
+        },
+        {
+          "class": "com/craisinlord/integrated_api/world/terrainadaptation/TerrainAdaptationDirection",
+          "method": "isInverted",
+          "desc": "()Z",
+          "note": "this == UP",
+          "sha256": "50d1d625a323f916590d5b8a3d50d9fa5c2e09dbec6c839fe3d1c02bbb1e08cc"
+        },
+        {
+          "class": "com/craisinlord/integrated_api/world/terrainadaptation/beardifier/EnhancedBeardifierRigid",
+          "method": "pieceBoundingBox",
+          "desc": "()Lnet/minecraft/world/level/levelgen/structure/BoundingBox;",
+          "note": "record accessor",
+          "sha256": "62012263f7d51131f78f3461c6ed7b3a917aa6dc0210b440f054ab47b1fe8b94"
+        },
+        {
+          "class": "com/craisinlord/integrated_api/world/terrainadaptation/beardifier/EnhancedBeardifierRigid",
+          "method": "pieceTerrainAdaptation",
+          "desc": "()Lcom/craisinlord/integrated_api/world/terrainadaptation/EnhancedTerrainAdaptation;",
+          "note": "record accessor",
+          "sha256": "05feee76080ac54b29b731ac180e7843b27d560f762b5fa914762e856e354db7"
+        },
+        {
+          "class": "com/craisinlord/integrated_api/world/terrainadaptation/beardifier/EnhancedJigsawJunction",
+          "method": "jigsawJunction",
+          "desc": "()Lnet/minecraft/world/level/levelgen/structure/pools/JigsawJunction;",
+          "note": "record accessor",
+          "sha256": "dd70aed71dcba1df92567522b85f390dc6e721680ca7436292c13285c0ad0863"
+        },
+        {
+          "class": "com/craisinlord/integrated_api/world/terrainadaptation/beardifier/EnhancedJigsawJunction",
+          "method": "pieceTerrainAdaptation",
+          "desc": "()Lcom/craisinlord/integrated_api/world/terrainadaptation/EnhancedTerrainAdaptation;",
+          "note": "record accessor",
+          "sha256": "6019cefd663a88e8b7ff5e5833b57cc41a36928c7874c5fed1c17774c1a42f4b"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/pools/JigsawJunction",
+          "method": "m_210252_",
+          "desc": "()I",
+          "note": "getSourceX",
+          "sha256": "c288bd8dbce87abfe546de44a2da709f0b56ede3cb5c99b124e22e6484d79262"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/pools/JigsawJunction",
+          "method": "m_210257_",
+          "desc": "()I",
+          "note": "getSourceGroundY",
+          "sha256": "97ddc64d12fac688352c539665141c9d865d5ef27efd608e6e9273b98836601d"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/pools/JigsawJunction",
+          "method": "m_210258_",
+          "desc": "()I",
+          "note": "getSourceZ",
+          "sha256": "6f460120318c86636de543b04f5f7b3597bc63c7c8304e78c01998a2cc836b33"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinSquared @TargetHandler + MixinExtras @WrapOperation on the EnhancedBeardifierHelper.computeDensity call inside Integrated API's Beardifier compute handler (intapi_calculateDensity): per block the call runs on views of Integrated API's two adaptation lists that hold only the terms whose kernel reaches the block, swapped into the two slots for the call; with no term in reach the value is returned without the call (helper bons.furious.patch.integratedapi_c49.IapiBounds)",
+      "license": "All Rights Reserved (Integrated API): injectors only, no Integrated API code is carried; Minecraft (Mojang): no-copy"
+    }
+  }
+}

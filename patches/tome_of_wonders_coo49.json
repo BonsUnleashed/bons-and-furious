@@ -1,0 +1,61 @@
+{
+  "group": "tome_of_wonders_coo49",
+  "keys": {
+    "tome_of_wonders_baitfish_school_cap": {
+      "mod": "tome_of_wonders",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.tome_of_wonders_coo49.BaitfishSchoolCapMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/platypushasnohat/tome_of_wonders/entities/Baitfish",
+          "method": "m_6518_",
+          "desc": "(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/entity/SpawnGroupData;",
+          "note": "finalizeSpawn: variant; for NATURAL / CHUNK_GENERATION with BAITFISH_SCHOOL_SPAWNING: count = (int)(getMaxSchoolSize() * random.nextFloat()) (the wrapped call), then per member a new Baitfish at 3 random offsets, startFollowing, addFreshEntity",
+          "sha256": "ea7cac7965d965796fd067235ae8df0a1f7a3d721052c7ba08eed68fdc55d79e"
+        },
+        {
+          "class": "com/platypushasnohat/tome_of_wonders/entities/Baitfish",
+          "method": "m_6031_",
+          "desc": "()I",
+          "note": "getMaxSchoolSize: 72",
+          "sha256": "39995a66c6226d519db4376e06da5bd727e2ea8eb0e49f3202a275cb54aac7f2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Trade-off, off by default: MixinExtras @ModifyExpressionValue on the m_6031_ (getMaxSchoolSize) call inside Baitfish.finalizeSpawn returns min(value, cap); cap = PureConfig.intValue(\"tome_of_wonders_baitfish_school_cap\", 24, 0, 72) (72 = the original). Runtime flag tomeOfWondersBaitfishSchoolCap. Helper bons.furious.patch.tome_of_wonders_coo49.TowSchools.",
+      "license": "MIT (Tome of Wonders): no Tome of Wonders code is carried; the hook caps one value"
+    },
+    "tome_of_wonders_squill_school_main_thread": {
+      "mod": "tome_of_wonders",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.tome_of_wonders_coo49.SquillSchoolThreadMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/platypushasnohat/tome_of_wonders/entities/Squill",
+          "method": "spawnSchool",
+          "desc": "()V",
+          "note": "count = (int)(20 * random.nextFloat()); if not client: per member new Squill(SQUILL, level()), moveTo 3 random offsets, level().addFreshEntity(member) (the wrapped call; its answer is popped)",
+          "sha256": "8a4fdc6ce1999d32130def6987ea491de23d4643ba077e77e16597f8a45b5da3"
+        },
+        {
+          "class": "com/platypushasnohat/tome_of_wonders/entities/Squill",
+          "method": "m_6518_",
+          "desc": "(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/DifficultyInstance;Lnet/minecraft/world/entity/MobSpawnType;Lnet/minecraft/world/entity/SpawnGroupData;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/entity/SpawnGroupData;",
+          "note": "finalizeSpawn: NATURAL or CHUNK_GENERATION: move to the spawn height, spawnSchool when SQUILL_SCHOOL_SPAWNING (CHUNK_GENERATION runs on a world generation worker)",
+          "sha256": "139b16d0369b702aa2b2bdd29ba94d380183f7fe6336ae335ffb2f43b83f1d76"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix: MixinExtras @WrapOperation on the Level.addFreshEntity call in Squill.spawnSchool: off the server thread the add is handed to MinecraftServer.execute and the call answers true (the answer is popped); on the server thread the original. Runtime flag tomeOfWondersSquillSchoolMainThread. Helper bons.furious.patch.tome_of_wonders_coo49.TowSchools.",
+      "license": "MIT (Tome of Wonders): no Tome of Wonders code is carried; the hook moves one call to the server thread"
+    }
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "group": "mcreator_guards49",
+  "keys": {
+    "macabre_animation_entity_guard": {
+      "mod": "macabre",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mcreator_guards49.MacabreEntityGuardMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/curseforge/macabre/init/EntityAnimationFactory",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "Macabre 1.0.0 (0.9.2 the same): null tests, then 122 instanceof blocks of GeckoLib entity classes; COO's pin 0.8.4 (120) as an accepted alternative build",
+          "sha256": "3fffc22a315cf92c622939390ae143fe96627db46801e15a4cccfb0784acd200",
+          "sha256_also": [
+            {
+              "build": "0.8.4",
+              "sha256": "07abfd066d8485d16db2f1b55df70ea0b02c40e9bf53eb42ac53b776af100c60"
+            }
+          ]
+        },
+        {
+          "class": "net/minecraftforge/event/entity/living/LivingEvent",
+          "method": "getEntity",
+          "desc": "()Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "the handler's only read of the event (AnimationGuards.Caller.filter)",
+          "sha256": "37432747cf9699c15af8dd6f12b3f5ca07eb75b375d1fa4e15aa4f86fc904985"
+        },
+        {
+          "class": "net/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "the event class the handler compares with (plain LivingTickEvent only)",
+          "sha256": "1862ebddf972a746aab3edaa1fbff727e393f7ef55bde519d93ecce57b645ba8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@ModifyVariable (argsOnly, HEAD) on Macabre's EntityAnimationFactory.onEntityTick: a plain LivingTickEvent whose entity is not a GeckoLib GeoEntity is handed to the method as null, so its own first test returns (the mcreator_animation_entity_guard layer, AnimationGuards.Caller.filter, runtime flag)",
+      "license": "Macabre: AFL-3.0 (mods.toml). Treated as no-copy: the mixin holds only our guard; the mod's code stays in its jar"
+    },
+    "armageddon_animation_entity_guard": {
+      "mod": "armageddon_mod",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mcreator_guards49.ArmageddonEntityGuardMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mcreator/armageddonmod/init/EntityAnimationFactory",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "Armageddon 3.3.0b: null tests, then 30 instanceof blocks of GeckoLib entity classes",
+          "sha256": "f30eb4c8b58dd1b22bcdf83ecd6571eb3121f7098e962cce8badcbbc0ff7fa51"
+        },
+        {
+          "class": "net/minecraftforge/event/entity/living/LivingEvent",
+          "method": "getEntity",
+          "desc": "()Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "the handler's only read of the event (AnimationGuards.Caller.filter)",
+          "sha256": "37432747cf9699c15af8dd6f12b3f5ca07eb75b375d1fa4e15aa4f86fc904985"
+        },
+        {
+          "class": "net/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "the event class the handler compares with (plain LivingTickEvent only)",
+          "sha256": "1862ebddf972a746aab3edaa1fbff727e393f7ef55bde519d93ecce57b645ba8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@ModifyVariable (argsOnly, HEAD) on Armageddon's EntityAnimationFactory.onEntityTick: a plain LivingTickEvent whose entity is not a GeckoLib GeoEntity is handed to the method as null, so its own first test returns (the mcreator_animation_entity_guard layer, AnimationGuards.Caller.filter, runtime flag)",
+      "license": "Armageddon: AFL-3.0 (mods.toml). Treated as no-copy: the mixin holds only our guard; the mod's code stays in its jar"
+    },
+    "cnc_animation_entity_guard": {
+      "mod": "cnc",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mcreator_guards49.CncEntityGuardMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/imasillylittleguy/cnc/init/EntityAnimationFactory",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "Critters n' Crawlers 2.2.5: null tests, then 28 instanceof blocks of GeckoLib entity classes",
+          "sha256": "bb1f0bd724864bbe2275fbfab8affac2a92e20015837c8d744b76a9ebf7c334c"
+        },
+        {
+          "class": "net/minecraftforge/event/entity/living/LivingEvent",
+          "method": "getEntity",
+          "desc": "()Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "the handler's only read of the event (AnimationGuards.Caller.filter)",
+          "sha256": "37432747cf9699c15af8dd6f12b3f5ca07eb75b375d1fa4e15aa4f86fc904985"
+        },
+        {
+          "class": "net/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "the event class the handler compares with (plain LivingTickEvent only)",
+          "sha256": "1862ebddf972a746aab3edaa1fbff727e393f7ef55bde519d93ecce57b645ba8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@ModifyVariable (argsOnly, HEAD) on Critters n' Crawlers' EntityAnimationFactory.onEntityTick: a plain LivingTickEvent whose entity is not a GeckoLib GeoEntity is handed to the method as null, so its own first test returns (the mcreator_animation_entity_guard layer, AnimationGuards.Caller.filter, runtime flag)",
+      "license": "Critters n' Crawlers: All Rights Reserved (mods.toml): no-copy; the mixin holds only our guard; the mod's code stays in its jar"
+    },
+    "macabre_item_animation_idle": {
+      "mod": "macabre",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mcreator_guards49.MacabreItemAnimationMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/curseforge/macabre/init/ItemAnimationFactory",
+          "method": "animatedItems",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "Macabre 1.0.0 (0.8.4 and 0.9.2 the same class): copies both hands, then acts only in START with a GeoItem in a hand (13 item classes)",
+          "sha256": "088426d8b209142d3867811045cc0c1d513b1fd0a10360a5cbcb767dc7a3a276"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41777_",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "copy: keeps getItem() (empty -> EMPTY, else a stack of the same item), so the test on the held stacks equals the test on the copies",
+          "sha256": "09624940bbdb89f1bf03606b5e8edc4b88524135142800fe80ed791b37cf7c3c"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41720_",
+          "desc": "()Lnet/minecraft/world/item/Item;",
+          "note": "getItem: AIR for an empty stack",
+          "sha256": "ce7982961328f6d190746b117db6ef59920bc2a9dcbb28fadc3c325294da242c"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41619_",
+          "desc": "()Z",
+          "note": "isEmpty, used by copy and getItem",
+          "sha256": "8f98b32b0197e0943c848b64db2e019736072716a7da9afd7bf61b23ad3a46e1"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21205_",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "getMainHandItem, read by the handler and by the switch",
+          "sha256": "527e4271cfee67a7c2566bcb89d703b044425dd4838d7482046d4319609cb95d"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21206_",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "getOffhandItem, read by the handler and by the switch",
+          "sha256": "c85db0b1a46aaf954cd2807127a981b5593ce942873ffaea171e8fe119ef2ad6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of Macabre's ItemAnimationFactory.animatedItems: cancelled unless it is the START phase and a hand holds a GeckoLib GeoItem (the test every effect of the method sits behind, evaluated on the held stacks instead of their copies); the mcreator_item_animation_idle layer (AnimationGuards.Caller.idle, runtime flag)",
+      "license": "Macabre: AFL-3.0 (mods.toml). Treated as no-copy: the mixin holds only our own test; the mod's code stays in its jar"
+    }
+  }
+}

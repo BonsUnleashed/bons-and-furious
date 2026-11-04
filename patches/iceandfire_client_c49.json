@@ -1,0 +1,129 @@
+{
+  "group": "iceandfire_client_c49",
+  "keys": {
+    "iceandfire_dragon_armor_layer_ordinals": {
+      "mod": "iceandfire",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.iceandfire_client_c49.LayerDragonArmorMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerDragonArmor",
+          "method": "render",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILcom/github/alexthe666/iceandfire/entity/EntityDragonBase;FFFFFF)V",
+          "sha256": "8505c0f7a0a4e4b7ffc7cf02da3bb41fbe0bce9953af43fd7978e79ee6793ab6"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/EntityDragonBase",
+          "method": "getArmorOrdinal",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "sha256": "8537c243cf3188c09c16a6b9c8211bef118f5feadcb2d72539275b5d8a9d3286"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/EntityDragonBase",
+          "method": "m_6844_",
+          "desc": "(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;",
+          "sha256": "754ddec622b6c1b3d1b5ab2ab7f7ded17524787094206680f86aafdab42a9fe7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on LayerDragonArmor.render: the four armour ordinals are read as stock reads them and the method returns when all four are 0 (stock's two strings are then equal and it draws nothing); otherwise the original runs (helper bons.furious.patch.iceandfire_client_c49.DragonLayers)",
+      "license": "LGPL-3.0 (Ice and Fire): no Ice and Fire code is carried; the wrapper carries only our own logic (Idea: Collections Of Optimizations iceandfire.skipEmptyArmorLayer, idea text only)"
+    },
+    "iceandfire_dragon_layers_empty_skip": {
+      "mod": "iceandfire",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.iceandfire_client_c49.LayerDragonBannerMixin",
+        "bons.furious.mixin.iceandfire_client_c49.LayerDragonRiderMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerDragonBanner",
+          "method": "render",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILcom/github/alexthe666/iceandfire/entity/EntityDragonBase;FFFFFF)V",
+          "sha256": "52da5f66dbbd8aeb1034a163947f596eb9e61bf78a5f91c7e61d10e03ad1678f"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/client/render/entity/layer/LayerDragonRider",
+          "method": "render",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILcom/github/alexthe666/iceandfire/entity/EntityDragonBase;FFFFFF)V",
+          "sha256": "4bdf0b6ef20a4594f09b96c9a5f7e063f507189f6ab38bda15bfab96c409006d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on LayerDragonBanner.render (returns when the off-hand stack is empty or not a banner) and LayerDragonRider.render (returns when the dragon has no passengers); stock pushes and pops one pose and draws nothing in those cases; otherwise the original runs (helper bons.furious.patch.iceandfire_client_c49.DragonLayers)",
+      "license": "LGPL-3.0 (Ice and Fire): no Ice and Fire code is carried; the wrappers carry only our own logic (Idea: Collections Of Optimizations iceandfire.skipEmptyDragonLayers, idea text only)"
+    },
+    "iceandfire_dragon_texture_key": {
+      "mod": "iceandfire",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.iceandfire_client_c49.RenderDragonBaseTextureMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/iceandfire/client/render/entity/RenderDragonBase",
+          "method": "getTextureLocation",
+          "desc": "(Lcom/github/alexthe666/iceandfire/entity/EntityDragonBase;)Lnet/minecraft/resources/ResourceLocation;",
+          "sha256": "f1fb240ab04985b7bce82c0fb1098e4795966710e6354c1fe9bad72ebe2d18ea"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/client/render/entity/RenderDragonBase",
+          "method": "*",
+          "desc": "",
+          "sha256": "10e0287d5f3ebd0f0837e2afdeebe83865ec183c1d6ffaa0567f6dd8a443086c"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/EntityDragonBase",
+          "method": "isModelDead",
+          "desc": "()Z",
+          "sha256": "fe26c0526cbe50e3fe4f6957a85f5b860fda165addb84f7cfdfa405575ee741e"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/EntityDragonBase",
+          "method": "getDragonStage",
+          "desc": "()I",
+          "sha256": "a309b6733b2faa6f6ea5ab2c0758b6a29e4cb0f3cf2583c211cd9b3d0de1c219"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/EntityDragonBase",
+          "method": "isSkeletal",
+          "desc": "()Z",
+          "sha256": "2a332e275d8bd052f115c3a586466c079dcc485d06839279f0074bdf71b61f09"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/EntityDragonBase",
+          "method": "isBlinking",
+          "desc": "()Z",
+          "sha256": "cf051828c389697a7b451ef0735ac609a20573c9b8ad53e55fcb0bd6721534b4"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/EntityFireDragon",
+          "method": "getVariantName",
+          "desc": "(I)Ljava/lang/String;",
+          "sha256": "50079d6dfa12b75abec69762929415e34e9efaee403b3b4ecb83d23a31906ab3"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/EntityIceDragon",
+          "method": "getVariantName",
+          "desc": "(I)Ljava/lang/String;",
+          "sha256": "81f28f0978073c16187cf5a8e00ffd405e6021c893109e642a23a3a6e1a1eec4"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/EntityLightningDragon",
+          "method": "getVariantName",
+          "desc": "(I)Ljava/lang/String;",
+          "sha256": "f7a117bf26bf95960316884a6dd282fabfd5fc9cc71d4732b90b9273ea19aa90"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on RenderDragonBase.getTextureLocation: the seven texture values are read as stock reads them (same order) and the answer comes from a per-renderer table (one @Unique field) keyed by the variant name and the six others; a table miss runs the original and keeps its answer (helper bons.furious.patch.iceandfire_client_c49.DragonTextureKey; shadow mode compares every call)",
+      "license": "LGPL-3.0 (Ice and Fire): no Ice and Fire code is carried; the wrapper carries only our own logic (Idea: Collections Of Optimizations iceandfire.cacheDragonTexture, idea text only)"
+    }
+  }
+}

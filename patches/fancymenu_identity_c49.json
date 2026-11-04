@@ -1,0 +1,83 @@
+{
+  "group": "fancymenu_identity_c49",
+  "keys": {
+    "fancymenu_screen_identity_memo": {
+      "mod": "fancymenu",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.fancymenu_identity_c49.ScreenBlacklistMemoMixin",
+        "bons.furious.mixin.fancymenu_identity_c49.UniversalIdentifierIndexMixin",
+        "bons.furious.mixin.fancymenu_identity_c49.IdentifierClassMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "de/keksuccino/fancymenu/customization/ScreenCustomization",
+          "method": "isScreenBlacklisted",
+          "desc": "(Ljava/lang/String;)Z",
+          "note": "true when any rule of the list answers true for the class name",
+          "sha256": "2ebd3ceb6fea34768dd0e569cf5f272700a924cba1a15f3b0758e4cf26f6290c"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/customization/ScreenCustomization",
+          "method": "addScreenBlacklistRule",
+          "desc": "(Lde/keksuccino/fancymenu/customization/ScreenCustomization$ScreenBlacklistRule;)V",
+          "note": "the rule list's only writer (the memo drops every answer at its end)",
+          "sha256": "32a6073013972bfb262f3411807be67c1f8b26176bb8cfc06aaaf8ca08b13408"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/customization/ScreenCustomization",
+          "method": "addDefaultScreenBlacklistRules",
+          "desc": "()V",
+          "note": "FancyMenu's twenty rules: tests of the class name only (one also asks Compat.isOptiFineLoaded)",
+          "sha256": "c5b79db9170c432658e778079b762301f544694d651dedadcbe28a722b2126de"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/customization/ScreenCustomization",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods incl. the rule lambdas; getScreenBlacklistRules hands out a copy",
+          "sha256": "55664836497d07242ecb861c41dff4af414097f58fb61eb0f44906cbebc491d1"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/Compat",
+          "method": "isOptiFineLoaded",
+          "desc": "()Z",
+          "note": "whether OptiFine's installer class is present: fixed for a session",
+          "sha256": "948f9173815de1319be6ce1f734a8fb06e16ac111e955648402510f56f988cf5"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/customization/screen/identifier/UniversalScreenIdentifierRegistry",
+          "method": "getUniversalIdentifierFor",
+          "desc": "(Ljava/lang/String;)Ljava/lang/String;",
+          "note": "containsKey, then the first entry (iteration order) whose screen class equals the argument",
+          "sha256": "63413c2edc10300bcd2157fc2130fbc99e8a20a39ffd509dfee084ac97003030"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/customization/screen/identifier/UniversalScreenIdentifierRegistry",
+          "method": "register",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)V",
+          "note": "LinkedHashMap.put (a replaced key keeps its place): the map's only writer",
+          "sha256": "2ffae6da5ae50021477add923ac3f4f5d7ba4b593b21b47d0daa1be5985f399d"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/customization/screen/identifier/UniversalScreenIdentifierRegistry",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: no other writer of the private map; getUniversalIdentifiers hands out a copy",
+          "sha256": "662e4dcaa923923955eda5669984787d4989f0347ed05b4548218680e0c275ea"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/customization/screen/identifier/ScreenIdentifierHandler",
+          "method": "isValidIdentifier",
+          "desc": "(Ljava/lang/String;)Z",
+          "note": "custom GUI, universal identifier, blacklist, then Class.forName(identifier, false, its loader) in a catch(Exception)",
+          "sha256": "22fe3844f249178c775086e1da2bc0c3334875855c4cdd7c9598a1340a224f28"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@WrapMethod of ScreenCustomization.isScreenBlacklisted(String) (per class name the position of the first of FancyMenu's own rules that says true is kept; other mods' rules are called live in the loop's order up to that position; cleared by an @Inject TAIL of addScreenBlacklistRule), @WrapMethod of UniversalScreenIdentifierRegistry.getUniversalIdentifierFor(String) (screen class -> first identifier index, dropped by an @Inject TAIL of register; the first 8 lookups after a register run the original walk), @Redirect of Class.forName in ScreenIdentifierHandler.isValidIdentifier (classes already found) (helper bons.furious.patch.fancymenu_identity_c49.ScreenIdentityMemo)",
+      "license": "FancyMenu custom licence (DSMSL): none of its code is carried; the injectors only keep answers FancyMenu's own methods gave"
+    }
+  }
+}

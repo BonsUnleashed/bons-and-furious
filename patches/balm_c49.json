@@ -1,0 +1,94 @@
+{
+  "group": "balm_c49",
+  "keys": {
+    "balm_config_identifier_memo": {
+      "mod": "balm",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.balm_c49.BalmConfigIdentifierMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/blay09/mods/balm/common/config/AbstractBalmConfig",
+          "method": "getActiveConfig",
+          "desc": "(Ljava/lang/Class;)Ljava/lang/Object;",
+          "note": "getIdentifier(class), then activeReflectionConfigs.computeIfAbsent(id, ...)",
+          "sha256": "70df707160bd561d9e8226b5e05fe9b962e0afc9a49525f8e0e5541e394a7866"
+        },
+        {
+          "class": "net/blay09/mods/balm/api/network/ConfigReflection",
+          "method": "getIdentifier",
+          "desc": "(Ljava/lang/Class;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "a pure function of the class's @Config annotations; throws for a class without one",
+          "sha256": "9829b406054a51f8c9cc51e6a8ab9c65395e622194a11fdd76b52d0dd1a5f5d2"
+        },
+        {
+          "class": "net/blay09/mods/balm/common/config/AbstractBalmConfig",
+          "method": "saveLocalConfig",
+          "desc": "(Lnet/blay09/mods/balm/api/config/schema/BalmConfigSchema;Lnet/blay09/mods/balm/api/config/MutableLoadedConfig;)V",
+          "note": "writer: activeReflectionConfigs.remove",
+          "sha256": "21acee5830b0920bbf5d8b5303b117c6a13777f73c4875589cd9ce618ecfa5c4"
+        },
+        {
+          "class": "net/blay09/mods/balm/common/config/AbstractBalmConfig",
+          "method": "setActiveConfig",
+          "desc": "(Lnet/blay09/mods/balm/api/config/schema/BalmConfigSchema;Lnet/blay09/mods/balm/api/config/LoadedConfig;)V",
+          "note": "writer: activeReflectionConfigs.remove",
+          "sha256": "1d9018f643776050a06edd0b00bd62ad533b60102941a49d922509719d736975"
+        },
+        {
+          "class": "net/blay09/mods/balm/common/config/AbstractBalmConfig",
+          "method": "resetToLocalConfig",
+          "desc": "()V",
+          "note": "writer: activeReflectionConfigs.clear",
+          "sha256": "f73e08f5ad8bfa902b948f3b0605102800c57b46ab1aec573a8498b6bb66a4f4"
+        },
+        {
+          "class": "net/blay09/mods/balm/common/config/AbstractBalmConfig",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "activeReflectionConfigs = new ConcurrentHashMap() (no null values)",
+          "sha256": "d55507fec6aaa012dd51ae687d84473595c6ab012c4a3bf5863567e335765019"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on AbstractBalmConfig.getActiveConfig(Class): activeReflectionConfigs.get(identifier) with the identifier from a ClassValue answers a present config, otherwise the method runs (helper bons.furious.patch.balm_c49.BalmMemos)",
+      "license": "All Rights Reserved (Balm): injectors only, no Balm code is carried"
+    },
+    "balm_dynamic_model_state_key": {
+      "mod": "balm",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.balm_c49.BalmDynamicModelKeyMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/blay09/mods/balm/common/client/rendering/AbstractCachedDynamicModel",
+          "method": "m_213637_",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/util/RandomSource;)Ljava/util/List;",
+          "note": "cache key = state.toString(), looked up in a HashMap<String, BakedModel> under its lock",
+          "sha256": "e6acfe041f832bed4e9df6313b916a7396921b9a2fdafd06777a895868253fd7"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/StateHolder",
+          "method": "toString",
+          "desc": "()Ljava/lang/String;",
+          "note": "owner + fixed property values",
+          "sha256": "29124e9603bf69f9526cb8272576a54aefba8287c0f708e36d00fe30a06a2561"
+        },
+        {
+          "class": "net/minecraft/world/level/block/Block",
+          "method": "toString",
+          "desc": "()Ljava/lang/String;",
+          "note": "Block{registry id}: fixed once the block is registered",
+          "sha256": "f6ed1f84272ed4c9b5a86ea9d8cf44f4d6a199e67a3b0fa204309df6c4903b78"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on BlockState.toString() in AbstractCachedDynamicModel.getQuads (m_213637_): the text remembered per BlockState object (helper bons.furious.patch.balm_c49.BalmMemos)",
+      "license": "All Rights Reserved (Balm): injectors only, no Balm code is carried; Minecraft (Mojang): no-copy"
+    }
+  }
+}

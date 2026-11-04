@@ -1,0 +1,296 @@
+{
+  "group": "touchnmotion_c49",
+  "keys": {
+    "touchnmotion_ground_probe_direct": {
+      "mod": "touch_n_motion",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.touchnmotion_c49.TnmProbeFrameMixin",
+        "bons.furious.mixin.touchnmotion_c49.TnmStrideProbeMixin",
+        "bons.furious.mixin.touchnmotion_c49.TnmFloorProbeMixin"
+      ],
+      "guard": [
+        {
+          "class": "strm/touchnmotion/torso/Stride",
+          "method": "level",
+          "desc": "(Lnet/minecraft/client/player/AbstractClientPlayer;Lstrm/emfcompat/core/ik/IKFrame;Lnet/minecraft/client/model/geom/ModelPart;Lorg/joml/Vector3f;Lorg/joml/Vector3f;DDD)Z",
+          "note": "per leg: 3 joint points x 3 x 3 vertical probes player.level().clip(new ClipContext(p + probe, p - probe, COLLIDER, NONE, player)); reads type and location.y",
+          "sha256": "557d66a908562e7a348909c30eba15610026bb3852b78ba2790ec221f6bde00a"
+        },
+        {
+          "class": "strm/touchnmotion/footgrounding/compat/TerrainBalance",
+          "method": "floor",
+          "desc": "(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/world/phys/Vec3;Ljava/util/List;)Lstrm/touchnmotion/footgrounding/compat/TerrainBalance$Floor;",
+          "note": "per space: player.level().clip(new ClipContext(local start, local end, COLLIDER, NONE, player)); reads type, inside, direction, location (EjectorLid.onLid), block pos",
+          "sha256": "a15bba9cf719762c3988b664df6accc76bd5b3233af1ed0c10ac0a61a6b96ab0"
+        },
+        {
+          "class": "net/minecraft/client/renderer/GameRenderer",
+          "method": "m_109093_",
+          "desc": "(FJZ)V",
+          "note": "render: the frame bracket (players and their poses are drawn inside it)",
+          "sha256": "b3d30ea94475a46c894be4fe1ae26574612e278c409632414625d31a0f0ecfc2"
+        },
+        {
+          "class": "net/minecraft/world/level/BlockGetter",
+          "method": "m_45547_",
+          "desc": "(Lnet/minecraft/world/level/ClipContext;)Lnet/minecraft/world/phys/BlockHitResult;",
+          "note": "clip: traverseBlocks(from, to, context, step, miss)",
+          "sha256": "ef00393c1b080047d0e820e6d1f2d7f59c224c91e0bc8e09940b21aceb0b3c9b"
+        },
+        {
+          "class": "net/minecraft/world/level/BlockGetter",
+          "method": "m_151358_",
+          "desc": "(Lnet/minecraft/world/level/ClipContext;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/BlockHitResult;",
+          "note": "clip's step: block state, fluid state, block shape, clipWithInteractionOverride, fluid shape clip, nearer of the two",
+          "sha256": "391c674d7f0691e5205f90a94a51c074aa5813fd09985770f21b9ccb34fbb701"
+        },
+        {
+          "class": "net/minecraft/world/level/BlockGetter",
+          "method": "m_274262_",
+          "desc": "(Lnet/minecraft/world/level/ClipContext;)Lnet/minecraft/world/phys/BlockHitResult;",
+          "note": "clip's miss: BlockHitResult.miss(to, getNearest(from - to), containing(to))",
+          "sha256": "fbda13eca417dcb346ad681125d30cf7416505c830d0728c3cab2763023a5186"
+        },
+        {
+          "class": "net/minecraft/world/level/BlockGetter",
+          "method": "m_151361_",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Ljava/lang/Object;Ljava/util/function/BiFunction;Ljava/util/function/Function;)Ljava/lang/Object;",
+          "note": "traverseBlocks: the walk the direct probe calls itself",
+          "sha256": "6894f5938d142c8a08a653fa51fd125953a084d96912bbd24b425b8b4ed40d44"
+        },
+        {
+          "class": "net/minecraft/world/level/ClipContext",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/level/ClipContext$Block;Lnet/minecraft/world/level/ClipContext$Fluid;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "stores the four values and CollisionContext.of(entity) (Forge: empty for a null entity)",
+          "sha256": "c977019338dac976e45cc31dc9d60704d8c7e920ed7913241ceba7f267f5b595"
+        },
+        {
+          "class": "net/minecraft/world/level/ClipContext",
+          "method": "m_45694_",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "note": "getBlockShape: block.get(state, level, pos, collisionContext)",
+          "sha256": "7a6796c8354548f0a75e244ee45aba2a6076b76d5a4d8ad4578a16b8d986eef7"
+        },
+        {
+          "class": "net/minecraft/world/level/ClipContext",
+          "method": "m_45698_",
+          "desc": "(Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "note": "getFluidShape: Shapes.empty() unless the fluid mode can pick the fluid",
+          "sha256": "b560224e804ee923ce55aa203098fbe1b7c9832d331f6da3c7c606dd8219fa98"
+        },
+        {
+          "class": "net/minecraft/world/level/ClipContext$Fluid",
+          "method": "m_45731_",
+          "desc": "(Lnet/minecraft/world/level/material/FluidState;)Z",
+          "note": "canPick: the mode predicate",
+          "sha256": "e9e6e18e8ebd31be51fb890340d46d5b8a9d56d4714f05cabe2b77a802b88e5a"
+        },
+        {
+          "class": "net/minecraft/world/level/ClipContext$Fluid",
+          "method": "m_45735_",
+          "desc": "(Lnet/minecraft/world/level/material/FluidState;)Z",
+          "note": "NONE's predicate: false",
+          "sha256": "a9057d062fb197564c8e845386d2280bde1a1cc2fd7f4098adc42ac45ea65ea5"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/CollisionContext",
+          "method": "m_82750_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/phys/shapes/CollisionContext;",
+          "note": "of: new EntityCollisionContext(entity)",
+          "sha256": "0f90d4a3520e2e32355f786c976e214e81d2398e0a78a4a7b2e4c331b42d7f83"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/EntityCollisionContext",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "captures isDescending, getY, the main-hand item, canStandOnFluid's method reference and the entity",
+          "sha256": "fc9993a24944aebf2180a0386973c19d77d01bbb8149cd72c7e3a96bf2139adc"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_6425_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/FluidState;",
+          "note": "getFluidState: the chunk read the direct probe leaves out (no side effect)",
+          "sha256": "0a130f8d7b048efaeafd89317c904abee3110181ae46392bca5b4c90f3846626"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the `new ClipContext(from, to, COLLIDER, NONE, player)` and the Level.clip right after it in Stride.level and TerrainBalance.floor: inside the render frame (GameRenderer.render HEAD/RETURN @Inject) on its thread, the constructor wrapper keeps the five values and yields null, the clip wrapper walks the segment with vanilla's BlockGetter.traverseBlocks and a step of getBlockState, ClipContext.Block.COLLIDER's shape for one CollisionContext.of(player) per player, level and frame, and the level's clipWithInteractionOverride (the fluid read Fluid.NONE never uses is left out), with the same miss result. Steps aside (shipped probe, one WARN per level class) when the level's class chain declares its own clip other than vanilla_raycast_fluid_none's or a getFluidState below Level, or another mod merged code into ClipContext or BlockGetter. Runtime flag touchnmotionGroundProbeDirect (shadow .shadow). Helpers bons.furious.patch.touchnmotion_c49.TnmProbe, TnmFrame.",
+      "license": "GPL-3.0 (Touch'n Motion): none of its code is carried; the redirects only route its probes"
+    },
+    "touchnmotion_pose_block_memo": {
+      "mod": "touch_n_motion",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.touchnmotion_c49.TnmMemoFrameMixin",
+        "bons.furious.mixin.touchnmotion_c49.TnmFloorMemoMixin",
+        "bons.furious.mixin.touchnmotion_c49.TnmWallSurfaceMemoMixin",
+        "bons.furious.mixin.touchnmotion_c49.TnmSupportSearchMemoMixin",
+        "bons.furious.mixin.touchnmotion_c49.TnmWallSqueezeMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "strm/touchnmotion/footgrounding/compat/TerrainBalance",
+          "method": "floor",
+          "desc": "(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/world/phys/Vec3;Ljava/util/List;)Lstrm/touchnmotion/footgrounding/compat/TerrainBalance$Floor;",
+          "note": "after its probe: player.level().getBlockState(hit pos); for FenceBlock / WallBlock / FenceGateBlock state.getShape(level, pos).clip(local start, local end, pos)",
+          "sha256": "a15bba9cf719762c3988b664df6accc76bd5b3233af1ed0c10ac0a61a6b96ab0"
+        },
+        {
+          "class": "strm/touchnmotion/wallhand/WallSurface",
+          "method": "clip",
+          "desc": "(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Ljava/util/List;)Lstrm/touchnmotion/wallhand/WallSurface$Hit;",
+          "note": "per space: player.level().clip(new ClipContext(local from, local to, COLLIDER, NONE, player))",
+          "sha256": "c6b7db2f0ddd3be7bd3ff0befdbc3787ca1f9b5873df4dc4a12e17deb0c17d4b"
+        },
+        {
+          "class": "strm/touchnmotion/transport/SupportSearch",
+          "method": "deck",
+          "desc": "(Lnet/minecraft/client/player/AbstractClientPlayer;Ljava/util/List;)Lstrm/touchnmotion/transport/SupportSearch$Deck;",
+          "note": "per space: clip(new ClipContext(.., COLLIDER, NONE, player))",
+          "sha256": "ba1043c6bd5985c90c2f220b91186068b459a1ac621f5c0766a6f9120a50c354"
+        },
+        {
+          "class": "strm/touchnmotion/transport/SupportSearch",
+          "method": "find",
+          "desc": "(Lnet/minecraft/client/player/AbstractClientPlayer;Lstrm/emfcompat/core/ik/IKFrame;Ljava/util/List;Z)Lstrm/touchnmotion/transport/SupportSearch$Contact;",
+          "note": "per candidate: clip(new ClipContext(.., outline ? OUTLINE : COLLIDER, NONE, player))",
+          "sha256": "73b55da7e2f427bfa9d7e8b8967b5c8dc6751e5569461b6e7b0c13fbc0aef167"
+        },
+        {
+          "class": "strm/touchnmotion/transport/SupportSearch",
+          "method": "clear",
+          "desc": "(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Ljava/util/List;)Z",
+          "note": "per space: clip(new ClipContext(.., COLLIDER, NONE, player))",
+          "sha256": "f0eeecf73b5125bb69f9de860af53fbb9a96c348392b5bd207d5549c8bcedb97"
+        },
+        {
+          "class": "strm/touchnmotion/transport/SupportSearch",
+          "method": "valid",
+          "desc": "(Lnet/minecraft/client/player/AbstractClientPlayer;Lstrm/emfcompat/core/ik/IKFrame;Lstrm/touchnmotion/transport/SupportSearch$Contact;Z)Z",
+          "note": "clip(new ClipContext(.., contact.outline ? OUTLINE : COLLIDER, NONE, player))",
+          "sha256": "696f49c4e403cf8282c5160588c3b6d6bdae616f984121bb3ba690989281463a"
+        },
+        {
+          "class": "strm/touchnmotion/wallhand/WallSqueeze",
+          "method": "crouchOffset",
+          "desc": "(Ljava/util/UUID;F)Lorg/joml/Vector3f;",
+          "note": "state.player.level().clip(new ClipContext(a, b, COLLIDER, NONE, state.player))",
+          "sha256": "4b8f7a3a0aaf2426d987ba55611537daaeef95ef3dedc80ed7c4c9d00537ba1e"
+        },
+        {
+          "class": "net/minecraft/client/renderer/GameRenderer",
+          "method": "m_109093_",
+          "desc": "(FJZ)V",
+          "note": "render: the frame bracket (players and their poses are drawn inside it)",
+          "sha256": "b3d30ea94475a46c894be4fe1ae26574612e278c409632414625d31a0f0ecfc2"
+        },
+        {
+          "class": "net/minecraft/world/level/BlockGetter",
+          "method": "m_45547_",
+          "desc": "(Lnet/minecraft/world/level/ClipContext;)Lnet/minecraft/world/phys/BlockHitResult;",
+          "note": "clip: traverseBlocks(from, to, context, step, miss)",
+          "sha256": "ef00393c1b080047d0e820e6d1f2d7f59c224c91e0bc8e09940b21aceb0b3c9b"
+        },
+        {
+          "class": "net/minecraft/world/level/BlockGetter",
+          "method": "m_151358_",
+          "desc": "(Lnet/minecraft/world/level/ClipContext;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/BlockHitResult;",
+          "note": "clip's step: block state, fluid state, block shape, clipWithInteractionOverride, fluid shape clip, nearer of the two",
+          "sha256": "391c674d7f0691e5205f90a94a51c074aa5813fd09985770f21b9ccb34fbb701"
+        },
+        {
+          "class": "net/minecraft/world/level/BlockGetter",
+          "method": "m_274262_",
+          "desc": "(Lnet/minecraft/world/level/ClipContext;)Lnet/minecraft/world/phys/BlockHitResult;",
+          "note": "clip's miss: BlockHitResult.miss(to, getNearest(from - to), containing(to))",
+          "sha256": "fbda13eca417dcb346ad681125d30cf7416505c830d0728c3cab2763023a5186"
+        },
+        {
+          "class": "net/minecraft/world/level/BlockGetter",
+          "method": "m_151361_",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Ljava/lang/Object;Ljava/util/function/BiFunction;Ljava/util/function/Function;)Ljava/lang/Object;",
+          "note": "traverseBlocks: the walk the direct probe calls itself",
+          "sha256": "6894f5938d142c8a08a653fa51fd125953a084d96912bbd24b425b8b4ed40d44"
+        },
+        {
+          "class": "net/minecraft/world/level/ClipContext",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/level/ClipContext$Block;Lnet/minecraft/world/level/ClipContext$Fluid;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "stores the four values and CollisionContext.of(entity) (Forge: empty for a null entity)",
+          "sha256": "c977019338dac976e45cc31dc9d60704d8c7e920ed7913241ceba7f267f5b595"
+        },
+        {
+          "class": "net/minecraft/world/level/ClipContext",
+          "method": "m_45694_",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "note": "getBlockShape: block.get(state, level, pos, collisionContext)",
+          "sha256": "7a6796c8354548f0a75e244ee45aba2a6076b76d5a4d8ad4578a16b8d986eef7"
+        },
+        {
+          "class": "net/minecraft/world/level/ClipContext",
+          "method": "m_45698_",
+          "desc": "(Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "note": "getFluidShape: Shapes.empty() unless the fluid mode can pick the fluid",
+          "sha256": "b560224e804ee923ce55aa203098fbe1b7c9832d331f6da3c7c606dd8219fa98"
+        },
+        {
+          "class": "net/minecraft/world/level/ClipContext$Fluid",
+          "method": "m_45731_",
+          "desc": "(Lnet/minecraft/world/level/material/FluidState;)Z",
+          "note": "canPick: the mode predicate",
+          "sha256": "e9e6e18e8ebd31be51fb890340d46d5b8a9d56d4714f05cabe2b77a802b88e5a"
+        },
+        {
+          "class": "net/minecraft/world/level/ClipContext$Fluid",
+          "method": "m_45735_",
+          "desc": "(Lnet/minecraft/world/level/material/FluidState;)Z",
+          "note": "NONE's predicate: false",
+          "sha256": "a9057d062fb197564c8e845386d2280bde1a1cc2fd7f4098adc42ac45ea65ea5"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/CollisionContext",
+          "method": "m_82750_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/phys/shapes/CollisionContext;",
+          "note": "of: new EntityCollisionContext(entity)",
+          "sha256": "0f90d4a3520e2e32355f786c976e214e81d2398e0a78a4a7b2e4c331b42d7f83"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/EntityCollisionContext",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "captures isDescending, getY, the main-hand item, canStandOnFluid's method reference and the entity",
+          "sha256": "fc9993a24944aebf2180a0386973c19d77d01bbb8149cd72c7e3a96bf2139adc"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_6425_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/FluidState;",
+          "note": "getFluidState: the chunk read the direct probe leaves out (no side effect)",
+          "sha256": "0a130f8d7b048efaeafd89317c904abee3110181ae46392bca5b4c90f3846626"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_8055_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "getBlockState: a chunk read, the same within a frame",
+          "sha256": "cb0e4f7ff3d67591f62963ba1937adb91261c87b4c5adc352a50f532b8f8aa1b"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase",
+          "method": "m_60808_",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "note": "getShape(level, pos): getShape with the empty collision context",
+          "sha256": "1e0643e46c7c7bf816bfce875041602bfb50793fcc1fa2ae9991c8534f5eeebf"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect: the COLLIDER + Fluid.NONE probes of WallSurface.clip, SupportSearch.deck / find / clear / valid and WallSqueeze.crouchOffset go through touchnmotion_ground_probe_direct's direct probe (TnmProbe; nothing without that switch); the floor probes of a render frame (GameRenderer.render HEAD @Inject marks the switch applied) read each block once into a per-frame, per-level memo (BlockPos.asLong -> state, collision shape for the collision context object it was made with, outline shape), cleared at frame end; TerrainBalance.floor's getBlockState of the hit block gets the probe's read and its fence / wall / gate getShape is made once per block and frame (@Redirect of both calls). Runtime flag touchnmotionPoseBlockMemo (shadow .shadow). Helpers bons.furious.patch.touchnmotion_c49.TnmMemo, TnmProbe, TnmFrame.",
+      "license": "GPL-3.0 (Touch'n Motion): none of its code is carried; the redirects only route its probes and keep block reads"
+    }
+  }
+}

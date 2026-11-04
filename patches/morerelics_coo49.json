@@ -1,0 +1,143 @@
+{
+  "group": "morerelics_coo49",
+  "keys": {
+    "morerelics_delayed_task_safety": {
+      "mod": "morerelics",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.morerelics_coo49.MrDelayedTasksMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/blorb/morerelics/helper/DelayedTaskManager",
+          "method": "onServerEvent",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$ServerTickEvent;)V",
+          "note": "START only; walk tasks with its iterator (the wrapped first iterator call): delay 0 -> run, note for removal; else count down; then remove the noted tasks",
+          "sha256": "6e772d6ef3729810976f9cfecd1a531d1a328cc55455c8fbfe98aee6c3e98154"
+        },
+        {
+          "class": "com/blorb/morerelics/helper/DelayedTaskManager",
+          "method": "addTask",
+          "desc": "(Ljava/lang/Runnable;I)V",
+          "note": "appends to the same list",
+          "sha256": "440f5ab912a6b2b07df5d2aeae27cfabc8511ed2961a1c3b6286515fbf6a4ab2"
+        },
+        {
+          "class": "com/blorb/morerelics/helper/DelayedTaskManager",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "tasks = new ArrayList (our RETURN hook registers the stop listener)",
+          "sha256": "82ad69e4a4e70e7923ece7df255adbb268e8d67ead3917b25f4134f49447b061"
+        },
+        {
+          "class": "com/blorb/morerelics/helper/DelayedTaskManager",
+          "method": "*",
+          "desc": "",
+          "note": "declared members: the public static tasks list, addTask, onServerEvent",
+          "sha256": "980bbcaf128b3da58fd2fbcdf8af6e0656ae2b5a65ce30b8973a9cb4f14ff8be"
+        },
+        {
+          "class": "com/blorb/morerelics/helper/DelayedTask",
+          "method": "*",
+          "desc": "",
+          "note": "runnable and tickDelay fields",
+          "sha256": "243d4e2e08911fa48a75579bb71f9a86f141812945a16026dfb13975cb880e52"
+        },
+        {
+          "class": "com/blorb/morerelics/relics/TwinFangs",
+          "method": "onPlayerAttack",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V",
+          "note": "1.7.7: inDualStrike set true before the second hit is scheduled; only that task sets it false again (1.7.6, the also row: set and cleared inside the task)",
+          "sha256": "e35396d8eba6bac4e5294e8f2b98d79ead21bc9d7dbfb036a31e310d128856c3",
+          "sha256_also": [
+            {
+              "build": "morerelics 1.7.6",
+              "sha256": "b919c731e426173856cb65339f6a7e60b5f7c6515dd48f74672ee878534d736f"
+            }
+          ]
+        },
+        {
+          "class": "com/blorb/morerelics/relics/TwinFangs",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "inDualStrike = false, the state the stop listener restores",
+          "sha256": "93de330b25fb17e849e85a4e202795d67e051dd24f78682be4bd251dea5d23ef"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix. MixinExtras @WrapOperation on the first List.iterator() call of DelayedTaskManager.onServerEvent: an iterator over the entries the task list has when the pass starts, read by index (same tasks, same order, nothing copied; a task added during the pass waits for the next pass instead of a ConcurrentModificationException); @Inject at RETURN of DelayedTaskManager.<clinit> registers a ServerStoppedEvent listener that empties the list and resets TwinFangs.inDualStrike. Runtime flag morerelicsDelayedTaskSafety. Helper bons.furious.patch.morerelics_coo49.MrTasks.",
+      "license": "More Relics (All Rights Reserved): no code carried; the snapshot and the stop listener are ours"
+    },
+    "morerelics_equipped_curios_hoist": {
+      "mod": "morerelics",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.morerelics_coo49.MrEquippedHoistMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/blorb/morerelics/MoreRelicsUtil",
+          "method": "lambda$actuallyGetEquippedRelics$0",
+          "desc": "(Ljava/util/List;Ltop/theillusivec4/curios/api/type/capability/ICuriosItemHandler;)V",
+          "note": "for (i < getEquippedCurios().getSlots()) { stack = getEquippedCurios().getStackInSlot(i); if (stack.getItem() instanceof IRelicItem) items.add(stack) }; reads only, always on its handler argument (MrHoist.scan walks the same way over one wrapper)",
+          "sha256": "3cbb5ee012f8c83982b306f4f78432155b090974af45cc199c331e67ef7374b8"
+        },
+        {
+          "class": "com/blorb/morerelics/MoreRelicsUtil",
+          "method": "actuallyGetEquippedRelics",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/List;",
+          "note": "players only: CuriosApi.getCuriosInventory(player).ifPresent(the lambda)",
+          "sha256": "5d155c53affe9f77e9b77f9d91db945dc8796c54062d12d3ab5e41af18a19780"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$CurioInventoryWrapper",
+          "method": "getEquippedCurios",
+          "desc": "()Lnet/minecraftforge/items/IItemHandlerModifiable;",
+          "note": "getCurios() view, an array of every type's getStacks(), new CombinedInvWrapper(array)",
+          "sha256": "ae3cd240eac1888aa1683551e67acfb16c7928f380ea450eaee888192a8e5146"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$CurioInventoryWrapper",
+          "method": "getCurios",
+          "desc": "()Ljava/util/Map;",
+          "note": "an unmodifiable view of the wrapper's own map",
+          "sha256": "483f6d6b65b8e83cafa20645ffd3668ad80b990f35d8aec1e74d243c016002b0"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/inventory/CurioStacksHandler",
+          "method": "getStacks",
+          "desc": "()Ltop/theillusivec4/curios/api/type/inventory/IDynamicStackHandler;",
+          "note": "update() then the stackHandler field",
+          "sha256": "6675e74182e8b58193b191461d657ffc8cffe58a6ce8fd39570de6bd30155c22"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/inventory/CurioStacksHandler",
+          "method": "update",
+          "desc": "()V",
+          "note": "acts only while the update flag is set (a pending slot-count change)",
+          "sha256": "2f365d2637d4c1ed755d7e1cb85f45f41073d3eb27d698d2d6710ebf26304387"
+        },
+        {
+          "class": "net/minecraftforge/items/wrapper/CombinedInvWrapper",
+          "method": "<init>",
+          "desc": "([Lnet/minecraftforge/items/IItemHandlerModifiable;)V",
+          "note": "baseIndex from every handler's getSlots(), kept",
+          "sha256": "7754973ce509edd5a99622f1ccf077115f3081ddf270c57bc40e9ac232545f36"
+        },
+        {
+          "class": "net/minecraftforge/items/wrapper/CombinedInvWrapper",
+          "method": "getStackInSlot",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "note": "reads through the kept handlers",
+          "sha256": "964e702080d299a361f0eb6f4f4141617475c79c42d6f7e900c1a7de6f49a27e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of MoreRelicsUtil.lambda$actuallyGetEquippedRelics$0 (no other mixin targets the lambda): when MrHoist.scan finds the handler quiet before the walk (the Curios presence layer's CuriosPresence.quiet(ICuriosItemHandler), reached by name: the layer's mixins applied and its switch on, Curios' own CurioInventoryWrapper, every slot type Curios' own stacks handler with no pending update) it walks the slots once over one getEquippedCurios() wrapper (the same stacks in the same order through the same item test, Relics' IRelicItem by name) and cancels; otherwise the original walk runs as shipped. Nothing is kept beyond the call. Runtime flag morerelicsEquippedCuriosHoist. Helper bons.furious.patch.morerelics_coo49.MrHoist.",
+      "license": "More Relics (All Rights Reserved): no code carried; the one-wrapper walk is ours. Curios (LGPL-3.0): only called. Relics: IRelicItem only named."
+    }
+  }
+}

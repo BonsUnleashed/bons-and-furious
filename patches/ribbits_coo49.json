@@ -1,0 +1,33 @@
+{
+  "group": "ribbits_coo49",
+  "keys": {
+    "ribbits_band_scan_interval": {
+      "mod": "ribbits",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.ribbits_coo49.RibbitBandScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/yungnickyoung/minecraft/ribbits/entity/goal/RibbitPlayMusicGoal",
+          "method": "m_8036_",
+          "desc": "()Z",
+          "note": "canUse: night -> false; getEntitiesOfClass(RibbitEntity, bb.inflate(64, 16, 64)) (the wrapped search) -> stream, playing ones: take their master; band full -> drop it; alive and not falling",
+          "sha256": "522ebb11ebaba8389d0afe32c2995ecb0a61a1ee651f11f70beb880d21be4c8a"
+        },
+        {
+          "class": "com/yungnickyoung/minecraft/ribbits/entity/goal/RibbitPlayMusicGoal",
+          "method": "m_8037_",
+          "desc": "()V",
+          "note": "tick: without a playing master the same search and adoption, then path / look / play; the list is only streamed, never kept",
+          "sha256": "bf1b92d275bf4e5712da8d0067c304c3c30ab6b33a239b1ee24d1db372e11128"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass(RibbitEntity, box) call in RibbitPlayMusicGoal.canUse and tick: the goal keeps its last search's list (@Unique fields) and for the next N - 1 calls answers it filtered by the current box (the search's own intersects test); a removed ribbit in it or a level change searches again at once. Trade-off, off by default; N = PureConfig.intValue(\"ribbits_band_scan_interval\", 10, 1, 200). Runtime flag ribbitsBandScanInterval. Helper bons.furious.patch.ribbits_coo49.BandScan.",
+      "license": "Ribbits (All Rights Reserved): no code carried; the hook decides when its own search runs"
+    }
+  }
+}

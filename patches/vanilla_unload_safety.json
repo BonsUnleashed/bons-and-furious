@@ -1,0 +1,75 @@
+{
+  "group": "vanilla_unload_safety",
+  "keys": {
+    "vanilla_entity_unload_snapshot": {
+      "mod": "minecraft",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_unload_safety.EntityUnloadDeferralMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157577_",
+          "desc": "()V",
+          "sha256": "42196982260188b31d18257ae4aa54889a3a4cab47c5cd72c254b89527315eaf"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157583_",
+          "desc": "(J)Z",
+          "sha256": "3eeb42d0ba249ef764b23b1e1b4dad39e40c1a9f7b417166999bcaaa0a609e35"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157527_",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/level/entity/Visibility;)V",
+          "sha256": "7f1353fde31999c657a258f209289e4084bb310cb5afca438f03a84ca0d3d663"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157568_",
+          "desc": "(J)Z",
+          "sha256": "a12e3efb7e1b770e1cf8d3ac5c5f05325c0b10c73f17126bd27b2a3c3a209730"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on chunksToUnload.removeIf in processUnloads (m_157577_: the stock call inside a deferral scope) and on chunksToUnload.add / remove in updateChunkStatus (m_157527_: queued while the scope is open, applied in order when it closes)",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helpers bons.furious.patch.vanilla_unload_safety.UnloadSnapshot, UnloadDeferral)"
+    },
+    "valkyrien_entity_unload_snapshot": {
+      "mod": "valkyrienskies",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_unload_safety.ValkyrienUnloadSnapshotMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/valkyrienskies/mod/mixin/feature/shipyard_entities/MixinPersistentEntitySectionManager",
+          "method": "replaceProcessUnloads",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "88fadc9571c58c2687f9d54c299fa6eeed7c1fd7bab972f55ee1bfd5860b4d9c"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157568_",
+          "desc": "(J)Z",
+          "sha256": "a12e3efb7e1b770e1cf8d3ac5c5f05325c0b10c73f17126bd27b2a3c3a209730"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "m_157527_",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/level/entity/Visibility;)V",
+          "sha256": "7f1353fde31999c657a258f209289e4084bb310cb5afca438f03a84ca0d3d663"
+        }
+      ],
+      "cancel": [],
+      "conversion": "targethandler: MixinSquared HEAD-cancel in Valkyrien Skies' replaceProcessUnloads running the same loop with Valkyrien Skies' semantics inside vanilla_entity_unload_snapshot's deferral scope (UnloadDeferral; without it the loop is exactly Valkyrien Skies')",
+      "license": "Apache-2.0 (Valkyrien Skies mod mixin classes): our own loop; no Valkyrien Skies code copied"
+    }
+  }
+}

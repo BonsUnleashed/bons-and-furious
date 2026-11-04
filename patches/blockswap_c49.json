@@ -1,0 +1,60 @@
+{
+  "group": "blockswap_c49",
+  "keys": {
+    "blockswap_retrogen_palette_scan": {
+      "mod": "blockswap",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.blockswap_c49.RetroGenScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "corgitaco/blockswap/swapper/Swapper",
+          "method": "runRetroGenerator",
+          "desc": "(Lnet/minecraft/world/level/Level;[Lnet/minecraft/world/level/chunk/LevelChunkSection;Lnet/minecraft/world/level/chunk/LevelChunk;)V",
+          "note": "config local first; retroGen && !markTickDirty(): every position x, y, z: getBlockState, block-map swap, state-map swap (flag 2); setTickDirty",
+          "sha256": "5ada72a9faa8f8081e00e39fa53c363c5fcbe2f9eaf9cd7be7bb40c4ba34f36a"
+        },
+        {
+          "class": "corgitaco/blockswap/swapper/Swapper",
+          "method": "remapState",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "called by the step as Block Swap calls it",
+          "sha256": "be6968811e970ad519db2bc9aba13ca6de412dba6182846e86dd349fb2518798"
+        },
+        {
+          "class": "corgitaco/blockswap/mixin/MixinChunkHolder",
+          "method": "runChunkUpdates",
+          "desc": "(Lnet/minecraft/world/level/chunk/LevelChunk;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "the only caller: runRetroGenerator(chunk.getLevel(), chunk.getSections(), chunk) at ChunkHolder.broadcastChanges",
+          "sha256": "23a576defcaf35d4784c8431caa26149a526f0b6e5c5809c411ec6f090a3f68a"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunk",
+          "method": "m_8055_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "the chunk read Block Swap's world read lands in: the section's state, air for a section with only air (debug world excluded)",
+          "sha256": "d5a3f2bd5d95ad50a1dc4d8e118af704a17b2c9eb7dad1450788b33624d17fc8"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_8055_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "outside the build height void air, else getChunk(x >> 4, z >> 4).getBlockState(pos)",
+          "sha256": "cb0e4f7ff3d67591f62963ba1937adb91261c87b4c5adc352a50f532b8f8aa1b"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/PalettedContainer",
+          "method": "m_63099_",
+          "desc": "(Lnet/minecraft/world/level/chunk/PalettedContainer$CountConsumer;)V",
+          "note": "count: every state present in the storage (only those)",
+          "sha256": "c43f801969d1ea381139b867519af3f213420ed9af498669d3f84a44e213791d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the TickHelper.markTickDirty() call in Swapper.runRetroGenerator (reached only with retro_gen on) with @Local captures of its arguments and config: an eligible chunk is walked by bons.furious.patch.blockswap_c49.RetroScan (sections without a swap target skipped; Block Swap's own step where a target is), then marked, and Block Swap's loop is skipped",
+      "license": "LGPLv3 (Block Swap): the walk is re-written around Block Swap's per-position step (its remapState and the same setBlock calls are called, not copied); Minecraft (Mojang): no-copy"
+    }
+  }
+}

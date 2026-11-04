@@ -1,0 +1,55 @@
+{
+  "group": "fancymenu_capture_c49",
+  "keys": {
+    "fancymenu_seamless_capture_async": {
+      "mod": "fancymenu",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.fancymenu_capture_c49.SeamlessCaptureMixin",
+        "bons.furious.mixin.fancymenu_capture_c49.NativeImagePixelsMixin"
+      ],
+      "guard": [
+        {
+          "class": "de/keksuccino/fancymenu/customization/global/SeamlessWorldLoadingHandler",
+          "method": "*",
+          "desc": "",
+          "note": "every reader and writer of lastCapturedImage: captureFrameIfNeeded (one-per-second check, Screenshot.takeScreenshot, replaceLastCapturedImage), saveAndClearCapture, clearLastCapturedImage, replaceLastCapturedImage, clearCaptureState, setCaptureTarget, saveNativeImage",
+          "sha256": "7c6f60293d50bbd0955a626e7bf1352fd9cb519da4a4d5380f89734f0e1767c2"
+        },
+        {
+          "class": "net/minecraft/client/Screenshot",
+          "method": "m_92279_",
+          "desc": "(Lcom/mojang/blaze3d/pipeline/RenderTarget;)Lcom/mojang/blaze3d/platform/NativeImage;",
+          "note": "takeScreenshot: new NativeImage(width, height, false), bind the colour texture, downloadTexture(0, true), flipY",
+          "sha256": "a206744af62912d38a1f56f2f3c18778cdd0e969546a094e2fb080a03fcb4cca"
+        },
+        {
+          "class": "com/mojang/blaze3d/platform/NativeImage",
+          "method": "m_85045_",
+          "desc": "(IZ)V",
+          "note": "downloadTexture: pack alignment, glGetTexImage(GL_TEXTURE_2D, level, RGBA, UNSIGNED_BYTE), the opaque-alpha loop",
+          "sha256": "b4b11b97e2f3cb5524ff8e9744f8d59c5874e2df1e023496c8faad7743abe128"
+        },
+        {
+          "class": "com/mojang/blaze3d/platform/NativeImage",
+          "method": "m_85122_",
+          "desc": "()V",
+          "note": "flipY",
+          "sha256": "14721cf86907a3c337f9acc521e7e292feaa4a2d63b979cdf6cebb24b5fd0675"
+        },
+        {
+          "class": "com/mojang/blaze3d/platform/NativeImage$Format",
+          "method": "m_85166_",
+          "desc": "()V",
+          "note": "setPackPixelStoreState: GL_PACK_ALIGNMENT = components",
+          "sha256": "faba99563fc632f9f9f0484532c0fce5be0655f6dd3d10d271550594565acee4"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@WrapOperation of Screenshot.takeScreenshot in SeamlessWorldLoadingHandler.captureFrameIfNeeded (glGetTexImage into a pixel buffer object + fence, a placeholder image for FancyMenu), @ModifyExpressionValue of its read of lastCapturedImage (the finished image replaces the placeholder), @Inject HEAD of saveAndClearCapture (finish a pending capture) and of clearLastCapturedImage (drop it), and a pixel-address getter on NativeImage; stands aside (FancyMenu's own capture) when another mod's injector handler or overwrite is merged into Screenshot or NativeImage, read once on the first capture; helper bons.furious.patch.fancymenu_capture_c49.SeamlessCapture",
+      "license": "FancyMenu's licence (DSMSL) allows none of its code: injectors only; the GL read, the copy, the alpha fill and the flip call are our own code or Minecraft's public NativeImage methods"
+    }
+  }
+}

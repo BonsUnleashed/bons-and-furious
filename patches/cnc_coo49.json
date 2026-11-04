@@ -1,0 +1,690 @@
+{
+  "group": "cnc_coo49",
+  "keys": {
+    "cnc_encounter_flag_first": {
+      "mod": "cnc",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cnc_coo49.EncounterBeaverMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterBlackbearMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterCaribouMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterChupacabraMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterCougarMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterCoyoteMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterElkMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterGiantBoarMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterGooseMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterGreywolfMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterHarmlessSnakeMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterHowlerMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterMarmotMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterMouseMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterPitViperMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterRattlesnakeMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterRingtailMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterSasquatchMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterSkinwalkerMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterSkunkMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterSquonkMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterTurkeyMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterWechugeMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterWendigoMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterWhitetailMixin",
+        "bons.furious.mixin.cnc_coo49.EncounterWolverineMixin",
+        "bons.furious.mixin.cnc_coo49.SquonkCryFirstTestsMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/BeaverAdvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search BeaverEntity in a 4 block box (or its head item BEAVER_HEAD in the inventory), then the flag encountered_beaver from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "d8af603b05e8468d5ea0bcb2748e02ef9bf3023543d4c71f65f2da2055c54b1f"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/BlackbearAdvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search BlackbearEntity in a 4 block box (or its head item BLACK_BEAR_HEAD in the inventory), then the flag encountered_black_bear from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "f66c726b5b53e4aaea2b13829d772dd444292dad82adb97bc1e0088532126885"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/CaribouadvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search CaribouEntity in a 4 block box (or its head item CARIBOU_HEAD in the inventory), then the flag encountered_caribou from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "14795f77bbbf0307a84348c1f57d97fc2639e3db0b5dbbf439a14f50cc9205a2"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/ChupacabraadvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search ChupacabraEntity in a 4 block box (or its head item CHUPACABRA_HEAD in the inventory), then the flag encountered_chupacabra from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "12fdf882750231008f8d15961a6801647b30d493047c277286f2ff189bbfe4b3"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/CougaradvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search CougarEntity in a 4 block box (or its head item COUGAR_HEAD in the inventory), then the flag encountered_cougar from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "03aa27f2491bf5a9f1608a17dc4685de6c417acb12da35b4556e4149da1584c5"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/CoyoteadvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search CoyoteEntity in a 4 block box (or its head item COYOTE_HEAD in the inventory), then the flag encountered_coyote from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "0f168d0f4d01340367be557ed63c829abaa3a16a53c40f310724deb13a1f3bff"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/ElkadvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search ElkEntity in a 4 block box (or its head item ELK_HEAD in the inventory), then the flag encountered_elk from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "228dc36163d85228a3b66a639886e7ae079c510751d682de9e20b792ec9409ef"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/GiantBoaradvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search GiantBoarEntity in a 4 block box (or the advancement cnc:giant_boar_killed done), then the flag encountered_giant_boar from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "26baeba3a01250617de6154c008c2317378f0ea9760d4931bbb34299dbca799a"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/GooseAdvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search GooseEntity in a 4 block box (only), then the flag encountered_goose from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "9bf6006403bf3d4c574398f1f3e46d135a7b18f466aa61bd8a3304057141b1b4"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/GreywolfadvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search GreywolfEntity in a 4 block box (or its head item TIMBER_WOLF_HEAD in the inventory), then the flag encountered_greywolf from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "ba2706d72b15cb02e678ff811595b5651839af6ff8aa19923556985ababc06f4"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/HarmlessSnakeAdvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search SnakeEntity in a 4 block box (only), then the flag encountered_snake from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "4f426324dadf3a996791d15557489e1d76850bb02323e83fc588eb91a873526d"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/HowlerAdvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search HowlerEntity in a 4 block box (or its head item HOWLER_HEAD in the inventory), then the flag encountered_howler from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "a2ea9ed0de9df4ef330bd6eb7fb4607b2f14fb6f8661aa8ff996a0f253fdca9b"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/MarmotAdvanceProcProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search MarmotEntity in a 4 block box (or its head item MARMOT_HEAD in the inventory), then the flag encountered_marmot from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "1b616b7306fb7caf442439cef803e1794ae6c5658c2275bed45a1f1eb7bf159d"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/MouseAdvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search MouseEntity in a 4 block box (only), then the flag encountered_mouse from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "a66300ec35a9d705e1a00489b19c4ab4fa7e38e7ec1010491da8eb4d7a83297f"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/PitViperAdvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search PitViperEntity in a 4 block box (only), then the flag encountered_pit_viper from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "0894aa2de989666dcf7416b81c52ba5e939e7c287c39563a79f038658c0e6ba6"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/RattlesnakeAdvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search RattlesnakeEntity in a 4 block box (only), then the flag encountered_rattlesnake from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "756f35e844c509e35bcdd2f61d1624185f3a70605b46d94a3e7caa2a87e8bea1"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/RingtailadvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search RingtailEntity in a 4 block box (or its head item RINGTAIL_HEAD in the inventory), then the flag encountered_ringtail from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "730b16134e77b1e872d2b468569e06a602cd86a1e203c626c9e60862822db6ef"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/SasquatchAdvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search SasquatchEntity in a 4 block box (or its head item SASQUATCH_HEAD in the inventory), then the flag encountered_sasquatch from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "5f197a8f8c46d6963f76a3419cfa7e26c29f4c004512dc37e1d0895548130d09"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/SkinwalkerAdvanceProcProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search SkinwalkerEntity in a 4 block box (or the advancement cnc:skinwalkeradvancement done), then the flag encountered_skinwalker from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "88678df5ea41bc16189a7d7ba8f3b86e0a4815490729eb86a877253acb63c9b7"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/SkunkAdvanceProcProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search SkunkEntity in a 4 block box (or its head item WHITE_TAILED_DEER_HEAD in the inventory), then the flag encountered_skunk from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "2815a0c5342090f4fc04b70acc12d816bf3f435efc2b779fccab28485056c19b"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/SquonkAdvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search SquonkEntity in a 4 block box (or its head item SQUONK_HEAD in the inventory), then the flag encountered_squonk from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "1168dffc8e5470ff26ca7c0cf79d299096310ca59fce0effeadf141d7aba7739"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/TurkeyadvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search TurkeyEntity in a 4 block box (only), then the flag encountered_turkey from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "ae2fc450231a848bf277ccf246c45ed3b440f0cd377c150eefe0f8dfeb5ff272"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/WechugeadvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search WechugeEntity in a 4 block box (or the advancement cnc:wechuge_killed done), then the flag encountered_wechuge from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "5be15206b4bb283398d7a22b2786a65e383378f87ef528ba27aba562b4c75a0c"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/WendigoadvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search WendigoEntity in a 4 block box (or the advancement cnc:wendigo_killed done), then the flag encountered_wendigo from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "ade231615024e0bba40f997facdfc2fc549d8d5b7a1b6a07b8d9555e9c4ccade"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/WhitetailAdvanceProcProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search WhitetailEntity in a 4 block box (or its head item WHITE_TAILED_DEER_HEAD in the inventory), then the flag encountered_whitetail from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "75ec3359418273365e307b8983eb4245bcfd117210a93896bde87a8cafc03c79"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/WolverineadvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search WolverineEntity in a 4 block box (or its head item WOLVERINE_HEAD in the inventory), then the flag encountered_wolverine from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "6cb1c78416a561b1f2f57345c9cb1118786c3d3190c76e59d286998ccc8c64b6"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/PlayerSquonkCryEffectProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "squonk search in a 4 block box, then living / no Sobbing / not a client level, then addEffect(Sobbing 300)",
+          "sha256": "85f1022273e257487fcd3f23d0e2a5be986d0b5bc8bf0c3a8abe6a8ff94a5b1c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Mixin @Inject at HEAD (cancellable) of each of the 26 *AdvanceprocProcedure.execute(Event, LevelAccessor, DDD, Entity) (one mixin per class, generated from the jar's census): the player's PlayerVariables are read once (LazyOptional.orElse(null): no default object); when the handler's encountered_<animal> flag is already true the handler returns (one profiler getEntities, as its search counts); the four advancement handlers run the original when their advancement is not loaded (its look-up then throws). PlayerSquonkCryEffectProcedure: living / client level / Sobbing tested before its search. Exact variant (Forge no longer gathers capabilities for the throwaway head item). Runtime flag cncEncounterFlagFirst. Helper bons.furious.patch.cnc_coo49.CncScans.",
+      "license": "Critters n' Crawlers (All Rights Reserved): no code carried; the hooks only decide whether its own code runs"
+    },
+    "cnc_encounter_client_lean": {
+      "mod": "cnc",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cnc_coo49.EncounterClientLeanMixin",
+        "bons.furious.mixin.cnc_coo49.SquonkCryClientMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/BeaverAdvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search BeaverEntity in a 4 block box (or its head item BEAVER_HEAD in the inventory), then the flag encountered_beaver from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "d8af603b05e8468d5ea0bcb2748e02ef9bf3023543d4c71f65f2da2055c54b1f"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/BlackbearAdvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search BlackbearEntity in a 4 block box (or its head item BLACK_BEAR_HEAD in the inventory), then the flag encountered_black_bear from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "f66c726b5b53e4aaea2b13829d772dd444292dad82adb97bc1e0088532126885"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/CaribouadvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search CaribouEntity in a 4 block box (or its head item CARIBOU_HEAD in the inventory), then the flag encountered_caribou from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "14795f77bbbf0307a84348c1f57d97fc2639e3db0b5dbbf439a14f50cc9205a2"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/ChupacabraadvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search ChupacabraEntity in a 4 block box (or its head item CHUPACABRA_HEAD in the inventory), then the flag encountered_chupacabra from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "12fdf882750231008f8d15961a6801647b30d493047c277286f2ff189bbfe4b3"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/CougaradvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search CougarEntity in a 4 block box (or its head item COUGAR_HEAD in the inventory), then the flag encountered_cougar from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "03aa27f2491bf5a9f1608a17dc4685de6c417acb12da35b4556e4149da1584c5"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/CoyoteadvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search CoyoteEntity in a 4 block box (or its head item COYOTE_HEAD in the inventory), then the flag encountered_coyote from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "0f168d0f4d01340367be557ed63c829abaa3a16a53c40f310724deb13a1f3bff"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/ElkadvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search ElkEntity in a 4 block box (or its head item ELK_HEAD in the inventory), then the flag encountered_elk from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "228dc36163d85228a3b66a639886e7ae079c510751d682de9e20b792ec9409ef"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/GiantBoaradvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search GiantBoarEntity in a 4 block box (or the advancement cnc:giant_boar_killed done), then the flag encountered_giant_boar from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "26baeba3a01250617de6154c008c2317378f0ea9760d4931bbb34299dbca799a"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/GooseAdvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search GooseEntity in a 4 block box (only), then the flag encountered_goose from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "9bf6006403bf3d4c574398f1f3e46d135a7b18f466aa61bd8a3304057141b1b4"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/GreywolfadvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search GreywolfEntity in a 4 block box (or its head item TIMBER_WOLF_HEAD in the inventory), then the flag encountered_greywolf from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "ba2706d72b15cb02e678ff811595b5651839af6ff8aa19923556985ababc06f4"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/HarmlessSnakeAdvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search SnakeEntity in a 4 block box (only), then the flag encountered_snake from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "4f426324dadf3a996791d15557489e1d76850bb02323e83fc588eb91a873526d"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/HowlerAdvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search HowlerEntity in a 4 block box (or its head item HOWLER_HEAD in the inventory), then the flag encountered_howler from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "a2ea9ed0de9df4ef330bd6eb7fb4607b2f14fb6f8661aa8ff996a0f253fdca9b"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/MarmotAdvanceProcProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search MarmotEntity in a 4 block box (or its head item MARMOT_HEAD in the inventory), then the flag encountered_marmot from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "1b616b7306fb7caf442439cef803e1794ae6c5658c2275bed45a1f1eb7bf159d"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/MouseAdvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search MouseEntity in a 4 block box (only), then the flag encountered_mouse from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "a66300ec35a9d705e1a00489b19c4ab4fa7e38e7ec1010491da8eb4d7a83297f"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/PitViperAdvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search PitViperEntity in a 4 block box (only), then the flag encountered_pit_viper from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "0894aa2de989666dcf7416b81c52ba5e939e7c287c39563a79f038658c0e6ba6"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/RattlesnakeAdvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search RattlesnakeEntity in a 4 block box (only), then the flag encountered_rattlesnake from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "756f35e844c509e35bcdd2f61d1624185f3a70605b46d94a3e7caa2a87e8bea1"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/RingtailadvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search RingtailEntity in a 4 block box (or its head item RINGTAIL_HEAD in the inventory), then the flag encountered_ringtail from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "730b16134e77b1e872d2b468569e06a602cd86a1e203c626c9e60862822db6ef"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/SasquatchAdvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search SasquatchEntity in a 4 block box (or its head item SASQUATCH_HEAD in the inventory), then the flag encountered_sasquatch from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "5f197a8f8c46d6963f76a3419cfa7e26c29f4c004512dc37e1d0895548130d09"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/SkinwalkerAdvanceProcProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search SkinwalkerEntity in a 4 block box (or the advancement cnc:skinwalkeradvancement done), then the flag encountered_skinwalker from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "88678df5ea41bc16189a7d7ba8f3b86e0a4815490729eb86a877253acb63c9b7"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/SkunkAdvanceProcProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search SkunkEntity in a 4 block box (or its head item WHITE_TAILED_DEER_HEAD in the inventory), then the flag encountered_skunk from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "2815a0c5342090f4fc04b70acc12d816bf3f435efc2b779fccab28485056c19b"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/SquonkAdvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search SquonkEntity in a 4 block box (or its head item SQUONK_HEAD in the inventory), then the flag encountered_squonk from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "1168dffc8e5470ff26ca7c0cf79d299096310ca59fce0effeadf141d7aba7739"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/TurkeyadvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search TurkeyEntity in a 4 block box (only), then the flag encountered_turkey from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "ae2fc450231a848bf277ccf246c45ed3b440f0cd377c150eefe0f8dfeb5ff272"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/WechugeadvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search WechugeEntity in a 4 block box (or the advancement cnc:wechuge_killed done), then the flag encountered_wechuge from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "5be15206b4bb283398d7a22b2786a65e383378f87ef528ba27aba562b4c75a0c"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/WendigoadvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search WendigoEntity in a 4 block box (or the advancement cnc:wendigo_killed done), then the flag encountered_wendigo from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "ade231615024e0bba40f997facdfc2fc549d8d5b7a1b6a07b8d9555e9c4ccade"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/WhitetailAdvanceProcProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search WhitetailEntity in a 4 block box (or its head item WHITE_TAILED_DEER_HEAD in the inventory), then the flag encountered_whitetail from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "75ec3359418273365e307b8983eb4245bcfd117210a93896bde87a8cafc03c79"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/WolverineadvanceprocProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "PlayerTickEvent handler: search WolverineEntity in a 4 block box (or its head item WOLVERINE_HEAD in the inventory), then the flag encountered_wolverine from PlayerVariables; sets it, syncs and toasts only when it was false",
+          "sha256": "6cb1c78416a561b1f2f57345c9cb1118786c3d3190c76e59d286998ccc8c64b6"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/BeaverAdvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "ee3b55935acbc785235e76438325584660ef69b46159e89d6ef0ce0faf57856e"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/BlackbearAdvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "70c020c78ab8c9206c615a520f69ba43a42e198de651eac10c79c709f9870654"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/CaribouadvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "d3022d5d14bd27ddda9d11b7d757fee72a7a6c560a154b097d919f3f4f52288b"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/ChupacabraadvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "a033a700284323fcea6efc4e23d9304e5c23099e00c20e066c0288dfe6cfcd6b"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/CougaradvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "6a1d43fe78e1c676fad2eb21faadfb617affa2cd57a7e6a998e6a508ef1d9b91"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/CoyoteadvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "2bdcfd0aca3623675c023ada45caa9f9cfb2830b5c74fc56efe93b37f14843b7"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/ElkadvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "0d3bd17fdfdb3da4d7fd45bdb0a130d861035ce1965a22259f7fb4e15e9acd3e"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/GiantBoaradvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "aa7007d82f953fb7cf8b4b0e94117afefef272d8861845ba29cddc13d9c06fe6"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/GooseAdvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "873a5bcff0ee79611ab0e8eee62f2a1fb63aaac4af9f5ab72cc340f5e7666006"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/GreywolfadvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "0011157702cb69721039293c3521c76927d3e365d30c930a136d7d950e8304ab"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/HarmlessSnakeAdvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "1ee128c37214cf9d7baf93a79576a676a137261d979247060b813ad8ef56d5cb"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/HowlerAdvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "f1802c744702d4bdc29c874474edbf41d7ed5587cf488e2004df21de4b116afc"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/MarmotAdvanceProcProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "dd174184a8f1e9b6636a4e16924f5426c23e5249617dbbb52cfc8dfa322b48f7"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/MouseAdvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "484d9d0a506910b3d7a9023f7d6b75e29598c5d43fe696f548a99cf732166317"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/PitViperAdvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "f1c2b9e1fd76a74dd1ea89c7298e6ef6921423006ee3410f23e08d189a771455"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/RattlesnakeAdvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "9fe1dada87392c558efeaa4fc30bace1759b6e319a21bad0377929df6eb5a7ba"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/RingtailadvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "c29039020607c0e5bf60356a309f505432c1d6bf43fc4e0384c4f2d10e32787b"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/SasquatchAdvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "926153f04dae2363aaed641375374386ef202d1b0f66c9c64db45a11c656261e"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/SkinwalkerAdvanceProcProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "b1c09b744656c0d5ee56b02487777791eff398dec1843a9b7c9677321ffbe99f"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/SkunkAdvanceProcProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "b2a3448ff047b177e7c66be380afce9a7b93644daf0544032903fa6def85df7c"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/SquonkAdvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "70ee18ea2ffccdbb0f99c995c294c5a3643a37a72f90b42867793de82b74269a"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/TurkeyadvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "1e85c2bdb46f4bce2fa02a7a6c3593f5c850cb347c1f0c151163065a5940e76a"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/WechugeadvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "2a7c96065b5a5bb77648490c2846f7b942f5ecfad3f0137e0f9099349c22c587"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/WendigoadvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "1599c00d40d189acbf25588c4880eb5b0beda11fb350fec1f1890d1844fa2876"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/WhitetailAdvanceProcProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "90025c7d535b8c53e7d1f414248cf27cd610cbae1fec57a16920e4523695ec74"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/WolverineadvanceprocProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(ZLnet/minecraft/world/entity/Entity;Lnet/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables;)V",
+          "note": "the flag-set lambda: syncPlayerVariables, then the toast packet only for a server player",
+          "sha256": "d798b39cfd6e091fb4d1f604913bccda196ba62057045d2c38b75f36f9f92d55"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/network/CncModVariables$PlayerVariables",
+          "method": "syncPlayerVariables",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "sends the sync packet only for a server player",
+          "sha256": "befcd724b7e6986602481d6e8a0bb407827e3cd691979f27dc6267acbc4a21c5"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/PlayerSquonkCryEffectProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "its only effect (addEffect) is behind level().isClientSide() == false",
+          "sha256": "85f1022273e257487fcd3f23d0e2a5be986d0b5bc8bf0c3a8abe6a8ff94a5b1c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Mixin @Inject at HEAD (cancellable) of the 26 *AdvanceprocProcedure.execute (one mixin on all 26, client list): on a client level the handler returns for players other than the local one (Player.isLocalPlayer), one profiler getEntities each; PlayerSquonkCryEffectProcedure returns on a client level. Exact variant (other players' client copies of PlayerVariables keep their defaults). Runtime flag cncEncounterClientLean. Helper bons.furious.patch.cnc_coo49.CncScans.",
+      "license": "Critters n' Crawlers (All Rights Reserved): no code carried; the hooks only decide whether its own code runs"
+    },
+    "cnc_sasquatch_knock_client_skip": {
+      "mod": "cnc",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cnc_coo49.SasquatchKnockClientMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/SasquatchWoodKnockProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "for a sasquatch: 216 block states tested for minecraft:logs, then a 1 in 151 roll plays a knock with no player",
+          "sha256": "e37f15ab2ea717aab1b85a0d4b54c322f179c3d1300d8df8d36892cec46232a9"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on the one 'instanceof SasquatchEntity' of SasquatchWoodKnockProcedure.execute (client list): false on a client level, where the sound with no player is never played. Exact variant (no client RandomSource / seed draws). Runtime flag cncSasquatchKnockClientSkip. Helper bons.furious.patch.cnc_coo49.CncScans.",
+      "license": "Critters n' Crawlers (All Rights Reserved): no code carried; the hooks only decide whether its own code runs"
+    },
+    "cnc_sasquatch_texture_scan_interval": {
+      "mod": "cnc",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cnc_coo49.SasquatchTextureIntervalMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/SasquatchOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "Player then ServerPlayer search in a 16 block box; setTexture sasquatch or sasquatch_hidden",
+          "sha256": "ddfe8bbf4882a4c253c526ba735cd5c56c875e698e26edf9b2624a43fe90d664"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Mixin @Inject at HEAD (cancellable) of SasquatchOnEntityTickUpdateProcedure.execute: returns on the ticks where (tickCount + id) mod N != 0, so the texture is chosen every N ticks. Trade-off, off by default; N = PureConfig.intValue(\"cnc_sasquatch_texture_scan_interval\", 4, 1, 200). Runtime flag cncSasquatchTextureScanInterval. Helper bons.furious.patch.cnc_coo49.CncScans.",
+      "license": "Critters n' Crawlers (All Rights Reserved): no code carried; the hooks only decide whether its own code runs"
+    },
+    "cnc_sobbing_shader_own_only": {
+      "mod": "cnc",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cnc_coo49.SobbingShaderOwnMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/SobbingShaderProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "client: Sobbing -> loadEffect(cnc:shaders/post/cry.json) when no effect is active; else shutdownEffect() of any active effect",
+          "sha256": "fcbb0b9d1c728e653fb100e79361af9b9fb0b6d0bf3e5faf74828b65c3ae2cc5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Mixin @Inject at HEAD (cancellable) of SobbingShaderProcedure.execute: returns for players other than the local one; MixinExtras @WrapOperation of its GameRenderer.shutdownEffect call: only when the active post chain is cnc:shaders/post/cry.json (CncSobbingClient). Gameplay fix, off by default. Runtime flag cncSobbingShaderOwnOnly.",
+      "license": "Critters n' Crawlers (All Rights Reserved): no code carried; the hooks only decide whether its own code runs"
+    }
+  }
+}

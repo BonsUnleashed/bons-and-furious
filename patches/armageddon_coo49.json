@@ -1,0 +1,125 @@
+{
+  "group": "armageddon_coo49",
+  "keys": {
+    "armageddon_progression_id_memo": {
+      "mod": "armageddon_mod",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.armageddon_coo49.ArmorGateIdsMixin",
+        "bons.furious.mixin.armageddon_coo49.EntityGateIdsMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mcreator/armageddonmod/procedures/BloodyArmorEquippedPreventionProcedureProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "armour gate (the_blood_keeper, forge:bloody_armor): 5 ResourceLocation.parse of constant strings (the advancement id -> ServerAdvancementManager.getAdvancement, 4 x the armour tag -> ItemTags.create -> ItemStack.is), 4 x ForgeRegistries.ITEMS.getKey(item).toString() -> List.contains; no other use of the results",
+          "sha256": "30d5d4257e194392e066bfbd4f348905bff5ec2ee84bf6ea9a17bbb7a7a44c18"
+        },
+        {
+          "class": "net/mcreator/armageddonmod/procedures/CALArmorPreventionProcedureProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "armour gate (the_cataclysm_keeper, forge:cataclysmic_armor): 5 ResourceLocation.parse of constant strings (the advancement id -> ServerAdvancementManager.getAdvancement, 4 x the armour tag -> ItemTags.create -> ItemStack.is), 4 x ForgeRegistries.ITEMS.getKey(item).toString() -> List.contains; no other use of the results",
+          "sha256": "7181b35d5ffcd73d69aeb88309d43f9f1baf7a8b15527025215d22cb09d994e0"
+        },
+        {
+          "class": "net/mcreator/armageddonmod/procedures/DiamondArmorPreventionProcedureProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "armour gate (the_diamond_keeper, forge:diamond_armor): 5 ResourceLocation.parse of constant strings (the advancement id -> ServerAdvancementManager.getAdvancement, 4 x the armour tag -> ItemTags.create -> ItemStack.is), 4 x ForgeRegistries.ITEMS.getKey(item).toString() -> List.contains; no other use of the results",
+          "sha256": "24e65be7c83f6fc4462a86514bc02e4e4a051c8e1567869efdee03f81da83d66"
+        },
+        {
+          "class": "net/mcreator/armageddonmod/procedures/ElveniteArmorPreventionProcedureProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "armour gate (the_elvenite_keeper, forge:elvenite_armor): 5 ResourceLocation.parse of constant strings (the advancement id -> ServerAdvancementManager.getAdvancement, 4 x the armour tag -> ItemTags.create -> ItemStack.is), 4 x ForgeRegistries.ITEMS.getKey(item).toString() -> List.contains; no other use of the results",
+          "sha256": "c57bf8ad761821bb2f70aab033e80bd3fe148c90d8504de3267f40c5c99afc79"
+        },
+        {
+          "class": "net/mcreator/armageddonmod/procedures/EmeraldArmorPreventionProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "armour gate (the_emerald_keeper, forge:emerald_armor): 5 ResourceLocation.parse of constant strings (the advancement id -> ServerAdvancementManager.getAdvancement, 4 x the armour tag -> ItemTags.create -> ItemStack.is), 4 x ForgeRegistries.ITEMS.getKey(item).toString() -> List.contains; no other use of the results",
+          "sha256": "f0683cc3013228ecf08702d68ed21df3b63df842bcafcc983073f5f5f1953581"
+        },
+        {
+          "class": "net/mcreator/armageddonmod/procedures/GoldArmorPreventionProcedrueProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "armour gate (the_gold_keeper, forge:golden_armor): 5 ResourceLocation.parse of constant strings (the advancement id -> ServerAdvancementManager.getAdvancement, 4 x the armour tag -> ItemTags.create -> ItemStack.is), 4 x ForgeRegistries.ITEMS.getKey(item).toString() -> List.contains; no other use of the results",
+          "sha256": "e4f39e1e2e0b1ce7518ed40c72fa27f19e962dc34fb202cc6ddfd17f29cfd83f"
+        },
+        {
+          "class": "net/mcreator/armageddonmod/procedures/HelioniteArmorEquippedPreventionProcedureProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "armour gate (the_sun_keeper, forge:helionite_armor): 5 ResourceLocation.parse of constant strings (the advancement id -> ServerAdvancementManager.getAdvancement, 4 x the armour tag -> ItemTags.create -> ItemStack.is), 4 x ForgeRegistries.ITEMS.getKey(item).toString() -> List.contains; no other use of the results",
+          "sha256": "9cbbc5694faf4104c62a4d8e3f1b7073283e0105f94e94e6d5ea3a2307051d89"
+        },
+        {
+          "class": "net/mcreator/armageddonmod/procedures/IronArmorPreventionProcedureProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "armour gate (the_iron_keeper, forge:iron_armor): 5 ResourceLocation.parse of constant strings (the advancement id -> ServerAdvancementManager.getAdvancement, 4 x the armour tag -> ItemTags.create -> ItemStack.is), 4 x ForgeRegistries.ITEMS.getKey(item).toString() -> List.contains; no other use of the results",
+          "sha256": "0b05fc6d749d1e71b5b1b770033948d4402b1494a205aa664c7803e894b4bc1f"
+        },
+        {
+          "class": "net/mcreator/armageddonmod/procedures/NetheriteArmorPreventionProcedureProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "armour gate (the_netherite_keeper, forge:netherite_armor): 5 ResourceLocation.parse of constant strings (the advancement id -> ServerAdvancementManager.getAdvancement, 4 x the armour tag -> ItemTags.create -> ItemStack.is), 4 x ForgeRegistries.ITEMS.getKey(item).toString() -> List.contains; no other use of the results",
+          "sha256": "3afca4ef1d1e7f21948f0ae973db365ef65b95c96c2a0e8f930e62430bf024bb"
+        },
+        {
+          "class": "net/mcreator/armageddonmod/procedures/ShadowArmorEquippedPreventionProcedureProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "armour gate (the_shadow_keeper, forge:shadow_armor): 5 ResourceLocation.parse of constant strings (the advancement id -> ServerAdvancementManager.getAdvancement, 4 x the armour tag -> ItemTags.create -> ItemStack.is), 4 x ForgeRegistries.ITEMS.getKey(item).toString() -> List.contains; no other use of the results",
+          "sha256": "590631fc0b933180311d7dc8b3346eae099d5d28ba8db28d19ef33af0c542d0d"
+        },
+        {
+          "class": "net/mcreator/armageddonmod/procedures/VoideriteArmorPreventionProcedureProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "armour gate (the_voiderite_keeper, forge:voiderite_armor): 5 ResourceLocation.parse of constant strings (the advancement id -> ServerAdvancementManager.getAdvancement, 4 x the armour tag -> ItemTags.create -> ItemStack.is), 4 x ForgeRegistries.ITEMS.getKey(item).toString() -> List.contains; no other use of the results",
+          "sha256": "985516deb12383fbd798c92e3e8fd6b705b95f490b408adcde98e56ec76c4d53"
+        },
+        {
+          "class": "net/mcreator/armageddonmod/procedures/EnchantedArmorPreventionProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "1 ResourceLocation.parse of a constant string (the_diamond_keeper -> ServerAdvancementManager.getAdvancement)",
+          "sha256": "d86aecd353760f2596b472f4ab8a3c2f756d5054ea200cd3e5292db54d893d20"
+        },
+        {
+          "class": "net/mcreator/armageddonmod/procedures/HollowPickaxeTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "3 ResourceLocation.parse(\"armageddon_mod:hollow_tools\") -> ItemTags.create -> ItemStack.is",
+          "sha256": "9238b727186816b4048cb596e0d70efa4a469376c3fa2a9fc1da1171a5a73d10"
+        },
+        {
+          "class": "net/mcreator/armageddonmod/procedures/IncreaseLifeOfMobsAndDamgetestProcedureProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "2 ResourceLocation.parse (forge:armageddon_bosses, minecraft:raider) -> TagKey.create(ENTITY_TYPE) -> EntityType.is; 1 ForgeRegistries getKey(...).toString() -> List.contains",
+          "sha256": "474950d5dc8bd9c39046dadabcf3d79c53d203e008bfaebdf17c9811d6a0050f"
+        },
+        {
+          "class": "net/mcreator/armageddonmod/procedures/NetherPreventionProcedureProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "1 ResourceLocation.parse of a constant string (overworld_conqueror -> ServerAdvancementManager.getAdvancement)",
+          "sha256": "e689677e5fbb8d87399a05b9bff8fdd5b8e2a0a56e65c4cad555ee3b6c5f2473"
+        }
+      ],
+      "cancel": [],
+      "kind": "variant",
+      "conversion": "Exact variant: MixinExtras @WrapOperation on every ResourceLocation.parse (62 sites, all constant strings), ItemTags.create (47), TagKey.create (2) and ResourceLocation.toString (45, item registry ids for the config lists) call in the private execute of the 15 progression procedures (two mixins, one per execute descriptor): bounded ConcurrentHashMaps hand out the result the original returned for the same input (successful parses only; plain ResourceLocation keys only). Callers use the results by value (map lookups, tag tests, List.contains), so the one internal difference is object identity (kept ids and strings instead of new equal ones; tag keys are interned either way). Runtime flag armageddonProgressionIdMemo (+ .shadow). Helper bons.furious.patch.armageddon_coo49.ProgressionIds.",
+      "license": "Armageddon (Academic Free License 3.0): no code carried; the memo is ours"
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "group": "bloodmagic_coo49",
+  "keys": {
+    "bloodmagic_arc_furnace_recipe_memo": {
+      "mod": "bloodmagic",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.bloodmagic_coo49.BmArcFurnaceRecipeMixin"
+      ],
+      "guard": [
+        {
+          "class": "wayoftime/bloodmagic/common/tile/TileAlchemicalReactionChamber",
+          "method": "tick",
+          "desc": "()V",
+          "note": "furnace mode (no ARC recipe, a furnace-tagged tool): new InventoryWrapper(1), setItem(0, input.copy()), level.getRecipeManager().getRecipeFor(SMELTING, it, level) (the wrapped call), only unwrapped: isPresent, get, assemble",
+          "sha256": "105764a479d8b7ff411da254b43238c6094e1c91d72ff32f6f4dacbcf129ec51"
+        },
+        {
+          "class": "wayoftime/bloodmagic/common/item/inventory/InventoryWrapper",
+          "method": "<init>",
+          "desc": "(I)V",
+          "note": "a NonNullList of the given size, filled with ItemStack.EMPTY",
+          "sha256": "718ab33fdd99b178f53c39bee7fcc12d3b19fdbad5eb4517338e361cf35e5cbe"
+        },
+        {
+          "class": "wayoftime/bloodmagic/common/item/inventory/InventoryWrapper",
+          "method": "m_8020_",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "note": "getItem: the stored stack (slot 0 = the input copy the index reads)",
+          "sha256": "8c67dc00c29901b89ecb937ef390b15219e2d7a09d12d4d5ecc7d07a2a8b10f4"
+        },
+        {
+          "class": "wayoftime/bloodmagic/common/item/inventory/InventoryWrapper",
+          "method": "m_6836_",
+          "desc": "(ILnet/minecraft/world/item/ItemStack;)V",
+          "note": "setItem: stores the stack (count capped at the container's max stack size)",
+          "sha256": "4ab46e38cb6d70bfdd81b99fc4b4d3466d4fc085b1f4fb78e4bb632e848bb441"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the RecipeManager.getRecipeFor (m_44015_) call of TileAlchemicalReactionChamber.tick (furnace mode): the call goes to the vanilla_cooking_recipe_item_index layer (CookingRecipeIndex.answer, reached by name, caller token registered once), which answers the same recipe object from its first-match index while its probe and recipe generation token allow and otherwise makes the call. Runtime flag bloodmagicArcFurnaceRecipeMemo (also the layer's caller flag); shadow = the layer's vanillaCookingRecipeItemIndex.shadow. Helper bons.furious.patch.bloodmagic_coo49.BmRecipes.",
+      "license": "Blood Magic (CC BY 4.0): no Blood Magic code is carried; the wrapper hands one lookup to the shared index"
+    },
+    "bloodmagic_arc_recipe_list_memo": {
+      "mod": "bloodmagic",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.bloodmagic_coo49.BmArcRecipeListMixin",
+        "bons.furious.mixin.bloodmagic_coo49.BmRecipeManagerProbeMixin"
+      ],
+      "guard": [
+        {
+          "class": "wayoftime/bloodmagic/impl/BloodMagicRecipeRegistrar",
+          "method": "getARC",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;Lnet/minecraftforge/fluids/FluidStack;)Lwayoftime/bloodmagic/recipe/RecipeARC;",
+          "note": "null for an empty input or tool; list = getRecipeManager().getAllRecipesFor(ARC) (the redirected call), only iterated: the first recipe whose input, tool and fluid match",
+          "sha256": "e74bdad60a143cf8fcd2ca3bb70fc5b75b412d303897698db0969df9f67dfcc6"
+        },
+        {
+          "class": "net/minecraft/world/item/crafting/RecipeManager",
+          "method": "m_44013_",
+          "desc": "(Lnet/minecraft/world/item/crafting/RecipeType;)Ljava/util/List;",
+          "note": "getAllRecipesFor: List.copyOf(byType(type).values()); the probe also requires it unchanged by any other mod's mixin",
+          "sha256": "46ffe4f5063f5633a8b79f5bbc2313ba1c6e584deaf6330f33381b64fe57d7ce"
+        },
+        {
+          "class": "net/minecraft/world/item/crafting/RecipeManager",
+          "method": "m_44054_",
+          "desc": "(Lnet/minecraft/world/item/crafting/RecipeType;)Ljava/util/Map;",
+          "note": "byType: recipes.getOrDefault(type, emptyMap()); the probe also requires it unchanged",
+          "sha256": "d4aea543ef520f1b7f1aa3a6fc9f04a3e260c69fa1cab62e546d8cb238e1d111"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the RecipeManager.getAllRecipesFor (m_44013_) call of BloodMagicRecipeRegistrar.getARC, with getARC's level argument captured (a redirect, not a MixinExtras wrap, so the paths that run as shipped pay a few field tests and no operation object): on a server level the list the same call built is handed out again while the recipe generation token (RecipeGenerationToken of the vanilla_cooking_recipe_index group, reached by name) is current, the table's map for the type is the same object and an immutable map (a Guava ImmutableMap, as RecipeManager.apply builds every server table, or the shared empty map), the manager is RecipeManager itself, and the probe (BmRecipeManagerProbeMixin, priority 3000, recorded by the group's plugin BmPlugin) saw getAllRecipesFor and byType as shipped; otherwise the same call. A table that is not an ImmutableMap (replaceRecipes or a mod's own) runs as shipped after one type test, an immutable table with a mutable map is remembered as such and runs as shipped; client levels always run as shipped. Runtime flag bloodmagicArcRecipeListMemo, shadow bloodmagicArcRecipeListMemo.shadow. Helpers bons.furious.patch.bloodmagic_coo49.BmRecipes, BmProbe.",
+      "license": "Blood Magic (CC BY 4.0): no Blood Magic code is carried; the redirect hands out the list the same call built"
+    },
+    "bloodmagic_routing_visited_set": {
+      "mod": "bloodmagic",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.bloodmagic_coo49.BmRoutingVisitedSetMixin"
+      ],
+      "guard": [
+        {
+          "class": "wayoftime/bloodmagic/common/tile/routing/TileMasterRoutingNode",
+          "method": "tick",
+          "desc": "()V",
+          "note": "server, every max(1, 20 - upgrades) ticks: isConnected(new LinkedList(), node) for every output node (NEW 0, redirected) and input node (NEW 2, redirected); NEW 1 and 3 are the filter lists",
+          "sha256": "bda3a9f3c8fc29256a06c0e262f69dcfa6df9262f32ad51c817c596397020d0e"
+        },
+        {
+          "class": "wayoftime/bloodmagic/common/tile/routing/TileMasterRoutingNode",
+          "method": "addNodeToList",
+          "desc": "(Lwayoftime/bloodmagic/common/routing/IRoutingNode;)V",
+          "note": "registers every node of the network in generalNodeList (List<BlockPos>, the field the mixin shadows for the network size), inputs and outputs also in their own lists",
+          "sha256": "ce63b3e9739bddf2ab11740920c61ac3e1af24ec1bc87b493463c14f7bffdbc0"
+        },
+        {
+          "class": "wayoftime/bloodmagic/common/tile/routing/TileMasterRoutingNode",
+          "method": "isConnected",
+          "desc": "(Ljava/util/List;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "depth-first search: path.add(node), then per connection path.contains(it), the master test, the recursion; no other use of the list",
+          "sha256": "1b30f5437b22fe73370deba78a0bbdf3f1f8d3ae6779d608313af59dc43e7def"
+        },
+        {
+          "class": "net/minecraft/core/Vec3i",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "note": "coordinates of any Vec3i (BlockPos keeps it)",
+          "sha256": "c046fc679082224fd6ae0218cf698946b5815a26d68058616c5de617b2a6497e"
+        },
+        {
+          "class": "net/minecraft/core/Vec3i",
+          "method": "hashCode",
+          "desc": "()I",
+          "note": "from the coordinates, consistent with equals",
+          "sha256": "271b8e948624504421ed407d308525e1a10c80fe27ad5057c3f4168533b3973c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of NEW java/util/LinkedList ordinals 0 and 2 of TileMasterRoutingNode.tick (the isConnected seed lists of the output and input loops; a redirect, not a MixinExtras wrap, so a small network pays one size test), with @Shadow generalNodeList (the master's node list): a network of fewer than 16 nodes gets the plain LinkedList as shipped; a larger one a VisitedList, a LinkedList that, once it holds 16 elements, all exactly BlockPos (checked when the set is built and for every later add), also keeps a hash set of its elements, so isConnected's path.contains is a hash lookup (below 16 it walks the list as before); any other element, a size difference or any other list operation turns the set off for that list (contains then walks the list). Runtime flag bloodmagicRoutingVisitedSet, shadow bloodmagicRoutingVisitedSet.shadow. Helper bons.furious.patch.bloodmagic_coo49.BmVisited.",
+      "license": "Blood Magic (CC BY 4.0): no Blood Magic code is carried; the redirect hands the search a list with a faster contains"
+    }
+  }
+}

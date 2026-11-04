@@ -1,0 +1,605 @@
+{
+  "group": "oculus_passes",
+  "keys": {
+    "oculus_shadow_skip_banner_patterns": {
+      "mod": "oculus",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.oculus_passes.BannerPatternShadowMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/renderer/blockentity/BannerRenderer",
+          "method": "m_112074_",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IILnet/minecraft/client/model/geom/ModelPart;Lnet/minecraft/client/resources/model/Material;ZLjava/util/List;Z)V",
+          "note": "renderPatterns: the base render with the base material, then the pattern loop `i < 17 && i < patterns.size()` (the one List.size() call)",
+          "sha256": "f020991227d4e2a548e1a77cf156b5e7aab29a1008fdf616d07ed48025bd1397"
+        },
+        {
+          "class": "net/irisshaders/iris/api/v0/IrisApi",
+          "method": "getInstance",
+          "desc": "()Lnet/irisshaders/iris/api/v0/IrisApi;",
+          "note": "returns IrisApiV0Impl.INSTANCE",
+          "sha256": "0cc098d78cd38414848b334465db748c5c1eef4acfd47e80c1dad1157ecd5fd6"
+        },
+        {
+          "class": "net/irisshaders/iris/apiimpl/IrisApiV0Impl",
+          "method": "isRenderingShadowPass",
+          "desc": "()Z",
+          "note": "= ShadowRenderingState.areShadowsCurrentlyBeingRendered()",
+          "sha256": "2f3d2f729fe319e769eca36ad5efe2714eac4995db25dc94e731e0b7cdbb5e14"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/ShadowRenderingState",
+          "method": "areShadowsCurrentlyBeingRendered",
+          "desc": "()Z",
+          "note": "= ShadowRenderer.ACTIVE",
+          "sha256": "893ca576ce540a54d917aea65ae6869cb35e035acf317d7c49f4e4564a559cd8"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/ShadowRenderer",
+          "method": "renderShadows",
+          "desc": "(Lnet/irisshaders/iris/mixin/LevelRendererAccessor;Lnet/minecraft/client/Camera;)V",
+          "note": "sets ACTIVE = true at its start and false at its end; the shadow map's entities and block entities render in between",
+          "sha256": "341a6554e3a8c301b2c5b0f02f85331ed32f0f27385de80f2d29d761dcbf06b6"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/ShadowRenderer",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "only ACTIVE = false (reading the flag has no side effect)",
+          "sha256": "8388cae4b5dfa3f81ae1b709951956f4470a8dc26bd53a78a328a6b03dd675f9"
+        },
+        {
+          "class": "traben/entity_model_features/mixin/mixins/rendering/MixinBannerRenderer",
+          "method": "emf$injected",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "audited: EMF's HEAD hook of renderPatterns only counts rendered models; it keeps running",
+          "audit": true,
+          "sha256": "a2d76f7a79ba771058ba109a2ac8a863694c8ef1cbfeec2984ee6d698685fcb3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on the List.size() call of BannerRenderer.renderPatterns' pattern loop (priority 1500, require = 0): 0 while Oculus renders its shadow map, the size otherwise; helper bons.furious.patch.oculus_passes.ShadowSkips (Site BANNER_PATTERNS) over IrisPasses.shadowPass (Oculus's public IrisApi.isRenderingShadowPass)",
+      "license": "Minecraft (Mojang): no-copy, the injector carries only our logic; Oculus (LGPL-3.0-only): only its public API is called"
+    },
+    "oculus_shadow_skip_name_tags": {
+      "mod": "oculus",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.oculus_passes.NameTagShadowMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/renderer/entity/EntityRenderer",
+          "method": "m_7649_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/network/chat/Component;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+          "note": "renderNameTag: name-plate distance check, then two Font.drawInBatch calls (see-through and normal); no other effect",
+          "sha256": "82e4a3767870f04e53c9dd5f4ead7c77151656475b5c8c7b4496b3f5617090e0"
+        },
+        {
+          "class": "net/minecraft/client/renderer/entity/EntityRenderer",
+          "method": "m_7392_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+          "note": "render: posts RenderNameTagEvent, then calls renderNameTag (the event keeps firing)",
+          "sha256": "02b60f1faa590544d0dd8e1c818e963cedcfa32558d8824e79d56c2536de6b72"
+        },
+        {
+          "class": "net/irisshaders/iris/api/v0/IrisApi",
+          "method": "getInstance",
+          "desc": "()Lnet/irisshaders/iris/api/v0/IrisApi;",
+          "sha256": "0cc098d78cd38414848b334465db748c5c1eef4acfd47e80c1dad1157ecd5fd6"
+        },
+        {
+          "class": "net/irisshaders/iris/apiimpl/IrisApiV0Impl",
+          "method": "isRenderingShadowPass",
+          "desc": "()Z",
+          "sha256": "2f3d2f729fe319e769eca36ad5efe2714eac4995db25dc94e731e0b7cdbb5e14"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/ShadowRenderingState",
+          "method": "areShadowsCurrentlyBeingRendered",
+          "desc": "()Z",
+          "sha256": "893ca576ce540a54d917aea65ae6869cb35e035acf317d7c49f4e4564a559cd8"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/ShadowRenderer",
+          "method": "renderShadows",
+          "desc": "(Lnet/irisshaders/iris/mixin/LevelRendererAccessor;Lnet/minecraft/client/Camera;)V",
+          "sha256": "341a6554e3a8c301b2c5b0f02f85331ed32f0f27385de80f2d29d761dcbf06b6"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/ShadowRenderer",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "8388cae4b5dfa3f81ae1b709951956f4470a8dc26bd53a78a328a6b03dd675f9"
+        },
+        {
+          "class": "org/valkyrienskies/mod/mixin/feature/shipyard_entities/MixinEntityRenderer",
+          "method": "revertShipRotation",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;FFFLcom/llamalad7/mixinextras/injector/wrapoperation/Operation;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "audited: wraps the pose translate inside renderNameTag (a pose rotation for ship entities); nothing outside the pose",
+          "audit": true,
+          "sha256": "883e727e9ee21849ffdb490bb6b7266f9c2060ce4c94d0b7a4d6df9ba8d6cffb"
+        },
+        {
+          "class": "org/vivecraft/mixin/client_vr/renderer/entity/EntityRendererVRMixin",
+          "method": "vivecraft$cameraOffset",
+          "desc": "(Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;)Lorg/joml/Quaternionf;",
+          "note": "audited: wraps the camera orientation read inside renderNameTag; no state",
+          "audit": true,
+          "sha256": "927e7dbd1415054f7b3809b2a9dea6b3fd0fb7ac28acd48ea6b8b0b0305c7dfe"
+        }
+      ],
+      "cancel": [],
+      "conversion": "cancellable @Inject at the HEAD of EntityRenderer.renderNameTag (priority 1500, require = 0): returns while Oculus renders its shadow map; helper bons.furious.patch.oculus_passes.ShadowSkips (Site NAME_TAGS)",
+      "license": "Minecraft (Mojang): no-copy, the injector carries only our logic; Oculus (LGPL-3.0-only): only its public API is called"
+    },
+    "oculus_shadow_skip_sign_text": {
+      "mod": "oculus",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.oculus_passes.SignTextShadowMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/renderer/blockentity/SignRenderer",
+          "method": "m_278841_",
+          "desc": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/entity/SignText;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IIIZ)V",
+          "note": "renderSignText: pose, line split, up to four Font draws; no state outside the pose and the buffers",
+          "sha256": "d7895fa411307931c3e28f8bad2e200f43d008728fee1aa1ce19da7cfb11aa2b"
+        },
+        {
+          "class": "net/minecraft/client/renderer/blockentity/SignRenderer",
+          "method": "m_278756_",
+          "desc": "(Lnet/minecraft/world/level/block/entity/SignBlockEntity;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IILnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/SignBlock;Lnet/minecraft/world/level/block/state/properties/WoodType;Lnet/minecraft/client/model/Model;)V",
+          "note": "renderSignWithText: the sign model first (renderSignModel), then renderSignText for both sides",
+          "sha256": "a06c3310cc60044d8c2703a7c035b693845fa9d1bcfccbb3599ab4df6b54590d"
+        },
+        {
+          "class": "net/irisshaders/iris/api/v0/IrisApi",
+          "method": "getInstance",
+          "desc": "()Lnet/irisshaders/iris/api/v0/IrisApi;",
+          "sha256": "0cc098d78cd38414848b334465db748c5c1eef4acfd47e80c1dad1157ecd5fd6"
+        },
+        {
+          "class": "net/irisshaders/iris/apiimpl/IrisApiV0Impl",
+          "method": "isRenderingShadowPass",
+          "desc": "()Z",
+          "sha256": "2f3d2f729fe319e769eca36ad5efe2714eac4995db25dc94e731e0b7cdbb5e14"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/ShadowRenderingState",
+          "method": "areShadowsCurrentlyBeingRendered",
+          "desc": "()Z",
+          "sha256": "893ca576ce540a54d917aea65ae6869cb35e035acf317d7c49f4e4564a559cd8"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/ShadowRenderer",
+          "method": "renderShadows",
+          "desc": "(Lnet/irisshaders/iris/mixin/LevelRendererAccessor;Lnet/minecraft/client/Camera;)V",
+          "sha256": "341a6554e3a8c301b2c5b0f02f85331ed32f0f27385de80f2d29d761dcbf06b6"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/ShadowRenderer",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "8388cae4b5dfa3f81ae1b709951956f4470a8dc26bd53a78a328a6b03dd675f9"
+        },
+        {
+          "class": "net/mehvahdjukaar/amendments/mixins/SignRendererMixin",
+          "method": "amendments$captureFace",
+          "desc": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/entity/SignText;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IIIZLorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "audited: HEAD of renderSignText remembers the side for Amendments' getDarkColor overwrite",
+          "audit": true,
+          "sha256": "5ebebcf01b2ff0b20bc1506603bf165a6ddf1d458849cc40a52a4fa782d297f6"
+        },
+        {
+          "class": "net/mehvahdjukaar/amendments/mixins/SignRendererMixin",
+          "method": "m_173639_",
+          "desc": "(Lnet/minecraft/world/level/block/entity/SignText;)I",
+          "note": "audited: Amendments' getDarkColor shades only while both the side and the yaw are set; called from renderSignText's body",
+          "audit": true,
+          "sha256": "95b993a5360b1fc9d30a5556cf1f83aa96d548c90e1dbecb5f0fc5c1b2cb0458"
+        },
+        {
+          "class": "net/mehvahdjukaar/amendments/mixins/SignRendererMixin",
+          "method": "amendments$resetYaw",
+          "desc": "(Lnet/minecraft/world/level/block/entity/SignBlockEntity;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IILnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/SignBlock;Lnet/minecraft/world/level/block/state/properties/WoodType;Lnet/minecraft/client/model/Model;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "audited: TAIL of renderSignWithText clears the yaw, so a skipped side leaves nothing that shades a later sign",
+          "audit": true,
+          "sha256": "e197d2a8b0e519b660ad465d79c71394e54eb7a7f0cad83ea6d3197208500211"
+        },
+        {
+          "class": "net/raphimc/immediatelyfast/injection/mixins/sign_text_buffering/MixinSignBlockEntityRenderer",
+          "method": "renderBufferedSignText",
+          "desc": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/entity/SignText;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;IIIZLorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "audited: ImmediatelyFast's experimental sign text cache (off by default) draws one cached quad and cancels before our HEAD hook",
+          "audit": true,
+          "sha256": "a21c57624d466607b406a51152e1e740ae38adf90a222e1147d809a43b61e200"
+        }
+      ],
+      "cancel": [],
+      "conversion": "cancellable @Inject at the HEAD of SignRenderer.renderSignText (priority 1500, require = 0): returns while Oculus renders its shadow map; helper bons.furious.patch.oculus_passes.ShadowSkips (Site SIGN_TEXT)",
+      "license": "Minecraft (Mojang): no-copy, the injector carries only our logic; Oculus (LGPL-3.0-only): only its public API is called"
+    },
+    "oculus_shadow_skip_item_glint": {
+      "mod": "oculus",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.oculus_passes.ItemGlintShadowMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41790_",
+          "desc": "()Z",
+          "note": "hasFoil = getItem().isFoil(this): read by the item, armour, elytra and trident renderers to add the glint draw",
+          "sha256": "2677b40831537aa660ca27b53462e5c80a281bea4b0c4ca08b32bfbc70a1bacc"
+        },
+        {
+          "class": "com/mojang/blaze3d/systems/RenderSystem",
+          "method": "isOnRenderThread",
+          "desc": "()Z",
+          "sha256": "82441fbc52221086945427fcd703b7628d70c927f6714e5fcb07c0c1f53099cf"
+        },
+        {
+          "class": "net/irisshaders/iris/api/v0/IrisApi",
+          "method": "getInstance",
+          "desc": "()Lnet/irisshaders/iris/api/v0/IrisApi;",
+          "sha256": "0cc098d78cd38414848b334465db748c5c1eef4acfd47e80c1dad1157ecd5fd6"
+        },
+        {
+          "class": "net/irisshaders/iris/apiimpl/IrisApiV0Impl",
+          "method": "isRenderingShadowPass",
+          "desc": "()Z",
+          "sha256": "2f3d2f729fe319e769eca36ad5efe2714eac4995db25dc94e731e0b7cdbb5e14"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/ShadowRenderingState",
+          "method": "areShadowsCurrentlyBeingRendered",
+          "desc": "()Z",
+          "sha256": "893ca576ce540a54d917aea65ae6869cb35e035acf317d7c49f4e4564a559cd8"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/ShadowRenderer",
+          "method": "renderShadows",
+          "desc": "(Lnet/irisshaders/iris/mixin/LevelRendererAccessor;Lnet/minecraft/client/Camera;)V",
+          "sha256": "341a6554e3a8c301b2c5b0f02f85331ed32f0f27385de80f2d29d761dcbf06b6"
+        },
+        {
+          "class": "net/irisshaders/iris/shadows/ShadowRenderer",
+          "method": "<clinit>",
+          "desc": "()V",
+          "sha256": "8388cae4b5dfa3f81ae1b709951956f4470a8dc26bd53a78a328a6b03dd675f9"
+        },
+        {
+          "class": "dev/tomwmth/citreforged/mixin/defaults/types/enchantment/ItemStackMixin",
+          "method": "citresewn$enchantment$disableDefaultGlint",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "audited: CIT Reforged's HEAD hook answers false itself while its enchantment textures replace the default glint",
+          "audit": true,
+          "sha256": "fe929603f062e44a0ef32fadacb8bbed28c37e9f87804e339063f4f9fd9454f6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyReturnValue at the RETURN of ItemStack.hasFoil (priority 1500, require = 0): false while Oculus renders its shadow map and the caller is the render thread, the stock answer otherwise; helper bons.furious.patch.oculus_passes.ShadowSkips (Site ITEM_GLINT)",
+      "license": "Minecraft (Mojang): no-copy, the injector carries only our logic; Oculus (LGPL-3.0-only): only its public API is called"
+    },
+    "oculus_vanilla_buffers_without_shaders": {
+      "mod": "oculus",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.oculus_passes.BatchedNoPackMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/irisshaders/batchedentityrendering/mixin/MixinLevelRenderer",
+          "method": "batchedentityrendering$beginLevelRender",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;FJZLnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/renderer/LightTexture;Lorg/joml/Matrix4f;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "HEAD of renderLevel: draw-count reset, beginLevelRendering() (the wrapped call), then bufferSource() -> groupable when Groupable",
+          "sha256": "f8cbfda63a110a760dc6efa800aa011c1c15eb811cec9c5c750d5581cb8a983f"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/mixin/MixinLevelRenderer",
+          "method": "batchedentityrendering$endLevelRender",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;FJZLnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/renderer/LightTexture;Lorg/joml/Matrix4f;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "RETURN of renderLevel: endLevelRendering() (the wrapped call), groupable = null",
+          "sha256": "77f59c38b3628fbb6d69574b916e6b167fb4ff5ab6e8365954b087a452ca9422"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/mixin/MixinLevelRenderer",
+          "method": "batchedentityrendering$preRenderEntity",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;FJZLnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/renderer/LightTexture;Lorg/joml/Matrix4f;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "startGroup only when groupable is set (vanilla's BufferSource is not Groupable)",
+          "sha256": "9a718103e51eeb97c857a920c18d108c48ecf8ed81b8f15cc2d8b2a92f817654"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/mixin/MixinLevelRenderer",
+          "method": "batchedentityrendering$postRenderEntity",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;FJZLnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/renderer/LightTexture;Lorg/joml/Matrix4f;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "86070bb3d0362d605f7c824c0ca6bac68c5add9dbbfc4ed25b02ac15e886673d"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/mixin/MixinLevelRenderer",
+          "method": "batchedentityrendering$beginTranslucents",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;FJZLnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/renderer/LightTexture;Lorg/joml/Matrix4f;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "instanceof FullyBufferedMultiBufferSource branches; otherwise bufferSource().endBatch()",
+          "sha256": "7d489e53fdbc9eb996bf1ce758c0de634195629e0578644ad1be69b3372b789b"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/mixin/MixinLevelRenderer",
+          "method": "batchedentityrendering$endTranslucents",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;FJZLnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/renderer/LightTexture;Lorg/joml/Matrix4f;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "sha256": "da865e56750075c4596196206a37ea5079afc69caff4f714c12bed3ef3d293c2"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/mixin/MixinRenderBuffers",
+          "method": "beginLevelRendering",
+          "desc": "()V",
+          "note": "++begins (and the wrap-stack assertion)",
+          "sha256": "e0e750276614297479ac8ccab62bdc5722852d1adf95a0730f253201419894b8"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/mixin/MixinRenderBuffers",
+          "method": "endLevelRendering",
+          "desc": "()V",
+          "note": "--begins",
+          "sha256": "4b8a15504b55536feec40d7872704c332cde9bb2ba9934768f1865db943bf329"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/mixin/MixinRenderBuffers",
+          "method": "batchedentityrendering$replaceBufferSource",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "begins == 0 -> vanilla's bufferSource()",
+          "sha256": "8ce98b9d10ae5f167309cd90f8cfa1efc41b2989419827c103cc1b4bd2122eaa"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/mixin/MixinRenderBuffers",
+          "method": "batchedentityrendering$replaceCrumblingBufferSource",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "sha256": "832d83cc925a3aea26ed9fe3f4d42df846514c0495f5ffe93a81602302f4ddad"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/mixin/MixinRenderBuffers",
+          "method": "batchedentityrendering$replaceOutlineBufferSource",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "sha256": "5e849931bd8b0124971b7bd0b7f45b0a48471e53ffc2f691c5164a447645902e"
+        },
+        {
+          "class": "net/irisshaders/iris/mixin/MixinLevelRenderer",
+          "method": "iris$setupPipeline",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;FJZLnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/renderer/LightTexture;Lorg/joml/Matrix4f;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "Iris's HEAD (priority 1000, after the batched handler): pipeline = getPipelineManager().preparePipeline(getCurrentDimension())",
+          "sha256": "9c31c54e9342b1a1987f3c41c413c10d87d40eebce9883b2d05ad859ee02f418"
+        },
+        {
+          "class": "net/irisshaders/iris/pipeline/PipelineManager",
+          "method": "preparePipeline",
+          "desc": "(Lnet/irisshaders/iris/shaderpack/materialmap/NamespacedId;)Lnet/irisshaders/iris/pipeline/WorldRenderingPipeline;",
+          "note": "pipelinesPerDimension.get(dim) when the map holds dim, a new pipeline otherwise (the prediction rule)",
+          "sha256": "306be352a736bb930f4845d817cb1c8c82f41c60df95d7961fe8dbdea52b53ab"
+        },
+        {
+          "class": "net/irisshaders/iris/pipeline/PipelineManager",
+          "method": "<init>",
+          "desc": "(Ljava/util/function/Function;)V",
+          "note": "the fields read reflectively: pipelinesPerDimension (HashMap), pipeline",
+          "sha256": "4414d61a3441866abde39e88a85eb84c7ddf657413675ef8274ac8502ed8e583"
+        },
+        {
+          "class": "net/irisshaders/iris/pipeline/PipelineManager",
+          "method": "getPipelineNullable",
+          "desc": "()Lnet/irisshaders/iris/pipeline/WorldRenderingPipeline;",
+          "sha256": "d034f8a6170e5ff636c64c5a34c221afdc12ee2741df5bbd3ee92737884127ec"
+        },
+        {
+          "class": "net/irisshaders/iris/pipeline/PipelineManager",
+          "method": "destroyPipeline",
+          "desc": "()V",
+          "note": "clears the map (the next frame is unknown again: stock path)",
+          "sha256": "41afee105cb46f676604d1386a3bab68ed710cb53cf5da436a26c147829bd624"
+        },
+        {
+          "class": "net/irisshaders/iris/Iris",
+          "method": "getCurrentDimension",
+          "desc": "()Lnet/irisshaders/iris/shaderpack/materialmap/NamespacedId;",
+          "sha256": "0a5c1dc643b73fa99fff7e8c05fcb53f5cf901fe4493de2102bc4a00d66319c3"
+        },
+        {
+          "class": "net/irisshaders/iris/Iris",
+          "method": "getPipelineManager",
+          "desc": "()Lnet/irisshaders/iris/pipeline/PipelineManager;",
+          "note": "lazy creation + pending pack load: why the switch reads the pipelineManager field instead",
+          "sha256": "f9c296756adc7e170842c814526304eded1efe0dc47b58b7a7d48e93532eb5ce"
+        },
+        {
+          "class": "net/irisshaders/iris/apiimpl/IrisApiV0Impl",
+          "method": "isShaderPackInUse",
+          "desc": "()Z",
+          "note": "the answer IrisPasses.packInUse reproduces (shadow-mode check at RETURN)",
+          "sha256": "bfb6669107596cde909be7cfac6213d6d9a1502026731357d1d79bd90dfdc9c0"
+        },
+        {
+          "class": "net/minecraft/client/renderer/LevelRenderer",
+          "method": "m_109599_",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;FJZLnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/renderer/LightTexture;Lorg/joml/Matrix4f;)V",
+          "note": "renderLevel: the method Oculus's handlers are merged into",
+          "sha256": "1b0476ce4324f88f476ff5cc106fb1e5b33ca719a769f84e41d9b1bd6556f120"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors (MixinSquared @TargetHandler @WrapOperation of RenderBuffersExt.beginLevelRendering() in Oculus's batchedentityrendering$beginLevelRender and of endLevelRendering() in its batchedentityrendering$endLevelRender, merged into LevelRenderer.renderLevel; priority 1500, require = 0, expect = 0): both calls left out, paired per renderLevel call, while the frame's pipeline is known to be Iris's VanillaRenderingPipeline; helpers bons.furious.patch.oculus_passes.NoPackBuffers and IrisPasses",
+      "license": "Oculus (LGPL-3.0-only): no Oculus code is carried; our wrappers only decide whether its two calls run; Minecraft: no code"
+    },
+    "vanilla_order_independent_sort_skip": {
+      "mod": "minecraft",
+      "target_mods": [
+        "oculus"
+      ],
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.oculus_passes.RenderTypeOrderFreeMixin",
+        "bons.furious.mixin.oculus_passes.CompositeRenderTypeStateAccessor",
+        "bons.furious.mixin.oculus_passes.CompositeStateShardsAccessor",
+        "bons.furious.mixin.oculus_passes.WriteMaskDepthAccessor",
+        "bons.furious.mixin.oculus_passes.SegmentedSortSkipMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/renderer/RenderType",
+          "method": "m_276775_",
+          "desc": "(Lcom/mojang/blaze3d/vertex/BufferBuilder;Lcom/mojang/blaze3d/vertex/VertexSorting;)V",
+          "note": "end: if building { if sortOnUpload setQuadSorting(sorting); end(); setup; drawWithShader; clear }",
+          "sha256": "7665b2fd34d1244f0b02bb2c2130c5524ccf0f4fb1d4636b7690d3d18f3d3280"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferBuilder",
+          "method": "m_277127_",
+          "desc": "(Lcom/mojang/blaze3d/vertex/VertexSorting;)V",
+          "note": "setQuadSorting: QUADS only; stores the sorting and the quad centroids",
+          "sha256": "bcc17e502bdf2b7d9e9fe06327dd756aaa46c3ae86576d9f26e241cd61f0eb9e"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferBuilder",
+          "method": "m_231177_",
+          "desc": "()Lcom/mojang/blaze3d/vertex/BufferBuilder$RenderedBuffer;",
+          "note": "storeRenderedBuffer: centroids present -> sorted index buffer, else the sequential index (same vertex bytes)",
+          "sha256": "43c1b1c11e88d1f033e4276b35a12b2035d8630c4ec3e6635473c7b2cafe746c"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/BufferBuilder",
+          "method": "m_231178_",
+          "desc": "()V",
+          "note": "after every end: centroids and sorting cleared, so a left-out sort never leaks into the next batch",
+          "sha256": "f8d8572859a35c032c6ba89c573881497228151fe72f30561ba017eec8583ae5"
+        },
+        {
+          "class": "net/minecraft/client/renderer/RenderType$CompositeRenderType",
+          "method": "m_173265_",
+          "desc": "()Lnet/minecraft/client/renderer/RenderType$CompositeState;",
+          "sha256": "2ab22d45bbd93cdc1d4b560ce433a903a9e2a36e6963f5f9b9eb9b79e6244345"
+        },
+        {
+          "class": "net/minecraft/client/renderer/RenderType$CompositeState",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/renderer/RenderStateShard$EmptyTextureStateShard;Lnet/minecraft/client/renderer/RenderStateShard$ShaderStateShard;Lnet/minecraft/client/renderer/RenderStateShard$TransparencyStateShard;Lnet/minecraft/client/renderer/RenderStateShard$DepthTestStateShard;Lnet/minecraft/client/renderer/RenderStateShard$CullStateShard;Lnet/minecraft/client/renderer/RenderStateShard$LightmapStateShard;Lnet/minecraft/client/renderer/RenderStateShard$OverlayStateShard;Lnet/minecraft/client/renderer/RenderStateShard$LayeringStateShard;Lnet/minecraft/client/renderer/RenderStateShard$OutputStateShard;Lnet/minecraft/client/renderer/RenderStateShard$TexturingStateShard;Lnet/minecraft/client/renderer/RenderStateShard$WriteMaskStateShard;Lnet/minecraft/client/renderer/RenderStateShard$LineStateShard;Lnet/minecraft/client/renderer/RenderStateShard$ColorLogicStateShard;Lnet/minecraft/client/renderer/RenderType$OutlineProperty;)V",
+          "note": "the state list f_110592_: transparency at 2, write mask at 10, colour logic at 11, 13 shards",
+          "sha256": "f09f1665a800535565fd1a76bef437c7f5ba1015de83f9ba306b861b54b55b24"
+        },
+        {
+          "class": "net/minecraft/client/renderer/RenderStateShard$WriteMaskStateShard",
+          "method": "<init>",
+          "desc": "(ZZ)V",
+          "note": "f_110357_ = writeDepth (second argument)",
+          "sha256": "a131e06f620aff0bb861f6d49cdf62b752991278402ffd0ba397a7ab85d56943"
+        },
+        {
+          "class": "net/minecraft/client/renderer/RenderStateShard$WriteMaskStateShard",
+          "method": "m_110364_",
+          "desc": "(ZZ)V",
+          "note": "setup: depthMask(false) when writeDepth is false",
+          "sha256": "20d0ec37a2caf2e4f0fcd8074e329fdbbc9aa44185076e223588ae04885f9c75"
+        },
+        {
+          "class": "net/minecraft/client/renderer/RenderStateShard",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "the shard constants f_110135_ additive, f_110136_ lightning, f_110137_ glint, f_285585_ no colour logic",
+          "sha256": "10df1a02aba423cc6a68e6b04eb62056828b29da9427258bb771c09096c08218"
+        },
+        {
+          "class": "net/minecraft/client/renderer/RenderStateShard",
+          "method": "m_110182_",
+          "desc": "()V",
+          "note": "additive setup: enableBlend, blendFunc(ONE, ONE)",
+          "sha256": "6f6eccbd6c44a5d0f76660126fa9bf068138a847df507a87dd07b3c0f7584acc"
+        },
+        {
+          "class": "net/minecraft/client/renderer/RenderStateShard",
+          "method": "m_110180_",
+          "desc": "()V",
+          "note": "lightning setup: enableBlend, blendFunc(SRC_ALPHA, ONE)",
+          "sha256": "47e8584601581ec42c74e6e27cee8f949207a7f1b0e0a304d4cd5af6f931015c"
+        },
+        {
+          "class": "net/minecraft/client/renderer/RenderStateShard",
+          "method": "m_110178_",
+          "desc": "()V",
+          "note": "glint setup: enableBlend, blendFuncSeparate(SRC_COLOR, ONE, ZERO, ONE)",
+          "sha256": "4f24643ccc76722dd02b2e00fc407db930982ec34c4638f2c5c509a33d588692"
+        },
+        {
+          "class": "net/minecraft/client/renderer/RenderStateShard",
+          "method": "m_285680_",
+          "desc": "()V",
+          "note": "no colour logic setup: disableColorLogicOp",
+          "sha256": "bece913ff6cbd3bcae4fc6421318da36914ccd5c312d1b49cf3359962c650064"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/SegmentedBufferBuilder",
+          "method": "m_6299_",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;",
+          "note": "audited (Oculus installed): getBuffer ends the previous segment, sorted when shouldSortOnUpload says so",
+          "audit": true,
+          "sha256": "7632a7b2ae83cff7b7fbcff2c85857a3d4ec9c0858de013670ebee9426728d0f"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/SegmentedBufferBuilder",
+          "method": "getSegments",
+          "desc": "()Ljava/util/List;",
+          "note": "audited (Oculus installed): ends the current segment the same way",
+          "audit": true,
+          "sha256": "4ac12028bad58c0879f71a339da01de858fed6a21471be85456003ef95051120"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/SegmentedBufferBuilder",
+          "method": "getSegmentsForType",
+          "desc": "(Lnet/irisshaders/batchedentityrendering/impl/TransparencyType;)Ljava/util/List;",
+          "note": "audited (Oculus installed): ends the current segment the same way",
+          "audit": true,
+          "sha256": "0d806121978b2e2ce06c15589be0a6cf213660573411094a219f3e5706791dbd"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/impl/SegmentedBufferBuilder",
+          "method": "shouldSortOnUpload",
+          "desc": "(Lnet/minecraft/client/renderer/RenderType;)Z",
+          "note": "audited (Oculus installed): the sort question our wrapper answers false for order-free types without a shader pack",
+          "audit": true,
+          "sha256": "8bd04119ccc3b65023bb7350316f246b93330100ad4550899701f10a54bbc4c9"
+        },
+        {
+          "class": "net/irisshaders/iris/api/v0/IrisApi",
+          "method": "getInstance",
+          "desc": "()Lnet/irisshaders/iris/api/v0/IrisApi;",
+          "note": "audited (Oculus installed): the API the shader-pack check asks",
+          "audit": true,
+          "sha256": "0cc098d78cd38414848b334465db748c5c1eef4acfd47e80c1dad1157ecd5fd6"
+        },
+        {
+          "class": "net/irisshaders/iris/apiimpl/IrisApiV0Impl",
+          "method": "isShaderPackInUse",
+          "desc": "()Z",
+          "note": "audited (Oculus installed): no pack in use -> order-free types may skip the sort",
+          "audit": true,
+          "sha256": "bfb6669107596cde909be7cfac6213d6d9a1502026731357d1d79bd90dfdc9c0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapWithCondition on BufferBuilder.setQuadSorting in RenderType.end (require = 0) and @WrapOperation on SegmentedBufferBuilder.shouldSortOnUpload in Oculus's batched buffers (@Pseudo, require = 0): the sort is left out for order-free render types (classified once per type) while no shader pack is in use; accessors on RenderType$CompositeRenderType (state()), RenderType$CompositeState (its state list) and RenderStateShard$WriteMaskStateShard (writeDepth); helpers bons.furious.patch.oculus_passes.SortSkip, OrderFreeType, IrisPasses. Oculus's classes the switch relies on (SegmentedBufferBuilder's getBuffer, getSegments, getSegmentsForType and shouldSortOnUpload, IrisApi.getInstance, IrisApiV0Impl.isShaderPackInUse) are audit guard lines: checked while Oculus is installed, satisfied without it, so the vanilla part applies in packs without Oculus",
+      "license": "Minecraft (Mojang): no-copy, the injectors carry only our logic; Oculus (LGPL-3.0-only): no Oculus code is carried"
+    }
+  }
+}

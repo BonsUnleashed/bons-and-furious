@@ -4,7 +4,7 @@
 
 **Your CPU lives its life one tick at a time.**
 
-[**Forge 1.20.1: 1.0.48.1**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.48.1) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
+[**Forge 1.20.1: 1.0.49**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.49) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
 
 ## Faster worlds. Smoother busy scenes.
 
@@ -12,7 +12,7 @@ Bons and Furious reduces the repeated work behind terrain generation, loading, r
 
 **In our tested Forge pack: about 9× world-generation throughput, 5½ minutes less waiting to enter a new world, and 17% higher average FPS with 64 animated mobs.**
 
-Those results were measured with **Bons and Furious 1.0.31 on Minecraft 1.20.1**, on 5 October 2026. They are not measurements of the current 1.0.48.1 release or the NeoForge build.
+Those results were measured with **Bons and Furious 1.0.31 on Minecraft 1.20.1**, on 5 October 2026. They are not measurements of the current 1.0.49 release or the NeoForge build.
 
 ## What you get
 
@@ -88,22 +88,22 @@ The mob warm-up uses about 7 MB more class memory and adds roughly half a second
 
 | Minecraft | Loader | Controls | Requirements |
 | --- | --- | ---: | --- |
-| 1.20.1 | Forge | 384 | Forge 47.3.22 or newer |
+| 1.20.1 | Forge | 885 | Forge 47.3.22 or newer |
 | 1.21.1 | NeoForge | 260 | Java 21; NeoForge 21.1.252 or newer |
 
 Each build uses one JAR for client and server, with no required target mods. Coverage differs between builds; the figures above are Forge 1.20.1 measurements.
 
-The Forge build contains **322 optimizations, 57 fixes and 5 deliberate behaviour changes**. Those five controls include frame pacing and experimental Radium options; their trade-offs are documented individually. All 384 controls are listed in `config/bons_and_furious.properties`. To disable one, set its key to `false` and restart.
+The Forge build contains **597 optimizations, 94 fixes and 194 deliberate behaviour changes**. They include frame pacing, experimental Radium options and, since 1.0.49, 189 opt-in switches that ship off (trade-offs and gameplay fixes); each one is documented individually. All 885 controls are listed in `config/bons_and_furious.properties`. To disable one, set its key to `false` and restart.
 
 ## Forge 1.20.1 covered mods (all optional)
 
-**Rendering, shaders and ambience:** Embeddium, Oculus, ImmediatelyFast, Entity Texture Features, Entity Model Features, EntityCulling, Fusion, Colorwheel, Ryoamic Lights, Presence Footsteps, AmbientSounds, CIT Reforged, FancyMenu, Particular, Subtle Effects, Smart Particles, Punchy.
+**Rendering, shaders and ambience:** Embeddium, Oculus, ImmediatelyFast, Entity Texture Features, Entity Model Features, EntityCulling, Fusion, Colorwheel, Ryoamic Lights, Presence Footsteps, AmbientSounds, CIT Reforged, FancyMenu, Particular, Subtle Effects, Smart Particles, Punchy, Blessfulled, FTB Chunks, Photon, Pick Up Notifier, Shoulder Surfing Reloaded, The Immersive Music Mod, Tooltip Overhaul, Touch'n Motion, Xaero's Map - Waystones Compatibility, Xaero's Minimap, Xaero's World Map.
 
-**Shared libraries and server performance mods:** GeckoLib, Architectury API, Curios API, Structure Gel API, Radium, ModernFix, ChunkSending, TerraBlender, Citadel, Lionfish API, Placebo, Kiwi, Cucumber, CoFH Core, L2 Library, Pehkui, Almost Unified, ElysiumAPI, Zeta, Flywheel, AzureLib, Knight Lib, LDLib, Advanced Wall Climber API, Item Filters, Text Animator.
+**Shared libraries and server performance mods:** GeckoLib, Architectury API, Curios API, Structure Gel API, Radium, ModernFix, ChunkSending, TerraBlender, Citadel, Lionfish API, Placebo, Kiwi, Cucumber, CoFH Core, L2 Library, Pehkui, Almost Unified, ElysiumAPI, Zeta, Flywheel, AzureLib, Knight Lib, LDLib, Advanced Wall Climber API, Item Filters, Text Animator, AllTheLeaks, Balm, Celestial Core, Cerbon's API, EndingLibrary, FTB XMod Compat, GTBC's SpellLib, Immersive Optimization, Konkrete, KubeJS, Moonlight Library, NeoBackports, Patchouli, Projectile Damage Attribute, Pufferfish's Attributes, Ritchie's Projectile Library, Titanium, XaeroLib.
 
-**Ships, structures and distant terrain:** Valkyrien Skies, Trackwork, Distant Horizons, Structurify, Sakes Structures, Oh The Biomes We've Gone, Dynamic Trees.
+**Ships, structures and distant terrain:** Valkyrien Skies, Trackwork, Distant Horizons, Structurify, Sakes Structures, Oh The Biomes We've Gone, Dynamic Trees, Biolith, Block Swap, Integrated API, Integrated Villages, Lithostitched, Lootr.
 
-**Content and gameplay:** Alex's Caves, Ice and Fire, Ars Nouveau, JEI, Farmer's Delight, Relics, Timeless and Classics Zero (TaCZ), Terramity, Ad Astra, Fowl Play, Butterflies, Goblins Tyranny, Under the Moon, Nether Depths Upgrade, Spawn, Cryptic Foes, Hostile Villages, Scuba Gear, Occult, Scorched and Better Combat, Create, Pipez, Storage Drawers, Immersive Engineering, Slice & Dice, Cooking for Blockheads, Alex's Mobs, Mowzie's Mobs, Mutant Monsters, Critters and Companions, Bosses of Mass Destruction, FD Bosses, Legendary Monsters, Ribbits, Artifacts, Simply Swords, SlashBlade: Resharped, Dungeons Delight, Jaden's Nether Expansion, Regions Unexplored, L_Ender's Cataclysm, Mekanism, Rats, Aquaculture, XercaPaint, Botania, Reliquary, Immersive Aircraft, Born in Chaos, Luminous Beasts, Rustic Engineer, Unique Dungeons, More Artifacts, Nature's Aura, L2 Hostility, Species, Celestisynth, Brutality, Clanging Howl, TreeChop, Cable Facades.
+**Content and gameplay:** Alex's Caves, Ice and Fire, Ars Nouveau, JEI, Farmer's Delight, Relics, Timeless and Classics Zero (TaCZ), Terramity, Ad Astra, Fowl Play, Butterflies, Goblins Tyranny, Under the Moon, Nether Depths Upgrade, Spawn, Cryptic Foes, Hostile Villages, Scuba Gear, Occult, Scorched and Better Combat, Create, Pipez, Storage Drawers, Immersive Engineering, Slice & Dice, Cooking for Blockheads, Alex's Mobs, Mowzie's Mobs, Mutant Monsters, Critters and Companions, Bosses of Mass Destruction, FD Bosses, Legendary Monsters, Ribbits, Artifacts, Simply Swords, SlashBlade: Resharped, Dungeons Delight, Jaden's Nether Expansion, Regions Unexplored, L_Ender's Cataclysm, Mekanism, Rats, Aquaculture, XercaPaint, Botania, Reliquary, Immersive Aircraft, Born in Chaos, Luminous Beasts, Rustic Engineer, Unique Dungeons, More Artifacts, Nature's Aura, L2 Hostility, Species, Celestisynth, Brutality, Clanging Howl, TreeChop, Cable Facades, Adam's Ars Plus, Advanced Bow Enchantments, Amendments, Animus, Armageddon, Ars 'n' Spells, Ars Additions, Ars Elemental, Ars Énergistique, Better Spellcasting, Biomancy, Blood Magic, Born in Chaos, Brutal Bosses, Caster Curios Bonus, Celestial Enchantments, Chimes, Cognition, Companions!, Composite Material, Corpse, Cosmetic Armor Reworked, Create Crafts & Additions, Create: Copycats+, Create: Solar Powered, Creatures and Beasts: Unofficial Port, Critters n' Crawlers, Dark Doppelganger, Deeper and Darker, Dodo's Mobs, Domestication Innovation, Duplicationless, Easy Villagers, Echelon, EEEAB's Mobs, Enigmatic Addons, Enigmatic Delicacy, Enigmatic Legacy, Extra Hostile Neural Networks, Fallen Traits, Faunify, Fluidium, From the Shadows Reborn, Goety, Goety Awaken, Goety Cataclysm, Goety Delight, Goety Hostility, GTBC's Geomancy Plus, Hexerei, Hostile Neural Networks, Immersive Armors, Immersive Weathering, Industrial Foregoing, Iron's Spells 'n Spellbooks, Just Dire Things, L2 Archery, L2 Backpack, L2 Complements, Legendary Spellbooks, Lethality, Macabre: Call of False Prophets, Mahou Tsukai, Marium's Soulslike Weaponry, Mekanism: Weapons, MmmMmmMmmMmm, Mob Grinding Utils, Modular Routers, More Relics, Mystical Agriculture, Myths & Legends, Odd Accessories, Opposing Force, Peyro's Scythe, Powah, Primitive Mobs, Refined Mod, RevelationFix, Saint's Dragons, Sanguine Neural Networks, Simply Swords Overhaul, Skarrier Mobs, Sky Arena, Snuffles, SomakeSpells, Sophisticated Backpacks, Summonity, Supplementaries, T.O Magic 'n Extras, TACT, Terra Curio, The Undergarden, Tome of Blood: Rebirth, Tome of Wonders, Tons Of Enchants, Too Many Bows, Too Many Glyphs, Torchmaster, Transmog, Unique Accessories, Wither Reincarnated.
 
 Coverage means the tested build and the specific code paths of each mod, not every feature. Tested builds per mod: [Compatibility and target versions](https://github.com/BonsUnleashed/bons-and-furious/wiki/Compatibility-and-target-versions).
 
@@ -113,8 +113,8 @@ For Minecraft 1.21.1, use `bons_and_furious-neoforge-1.0.47+mc1.21.1.jar`, Java 
 
 For Minecraft 1.20.1 / Forge:
 
-1. Download `bons_and_furious-1.0.48.1.jar` from the [1.0.48.1 release](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.48.1) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load. The two small mixin libraries it uses, MixinExtras and MixinSquared, are bundled inside it.
-2. Start once. The mod writes its config file with its defaults (every switch on except `jei_join_recipe_deferral` and `radium_experimental_tickets_spawning` and `vanilla_background_level_dat`) and logs how many controls are enabled.
+1. Download `bons_and_furious-1.0.49.jar` from the [1.0.49 release](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.49) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load. The two small mixin libraries it uses, MixinExtras and MixinSquared, are bundled inside it.
+2. Start once. The mod writes its config file with its defaults (every switch on except the 192 opt-in switches: three older ones and 189 trade-offs and gameplay fixes added in 1.0.49) and logs how many controls are enabled.
 3. To turn one off, set its key to `false` and restart. Client-only patches (renderer, shaders, ambience) never load on a dedicated server.
 
 JVM overrides, log messages and troubleshooting: [Installation and configuration](https://github.com/BonsUnleashed/bons-and-furious/wiki/Installation-and-configuration).
@@ -155,7 +155,7 @@ switch's mixins and guarded methods are listed in `patches/<mod>.json`.
 
 Licensed GPL-3.0-only ([LICENSE](LICENSE)). Upstream attribution is in [NOTICE.md](NOTICE.md); the tested dependency builds are listed in [upstream-credits.json](upstream-credits.json).
 
-The 1.0.48.1 release JAR was tested in client and dedicated-server copies of the reference pack before release. The whole-pack benchmark above was measured with 1.0.31 on 5 October 2026.
+The 1.0.49 release JAR was tested in client and dedicated-server copies of the reference pack before release. The whole-pack benchmark above was measured with 1.0.31 on 5 October 2026.
 
 ### Upstream pull requests
 

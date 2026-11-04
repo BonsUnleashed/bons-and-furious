@@ -1,0 +1,110 @@
+{
+  "group": "extrahnn_coo49",
+  "keys": {
+    "extrahnn_rendered_model_cap": {
+      "mod": "extrahnn",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.extrahnn_coo49.ExtraModelRenderCapMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/lmor/extrahnn/client/ExtraDataModelItemStackRenderer",
+          "method": "m_108829_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "note": "renderByItem: base model, then for every bound stored model: entity cache lookup, tickCount, renderEntityInInventory(..., count) with count numbering the bound models (the one call we wrap)",
+          "sha256": "d0b91dc07c49bd359c496226e213866965b48913a58d8c5e3a6734cdbd2cd602"
+        },
+        {
+          "class": "net/lmor/extrahnn/client/ExtraDataModelItemStackRenderer",
+          "method": "renderEntityInInventory",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/item/ItemDisplayContext;Lnet/minecraft/world/entity/LivingEntity;Ldev/shadowsoffire/hostilenetworks/data/DataModel;I)V",
+          "note": "draws one entity in the count's quadrant (counts 4 and up repeat the third); it also sets the cached entity's rotations, which every renderer of that entity sets again before it draws",
+          "sha256": "3933a12d19a534263b9c71d0d7e74114d749a9c8ba898b41fdedc63a6797cfed"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation of the renderEntityInInventory call in ExtraDataModelItemStackRenderer.m_108829_: the call runs only for bound-model counts below the value (helper bons.furious.patch.extrahnn_coo49.ModelRenderCap, value PureConfig.intValue)",
+      "license": "MIT (Extra Hostile Neural Networks): no Extra Hostile Neural Networks code is carried"
+    },
+    "extrahnn_stored_models_memo": {
+      "mod": "extrahnn",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.extrahnn_coo49.ExtraStoredModelsMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/lmor/extrahnn/item/ExtraDataModelItem",
+          "method": "getStoredModels",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Ljava/util/List;",
+          "note": "empty stack or no data_model tag: four empty holders (the redirected call is not reached); else getList(ids, 8) and one INSTANCE.holder(new ResourceLocation(id)) per id into a new ArrayList: the location goes to holder() only (the one NEW we redirect)",
+          "sha256": "7567b8d25683a3551c9ef5159e5f86fd04a37cd98a3732431840dd6bd665cd0d"
+        },
+        {
+          "class": "dev/shadowsoffire/hostilenetworks/data/DataModelRegistry",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: no override of Placebo's holder(ResourceLocation); INSTANCE static final",
+          "sha256": "c4957ad0695d4d17a3564f87c81fc62fe268c9d42a405c594c9d031e631107d6"
+        },
+        {
+          "class": "dev/shadowsoffire/placebo/reload/DynamicRegistry",
+          "method": "holder",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Ldev/shadowsoffire/placebo/reload/DynamicHolder;",
+          "note": "audited (Placebo, which Extra Hostile Neural Networks requires): holders.computeIfAbsent(id, new DynamicHolder): the holder is found by the location's equality, so an equal kept location finds the same holder",
+          "audit": true,
+          "sha256": "7ff0005a15f075bbe23ee7b55292090bce753c1f14ba59bfd13ab1057abe84a2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the one new ResourceLocation(String) in ExtraDataModelItem.getStoredModels: the location kept per id string (at most 4,096; an invalid id is never kept: the constructor throws as shipped); helper bons.furious.patch.extrahnn_coo49.StoredModelsMemo",
+      "license": "MIT (Extra Hostile Neural Networks, Hostile Neural Networks, Placebo): none of their code is carried"
+    },
+    "extrahnn_ultimate_chamber_base_drop_copy": {
+      "mod": "extrahnn",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.extrahnn_coo49.UltimateChamberBaseDropMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/lmor/extrahnn/tile/UltimateSimChamberTileEntity",
+          "method": "setResult",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)V",
+          "note": "per model: getPredictionDrop() (a new stack) and baseDrop() (the one call we wrap), each setCount(multiplier); setItem(base drops, 2, 6), setItem(predictions, 6, 10) when the prediction succeeds; data and iterations",
+          "sha256": "4d96810fd6dd246317f1f63ef310e28db6ec9fb92347bac61a1701064e018f86"
+        },
+        {
+          "class": "net/lmor/extrahnn/tile/UltimateSimChamberTileEntity",
+          "method": "setItem",
+          "desc": "(Ljava/util/List;II)V",
+          "note": "grows matching stacks, then puts copy() of the stack into empty slots: the passed stack never ends up in a slot",
+          "sha256": "345724b5176a2dc11c3f004de22fff14655ff103f3ed84bb0b103876501e5e65"
+        },
+        {
+          "class": "net/lmor/extrahnn/tile/UltimateSimChamberTileEntity",
+          "method": "canStartSimulation",
+          "desc": "()Z",
+          "note": "the free-space check reads baseDrop() (and getPredictionDrop()) counts as they are: with the fix the model's own count",
+          "sha256": "42046f1e6bc3a960f86abcbd5fcc7d781aad37f4cfb25750004cc66e93ffdb67"
+        },
+        {
+          "class": "dev/shadowsoffire/hostilenetworks/data/DataModel",
+          "method": "baseDrop",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "record accessor: the loaded model's own stack",
+          "sha256": "c8ecdadf2da5aedd8f2c8369841a6e72640efaef66cbe704ac543206671fc2b9"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation of the DataModel.baseDrop() call in UltimateSimChamberTileEntity.setResult: setResult gets a copy (helper bons.furious.patch.extrahnn_coo49.BaseDropCopy)",
+      "license": "MIT (Extra Hostile Neural Networks, Hostile Neural Networks): none of their code is carried"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "group": "echelon_coo49",
+  "keys": {
+    "echelon_tier_uuid_memo": {
+      "mod": "tiered",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.echelon_coo49.TierUuidMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "elocindev/tierify/forge/ForgeTieredAttributeSubscriber",
+          "method": "onItemAttributeModifiers",
+          "desc": "(Lnet/minecraftforge/event/ItemAttributeModifierEvent;)V",
+          "note": "per tier entry: UUID.nameUUIDFromBytes((attributeId + _ + slot name + _ + salt).getBytes(UTF_8)) used only as the new modifier's id",
+          "sha256": "77d7147128440b0313ba98a92a7fe5aac58535ceaa329e71138e996d7b9c2ff6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of UUID.nameUUIDFromBytes in ForgeTieredAttributeSubscriber.onItemAttributeModifiers: an equal UUID from a bounded table (2048 slots, hashes in their own array) when the same bytes were seen before, else the same steps as nameUUIDFromBytes (MD5, version 3, IETF variant) on a per-thread MessageDigest instead of a MessageDigest.getInstance per call; helper bons.furious.patch.echelon_coo49.TierUuids",
+      "license": "MIT (Echelon - Linggango Variant): no Echelon code is carried"
+    }
+  }
+}

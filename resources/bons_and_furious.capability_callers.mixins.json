@@ -10,8 +10,18 @@
   "mixins": [
     "BotaniaLooniumHandlesMixin",
     "CapabilityProviderCallerStateAccessor",
+    "CelestisynthProviderHandlesMixin",
     "CHCapHelperValueMixin",
+    "EeeabCapabilityHandlerHandlesMixin",
+    "L2GeneralHolderHandlesMixin",
+    "L2HostilityTickHandlesMixin",
+    "L2PlayerHolderHandlesMixin",
+    "LevelCallerHandlesMixin",
+    "LichdomHelperHandlesMixin",
     "LivingEntityCallerHandlesMixin",
-    "SpawnFlyHandlesMixin"
+    "MiscCapHelperHandlesMixin",
+    "SEHelperHandlesMixin",
+    "SpawnFlyHandlesMixin",
+    "WitherPossessedHandlesMixin"
   ]
 }

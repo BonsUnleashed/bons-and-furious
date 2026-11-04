@@ -1,0 +1,25 @@
+{
+  "group": "vanilla_boat_fall",
+  "keys": {
+    "vanilla_boat_fall_no_break": {
+      "mod": "minecraft",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_boat_fall.BoatFallKeepMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/vehicle/Boat",
+          "method": "m_7840_",
+          "desc": "(DZLnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)V",
+          "sha256": "a855f2e91b44a94e1b4b2ac7dd9763db876294b1aec15e0b998b8afa70b052c0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on kill() (m_6074_) and the two spawnAtLocation (m_19998_) calls inside Boat.checkFallDamage (m_7840_): left out while the switch acts; causeFallDamage and resetFallDistance unchanged",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_boat_fall.BoatFall)"
+    }
+  }
+}

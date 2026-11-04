@@ -1,0 +1,61 @@
+{
+  "group": "transmog_coo49",
+  "keys": {
+    "transmog_appearance_cache_identity": {
+      "mod": "transmog",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.transmog_coo49.TransmogAppearanceCacheMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/hidoni/transmog/TransmogUtils",
+          "method": "getAppearanceItemStack",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Z)Lnet/minecraft/world/item/ItemStack;",
+          "note": "getTagElement(transmog:transmogItem); null or empty stack returns the stack; else the shared hash-keyed cache's ItemStack.of(tag); hidden item -> EMPTY unless keepHidden",
+          "sha256": "8bfa100618bffe7cf758edda55ec83b3240e5b7b2adc6805736d22d844556652"
+        },
+        {
+          "class": "com/hidoni/transmog/TransmogUtils",
+          "method": "getAppearanceStackFromTag",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/item/ItemStack;",
+          "note": "ItemStack.of(tag): the decode the helper calls on a miss",
+          "sha256": "deee6a0b832a6cc772ac532f26271bc085132ddce5b60c0f5a6e02065f4e5683"
+        },
+        {
+          "class": "com/hidoni/transmog/TransmogUtils",
+          "method": "isHiddenItem",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "note": "appearance.is(VOID_FRAGMENT): the hidden rule the helper calls",
+          "sha256": "7dfd1ddf4ab3f32c93dc109faa7fe900389cc5a9141a9b96a746965571556ebe"
+        },
+        {
+          "class": "com/hidoni/transmog/TransmogUtils",
+          "method": "transmogAppearanceOntoItemStack",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)V",
+          "note": "the mod's only writer of the appearance: addTagElement(key, appearance.save(new CompoundTag())), a new compound per change",
+          "sha256": "2ee1153756105062eb76e1f7934f18018885826007bbc88632c7397a777a5009"
+        },
+        {
+          "class": "com/hidoni/transmog/TransmogUtils",
+          "method": "getAppearanceStackOrOriginal",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;",
+          "note": "the draw-time caller: sets the count of the returned appearance stack for inventory drawing",
+          "sha256": "53e32d9ac3643d7f589759032b0eff83ce19ccf5f3d56917ef634ddc354b1475"
+        },
+        {
+          "class": "com/hidoni/transmog/inventory/TransmogMenu",
+          "method": "outputRemovedTransmog",
+          "desc": "()V",
+          "note": "removeTagKey(transmog:transmogItem): the only other writer of the key",
+          "sha256": "dccc209f1568bd5a51c8be0935fb2fb802701d7bb8c352aa7c80e4e404d37358"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Cancellable @Inject in TransmogUtils.getAppearanceItemStack at its GETSTATIC of TRANSMOG_ITEM_CACHE (physical client), so after the mod's own untransmogged / empty test, with the stored appearance compound (@Local): on client threads the appearance comes from two tables the client threads share, with immutable entries (TransmogAppearances): 64 two-way sets keyed by the compound object (the set from the identity of its id tag, which copies of the compound share), then 128 entries keyed by the compound's hashCode as the mod's own cache is, decoded with the mod's own getAppearanceStackFromTag on a miss; the hidden-item rule as shipped; the logical server thread and the switch off run the mod's code. Trade-off (off by default, two of these show on screen): when two different appearances share a hash code (the mod's cache then shows one look for both) a compound keeps the look its first lookup found, so which of the two an item shows can differ from the shared map's pick; a compound changed in place on the client (the mod always stores a new one; stacks sent by the server arrive as new ones) keeps its earlier look until the stack is replaced, unless its id tag changed; the server thread's appearance stacks are no longer shared with the client threads. Runtime flag transmogAppearanceCacheIdentity; shadow property bons_and_furious.transmogAppearanceCacheIdentity.shadow. Helper bons.furious.patch.transmog_coo49.TransmogAppearances.",
+      "license": "Transmog (MIT): no code carried; the per-thread table is ours"
+    }
+  }
+}

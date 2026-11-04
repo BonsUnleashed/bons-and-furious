@@ -1,0 +1,31 @@
+{
+  "group": "bomd_c49",
+  "keys": {
+    "bomd_player_tick_end_only": {
+      "mod": "bosses_of_mass_destruction",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.bomd_c49.PlayerTickPhaseMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/cerbon/bosses_of_mass_destruction/event/ForgeEvents",
+          "method": "onPlayerTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "sha256": "32f7bb95e63107fccf92ebefb794bcdf690b5318e00fc1d550acb95687f55f96"
+        },
+        {
+          "class": "com/cerbon/bosses_of_mass_destruction/event/ForgeEvents",
+          "method": "lambda$onPlayerTick$0",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;Lcom/cerbon/cerbons_api/api/general/data/HistoricalData;)V",
+          "sha256": "28c0e4b0933a0d1ce4f31007adc51d425a44fa590008d4b8a4b0f1e5bf6c2db0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on ForgeEvents.onPlayerTick: a PlayerTickEvent of phase START returns before the original, END runs it (helper bons.furious.patch.bomd_c49.PlayerTickPhase)",
+      "license": "LGPL-3.0 (Bosses of Mass Destruction): no code is carried; the wrapper carries only our own phase test (Idea: Collections Of Optimizations bmd.singlePlayerTickPhase, idea text only)"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.crittersandcompanions_coo49",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "bons.furious.patch.crittersandcompanions_coo49.CrittersandcompanionsPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "BehaviourFastPathBonsaiMixin",
+    "FoodScanBonsaiLeafMixin",
+    "FoodScanBonsaiOtterMixin",
+    "FoodScanEterdeltaMixin",
+    "NecklaceLoopBonsaiMixin",
+    "NecklaceLoopEterdeltaMixin"
+  ],
+  "client": [
+    "LeashEmptyBonsaiMixin",
+    "LeashEmptyEterdeltaMixin"
+  ]
+}

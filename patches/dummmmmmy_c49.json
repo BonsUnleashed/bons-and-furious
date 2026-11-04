@@ -1,0 +1,54 @@
+{
+  "group": "dummmmmmy_c49",
+  "keys": {
+    "dummmmmmy_damage_number_send_first": {
+      "mod": "dummmmmmy",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "fix",
+      "mixins": [
+        "bons.furious.mixin.dummmmmmy_c49.ModEventsSendFirstMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mehvahdjukaar/dummmmmmy/common/ModEvents",
+          "method": "onEntityDamage",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;FLnet/minecraft/world/damagesource/DamageSource;)V",
+          "note": "side / not a dummy / amount != 0, then the message is built, then switch(DAMAGE_NUMBERS_MODE): ALL_ENTITIES sends; ALL_PLAYERS / LOCAL_PLAYER only for a ServerPlayer source entity; NONE nothing",
+          "sha256": "5af0ad513a0717bda383cab731ded3adad875ebc93fdd016141f31db17fded98"
+        },
+        {
+          "class": "net/mehvahdjukaar/dummmmmmy/network/ClientBoundDamageNumberMessage",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;FLnet/minecraft/world/damagesource/DamageSource;Lnet/mehvahdjukaar/dummmmmmy/common/CritRecord;)V",
+          "note": "reads the entity id and encodes the damage type into final fields; nothing else",
+          "sha256": "bc4c11166e8215977c633cd7b2bc6918a8a7e3d402d135273259bcbcc8b4f892"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on ModEvents.onEntityDamage: after the mod's own first checks, return before the message is built when the mode switch would send nothing (helper bons.furious.patch.dummmmmmy_c49.DamageNumberFixes); onEntityHeal is not touched",
+      "license": "Supplementaries Team License v1.5 (MmmMmmMmmMmm): no mod code is carried; the injectors and the decision are ours"
+    },
+    "dummmmmmy_inline_damage_type_fallback": {
+      "mod": "dummmmmmy",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "fix",
+      "mixins": [
+        "bons.furious.mixin.dummmmmmy_c49.DamageMessageEncodeMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mehvahdjukaar/dummmmmmy/network/ClientBoundDamageNumberMessage",
+          "method": "encodeDamage",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/damagesource/DamageSource;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "null source -> TRUE_DAMAGE; null type -> AssertionError; typeHolder().unwrapKey() empty -> AssertionError; else the key's location",
+          "sha256": "cfb68ef09c3d22f4bd32faab47617b168835eab414c512c4dec9e8a75f8345d0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on ClientBoundDamageNumberMessage.encodeDamage: TRUE_DAMAGE for a source whose type holder has no registry key (helper bons.furious.patch.dummmmmmy_c49.DamageNumberFixes)",
+      "license": "Supplementaries Team License v1.5 (MmmMmmMmmMmm): no mod code is carried; the injector is ours"
+    }
+  }
+}

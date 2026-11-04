@@ -1,0 +1,93 @@
+{
+  "group": "mcreator_constant_tag_keys",
+  "keys": {
+    "skarriermobs_constant_tag_keys": {
+      "mod": "skarrier_mobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mcreator_constant_tag_keys.SkarrierDaylightBurnTagMixin",
+        "bons.furious.mixin.mcreator_constant_tag_keys.SkarrierResisteelToolsTagMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mcreator/skarriermobs/procedures/MobsBurningInSunProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "one new ResourceLocation(\"skarrier_mobs:burns_in_daylight\") straight into TagKey.create (1.1.2: behind tickCount % 20; COO's pin 1.0.6 as an accepted alternative build)",
+          "sha256": "930abca4f075200d0ca32e0eae2a33197d06975fa55457ed4b2914b2daa6a1d6",
+          "sha256_also": [
+            {
+              "build": "1.0.6",
+              "sha256": "27a280dbf6d742407e3419d1ab7f1be7e060728e63ee7b5c7001df18b25c6acc"
+            }
+          ]
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/ResisteelToolsEffectProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "one new ResourceLocation(\"skarrier_mobs:resisteel_tools\") straight into ItemTags.create (1.1.2: behind tickCount % 10; 1.0.6 as an accepted alternative build)",
+          "sha256": "a0ef85aae021f7529191f3ecd9f63acedd130e298795aaf3bbe106ef51ec0071",
+          "sha256_also": [
+            {
+              "build": "1.0.6",
+              "sha256": "69d3d061948d625c0d3fc08d3a4ab70d3ba2caa7f96999170219fb42fb404f7b"
+            }
+          ]
+        },
+        {
+          "class": "net/minecraft/tags/TagKey",
+          "method": "m_203882_",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/tags/TagKey;",
+          "note": "create: the weak interner's canonical key for (registry, location)",
+          "sha256": "9f2ed852b1a7ff8bf40c67b07db96933ed61ecc88f5a26367e571aa0d60ec0ef"
+        },
+        {
+          "class": "net/minecraft/tags/ItemTags",
+          "method": "create",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/tags/TagKey;",
+          "note": "Forge's create(location) = TagKey.create(Registries.ITEM, location)",
+          "sha256": "786939ebec5843dd92aad6a873acada43067cb765a8eaaa5df30ff5f8a878dee"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Two @Redirects per Skarrier procedure (the location constructor and the tag key factory of the one tag expression) to the mcreator_constant_tag_keys layer (ConstantTagKeys.Caller: the location parsed once, the canonical key kept strongly, so the factory would return the very object; runtime flag)",
+      "license": "Skarrier Mobs: All Rights Reserved (mods.toml): no-copy; the mixins hold only our redirects, the mod's code stays in its jar"
+    },
+    "cnc_constant_tag_keys": {
+      "mod": "cnc",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mcreator_constant_tag_keys.CncSasquatchKnockTagMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/SasquatchWoodKnockProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "Critters n' Crawlers 2.2.5: the first new ResourceLocation(\"minecraft:logs\") straight into BlockTags.create, 216 times per sasquatch per tick",
+          "sha256": "e37f15ab2ea717aab1b85a0d4b54c322f179c3d1300d8df8d36892cec46232a9"
+        },
+        {
+          "class": "net/minecraft/tags/TagKey",
+          "method": "m_203882_",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/tags/TagKey;",
+          "note": "create: the weak interner's canonical key for (registry, location)",
+          "sha256": "9f2ed852b1a7ff8bf40c67b07db96933ed61ecc88f5a26367e571aa0d60ec0ef"
+        },
+        {
+          "class": "net/minecraft/tags/BlockTags",
+          "method": "create",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/tags/TagKey;",
+          "note": "Forge's create(location) = TagKey.create(Registries.BLOCK, location)",
+          "sha256": "b3d070297158ba7ae0ac0eec049a2b4d3155feaa4b4ed08ce6a782e95b313732"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Two @Redirects in SasquatchWoodKnockProcedure.execute (the first location constructor and the BlockTags.create call) to the mcreator_constant_tag_keys layer (ConstantTagKeys.Caller, runtime flag)",
+      "license": "Critters n' Crawlers: All Rights Reserved (mods.toml): no-copy; the mixin holds only our redirects, the mod's code stays in its jar"
+    }
+  }
+}

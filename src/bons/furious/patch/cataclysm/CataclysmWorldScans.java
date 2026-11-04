@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
  *
  *  cataclysm_area_attack_scans  (both sides) sandstorm, ashen breath, earthquake, phantom halberd and void rune scan for
  *      living entities every tick but can hurt them only on every 3rd / 5th tick: the scan is skipped on the other ticks.
+ *      Since 1.0.49 also Ignis's flame strike, which scans every 5th tick but hurts only on even ticks (every 10th).
  *  cataclysm_beam_client_scans  (client) the death laser and the mini abyss blast collect the entities on their beam on
  *      both sides but use the list only on the server.
  *  cataclysm_server_leg_solver  (server) Clawdian / Ancient Remnant leg solvers probe the ground every tick for the leg

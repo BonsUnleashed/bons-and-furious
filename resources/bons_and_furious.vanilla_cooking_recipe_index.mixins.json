@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.vanilla_cooking_recipe_index",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "bons.furious.patch.vanilla_cooking_recipe_index.RecipeIndexPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "AbstractCookingRecipeProbeMixin",
+    "CookingForBlockheadsOvenIndexMixin",
+    "IngredientProbeMixin",
+    "MysticalAgricultureFurnaceIndexMixin",
+    "RecipeManagerIndexMixin"
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "group": "immersiveweathering_spread_c49",
+  "keys": {
+    "immersiveweathering_patch_spread_lean": {
+      "mod": "immersive_weathering",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.immersiveweathering_spread_c49.CrackSpreaderLeanMixin",
+        "bons.furious.mixin.immersiveweathering_spread_c49.MossSpreaderLeanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ordana/immersive_weathering/util/PatchSpreader",
+          "method": "getWantedWeatheringState",
+          "desc": "(ZLnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Level;I)Z",
+          "note": "Random(Mth.getSeed(pos)); getUnWeatherableChance; getInfluenceForDirections; needsAirToSpread; per HashMap entry: getBlockState, the air test, getBlockWeatheringEffect; needs-air exit; hasTicked immune draw; PREVENT in any direction -> false, else WEATHER in any -> true",
+          "sha256": "bb9e9c83df63d6435a91cc584fa74c5a10a70f953a658c1ed7608f77519c03c0"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/util/PatchSpreader",
+          "method": "getInfluenceForDirections",
+          "desc": "(Ljava/util/Random;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Level;)Ljava/util/Map;",
+          "note": "interest and patchiness getters, getDirectionCount, Collections.shuffle of List.of(Direction.values()), then HIGH/MEDIUM draws for the first wanted directions, LOW for the rest",
+          "sha256": "42ee231289d7c83d5a4c89eb0dd3839ab3ae06c85666bd1e5dfcbc10b540190b"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/util/PatchSpreader",
+          "method": "getDirectionCount",
+          "desc": "(Ljava/util/Random;F)I",
+          "note": "the float[7] polynomial, one nextFloat, the first index whose value exceeds it, else 0",
+          "sha256": "76b6fb6292231502a0767c1041112cef0e0b1ed878cad8e2c9de95fe1f40df6a"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/util/PatchSpreader",
+          "method": "getWantedWeatheringState",
+          "desc": "(ZLnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Level;)Z",
+          "note": "the three-argument form calls the four-argument one with maxRecursion 2",
+          "sha256": "6aab1423ec4aad4a74ab24b78b6cdb730d34dc1f6cdd42d0240aa96db2db3257"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/util/PatchSpreader",
+          "method": "getBlockWeatheringEffect",
+          "desc": "(Lcom/ordana/immersive_weathering/util/PatchSpreader$Susceptibility;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;I)Lcom/mojang/datafixers/util/Pair;",
+          "note": "reads only: low (recursion), medium and high influence effects by susceptibility; no state of its own (the answer cannot depend on the order of directions)",
+          "sha256": "64ca93685830cdcf8a3984dd098a53b28617a0dadd65e877fc591f021c5745b7"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/util/PatchSpreader",
+          "method": "getLowInfluenceWeatheringEffect",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;I)Lcom/ordana/immersive_weathering/util/PatchSpreader$WeatheringAgent;",
+          "note": "a weathering Weatherable neighbour's spreader asked getWantedWeatheringState(false, its pos, level, maxRecursion - 1)",
+          "sha256": "93149f2d64778517142c2296348de998648cb60f173882fae355a28fe3fe583f"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/blocks/mossy/MossSpreader",
+          "method": "*",
+          "desc": "",
+          "note": "overrides only getType, the interest / patchiness / immune / needs-air getters, getWeatheringEffect and getHighInfluenceWeatheringEffect",
+          "sha256": "9fb0285ffb7275b59145310ff0155939b0a8b1b3189d2abe351cd4f53cd6ddb9"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/blocks/cracked/CrackSpreader",
+          "method": "*",
+          "desc": "",
+          "note": "overrides only getType, the interest / patchiness / immune / needs-air getters, getWeatheringEffect and getHighInfluenceWeatheringEffect",
+          "sha256": "f0951504b8fd4a4a4d8eb5e9cac4bdfe2fc1544a1973a86047eacfa76ffb597e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MossSpreader and CrackSpreader gain their own getWantedWeatheringState(ZBlockPos;Level;I) override: exactly these classes with the switch on compute the default's answer without temporary objects (java.util.Random's LCG replayed on a long, Collections.shuffle on a packed permutation, the spreader's own getBlockWeatheringEffect per direction); otherwise PatchSpreader.super (helper bons.furious.patch.immersiveweathering_spread_c49.LeanSpread)",
+      "license": "LGPL-3.0 (Immersive Weathering): no Immersive Weathering code is carried; the arithmetic re-implementation is ours"
+    }
+  }
+}

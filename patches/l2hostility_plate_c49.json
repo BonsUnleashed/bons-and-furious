@@ -1,0 +1,124 @@
+{
+  "group": "l2hostility_plate_c49",
+  "keys": {
+    "l2hostility_name_plate_hover_direct": {
+      "mod": "l2hostility",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.l2hostility_plate_c49.NamePlateHoverMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/xkmc/l2hostility/events/ClientEvents",
+          "method": "renderNamePlate",
+          "desc": "(Lnet/minecraftforge/client/event/RenderNameTagEvent;)V",
+          "note": "le = (LivingEntity) event.getEntity(); when le is invisible or showOnlyWhenHovered: rayTraceEntity(player, getEntityReach(), e -> e == le) == null -> return; only null-checked",
+          "sha256": "abc33377197c1d67ac080b1bef4f1da2a12b5512c13b0034bfa1d4ee71461556"
+        },
+        {
+          "class": "dev/xkmc/l2hostility/events/ClientEvents",
+          "method": "lambda$renderNamePlate$0",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "the predicate: e == le",
+          "sha256": "af39f4ca6379ec648d8b7ce65c6cda71829400f898794e741952c44531c85b5e"
+        },
+        {
+          "class": "dev/xkmc/l2library/util/raytrace/RayTraceUtil",
+          "method": "rayTraceEntity",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;DLjava/util/function/Predicate;)Lnet/minecraft/world/phys/EntityHitResult;",
+          "note": "pos = eye, end = getRayTerm(pos, xRot, yRot, reach), box = AABB(pos, end).inflate(1); ProjectileUtil.getEntityHitResult(level, player, pos, end, box, pred) (L2 Library 2.5.5; 2.5.1-slim has the same class bytes)",
+          "audit": true,
+          "sha256": "d17981cc95ac364ceea902f9937444e737e76dd60619085c7374835f13d3a871"
+        },
+        {
+          "class": "dev/xkmc/l2library/util/raytrace/RayTraceUtil",
+          "method": "getRayTerm",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;FFD)Lnet/minecraft/world/phys/Vec3;",
+          "note": "the ray end the switch computes with the same method",
+          "audit": true,
+          "sha256": "25d103dfb528f61e10fd8a4ea2c47ed868e308988b84a834f8dc49d04e953807"
+        },
+        {
+          "class": "net/minecraft/world/entity/projectile/ProjectileUtil",
+          "method": "m_37304_",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Lnet/minecraft/world/phys/EntityHitResult;",
+          "note": "getEntityHitResult(..., 0.3F)",
+          "sha256": "c99b8a3fca0c1e22915eacadc79ac07d7b1cf80cb0ccd2c8e5b331a0d8a27161"
+        },
+        {
+          "class": "net/minecraft/world/entity/projectile/ProjectileUtil",
+          "method": "m_150175_",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;F)Lnet/minecraft/world/phys/EntityHitResult;",
+          "note": "level.getEntities(shooter, box, pred); the nearest candidate whose box inflated by (double) inflate is clipped by start..end; null when none",
+          "sha256": "bbe22f5e79b2a24042a05952f567c02e65094e24160cae4b685b3abcf358d23d"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_6249_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+          "note": "profiler counter getEntities, section walk and part entities: only entities that pass the predicate",
+          "sha256": "f64a036652ed9773518dc1939fb9149fa37aa93ceb9439fbdd6eef29541d73b1"
+        },
+        {
+          "class": "net/minecraft/world/phys/AABB",
+          "method": "m_82371_",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)Ljava/util/Optional;",
+          "note": "clip: the shipped search's hit test (accepts points 1e-7 outside the box); the switch's slab test is a superset of it with a 1e-4 margin",
+          "sha256": "5781487f692507ac4df135a4eb0d4fb9994fdee00c732698bf08e44288b3acad"
+        },
+        {
+          "class": "net/minecraft/util/profiling/ProfilerFiller",
+          "method": "m_6174_",
+          "desc": "(Ljava/lang/String;)V",
+          "note": "incrementCounter(name): the counter the switch keeps",
+          "sha256": "a64096ff181776c3d89e824432fc0f65882971a2314d9415b29de0872268c5eb"
+        },
+        {
+          "class": "org/valkyrienskies/mod/mixin/feature/get_entities/MixinLevel",
+          "method": "check2",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "audited: empty list for a too-big box (never for a reach up to 256)",
+          "audit": true,
+          "sha256": "63bf2b6c0f897516d3d525a6718011521462fe65117f01ed63acd9cc0b3ec87f"
+        },
+        {
+          "class": "org/valkyrienskies/mod/mixin/feature/get_entities/MixinLevel",
+          "method": "moveAABB1",
+          "desc": "(Lnet/minecraft/world/phys/AABB;)Lnet/minecraft/world/phys/AABB;",
+          "note": "audited: moves a shipyard box to world space; candidates still pass the predicate",
+          "audit": true,
+          "sha256": "b90b54894a48dbf2aa1725c5bea67851685ca16c5d6a4f2642c98dd51462ca5d"
+        },
+        {
+          "class": "org/valkyrienskies/mod/mixin/feature/shipyard_entities/MixinEntitySectionStorage",
+          "method": "shipSections",
+          "desc": "(Lnet/minecraft/world/phys/AABB;Lnet/minecraft/util/AbortableIterationConsumer;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "audited: walks the same storage's shipyard sections; candidates still pass the predicate",
+          "audit": true,
+          "sha256": "e764005041101c76284c3b6532a13ed8dea31f094d4b57c27e85eb639b4210bf"
+        },
+        {
+          "class": "org/valkyrienskies/mod/util/BugFixUtil",
+          "method": "isCollisionBoxTooBig",
+          "desc": "(Lnet/minecraft/world/phys/AABB;)Z",
+          "note": "audited: volume > 1e8",
+          "audit": true,
+          "sha256": "7c5a8322877272ab23ed64d775d51c82649bc58d013bd1a270eb53245bfa61eb"
+        },
+        {
+          "class": "dev/obscuria/aquamirae/mixin/MixinLevel",
+          "method": "injectMultipartEntities",
+          "desc": "(Lnet/minecraft/world/level/entity/LevelEntityGetter;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Consumer;Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;Lnet/minecraft/world/entity/Entity;Ljava/util/function/Predicate;Ljava/util/List;)V",
+          "note": "audited: adds the sub-parts that pass the predicate (never the mob itself)",
+          "audit": true,
+          "sha256": "9dea36a762f7fcecfb377b09f10b3862617f87356bcdb220a665996b5bfbd8f3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the RayTraceUtil.rayTraceEntity call in ClientEvents.renderNamePlate (target-argument capture of the RenderNameTagEvent): null when the look ray stays clear of the mob's grown box by a 1e-4 margin, else rayTraceEntity's own search sequence from the eye position and ray end already computed (helper bons.furious.patch.l2hostility_plate_c49.NamePlateSight.trace); the shipped call when the switch is off or stands aside (ProjectileUtil or RayTraceUtil carries a merged mixin outside the tested set)",
+      "license": "All Rights Reserved (L2 Hostility): no code is carried. LGPL-2.1 (L2 Library): NamePlateSight.trace repeats the three calls of RayTraceUtil.rayTraceEntity (getRayTerm, AABB(eye, end).inflate(1), ProjectileUtil.getEntityHitResult) with values it computed itself. Minecraft (Mojang): no-copy"
+    }
+  }
+}

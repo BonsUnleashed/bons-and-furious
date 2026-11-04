@@ -1,0 +1,171 @@
+{
+  "group": "peyroscythe_coo49",
+  "keys": {
+    "peyroscythe_aura_apply_interval": {
+      "mod": "peyroscythe",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.peyroscythe_coo49.PeyroCrimsonMoonIntervalMixin",
+        "bons.furious.mixin.peyroscythe_coo49.PeyroGoldenBellIntervalMixin",
+        "bons.furious.mixin.peyroscythe_coo49.PeyroMundusIntervalMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/rinko1231/peyroscythe/spellentity/CrimsonMoon",
+          "method": "m_8119_",
+          "desc": "()V",
+          "note": "tick: tracking update every max(radius / 2, 2) ticks, then addEffect(Moon Frenzy, 40 ticks) for every tracked living entity inside (the wrapped call), the moon frenzy marks written only after a successful add",
+          "sha256": "5c6d31538bbcc89faf87d25675108a3a4e7416e91200314eddce3a56f173d448"
+        },
+        {
+          "class": "com/rinko1231/peyroscythe/spellentity/holy/GoldenBellEntity",
+          "method": "m_8119_",
+          "desc": "()V",
+          "note": "tick: tracking update, then addEffect(Holy Bell Suppression, 40 ticks) for every tracked living entity inside that is neither the owner nor an ally (the wrapped call, result unused)",
+          "sha256": "1531fed521c2f89a9875f28e59e94dff9ecf08fd515241490d02e1a503ca1159"
+        },
+        {
+          "class": "com/rinko1231/peyroscythe/spellentity/holy/MundusEntity",
+          "method": "m_8119_",
+          "desc": "()V",
+          "note": "tick: tracking update, then addEffect(Viator Mundi, 20 ticks) for every tracked living entity inside (the wrapped call, result unused)",
+          "sha256": "6b89ed2b6cfdb8115f060134c6907253c1be2870970f6bc4bdda3d728760f179"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the LivingEntity.addEffect (m_7292_) call in the tick (m_8119_) of CrimsonMoon, GoldenBellEntity and MundusEntity: on ticks where the aura's age is not a multiple of the interval (value line, default 10, range 1-19) the call answers false without running; otherwise as shipped. Runtime flag peyroscytheAuraApplyInterval. Helper bons.furious.patch.peyroscythe_coo49.PeyroAuras.",
+      "license": "Peyro's Scythes & Spells (GPLv3): no code carried; the wrapper decides on which ticks the mod's own add runs"
+    },
+    "peyroscythe_aura_server_only": {
+      "mod": "peyroscythe",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.peyroscythe_coo49.PeyroCrimsonMoonServerOnlyMixin",
+        "bons.furious.mixin.peyroscythe_coo49.PeyroGoldenBellServerOnlyMixin",
+        "bons.furious.mixin.peyroscythe_coo49.PeyroMundusServerOnlyMixin",
+        "bons.furious.mixin.peyroscythe_coo49.PeyroFrostFogServerOnlyMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/rinko1231/peyroscythe/spellentity/CrimsonMoon",
+          "method": "m_8119_",
+          "desc": "()V",
+          "note": "tick: updateTrackingEntities() every max(radius / 2, 2) ticks (the wrapped call), then the loop over the tracking list (effects and marks)",
+          "sha256": "5c6d31538bbcc89faf87d25675108a3a4e7416e91200314eddce3a56f173d448"
+        },
+        {
+          "class": "com/rinko1231/peyroscythe/spellentity/CrimsonMoon",
+          "method": "updateTrackingEntities",
+          "desc": "()V",
+          "note": "tracking list = level.getEntities(this, box grown by 1)",
+          "sha256": "9f10b5160b0587a54433779fa62cfb5ff68f4fd44a99e8a02a50ec63522b490f"
+        },
+        {
+          "class": "com/rinko1231/peyroscythe/spellentity/CrimsonMoon",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+          "note": "the tracking list starts as an empty ArrayList",
+          "sha256": "4366271faa7c2d13020ad143663e97c1b2a2b67085151e51306ec159ccab0b45"
+        },
+        {
+          "class": "com/rinko1231/peyroscythe/spellentity/holy/GoldenBellEntity",
+          "method": "m_8119_",
+          "desc": "()V",
+          "note": "tick: updateTrackingEntities() every max(radius / 2, 2) ticks (the wrapped call), then the loop over the tracking list",
+          "sha256": "1531fed521c2f89a9875f28e59e94dff9ecf08fd515241490d02e1a503ca1159"
+        },
+        {
+          "class": "com/rinko1231/peyroscythe/spellentity/holy/GoldenBellEntity",
+          "method": "updateTrackingEntities",
+          "desc": "()V",
+          "note": "tracking list = level.getEntities(this, radius box)",
+          "sha256": "744f8270e490c57485449ccae6429ebeadf06c4d8e531b6849fa0db738f51068"
+        },
+        {
+          "class": "com/rinko1231/peyroscythe/spellentity/holy/GoldenBellEntity",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+          "note": "the tracking list starts as an empty ArrayList",
+          "sha256": "6d45971c04db83c1c8846a8ae60d008aec05da08546f23a1421e997fa8710340"
+        },
+        {
+          "class": "com/rinko1231/peyroscythe/spellentity/holy/MundusEntity",
+          "method": "m_8119_",
+          "desc": "()V",
+          "note": "tick: updateTrackingEntities() every max(radius / 2, 2) ticks (the wrapped call), then the loop over the tracking list",
+          "sha256": "6b89ed2b6cfdb8115f060134c6907253c1be2870970f6bc4bdda3d728760f179"
+        },
+        {
+          "class": "com/rinko1231/peyroscythe/spellentity/holy/MundusEntity",
+          "method": "updateTrackingEntities",
+          "desc": "()V",
+          "note": "tracking list = level.getEntities(this, box grown by 1)",
+          "sha256": "31c754cd550fc576832b0561787d970200ec46ddf9a69821c077acef3e68871f"
+        },
+        {
+          "class": "com/rinko1231/peyroscythe/spellentity/holy/MundusEntity",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+          "note": "the tracking list starts as an empty ArrayList",
+          "sha256": "6398ae44fbc5ecea88c6d66a420fb176e3ba619f42159bce91f1ddbd3f69e426"
+        },
+        {
+          "class": "com/rinko1231/peyroscythe/spellentity/ice/FrostFogEntity",
+          "method": "m_8119_",
+          "desc": "()V",
+          "note": "tick: getEntitiesOfClass(LivingEntity, radius box, alive and not spectator) (the wrapped call), applyEffect / applyEffectPlus per target, then AoeEntity's tick",
+          "sha256": "51583ea5c16e871d8fde599fd2f2460a001a57a391eaf43bf483447720d95701"
+        },
+        {
+          "class": "com/rinko1231/peyroscythe/spellentity/ice/FrostFogEntity",
+          "method": "applyEffect",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "owner and ally checks, ignoreNextKnockback (server only), freeze ticks + 8",
+          "sha256": "336bedc33565907facfad9a602777202806cafbe9a02dbc131bfa79ef00f5640"
+        },
+        {
+          "class": "com/rinko1231/peyroscythe/spellentity/ice/FrostFogEntity",
+          "method": "applyEffectPlus",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "owner and ally checks, ignoreNextKnockback (server only), freeze ticks + 9",
+          "sha256": "b50190142321b635dc66bdda9241423bc2df8e69e6a5040377c8e1ef353367f1"
+        },
+        {
+          "class": "com/rinko1231/peyroscythe/effect/HolyBellSuppressionEffect",
+          "method": "m_6742_",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;I)V",
+          "note": "every tick: scales the entity's motion; for the local player this runs on the client, so it follows the client's copy of the effect (the documented difference)",
+          "sha256": "b09749fc8e3106ddce6064f2d53d4907dc88161e3613943e48366f3bba73d739"
+        }
+      ],
+      "cancel": [],
+      "conversion": "On client levels only: MixinExtras @WrapOperation on the updateTrackingEntities() call in the tick (m_8119_) of CrimsonMoon, GoldenBellEntity and MundusEntity (left out, so the tracking list stays the initial empty list) and on the Level.getEntitiesOfClass (m_6443_) call in FrostFogEntity.m_8119_ (an empty list). Server levels run everything as shipped. Runtime flag peyroscytheAuraServerOnly. Helper bons.furious.patch.peyroscythe_coo49.PeyroAuras.",
+      "license": "Peyro's Scythes & Spells (GPLv3): no code carried; the wrappers decide on which side the mod's own searches run"
+    },
+    "peyroscythe_black_flame_wings_server_contact": {
+      "mod": "peyroscythe",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.peyroscythe_coo49.PeyroBlackFlameWingsContactMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/rinko1231/peyroscythe/effect/BlackFlameWingsEffect",
+          "method": "m_6742_",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;I)V",
+          "note": "every 10 ticks: Angel Wings removal, particles, getEntities(wearer, box grown by 0.25/0.5/0.25) (the wrapped call), Iron's applyDamage + invulnerableTime 20 per touched living entity, fall distance reset, mana drain for a server player",
+          "sha256": "16a09dbbff724a487515e334360e9bd1dede90c2e55df2c0a26b4dec9f879a3d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntities(Entity, AABB) (m_45933_) call in BlackFlameWingsEffect.m_6742_: on a client level it answers an empty list (no contact damage call and no invulnerability write on the client's copies); on a server level as shipped. Runtime flag peyroscytheBlackFlameWingsServerContact. Helper bons.furious.patch.peyroscythe_coo49.PeyroAuras.",
+      "license": "Peyro's Scythes & Spells (GPLv3): no code carried; the wrapper decides on which side the mod's own search runs"
+    }
+  }
+}

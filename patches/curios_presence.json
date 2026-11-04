@@ -1,0 +1,533 @@
+{
+  "group": "curios_presence",
+  "keys": {
+    "curios_inventory_lookup_layer": {
+      "mod": "curios",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.curios_presence.CuriosImplHooksLookupMixin",
+        "bons.furious.mixin.curios_presence.LivingEntityCuriosLookupMixin",
+        "bons.furious.mixin.curios_presence.CapabilityProviderCuriosLookupAccessor",
+        "bons.furious.mixin.curios_presence.CapabilityDispatcherCuriosLookupAccessor",
+        "bons.furious.mixin.curios_presence.CuriosProviderLookupAccessor"
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapMethod on CuriosImplMixinHooks.getCuriosInventory (the API entry of CuriosApi.getCuriosInventory) to our lookup (helper bons.furious.patch.curios_presence.CuriosInventoryLookup); @Accessor for CapabilityProvider.valid/capabilities, CapabilityDispatcher.caps, Curios' Provider.optional/wearer; one @Unique reference field on LivingEntity",
+      "license": "LGPL-3.0 (Curios): the mixin only wraps the method with our own lookup, no Curios code is carried; Minecraft/Forge: one field and accessors, no code",
+      "guard": [
+        {
+          "class": "top/theillusivec4/curios/mixin/CuriosImplMixinHooks",
+          "method": "getCuriosInventory",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "entity != null ? entity.getCapability(CuriosCapability.INVENTORY) : LazyOptional.empty()",
+          "sha256": "d377711bfa7e71aab8e93c7645a17c99890920bf0ec0186b0bc2a16a104879b2"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$Provider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "getEntitySlots(wearer).isEmpty() ? empty : INVENTORY.orEmpty(capability, this.optional)",
+          "sha256": "c83347358428314ea4597f42900528fa209789e4b775380e83232eb7fe08fd5b"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$Provider",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "wearer, handler = new CurioInventoryWrapper(wearer), optional = LazyOptional.of(() -> handler): the only writes",
+          "sha256": "421e841250da8a3024b5c05a55e7873b3c3daa65d6e5096e671209766cca7f63"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$Provider",
+          "method": "*",
+          "desc": "",
+          "note": "three final fields; getCapability, serializeNBT, deserializeNBT, the supplier lambda",
+          "sha256": "99a44eebed8c76fe23b3e8b6ce80bd4de944e72797fc29d1c9719828e09f35f0"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability",
+          "method": "createProvider",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraftforge/common/capabilities/ICapabilityProvider;",
+          "note": "new Provider(livingEntity): exactly that class",
+          "sha256": "3a8208ac31af7aa8bd61206a69f28cb2228ece1a22a08aa6a0a089b7ac925612"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/event/CuriosEventHandler",
+          "method": "attachEntitiesCapabilities",
+          "desc": "(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V",
+          "note": "one Provider per LivingEntity, wearer = that entity, no invalidation listener",
+          "sha256": "dba673ffffa0ea966d0fdf14422de592b88309ef20f057d39965eba1092ae02f"
+        },
+        {
+          "class": "top/theillusivec4/curios/api/CuriosApi",
+          "method": "getEntitySlots",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/Map;",
+          "note": "the slot question the provider asks; asked on every call by the layer too",
+          "sha256": "862ced084e347d52600212ce583248cefeb85b4f3799b386a85b9977ab622fe5"
+        },
+        {
+          "class": "top/theillusivec4/curios/mixin/CuriosImplMixinHooks",
+          "method": "getEntitySlots",
+          "desc": "(Lnet/minecraft/world/entity/EntityType;Z)Ljava/util/Map;",
+          "note": "CuriosEntityManager CLIENT/SERVER .getEntitySlots(type): a read",
+          "sha256": "dc9f8acc483c32a3243537d536adb6854cba55d5b5e1723d88f32ceeff83bedd"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "!valid || capabilities == null ? empty : capabilities.getCapability(cap, side)",
+          "sha256": "84fca09ed93a5775f15ebb84533d079c78578a784fd7e8f016f41afbff45da9a"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityProvider",
+          "method": "invalidateCaps",
+          "desc": "()V",
+          "note": "valid = false, then the dispatcher listeners",
+          "sha256": "a1fae051df9bd0b5e5460a50ac320235e0355743d32077e37168ffcd441a73b6"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityProvider",
+          "method": "reviveCaps",
+          "desc": "()V",
+          "note": "valid = true",
+          "sha256": "1ae79a7a15e13c29686706c59ea2598dd95978a5b7f08e9a04874e937009f898"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityProvider",
+          "method": "doGatherCapabilities",
+          "desc": "(Lnet/minecraftforge/common/capabilities/ICapabilityProvider;)V",
+          "note": "the only writer of capabilities (once per provider)",
+          "sha256": "b1f70276baa470c4efa5d73a6194eb39c7ca98cb476e7ab37a7f5cfa5e4d86db"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityDispatcher",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "first present answer of the final caps array, else LazyOptional.empty() (ModernFix overwrites it with a generated walk in the same order)",
+          "sha256": "aff7dbc58d1187f3f6603f119e7235c01bad0b716e879dac45d07ba84ecb5696"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/ICapabilityProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "the one-argument default: getCapability(cap, null)",
+          "sha256": "3de75abc745161c991b677ce8d9eb9d0460f2d232c89035aec64148760b5cf87"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "ITEM_HANDLER only, then super (PLAIN)",
+          "sha256": "258831e142d2f796e042c20e25700e18a93b78a31be76c2999dd122f15e36f43"
+        },
+        {
+          "class": "net/minecraft/world/entity/player/Player",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "ITEM_HANDLER only, then super (PLAIN)",
+          "sha256": "c404867d35e2ef41b6bcec7a2789615d8575f1e599f15f82354102421738e62b"
+        },
+        {
+          "class": "net/minecraft/world/entity/animal/horse/AbstractHorse",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "ITEM_HANDLER only, then super (PLAIN)",
+          "sha256": "aa9b966f85556cfbb492fa44bdae84d386cc1a2af0c47322f94a32713eebc32d"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "isPresent",
+          "desc": "()Z",
+          "note": "supplier != null && isValid: the hit test of a kept LazyOptional",
+          "sha256": "528ff0650ee32736aedfad726cb2cecad9ff733967636cf3f368cb7713d94073"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "empty",
+          "desc": "()Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "the EMPTY singleton",
+          "sha256": "daade5076cdc683554d5dcd12d56681e17aac9f4301a9212853f9e38e68d8af5"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "invalidate",
+          "desc": "()V",
+          "note": "isValid true -> false once: an optional never becomes present again",
+          "sha256": "b5bcc4e96795e8f2ead91035f320ed53703efe6bf30a7fd235698d49b22c8057"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "*",
+          "desc": "",
+          "note": "no other method writes isValid or resolved",
+          "sha256": "eb3df48d49e75f27db2102a41c1206c592599c5c72b03f6be9d407bdc8977c0e"
+        }
+      ]
+    },
+    "curios_equipped_presence": {
+      "mod": "curios",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.curios_presence.CurioInventoryWrapperPresenceMixin",
+        "bons.furious.mixin.curios_presence.CuriosHelperPresenceMixin",
+        "bons.furious.mixin.curios_presence.CurioStacksHandlerPresenceAccessor"
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapMethod on CurioInventoryWrapper.findFirstCurio(Item)/findCurios(Item) and CuriosHelper.findEquippedCurio(Item, LivingEntity)/findFirstCurio(LivingEntity, Item)/findCurios(LivingEntity, Item) to the lean twins (helpers bons.furious.patch.curios_presence.CuriosItemLookups, CuriosLean; API CuriosPresence); @Shadow read of the wrapper's map and wearer; @Accessor for CurioStacksHandler.update",
+      "license": "LGPL-3.0 (Curios): the lean twins carry Curios' own walk, modified (allowed: our source is GPL-3.0)",
+      "guard": [
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$CurioInventoryWrapper",
+          "method": "findFirstCurio",
+          "desc": "(Lnet/minecraft/world/item/Item;)Ljava/util/Optional;",
+          "note": "this.findFirstCurio(stack -> stack.getItem() == item)",
+          "sha256": "dbfe1232fa172e48079cb5fdfca6eba037f8083bdbbd8149347c1ad547a932ca"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$CurioInventoryWrapper",
+          "method": "findFirstCurio",
+          "desc": "(Ljava/util/function/Predicate;)Ljava/util/Optional;",
+          "note": "getCurios() keySet walk: get(id).getStacks(), getSlots per slot, getStackInSlot, isEmpty, test, getRenders + SlotResult on a hit",
+          "sha256": "e8eb633325430b29377487fe2c6f061f5b6061230bb50b661279bbe351de1ccd"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$CurioInventoryWrapper",
+          "method": "findCurios",
+          "desc": "(Lnet/minecraft/world/item/Item;)Ljava/util/List;",
+          "note": "this.findCurios(stack -> stack.getItem() == item)",
+          "sha256": "603b8ef8bd3bbbf30e6508c6935c40747617a857a2330ac6aa9ebb81106c554f"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$CurioInventoryWrapper",
+          "method": "findCurios",
+          "desc": "(Ljava/util/function/Predicate;)Ljava/util/List;",
+          "note": "new ArrayList, the same walk, every hit added",
+          "sha256": "a6764d14e407b4b25833ce178cd67ee06f4fddc79c32142551b6ee6967a18b0a"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$CurioInventoryWrapper",
+          "method": "lambda$findFirstCurio$0",
+          "desc": "(Lnet/minecraft/world/item/Item;Lnet/minecraft/world/item/ItemStack;)Z",
+          "note": "stack.getItem() == item",
+          "sha256": "75a68cce6cdf5bdb102def3d3ec74bcb78b7fb9641fdecfc22052b161fdbe781"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$CurioInventoryWrapper",
+          "method": "lambda$findCurios$1",
+          "desc": "(Lnet/minecraft/world/item/Item;Lnet/minecraft/world/item/ItemStack;)Z",
+          "note": "stack.getItem() == item",
+          "sha256": "75a68cce6cdf5bdb102def3d3ec74bcb78b7fb9641fdecfc22052b161fdbe781"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$CurioInventoryWrapper",
+          "method": "getCurios",
+          "desc": "()Ljava/util/Map;",
+          "note": "Collections.unmodifiableMap(this.curios): a view of the walked map",
+          "sha256": "483f6d6b65b8e83cafa20645ffd3668ad80b990f35d8aec1e74d243c016002b0"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$CurioInventoryWrapper",
+          "method": "*",
+          "desc": "",
+          "note": "the wrapper's member set: curios is a LinkedHashMap field; no isEquipped override",
+          "sha256": "676e2e674085bf33072b7621eb916216a991efadae6741d36ff63ec1e9db71d3"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/CuriosHelper",
+          "method": "findEquippedCurio",
+          "desc": "(Lnet/minecraft/world/item/Item;Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/Optional;",
+          "note": "this.findEquippedCurio(stack -> stack.getItem() == item, entity)",
+          "sha256": "a28fd4be7c47e9e63bea729c56277da89c670e43272327224ec27511d37becc4"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/CuriosHelper",
+          "method": "findEquippedCurio",
+          "desc": "(Ljava/util/function/Predicate;Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/Optional;",
+          "note": "getCuriosHandler(e).map(walk).orElse(new ImmutableTriple(\"\", 0, EMPTY)); empty left -> Optional.empty()",
+          "sha256": "af7675d21e835b262e4d07eeee493b8b5a78a3186d9a4ec96739f7d216a28222"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/CuriosHelper",
+          "method": "lambda$findEquippedCurio$8",
+          "desc": "(Ljava/util/function/Predicate;Ltop/theillusivec4/curios/api/type/capability/ICuriosItemHandler;)Lorg/apache/commons/lang3/tuple/ImmutableTriple;",
+          "note": "handler.getCurios() keySet walk, a triple per hit, the miss triple",
+          "sha256": "51c084acd403450b7dc7e09570199f3f94ebbdff68e19a2bad916d694c6b7f48"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/CuriosHelper",
+          "method": "lambda$findEquippedCurio$7",
+          "desc": "(Lnet/minecraft/world/item/Item;Lnet/minecraft/world/item/ItemStack;)Z",
+          "note": "stack.getItem() == item",
+          "sha256": "75a68cce6cdf5bdb102def3d3ec74bcb78b7fb9641fdecfc22052b161fdbe781"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/CuriosHelper",
+          "method": "findFirstCurio",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/Item;)Ljava/util/Optional;",
+          "note": "this.findFirstCurio(entity, stack -> stack.getItem() == item)",
+          "sha256": "92294ab94f8b55c76a83d56cece7018d28d6c612b18af0746a1e1821252957e7"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/CuriosHelper",
+          "method": "findFirstCurio",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Ljava/util/function/Predicate;)Ljava/util/Optional;",
+          "note": "CuriosApi.getCuriosInventory(e).map(inv -> inv.findFirstCurio(filter)).orElse(Optional.empty())",
+          "sha256": "ad2fe11363f9da1e25cb80840a28e44428696827427fe8aac7a447280abd6d4d"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/CuriosHelper",
+          "method": "lambda$findFirstCurio$1",
+          "desc": "(Lnet/minecraft/world/item/Item;Lnet/minecraft/world/item/ItemStack;)Z",
+          "note": "stack.getItem() == item",
+          "sha256": "75a68cce6cdf5bdb102def3d3ec74bcb78b7fb9641fdecfc22052b161fdbe781"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/CuriosHelper",
+          "method": "lambda$findFirstCurio$2",
+          "desc": "(Ljava/util/function/Predicate;Ltop/theillusivec4/curios/api/type/capability/ICuriosItemHandler;)Ljava/util/Optional;",
+          "note": "inv.findFirstCurio(filter)",
+          "sha256": "ca26e1b533c7fb9e83205d86a7bbcfd726457dad47aceca35015b9fae81b6d4a"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/CuriosHelper",
+          "method": "findCurios",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/Item;)Ljava/util/List;",
+          "note": "this.findCurios(entity, stack -> stack.getItem() == item)",
+          "sha256": "52761b9a3530805255879af5780d2c133a15f430f3303641926e4e57ebe6ed3d"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/CuriosHelper",
+          "method": "findCurios",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Ljava/util/function/Predicate;)Ljava/util/List;",
+          "note": "CuriosApi.getCuriosInventory(e).map(inv -> inv.findCurios(filter)).orElse(Collections.emptyList())",
+          "sha256": "1621af869b6874e96e19cd9edc34fb195780969242e2dffb23101b6dd80ffe49"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/CuriosHelper",
+          "method": "lambda$findCurios$3",
+          "desc": "(Lnet/minecraft/world/item/Item;Lnet/minecraft/world/item/ItemStack;)Z",
+          "note": "stack.getItem() == item",
+          "sha256": "75a68cce6cdf5bdb102def3d3ec74bcb78b7fb9641fdecfc22052b161fdbe781"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/CuriosHelper",
+          "method": "lambda$findCurios$4",
+          "desc": "(Ljava/util/function/Predicate;Ltop/theillusivec4/curios/api/type/capability/ICuriosItemHandler;)Ljava/util/List;",
+          "note": "inv.findCurios(filter)",
+          "sha256": "00531b339a01143b31c652ce7d16c531bc25313ae5f583004c4f36f7d9fa14b4"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/CuriosHelper",
+          "method": "getCuriosHandler",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "CuriosApi.getCuriosInventory(livingEntity)",
+          "sha256": "85aade1ccf30aadb6bd90148f28d36ca2ea7650c9a172d401297050b42256535"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/inventory/CurioStacksHandler",
+          "method": "getStacks",
+          "desc": "()Ltop/theillusivec4/curios/api/type/inventory/IDynamicStackHandler;",
+          "note": "update(); return stackHandler",
+          "sha256": "6675e74182e8b58193b191461d657ffc8cffe58a6ce8fd39570de6bd30155c22"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/inventory/CurioStacksHandler",
+          "method": "getRenders",
+          "desc": "()Lnet/minecraft/core/NonNullList;",
+          "note": "update(); return renderHandler",
+          "sha256": "66c782ed672edf7b9c7d16fcf65e3b823f50a86a5b1ff75ce94ad55244a9a582"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/inventory/CurioStacksHandler",
+          "method": "update",
+          "desc": "()V",
+          "note": "only acts while the update flag is set (CuriosPresence answers unknown then)",
+          "sha256": "2f365d2637d4c1ed755d7e1cb85f45f41073d3eb27d698d2d6710ebf26304387"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/inventory/CurioStacksHandler",
+          "method": "flagUpdate",
+          "desc": "()V",
+          "note": "the only writer of update = true",
+          "sha256": "04973a3d19f5108d7131cd3c8edef86fdc039674a9e5ca614067a6e18fb63e92"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/inventory/DynamicStackHandler",
+          "method": "*",
+          "desc": "",
+          "note": "no getSlots / getStackInSlot override (ItemStackHandler's reads)",
+          "sha256": "66fb3dfe9ca7982ced288679db979eb4de62b416fdd2bda0e0163c23f633ede3"
+        },
+        {
+          "class": "net/minecraftforge/items/ItemStackHandler",
+          "method": "getStackInSlot",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "note": "validateSlotIndex(slot); return stacks.get(slot)",
+          "sha256": "2f9f182e94a0376c88c9770d7c72c898c550cebdf618d9f2df63eec7a5ddc9dc"
+        },
+        {
+          "class": "net/minecraftforge/items/ItemStackHandler",
+          "method": "getSlots",
+          "desc": "()I",
+          "note": "stacks.size()",
+          "sha256": "0c5f12e8d4631ce63f1ad6e82dacb957df7ef99f0f81c4d8a0e03d68fa9921a1"
+        },
+        {
+          "class": "top/theillusivec4/curios/api/type/capability/ICuriosItemHandler",
+          "method": "isEquipped",
+          "desc": "(Lnet/minecraft/world/item/Item;)Z",
+          "note": "the default: findFirstCurio(item).isPresent() (Caster Curios Bonus, Meet Your Fight)",
+          "sha256": "a0e2c740f23971d1c1d3dd26596f7795202fc08260d69538c9604273aa5260d9"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "map",
+          "desc": "(Lnet/minecraftforge/common/util/NonNullFunction;)Ljava/util/Optional;",
+          "note": "isPresent() ? Optional.of(f(getValueUnsafe())) : Optional.empty()",
+          "sha256": "c54a8a4bd5fe3017bf9f95c29cd9c1cbcf27be904821f7566b4496303c6b25f0"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "orElse",
+          "desc": "(Ljava/lang/Object;)Ljava/lang/Object;",
+          "note": "getValue() if non-null, else the fallback (the same resolution as map)",
+          "sha256": "28cc736150f375e63b5bb2b18a75e6a6fd4174c63e31bee4e8bc428c049cb292"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "isPresent",
+          "desc": "()Z",
+          "note": "supplier != null && isValid",
+          "sha256": "528ff0650ee32736aedfad726cb2cecad9ff733967636cf3f368cb7713d94073"
+        }
+      ]
+    },
+    "curios_first_match_lean": {
+      "mod": "curios",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.curios_presence.CurioInventoryWrapperFirstMatchMixin",
+        "bons.furious.mixin.curios_presence.CuriosHelperFirstMatchMixin"
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapMethod on CurioInventoryWrapper.findFirstCurio(Predicate)/findCurios(Predicate) and CuriosHelper.findEquippedCurio(Predicate, LivingEntity)/findFirstCurio(LivingEntity, Predicate)/findCurios(LivingEntity, Predicate) to the lean twins (helpers bons.furious.patch.curios_presence.CuriosPredicateLookups, CuriosLean); @Shadow read of the wrapper's map and wearer",
+      "license": "LGPL-3.0 (Curios): the lean twins carry Curios' own walk, modified (allowed: our source is GPL-3.0)",
+      "guard": [
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$CurioInventoryWrapper",
+          "method": "findFirstCurio",
+          "desc": "(Ljava/util/function/Predicate;)Ljava/util/Optional;",
+          "note": "getCurios() keySet walk: get(id).getStacks(), getSlots per slot, getStackInSlot, isEmpty, test, getRenders + SlotResult on a hit",
+          "sha256": "e8eb633325430b29377487fe2c6f061f5b6061230bb50b661279bbe351de1ccd"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$CurioInventoryWrapper",
+          "method": "findCurios",
+          "desc": "(Ljava/util/function/Predicate;)Ljava/util/List;",
+          "note": "new ArrayList, the same walk, every hit added",
+          "sha256": "a6764d14e407b4b25833ce178cd67ee06f4fddc79c32142551b6ee6967a18b0a"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$CurioInventoryWrapper",
+          "method": "getCurios",
+          "desc": "()Ljava/util/Map;",
+          "note": "Collections.unmodifiableMap(this.curios)",
+          "sha256": "483f6d6b65b8e83cafa20645ffd3668ad80b990f35d8aec1e74d243c016002b0"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$CurioInventoryWrapper",
+          "method": "*",
+          "desc": "",
+          "note": "the wrapper's member set: curios is a LinkedHashMap field; no isEquipped override",
+          "sha256": "676e2e674085bf33072b7621eb916216a991efadae6741d36ff63ec1e9db71d3"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/CuriosHelper",
+          "method": "findEquippedCurio",
+          "desc": "(Ljava/util/function/Predicate;Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/Optional;",
+          "note": "getCuriosHandler(e).map(walk).orElse(new ImmutableTriple(\"\", 0, EMPTY)); empty left -> Optional.empty()",
+          "sha256": "af7675d21e835b262e4d07eeee493b8b5a78a3186d9a4ec96739f7d216a28222"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/CuriosHelper",
+          "method": "lambda$findEquippedCurio$8",
+          "desc": "(Ljava/util/function/Predicate;Ltop/theillusivec4/curios/api/type/capability/ICuriosItemHandler;)Lorg/apache/commons/lang3/tuple/ImmutableTriple;",
+          "note": "handler.getCurios() keySet walk, a triple per hit, the miss triple",
+          "sha256": "51c084acd403450b7dc7e09570199f3f94ebbdff68e19a2bad916d694c6b7f48"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/CuriosHelper",
+          "method": "findFirstCurio",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Ljava/util/function/Predicate;)Ljava/util/Optional;",
+          "note": "CuriosApi.getCuriosInventory(e).map(inv -> inv.findFirstCurio(filter)).orElse(Optional.empty())",
+          "sha256": "ad2fe11363f9da1e25cb80840a28e44428696827427fe8aac7a447280abd6d4d"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/CuriosHelper",
+          "method": "lambda$findFirstCurio$2",
+          "desc": "(Ljava/util/function/Predicate;Ltop/theillusivec4/curios/api/type/capability/ICuriosItemHandler;)Ljava/util/Optional;",
+          "note": "inv.findFirstCurio(filter)",
+          "sha256": "ca26e1b533c7fb9e83205d86a7bbcfd726457dad47aceca35015b9fae81b6d4a"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/CuriosHelper",
+          "method": "findCurios",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Ljava/util/function/Predicate;)Ljava/util/List;",
+          "note": "CuriosApi.getCuriosInventory(e).map(inv -> inv.findCurios(filter)).orElse(Collections.emptyList())",
+          "sha256": "1621af869b6874e96e19cd9edc34fb195780969242e2dffb23101b6dd80ffe49"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/CuriosHelper",
+          "method": "lambda$findCurios$4",
+          "desc": "(Ljava/util/function/Predicate;Ltop/theillusivec4/curios/api/type/capability/ICuriosItemHandler;)Ljava/util/List;",
+          "note": "inv.findCurios(filter)",
+          "sha256": "00531b339a01143b31c652ce7d16c531bc25313ae5f583004c4f36f7d9fa14b4"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/CuriosHelper",
+          "method": "getCuriosHandler",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "CuriosApi.getCuriosInventory(livingEntity)",
+          "sha256": "85aade1ccf30aadb6bd90148f28d36ca2ea7650c9a172d401297050b42256535"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "map",
+          "desc": "(Lnet/minecraftforge/common/util/NonNullFunction;)Ljava/util/Optional;",
+          "note": "isPresent() ? Optional.of(f(getValueUnsafe())) : Optional.empty()",
+          "sha256": "c54a8a4bd5fe3017bf9f95c29cd9c1cbcf27be904821f7566b4496303c6b25f0"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "orElse",
+          "desc": "(Ljava/lang/Object;)Ljava/lang/Object;",
+          "note": "getValue() if non-null, else the fallback",
+          "sha256": "28cc736150f375e63b5bb2b18a75e6a6fd4174c63e31bee4e8bc428c049cb292"
+        }
+      ]
+    },
+    "curios_render_layer_empty_skip": {
+      "mod": "curios",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.curios_presence.CuriosLayerEmptySkipMixin"
+      ],
+      "cancel": [],
+      "conversion": "injectors: one @Inject at the HEAD of CuriosLayer.render (client) returning at once for an entity without a Curios inventory, where the shipped method pushes the pose, finds no inventory and pops it (helper bons.furious.patch.curios_presence.CuriosRenderSkip, only while curios_inventory_lookup_layer is on)",
+      "license": "Curios (LGPL-3.0): the mixin only adds an early return with our own check",
+      "guard": [
+        {
+          "class": "top/theillusivec4/curios/client/render/CuriosLayer",
+          "method": "render",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V",
+          "note": "pushPose; CuriosApi.getCuriosInventory(entity).ifPresent(lambda$render$2); popPose",
+          "sha256": "26a935acd912774c43f733d87377dfbead1bdc41bedf6c8094dc787cb4432b42"
+        }
+      ]
+    }
+  }
+}

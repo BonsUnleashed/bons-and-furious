@@ -1,0 +1,69 @@
+{
+  "group": "pickupnotifier_c49",
+  "keys": {
+    "pickupnotifier_opaque_sprite_direct": {
+      "mod": "pickupnotifier",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.pickupnotifier_c49.ItemSpriteDirectMixin",
+        "bons.furious.mixin.pickupnotifier_c49.ExperienceSpriteDirectMixin"
+      ],
+      "guard": [
+        {
+          "class": "fuzs/pickupnotifier/client/gui/entry/ItemDisplayEntry",
+          "method": "renderSprite",
+          "desc": "(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/GuiGraphics;IIFF)V",
+          "note": "prepare, the item and its count, preInject(fade), push + inverse scale, full-window blit, pop, postInject",
+          "sha256": "ec3c7b227fbf844adcb3983e3b1337cf1592c3cb90fc57e5678e50878d6ee68c"
+        },
+        {
+          "class": "fuzs/pickupnotifier/client/gui/entry/ExperienceDisplayEntry",
+          "method": "renderSprite",
+          "desc": "(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/GuiGraphics;IIFF)V",
+          "note": "prepare, tinted orb blit, preInject(fade), push + inverse scale, full-window blit, pop, postInject",
+          "sha256": "f9d3b7974c0f34059ea1d0a702894b1ba4d4347f75a1823f12b4453718fe2898"
+        },
+        {
+          "class": "fuzs/pickupnotifier/client/gui/entry/DisplayEntry",
+          "method": "render",
+          "desc": "(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/GuiGraphics;IIFF)V",
+          "note": "hands renderSprite fade / 255 (1.0 when the entry is not fading)",
+          "sha256": "24c23f835853fd097b8a10fc0d128c68d5692e6081d51343923ec542115a6bb6"
+        },
+        {
+          "class": "fuzs/pickupnotifier/client/util/TransparencyBuffer",
+          "method": "prepareExtraFramebuffer",
+          "desc": "()V",
+          "note": "clears and binds the window-sized target",
+          "sha256": "4e9201a303344a4868fca562a09a501dfcf247b0bd362f779f8c15740ca63248"
+        },
+        {
+          "class": "fuzs/pickupnotifier/client/util/TransparencyBuffer",
+          "method": "drawExtraFramebuffer",
+          "desc": "(Lnet/minecraft/client/gui/GuiGraphics;)V",
+          "note": "binds the previous framebuffer and blits the whole window from the target",
+          "sha256": "78071172e9c26d7d9d988249b0762784847bf316f0e6b0e19d7447c201272dbc"
+        },
+        {
+          "class": "fuzs/pickupnotifier/client/util/TransparencyBuffer",
+          "method": "preInject",
+          "desc": "(F)V",
+          "note": "enables blending, shader colour alpha = fade",
+          "sha256": "5175895fcbd89060e03c525f334f8ac704a6d8c9970bd93abbf8d2651d0ace48"
+        },
+        {
+          "class": "fuzs/pickupnotifier/client/util/TransparencyBuffer",
+          "method": "postInject",
+          "desc": "()V",
+          "note": "shader colour back to white",
+          "sha256": "5af68c4f7153d8676ef665cf0cd705e756fcd2f8873d8f7ed3ae38fabb9ba6e8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD of ItemDisplayEntry / ExperienceDisplayEntry.renderSprite (fade 1.0 = direct), @Redirect of their TransparencyBuffer.prepareExtraFramebuffer() (direct: enable blending instead) and drawExtraFramebuffer(GuiGraphics) (direct: skipped) (helper bons.furious.patch.pickupnotifier_c49.SpriteDirect)",
+      "license": "Pick Up Notifier (MPL-2.0): no Pick Up Notifier code is carried; the redirects skip two of its own calls"
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "group": "bettercombat_c49",
+  "keys": {
+    "bettercombat_weapon_attributes_memo": {
+      "mod": "bettercombat",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.bettercombat_c49.ItemWeaponMemoMixin",
+        "bons.furious.mixin.bettercombat_c49.WeaponRegistryMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/bettercombat/logic/WeaponRegistry",
+          "method": "getAttributes",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Lnet/bettercombat/api/WeaponAttributes;",
+          "note": "null -> null; a tag with NBT attributes -> those; else registrations.get(ITEM.getKey(item))",
+          "sha256": "110f7d856e79524abbe82f6e0bc0ad5e8e76d3ab91802ae57cbb80869cdcfc80"
+        },
+        {
+          "class": "net/bettercombat/logic/WeaponRegistry",
+          "method": "getAttributes",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/bettercombat/api/WeaponAttributes;",
+          "sha256": "250a71ed984d2a721e130f18bc2b3ddd6d50eac5334ac3171bf6e083b3f98d75"
+        },
+        {
+          "class": "net/bettercombat/logic/WeaponRegistry",
+          "method": "register",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;Lnet/bettercombat/api/WeaponAttributes;)V",
+          "note": "writer 1: registrations.put",
+          "sha256": "3eec3f662b21536170262df05a2d668d862ce131278175430319c84b7d241ace"
+        },
+        {
+          "class": "net/bettercombat/logic/WeaponRegistry",
+          "method": "decodeRegistry",
+          "desc": "(Lnet/minecraft/network/FriendlyByteBuf;)V",
+          "note": "writer 2: registrations = a new map (the last statement)",
+          "sha256": "9f233b0e4bac2e8823417486e350bdd2a54908c3180ea8044abb831b6db82633"
+        },
+        {
+          "class": "net/bettercombat/logic/WeaponRegistry",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: no other writer of registrations (bytecode scan of the pack: only WeaponRegistry names the field)",
+          "sha256": "60ee84646abc1c15d2c5820474d73718f796351017c38abd6838c7bb14a6adfd"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41782_",
+          "desc": "()Z",
+          "note": "hasTag: a stack without a tag is answered by its item alone",
+          "sha256": "f8fd085cc1f1ed7a609cc36ab1e5e6d204affeda175ce259e730a32c4104c047"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41720_",
+          "desc": "()Lnet/minecraft/world/item/Item;",
+          "sha256": "ce7982961328f6d190746b117db6ef59920bc2a9dcbb28fadc3c325294da242c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on WeaponRegistry.getAttributes(ItemStack) (a tagless stack answered from a per-Item (generation, attributes) record, helper bons.furious.patch.bettercombat_c49.WeaponMemo); @Inject HEAD+RETURN of register and RETURN of decodeRegistry bump the generation; one @Unique field on Item (ItemWeaponMemoMixin, interface WeaponMemoHolder)",
+      "license": "Better Combat: GPL-3.0 (mods.toml) / All Rights Reserved (repository): injectors only, no Better Combat code is carried; Minecraft (Mojang): no-copy"
+    }
+  }
+}

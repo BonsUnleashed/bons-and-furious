@@ -1,0 +1,135 @@
+{
+  "group": "lionfishapi_bulk_c49",
+  "keys": {
+    "lionfishapi_model_bulk_vertices": {
+      "mod": "lionfishapi",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.lionfishapi_bulk_c49.AdvancedBoxBulkMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/tools/AdvancedModelBox",
+          "method": "doRender",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V",
+          "note": "per quad new Vector3f(normal).mul(normal matrix), per corner new Vector4f(position / 16, 1).mul(pose) and VertexConsumer.vertex with 14 arguments (light, then overlay)",
+          "sha256": "36fa3aba77f5e68e1fb8ef0ef8bf2e3d8cd81e7a549c137735a28f2ec99a2a76"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/tools/AdvancedModelBox",
+          "method": "render",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V",
+          "note": "the one doRender(poseStack.last(), ...) call our condition wraps: pushPose, translateAndRotate, doRender for its own cubes, then the children, popPose",
+          "sha256": "26f5982fe9418a14c2510a6be7556e9cbe45167f7b3804ef026a08c69a508d69"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/PoseStack$Pose",
+          "method": "m_252922_",
+          "desc": "()Lorg/joml/Matrix4f;",
+          "note": "pose(): the position matrix",
+          "sha256": "8c142c5e58a27263025e9f04f6bb9d798d20b89a02a57e9ae8775916156a1105"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/PoseStack$Pose",
+          "method": "m_252943_",
+          "desc": "()Lorg/joml/Matrix3f;",
+          "note": "normal(): the normal matrix",
+          "sha256": "78a497e45acf53ba17fbbf121bd288eb6f005735e37fe6663a0ae0a85d419814"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/vertex/buffer/SodiumBufferBuilder",
+          "method": "m_5954_",
+          "desc": "(FFFFFFFFFIIFFF)V",
+          "note": "the one-vertex path the switch reproduces: position, ColorABGR.pack, texture, overlay, light, NormI8.pack, then endVertex",
+          "audit": true,
+          "sha256": "64326fb3f4265422ec83c472473459094623becbde6aab4a2e3531f6b0baa543"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/vertex/buffer/SodiumBufferBuilder",
+          "method": "m_5752_",
+          "desc": "()V",
+          "note": "endVertex: moveToNextVertex, attributes cleared",
+          "audit": true,
+          "sha256": "ed16a2d9c85f4d0abed30ef12c41d642bbf6491822fcb8491ba3664d314eee4b"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/vertex/buffer/SodiumBufferBuilder",
+          "method": "push",
+          "desc": "(Lorg/lwjgl/system/MemoryStack;JILnet/caffeinemc/mods/sodium/api/vertex/format/VertexFormatDescription;)V",
+          "note": "push: hands the block to the builder",
+          "audit": true,
+          "sha256": "afd077f6ef1afa9ba626b7be455f606c17083f0e07010ffa435c89341544a629"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/vertex/buffer/SodiumBufferBuilder",
+          "method": "getOriginalBufferBuilder",
+          "desc": "()Lcom/mojang/blaze3d/vertex/BufferBuilder;",
+          "note": "the builder behind the fast consumer",
+          "audit": true,
+          "sha256": "b0989d9d0db5ca111721c1a9b47c52791696d49a98e6613e69cb13f4775d153b"
+        },
+        {
+          "class": "net/caffeinemc/mods/sodium/api/vertex/format/common/ModelVertex",
+          "method": "write",
+          "desc": "(JFFFIFFIII)V",
+          "note": "the entity vertex writer: the same attribute packers as the one-vertex path",
+          "audit": true,
+          "sha256": "f0d1e1ec45031b5426666a2b05bedd0695d107cf7bb1ebb0d9f6a9c86f964863"
+        },
+        {
+          "class": "net/caffeinemc/mods/sodium/api/util/ColorABGR",
+          "method": "pack",
+          "desc": "(FFFF)I",
+          "note": "colour packer of both paths",
+          "audit": true,
+          "sha256": "3480519dbd20e1b10cb22fbc823d12c1aa8887bcd6a2d282bb9ea944d337c41a"
+        },
+        {
+          "class": "net/caffeinemc/mods/sodium/api/util/NormI8",
+          "method": "pack",
+          "desc": "(FFF)I",
+          "note": "normal packer of both paths",
+          "audit": true,
+          "sha256": "fec4bb4e886679779144ffc425d0af21afac6a44e2d17610b00108d05d7e394c"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/mixin/core/render/immediate/consumer/BufferBuilderMixin",
+          "method": "push",
+          "desc": "(Lorg/lwjgl/system/MemoryStack;JILnet/caffeinemc/mods/sodium/api/vertex/format/VertexFormatDescription;)V",
+          "note": "the builder's push: capacity, copy (same format: one memory copy), vertex count and offset",
+          "audit": true,
+          "sha256": "f994e8caa5cd9248b99a4a55b2dab085e53b221fed0191d508c195826bcb861b"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/mixin/core/render/immediate/consumer/BufferBuilderMixin",
+          "method": "sodium$moveToNextVertex",
+          "desc": "()V",
+          "note": "what the one-vertex path does per vertex instead of the push",
+          "audit": true,
+          "sha256": "e8bc818979d68002b06f550ded5d21d7dcc8315d719358d734a092826153f091"
+        },
+        {
+          "class": "net/irisshaders/iris/apiimpl/IrisApiV0Impl",
+          "method": "isShaderPackInUse",
+          "desc": "()Z",
+          "note": "Oculus: the switch stands down while a shader pack is in use",
+          "audit": true,
+          "sha256": "bfb6669107596cde909be7cfac6213d6d9a1502026731357d1d79bd90dfdc9c0"
+        },
+        {
+          "class": "net/irisshaders/batchedentityrendering/mixin/MixinBufferBuilder_SegmentRendering",
+          "method": "batchedentityrendering$onNextSodium",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "Oculus' hook on moveToNextVertex (skipped by a push): duplicates a vertex only after splitStrip, batched rendering with a shader pack",
+          "audit": true,
+          "sha256": "bb7c5d33f43b3e6d50ff05f4fc46c7d10af190f2c806e659078d12332800de0f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: @WrapWithCondition (MixinExtras) of the one doRender call in Lionfish API's AdvancedModelBox.render, skipped when the box was written; doRender itself is not changed (helper bons.furious.patch.lionfishapi_bulk_c49.BulkVertices, Embeddium side EmbeddiumBoxWriter, Lionfish's package-private quad and corner fields through LionfishFields' method handles, Oculus side ShaderCheck)",
+      "license": "LGPL (Lionfish API): no Lionfish API code is carried; Embeddium (LGPL) and Oculus (LGPL) used through their public classes; Minecraft (Mojang): no-copy"
+    }
+  }
+}

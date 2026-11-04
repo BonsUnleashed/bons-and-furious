@@ -1,0 +1,40 @@
+{
+  "group": "arsnspells_coo49",
+  "keys": {
+    "arsnspells_keep_cooldowns_on_clone": {
+      "mod": "ars_n_spells",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.arsnspells_coo49.AnsCloneCooldownsMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/otectus/arsnspells/data/ModCapabilityProvider",
+          "method": "onPlayerClone",
+          "desc": "(Lnet/minecraftforge/event/entity/player/PlayerEvent$Clone;)V",
+          "note": "getOriginal().reviveCaps(); copies AFFINITY_DATA and PROGRESSION_DATA (saveToNBT / loadFromNBT), not COOLDOWN_CAP; getOriginal().invalidateCaps()",
+          "sha256": "11c428453bbae209d4e9b8b7f9ff46ae08c1ab5e1a7cffc1269a938b52d0ee01"
+        },
+        {
+          "class": "com/otectus/arsnspells/data/CooldownData",
+          "method": "save",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "writes every category's end tick into a BridgeCooldowns compound",
+          "sha256": "b90a3a26d9e533b4f7e04cfbd522d6a3684eee6cc7549deea9381c45eec92c32"
+        },
+        {
+          "class": "com/otectus/arsnspells/data/CooldownData",
+          "method": "load",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "clears, then reads every category present in BridgeCooldowns",
+          "sha256": "c0fc7500a95138f2dde31471ba6566248fc04b12b571b610729215aad6ba0dfe"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject in ModCapabilityProvider.onPlayerClone before its Player.invalidateCaps() call: the old player's CooldownData is saved into a tag and loaded into the new player's (helper bons.furious.patch.arsnspells_coo49.AnsCooldowns)",
+      "license": "Ars 'n' Spells (GPL-3.0): no code carried, the injector carries only our own logic through the mod's public save / load"
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "group": "vanilla_template_memory",
+  "keys": {
+    "vanilla_template_position_share": {
+      "mod": "minecraft",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_template_memory.StructureTemplatePositionsMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate",
+          "method": "m_247272_",
+          "desc": "(Lnet/minecraft/core/HolderGetter;Lnet/minecraft/nbt/ListTag;Lnet/minecraft/nbt/ListTag;)V",
+          "sha256": "6e7927f1b9cdeca37b345c0b18c1a94c3c086ccd0d416253299eb23d743380ef"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate",
+          "method": "m_246595_",
+          "desc": "(Lnet/minecraft/core/HolderGetter;Lnet/minecraft/nbt/CompoundTag;)V",
+          "sha256": "fdc1aaf56f6128c6c07774f2b2ea9848dcd7426ec51284b753a86b7a9b3207f3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the new BlockPos(III) in StructureTemplate.loadPalette (m_247272_) and in load (m_246595_, entity block positions): a shared position from a table of every position 0..63, made in one go on first use in the order saved templates list their blocks (y, x, z), a new one otherwise",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_template_memory.TemplatePositions)"
+    },
+    "vanilla_template_top_air_trim": {
+      "mod": "minecraft",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_template_memory.StructureTemplateTopAirMixin",
+        "bons.furious.mixin.vanilla_template_memory.StructureTemplateManagerResourceMixin",
+        "bons.furious.mixin.vanilla_template_memory.PaletteBlocksAccess"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate",
+          "method": "m_246595_",
+          "desc": "(Lnet/minecraft/core/HolderGetter;Lnet/minecraft/nbt/CompoundTag;)V",
+          "sha256": "fdc1aaf56f6128c6c07774f2b2ea9848dcd7426ec51284b753a86b7a9b3207f3"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate",
+          "method": "m_247272_",
+          "desc": "(Lnet/minecraft/core/HolderGetter;Lnet/minecraft/nbt/ListTag;Lnet/minecraft/nbt/ListTag;)V",
+          "sha256": "6e7927f1b9cdeca37b345c0b18c1a94c3c086ccd0d416253299eb23d743380ef"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate",
+          "method": "m_74614_",
+          "desc": "(Ljava/util/List;Ljava/util/List;Ljava/util/List;)Ljava/util/List;",
+          "sha256": "2b61ae94b127a2fb9bc3d66f034170152e6a90c552717d22b501366e9998e808"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$Palette",
+          "method": "*",
+          "desc": "",
+          "sha256": "b53011b1dd9e3edd29fc728a50c1ff94024ee4d5c12e8caddef4384c04fed419"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager",
+          "method": "m_230427_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Ljava/util/Optional;",
+          "sha256": "30da0e0c96b68e01d3d35c7097cbb7d1fc3196cd85a02e829273f1b41fac7ad9"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD/RETURN on StructureTemplateManager.loadFromResource (m_230427_, also inside ModernFix's replacement) marks the thread; @Inject RETURN on StructureTemplate.load (m_246595_) removes, per palette, the air entries above the highest non-air block (room kept above the highest entity) from the palette's block list (accessor on f_74645_)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.vanilla_template_memory.TopAirTrim)"
+    }
+  }
+}

@@ -1,0 +1,460 @@
+{
+  "group": "sanguinenetworks_coo49",
+  "keys": {
+    "sanguinenetworks_tick_stats_reuse": {
+      "mod": "sanguine_networks",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.sanguinenetworks_coo49.SacrificerTickStatsMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "tick",
+          "desc": "()V",
+          "note": "the data model stats once at the start (1.2.1: up to three getModelFromStack), then getRFTick() for the energy check and the energy taken; between them only slot 1, the progress / catalyst fields, the energy buffer and the Blood Magic altar change",
+          "sha256": "4f769ab912956fd39b1ede0d0e1f43066b84daa5a11b8099d6031053a66b2cb4"
+        },
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "getRFTick",
+          "desc": "()I",
+          "note": "getModelFromStack(getModelStack()).second",
+          "sha256": "f99d59d072dd00bc84f856a3f44114107d43c2094bb6c5e171e9abeae570361b"
+        },
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "getModelFromStack",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Lcom/luna/sanguine_networks/util/Pair;",
+          "note": "reads only: the recipe list, the entity registry, Hostile Neural Networks' model registry and the stack (1.2.1: creates the stack's data_model compound when missing, the first call already does)",
+          "sha256": "0e92e2b7df3a8135cf23726c5858572b82bcd258b292246dd523b7c5d7fda35c"
+        },
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "getModelStack",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "itemHandler.getStackInSlot(0)",
+          "sha256": "707aec694023a0f8d7cf3306547eef3dee150963376bce81878be76ea2c1ec9d"
+        },
+        {
+          "class": "dev/shadowsoffire/hostilenetworks/item/DataModelItem",
+          "method": "getStoredModel",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Ldev/shadowsoffire/placebo/reload/DynamicHolder;",
+          "note": "Hostile Neural Networks: the model holder named by the stack's data_model id (reads only)",
+          "sha256": "2bce2b7d65e59cb51cde5949d648bf012a796c2741c63e665fd750d158838888"
+        },
+        {
+          "class": "dev/shadowsoffire/hostilenetworks/item/DataModelItem",
+          "method": "getData",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "note": "the stack's data counter (reads only)",
+          "sha256": "e84fb707b64e67eb251ca5c52d46358271a2ccbcb8402177a16eb04aa4134164"
+        },
+        {
+          "class": "dev/shadowsoffire/placebo/reload/DynamicHolder",
+          "method": "bind",
+          "desc": "()V",
+          "audit": true,
+          "note": "Placebo (installed library): keeps the registry value once looked up; idempotent",
+          "sha256": "06bf8b810442276141b28737b7380f88953cd60f0bf6d9f1bff157f633e098d8"
+        },
+        {
+          "class": "com/luna/sanguine_networks/compat/ExtraHnnCompat",
+          "method": "isCombined",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "note": "Extra Hostile Networks only when the mod id extrahnn is loaded (then the stats are not reused)",
+          "sha256": "f21cae80edbf02514a616e266385f6e75f91c8a5bed3be3c68bdad0858b08dda"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on both getRFTick calls in VSBlockEntity.tick (Sanguine Neural Networks 2.0.1): the first works the stats out with the lookup the mod's getRFTick does (getModelFromStack(getModelStack())) and keeps them with the slot-0 stack they are for; the second answers their energy while slot 0 holds the same stack object (not for subclasses, nor with Extra Hostile Networks loaded). Runtime flag sanguinenetworksTickStatsReuse, shadow sanguinenetworksTickStatsReuse.shadow. Helper bons.furious.patch.sanguinenetworks_coo49.SacrificerTickStats.",
+      "license": "Sanguine Neural Networks (MIT): no code carried; the hooks hold only our own logic"
+    },
+    "sanguinenetworks_client_sync_no_remesh": {
+      "mod": "sanguine_networks",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.sanguinenetworks_coo49.SacrificerClientSyncMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "sync",
+          "desc": "()V",
+          "note": "setChanged(), then level.sendBlockUpdated(pos, state, state, 3) with the block's own state",
+          "sha256": "b7a5eb8c4d20ca77c41f9d867538ecf72c3eaad24db7dce960a1e571e307bc09"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapWithCondition on the sendBlockUpdated call in VSBlockEntity.sync (Sanguine Neural Networks 2.0.1): left out on a client level (setChanged kept). Exact variant: identical chunk sections are not meshed again. Runtime flag sanguinenetworksClientSyncNoRemesh. Helper bons.furious.patch.sanguinenetworks_coo49.SacrificerClientSync.",
+      "license": "Sanguine Neural Networks (MIT): no code carried; the hooks hold only our own logic"
+    },
+    "sanguinenetworks_sync_dedup": {
+      "mod": "sanguine_networks",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.sanguinenetworks_coo49.SacrificerSyncDedupMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "m_58483_",
+          "desc": "()Lnet/minecraft/network/protocol/Packet;",
+          "note": "ClientboundBlockEntityDataPacket.create(this)",
+          "sha256": "f849588c0b7c3638278df23f2047c7b682542a33d9eb528d4b30fc6ac54e7c06"
+        },
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "m_5995_",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "super.getUpdateTag() + saveAdditional(tag)",
+          "sha256": "22554def295734b8e4ed29ba669af1f804129a743356a88d05ab8effe9ba83d3"
+        },
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "m_183515_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "Forge part, inventory, energy, catalystUses, maxCatalystUses, catalystMult, toProduce, progress, maxProgress, altarPos when set",
+          "sha256": "2a336335349e0ee9cbeea98757e7c5294e1e3758e8e4e85e6548fac2ae1fddc7"
+        },
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "m_142466_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "the client's load of a packet: reads the tag, copies every stack tag",
+          "sha256": "8087b8969c86cbaca9dfe17e7285e4ee1364dff887f9440e4978320c6298ec9f"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/BlockEntity",
+          "method": "m_183515_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "Forge 47.4.28: ForgeData when the block entity has persistent data, ForgeCaps when it has attached capabilities",
+          "sha256": "4e1c3f1fed998306eb1ef1b88a5c9a2208c282ed6acbe7598ea0c337883959a2"
+        },
+        {
+          "class": "net/minecraftforge/items/ItemStackHandler",
+          "method": "serializeNBT",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "Items: Slot + ItemStack.save per non-empty slot; Size",
+          "sha256": "dc1274ef3720af9e7b7f43e9fc35c24be4d37b1d1eb03c1ba6019bf1aaa49e23"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41739_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "Forge 47.4.28 save: id, Count byte, a copy of the tag, ForgeCaps when serializeCaps is not empty",
+          "sha256": "0e3be170939478611ffff3ca38e0c1cf69ba738f0e1702d0bdbebe9bf7e313a7"
+        },
+        {
+          "class": "net/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket",
+          "method": "m_195640_",
+          "desc": "(Lnet/minecraft/world/level/block/entity/BlockEntity;)Lnet/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket;",
+          "note": "create(be): the position, the type and be.getUpdateTag()",
+          "sha256": "9a3f3fa6657f1ac45c5419e6fd9927e119106b6c2e9a41bef75b4170598e06c3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Mixin @Redirect of the ClientboundBlockEntityDataPacket.create(this) call in VSBlockEntity.getUpdatePacket + MixinExtras @ModifyReturnValue on getUpdateTag (Sanguine Neural Networks 2.0.1): null while the values of the update tag equal those of the last packet sent and no different state was handed out since; persistent data, attached capabilities, stacks with capability data and subclasses run the mod's method; every client holds the same state as without it. Trade-off (off by default): packets identical to the previous one are not sent, but each packet that does go out costs the server about 4 % more to build than with the mod's own class. Runtime flag sanguinenetworksSyncDedup, shadow sanguinenetworksSyncDedup.shadow. Helper bons.furious.patch.sanguinenetworks_coo49.SacrificerSync.",
+      "license": "Sanguine Neural Networks (MIT): no code carried; the hooks hold only our own logic"
+    },
+    "sanguinenetworks_sync_relevant_only": {
+      "mod": "sanguine_networks",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.sanguinenetworks_coo49.SacrificerSyncRelevantMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "m_58483_",
+          "desc": "()Lnet/minecraft/network/protocol/Packet;",
+          "note": "ClientboundBlockEntityDataPacket.create(this)",
+          "sha256": "f849588c0b7c3638278df23f2047c7b682542a33d9eb528d4b30fc6ac54e7c06"
+        },
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "m_5995_",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "super.getUpdateTag() + saveAdditional(tag)",
+          "sha256": "22554def295734b8e4ed29ba669af1f804129a743356a88d05ab8effe9ba83d3"
+        },
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "m_183515_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "Forge part, inventory, energy, catalystUses, maxCatalystUses, catalystMult, toProduce, progress, maxProgress, altarPos when set",
+          "sha256": "2a336335349e0ee9cbeea98757e7c5294e1e3758e8e4e85e6548fac2ae1fddc7"
+        },
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "m_142466_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "the client's load of a packet: reads the tag, copies every stack tag",
+          "sha256": "8087b8969c86cbaca9dfe17e7285e4ee1364dff887f9440e4978320c6298ec9f"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/BlockEntity",
+          "method": "m_183515_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "Forge 47.4.28: ForgeData when the block entity has persistent data, ForgeCaps when it has attached capabilities",
+          "sha256": "4e1c3f1fed998306eb1ef1b88a5c9a2208c282ed6acbe7598ea0c337883959a2"
+        },
+        {
+          "class": "net/minecraftforge/items/ItemStackHandler",
+          "method": "serializeNBT",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "Items: Slot + ItemStack.save per non-empty slot; Size",
+          "sha256": "dc1274ef3720af9e7b7f43e9fc35c24be4d37b1d1eb03c1ba6019bf1aaa49e23"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41739_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "Forge 47.4.28 save: id, Count byte, a copy of the tag, ForgeCaps when serializeCaps is not empty",
+          "sha256": "0e3be170939478611ffff3ca38e0c1cf69ba738f0e1702d0bdbebe9bf7e313a7"
+        },
+        {
+          "class": "net/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket",
+          "method": "m_195640_",
+          "desc": "(Lnet/minecraft/world/level/block/entity/BlockEntity;)Lnet/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket;",
+          "note": "create(be): the position, the type and be.getUpdateTag()",
+          "sha256": "9a3f3fa6657f1ac45c5419e6fd9927e119106b6c2e9a41bef75b4170598e06c3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Mixin @Inject (cancellable) at the head of VSBlockEntity.getUpdatePacket + MixinExtras @ModifyReturnValue on its return and on getUpdateTag (Sanguine Neural Networks 2.0.1): as sanguinenetworks_sync_dedup, the comparison without the energy buffer and with the progress only by whether it is zero. Trade-off (off by default): the client copy of the progress and energy is refreshed only when a cycle starts or ends or something else changes. Runtime flag sanguinenetworksSyncRelevantOnly (emergency off). Helper bons.furious.patch.sanguinenetworks_coo49.SacrificerSync.",
+      "license": "Sanguine Neural Networks (MIT): no code carried; the hooks hold only our own logic"
+    },
+    "sanguinenetworks_leo_tick_stats_reuse": {
+      "mod": "sanguine_networks",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.sanguinenetworks_coo49.LeoSacrificerTickStatsMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/leo/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "tick",
+          "desc": "()V",
+          "note": "the data model stats once at the start (1.2.1: up to three getModelFromStack), then getRFTick() for the energy check and the energy taken; between them only slot 1, the progress / catalyst fields, the energy buffer and the Blood Magic altar change",
+          "sha256": "3f4c30743e8cfffc65cbf5c581a17dfc1898b4e6cb1d6776c882cd4dd40a3776"
+        },
+        {
+          "class": "com/leo/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "getRFTick",
+          "desc": "()I",
+          "note": "getModelFromStack(getModelStack()).second",
+          "sha256": "e569b8eb531728ec295bac1f75e1d6aca8bdd6fbebfc5db62340b970076efbac"
+        },
+        {
+          "class": "com/leo/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "getModelFromStack",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Lcom/leo/sanguine_networks/util/Pair;",
+          "note": "reads only: the recipe list, the entity registry, Hostile Neural Networks' model registry and the stack (1.2.1: creates the stack's data_model compound when missing, the first call already does)",
+          "sha256": "c2dddda97ca68f45a6863fc072242b536d2933829c7582f5714c7a050dec936f"
+        },
+        {
+          "class": "com/leo/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "getModelStack",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "itemHandler.getStackInSlot(0)",
+          "sha256": "6f58f0288525a42ca61b8289fa46700cde0e6795c5adb8e1ff5b2c127020b501"
+        },
+        {
+          "class": "dev/shadowsoffire/hostilenetworks/item/DataModelItem",
+          "method": "getStoredModel",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Ldev/shadowsoffire/placebo/reload/DynamicHolder;",
+          "note": "Hostile Neural Networks: the model holder named by the stack's data_model id (reads only)",
+          "sha256": "2bce2b7d65e59cb51cde5949d648bf012a796c2741c63e665fd750d158838888"
+        },
+        {
+          "class": "dev/shadowsoffire/hostilenetworks/item/DataModelItem",
+          "method": "getData",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "note": "the stack's data counter (reads only)",
+          "sha256": "e84fb707b64e67eb251ca5c52d46358271a2ccbcb8402177a16eb04aa4134164"
+        },
+        {
+          "class": "dev/shadowsoffire/placebo/reload/DynamicHolder",
+          "method": "bind",
+          "desc": "()V",
+          "audit": true,
+          "note": "Placebo (installed library): keeps the registry value once looked up; idempotent",
+          "sha256": "06bf8b810442276141b28737b7380f88953cd60f0bf6d9f1bff157f633e098d8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on VSBlockEntity.tick's first getModelFromStack call (keeps the stats with the slot-0 stack they are for) and @WrapOperation on the second and third getModelFromStack and both getRFTick calls (Sanguine Neural Networks 1.2.1): they answer from the kept stats while slot 0 holds the same stack object (not for subclasses). Runtime flag sanguinenetworksLeoTickStatsReuse, shadow sanguinenetworksLeoTickStatsReuse.shadow. Helper bons.furious.patch.sanguinenetworks_coo49.SacrificerTickStats.",
+      "license": "Sanguine Neural Networks (MIT): no code carried; the hooks hold only our own logic"
+    },
+    "sanguinenetworks_leo_client_sync_no_remesh": {
+      "mod": "sanguine_networks",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.sanguinenetworks_coo49.LeoSacrificerClientSyncMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/leo/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "sync",
+          "desc": "()V",
+          "note": "setChanged(), then level.sendBlockUpdated(pos, state, state, 3) with the block's own state",
+          "sha256": "23087bd449b83258629230d142a4e06fc5fe2fc86a3fa6dc701e0490c7d6b4e3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapWithCondition on the sendBlockUpdated call in VSBlockEntity.sync (Sanguine Neural Networks 1.2.1): left out on a client level (setChanged kept). Exact variant: identical chunk sections are not meshed again. Runtime flag sanguinenetworksLeoClientSyncNoRemesh. Helper bons.furious.patch.sanguinenetworks_coo49.SacrificerClientSync.",
+      "license": "Sanguine Neural Networks (MIT): no code carried; the hooks hold only our own logic"
+    },
+    "sanguinenetworks_leo_sync_dedup": {
+      "mod": "sanguine_networks",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.sanguinenetworks_coo49.LeoSacrificerSyncDedupMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/leo/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "m_58483_",
+          "desc": "()Lnet/minecraft/network/protocol/Packet;",
+          "note": "ClientboundBlockEntityDataPacket.create(this)",
+          "sha256": "f849588c0b7c3638278df23f2047c7b682542a33d9eb528d4b30fc6ac54e7c06"
+        },
+        {
+          "class": "com/leo/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "m_5995_",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "super.getUpdateTag() + saveAdditional(tag)",
+          "sha256": "e6110121e0fbe5725eb73fe3033199b0a6584a912c6b01ecd64aadc7fcd69866"
+        },
+        {
+          "class": "com/leo/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "m_183515_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "Forge part, inventory, energy, catalystUses, maxCatalystUses, catalystMult, toProduce, progress, maxProgress, altarPos when set",
+          "sha256": "6d8e9aaa9f021138d3702966d4d9b435501fd167672006c31e625dd66070f584"
+        },
+        {
+          "class": "com/leo/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "m_142466_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "the client's load of a packet: reads the tag, copies every stack tag",
+          "sha256": "d3d4f7cac3a1f93820574d609768131a4f7e7f5a74c928b99bab804334fb9959"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/BlockEntity",
+          "method": "m_183515_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "Forge 47.4.28: ForgeData when the block entity has persistent data, ForgeCaps when it has attached capabilities",
+          "sha256": "4e1c3f1fed998306eb1ef1b88a5c9a2208c282ed6acbe7598ea0c337883959a2"
+        },
+        {
+          "class": "net/minecraftforge/items/ItemStackHandler",
+          "method": "serializeNBT",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "Items: Slot + ItemStack.save per non-empty slot; Size",
+          "sha256": "dc1274ef3720af9e7b7f43e9fc35c24be4d37b1d1eb03c1ba6019bf1aaa49e23"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41739_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "Forge 47.4.28 save: id, Count byte, a copy of the tag, ForgeCaps when serializeCaps is not empty",
+          "sha256": "0e3be170939478611ffff3ca38e0c1cf69ba738f0e1702d0bdbebe9bf7e313a7"
+        },
+        {
+          "class": "net/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket",
+          "method": "m_195640_",
+          "desc": "(Lnet/minecraft/world/level/block/entity/BlockEntity;)Lnet/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket;",
+          "note": "create(be): the position, the type and be.getUpdateTag()",
+          "sha256": "9a3f3fa6657f1ac45c5419e6fd9927e119106b6c2e9a41bef75b4170598e06c3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Mixin @Redirect of the ClientboundBlockEntityDataPacket.create(this) call in VSBlockEntity.getUpdatePacket + MixinExtras @ModifyReturnValue on getUpdateTag (Sanguine Neural Networks 1.2.1): null while the values of the update tag equal those of the last packet sent and no different state was handed out since; persistent data, attached capabilities, stacks with capability data and subclasses run the mod's method; every client holds the same state as without it. Trade-off (off by default): packets identical to the previous one are not sent, but each packet that does go out costs the server about 4 % more to build than with the mod's own class. Runtime flag sanguinenetworksLeoSyncDedup, shadow sanguinenetworksLeoSyncDedup.shadow. Helper bons.furious.patch.sanguinenetworks_coo49.SacrificerSync.",
+      "license": "Sanguine Neural Networks (MIT): no code carried; the hooks hold only our own logic"
+    },
+    "sanguinenetworks_leo_sync_relevant_only": {
+      "mod": "sanguine_networks",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.sanguinenetworks_coo49.LeoSacrificerSyncRelevantMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/leo/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "m_58483_",
+          "desc": "()Lnet/minecraft/network/protocol/Packet;",
+          "note": "ClientboundBlockEntityDataPacket.create(this)",
+          "sha256": "f849588c0b7c3638278df23f2047c7b682542a33d9eb528d4b30fc6ac54e7c06"
+        },
+        {
+          "class": "com/leo/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "m_5995_",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "super.getUpdateTag() + saveAdditional(tag)",
+          "sha256": "e6110121e0fbe5725eb73fe3033199b0a6584a912c6b01ecd64aadc7fcd69866"
+        },
+        {
+          "class": "com/leo/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "m_183515_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "Forge part, inventory, energy, catalystUses, maxCatalystUses, catalystMult, toProduce, progress, maxProgress, altarPos when set",
+          "sha256": "6d8e9aaa9f021138d3702966d4d9b435501fd167672006c31e625dd66070f584"
+        },
+        {
+          "class": "com/leo/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "m_142466_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "the client's load of a packet: reads the tag, copies every stack tag",
+          "sha256": "d3d4f7cac3a1f93820574d609768131a4f7e7f5a74c928b99bab804334fb9959"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/BlockEntity",
+          "method": "m_183515_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "Forge 47.4.28: ForgeData when the block entity has persistent data, ForgeCaps when it has attached capabilities",
+          "sha256": "4e1c3f1fed998306eb1ef1b88a5c9a2208c282ed6acbe7598ea0c337883959a2"
+        },
+        {
+          "class": "net/minecraftforge/items/ItemStackHandler",
+          "method": "serializeNBT",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "Items: Slot + ItemStack.save per non-empty slot; Size",
+          "sha256": "dc1274ef3720af9e7b7f43e9fc35c24be4d37b1d1eb03c1ba6019bf1aaa49e23"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41739_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "Forge 47.4.28 save: id, Count byte, a copy of the tag, ForgeCaps when serializeCaps is not empty",
+          "sha256": "0e3be170939478611ffff3ca38e0c1cf69ba738f0e1702d0bdbebe9bf7e313a7"
+        },
+        {
+          "class": "net/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket",
+          "method": "m_195640_",
+          "desc": "(Lnet/minecraft/world/level/block/entity/BlockEntity;)Lnet/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket;",
+          "note": "create(be): the position, the type and be.getUpdateTag()",
+          "sha256": "9a3f3fa6657f1ac45c5419e6fd9927e119106b6c2e9a41bef75b4170598e06c3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Mixin @Inject (cancellable) at the head of VSBlockEntity.getUpdatePacket + MixinExtras @ModifyReturnValue on its return and on getUpdateTag (Sanguine Neural Networks 1.2.1): as sanguinenetworks_leo_sync_dedup, the comparison without the energy buffer and with the progress only by whether it is zero. Trade-off (off by default): the client copy of the progress and energy is refreshed only when a cycle starts or ends or something else changes. Runtime flag sanguinenetworksLeoSyncRelevantOnly (emergency off). Helper bons.furious.patch.sanguinenetworks_coo49.SacrificerSync.",
+      "license": "Sanguine Neural Networks (MIT): no code carried; the hooks hold only our own logic"
+    }
+  }
+}

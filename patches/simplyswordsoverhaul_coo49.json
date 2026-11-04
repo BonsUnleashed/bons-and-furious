@@ -1,0 +1,251 @@
+{
+  "group": "simplyswordsoverhaul_coo49",
+  "keys": {
+    "simplyswordsoverhaul_server_stop_reset": {
+      "mod": "simply_swords_overhaul",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.simplyswordsoverhaul_coo49.SsoSchedulerStopMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/scheduler/Scheduler",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "tasks = new ArrayList (our RETURN hook keeps it and registers the stop listener)",
+          "sha256": "d4ca82b056bc0ed527911c8959913082cb69ed76b5c89ddeb4c4568930b0fdf4"
+        },
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/scheduler/Scheduler",
+          "method": "schedule",
+          "desc": "(Ljava/lang/Runnable;II)V",
+          "note": "synchronized (tasks): tasks.add(new SchedulerTask(delay, period, task))",
+          "sha256": "249ade772a609436aba730c1ca9f7a7fbaa3c83e8ee54d06b5cbb570f046095c"
+        },
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/scheduler/Scheduler",
+          "method": "onServerTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$ServerTickEvent;)V",
+          "note": "END only; synchronized (tasks): every task counts down, runs at 0, then repeats or is removed",
+          "sha256": "dbe72afe39e7756ef4d1d5661adef950a81a9a27bb0df0da55389207d3a1d1dc"
+        },
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/scheduler/Scheduler",
+          "method": "*",
+          "desc": "",
+          "note": "declared members: the private static final tasks list, schedule, onServerTick",
+          "sha256": "56bf5d5e4b037e9cfd23da3420a94a0af15ed48f009e91a66790fd8e503cef91"
+        },
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/scheduler/SchedulerTask",
+          "method": "*",
+          "desc": "",
+          "note": "ticksRemaining, task, period",
+          "sha256": "cc3a4894dbd3843037bf2821d2e44dd804e38288ba9981ab4959c6f582cbce97"
+        },
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/SimplySwordsOverhaul",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "the mod constructor builds a Scheduler, so its static initialiser (our hook) runs while the mods load",
+          "sha256": "621ed7670cfce16927dd6c8913145385044464d0a5c396a7f2f04d1fa2f36efd"
+        },
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/mixin/MixinStarsEdgeSword",
+          "method": "*",
+          "desc": "",
+          "note": "declares the static HashMap savedPositions (player UUID -> recall spot) merged into StarsEdgeSwordItem",
+          "sha256": "7e182b067106c181889ef37d8fb25fd8ff396b31095cd1f26f4c9df4a7753e03",
+          "sha256_also": [
+            {
+              "build": "dedicated_server",
+              "sha256": "48923b83faf9ab876565dfe52eb322a2ea018063c94b29dba43879f35b7341f7"
+            }
+          ]
+        },
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/mixin/MixinWhisperwindSword",
+          "method": "*",
+          "desc": "",
+          "note": "declares the static Map DASH_HIT_MAP (player UUID -> entities hit in the dash) merged into WhisperwindSwordItem",
+          "sha256": "9ad123067a6597e414847b01a9a8ea922125b7e100734dc4f2d81423340e1aa7",
+          "sha256_also": [
+            {
+              "build": "dedicated_server",
+              "sha256": "8930c5e3f7f9c1e80d5e2a66c9b52dd5c31e759fb9c330c138647b9e34c6dae5"
+            }
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix. @Inject at RETURN of Simply Swords Overhaul's Scheduler.<clinit> (run in its mod constructor): SsoStop keeps the private static task list and registers a ServerStoppedEvent listener that empties it under its lock, with the two static per-player maps Simply Swords Overhaul's sword mixins merge into Simply Swords' StarsEdgeSwordItem (savedPositions) and WhisperwindSwordItem (DASH_HIT_MAP), found by reflection (SsoMaps; a missing field is reported once and left alone). Runtime flag simplyswordsoverhaulServerStopReset. Helpers bons.furious.patch.simplyswordsoverhaul_coo49.SsoStop, SsoMaps.",
+      "license": "Simply Swords Overhaul (MIT): no code carried; the stop listener is ours. Simply Swords (Timefall Development License): its classes only hold the maps Simply Swords Overhaul adds."
+    },
+    "simplyswordsoverhaul_logout_dash_restore": {
+      "mod": "simply_swords_overhaul",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.simplyswordsoverhaul_coo49.SsoSchedulerDashMixin",
+        "bons.furious.mixin.simplyswordsoverhaul_coo49.SsoWhisperwindDashMixin",
+        "bons.furious.mixin.simplyswordsoverhaul_coo49.SsoStormsEdgeDashMixin",
+        "bons.furious.mixin.simplyswordsoverhaul_coo49.SsoEmberlashDashMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/mixin/MixinWhisperwindSword",
+          "method": "modifyUseMethod",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "server side: dashing flag set -> end the dash now (flag off, motion 0, gravity on, kill flag removed or full cooldown, hit list removed); else flag on, gravity off, 7 step tasks (0..12) and the end task (14) through Scheduler.schedule(task, delay, 0)",
+          "sha256": "884ea760324ad675096e4b0d76d69fe4de8014aa2ecabcdc1498b7b4d9dd223b"
+        },
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/mixin/MixinWhisperwindSword",
+          "method": "lambda$modifyUseMethod$2",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/level/Level;)V",
+          "note": "a dash step, only while the dashing flag is set: motion, hits into DASH_HIT_MAP, the kill flag on a kill",
+          "sha256": "ce354bf36cce759ead0339956685af854a002f227b335ad0daf538b935a7c08d"
+        },
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/mixin/MixinWhisperwindSword",
+          "method": "lambda$modifyUseMethod$3",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;I)V",
+          "note": "the dash end, only while the dashing flag is set: flag off, motion 0, gravity on, kill flag removed or full cooldown, hit list removed",
+          "sha256": "0b5b85547ed91cf28556a464af68f76e89b78b3d1a0956e9bb811696ed16f139"
+        },
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/mixin/MixinStormsEdgeSword",
+          "method": "modifyUseMethod",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "server side: gravity off, 4 step tasks (0..6), the landing task (8) and the late gravity task (14) through Scheduler.schedule(task, delay, 0)",
+          "sha256": "c9d39b2309856c1d09b01fb57af8de6bcc423aaf14d4d74d02e28361554e1107"
+        },
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/mixin/MixinStormsEdgeSword",
+          "method": "lambda$modifyUseMethod$1",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/level/Level;I)V",
+          "note": "a dash step: motion, hits around the player",
+          "sha256": "a3ac6238ee19dfe35d742267e79aa74f4e29284f39a74623347342c568f67d88"
+        },
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/mixin/MixinStormsEdgeSword",
+          "method": "lambda$modifyUseMethod$2",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;[Z)V",
+          "note": "the landing: motion 0; on the ground gravity on, in the air marks the late task",
+          "sha256": "0c299b59bd89351c3924252c087bbaa03b33f79248c8fcc7c4a75533f690a400"
+        },
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/mixin/MixinStormsEdgeSword",
+          "method": "lambda$modifyUseMethod$3",
+          "desc": "([ZLnet/minecraft/world/entity/player/Player;)V",
+          "note": "gravity on when the landing marked it",
+          "sha256": "e02584414820be33d2fd04d7f2d5622ee9e041f254e253bc62f3699a5b129752"
+        },
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/mixin/MixinEmberlashSword",
+          "method": "modifyUseMethod",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "server side: dash motion, then 4 tasks (2, 4, 4, 10) through Scheduler.schedule(task, delay, 0); no gravity change in the handler itself",
+          "sha256": "debfe40a13e32a07662ff8ab60a692a39e9ecfbf639ee8918b8874def7a19be4"
+        },
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/mixin/MixinEmberlashSword",
+          "method": "lambda$modifyUseMethod$2",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;[Z)V",
+          "note": "in the air: gravity off and marks the late task",
+          "sha256": "86cac9640566037555c817b56e66aa346a6ecf2d19302f301ad7e4f0970b8275"
+        },
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/mixin/MixinEmberlashSword",
+          "method": "lambda$modifyUseMethod$3",
+          "desc": "([ZLnet/minecraft/world/entity/player/Player;)V",
+          "note": "gravity on when marked",
+          "sha256": "e02584414820be33d2fd04d7f2d5622ee9e041f254e253bc62f3699a5b129752"
+        },
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/scheduler/Scheduler",
+          "method": "schedule",
+          "desc": "(Ljava/lang/Runnable;II)V",
+          "note": "keeps the Runnable it is given and runs it once after delay ticks when period is 0",
+          "sha256": "249ade772a609436aba730c1ca9f7a7fbaa3c83e8ee54d06b5cbb570f046095c"
+        },
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/scheduler/Scheduler",
+          "method": "onServerTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$ServerTickEvent;)V",
+          "note": "END only: counts down, runs at 0, removes one-shot tasks",
+          "sha256": "dbe72afe39e7756ef4d1d5661adef950a81a9a27bb0df0da55389207d3a1d1dc"
+        },
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/scheduler/Scheduler",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "our RETURN hook registers the logout and stop listeners",
+          "sha256": "d4ca82b056bc0ed527911c8959913082cb69ed76b5c89ddeb4c4568930b0fdf4"
+        },
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/SimplySwordsOverhaul",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "the mod constructor builds a Scheduler: the listeners are registered while the mods load",
+          "sha256": "621ed7670cfce16927dd6c8913145385044464d0a5c396a7f2f04d1fa2f36efd"
+        },
+        {
+          "class": "net/sweenus/simplyswords/item/custom/WhisperwindSwordItem",
+          "method": "m_7203_",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+          "note": "Simply Swords' use, which Simply Swords Overhaul's handler replaces from its head",
+          "sha256": "1acd2dffa9bbaed68ca188c97c204bb91f1170d167316da4f7e6f5d3a153d7cc"
+        },
+        {
+          "class": "net/sweenus/simplyswords/item/custom/StormsEdgeSwordItem",
+          "method": "m_7203_",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+          "note": "Simply Swords' use, which Simply Swords Overhaul's handler replaces from its head",
+          "sha256": "d6b645258f6ee26a5c5a3f8fadebc8141e3fb31c0b9117ce1981e01b6bb3ec72"
+        },
+        {
+          "class": "net/sweenus/simplyswords/item/custom/EmberlashSwordItem",
+          "method": "m_7203_",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+          "note": "Simply Swords' use, which Simply Swords Overhaul's handler replaces from its head",
+          "sha256": "b4a07f165881911a17bdec0bfa9da1477d4027059cbfe31fda88f7127e221461"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Gameplay fix, off by default. MixinSquared @TargetHandler injections into Simply Swords Overhaul's MixinWhisperwindSword / MixinStormsEdgeSword / MixinEmberlashSword.modifyUseMethod handlers (merged into the Simply Swords items' use): MixinExtras @WrapOperation on their Scheduler.schedule calls hands each task to SsoDash.task (the same task, wrapped for a per-player session: tasks pending, whether gravity is off because Simply Swords Overhaul's own code turned it off), and on their Player.setNoGravity calls reports the change to SsoDash.gravity; @Inject at RETURN of Scheduler.<clinit> registers PlayerLoggedOutEvent and ServerStoppedEvent listeners. At logout, for a player with dash tasks pending: gravity back on if the dash turned it off, Whisperwind's dashing and kill flags removed and the hit list dropped when the dashing flag is set; the remaining tasks do nothing. Runtime flag simplyswordsoverhaulLogoutDashRestore. Helpers bons.furious.patch.simplyswordsoverhaul_coo49.SsoDash, SsoMaps.",
+      "license": "Simply Swords Overhaul (MIT): no code carried; the session bookkeeping and the logout listener are ours. Simply Swords (Timefall Development License): only targeted."
+    },
+    "simplyswordsoverhaul_molten_edge_buff_refresh": {
+      "mod": "simply_swords_overhaul",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.simplyswordsoverhaul_coo49.SsoMoltenEdgeBuffMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/jrdemiurge/simplyswordsoverhaul/mixin/MixinMoltenEdgeSword",
+          "method": "modifyInventoryTick",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;IZLorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "server side, a player holding this stack: level = (int) (missing health / 0.2) - 2 (+1 with one in each hand); strength and haste at the level, speed one lower, each new MobEffectInstance(effect, 100, amplifier, false, false) through Player.addEffect every tick; then footfalls, super.inventoryTick, cancel",
+          "sha256": "7fb206ecd3e4b79cfa1da75f988e5e7b936f277126b2266a17d8035ce71a570f"
+        },
+        {
+          "class": "net/sweenus/simplyswords/item/custom/MoltenEdgeSwordItem",
+          "method": "m_6883_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;IZ)V",
+          "note": "Simply Swords' inventoryTick, which Simply Swords Overhaul's handler replaces from its head",
+          "sha256": "0ebb153b8372e4ad042fc39234b188566e968689ec87d3b85f85e1dfab7df615"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Trade-off, off by default. MixinSquared @TargetHandler + MixinExtras @WrapOperation on the three Player.addEffect calls of Simply Swords Overhaul's MixinMoltenEdgeSword.modifyInventoryTick handler (merged into MoltenEdgeSwordItem.inventoryTick): SsoMoltenEdge leaves a call out while the player already has that effect at the same amplifier and ambient / visible / icon flags with more than 80 ticks left; anything else runs as shipped. The difference: the sword's buff timers run between 80 and 100 ticks instead of staying at 100, so after the sword is put away or the level drops a buff mostly ends up to 20 ticks sooner (measured: 1,278 of 1,282 stretches with another level), after several level changes within a few seconds up to 100 ticks sooner, and now and then a lower level that vanilla's hidden-effect chain drops stays on; held at one level the buffs are the same. Runtime flag simplyswordsoverhaulMoltenEdgeBuffRefresh. Helper bons.furious.patch.simplyswordsoverhaul_coo49.SsoMoltenEdge.",
+      "license": "Simply Swords Overhaul (MIT): no code carried; the renewal rule is ours. Simply Swords (Timefall Development License): only targeted."
+    }
+  }
+}

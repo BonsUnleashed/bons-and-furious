@@ -1,0 +1,122 @@
+{
+  "group": "mowziesmobs_client_c49",
+  "keys": {
+    "mowziesmobs_effect_render_state_memo": {
+      "mod": "mowziesmobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.mowziesmobs_client_c49.MMRenderTypeStateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/render/MMRenderType",
+          "method": "getGlowingEffect",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/renderer/RenderType;",
+          "sha256": "4f6d0f25fb30445bbcb44ce53052ee91a0ecf797c0f5d2af952a56439ed50725"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/render/MMRenderType",
+          "method": "getSolarFlare",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/renderer/RenderType;",
+          "sha256": "e1bad675001fb0158cc9bf4e60388e815f0a8d31ca876be53a42e8730d7cd4c9"
+        },
+        {
+          "class": "net/minecraft/client/renderer/RenderType",
+          "method": "m_173215_",
+          "desc": "(Ljava/lang/String;Lcom/mojang/blaze3d/vertex/VertexFormat;Lcom/mojang/blaze3d/vertex/VertexFormat$Mode;IZZLnet/minecraft/client/renderer/RenderType$CompositeState;)Lnet/minecraft/client/renderer/RenderType$CompositeRenderType;",
+          "sha256": "bef95243c4d27b0287482ec9d283b3445c6c6927184132031fe9d181b94987d7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on MMRenderType.getGlowingEffect and getSolarFlare: the first call per texture runs the original and keeps its render type's parameters and render state; later calls make a new render type from them through RenderType.create (the factory the original calls; reflection, once), so every call still returns a new object (helper bons.furious.patch.mowziesmobs_client_c49.EffectStates; shadow mode compares every call)",
+      "license": "Mowzie's Mobs (custom licence): no Mowzie's Mobs code is carried; the wrappers carry only our own logic (Idea: Collections Of Optimizations mowziesmobs.cacheEffectRenderTypes, idea text only)"
+    },
+    "mowziesmobs_umvuthana_layer_bone_test": {
+      "mod": "mowziesmobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mowziesmobs_client_c49.UmvuthanaArmorLayerScanMixin",
+        "bons.furious.mixin.mowziesmobs_client_c49.UmvuthanaSunLayerScanMixin",
+        "bons.furious.mixin.mowziesmobs_client_c49.UmvuthiSunLayerScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/render/entity/layer/UmvuthanaArmorLayer",
+          "method": "renderForBone",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/bobmowzie/mowziesmobs/server/entity/umvuthana/EntityUmvuthana;Lsoftware/bernie/geckolib/cache/object/GeoBone;Lnet/minecraft/client/renderer/RenderType;Lnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/VertexConsumer;FII)V",
+          "sha256": "23e5188a1fdef8d4029313e96a77149d868f024d309241d27f2cf8183241fb5d"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/render/entity/layer/UmvuthanaSunLayer",
+          "method": "renderForBone",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/bobmowzie/mowziesmobs/server/entity/umvuthana/EntityUmvuthana;Lsoftware/bernie/geckolib/cache/object/GeoBone;Lnet/minecraft/client/renderer/RenderType;Lnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/VertexConsumer;FII)V",
+          "sha256": "07103409e92be51577e3379d523793dc5c85f11d121fe4055e5322a7b212cad2"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/render/entity/layer/UmvuthiSunLayer",
+          "method": "renderForBone",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/bobmowzie/mowziesmobs/server/entity/umvuthana/EntityUmvuthi;Lsoftware/bernie/geckolib/cache/object/GeoBone;Lnet/minecraft/client/renderer/RenderType;Lnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/VertexConsumer;FII)V",
+          "sha256": "8988bf1ccf6e2d240d0fc7b903b0d43b44a8e8ebcf92051c655557d78e8d7814"
+        },
+        {
+          "class": "software/bernie/geckolib/util/RenderUtils",
+          "method": "translateToPivotPoint",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lsoftware/bernie/geckolib/core/animatable/model/CoreGeoBone;)V",
+          "audit": true,
+          "sha256": "c0fb07ea302342158562b1f6a5a4112ade97756361686b3c416a928d3d4db23a"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "getName",
+          "desc": "()Ljava/lang/String;",
+          "audit": true,
+          "sha256": "27bca21cb747ed700dec2df06c342c2646caf6520adcd918e150227a3e5d73cc"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the PoseStack.pushPose, RenderUtils.translateToPivotPoint and PoseStack.popPose calls of the three layers' renderForBone (@Share per call): for a bone whose name is none of the layer's drawn bones the three calls are left out; the super call, conditions, name test and getBuffer call stay (helper bons.furious.patch.mowziesmobs_client_c49.LayerBoneScan)",
+      "license": "Mowzie's Mobs (custom licence): no Mowzie's Mobs code is carried; the wrappers carry only our own logic and the layers' bone names (Idea: Collections Of Optimizations mowziesmobs.leanLayerBoneScan, idea text only)"
+    },
+    "mowziesmobs_dynamic_chain_substep_cap": {
+      "mod": "mowziesmobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.mowziesmobs_client_c49.GeckoDynamicChainSubstepMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/model/tools/dynamics/GeckoDynamicChain",
+          "method": "updateChain",
+          "desc": "(FFFFFIZ)V",
+          "sha256": "67759c8db28dc19dc7773f6137659ed0c000986752be0458a68c689aa2cbd3a3",
+          "sha256_standdown": [
+            {
+              "build": "mowziesmobs 1.8.2",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/model/tools/dynamics/GeckoDynamicChain",
+          "method": "updateSpringConstraint",
+          "desc": "(FFFZFIF)V",
+          "sha256": "cd2c6af856626709f3dd0dfa85c31f34e1931844e9e349e4a12231ea21a40128",
+          "sha256_standdown": [
+            {
+              "build": "mowziesmobs 1.8.2",
+              "sha256": "8ebc76d1ccc65f5d80834a29f48e6cd1064dab6e8fcd972e4907c0bb64dcfc2a"
+            }
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "Mixin @ModifyArg on the substep count (argument 5) of GeckoDynamicChain.updateChain's call to updateSpringConstraint: min(count, the switch's value) (PureConfig.intValue(\"mowziesmobs_dynamic_chain_substep_cap\", 4, 1, 64), helper bons.furious.patch.mowziesmobs_client_c49.ChainSubsteps)",
+      "license": "Mowzie's Mobs (custom licence): no Mowzie's Mobs code is carried; the injector carries only our own logic (Idea: Collections Of Optimizations mowziesmobs.dynamicChainSubstepCap, idea text only)"
+    }
+  }
+}

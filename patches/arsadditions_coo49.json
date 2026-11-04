@@ -1,0 +1,119 @@
+{
+  "group": "arsadditions_coo49",
+  "keys": {
+    "arsadditions_charm_held_only_inventory_tick": {
+      "mod": "ars_additions",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.arsadditions_coo49.AaCharmHeldMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/jarva/arsadditions/common/item/curios/Charm",
+          "method": "m_6883_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;IZ)V",
+          "note": "inventoryTick: a living holder runs tick(stack, holder) for every slot the charm is in",
+          "sha256": "bd260eae59ba0327b1155014ac74fa7bdd9a7d133e5e9fd00760aac0778c9684"
+        },
+        {
+          "class": "com/github/jarva/arsadditions/common/item/curios/Charm",
+          "method": "tick",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "fall prevention, night vision, void protection through CharmRegistry.processCharmEvent (the stack itself is not used)",
+          "sha256": "b5aea59fe9e0ffd5cf9b08a8e3f9b87ef8580d8d60a337612ca005cd0ead8ddc"
+        },
+        {
+          "class": "com/github/jarva/arsadditions/server/util/PlayerInvUtil",
+          "method": "findItem",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Ljava/util/function/Predicate;Ljava/lang/Object;Ljava/util/function/Function;)Ljava/lang/Object;",
+          "note": "main hand, off hand, then the curio slots; never the inventory",
+          "sha256": "7abe7922a26baae0bd5209dc1f8546c0ccf890bcdb20c42be62aa25892722e15"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at HEAD (cancellable) of Charm.inventoryTick: returns at once when the holder is living and the stack is neither its main hand nor its off hand item (helper bons.furious.patch.arsadditions_coo49.AaCharms)",
+      "license": "Ars Additions (LGPL-3.0): no code carried, the injector carries only our own logic"
+    },
+    "arsadditions_magelight_far_burst_skip": {
+      "mod": "ars_additions",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.arsadditions_coo49.AaMagelightCullMixin",
+        "bons.furious.mixin.arsadditions_coo49.AaLevelRendererProbeMixin",
+        "bons.furious.mixin.arsadditions_coo49.AaClientLevelProbeMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/jarva/arsadditions/common/block/tile/MagelightLanternTile",
+          "method": "tick",
+          "desc": "()V",
+          "note": "client, lit, HANGING state: color.transition(gameTime * 10), then 10 x level.addParticle(GlowParticleData.createData(color), centre x, y + 0.1 or 0.2 + inRange(-0, 0.1), centre z, 0, inRange(0, 0.01), 0)",
+          "sha256": "b5325878b9a110e8bc5351b16ec4b5995efcefa3dbd3e9d3ca064e77707c4551"
+        },
+        {
+          "class": "com/hollingsworth/arsnouveau/client/particle/ParticleUtil",
+          "method": "inRange",
+          "desc": "(DD)D",
+          "note": "ThreadLocalRandom.current().nextDouble(min, max): one draw",
+          "sha256": "82919edbda1cb125b696d73cf5121437fb0499cc2850ffb41a5c4a447c53f823"
+        },
+        {
+          "class": "com/hollingsworth/arsnouveau/client/particle/GlowParticleData",
+          "method": "createData",
+          "desc": "(Lcom/hollingsworth/arsnouveau/client/particle/ParticleColor;)Lnet/minecraft/core/particles/ParticleOptions;",
+          "note": "new ColorParticleTypeData(GLOW_TYPE, color, false): no other effect",
+          "sha256": "445c0778666b3f05bd43f31e0c58a0dccae261057720812141f38641ec6772db"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel",
+          "method": "m_7106_",
+          "desc": "(Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V",
+          "note": "addParticle: levelRenderer.addParticle(options, type.getOverrideLimiter(), ...)",
+          "sha256": "34e842e7cfd488cbce40723bacdf28de5f2215ad3560171aea1125948f08998c"
+        },
+        {
+          "class": "net/minecraft/client/renderer/LevelRenderer",
+          "method": "m_109804_",
+          "desc": "(Lnet/minecraft/core/particles/ParticleOptions;ZZDDDDDD)Lnet/minecraft/client/particle/Particle;",
+          "note": "addParticleInternal: calculateParticleLevel, forced -> create, camera distanceToSqr > 1024 -> null, MINIMAL -> null",
+          "sha256": "ee4ab14b22ddbdf04cc021e5cf0b47a05ce5c31453405fac68789aa0b32e4bbf"
+        },
+        {
+          "class": "net/minecraft/client/renderer/LevelRenderer",
+          "method": "m_109767_",
+          "desc": "(Z)Lnet/minecraft/client/ParticleStatus;",
+          "note": "calculateParticleLevel: level.random draws only on Decreased (or Minimal with the decreased flag)",
+          "sha256": "25322cbf15503ebab20d225e2974f8ad1305a041bcbd39ffe8bbefe2e1bac75c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at HEAD of MagelightLanternTile.tick decides per lantern tick (client) whether every spawn point of the burst lies beyond 32.25 blocks of the camera; MixinExtras @WrapOperation on its GlowParticleData.createData and Level.addParticle calls then answer null and leave the particle out, the random draws untouched; stands aside on Decreased particles, a limiter-overriding glow type, Valkyrien Skies shipyard lanterns and a particle path changed by another mod (probe mixins on LevelRenderer and ClientLevel, priority 2,000,000, read by the group's plugin bons.furious.patch.arsadditions_coo49.AaPlugin) (helpers AaLanterns, AaParticleProbe)",
+      "license": "Ars Additions (LGPL-3.0), Ars Nouveau and Minecraft: no code carried, the injectors carry only our own logic"
+    },
+    "arsadditions_magelight_particle_distance": {
+      "mod": "ars_additions",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.arsadditions_coo49.AaMagelightDistanceMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/jarva/arsadditions/common/block/tile/MagelightLanternTile",
+          "method": "tick",
+          "desc": "()V",
+          "note": "client, lit, HANGING state: color.transition(gameTime * 10), then 10 x level.addParticle(GlowParticleData.createData(color), centre x, y + 0.1 or 0.2 + inRange(-0, 0.1), centre z, 0, inRange(0, 0.01), 0)",
+          "sha256": "b5325878b9a110e8bc5351b16ec4b5995efcefa3dbd3e9d3ca064e77707c4551"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at HEAD of MagelightLanternTile.tick decides per lantern tick (client) whether every spawn point of the burst lies beyond N blocks of the camera (PureConfig value, default 32); MixinExtras @WrapOperation on its GlowParticleData.createData and Level.addParticle calls then answer null and leave the particle out, the lantern's random draws untouched; shipyard lanterns run the original; composes with the far-burst variant (helper bons.furious.patch.arsadditions_coo49.AaLanterns)",
+      "license": "Ars Additions (LGPL-3.0): no code carried, the injectors carry only our own logic"
+    }
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "group": "immersive_overlays",
+  "keys": {
+    "immersiveaircraft_hud_blit_batch": {
+      "mod": "immersive_aircraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.immersive_overlays.AircraftHealthBatchMixin"
+      ],
+      "guard": [
+        {
+          "class": "immersive_aircraft/client/OverlayRenderer",
+          "method": "renderAircraftHealth",
+          "desc": "(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/GuiGraphics;Limmersive_aircraft/entity/VehicleEntity;)V",
+          "note": "ten hearts: up to three GuiGraphics.blit(ICONS_TEX, x, y, u, v, 9, 9, 64, 64) each, nothing else between the blits",
+          "sha256": "a470840f75d2b7a50d0bc723e0ae29023286124c00d32c5e583c479a2a86f82f"
+        },
+        {
+          "class": "net/minecraft/client/gui/GuiGraphics",
+          "method": "m_280163_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;IIFFIIII)V",
+          "note": "blit(atlas, x, y, u, v, w, h, tw, th) -> m_280411_(atlas, x, y, w, h, u, v, w, h, tw, th)",
+          "sha256": "5468f827de308444f22d6f1e0de33383fb4c228b9555951a7fdd96baa652ff06"
+        },
+        {
+          "class": "net/minecraft/client/gui/GuiGraphics",
+          "method": "m_280411_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;IIIIFFIIII)V",
+          "note": "-> m_280312_(atlas, x, x + w, y, y + h, 0, uW, vH, u, v, tw, th)",
+          "sha256": "48d6167e3c3ce59fb9d5f6c653f8e54006d6aba1fb48171310cfda1ce4a61f45"
+        },
+        {
+          "class": "net/minecraft/client/gui/GuiGraphics",
+          "method": "m_280312_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;IIIIIIIFFII)V",
+          "note": "-> innerBlit(atlas, x1, x2, y1, y2, z, (u + 0) / tw, (u + uW) / tw, (v + 0) / th, (v + vH) / th)",
+          "sha256": "6b8049af54a879821a6226d710e289457ea1eb12dbb47aca128fdd300dc6d7b4"
+        },
+        {
+          "class": "net/minecraft/client/gui/GuiGraphics",
+          "method": "m_280444_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;IIIIIFFFF)V",
+          "note": "innerBlit: setShaderTexture(0, atlas); setShader(getPositionTexShader); begin(QUADS, POSITION_TEX); 4 x vertex(pose, x, y, z).uv(u, v).endVertex(); BufferUploader.drawWithShader(end())",
+          "sha256": "74e8f412b21c6fad1ba411b43811489bd666a6d4619591dd8684b762f56d6d79"
+        },
+        {
+          "class": "net/raphimc/immediatelyfast/injection/mixins/hud_batching/consumer/MixinDrawContext",
+          "method": "drawTexturedQuadIntoBuffer",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;IIIIIFFFFLorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "audited: ImmediatelyFast's innerBlit hook acts only while TEXTURE_CONSUMER != null, i.e. while isHudBatching(); the switch stands aside then",
+          "audit": true,
+          "sha256": "24ae54401320c63c48df76badaad6fd70f6ca0e21555adba69c86d97e66cb824"
+        },
+        {
+          "class": "net/raphimc/immediatelyfast/feature/batching/BatchingBuffers",
+          "method": "isHudBatching",
+          "desc": "()Z",
+          "note": "audited: true while any of its HUD consumers (text, texture, fill, item model) is set",
+          "audit": true,
+          "sha256": "a3ac2c52b25dcac10c8f7a2665b9a85e415097b7af9ec7130cb190800ca96933"
+        },
+        {
+          "class": "org/vivecraft/mixin/client_vr/gui/GuiGraphicsVRMixin",
+          "method": "vivecraft$addBlend",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "audited: after innerBlit's setShader, enables blending only while VRState.VR_RUNNING; the switch stands aside then",
+          "audit": true,
+          "sha256": "5d54568929bff8e9c2abcdcd46fef70749bbdc89058b44b43179f45940635708"
+        },
+        {
+          "class": "org/vivecraft/mixin/client_vr/gui/GuiGraphicsVRMixin",
+          "method": "vivecraft$stopBlend",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "audited: innerBlit TAIL, disables blending only while VRState.VR_RUNNING",
+          "audit": true,
+          "sha256": "78f4746d8f51475d2f50658b08f3f163ee8f208d57c0635fbf679522889038d8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on Immersive Aircraft's OverlayRenderer.renderAircraftHealth (opens and draws one batch per call, also on an exception) and @WrapOperation on its three GuiGraphics.blit(RL, IIFFIIII) (m_280163_) calls (the quad innerBlit would write goes into the open QUADS / POSITION_TEX buffer); helper bons.furious.patch.immersive_overlays.HudQuadBatch",
+      "license": "GPL-3.0-only (Immersive Aircraft): no Immersive Aircraft code is carried; the wrappers only decide where its unchanged blit calls go; Minecraft (Mojang): no code is carried, the helper calls the same public BufferBuilder / RenderSystem methods innerBlit calls"
+    },
+    "immersivearmors_steampunk_item_identity": {
+      "mod": "immersive_armors",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.immersive_overlays.ImmersiveArmorsOverlayMixin"
+      ],
+      "guard": [
+        {
+          "class": "immersive_armors/client/OverlayRenderer",
+          "method": "renderOverlay",
+          "desc": "(Lnet/minecraft/client/gui/GuiGraphics;)V",
+          "note": "!options.hideGui && gameMode != null && player != null; for each getArmorSlots(): ITEM.getKey(item).equals(Main.locate(\"steampunk_chestplate\")) -> renderSteampunkHud(context)",
+          "sha256": "ff780183c2ac24bf40bf371f4493dc694aa8427f16534ecb90be929e3c00e902"
+        },
+        {
+          "class": "immersive_armors/client/OverlayRenderer",
+          "method": "renderSteampunkHud",
+          "desc": "(Lnet/minecraft/client/gui/GuiGraphics;)V",
+          "sha256": "1cc3dcebdb35e252013f8c0ac8f7a5845ae48186484e0737292f4cda75270d29"
+        },
+        {
+          "class": "immersive_armors/Main",
+          "method": "locate",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+          "sha256": "6b8d3383ef2d6bb9acb50eb5bf155a91fc6e4026532eaeb4c8e39d6114404f26"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injector (@Inject at the HEAD of Immersive Armors' static OverlayRenderer.renderOverlay, cancellable): with the chestplate resolved once, the same outer tests and slot loop with an identity test, the mod's own renderSteampunkHud per match, then cancel; helper bons.furious.patch.immersive_overlays.SteampunkOverlay",
+      "license": "GPL (Immersive Armors): no Immersive Armors code is carried; the injection's loop and test are ours and call the mod's own renderSteampunkHud and Main.locate; Minecraft (Mojang): no code"
+    }
+  }
+}

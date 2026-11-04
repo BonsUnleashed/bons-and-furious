@@ -1,0 +1,121 @@
+{
+  "group": "celestialcore_match_c49",
+  "keys": {
+    "celestialcore_transformation_recipe_match": {
+      "mod": "celestial_core",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.celestialcore_match_c49.CelestialRecipeLookupMixin",
+        "bons.furious.mixin.celestialcore_match_c49.FluidRecipeBlockMixin",
+        "bons.furious.mixin.celestialcore_match_c49.StatRecipeBlockMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/xiaoyue/celestial_core/mixin/ItemEntityMixin",
+          "method": "celestial_core$tick$recipe",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "the handler: return while removed or isClientSide; a 9-slot container; getRecipeFor(RT_TRANSFORMATION, container, level).ifPresent(lambda): the one call we wrap",
+          "sha256": "7e5b843de9167695f152c905725e65dbe39d29c4948da2957efa508f29316438",
+          "sha256_also": [
+            {
+              "build": "celestial_core 1.5.8",
+              "sha256": "9c05c745e3cc9da53f792e734a65850e82d80c117fb60add9b52d6f56ec1b8b1"
+            }
+          ]
+        },
+        {
+          "class": "com/xiaoyue/celestial_core/mixin/ItemEntityMixin",
+          "method": "lambda$celestial_core$tick$recipe$0",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/item/ItemEntity;Lcom/xiaoyue/celestial_core/content/recipes/FluidTransformationRecipe$Inv;Lcom/xiaoyue/celestial_core/content/recipes/FluidTransformationRecipe;)V",
+          "note": "1.6.x: getBlockState(getOnPos()), return unless it is the recipe's fluid block (the test our matches() answers first)",
+          "sha256": "cfb01eadd9543029087556de291fff40e077588bda3f123337781d26621262a9",
+          "sha256_also": [
+            {
+              "build": "celestial_core 1.5.8",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "com/xiaoyue/celestial_core/mixin/ItemEntityMixin",
+          "method": "lambda$celestial_core$tick$recipe$0",
+          "desc": "(Lnet/minecraft/world/entity/item/ItemEntity;Lnet/minecraft/world/level/Level;Lcom/xiaoyue/celestial_core/content/recipes/TransformationRecipe$Inv;Lcom/xiaoyue/celestial_core/content/recipes/TransformationRecipe;)V",
+          "note": "1.5.x: getOnPos() then getOnPos().below(); return unless one of them is the recipe's stat block (the test our matches() answers first)",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "celestial_core 1.5.8",
+              "sha256": "395f10d1b845e1d65856f312c672af0868eba11dd550348f9aef1d0fd8e993b0"
+            }
+          ]
+        },
+        {
+          "class": "com/xiaoyue/celestial_core/content/recipes/FluidTransformationRecipe",
+          "method": "matches",
+          "desc": "(Lcom/xiaoyue/celestial_core/content/recipes/FluidTransformationRecipe$Inv;Lnet/minecraft/world/level/Level;)Z",
+          "note": "1.6.x: always true (the bridge m_5818_ calls it)",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89",
+          "sha256_also": [
+            {
+              "build": "celestial_core 1.5.8",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "com/xiaoyue/celestial_core/content/recipes/TransformationRecipe",
+          "method": "matches",
+          "desc": "(Lcom/xiaoyue/celestial_core/content/recipes/TransformationRecipe$Inv;Lnet/minecraft/world/level/Level;)Z",
+          "note": "1.5.x: always true (the bridge m_5818_ calls it)",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "celestial_core 1.5.8",
+              "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+            }
+          ]
+        },
+        {
+          "class": "net/minecraft/world/item/crafting/RecipeManager",
+          "method": "m_44015_",
+          "desc": "(Lnet/minecraft/world/item/crafting/RecipeType;Lnet/minecraft/world/Container;Lnet/minecraft/world/level/Level;)Ljava/util/Optional;",
+          "note": "getRecipeFor: byType(type).values() filtered by matches(container, level), findFirst",
+          "sha256": "05ab8288d843c06c7ce03bd807319bc05dccdef04a57e8828971889a478d53cb"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_20097_",
+          "desc": "()Lnet/minecraft/core/BlockPos;",
+          "note": "getOnPos(): getOnPos(0.2F)",
+          "sha256": "c6a73d8d99cd43553809b6138dcde0741343b21315c79257c5dfcad483b80ce0"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_216986_",
+          "desc": "(F)Lnet/minecraft/core/BlockPos;",
+          "note": "getOnPos(offset): the supporting block or the position below the feet; reads at most one block",
+          "sha256": "d2fef2cc114a669fdf6420bb7adb537e44d344c44082cd1b8c898bed15056954"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_8055_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "getBlockState: the read the lambda makes and the matches() test makes once per lookup",
+          "sha256": "cb0e4f7ff3d67591f62963ba1937adb91261c87b4c5adc352a50f532b8f8aa1b"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase",
+          "method": "m_60713_",
+          "desc": "(Lnet/minecraft/world/level/block/Block;)Z",
+          "note": "is(block): getBlock() == block, the lambda's test",
+          "sha256": "a26a4f6803d2d56e746455eb4989b9a1b93b811523b7a9b1cd61c8ae487b92b1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "targethandler (MixinSquared @WrapOperation of RecipeManager.getRecipeFor inside Celestial Core's ItemEntityMixin.celestial_core$tick$recipe: the call runs with a per-thread scope set to the item) + @ModifyReturnValue of FluidTransformationRecipe.matches (1.6.x) and TransformationRecipe.matches (1.5.x): false inside that scope when the recipe's block is not under the item; helper bons.furious.patch.celestialcore_match_c49.RecipeBlockMatch",
+      "license": "LGPL-2.1 (Celestial Core): no Celestial Core code is carried; Minecraft (Mojang): no-copy"
+    }
+  }
+}

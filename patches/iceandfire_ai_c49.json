@@ -1,0 +1,31 @@
+{
+  "group": "iceandfire_ai_c49",
+  "keys": {
+    "iceandfire_dragon_target_search_height": {
+      "mod": "iceandfire",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.iceandfire_ai_c49.DragonTargetSearchMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/ai/DragonAITarget",
+          "method": "m_7255_",
+          "desc": "(D)Lnet/minecraft/world/phys/AABB;",
+          "sha256": "a63b3930ab8b2717e9a8c1c09c99a6cbcc7db0bd6dc7aca45968538d7b8168f5"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/entity/ai/DragonAITargetNonTamed",
+          "method": "m_7255_",
+          "desc": "(D)Lnet/minecraft/world/phys/AABB;",
+          "sha256": "4cc2298f639a5a06122892aa6ef232210a440aaaa3589a346e560317060b8e14"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the AABB.inflate(x, y, z) call of DragonAITarget.getTargetSearchArea and DragonAITargetNonTamed.getTargetSearchArea: y becomes the switch's value (PureConfig.intValue(\"iceandfire_dragon_target_search_height\", 32, 1, 512), helper bons.furious.patch.iceandfire_ai_c49.DragonSearchHeight); x and z unchanged",
+      "license": "LGPL-3.0 (Ice and Fire): no Ice and Fire code is carried; the wrapper carries only our own logic (Idea: Collections Of Optimizations iceandfire.dragonTargetSearchHeight, idea text only)"
+    }
+  }
+}

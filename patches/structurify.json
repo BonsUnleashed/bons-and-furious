@@ -115,10 +115,93 @@
           "method": "getStructureSetData",
           "desc": "(Ljava/lang/String;)Lcom/faboslav/structurify/common/config/data/StructureSetData;",
           "sha256": "7759cdafa300fd6b5e3b2a526cb710698f126b438d34b874d89f3f624f313211"
+        },
+        {
+          "class": "com/faboslav/structurify/common/config/StructurifyConfig",
+          "method": "getStructureSetData",
+          "desc": "()Ljava/util/Map;",
+          "note": "since 1.0.49 (hash index): the config's own map field, handed out as is",
+          "sha256": "e48a289adc09e9739df34bcff9eb652f873754956a238eae3ee0fef486abea52"
+        },
+        {
+          "class": "com/faboslav/structurify/common/config/StructurifyConfig",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "since 1.0.49: a new empty TreeMap",
+          "sha256": "7424b191316d6aa8f60483fd65053521a24c777767d5372d7ec7c331cceb25c1"
+        },
+        {
+          "class": "com/faboslav/structurify/common/config/StructurifyConfig",
+          "method": "load",
+          "desc": "()V",
+          "note": "since 1.0.49: takes WorldgenDataProvider's freshly built map (a new object per load), then only reads it",
+          "sha256": "7d57c42cb3adff17aa0d8281a48e542383d78d06f6bcc362395dfc31fff717fd"
+        },
+        {
+          "class": "com/faboslav/structurify/common/config/StructurifyConfig",
+          "method": "loadFromJson",
+          "desc": "(Lcom/google/gson/JsonObject;)V",
+          "note": "since 1.0.49: as load, for a config received from the server",
+          "sha256": "84ba00c4c3e764af259191be0e65ee297ea6651ac7cb5de21c15a6cad11cc056"
+        },
+        {
+          "class": "com/faboslav/structurify/common/config/data/WorldgenDataProvider",
+          "method": "loadWorldgenData",
+          "desc": "()V",
+          "note": "since 1.0.49: publishes loadStructureSets' new map",
+          "sha256": "7d02dfc145d1ac9fc0b251dfe0bd9e47369ee1159def9dd380f4f56b9276eb32"
+        },
+        {
+          "class": "com/faboslav/structurify/common/config/data/WorldgenDataProvider",
+          "method": "loadStructureSets",
+          "desc": "()Ljava/util/Map;",
+          "note": "since 1.0.49: a new TreeMap (natural order, String keys) filled before it is returned, or Collections.emptyMap()",
+          "sha256": "469cda9d24ed57d32bf9de9349ec3ce96d52258c2ba2b3dd8cd308104aea9994"
+        },
+        {
+          "class": "com/faboslav/structurify/common/config/data/WorldgenDataProvider",
+          "method": "getStructureSets",
+          "desc": "()Ljava/util/Map;",
+          "sha256": "7fde37470addfa4663ff7aab8b519d826f5cc74fa0a7c92f228a71e97c470b9f"
+        },
+        {
+          "class": "com/faboslav/structurify/common/config/StructurifyConfigSerializer",
+          "method": "loadStructureSets",
+          "desc": "(Lcom/faboslav/structurify/common/config/StructurifyConfig;Lcom/google/gson/JsonObject;)V",
+          "note": "since 1.0.49: reads the map (containsKey / get) and changes settings inside its values only",
+          "sha256": "b271f5f39fdfde9928d6bc8300f489b93c079e31ae44fa7919d29bb1e29de0d2"
+        },
+        {
+          "class": "com/faboslav/structurify/common/config/StructurifyConfigSerializer",
+          "method": "saveStructureSetsData",
+          "desc": "(Lcom/faboslav/structurify/common/config/StructurifyConfig;Lcom/google/gson/JsonObject;Z)V",
+          "note": "since 1.0.49: reads the map",
+          "sha256": "b7376fb771f012ba8fa03bd887f8592f0d1b42da5822137e57930a38ba123137"
+        },
+        {
+          "class": "com/faboslav/structurify/common/config/client/gui/StructureSetConfigScreen",
+          "method": "create",
+          "desc": "(Lcom/faboslav/structurify/common/config/StructurifyConfig;Ljava/lang/String;Lnet/minecraft/client/gui/screens/Screen;)Ldev/isxander/yacl3/gui/YACLScreen;",
+          "note": "since 1.0.49: reads the map (get)",
+          "sha256": "fe0bd2eff257d9985d80544a21fb322b1d6db9b0b1f4cfe5352fba5ae78695fe"
+        },
+        {
+          "class": "com/faboslav/structurify/common/config/client/gui/StructureSetsConfigScreen",
+          "method": "addStructureSets",
+          "desc": "(Ldev/isxander/yacl3/api/ConfigCategory$Builder;Lcom/faboslav/structurify/common/config/StructurifyConfig;)V",
+          "note": "since 1.0.49: copies the map into a TreeMap of its own",
+          "sha256": "a2d5ca2e6df5a6ddc4970a2c90ba593629d08130f7c61a6447cf4ce2591c82a5"
+        },
+        {
+          "class": "com/faboslav/structurify/common/mixin/structure/StructureSetMixin",
+          "method": "structurify$getStructures",
+          "desc": "(Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;)Ljava/util/List;",
+          "note": "since 1.0.49: reads the map (containsKey / get)",
+          "sha256": "c892d03ec14bef52e96c25f3f436caeaa452ff64c980847d9cd0211f267ceefc"
         }
       ],
       "cancel": [],
-      "conversion": "injectors (@Redirect x2)",
+      "conversion": "injectors (@Redirect x2) to our helper; since 1.0.49 the helper answers both from a hash index of the same map (rebuilt when the map object or its size changes)",
       "license": "CC BY-NC-ND 4.0 (no derivatives): no Structurify code in our source; two map-call redirects to our own helper bons.furious.patch.structurify.SetDataLookup"
     }
   }

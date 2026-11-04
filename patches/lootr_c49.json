@@ -1,0 +1,54 @@
+{
+  "group": "lootr_c49",
+  "keys": {
+    "lootr_ticker_blocker_memo": {
+      "mod": "lootr",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.lootr_c49.TileTickerEntryMemoMixin",
+        "bons.furious.mixin.lootr_c49.TileTickerMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "noobanidus/mods/lootr/block/entities/TileTicker",
+          "method": "serverTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$ServerTickEvent;)V",
+          "note": "level/age/border -> remove; own hasChunk -> continue; area hasChunk until a miss + LOADED_CHUNKS lookups until a miss -> continue on any miss; else convert",
+          "sha256": "1a818b687bbb41bb2c60b95d893c7bccd88f14bf231e03b90fe7c4727d6b981f"
+        },
+        {
+          "class": "noobanidus/mods/lootr/block/entities/TileTicker",
+          "method": "addEntry",
+          "desc": "(Lnet/minecraft/world/level/block/entity/RandomizableContainerBlockEntity;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V",
+          "note": "builds each entry's chunk set once; nothing changes it afterwards",
+          "sha256": "82eae8ce41e40444ddbab7bce52887ae69397e3190ee17d988abe543c45d9ccc"
+        },
+        {
+          "class": "noobanidus/mods/lootr/block/entities/TileTicker$Entry",
+          "method": "*",
+          "desc": "",
+          "note": "final fields, getters only (getChunkPositions returns the set built in addEntry)",
+          "sha256": "8402c510e747241c1d91dcfb1a827434590e3e38345401631386dee9b835877a"
+        },
+        {
+          "class": "noobanidus/mods/lootr/event/HandleChunk",
+          "method": "*",
+          "desc": "",
+          "note": "LOADED_CHUNKS: per-dimension sets that only grow (chunk load), cleared on server start/stop, all under the map's lock",
+          "sha256": "7947e7d239c1725bb1c1a9e96d518fbe09171e7ee7a2925d27dcf895ee9b21b1"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerChunkCache",
+          "method": "m_5563_",
+          "desc": "(II)Z",
+          "note": "hasChunk: reads the visible chunk map and the holder's ticket level",
+          "sha256": "62bfeb8904f60db7a57f13b9c51e43f6a9c50a5098cf6400fed08261f3a8eb72"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@WrapOperation on two call sites of TileTicker.serverTick (Entry.age marks the entry; at the own-chunk hasChunk a chest that is already waiting repeats only its remembered failing test, or on its second evaluation gets Lootr's chunk tests from us until the first failure, which is remembered) + @Unique memo fields on TileTicker$Entry behind the duck interface bons.furious.patch.lootr_c49.LootrEntryMemo (helper bons.furious.patch.lootr_c49.LootrTickerMemo)",
+      "license": "MIT (Lootr): no Lootr code is carried; the injectors and the memo are ours"
+    }
+  }
+}

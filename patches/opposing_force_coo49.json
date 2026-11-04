@@ -1,0 +1,41 @@
+{
+  "group": "opposing_force_coo49",
+  "keys": {
+    "opposing_force_stealth_tick_memo": {
+      "mod": "opposing_force",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.opposing_force_coo49.LivingEntityStealthMemoMixin",
+        "bons.furious.mixin.opposing_force_coo49.StealthVisibilityMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/unusualmodding/opposing_force/events/ForgeEvents",
+          "method": "onLivingVisibility",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingVisibilityEvent;)V",
+          "note": "per slot: event.getEntity().getItemBySlot(slot).getAttributeModifiers(slot) (the wrapped call), its STEALTH entries summed; modifyVisibility(max(1 - sum, 0)); then the looker type / head checks",
+          "sha256": "b332df7fe25ae8856fee4994030d6fa147591ec326ae7f0473fba2085fcb64b9"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41638_",
+          "desc": "(Lnet/minecraft/world/entity/EquipmentSlot;)Lcom/google/common/collect/Multimap;",
+          "note": "getAttributeModifiers: the stack's NBT modifiers or its item's, then ForgeHooks.getAttributeModifiers (an answer of the stack, the slot and the event's listeners only)",
+          "sha256": "246357ca53e4b123efb7b451c8ef3caabdf62cb7933a349c3c9dd26c69840af7"
+        },
+        {
+          "class": "net/minecraftforge/common/ForgeHooks",
+          "method": "getAttributeModifiers",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/EquipmentSlot;Lcom/google/common/collect/Multimap;)Lcom/google/common/collect/Multimap;",
+          "note": "posts ItemAttributeModifierEvent (stack, slot, modifiers) and answers the event's modifiers",
+          "sha256": "8adb4f781ee544e07790d23f49851b76e908069457584aae32acb5e155014626"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Trade-off, off by default: on ForgeEvents.onLivingVisibility, @Inject HEAD names the event's entity's memo for this tick in a per-thread box (StealthMemo.begin), MixinExtras @WrapOperation on its ItemStack.getAttributeModifiers (m_41638_) call answers from the memo, @Inject RETURN clears the box; a field added to LivingEntity (LivingEntityStealthMemoMixin, duck StealthMemo.Holder) keeps per slot the answer and the stack object for the current game tick of the entity's level; a later visibility test of the same entity in the same tick gets the kept map while the slot holds the same stack object. A stack changed in place or a listener answer changed within the tick is seen from the next tick. Memo owned by the thread that made it. Runtime flag opposingForceStealthTickMemo, shadow opposingForceStealthTickMemo.shadow. Helper bons.furious.patch.opposing_force_coo49.StealthMemo.",
+      "license": "Opposing Force (MIT): no code carried, the wrapper carries only our own logic"
+    }
+  }
+}

@@ -1,0 +1,246 @@
+{
+  "group": "legendaryspellbooks_coo49",
+  "keys": {
+    "legendary_spellbooks_tornado_presence_gate": {
+      "mod": "legendary_spellbooks",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.legendaryspellbooks_coo49.LsTornadoScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/higurashi/legendary_spellbooks/common/entities/handler/TornadoEntityHandler",
+          "method": "onLivingUpdate",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "server levels: box grown by 2; riding a Tornado, or level.getEntitiesOfClass(Tornado, box) not empty (the wrapped call) -> fall distance -2 and the in_tornado tag, else the tag goes",
+          "sha256": "146e3568af304289a8206c9d27bbd0d6451f56e3dbec8a8ea90215ffba6e57cf"
+        },
+        {
+          "class": "net/minecraft/world/level/EntityGetter",
+          "method": "m_45976_",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;",
+          "note": "getEntitiesOfClass(class, box) = getEntitiesOfClass(class, box, NO_SPECTATORS): the class search the walk mark applies to",
+          "sha256": "02b741b674cda0ec6d8bfa9662b11dd0e9065674d64257adc716432fd5c3b338"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the Level.getEntitiesOfClass (m_45976_) call in TornadoEntityHandler.onLivingUpdate (a plain call when a tornado is present): while vanilla_entity_class_count_layer says the level holds no Legendary Monsters Tornado (registration bons_and_furious.legendaryspellbooks_coo49.entity_classes.json, counted while Legendary Spellbooks is installed and this switch is on) a search for exactly the Tornado class is marked EMPTY, so vanilla_entity_walk_skip leaves out its section walk; the call and the in_tornado tag logic run unchanged. Runtime flag legendarySpellbooksTornadoPresenceGate, shadow legendarySpellbooksTornadoPresenceGate.shadow. Helper bons.furious.patch.legendaryspellbooks_coo49.LsTornadoGate.",
+      "license": "LGPL-3.0 (Legendary Spellbooks): no code carried, the wrapper carries only our own logic"
+    },
+    "legendary_spellbooks_drift_scan_gate": {
+      "mod": "legendary_spellbooks",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.legendaryspellbooks_coo49.LsDriftScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/higurashi/legendary_spellbooks/common/effects/handler/FlamebornDriftSpellHandler",
+          "method": "onPlayerTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "client END ticks of every player: level.getEntities(null, box grown by 64, instanceof LivingEntity) (the wrapped call); acts only on entities spin-attacking with Iron's spin type FLAMEBORN",
+          "sha256": "2d8b5c69d7aa6a8594d5c3d5f6a9af1bd5c4332ab10abeb3fadea38c138291a5"
+        },
+        {
+          "class": "io/redspace/ironsspellbooks/player/ClientMagicData",
+          "method": "getSyncedSpellData",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lio/redspace/ironsspellbooks/capabilities/magic/SyncedSpellData;",
+          "note": "Player: the synced map; IMagicEntity: its magic data; any other entity: a new default (spin RIPTIDE)",
+          "audit": true,
+          "sha256": "8d0e3853194b59159fd04429103d27c4fef21add4936aa025cb13236e81c5457"
+        },
+        {
+          "class": "io/redspace/ironsspellbooks/capabilities/magic/SyncedSpellData",
+          "method": "<init>",
+          "desc": "(I)V",
+          "note": "the default: spinAttackType RIPTIDE",
+          "audit": true,
+          "sha256": "bf597b6c7d5b84f4b6630f8cb144f7de9308183afe9b8310970aa050c2e8724c"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_6249_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+          "note": "getEntities: the profiler's getEntities count, the section walk into a new list, Forge's part pass (parts are never LivingEntity)",
+          "sha256": "f64a036652ed9773518dc1939fb9149fa37aa93ceb9439fbdd6eef29541d73b1"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel$EntityCallbacks",
+          "method": "m_141985_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "onTrackingStart: an AbstractClientPlayer joins level.players()",
+          "sha256": "d9ff9d8ea5f8ec407363cddd5bb44d0310a53f46637915e3986ef5aa3f258314"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel$EntityCallbacks",
+          "method": "m_141981_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "onTrackingEnd: the player leaves level.players()",
+          "sha256": "7ad00f9e2acf5d8e6979c8843dea155f4e0af281ce5b623fc6cc1ffbebfb9bec"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/TransientEntitySectionManager",
+          "method": "m_157653_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)V",
+          "note": "addEntity: lookup, section, then onCreated and onTrackingStart for every entity",
+          "sha256": "5f2f67f1c20294f5b4d354e0053fef4f1d87d67c0b0cd4eee5d600193300259c"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/TransientEntitySectionManager$Callback",
+          "method": "m_142472_",
+          "desc": "(Lnet/minecraft/world/entity/Entity$RemovalReason;)V",
+          "note": "onRemove: out of the section, then onTrackingEnd",
+          "sha256": "8d56d9c22965d3e4130a39575f3c966b9e709dc11a0901cc43e93249579a15a6"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/LevelEntityGetterAdapter",
+          "method": "m_142232_",
+          "desc": "(Lnet/minecraft/world/phys/AABB;Ljava/util/function/Consumer;)V",
+          "note": "get(box, consumer): hands the walk to EntitySectionStorage.getEntities(box, ...)",
+          "sha256": "62c02342e7e0766387d97108d429102f557bfb130d027ae8b4b4ce23828a6af2"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntitySectionStorage",
+          "method": "m_261111_",
+          "desc": "(Lnet/minecraft/world/phys/AABB;Lnet/minecraft/util/AbortableIterationConsumer;)V",
+          "note": "getEntities(box, consumer): every accessible section of the box, section.getEntities(box, consumer)",
+          "sha256": "8efdf3acef602506f3956b61e84c9906d5c759d34465f913ed4a555dcbf1cdd8"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntitySection",
+          "method": "m_260830_",
+          "desc": "(Lnet/minecraft/world/phys/AABB;Lnet/minecraft/util/AbortableIterationConsumer;)Lnet/minecraft/util/AbortableIterationConsumer$Continuation;",
+          "note": "getEntities(box, consumer): lists an entity only when its bounding box intersects the box (the gate tests only those players)",
+          "sha256": "aaa760f7c743e9a49400ab3ad19bb4abc5055c2ecec2a7b7c8086d6e3e87a149"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the ClientLevel.getEntities(Entity, AABB, Predicate) (m_6249_) call in FlamebornDriftSpellHandler.onPlayerTick: while vanilla_entity_class_count_layer says the client level holds no Iron's IMagicEntity (asked first; registration bons_and_furious.legendaryspellbooks_coo49.entity_classes.json: IMagicEntity, Player and AbstractClientPlayer, counted while Legendary Spellbooks is installed and this switch is on), its Player count equals its AbstractClientPlayer count and no player of level.players() whose bounding box meets the search box is spin-attacking (the player that kept the last search is tried first), the search answers a new empty list after counting the profiler's getEntities line; otherwise the original. Runtime flag legendarySpellbooksDriftScanGate, shadow legendarySpellbooksDriftScanGate.shadow. Helper bons.furious.patch.legendaryspellbooks_coo49.LsDriftClient.",
+      "license": "LGPL-3.0 (Legendary Spellbooks): no code carried, the wrapper carries only our own logic; Iron's Spellbooks rows are reads of its client data"
+    },
+    "legendary_spellbooks_drift_local_player_only": {
+      "mod": "legendary_spellbooks",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.legendaryspellbooks_coo49.LsDriftLocalOnlyMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/higurashi/legendary_spellbooks/common/effects/handler/FlamebornDriftSpellHandler",
+          "method": "onPlayerTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "END on the client, then player = event.player (the read our hook answers), a null player ends the handler; the sweep and the drift particles around that player",
+          "sha256": "2d8b5c69d7aa6a8594d5c3d5f6a9af1bd5c4332ab10abeb3fadea38c138291a5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Gameplay fix, off by default: MixinExtras @ModifyExpressionValue on the handler's first read of PlayerTickEvent.player in FlamebornDriftSpellHandler.onPlayerTick: null for every player but Minecraft's local player, so the handler's own null test ends it. Runtime flag legendarySpellbooksDriftLocalPlayerOnly. Helper bons.furious.patch.legendaryspellbooks_coo49.LsDriftClient.",
+      "license": "LGPL-3.0 (Legendary Spellbooks): no code carried; the hook decides for which player the mod's own sweep runs"
+    },
+    "legendary_spellbooks_annihilation_bonus_memo": {
+      "mod": "legendary_spellbooks",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.legendaryspellbooks_coo49.LsAnnihilationMemoMixin",
+        "bons.furious.mixin.legendaryspellbooks_coo49.LsAttributeVersionMixin",
+        "bons.furious.mixin.legendaryspellbooks_coo49.LsLivingMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/higurashi/legendary_spellbooks/common/event/AnnihilationAttributeBonusEvent",
+          "method": "onLivingTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "every 2nd tick on server levels: three getAttribute lookups, return without annihilation, fire / ender getValue - 1, the two config factors, getModifier(BONUS_UUID); remove + add a new permanent modifier only when it is missing or differs",
+          "sha256": "9bc7f7d38eeaa2f58306ca993954dfca8402cf8096578b7806fb27a52ee62fa9"
+        },
+        {
+          "class": "dev/higurashi/legendary_spellbooks/common/event/AnnihilationAttributeBonusEvent",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "BONUS_UUID = d1c92506-bc83-41ed-ae4b-47b0b798a33e",
+          "sha256": "e1a050d618f24b5d592a84777ee2318a55ec65b7f9fbf00eb1e6f0a3381f124c"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21051_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/Attribute;)Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;",
+          "note": "getAttribute = getAttributes().getInstance(attribute)",
+          "sha256": "4a64442b0a28f239245fe3c5c1284ed3afc850ae038b6d2f63875c5070c7aee7"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeMap",
+          "method": "m_22146_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/Attribute;)Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;",
+          "note": "getInstance = computeIfAbsent over the final map from the final supplier: an instance, once made, is always the answer",
+          "sha256": "19b9318b1c17b68d602cee0a772f66ed03324aa80d20b973633ec28652ff29bd"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22129_",
+          "desc": "()V",
+          "note": "setDirty: dirty = true, onDirty.accept(this) (the read our counter hook answers)",
+          "sha256": "62cbcd898d6ab0d8d9c70d9cd4befc6af356e81764d4466eaee30098ddbb3978"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22135_",
+          "desc": "()D",
+          "note": "getValue: recompute only while dirty, else the cached value",
+          "sha256": "6f72a3562c49f9869c27a47096da567242eb4f60acbbdc9012542b05252a2095"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22100_",
+          "desc": "(D)V",
+          "note": "setBaseValue: setDirty on a change",
+          "sha256": "5b9860b62059f64879acb87caffbdc37a2d4bcf4f67330c4d76b0acf345b2447"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22133_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "note": "addModifier: setDirty",
+          "sha256": "a04c6fff95e4fd1f662cffb1e88ba8919562222fe7c5dc816224eb60235f900a"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22130_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "note": "removeModifier: setDirty",
+          "sha256": "1a36bba283103cf86bf1f38843281b2ddab1793edce903a3d2947560718afcdd"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22102_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;)V",
+          "note": "replaceFrom: setDirty",
+          "sha256": "f13586252034300cbd30c536cce685f6badb3c5cd84b2be8dfc5a588c6771124"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22113_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "load: setDirty",
+          "sha256": "2db2822784aa067412406bca44c0cbb98afb1d3b6a3bf2fb4201e19d460ebbbc"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22111_",
+          "desc": "(Ljava/util/UUID;)Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;",
+          "note": "getModifier: a read of the UUID map",
+          "sha256": "7a9e9d9c7855dd3f342c69a5deea906a408d045960683bb81281e5813a135607"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on AnnihilationAttributeBonusEvent.onLivingTick: after the handler's own tick-parity and client test, a run is skipped when the entity's memo (LsLivingMemoMixin field) says the annihilation instance was absent last time, or the annihilation instance saw no setDirty, the fire and ender instances saw no setDirty and are not dirty, the two config factors have the same bits and the last run ended with the bonus modifier at a number; else the original runs and is recorded (the three getAttribute calls wrapped by @WrapOperation keep the instances unchanged). Counter: LsAttributeVersionMixin (@ModifyExpressionValue on setDirty's onDirty read; dirty flag through @Shadow). Runtime flag legendarySpellbooksAnnihilationBonusMemo, shadow legendarySpellbooksAnnihilationBonusMemo.shadow. Helper bons.furious.patch.legendaryspellbooks_coo49.LsAnnihilationMemo.",
+      "license": "LGPL-3.0 (Legendary Spellbooks): no code carried, the wrappers carry only our own logic; the AttributeInstance / LivingEntity hooks only count calls and hold the memo"
+    }
+  }
+}

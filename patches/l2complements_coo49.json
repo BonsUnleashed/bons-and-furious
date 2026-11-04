@@ -1,0 +1,309 @@
+{
+  "group": "l2complements_coo49",
+  "keys": {
+    "l2complements_attack_checks_cheap_first": {
+      "mod": "l2complements",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.l2complements_coo49.AttackFeatureChecksMixin",
+        "bons.furious.mixin.l2complements_coo49.EntityFeatureListAccess",
+        "bons.furious.mixin.l2complements_coo49.EntityFeatureAddMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/xkmc/l2complements/events/MagicEventHandler",
+          "method": "onLivingAttack",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingAttackEvent;)V",
+          "note": "seven EntityFeature.test calls; six ANDed with a later condition (owner Ownable, no causing entity, magic / projectile / fire / explosion tag), INVINCIBLE alone; the config gate after the first",
+          "sha256": "ce3bc461b08a05fbb1c45331375bad65d6b9a0c1b42940a51bad261bbb5db531"
+        },
+        {
+          "class": "dev/xkmc/l2complements/content/feature/EntityFeature",
+          "method": "test",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "true when any predicate of the list answers true",
+          "sha256": "b5cef09abd3b424c29759f737f5822fe8833fc062b9f7385ab2142cd5ffa6d6f"
+        },
+        {
+          "class": "dev/xkmc/l2complements/content/feature/EntityFeature",
+          "method": "add",
+          "desc": "(Ldev/xkmc/l2complements/content/feature/FeaturePredicate;)V",
+          "note": "the only writer of the list after the constructor (a predicate another mod adds makes the feature impure)",
+          "sha256": "600a9d424620a219b6b2f425cc9c6787fffe52489af420877ff7f6fcbc738cfa"
+        },
+        {
+          "class": "dev/xkmc/l2complements/content/feature/EnchantmentFeaturePredicate",
+          "method": "test",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "EnchantmentHelper.getEnchantmentLevel(supplier.get(), entity) > 0: reads only",
+          "sha256": "24883b64dfc6783ecbda5769591f02be98713b951325420607c22b42c7d8f72f"
+        },
+        {
+          "class": "dev/xkmc/l2complements/content/feature/SlotEnchantmentFeaturePredicate",
+          "method": "test",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "entity.getItemBySlot(slot).getEnchantmentLevel(supplier.get()) > 0: reads only",
+          "sha256": "ac50b6d9771de3ffb95697d6f9c537714ed9bf324a0a812bda1695384129136e"
+        },
+        {
+          "class": "net/minecraft/world/item/enchantment/EnchantmentHelper",
+          "method": "m_44836_",
+          "desc": "(Lnet/minecraft/world/item/enchantment/Enchantment;Lnet/minecraft/world/entity/LivingEntity;)I",
+          "note": "getEnchantmentLevel(enchantment, entity): the slot map and the highest item level, reads only",
+          "sha256": "a64e23135e26a0bc55b8649afeb72c39e1296af5877e20e92093d0175d0c874a"
+        },
+        {
+          "class": "net/minecraft/world/item/enchantment/Enchantment",
+          "method": "m_44684_",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/Map;",
+          "note": "getSlotItems: a new EnumMap of getItemBySlot for the enchantment's slots",
+          "sha256": "ec428c3e230f1960ebba5d5f7c3620d73675d49b705c5b0513cb55ed85f6e583"
+        },
+        {
+          "class": "net/minecraft/world/item/enchantment/EnchantmentHelper",
+          "method": "m_44843_",
+          "desc": "(Lnet/minecraft/world/item/enchantment/Enchantment;Lnet/minecraft/world/item/ItemStack;)I",
+          "note": "getItemEnchantmentLevel (Forge: stack.getEnchantmentLevel): reads only",
+          "sha256": "eb81d8c24a2ee83b92ec4ee237e1e36f8a7201427d00b5c777b5ba33af339cc9"
+        },
+        {
+          "class": "net/minecraft/world/damagesource/DamageSource",
+          "method": "m_7639_",
+          "desc": "()Lnet/minecraft/world/entity/Entity;",
+          "note": "getEntity: the causing entity field",
+          "sha256": "6bce916d8de0f38789c9971e795f22d3301b1cf566e55e0ea55e9707ba4ab726"
+        },
+        {
+          "class": "net/minecraft/world/damagesource/DamageSource",
+          "method": "m_269533_",
+          "desc": "(Lnet/minecraft/tags/TagKey;)Z",
+          "note": "is(tag): the damage type holder's tag test",
+          "sha256": "cd3db2c4f5256f902e069781fa583c7c2465a9e6bfa640fcac53a798489b85c0"
+        },
+        {
+          "class": "com/iafenvoy/iafpatcher/mixin/EnchantmentHelperMixin",
+          "method": "wrapFireAspect",
+          "desc": "(Lnet/minecraft/world/item/enchantment/Enchantment;Lnet/minecraft/world/item/ItemStack;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "audited hook on getItemEnchantmentLevel (IaF Patcher 1.2): sets the return value for two Ice and Fire swords; no other effect",
+          "audit": true,
+          "sha256": "8b0aa8e40b2645edce0ed217647e3fac0621b973389384e0ad7954e0b77af6fc"
+        },
+        {
+          "class": "immersive_armors/mixin/MixinEnchantmentHelper",
+          "method": "immersiveArmors$getLevel",
+          "desc": "(Lnet/minecraft/world/item/enchantment/Enchantment;Lnet/minecraft/world/item/ItemStack;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "audited hook on getItemEnchantmentLevel (Immersive Armors 1.6.1): adds the armor material's level to the return value; no other effect",
+          "audit": true,
+          "sha256": "0eded7a02bf5eff3c02bcf0132dad1452876ecc6b6bf01bbc893d4fb98769c1c"
+        },
+        {
+          "class": "net/bettercombat/mixin/PlayerEntityMixin",
+          "method": "getEquippedStack_Pre",
+          "desc": "(Lnet/minecraft/world/entity/EquipmentSlot;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "audited hook on Player.getItemBySlot (Better Combat 1.8.6): answers the off hand of a two-handed or dual-wielded weapon; reads only",
+          "audit": true,
+          "sha256": "714fe8a5fbeab7d700be58df7e513f85d7760e1ed6b8dd6b11839d6b0fd4fc36"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of six of the seven EntityFeature.test calls in MagicEventHandler.onLivingAttack (ordinals 0, 2-6; target-argument capture of the LivingAttackEvent; the handler makes the shipped call itself when it does not leave the test out) + an @Accessor of EntityFeature.list + an @Inject at the RETURN of EntityFeature.add (the features' purity is checked again after every add); helper bons.furious.patch.l2complements_coo49.AttackChecks",
+      "license": "All Rights Reserved (L2 Complements): no L2 Complements code is carried; our wrappers only decide whether its unchanged test runs; Minecraft (Mojang): no-copy"
+    },
+    "l2complements_breaker_set_concurrent": {
+      "mod": "l2complements",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "fix",
+      "mixins": [
+        "bons.furious.mixin.l2complements_coo49.BreakerSetMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/xkmc/l2complements/content/enchantment/digging/RangeDiggingEnchantment",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "BREAKER = new HashSet() and nothing else",
+          "sha256": "942c68e34ba44a7968ee5bcff4df1299f03372f0ea2fae2f078bb689a35c4046"
+        },
+        {
+          "class": "dev/xkmc/l2complements/content/enchantment/digging/RangeDiggingEnchantment",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Ljava/lang/Runnable;)V",
+          "note": "synchronized(BREAKER): contains, add the player's UUID, run, remove",
+          "sha256": "d6c2c52b8aa53fcd5beb91aa6bebdaec6a1b140ae1b717a1c0ad78bc2bc52e9c"
+        },
+        {
+          "class": "dev/xkmc/l2complements/content/enchantment/digging/RangeDiggingEnchantment",
+          "method": "isSuppressed",
+          "desc": "(Ljava/util/UUID;)Z",
+          "note": "BREAKER.contains(uuid) without the lock (called from BlockMixin.spawnDestroyParticles on either thread)",
+          "sha256": "76e808c0fb4f6e7e16187441dec224650b4ae3038186c69b8cb2ce21262c0328"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at the RETURN of RangeDiggingEnchantment.<clinit> with a @Shadow @Final @Mutable BREAKER: the field becomes a BreakerSet.SnapshotSet (copy-on-write: lock-free reads of an immutable array); helper bons.furious.patch.l2complements_coo49.BreakerSet",
+      "license": "All Rights Reserved (L2 Complements): no L2 Complements code is carried"
+    },
+    "l2complements_enchant_id_string_compare": {
+      "mod": "l2complements",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.l2complements_coo49.EnchantIdLevelMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/xkmc/l2complements/events/EnchUtils",
+          "method": "getTagEnchantmentLevel",
+          "desc": "(Lnet/minecraft/world/item/enchantment/Enchantment;Lnet/minecraft/world/item/ItemStack;)I",
+          "note": "isEmpty -> 0; key = getEnchantmentId(enchantment); for each entry of getEnchantmentTags: tryParse(id) equals key -> clamped lvl; else 0",
+          "sha256": "55742f4a80e36eaedb3b7d5f45c8587eb22e2a1210340e557308d79dcd39339b"
+        },
+        {
+          "class": "dev/xkmc/l2complements/events/EnchUtils",
+          "method": "getEnchantmentId",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "ResourceLocation.tryParse(tag.getString(\"id\"))",
+          "sha256": "1e2c4ba9171679fefd9597f6950edc298010706033592b94da9570486192bdd6"
+        },
+        {
+          "class": "dev/xkmc/l2complements/events/EnchUtils",
+          "method": "getEnchantmentId",
+          "desc": "(Lnet/minecraft/world/item/enchantment/Enchantment;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "BuiltInRegistries.ENCHANTMENT.getKey",
+          "sha256": "c528dec0868429065d084f04d5f2ccb29198e906039289f7cbe3ca77ccfd611d"
+        },
+        {
+          "class": "dev/xkmc/l2complements/events/EnchUtils",
+          "method": "getEnchantmentLevel",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)I",
+          "note": "Mth.clamp(tag.getInt(\"lvl\"), 0, 255)",
+          "sha256": "dcb130b59fcc0d68c865f7ff6ae7500595367c71babacf7de2579cad654d3817"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "m_135820_",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "tryParse: new ResourceLocation(s), null on ResourceLocationException",
+          "sha256": "b5ce38752bd5d15aaa2a30c61c05e03138f8015b7a6e940a0f208d4433557738"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;)V",
+          "note": "decompose at ':' then the two-part constructor",
+          "sha256": "0a6c843d2f00cd240fdaaf764417e090fdcb44f113b2dc3f262612b1c7a31443"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "m_135832_",
+          "desc": "(Ljava/lang/String;C)[Ljava/lang/String;",
+          "note": "decompose: first separator; namespace minecraft when there is none or it is first",
+          "sha256": "99e3f1ebf7d08df4960db8338065c2522513b5c8918af2dadedd1dde43af683e"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "<init>",
+          "desc": "([Ljava/lang/String;)V",
+          "note": "the two parts",
+          "sha256": "472687db0764d1cce4c1cdb02c678a4b79908cd54942927ee8502e213acc2ee1"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)V",
+          "note": "validates both parts (throws ResourceLocationException)",
+          "sha256": "dbcd98c634304656158821ac98904f21b8879bc312842adb1d3f8f8bcac49859"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "m_245413_",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;",
+          "note": "assertValidNamespace",
+          "sha256": "c0956c3c8e897bf1b513d09845c3e0218400b6d4219a79cf7045b67ee869aa01"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "m_245185_",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;",
+          "note": "assertValidPath",
+          "sha256": "2301ac50c8a8423ff0943ab3353617e2d86bcdc164f30cf830c03f959378dfce"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "m_135843_",
+          "desc": "(Ljava/lang/String;)Z",
+          "note": "isValidNamespace: every char [a-z0-9_.-]",
+          "sha256": "b0a770c50b1fa1bd10f1ff1dd4f239ed78eef4db418843092b08b49f0996bd7f"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "m_135841_",
+          "desc": "(Ljava/lang/String;)Z",
+          "note": "isValidPath: every char [a-z0-9_.-/]",
+          "sha256": "779f5974ad257bea4bf03084cea90b6b9cee5825df0b775756318826ef8bceec"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "m_135835_",
+          "desc": "(C)Z",
+          "note": "validNamespaceChar (no ':')",
+          "sha256": "a19d59b8179e0c2e4472ae07843aa437a8e62c5fe8208d106b15b3e79c6436e5"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "m_135828_",
+          "desc": "(C)Z",
+          "note": "validPathChar (no ':')",
+          "sha256": "55c3b69af47f7c0c372b21ea76fc21e765ae67dc6b9a9be82d23a2b9dbc4e409"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "note": "namespace and path equal",
+          "sha256": "3fef9a4090052f7b438d4823b18d1ded716f96c874bf4f62525161a717558c2a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on EnchUtils.getTagEnchantmentLevel: the same walk with string comparison (helper bons.furious.patch.l2complements_coo49.EnchantIds); unregistered enchantments run the shipped method",
+      "license": "All Rights Reserved (L2 Complements): no L2 Complements code is carried; Minecraft (Mojang): no-copy"
+    },
+    "l2complements_tooltip_line_precheck": {
+      "mod": "l2complements",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.l2complements_coo49.TooltipLinePrecheckMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/xkmc/l2complements/events/ClientEventHandler",
+          "method": "modifyItemTooltip",
+          "desc": "(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V",
+          "note": "returns unless enchanted or an enchanted book; then reads the enchantment map and the Alt state, wraps the lines, and replaces only lines with an l2complements .desc translation key (directly or as the only sibling of a literal line) whose enchantment is a CustomDescEnchantment; changes the list only then",
+          "sha256": "f58a18edc98a9e52af66893840bc09a1c03d2251a9569477735a08c7258fa366"
+        },
+        {
+          "class": "net/minecraft/world/item/enchantment/EnchantmentHelper",
+          "method": "m_44831_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Ljava/util/Map;",
+          "note": "getEnchantments: reads the stack's enchantment list (left out when no line qualifies)",
+          "sha256": "cdfe8452b225c8128eff115daa75eec9f939bbb5110f53b0c4191945cc3c450e"
+        },
+        {
+          "class": "org/violetmoon/quark/mixin/mixins/EnchantmentHelperMixin",
+          "method": "getAncientTomeEnchantments",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "audited hook on getEnchantments (Quark 4.0-460): sets the return value for ancient tomes; no other effect",
+          "audit": true,
+          "sha256": "bf42278e8925abe07347dd8d95d019a4db3c551ec0b884c2676250b8adaf3d83"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the two calls of ClientEventHandler.modifyItemTooltip's first test (ItemStack.isEnchanted, ItemStack.is(Items.ENCHANTED_BOOK); target-argument capture of the ItemTooltipEvent): a true answer stays true only when the handler's line test (without its registry lookup) finds a line, so the handler returns at once otherwise (helper bons.furious.patch.l2complements_coo49.TooltipPrecheck)",
+      "license": "All Rights Reserved (L2 Complements): no L2 Complements code is carried; Minecraft (Mojang): no-copy"
+    }
+  }
+}

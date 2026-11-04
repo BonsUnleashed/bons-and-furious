@@ -1,0 +1,46 @@
+{
+  "group": "gtbcsspelllib_coo49",
+  "keys": {
+    "gtbcs_spell_lib_shake_scan_presence_gate": {
+      "mod": "gtbcs_spell_lib",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.gtbcsspelllib_coo49.SpellLibShakeScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/gametechbc/spelllib/events/ForgeClientEvents",
+          "method": "onCameraSetup",
+          "desc": "(Lnet/minecraftforge/client/event/ViewportEvent$ComputeCameraAngles;)V",
+          "note": "getEntitiesOfClass(GSLScreenShakeEntity, player box +-50) and getEntitiesOfClass(GSLFollowingScreenShakeEntity, +-50) (the two wrapped calls), then the shake sum over each list",
+          "sha256": "ca2c0de1f906eb6c7b563d4b3ff3b929e6ed92631389a1a87463187343699804"
+        },
+        {
+          "class": "com/gametechbc/spelllib/events/ForgeClientEvents",
+          "method": "processScreenFlashEffects",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;FLnet/minecraft/client/gui/GuiGraphics;)V",
+          "note": "getEntitiesOfClass(GSLScreenFlashEntity, +-50) (the wrapped call), the strongest flash of the list, the overlay only when its alpha is above 0",
+          "sha256": "c49fccd91a77c0196bd5c641e878d9c7f326d1b929ed57cf5e77efde9dd8e530"
+        },
+        {
+          "class": "com/gametechbc/spelllib/events/ForgeClientEvents",
+          "method": "processPowerInversionEffects",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;FLnet/minecraft/client/gui/GuiGraphics;)V",
+          "note": "getEntitiesOfClass(GSLPowerInversionEntity, +-50) (the wrapped call), the strongest effect of the list, the overlay only when its phase is not NONE",
+          "sha256": "c42a3f2c37dc6bad36da778a821cb59b8a50d80c8382e3008807ba44b21f0958"
+        },
+        {
+          "class": "net/minecraft/world/level/EntityGetter",
+          "method": "m_45976_",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;",
+          "note": "getEntitiesOfClass(class, box) = getEntitiesOfClass(class, box, NO_SPECTATORS): the class search the walk mark applies to",
+          "sha256": "02b741b674cda0ec6d8bfa9662b11dd0e9065674d64257adc716432fd5c3b338"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the four Level.getEntitiesOfClass (m_45976_) calls of ForgeClientEvents (onCameraSetup x2, processScreenFlashEffects, processPowerInversionEffects): while vanilla_entity_class_count_layer says the client level holds no instance of the searched class (registration bons_and_furious.gtbcsspelllib_coo49.entity_classes.json: GSLScreenShakeEntity, GSLFollowingScreenShakeEntity, GSLScreenFlashEntity, GSLPowerInversionEntity, counted while SpellLib is installed and this switch is on) the call is marked EMPTY so that vanilla_entity_walk_skip leaves out its empty section walk; the call itself and the listener run unchanged. Runtime flag gtbcsSpellLibShakeScanPresenceGate, shadow gtbcsSpellLibShakeScanPresenceGate.shadow. Helper bons.furious.patch.gtbcsspelllib_coo49.SpellLibScans.",
+      "license": "GTBC's SpellLib (All Rights Reserved): no code carried, the wrapper carries only our own logic"
+    }
+  }
+}

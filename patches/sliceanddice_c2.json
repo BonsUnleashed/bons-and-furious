@@ -112,10 +112,37 @@
           "method": "m_7587_",
           "desc": "(IILnet/minecraft/world/level/chunk/ChunkStatus;Z)Lnet/minecraft/world/level/chunk/ChunkAccess;",
           "sha256": "0127d484627eaf07c5be44f422503fcda3aa00fe79bf7daf20bd475206bb6fa9"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientChunkCache",
+          "method": "m_7587_",
+          "desc": "(IILnet/minecraft/world/level/chunk/ChunkStatus;Z)Lnet/minecraft/world/level/chunk/LevelChunk;",
+          "note": "since 1.0.49: the client lookup (load = false: the loaded chunk or null); a client class, absent on a dedicated server: the dedicated-server row says so",
+          "sha256_also": [
+            {
+              "build": "dedicated-server",
+              "sha256": null
+            }
+          ],
+          "sha256": "15806bdb3f3c58cca496f5e7eb6ea009e53885b1985ee1b713df08d80ce69a27"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_20095_",
+          "desc": "()V",
+          "note": "since 1.0.49: clearFire = setRemainingFireTicks(0) (the unlit skip relies on it; subclasses that override it keep the read)",
+          "sha256": "6cd3a334b011d9c4275776872d7db6091070cc6656647f0129f28273e32e3209"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_7311_",
+          "desc": "(I)V",
+          "note": "since 1.0.49: setRemainingFireTicks = the field write (in this pack only Ars Nouveau hooks it, for values above 0)",
+          "sha256": "24766c3edc4c6a2033a9aef2b5f01b1b606830e853d76a5a16907d4ba2350448"
         }
       ],
       "cancel": [],
-      "conversion": "targethandler (MixinSquared @Redirect of WetAir.check in Slice & Dice's LevelMixin.isRainingAt handler and of Level.getBlockState in its EntityMixin.baseTick handler) + a scan-state field on vanilla HashMapPalette reset at the head of read(FriendlyByteBuf)",
+      "conversion": "targethandler (MixinSquared @Redirect of WetAir.check in Slice & Dice's LevelMixin.isRainingAt handler and of Level.getBlockState in its EntityMixin.baseTick handler) + a scan-state field on vanilla HashMapPalette reset at the head of read(FriendlyByteBuf). Since 1.0.49 the WetAir.check redirect answers on the client's main thread too (WetAirGateClient: ClientChunkCache.getChunk(x, z, FULL, false)) and, in the baseTick redirect on both sides, no read at all for an entity whose remainingFireTicks is 0 (clearFire would write the 0 it holds; classes overriding clearFire or setRemainingFireTicks keep the read). Sub-flags sliceanddiceWetAirGate.client, sliceanddiceWetAirGate.unlit.",
       "license": "Slice & Dice: licence not bundled (mods.toml points to its repository), treated as custom: no Slice & Dice code is carried; the redirects only call our gate (bons.furious.patch.sliceanddice_c2.WetAirGate) or Slice & Dice's own method"
     }
   }

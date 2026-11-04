@@ -1,0 +1,281 @@
+{
+  "group": "xaerolib_c49",
+  "keys": {
+    "xaerolib_current_profile_memo": {
+      "mod": "xaerolib",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.xaerolib_c49.XlCurrentProfileMemoMixin",
+        "bons.furious.mixin.xaerolib_c49.XlConfigTrackMixin",
+        "bons.furious.mixin.xaerolib_c49.XlManagersTrackMixin",
+        "bons.furious.mixin.xaerolib_c49.XlProfilesTrackMixin",
+        "bons.furious.mixin.xaerolib_c49.XlRedirectorTrackMixin",
+        "bons.furious.mixin.xaerolib_c49.XlClientRedirectorTrackMixin"
+      ],
+      "guard": [
+        {
+          "class": "xaero/lib/client/config/ClientConfigManager",
+          "method": "getCurrentProfile",
+          "desc": "()Lxaero/lib/common/config/profile/ConfigProfile;",
+          "note": "primary CURRENT_PROFILE value, profileManager.get, compare with lastFetchedProfile (switch handling only when it differs)",
+          "sha256": "96fa74b7526d8b8b1ab6ada1860fda132d971b8138fdd445b71846a20b68a9fa"
+        },
+        {
+          "class": "xaero/lib/common/config/profile/ConfigProfileManager",
+          "method": "get",
+          "desc": "(Ljava/lang/String;)Lxaero/lib/common/config/profile/ConfigProfile;",
+          "note": "profiles.get",
+          "sha256": "e4daa200bce1d5a77cbc12aa33083da7d43ed5f47bc1b9d8dd84b3ddfbe9b738"
+        },
+        {
+          "class": "xaero/lib/common/config/single/SingleConfigManager",
+          "method": "getEffective",
+          "desc": "(Lxaero/lib/common/config/option/ConfigOption;)Ljava/lang/Object;",
+          "note": "redirector check (only with a registered redirector: its condition, its supplier, cache writes), then getConfig().get(option)",
+          "sha256": "5834df821af3b0e2ba49e66113f3b9d8e14b90bb6fb4178ba46964a3a89f4ce1"
+        },
+        {
+          "class": "xaero/lib/common/config/single/SingleConfigManager",
+          "method": "getConfig",
+          "desc": "()Lxaero/lib/common/config/Config;",
+          "note": "the config field",
+          "sha256": "18f8a6c8f32c98be8253699c146c8befe18423831d7119d9439ba9990896af7b"
+        },
+        {
+          "class": "xaero/lib/common/config/Config",
+          "method": "get",
+          "desc": "(Lxaero/lib/common/config/option/ConfigOption;)Ljava/lang/Object;",
+          "note": "failed-value check (null-allowing configs), then values.get: reads only",
+          "sha256": "1bf2142e811bcd505a18668eca8f09676ce26c2e51036113b95a32d1f67915b9"
+        },
+        {
+          "class": "xaero/lib/common/config/Config",
+          "method": "getFailedSerializedValue",
+          "desc": "(Lxaero/lib/common/config/option/ConfigOption;)Ljava/lang/String;",
+          "note": "failedSerializedValues.get",
+          "sha256": "13bb56ee62fb4a20315d25075315b4b38f62876c3dda6dc7c7bfc2257af3e2f9"
+        },
+        {
+          "class": "xaero/lib/common/config/option/value/redirect/OptionValueRedirectorManager",
+          "method": "shouldRedirect",
+          "desc": "(Lxaero/lib/common/config/option/ConfigOption;)Z",
+          "note": "not overridable or no redirector: false with no side effect; otherwise the condition and a cache write",
+          "sha256": "f5343b8c63d65d9545eadd25213fad62ce2795b7fec6d6d34252604dcb7393f3"
+        },
+        {
+          "class": "xaero/lib/common/config/option/value/redirect/OptionValueRedirectorManager",
+          "method": "get",
+          "desc": "(Lxaero/lib/common/config/option/ConfigOption;)Lxaero/lib/common/config/option/value/redirect/OptionValueRedirector;",
+          "note": "redirectors.get",
+          "sha256": "57163919303e52088fc7e28a1c910dfccab7e04ab47d6d474cc84111735be6a8"
+        },
+        {
+          "class": "xaero/lib/common/config/option/ConfigOption",
+          "method": "isOverridable",
+          "desc": "()Z",
+          "note": "a final field",
+          "sha256": "07299c9df1060378d20ba3e0fb72955ac85c4e9880352fc595208a15f3eca7a2"
+        },
+        {
+          "class": "xaero/lib/common/config/Config",
+          "method": "set",
+          "desc": "(Lxaero/lib/common/config/option/ConfigOption;Ljava/lang/Object;)Ljava/lang/Object;",
+          "note": "two argument checks that throw first, then failedSerializedValues.remove (the first change), values.put/remove, listeners; every value change",
+          "sha256": "7429ce774c106b21901f0339747a3d4cc8808268fee0b117e207d1bf99456097"
+        },
+        {
+          "class": "xaero/lib/common/config/Config",
+          "method": "reset",
+          "desc": "()V",
+          "note": "clears the failed values, then set / setOptionDefault per option",
+          "sha256": "6c1e7e5faf1b6d44a0c392098927a2ef236232234dc279c251655aaffef566ed"
+        },
+        {
+          "class": "xaero/lib/common/config/Config",
+          "method": "addFailedSerializedValue",
+          "desc": "(Lxaero/lib/common/config/option/ConfigOption;Ljava/lang/String;)V",
+          "note": "set(default) then failedSerializedValues.put",
+          "sha256": "c6f22e061bdbc68da90c1568e07d096d990982f994496335a7dcca80c2cd76db"
+        },
+        {
+          "class": "xaero/lib/common/config/Config$Builder",
+          "method": "build",
+          "desc": "()Lxaero/lib/common/config/Config;",
+          "note": "creates the value and failed-value maps inside build: no one else holds them",
+          "sha256": "ec68c5178da2b314632509109c6456dbfc2ca74e1e88c66fc4def7239cc29c65"
+        },
+        {
+          "class": "xaero/lib/common/config/profile/ConfigProfile",
+          "method": "set",
+          "desc": "(Lxaero/lib/common/config/option/ConfigOption;Ljava/lang/Object;)Ljava/lang/Object;",
+          "note": "PROFILE_NAME null -> default, then Config.set",
+          "sha256": "d93e4fae32f3c96bf4883d859388bda66ca259769a5eeb5a5e76611d120727af"
+        },
+        {
+          "class": "xaero/lib/common/config/single/SingleConfigManager",
+          "method": "setConfig",
+          "desc": "(Lxaero/lib/common/config/Config;)V",
+          "note": "the config field, then its change listener",
+          "sha256": "3c1a3140ee93b161d1cd665f08da3507ccb3a7c305dcf422aa4233353ce744a1"
+        },
+        {
+          "class": "xaero/lib/common/config/single/SingleConfigManager",
+          "method": "setRedirectorManager",
+          "desc": "(Lxaero/lib/common/config/option/value/redirect/OptionValueRedirectorManager;)V",
+          "note": "throws when already set, else the field write",
+          "sha256": "e886195ca2a2e9a9280c1e9cc2d43131e4316ea6103740f5d00038db697d6ada"
+        },
+        {
+          "class": "xaero/lib/common/config/profile/ConfigProfileManager",
+          "method": "add",
+          "desc": "(ILxaero/lib/common/config/profile/ConfigProfile;)V",
+          "note": "duplicate-id check that throws first, then profiles.put, order, lookup",
+          "sha256": "3df02bb4b8244de6fdec4bd05018a9d700c182b9da75cb423cd15f67b9d4b47f"
+        },
+        {
+          "class": "xaero/lib/common/config/profile/ConfigProfileManager",
+          "method": "add",
+          "desc": "(Lxaero/lib/common/config/profile/ConfigProfile;)V",
+          "note": "add(order.size(), profile)",
+          "sha256": "ac0a5c681bfcc3f3ea34c88f8e61fe1c6d1bac0ca0f8ee692d5bec985c7587f7"
+        },
+        {
+          "class": "xaero/lib/common/config/profile/ConfigProfileManager",
+          "method": "remove",
+          "desc": "(Ljava/lang/String;)V",
+          "note": "unknown-id check that throws first, then profiles.remove, order, lookup",
+          "sha256": "956f8b5fe4fda3af3e5823f8875b5080942512a3e4d03fad413957ee8b4586ed"
+        },
+        {
+          "class": "xaero/lib/common/config/profile/ConfigProfileManager",
+          "method": "reset",
+          "desc": "()V",
+          "note": "clears the three maps",
+          "sha256": "9e23c4387b0473bf3b78293ea62466926528d63e6a1741a3a98f89a1a20235eb"
+        },
+        {
+          "class": "xaero/lib/common/config/option/value/redirect/OptionValueRedirectorManager",
+          "method": "<init>",
+          "desc": "(Ljava/util/Map;Lxaero/lib/common/config/Config;)V",
+          "note": "redirectors map and the cache config",
+          "sha256": "98d15a4aa4ed41ef9d2221dbd893269e1c3a40da9ddadee1915bc3cc8dc21eea"
+        },
+        {
+          "class": "xaero/lib/common/config/option/value/redirect/OptionValueRedirectorManager",
+          "method": "register",
+          "desc": "(Lxaero/lib/common/config/option/ConfigOption;Ljava/util/function/Supplier;Ljava/util/function/Predicate;)V",
+          "note": "frozen and duplicate checks that throw first, then redirectors.put",
+          "sha256": "59b020c49e472f2b16304427aa98236586c50045c70fd1e983660af66fa95c23"
+        },
+        {
+          "class": "xaero/lib/client/config/option/value/redirect/ClientOptionValueRedirectorManager",
+          "method": "register",
+          "desc": "(Lxaero/lib/common/config/option/ConfigOption;Ljava/util/function/Supplier;Ljava/util/function/Predicate;Ljava/util/function/Function;Lnet/minecraft/network/chat/Component;Ljava/util/function/Supplier;)V",
+          "note": "duplicate check that throws first, then redirectors.put",
+          "sha256": "871436033e52608de1920b671698c51c0973f6f712adc72731e19c20fa7cb4f7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on ClientConfigManager.getCurrentProfile: the kept answer while the change counter XaeroLibEpoch is unchanged (no change in progress) and the kept profile is the one returned last (or null); change tracking: @WrapOperation / @ModifyReturnValue / @Inject on Config.set, reset, addFailedSerializedValue, SingleConfigManager.setConfig / setRedirectorManager, ConfigProfileManager.add / remove / reset, the two redirector register methods; redirector cache configs are marked quiet. Runtime flag xaerolibCurrentProfileMemo (shadow .shadow). Helpers bons.furious.patch.xaerolib_c49.XaeroLibEpoch, XaeroLibMemos, XaeroLibTracked, XaeroLibRedirectors.",
+      "license": "All Rights Reserved (XaeroLib): none of its code is carried; the injections count changes and keep and hand back answers XaeroLib computed"
+    },
+    "xaerolib_enforcement_read_memo": {
+      "mod": "xaerolib",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.xaerolib_c49.XlEnforcementMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "xaero/lib/client/config/ClientConfigManager",
+          "method": "shouldIgnoreServerEnforcement",
+          "desc": "(Lxaero/lib/common/config/profile/ConfigProfile;Lxaero/lib/common/config/option/ConfigOption;)Z",
+          "note": "option, player, default enforced profile id tests, then the nested getEffective(config, IGNORE_ENFORCEMENT_IF_EDITOR) unboxed",
+          "sha256": "d7b14bda2e8a9b931b48543950f732ca3c5ae933093de61736332720fefce277"
+        },
+        {
+          "class": "xaero/lib/client/config/ClientConfigManager",
+          "method": "getEffective",
+          "desc": "(Lxaero/lib/common/config/profile/ConfigProfile;Lxaero/lib/common/config/option/ConfigOption;)Ljava/lang/Object;",
+          "note": "client redirector check, level null test, shouldIgnoreServerEnforcement (false at once for IGNORE itself), overridable, server synced value, getRaw",
+          "sha256": "9d74b3418a0c02cc609d1e225d9e81721fd7825a77b25a30f0a623870d0cfa87"
+        },
+        {
+          "class": "xaero/lib/client/config/ClientConfigManager",
+          "method": "getRaw",
+          "desc": "(Lxaero/lib/common/config/profile/ConfigProfile;Lxaero/lib/common/config/option/ConfigOption;)Ljava/lang/Object;",
+          "note": "config.get(option) or null",
+          "sha256": "081b424e7951140ab1b6d210d07efe82f97420064d84fb56c13182bcd3528ff6"
+        },
+        {
+          "class": "xaero/lib/common/config/single/SingleConfigManager",
+          "method": "getEffective",
+          "desc": "(Lxaero/lib/common/config/option/ConfigOption;)Ljava/lang/Object;",
+          "note": "redirector check (only with a registered redirector: its condition, its supplier, cache writes), then getConfig().get(option)",
+          "sha256": "5834df821af3b0e2ba49e66113f3b9d8e14b90bb6fb4178ba46964a3a89f4ce1"
+        },
+        {
+          "class": "xaero/lib/common/config/single/SingleConfigManager",
+          "method": "getConfig",
+          "desc": "()Lxaero/lib/common/config/Config;",
+          "note": "the config field",
+          "sha256": "18f8a6c8f32c98be8253699c146c8befe18423831d7119d9439ba9990896af7b"
+        },
+        {
+          "class": "xaero/lib/common/config/Config",
+          "method": "get",
+          "desc": "(Lxaero/lib/common/config/option/ConfigOption;)Ljava/lang/Object;",
+          "note": "failed-value check (null-allowing configs), then values.get: reads only",
+          "sha256": "1bf2142e811bcd505a18668eca8f09676ce26c2e51036113b95a32d1f67915b9"
+        },
+        {
+          "class": "xaero/lib/common/config/Config",
+          "method": "getFailedSerializedValue",
+          "desc": "(Lxaero/lib/common/config/option/ConfigOption;)Ljava/lang/String;",
+          "note": "failedSerializedValues.get",
+          "sha256": "13bb56ee62fb4a20315d25075315b4b38f62876c3dda6dc7c7bfc2257af3e2f9"
+        },
+        {
+          "class": "xaero/lib/common/config/option/value/redirect/OptionValueRedirectorManager",
+          "method": "shouldRedirect",
+          "desc": "(Lxaero/lib/common/config/option/ConfigOption;)Z",
+          "note": "not overridable or no redirector: false with no side effect; otherwise the condition and a cache write",
+          "sha256": "f5343b8c63d65d9545eadd25213fad62ce2795b7fec6d6d34252604dcb7393f3"
+        },
+        {
+          "class": "xaero/lib/common/config/option/value/redirect/OptionValueRedirectorManager",
+          "method": "get",
+          "desc": "(Lxaero/lib/common/config/option/ConfigOption;)Lxaero/lib/common/config/option/value/redirect/OptionValueRedirector;",
+          "note": "redirectors.get",
+          "sha256": "57163919303e52088fc7e28a1c910dfccab7e04ab47d6d474cc84111735be6a8"
+        },
+        {
+          "class": "xaero/lib/common/config/option/ConfigOption",
+          "method": "isOverridable",
+          "desc": "()Z",
+          "note": "a final field",
+          "sha256": "07299c9df1060378d20ba3e0fb72955ac85c4e9880352fc595208a15f3eca7a2"
+        },
+        {
+          "class": "xaero/lib/common/config/Config",
+          "method": "set",
+          "desc": "(Lxaero/lib/common/config/option/ConfigOption;Ljava/lang/Object;)Ljava/lang/Object;",
+          "note": "tracked by xaerolib_current_profile_memo",
+          "sha256": "7429ce774c106b21901f0339747a3d4cc8808268fee0b117e207d1bf99456097"
+        },
+        {
+          "class": "xaero/lib/common/config/single/SingleConfigManager",
+          "method": "setConfig",
+          "desc": "(Lxaero/lib/common/config/Config;)V",
+          "note": "tracked by xaerolib_current_profile_memo",
+          "sha256": "3c1a3140ee93b161d1cd665f08da3507ccb3a7c305dcf422aa4233353ce744a1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the getEffective(config, IGNORE_ENFORCEMENT_IF_EDITOR) call in ClientConfigManager.shouldIgnoreServerEnforcement(ConfigProfile, ConfigOption): the kept non-null Boolean while XaeroLibEpoch is unchanged, the config is the same object and the level null test is the same; needs the change tracking of xaerolib_current_profile_memo. Runtime flag xaerolibEnforcementReadMemo (shadow .shadow). Helper bons.furious.patch.xaerolib_c49.XaeroLibMemos.",
+      "license": "All Rights Reserved (XaeroLib): none of its code is carried; the wrapper keeps and hands back the answer XaeroLib computed"
+    }
+  }
+}

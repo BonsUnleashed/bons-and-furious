@@ -1,0 +1,7 @@
+{
+  "layer": "vanilla_entity_class_count_layer",
+  "entries": [
+    {"class": "net.minecraft.world.entity.boss.wither.WitherBoss", "key": "witherreincarnated_wither_scan_presence_gate", "mod": "witherreincarnated",
+     "why": "Wither Reincarnated 1.0.5: every mob's avoid-wither goal searches WitherBoss in a 129-block cube every other tick, and the client's wither music walks every entity each tick; counted only while Wither Reincarnated is installed"}
+  ]
+}

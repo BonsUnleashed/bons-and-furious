@@ -1,0 +1,162 @@
+{
+  "group": "mowziesmobs182_client_c49",
+  "keys": {
+    "mowziesmobs_chain_rotation_hoist": {
+      "mod": "mowziesmobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mowziesmobs182_client_c49.GeckoChainRotationHoistMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/model/tools/dynamics/GeckoDynamicChain",
+          "method": "setChainFromRenderPos",
+          "desc": "([Lcom/bobmowzie/mowziesmobs/client/model/tools/geckolib/MowzieGeoBone;[Lcom/bobmowzie/mowziesmobs/client/model/tools/geckolib/MowzieGeoBone;DLcom/bobmowzie/mowziesmobs/client/render/entity/MowzieGeoEntityRenderer;)V",
+          "note": "Mowzie's 1.8.2 method (absent in 1.7.3)",
+          "sha256": "17e37bdd906382eb43e2ee5ce5a7bf30c5107fd5f0dacf60c85c667d4cc77aba",
+          "sha256_standdown": [
+            {
+              "build": "mowziesmobs 1.7.3",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/model/tools/dynamics/GeckoDynamicChain",
+          "method": "setChainFromRenderPos",
+          "desc": "([Lcom/bobmowzie/mowziesmobs/client/model/tools/geckolib/MowzieGeoBone;[Lcom/bobmowzie/mowziesmobs/client/model/tools/geckolib/MowzieGeoBone;F)V",
+          "note": "Mowzie's 1.7.3 method: tells 1.7.3 (stand down) from other builds",
+          "sha256": null,
+          "sha256_standdown": [
+            {
+              "build": "mowziesmobs 1.7.3",
+              "sha256": "e3f9cbdb517098073055ec013d1241c23126a654bf1615893b14c69602b00642"
+            }
+          ]
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/render/entity/MowzieGeoEntityRenderer",
+          "method": "getModelRenderMatrix",
+          "desc": "()Lorg/joml/Matrix4f;",
+          "note": "a new matrix from the two render translations only (the reused result)",
+          "sha256": "61dd6c11affaf7f546645dc99f155a4f0df602444f5750570324f89d527b4490",
+          "sha256_standdown": [
+            {
+              "build": "mowziesmobs 1.7.3",
+              "sha256": null
+            }
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the MowzieGeoEntityRenderer.getModelRenderMatrix call of GeckoDynamicChain.setChainFromRenderPos (@Share per call): the first bone's matrix is worked out and kept, every later bone gets a copy of it (helper bons.furious.patch.mowziesmobs182_client_c49.ChainHoist)",
+      "license": "Mowzie's Mobs (custom licence): no Mowzie's Mobs code is carried; the wrappers carry only our own logic (Idea: Collections Of Optimizations mowziesmobs.hoistChainRenderMatrix, idea text only)"
+    },
+    "mowziesmobs_elokosa_blank_transform_skip": {
+      "mod": "mowziesmobs",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mowziesmobs182_client_c49.ElokosaBlankTransformMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/render/entity/layer/ElokosaTransformGeoLayer",
+          "method": "render",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/bobmowzie/mowziesmobs/server/entity/elokosa/EntityElokosa;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/client/renderer/RenderType;Lnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/VertexConsumer;FII)V",
+          "note": "its GeoRenderer.reRender call is wrapped; the alpha is the opacity",
+          "sha256": "8384a5d480a7213ce757f97489ef35977f98755982f1812284d5abced8274ba3",
+          "sha256_standdown": [
+            {
+              "build": "mowziesmobs 1.7.3",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/render/entity/layer/ElokosaTransformGeoLayer",
+          "method": "getOpacity",
+          "desc": "(Lcom/bobmowzie/mowziesmobs/server/entity/elokosa/EntityElokosa;Lcom/bobmowzie/mowziesmobs/client/model/tools/geckolib/MowzieGeoModel;)F",
+          "note": "0 while not transforming",
+          "sha256": "67f752f86ca7f0a62c0582c7b6d451f13f66f276b222d07e6b6b7f48035c7740",
+          "sha256_standdown": [
+            {
+              "build": "mowziesmobs 1.7.3",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/render/entity/MowzieGeoEntityRenderer",
+          "method": "actuallyRender",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/bobmowzie/mowziesmobs/server/entity/MowzieGeckoEntity;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/client/renderer/RenderType;Lnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/VertexConsumer;ZFIIFFFF)V",
+          "note": "the re-render path: buffer and alpha passed through",
+          "sha256": "1a56bd7cde296bc0f72f85c93e55ebb29c7523fda1c3d54b44e0eb797dca7b5b",
+          "sha256_standdown": [
+            {
+              "build": "mowziesmobs 1.7.3",
+              "sha256": "5cf2cc4feb7db84371daf1aeb43bffabc9fe317145faf3003f51edfd9b2d7425"
+            }
+          ]
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/render/entity/MowzieGeoEntityRenderer",
+          "method": "renderRecursively",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/bobmowzie/mowziesmobs/server/entity/MowzieGeckoEntity;Lsoftware/bernie/geckolib/cache/object/GeoBone;Lnet/minecraft/client/renderer/RenderType;Lnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/VertexConsumer;ZFIIFFFF)V",
+          "note": "the re-render path: buffer and alpha passed through",
+          "sha256": "32dc1f5c6c05d5a331b2b4bd4e427a61c1e9a10da73f8d20857b5515ca66f996",
+          "sha256_standdown": [
+            {
+              "build": "mowziesmobs 1.7.3",
+              "sha256": "cc4b65d52e854bccc457894c2e6e691cec88b91f629ff9dc8b2d976d9154cbe3"
+            }
+          ]
+        },
+        {
+          "class": "software/bernie/geckolib/renderer/GeoRenderer",
+          "method": "reRender",
+          "desc": "(Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lnet/minecraft/client/renderer/RenderType;Lcom/mojang/blaze3d/vertex/VertexConsumer;FIIFFFF)V",
+          "note": "GeckoLib: pre-render, render, post-render",
+          "audit": true,
+          "sha256": "abe4c9da8367237adf00ec6913fbaf3ea386f52b7626b3445cb63fab003095ea"
+        },
+        {
+          "class": "software/bernie/geckolib/renderer/GeoEntityRenderer",
+          "method": "actuallyRender",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/entity/Entity;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/client/renderer/RenderType;Lnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/VertexConsumer;ZFIIFFFF)V",
+          "note": "GeckoLib: a glowing entity re-renders into its own outline buffer",
+          "audit": true,
+          "sha256": "9b7c589f1e89ecb05a90ec22ab2235e15abb9f98d98fb56e4e8902b3dd8b57bc"
+        },
+        {
+          "class": "software/bernie/geckolib/renderer/GeoRenderer",
+          "method": "renderCubesOfBone",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lsoftware/bernie/geckolib/cache/object/GeoBone;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V",
+          "note": "GeckoLib: the only writes into the buffer",
+          "audit": true,
+          "sha256": "87da2ff447a566099dbe78b25343c5d187e965929eeb49438c3bba5f1dc79ea0"
+        },
+        {
+          "class": "software/bernie/geckolib/renderer/GeoRenderer",
+          "method": "renderCube",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lsoftware/bernie/geckolib/cache/object/GeoCube;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V",
+          "audit": true,
+          "sha256": "60187867c4cc515b61ccdc00927e7e63a9c148c0eaac854f045c2ac3f77b9cee"
+        },
+        {
+          "class": "software/bernie/geckolib/renderer/GeoRenderer",
+          "method": "createVerticesOfQuad",
+          "desc": "(Lsoftware/bernie/geckolib/cache/object/GeoQuad;Lorg/joml/Matrix4f;Lorg/joml/Vector3f;Lcom/mojang/blaze3d/vertex/VertexConsumer;IIFFFF)V",
+          "note": "GeckoLib: every vertex carries the given alpha",
+          "audit": true,
+          "sha256": "849680d43497ed4d373e3cd0c7c91d86897bba32a9a749632032fb62f7c2c955"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the GeoRenderer.reRender call of ElokosaTransformGeoLayer.render: while its alpha (the layer's opacity) is exactly 0 and no shader pack is in use, the re-render runs with a vertex consumer that keeps nothing in place of the translucent buffer (helper bons.furious.patch.mowziesmobs182_client_c49.ElokosaTransform)",
+      "license": "Mowzie's Mobs (custom licence): no Mowzie's Mobs code is carried; the wrappers carry only our own logic (Idea: Collections Of Optimizations mowziesmobs.skipBlankElokosaTransform, idea text only)"
+    }
+  }
+}

@@ -82,7 +82,8 @@
           "class": "net/irisshaders/iris/compat/sodium/mixin/copyEntity/ModelPartMixin",
           "method": "m_104299_",
           "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;)V",
-          "note": "Oculus's translateAndRotate overwrite (changes only the top pose)",
+          "note": "Oculus's translateAndRotate overwrite (changes only the top pose); audit since 1.0.49: the switch reads no Oculus class, so without Oculus it runs on Embeddium's overwrite (the row above). The four Embeddium rows stay: the switch needs Embeddium (EmfPoseCacheAccessor reads the cacheEnabled field Embeddium's MatrixStackMixin adds)",
+          "audit": true,
           "sha256": "358130e367e7359eeee77de31648702f42c13d3e88686bb597b4c25cc9158aab"
         },
         {
@@ -159,7 +160,8 @@
       "scripts": [],
       "since": "1.0.36",
       "mixins": [
-        "bons.furious.mixin.emf_render.EmfAngerMapMixin"
+        "bons.furious.mixin.emf_render.EmfAngerMapMixin",
+        "bons.furious.mixin.emf_render.EmfMathAngerMapMixin"
       ],
       "guard": [
         {
@@ -167,31 +169,139 @@
           "method": "getAngerTime",
           "desc": "()F",
           "note": "the redirected put(uuid, 0) (ordinal 0)",
-          "sha256": "ee9b5e77250dcae622f31d52b2bc8184f7cc695911bc60ea03faf0abda2111d2"
+          "sha256": "ee9b5e77250dcae622f31d52b2bc8184f7cc695911bc60ea03faf0abda2111d2",
+          "sha256_also": [
+            {
+              "build": "emf-3.3.10",
+              "sha256": null
+            },
+            {
+              "build": "emf-3.3.12",
+              "sha256": null
+            }
+          ]
         },
         {
           "class": "traben/entity_model_features/models/animation/EMFAnimationEntityContext",
           "method": "getAngerTimeStart",
           "desc": "()F",
           "note": "the other reader: getOrDefault(uuid, 0)",
-          "sha256": "437fbecf385bba5c2c1ae8ef0364c1cef047fe0815a6667f7e58daf02cfce8a0"
+          "sha256": "437fbecf385bba5c2c1ae8ef0364c1cef047fe0815a6667f7e58daf02cfce8a0",
+          "sha256_also": [
+            {
+              "build": "emf-3.3.10",
+              "sha256": null
+            },
+            {
+              "build": "emf-3.3.12",
+              "sha256": null
+            }
+          ]
         },
         {
           "class": "traben/entity_model_features/models/animation/EMFAnimationEntityContext",
           "method": "<clinit>",
           "desc": "()V",
-          "sha256": "ede87cd25da0dd9955a733be4104ff8c0f4963710ece466d3b0e23906ae9a211"
+          "sha256": "ede87cd25da0dd9955a733be4104ff8c0f4963710ece466d3b0e23906ae9a211",
+          "sha256_also": [
+            {
+              "build": "emf-3.3.10",
+              "sha256": null
+            },
+            {
+              "build": "emf-3.3.12",
+              "sha256": null
+            }
+          ]
         },
         {
           "class": "traben/entity_model_features/models/animation/EMFAnimationEntityContext$1",
           "method": "get",
           "desc": "(Ljava/lang/Object;)Ljava/lang/Integer;",
           "note": "the map's get override (getOrDefault(key, 0)); no other override",
-          "sha256": "899951360486dcd4fc7ee02e3d5dd8f9291d71f5a92992a626580317f7b0aa0d"
+          "sha256": "899951360486dcd4fc7ee02e3d5dd8f9291d71f5a92992a626580317f7b0aa0d",
+          "sha256_also": [
+            {
+              "build": "emf-3.3.10",
+              "sha256": null
+            },
+            {
+              "build": "emf-3.3.12",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/EMFMath",
+          "method": "getAngerTime",
+          "desc": "()F",
+          "note": "1.0.49, EMF 3.3.x: the wrapped put(uuid, 0) (ordinal 0); absent in the tested 3.2.4",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "emf-3.3.10",
+              "sha256": "ac8317e9b7738d2be295f62ffdf6bad5eebaff1dfe1efa55824a05c7532c9ee9"
+            },
+            {
+              "build": "emf-3.3.12",
+              "sha256": "ac8317e9b7738d2be295f62ffdf6bad5eebaff1dfe1efa55824a05c7532c9ee9"
+            }
+          ]
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/EMFMath",
+          "method": "getAngerTimeStart",
+          "desc": "()F",
+          "note": "1.0.49, EMF 3.3.x: the other reader, getOrDefault(uuid, 0)",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "emf-3.3.10",
+              "sha256": "0c38dffb7ef6cbd9b716ed91ba81f4c2fa5e8b9007b99ebedd4757dba7d13a49"
+            },
+            {
+              "build": "emf-3.3.12",
+              "sha256": "0c38dffb7ef6cbd9b716ed91ba81f4c2fa5e8b9007b99ebedd4757dba7d13a49"
+            }
+          ]
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/EMFMath",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "1.0.49, EMF 3.3.x: knownHighestAngerTimeByUUID = new EMFMath$1() (private; its only other users are the two methods above)",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "emf-3.3.10",
+              "sha256": "d43d1017215ccae5920217c2f36535bdbae59ba1ae58549fc25e7e30ad83f5a5"
+            },
+            {
+              "build": "emf-3.3.12",
+              "sha256": "d43d1017215ccae5920217c2f36535bdbae59ba1ae58549fc25e7e30ad83f5a5"
+            }
+          ]
+        },
+        {
+          "class": "traben/entity_model_features/models/animation/math/EMFMath$1",
+          "method": "get",
+          "desc": "(Ljava/lang/Object;)Ljava/lang/Integer;",
+          "note": "1.0.49, EMF 3.3.x: the map's get override (getOrDefault(key, 0)); no other override",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "emf-3.3.10",
+              "sha256": "899951360486dcd4fc7ee02e3d5dd8f9291d71f5a92992a626580317f7b0aa0d"
+            },
+            {
+              "build": "emf-3.3.12",
+              "sha256": "899951360486dcd4fc7ee02e3d5dd8f9291d71f5a92992a626580317f7b0aa0d"
+            }
+          ]
         }
       ],
       "cancel": [],
-      "conversion": "@Redirect of the first Map.put in EMFAnimationEntityContext.getAngerTime() to Map.remove (helper bons.furious.patch.emf_render.EmfRender: runtime flag)",
+      "conversion": "@Redirect of the first Map.put in EMFAnimationEntityContext.getAngerTime() to Map.remove (EMF 3.2.x); since 1.0.49 also MixinExtras @WrapOperation of the first Map.put in EMFMath.getAngerTime() (EMF 3.3.x, require = 0) to Map.remove; EMF 3.3.10 and 3.3.12 accepted as sha256_also builds (labels emf-3.3.10, emf-3.3.12); the group's plugin bons.furious.patch.emf_render.EmfRenderPlugin offers Mixin only the mixin whose class the matched build has (Guards.matchedBuild: tested build -> EmfAngerMapMixin, emf-3.3.* -> EmfMathAngerMapMixin), both @Pseudo as a backstop (helper bons.furious.patch.emf_render.EmfRender: runtime flag)",
       "license": "EMF is LGPL-3.0: no code of it is carried (the handler calls the map's own remove/put)"
     }
   }

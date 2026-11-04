@@ -1,0 +1,95 @@
+{
+  "group": "vanilla_cooking_recipe_index",
+  "keys": {
+    "vanilla_cooking_recipe_item_index": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_cooking_recipe_index.RecipeManagerIndexMixin",
+        "bons.furious.mixin.vanilla_cooking_recipe_index.AbstractCookingRecipeProbeMixin",
+        "bons.furious.mixin.vanilla_cooking_recipe_index.IngredientProbeMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/item/crafting/RecipeManager",
+          "method": "m_44015_",
+          "desc": "(Lnet/minecraft/world/item/crafting/RecipeType;Lnet/minecraft/world/Container;Lnet/minecraft/world/level/Level;)Ljava/util/Optional;",
+          "note": "getRecipeFor: byType(type).values().stream().filter(r -> r.matches(container, level)).findFirst(); the probe also requires it unchanged by any other mod's mixin",
+          "sha256": "05ab8288d843c06c7ce03bd807319bc05dccdef04a57e8828971889a478d53cb"
+        },
+        {
+          "class": "net/minecraft/world/item/crafting/RecipeManager",
+          "method": "m_44054_",
+          "desc": "(Lnet/minecraft/world/item/crafting/RecipeType;)Ljava/util/Map;",
+          "note": "byType: recipes.getOrDefault(type, emptyMap()), the table the index reads in the same order",
+          "sha256": "d4aea543ef520f1b7f1aa3a6fc9f04a3e260c69fa1cab62e546d8cb238e1d111"
+        },
+        {
+          "class": "net/minecraft/world/item/crafting/AbstractCookingRecipe",
+          "method": "m_5818_",
+          "desc": "(Lnet/minecraft/world/Container;Lnet/minecraft/world/level/Level;)Z",
+          "note": "matches: ingredient.test(container.getItem(0)), the answer of every provable recipe",
+          "sha256": "c057be58de8f3b8fb11022f44d0986f16f39970dda87dab3f3e480fcd5c73d1c"
+        },
+        {
+          "class": "net/minecraft/world/item/crafting/Ingredient",
+          "method": "test",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "note": "Forge 47.4.28: null -> false; empty -> input empty; else an item of getItems() is the input's item",
+          "sha256": "4dc7f8cffcb90c46de7d6c82040673729b15a7bcc82ef9ba2540009d9a250508"
+        },
+        {
+          "class": "net/minecraft/world/item/crafting/Ingredient",
+          "method": "m_43908_",
+          "desc": "()[Lnet/minecraft/world/item/ItemStack;",
+          "note": "getItems: the values' items, resolved once and kept until Ingredient.invalidateAll (Forge's counter, part of the token)",
+          "sha256": "451a35237e810fa189d58467857cb466d5853ba565a462ce1e0315c22a6fe145"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Three probe mixins of priority 3000 (RecipeManager also gets one memo field through CookingRecipeIndex.Holder; no method of any class is changed); RecipeIndexPlugin.postApply records whether getRecipeFor, its filter lambda, byType, AbstractCookingRecipe.matches and Ingredient.test are still as shipped after every other mod's mixins (any foreign change to one of them, ModernFix's faster_ingredients hook on Ingredient.test included, and a RecipeManager subclass such as FastSuite's keep the original calls); the caller keys then answer from CookingRecipeIndex (helper, runtime flag, SHADOW mode) while vanilla_recipe_generation_token (RecipeGenerationToken: recipe table identity, a TagsUpdatedEvent counter, Forge's Ingredient counter) is current",
+      "license": "Minecraft / Forge: no code carried; the layer only reads the recipe table and asks the recipes as before"
+    },
+    "cookingforblockheads_oven_result_index": {
+      "mod": "cookingforblockheads",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_cooking_recipe_index.CookingForBlockheadsOvenIndexMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/blay09/mods/cookingforblockheads/tile/OvenBlockEntity",
+          "method": "getSmeltingResult",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/ItemStack;",
+          "note": "Cooking for Blockheads 16.0.15: its registry first, then one getRecipeFor(SMELTING, singleSlotRecipeWrapper, level).orElse(null)",
+          "sha256": "2a8bafe9b5520570cdb204465713ebcbbcad692910981fd8046482f0ab68222f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the RecipeManager.getRecipeFor call in OvenBlockEntity.getSmeltingResult -> CookingRecipeIndex.recipeFor (the vanilla_cooking_recipe_item_index layer, runtime flag)",
+      "license": "Cooking for Blockheads: All Rights Reserved (mods.toml): no-copy; the mixin holds only our wrapper, the mod's code stays in its jar"
+    },
+    "mysticalagriculture_essence_furnace_recipe_index": {
+      "mod": "mysticalagriculture",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_cooking_recipe_index.MysticalAgricultureFurnaceIndexMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/blakebr0/mysticalagriculture/tileentity/EssenceFurnaceTileEntity",
+          "method": "tick",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lcom/blakebr0/mysticalagriculture/tileentity/EssenceFurnaceTileEntity;)V",
+          "note": "Mystical Agriculture 7.0.24: getRecipeFor(SMELTING, the furnace, level).orElse(null) on every running tick",
+          "sha256": "b9655f4fbf0feaab321e526497aa6997124fd4bd1e9400462a1bbbfec99f9133"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the RecipeManager.getRecipeFor call in EssenceFurnaceTileEntity.tick -> CookingRecipeIndex.recipeFor (the vanilla_cooking_recipe_item_index layer, runtime flag)",
+      "license": "Mystical Agriculture: MIT (mods.toml); no code carried, the mixin holds only our wrapper"
+    }
+  }
+}

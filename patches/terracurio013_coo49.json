@@ -1,0 +1,122 @@
+{
+  "group": "terracurio013_coo49",
+  "keys": {
+    "terracurio013_aggro_scan_solo_gate": {
+      "mod": "confluence",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.terracurio013_coo49.Terra013AggroSoloGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/confluence/mod/event/ForgeEvents",
+          "method": "livingChangeTarget",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingChangeTargetEvent;)V",
+          "note": "Enemy self and Player new target only; getAttributeValue(FOLLOW_RANGE) before the scan; stream of level.players() filtered by lambda$1, max by lambda$2, ifPresent lambda$3",
+          "sha256": "0d893042fff768c84fba5f519d5eeac9b3acdf37324dc55f4c44ee0c9cab3f6c"
+        },
+        {
+          "class": "org/confluence/mod/event/ForgeEvents",
+          "method": "lambda$livingChangeTarget$1",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;DLnet/minecraft/world/entity/player/Player;)Z",
+          "note": "the filter: distanceToSqr < range squared && self.canAttack(player); nothing else",
+          "sha256": "72d9956a7a4dfe66da2a7b9f8618392a73c506212164e48d3129a8ef4b527f61"
+        },
+        {
+          "class": "org/confluence/mod/event/ForgeEvents",
+          "method": "lambda$livingChangeTarget$2",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/player/Player;)I",
+          "note": "the aggro comparator (never called for one element)",
+          "sha256": "ad4019c215c69d95b71c2440bbe9cc3421ecccd73c9845f084ff91487abc598a"
+        },
+        {
+          "class": "org/confluence/mod/event/ForgeEvents",
+          "method": "lambda$livingChangeTarget$3",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraftforge/event/entity/living/LivingChangeTargetEvent;Lnet/minecraft/world/entity/player/Player;)V",
+          "note": "the consumer: returns at once when the best player is the new target",
+          "sha256": "413c3708acdfcc6731b381ff65f8e1f746dfde52a2e956f3b9866cddac82817f"
+        },
+        {
+          "class": "org/confluence/mod/item/curio/expert/RoyalGel",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "the Curios walk inside Terra Curio's canAttack hook: only for a Slime self (the gate asks the Curios layer then)",
+          "sha256": "30fe9d42a2c26c061ef33be3c007987be819bebf879b44df22fa8127161968c7"
+        },
+        {
+          "class": "org/confluence/mod/mixin/LivingEntityMixin",
+          "method": "notAttack",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "Terra Curio's canAttack RETURN hook: RoyalGel.apply only when canAttack answered true",
+          "sha256": "ba103c24568d93abc2b751d6e931ef54a1de32c83b071e9bd825198cf0a4e781"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_6779_",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "canAttack: difficulty and canBeSeenAsEnemy reads",
+          "sha256": "079d03eaed9b9bde78d3d0b5a2ed5eae05318aff8819ec1c91d5c03d29c0f907"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Cancellable @Inject at HEAD of ForgeEvents.livingChangeTarget: when an Enemy's new target is the only player in its level (and, for a slime, the shared Curios layer says the player's Curios walk would only read), the handler returns after the follow-range read it makes, because its player scan can then only yield the new target and its consumer returns for it; otherwise the handler runs as shipped. Runtime flag terracurio013AggroScanSoloGate. Helper bons.furious.patch.terracurio013_coo49.Terra013AggroGate.",
+      "license": "Terra Curio (LGPL-3.0): no code carried; the gate is ours"
+    },
+    "terracurio013_attribute_map_snapshot": {
+      "mod": "confluence",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.terracurio013_coo49.Terra013AttributeMapSnapshotMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/confluence/mod/misc/ModAttributes",
+          "method": "getCustomAttribute",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/Attribute;)Lnet/minecraft/world/entity/ai/attributes/Attribute;",
+          "note": "MAP.get(attribute), the argument when absent",
+          "sha256": "27c518501d28fc7d9a675472e4a325484cba8ea262f34207a56db9a258dd32f5"
+        },
+        {
+          "class": "org/confluence/mod/misc/ModAttributes",
+          "method": "hasCustomAttribute",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/Attribute;)Z",
+          "note": "MAP.get(attribute) != null",
+          "sha256": "74c38027a6ce7a1e4d95ab64072fad367740d4616be5251aa50c3b5eacd603c6"
+        },
+        {
+          "class": "org/confluence/mod/misc/ModAttributes",
+          "method": "readJsonConfig",
+          "desc": "()V",
+          "note": "the only writer of MAP: ApothicHelper.preset(MAP) and the attributes.json puts",
+          "sha256": "3796ca5b70200b11ed52e5e2ef2d7e77f74150eb54475757b02fca141784a2b9"
+        },
+        {
+          "class": "org/confluence/mod/misc/ModAttributes",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "MAP = new Hashtable()",
+          "sha256": "027bd17d6cf74ad1cfc6c903a0df103d77bebe7c2997d71a7eb8025c1b62a43a"
+        },
+        {
+          "class": "org/confluence/mod/misc/ModAttributes",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: no other method of the class (MAP is private) reads or writes the table",
+          "sha256": "0bc92713d54a39e304d2a423179d94e8f36b104d8bc1d31868d0f4f389aeee37"
+        },
+        {
+          "class": "org/confluence/mod/integration/apothic/ApothicHelper",
+          "method": "preset",
+          "desc": "(Ljava/util/Hashtable;)V",
+          "note": "puts six entries into the table it is given; keeps no reference",
+          "sha256": "fe6720055236158f079e856ed3e618fb599279c5c22d549994a03daa48e56eb6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at HEAD and RETURN of ModAttributes.readJsonConfig (withdraw / publish a HashMap copy of the replacement table taken under its monitor) and MixinExtras @WrapOperation on the Hashtable.get call of getCustomAttribute and hasCustomAttribute: a non-null key is answered from the published copy, anything else by the table as shipped. Runtime flag terracurio013AttributeMapSnapshot; shadow mode terracurio013AttributeMapSnapshot.shadow. Helper bons.furious.patch.terracurio013_coo49.Terra013AttributeSnapshot.",
+      "license": "Terra Curio (LGPL-3.0): no code carried; the snapshot is ours"
+    }
+  }
+}

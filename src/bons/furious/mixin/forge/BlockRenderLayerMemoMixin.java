@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
 /**
- * forge_render_layer_memo (Forge 47.4.16 with Oculus 1.8.0, client): the per-block slot for the remembered render layers.
+ * forge_render_layer_memo (Forge 47.4.28, with or without Oculus 1.8.0, client): the per-block slot for the remembered render layers.
  * The slot holds one immutable entry (a record: final fields), so meshing threads always see a consistent answer and its
  * inputs without any locking.
  */

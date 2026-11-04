@@ -35,11 +35,60 @@
           "desc": "",
           "note": "the declared methods of GeoModel 4.8.4 (the abstract 1-argument getters among them)",
           "sha256": "2dd57a02ffa7244e63ef813e15ddcb8ccee1837c278757a82d0ca2dccbb40f58"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "fromNamespaceAndPath",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "since 1.0.49 (getter shape B): Forge 47.3.22-47.4.28's return new ResourceLocation(namespace, path), the same constructor shape A calls",
+          "sha256": "e5a61dff5c45c214e5c62f735aa80c74ef93f227fd5f4cb1bc48983773bbc281"
         }
       ],
       "cancel": [],
-      "conversion": "MixinExtras @WrapOperation on the 1-argument getter call inside GeoModel.getModelResource(T, GeoRenderer), getTextureResource(T, GeoRenderer) and getAnimation(T, String): for a model class whose dispatched getter is proven from its bytecode (javac bridge with checkcast + typed getter returning new ResourceLocation of two string constants, no mixin merged into either class) the first result is handed out again when the argument is null or of the bridge's type; every other call runs the original (helper bons.furious.patch.geckolib_constant_resources.ConstantResources: runtime flag, SHADOW mode)",
+      "conversion": "MixinExtras @WrapOperation on the 1-argument getter call inside GeoModel.getModelResource(T, GeoRenderer), getTextureResource(T, GeoRenderer) and getAnimation(T, String): for a model class whose dispatched getter is proven from its bytecode (javac bridge with checkcast + typed getter returning new ResourceLocation of two string constants, or since 1.0.49 ResourceLocation.fromNamespaceAndPath of two string constants while that factory is Forge's own constructor call and no mixin replaces it; no mixin merged into either class) the first result is handed out again when the argument is null or of the bridge's type; every other call runs the original (helper bons.furious.patch.geckolib_constant_resources.ConstantResources: runtime flag, SHADOW mode)",
       "license": "GeckoLib (MIT): no code carried; the model classes of the mods (some All Rights Reserved) are only read as bytecode and called as before, nothing of theirs is copied"
+    },
+    "geckolib_texture_template_memo": {
+      "mod": "geckolib",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.geckolib_constant_resources.GeoModelTextureTemplateMixin"
+      ],
+      "guard": [
+        {
+          "class": "software/bernie/geckolib/model/GeoModel",
+          "method": "getTextureResource",
+          "desc": "(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/renderer/GeoRenderer;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "the renderers' texture entry point: one virtual call of the model's 1-argument texture getter (the call wrapped)",
+          "sha256": "7f41e490480681e8fd6a859e215452d73fa7874647c78cff66e8cb8b0ff5b595"
+        },
+        {
+          "class": "software/bernie/geckolib/model/GeoModel",
+          "method": "*",
+          "desc": "",
+          "note": "the declared methods of GeoModel 4.8.4",
+          "sha256": "2dd57a02ffa7244e63ef813e15ddcb8ccee1837c278757a82d0ca2dccbb40f58"
+        },
+        {
+          "class": "net/minecraft/network/syncher/SynchedEntityData",
+          "method": "m_135370_",
+          "desc": "(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;",
+          "note": "get: getItem(accessor).getValue(), the read a proven getTexture() makes (and the switch makes once on a kept answer, as the original does)",
+          "sha256": "f4f69d5972670b2916d03caaf6c14ccef50d5a37ae66ef17f4d12924c8dcf38b"
+        },
+        {
+          "class": "net/minecraft/network/syncher/SynchedEntityData$DataItem",
+          "method": "m_135403_",
+          "desc": "()Ljava/lang/Object;",
+          "note": "DataItem.getValue: a field read",
+          "sha256": "1feb0220390c532ccc1858af7ffa6e8d5e2ee03ef51500cbe1f35d4b62e9400c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the 1-argument texture getter call inside GeoModel.getTextureResource(T, GeoRenderer): for a model class whose typed texture getter is proven from its bytecode to be MCreator's template new ResourceLocation(ns, prefix + arg.getTexture() + suffix) (one string concatenation, behind the javac bridge, no mixin merged into the model classes) and an argument whose dispatched getTexture() is the plain synched-data read (proven per class from its bytecode), the location kept for an equal texture string is handed out again (at most 64 strings per model class); a first string runs the original and keeps its result only when it is exactly that string's location; every other call runs the original (helper bons.furious.patch.geckolib_constant_resources.ConstantResources: runtime flag, SHADOW mode)",
+      "license": "GeckoLib (MIT): no code carried; the model and entity classes of the mods (several All Rights Reserved) are only read as bytecode and called as before, nothing of theirs is copied"
     }
   }
 }

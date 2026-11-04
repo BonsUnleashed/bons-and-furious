@@ -1,0 +1,171 @@
+{
+  "group": "powah_coo49",
+  "keys": {
+    "powah_container_charge_streamless": {
+      "mod": "powah",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.powah_coo49.PowahContainerChargeMixin"
+      ],
+      "guard": [
+        {
+          "class": "owmii/powah/forge/ForgeEnvHandler",
+          "method": "chargeItemsInContainer",
+          "desc": "(Lnet/minecraft/world/Container;JJ)J",
+          "note": "IntStream.range(0, getContainerSize()).mapToObj(container::getItem).toList() (every getItem before any offer), transferSlotList(receiveEnergy), then setChanged and the total",
+          "sha256": "8f485ef2fad84386a741ec62a6473dcd7582b36c3c3ab048ba449a83c03c215c"
+        },
+        {
+          "class": "owmii/powah/forge/ForgeEnvHandler",
+          "method": "transferSlotList",
+          "desc": "(Lowmii/powah/forge/ForgeEnvHandler$EnergyTransferOperation;Ljava/lang/Iterable;JJ)J",
+          "note": "per non-empty stack: getCapability(ENERGY).orElse(EmptyEnergyStorage.INSTANCE), op(cap, saturatedCast(min(maxPerStack, maxTotal - charged)), false), summed",
+          "sha256": "32e604b1425237d39765f3ef8c6f5ba55175ddc7b55c704530995ad5b66a6f15"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of ForgeEnvHandler.chargeItemsInContainer: the same getContainerSize / getItem calls in slot order into an array, then the same offers, setChanged and total as Powah's stream-built list (PowahContainerCharge.charge); steps aside while powah_container_charge_idle_skip's mixin is in the game and on. Runtime flag powahContainerChargeStreamless. Helper bons.furious.patch.powah_coo49.PowahContainerCharge.",
+      "license": "Powah (LGPLv3): no code carried; our loop makes the same calls"
+    },
+    "powah_container_charge_idle_skip": {
+      "mod": "powah",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.powah_coo49.PowahContainerIdleMixin"
+      ],
+      "guard": [
+        {
+          "class": "owmii/powah/forge/ForgeEnvHandler",
+          "method": "chargeItemsInContainer",
+          "desc": "(Lnet/minecraft/world/Container;JJ)J",
+          "note": "walks every slot and calls setChanged on every call, also with nothing to give",
+          "sha256": "8f485ef2fad84386a741ec62a6473dcd7582b36c3c3ab048ba449a83c03c215c"
+        },
+        {
+          "class": "owmii/powah/forge/ForgeEnvHandler",
+          "method": "transferSlotList",
+          "desc": "(Lowmii/powah/forge/ForgeEnvHandler$EnergyTransferOperation;Ljava/lang/Iterable;JJ)J",
+          "note": "per non-empty stack the energy capability and one offer (0 when the budget is 0)",
+          "sha256": "32e604b1425237d39765f3ef8c6f5ba55175ddc7b55c704530995ad5b66a6f15"
+        },
+        {
+          "class": "owmii/powah/block/hopper/EnergyHopperTile",
+          "method": "postTick",
+          "desc": "(Lnet/minecraft/world/level/Level;)I",
+          "note": "the only caller: chargeItemsInContainer(the container in front, charging rate of the tier, stored energy), then consume(charged)",
+          "sha256": "e1272906d0e0472ed829c56b4ee5e2fd09a8d64e6999245b398f5329a2d07536"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of ForgeEnvHandler.chargeItemsInContainer: maxPerSlot <= 0 or maxTotal <= 0 -> 0 without touching the container; else PowahContainerCharge.charge with setChanged only when something was charged. Trade-off (off by default): an empty Energy Hopper no longer offers its container's items 0 energy and no longer marks the container changed when nothing moved. A @Unique marker method tells powah_container_charge_streamless's mixin to step aside. Runtime flag powahContainerChargeIdleSkip. Helpers bons.furious.patch.powah_coo49.PowahContainerIdle, PowahContainerCharge.",
+      "license": "Powah (LGPLv3): no code carried"
+    },
+    "powah_idle_player_charge_skip": {
+      "mod": "powah",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.powah_coo49.PowahPlayerChargeMixin"
+      ],
+      "guard": [
+        {
+          "class": "owmii/powah/forge/ForgeEnvHandler",
+          "method": "chargeItemsInPlayerInv",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;JJLjava/util/function/Predicate;)J",
+          "note": "inventory stacks into lists, ChargeableItemsEvent posted, filter, transferSlotList(receiveEnergy): every offer 0 when maxPerSlot or maxTotal is 0",
+          "sha256": "c53bde2fa9d6a2545232196899e0580996fac64f9554b45c731725ddd9f8cbfd"
+        },
+        {
+          "class": "owmii/powah/forge/ForgeEnvHandler",
+          "method": "transferSlotList",
+          "desc": "(Lowmii/powah/forge/ForgeEnvHandler$EnergyTransferOperation;Ljava/lang/Iterable;JJ)J",
+          "note": "per non-empty stack the energy capability and one offer",
+          "sha256": "32e604b1425237d39765f3ef8c6f5ba55175ddc7b55c704530995ad5b66a6f15"
+        },
+        {
+          "class": "owmii/powah/block/transmitter/PlayerTransmitterTile",
+          "method": "postTick",
+          "desc": "(Lnet/minecraft/world/level/Level;)I",
+          "note": "caller: chargeItemsInPlayerInv(bound player, charging speed of the tier, stored energy), then consume(charged)",
+          "sha256": "ec04fa6989a9d43f9549f8fbe44a92e31282437f666ff26d52197a442d092a65"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of ForgeEnvHandler.chargeItemsInPlayerInv(Player, long, long, Predicate): maxPerSlot <= 0 or maxTotal <= 0 -> 0 at once. Trade-off (off by default): an empty Player Transmitter or Battery no longer posts ChargeableItemsEvent and no longer offers the player's items 0 energy. Runtime flag powahIdlePlayerChargeSkip. Helper bons.furious.patch.powah_coo49.PowahPlayerCharge.",
+      "license": "Powah (LGPLv3): no code carried"
+    },
+    "powah_zero_energy_push_skip": {
+      "mod": "powah",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.powah_coo49.PowahEnergyPushMixin"
+      ],
+      "guard": [
+        {
+          "class": "owmii/powah/forge/ForgeEnvHandler",
+          "method": "pushEnergy",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;J)J",
+          "note": "getBlockEntity(neighbour), its ENERGY capability for the side, receiveEnergy(saturatedCast(howMuch), false), also for 0",
+          "sha256": "ac06a746445794c5b8662d1af87df404384c0f97698cc8b756353412a10c9c99"
+        },
+        {
+          "class": "owmii/powah/lib/block/AbstractEnergyStorage",
+          "method": "extractFromSides",
+          "desc": "(Lnet/minecraft/world/level/Level;)J",
+          "note": "caller: per extracting face pushEnergy(level, pos.relative(face), face.opposite, min(transfer, stored)), then extractEnergy(the answer)",
+          "sha256": "f5eff290039749c5c21967e505a3195f4e9d60c259aeed78797120d1d2ec7582"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of ForgeEnvHandler.pushEnergy: howMuch <= 0 -> 0 at once. Trade-off (off by default): a Powah block with nothing to give no longer looks its neighbours up and no longer hands them receiveEnergy(0, false). Runtime flag powahZeroEnergyPushSkip. Helper bons.furious.patch.powah_coo49.PowahEnergyPush.",
+      "license": "Powah (LGPLv3): no code carried"
+    },
+    "powah_item_energy_same_value_write_skip": {
+      "mod": "powah",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.powah_coo49.PowahItemEnergyWriteMixin"
+      ],
+      "guard": [
+        {
+          "class": "owmii/powah/lib/logistics/energy/Energy$Item",
+          "method": "write",
+          "desc": "()V",
+          "note": "write(stack.getOrCreateTagElement(\"powah_tile_data\"), false, false): the wrapped call, its flags constant false",
+          "sha256": "dcbdbd9bec7cb15e4b92a4e083a9ddeaed0828a5e2887dddbe57e285c196f2be"
+        },
+        {
+          "class": "owmii/powah/lib/logistics/energy/Energy",
+          "method": "write",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;ZZ)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "write(nbt, \"main_energy\", capacity, transfer)",
+          "sha256": "ebc3afa2d956d7607740210e47901b980dccc76e18044f07e84ca7a96ed11887"
+        },
+        {
+          "class": "owmii/powah/lib/logistics/energy/Energy",
+          "method": "write",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Ljava/lang/String;ZZ)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "with capacity and transfer false: only putLong(\"energy_stored_\" + key, stored)",
+          "sha256": "0c2c663cfc5586eff08d6858a53caa1834fcc2687d7f4078daec0a3910ae566b"
+        },
+        {
+          "class": "owmii/powah/lib/logistics/energy/Energy",
+          "method": "getEnergyStored",
+          "desc": "()J",
+          "note": "the stored field the put writes",
+          "sha256": "b898223587e8ee4f7ba853927af1794cab0ea353e8233999bd5e8a7c648bba8f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the write(compound, false, false) call in Energy$Item.write(), after Powah's own stack.getOrCreateTagElement(\"powah_tile_data\") (which still creates a fresh item's tag and compound), for an Energy$Item of exactly that class: the energy_stored_main_energy LongTag already equal to stored -> no write; else the same putLong with the same key (a constant) and value; another class, other flags or the switch off -> Powah's write. NBT trees, tag types and saved bytes as Powah's after every call. Runtime flag powahItemEnergySameValueWriteSkip. Helper bons.furious.patch.powah_coo49.PowahItemWrites.",
+      "license": "Powah (LGPLv3): no code carried"
+    }
+  }
+}

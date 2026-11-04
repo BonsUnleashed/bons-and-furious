@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.celestialcore_match_c49",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "bons.furious.patch.celestialcore_match_c49.CelestialcoreMatchPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "CelestialRecipeLookupMixin",
+    "FluidRecipeBlockMixin",
+    "StatRecipeBlockMixin"
+  ]
+}

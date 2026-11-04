@@ -1,0 +1,72 @@
+{
+  "group": "biomancy_coo49",
+  "keys": {
+    "biomancy_spatial_query_memo": {
+      "mod": "biomancy",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.biomancy_coo49.SdbiLevelKeyMixin",
+        "bons.furious.mixin.biomancy_coo49.SpatialManagerLevelKeyMixin",
+        "bons.furious.mixin.biomancy_coo49.SpatialStorageMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/elenterius/spatialdb/SDBI",
+          "method": "getLevelKey",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;)Ljava/lang/String;",
+          "note": "2.9.8.1: protected final, level.dimension().location().toString() (the wrapped call); callers use it as a map key and in map names",
+          "sha256": "ca6944f0b9378aa704e395b244c1b8989b60b57422e215ef31fcd875e794249f",
+          "sha256_also": [
+            {
+              "build": "biomancy-2.8.19.0",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "com/github/elenterius/biomancy/world/spatial/SpatialShapeManager",
+          "method": "getLevelKey",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;)Ljava/lang/String;",
+          "note": "2.8.19.0 (not in this pack: absent in the tested build, sha256_also biomancy-2.8.19.0): private static, the same string",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "biomancy-2.8.19.0",
+              "sha256": "ea84a9b2c97faaa83d2c6f2be10baafcd7b98f3d5c391eb677968b6c83e3f4a4"
+            }
+          ]
+        },
+        {
+          "class": "com/github/elenterius/biomancy/world/spatial/SpatialShapeStorage",
+          "method": "getInstance",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;)Lcom/github/elenterius/biomancy/world/spatial/SpatialShapeStorage;",
+          "note": "2.8.19.0: server.getWorldPath(DATA_DIR).resolve(db).toFile().getPath(), then server.overworld().getDataStorage().computeIfAbsent(load, create, biomancy.spatial)",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "biomancy-2.8.19.0",
+              "sha256": "8892a9a0dbff1db996c11f76fa5215073cc86696a39b1f4efb87673f380906e0"
+            }
+          ]
+        },
+        {
+          "class": "com/github/elenterius/biomancy/world/spatial/SpatialShapeStorage",
+          "method": "close",
+          "desc": "()V",
+          "note": "2.8.19.0: clears the level maps and closes the store (Biomancy's overworld unload)",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "biomancy-2.8.19.0",
+              "sha256": "c010afe8a8271da6c78aec4ead2ff07cf667671b82a6bfbbfbac2b4deffc5800"
+            }
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the ResourceLocation.toString() in the dimension key method (2.9.8.1 SDBI.getLevelKey; 2.8.19.0 SpatialShapeManager.getLevelKey): the string kept per ResourceLocation (copy-on-write identity map, one entry per dimension). 2.8.19.0 also: @Inject HEAD (cancellable) and RETURN of SpatialShapeStorage.getInstance: the database object kept per server (weak references) is returned, a lookup that ran is kept; @Inject TAIL of close() drops it. The group's mixin plugin BiomancyPlugin offers Mixin only the mixins of the build the guard matched. Runtime flag biomancySpatialQueryMemo. Helper bons.furious.patch.biomancy_coo49.SpatialMemo.",
+      "license": "Biomancy (LGPL-3.0): no code carried; the hooks keep what Biomancy's own methods returned"
+    }
+  }
+}

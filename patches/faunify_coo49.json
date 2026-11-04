@@ -1,0 +1,151 @@
+{
+  "group": "faunify_coo49",
+  "keys": {
+    "faunify_millipede_parent_uuid_lookup": {
+      "mod": "faunify",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.faunify_coo49.MillipedeParentLookupMixin",
+        "bons.furious.mixin.faunify_coo49.LevelEntityGetterAccessor"
+      ],
+      "guard": [
+        {
+          "class": "com/pepper/faunify/entity/MillipedeSegmentEntity",
+          "method": "getParentSegment",
+          "desc": "()Lnet/minecraft/world/entity/Entity;",
+          "note": "1.3.3 (not in this pack's 1.1.3: absent in the tested build, sha256_also faunify-1.3.3): cached parent while alive; client: first of Level.getEntities(null, bb.inflate(50), uuid predicate); server: ServerLevel.getEntity(uuid)",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "faunify-1.3.3",
+              "sha256": "c4076b87d5cccea3639a3e4b486557613ddc0bc1db4d0d2e8c381eac88f148cc"
+            }
+          ]
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_6249_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+          "note": "getEntities: the entity getter's box search (+ ender dragon parts, + Forge part entities), each tested with the predicate",
+          "sha256": "f64a036652ed9773518dc1939fb9149fa37aa93ceb9439fbdd6eef29541d73b1"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntitySectionStorage",
+          "method": "m_188362_",
+          "desc": "(Lnet/minecraft/world/phys/AABB;Lnet/minecraft/util/AbortableIterationConsumer;)V",
+          "note": "forEachAccessibleNonEmptySection: sections from box.min - (2, 4, 2) to box.max + (2, 0, 2), accessible ones only: the rule ParentLookup.reached copies",
+          "sha256": "6486526750f73e1597cef041f725ad09dd48a7c75e9fc441519b29e504ec1c43"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/TransientEntitySectionManager",
+          "method": "m_157653_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)V",
+          "note": "addEntity (client): an entity's section is its block position's; visible entities = the lookup the switch asks",
+          "sha256": "5f2f67f1c20294f5b4d354e0053fef4f1d87d67c0b0cd4eee5d600193300259c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntities call in MillipedeSegmentEntity.getParentSegment's client branch (string target, @Pseudo): the level's entity lookup by the parent UUID (the segment's synced PARENT_UUID, read again at the call), accepted when its section lies in the range EntitySectionStorage walks for that box (x/z +-2, y -4/+0) and its bounding box intersects the box; else the empty list (what the search finds); the original search runs when the switch is off, the UUID is null or the level is not a client level. Exact variant (documented difference: duplicate client UUIDs). @Invoker on Level.getEntities() (m_142646_). Runtime flag faunifyMillipedeParentUuidLookup. Helper bons.furious.patch.faunify_coo49.ParentLookup.",
+      "license": "Faunify (MIT): no code carried; the wrapper answers its own search from the level's lookup"
+    },
+    "faunify_player_proximity_scan_lean": {
+      "mod": "faunify",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.faunify_coo49.PlayerScanMouseMixin",
+        "bons.furious.mixin.faunify_coo49.PlayerScanBeeflyMixin",
+        "bons.furious.mixin.faunify_coo49.PlayerScanDragonflyMixin",
+        "bons.furious.mixin.faunify_coo49.PlayerScanSilkMothFlightMixin",
+        "bons.furious.mixin.faunify_coo49.PlayerScanSilkMothTickMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/pepper/faunify/entity/MouseEntity$StealSeedGoal",
+          "method": "m_8036_",
+          "desc": "()Z",
+          "note": "canUse: canSteal, then the first player in getEntitiesOfClass(Player, bb.inflate(10)) carrying seeds becomes the target (1.1.3 and 1.3.3)",
+          "sha256": "911641c777783f0e6ac8b4ea2654fbe2bd34ff5db9e925dd0142486be01c86ed"
+        },
+        {
+          "class": "com/pepper/faunify/entity/BeeflyEntity$BeeflyFlightGoal",
+          "method": "m_8036_",
+          "desc": "()Z",
+          "note": "1.3.3 only (absent in the tested 1.1.3, sha256_also faunify-1.3.3): isEmpty of getEntitiesOfClass(Player, bb.inflate(4))",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "faunify-1.3.3",
+              "sha256": "b5d61134040a112949767e988849381e06175ec361d4aaff8e4006db6a4d21be"
+            }
+          ]
+        },
+        {
+          "class": "com/pepper/faunify/entity/DragonflyEntity$DartingGoal",
+          "method": "m_8036_",
+          "desc": "()Z",
+          "note": "1.3.3 only: any player of getEntitiesOfClass(Player, bb.inflate(4)) that is neither creative nor spectator",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "faunify-1.3.3",
+              "sha256": "c0a673eb5fe6f414e740be6632740633c29b0f37bb461ba399a113e84f5d8815"
+            }
+          ]
+        },
+        {
+          "class": "com/pepper/faunify/entity/DragonflyEntity$DartingGoal",
+          "method": "findNearestPlayer",
+          "desc": "()Lnet/minecraft/world/entity/player/Player;",
+          "note": "1.3.3 only: the nearest of getEntitiesOfClass(Player, bb.inflate(6)) (first of equal distances)",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "faunify-1.3.3",
+              "sha256": "0ce0a92438d505f53e99128ec9d5f9345f458b715e7f094f8e1c50af4ebe1ea5"
+            }
+          ]
+        },
+        {
+          "class": "com/pepper/faunify/entity/SilkMothEntity$SilkMothFlightGoal",
+          "method": "m_8036_",
+          "desc": "()Z",
+          "note": "1.3.3 only: isEmpty of getEntitiesOfClass(Player, bb.inflate(4))",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "faunify-1.3.3",
+              "sha256": "4f4f656cb2e6c584927bdaf536916c88a674a0af91721860cb2093ba15919426"
+            }
+          ]
+        },
+        {
+          "class": "com/pepper/faunify/entity/SilkMothEntity",
+          "method": "m_8119_",
+          "desc": "()V",
+          "note": "tick: 1.3.3 asks whether any player of getEntitiesOfClass(Player, bb.inflate(10)) holds the attracting item in a hand; the 1.1.3 tick has no such search (its own fingerprint)",
+          "sha256": "c4475ed7b7baaf349e1d6747f6ae80add5c111af7ffd6df0125deb7dc3f62615",
+          "sha256_also": [
+            {
+              "build": "faunify-1.3.3",
+              "sha256": "578a838e0afb0dae8fe6f0110355c2925bc2ae625652261ad0ac0b5eef6c9756"
+            }
+          ]
+        },
+        {
+          "class": "net/minecraft/world/level/EntityGetter",
+          "method": "m_45976_",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;",
+          "note": "getEntitiesOfClass(class, box) = getEntitiesOfClass(class, box, EntitySelector.NO_SPECTATORS): the filter the player-list answer keeps",
+          "sha256": "02b741b674cda0ec6d8bfa9662b11dd0e9065674d64257adc716432fd5c3b338"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass(Class, AABB) call of each of the five Faunify player searches (MouseEntity$StealSeedGoal.canUse in 1.1.3 and 1.3.3; BeeflyEntity$BeeflyFlightGoal.canUse, DragonflyEntity$DartingGoal.canUse and findNearestPlayer, SilkMothEntity$SilkMothFlightGoal.canUse and SilkMothEntity.tick in 1.3.3): for Player.class, the level's player list filtered by not-spectator and bounding-box intersection, in join order; any other class runs the search. Fallback trade-off (an exact order-keeping answer would need the shared player layer that was not built), off by default: the documented differences are the player order (first-match and distance-tie choices in multiplayer), Valkyrien Skies' ship-space part of the box, player entities outside the player list and players resized past 4 blocks. The group plugin FaunifyPlugin offers the four 1.3.3-only mixins only when the guard matched faunify-1.3.3. Runtime flag faunifyPlayerProximityScanLean. Helper bons.furious.patch.faunify_coo49.PlayerScan.",
+      "license": "Faunify (MIT): no code carried; the wrapper answers its own searches from the level's player list"
+    }
+  }
+}

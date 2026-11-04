@@ -1,0 +1,39 @@
+{
+  "group": "moonlight_c49",
+  "keys": {
+    "moonlight_empty_marker_refresh_skip": {
+      "mod": "moonlight",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.moonlight_c49.MoonlightEmptyMarkerMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mehvahdjukaar/moonlight/core/mixins/MapDataMixin",
+          "method": "checkCustomDeco",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;IILorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "two ArrayLists, a loop over moonlight$customMapMarkers.entrySet(), two forEach with bound method references; nothing else",
+          "sha256": "26dd2a3a65dcf37e8c609919481867bf6b783475e7d5c151d859a744e4fa70ba"
+        },
+        {
+          "class": "net/mehvahdjukaar/moonlight/core/mixins/MapDataMixin",
+          "method": "getCustomMarkers",
+          "desc": "()Ljava/util/Map;",
+          "note": "returns the final field moonlight$customMapMarkers the handler walks",
+          "sha256": "16f6436af21a2201a7c6cb0ba6d3e19a122c3835391f412f56ab1d648481a890"
+        },
+        {
+          "class": "net/minecraft/world/level/saveddata/maps/MapItemSavedData",
+          "method": "m_77930_",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;II)V",
+          "note": "checkBanners: Moonlight's handler runs at its TAIL",
+          "sha256": "df3c14b2784f513e660a8a3e6b3b95b03aaf323f7763bdba1d80687e6e50aab4"
+        }
+      ],
+      "cancel": [],
+      "conversion": "targethandler (MixinSquared @Inject HEAD cancellable on Moonlight's MapDataMixin.checkCustomDeco: returns at once while ExpandedMapData.getCustomMarkers() is empty; helper bons.furious.patch.moonlight_c49.EmptyMarkers)",
+      "license": "GPLv3 (Moonlight Lib): no Moonlight code is carried, only an early return in front of its handler"
+    }
+  }
+}

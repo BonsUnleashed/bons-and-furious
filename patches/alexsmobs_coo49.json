@@ -1,0 +1,48 @@
+{
+  "group": "alexsmobs_coo49",
+  "keys": {
+    "alexsmobs_release_level_maps": {
+      "mod": "alexsmobs",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.alexsmobs_coo49.AMWorldDataReleaseMixin",
+        "bons.furious.mixin.alexsmobs_coo49.ServerEventsWhaleReleaseMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/alexsmobs/world/AMWorldData",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "dataMap = new HashMap<Level, AMWorldData>() (never cleared)",
+          "sha256": "24ebdc2034fb8aa49edf01f2592997365409fb7c4fc73f697ee5031521f4f3e4"
+        },
+        {
+          "class": "com/github/alexthe666/alexsmobs/world/AMWorldData",
+          "method": "get",
+          "desc": "(Lnet/minecraft/world/level/Level;)Lcom/github/alexthe666/alexsmobs/world/AMWorldData;",
+          "note": "server levels only: looks up the overworld's entry, else loads the saved data and puts it under the given level",
+          "sha256": "3296bc81ceab33de728fc2b1d5294e71aec84821c93866a28435fd2a36c73b20"
+        },
+        {
+          "class": "com/github/alexthe666/alexsmobs/event/ServerEvents",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "BEACHED_CACHALOT_WHALE_SPAWNER_MAP = new HashMap<ServerLevel, BeachedCachalotWhaleSpawner>() (never cleared)",
+          "sha256": "943ed5579b92aab059808471404fde6595df8b31dedf7b63e714ac173b3d0518"
+        },
+        {
+          "class": "com/github/alexthe666/alexsmobs/event/ServerEvents",
+          "method": "onServerTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$LevelTickEvent;)V",
+          "note": "computeIfAbsent(serverLevel, new spawner) then tick: a level that comes back gets a new entry",
+          "sha256": "11e96a031d7246f517c196ae2387a66846a2c4b162190b4af1ec1fc8281e7d3c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at the TAIL of the static initializers of AMWorldData and ServerEvents hands their two never-cleared static level maps (dataMap, BEACHED_CACHALOT_WHALE_SPAWNER_MAP) to the helper, which registers one LevelEvent.Unload listener (lowest priority) that removes the unloading level from both. Runtime flag alexsmobsReleaseLevelMaps. Helper bons.furious.patch.alexsmobs_coo49.LevelMapRelease. Fix: every closed world stayed reachable through these maps.",
+      "license": "Alex's Mobs (LGPL-3.0): no code carried; the hooks hand over two map references, the listener is ours"
+    }
+  }
+}

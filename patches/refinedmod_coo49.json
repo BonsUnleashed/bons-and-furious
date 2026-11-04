@@ -1,0 +1,180 @@
+{
+  "group": "refinedmod_coo49",
+  "keys": {
+    "refinedmod_hunters_mark_bonus_floor": {
+      "mod": "refined_mod",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.refinedmod_coo49.RefinedHuntersMarkBonusMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/refinedrain/refinedmod/effect/hunters_mark/HuntersMarkHandler",
+          "method": "getBonusModifier",
+          "desc": "(ILnet/minecraft/world/entity/LivingEntity;)F",
+          "note": "((amplifier - 1) x power + 2) x 0.1 (power 1 without a caster): negative at amplifier 0 above power 2",
+          "sha256": "1dfe119f12fa4d098a0d9bda8523ba9622bab239f8a0b1a35a986f8df85b31cb"
+        },
+        {
+          "class": "net/refinedrain/refinedmod/effect/hunters_mark/HuntersMarkHandler",
+          "method": "onLivingHurt",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V",
+          "note": "the marked hit's amount x (1 + bonus)",
+          "sha256": "d3a81cc551101510f363bdc5838dd4a54b7ed30c71ff1fc9cfa9c726f18d32fc"
+        },
+        {
+          "class": "net/refinedrain/refinedmod/spells/HuntersMarkSpell",
+          "method": "*",
+          "desc": "",
+          "note": "the spell's other reader of the bonus (its description)",
+          "sha256": "ac6965f45d5cc48104553d1ba4e3e2ff21f26a20c2a171acde402237eb435aeb"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyReturnValue on HuntersMarkHandler.getBonusModifier: a negative bonus (a level 1 Hunter's Mark cast with more than 2 spell power: ((0 - 1) x power + 2) x 0.1) becomes 0, so the mark never lowers the marked hits' damage and the spell's description never shows a negative bonus; every other answer (NaN included) is returned unchanged. Gameplay fix, off by default. Runtime flag refinedmodHuntersMarkBonusFloor. Helper bons.furious.patch.refinedmod_coo49.RefinedFixes.",
+      "license": "Refined Mod (All Rights Reserved): no code carried, the injection carries only our own logic"
+    },
+    "refinedmod_storm_blade_ownerless_discard": {
+      "mod": "refined_mod",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.refinedmod_coo49.RefinedStormBladeOwnerMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/refinedrain/refinedmod/entity/spells/storm_blade/StormBladeCollider",
+          "method": "m_5790_",
+          "desc": "(Lnet/minecraft/world/phys/EntityHitResult;)V",
+          "note": "server: impact particles, then return without a discard when getOwner() is not a LivingEntity",
+          "sha256": "c827a41686897ee84ecae140c3588184926d9269a16dbb285a00d707982c472b"
+        },
+        {
+          "class": "net/refinedrain/refinedmod/entity/spells/storm_blade/StormBladeCollider",
+          "method": "m_8119_",
+          "desc": "()V",
+          "note": "the only caller (server side, the first entity the moving box hits); particles + discard after 20 ticks",
+          "sha256": "aa0f96cfa78c0e17085e16220fc6cf14d547825a34e561d1cce5b5c0eaafcb7a"
+        },
+        {
+          "class": "net/minecraft/world/entity/projectile/Projectile",
+          "method": "m_19749_",
+          "desc": "()Lnet/minecraft/world/entity/Entity;",
+          "note": "getOwner: the cached owner, else the server level's entity of the owner UUID",
+          "sha256": "7b0f7f5d76b2f5df556c807ce5e1ee795a7135b5faac7aa1eaf2da8945663ddc"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of StormBladeCollider.onHitEntity (m_5790_): on a server level a collider whose caster is not a living entity (logged out, unloaded, another dimension) is discarded at once and the method returns, before the impact particles; otherwise it runs as shipped. Gameplay fix, off by default: no stray sparks and re-hits from a blade whose caster is gone; a caster who comes back within the blade's 20 ticks no longer gets its later hits. Runtime flag refinedmodStormBladeOwnerlessDiscard. Helper bons.furious.patch.refinedmod_coo49.RefinedFixes.",
+      "license": "Refined Mod (All Rights Reserved): no code carried, the injection carries only our own logic"
+    },
+    "refinedmod_wave_terrain_server_only": {
+      "mod": "refined_mod",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.refinedmod_coo49.RefinedWaveClientTerrainMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/refinedrain/refinedmod/entity/spells/CustomWaveEntity",
+          "method": "extinguishNearbyFires",
+          "desc": "()V",
+          "note": "fire within 1 block -> setBlock(air, 3), no side check",
+          "sha256": "b505dc2b282e6ac0bef56619a72d87f670e0d0728a44a77cf596348d060d12ea"
+        },
+        {
+          "class": "net/refinedrain/refinedmod/entity/spells/CustomWaveEntity",
+          "method": "convertLavaToCobblestone",
+          "desc": "()V",
+          "note": "lava within 2 blocks -> setBlock(cobblestone, 3), no side check",
+          "sha256": "034d01af5526f36f9f5195486713d79f33e5607dc6bde190e0ff814af01fff30"
+        },
+        {
+          "class": "net/refinedrain/refinedmod/entity/spells/CustomWaveEntity",
+          "method": "m_8119_",
+          "desc": "()V",
+          "note": "tick: both sweeps on both sides, then the wave's own tick, then server-side damage",
+          "sha256": "5e3978309bd418d07869f7c3165a3fbe45726921e69d428a42f9a49b9d131c7c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of CustomWaveEntity.extinguishNearbyFires and convertLavaToCobblestone: on a client level both sweeps return at once, so the client no longer writes air / cobblestone into its own world at its interpolated wave position (blocks the server may never write stay wrong on the client until updated); the server's sweeps run as shipped and reach clients as block updates. Fix: clients show the tidal wave's fire and lava changes when the server's block updates arrive instead of guessing them. Client mixin. Runtime flag refinedmodWaveTerrainServerOnly. Helper bons.furious.patch.refinedmod_coo49.RefinedFixes.",
+      "license": "Refined Mod (All Rights Reserved): no code carried, the injection carries only our own logic"
+    },
+    "refinedmod_wave_terraforming_off": {
+      "mod": "refined_mod",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.refinedmod_coo49.RefinedWaveTerraformingOffMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/refinedrain/refinedmod/entity/spells/CustomWaveEntity",
+          "method": "extinguishNearbyFires",
+          "desc": "()V",
+          "note": "fire within 1 block -> setBlock(air, 3)",
+          "sha256": "b505dc2b282e6ac0bef56619a72d87f670e0d0728a44a77cf596348d060d12ea"
+        },
+        {
+          "class": "net/refinedrain/refinedmod/entity/spells/CustomWaveEntity",
+          "method": "convertLavaToCobblestone",
+          "desc": "()V",
+          "note": "lava within 2 blocks -> setBlock(cobblestone, 3)",
+          "sha256": "034d01af5526f36f9f5195486713d79f33e5607dc6bde190e0ff814af01fff30"
+        },
+        {
+          "class": "net/refinedrain/refinedmod/entity/spells/CustomWaveEntity",
+          "method": "m_8119_",
+          "desc": "()V",
+          "note": "tick: both sweeps, then the wave's own tick, then server-side damage (unaffected)",
+          "sha256": "5e3978309bd418d07869f7c3165a3fbe45726921e69d428a42f9a49b9d131c7c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of CustomWaveEntity.extinguishNearbyFires and convertLavaToCobblestone: both sweeps return at once on every level. Trade-off (admin option), off by default: Refined Mod's tidal waves no longer put out fire or turn lava into cobblestone (block changes made with setBlock that skip break / place events and claim protection); their damage and push are unchanged. Runtime flag refinedmodWaveTerraformingOff. Helper bons.furious.patch.refinedmod_coo49.RefinedFixes.",
+      "license": "Refined Mod (All Rights Reserved): no code carried, the injection carries only our own logic"
+    },
+    "refinedmod_wave_terrain_scan_lean": {
+      "mod": "refined_mod",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.refinedmod_coo49.RefinedWaveLeanScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/refinedrain/refinedmod/entity/spells/CustomWaveEntity",
+          "method": "extinguishNearbyFires",
+          "desc": "()V",
+          "note": "the 3 x 3 x 3 cube around floor(position): fire -> setBlock(air, 3); reads only otherwise",
+          "sha256": "b505dc2b282e6ac0bef56619a72d87f670e0d0728a44a77cf596348d060d12ea"
+        },
+        {
+          "class": "net/refinedrain/refinedmod/entity/spells/CustomWaveEntity",
+          "method": "convertLavaToCobblestone",
+          "desc": "()V",
+          "note": "the 5 x 5 x 5 cube around floor(position): lava -> setBlock(cobblestone, 3); reads only otherwise",
+          "sha256": "034d01af5526f36f9f5195486713d79f33e5607dc6bde190e0ff814af01fff30"
+        },
+        {
+          "class": "net/refinedrain/refinedmod/entity/spells/CustomWaveEntity",
+          "method": "m_8119_",
+          "desc": "()V",
+          "note": "tick: both sweeps every tick on both sides, then the wave moves (Alex's Caves WaveEntity.tick)",
+          "sha256": "5e3978309bd418d07869f7c3165a3fbe45726921e69d428a42f9a49b9d131c7c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Two @Unique (block, swept) pairs and @Inject HEAD (cancellable) / RETURN on CustomWaveEntity.extinguishNearbyFires and convertLavaToCobblestone: a sweep that ran to its end records the block it was centred on; while the wave is still in that block the sweep returns at its head (its cube is the cube it already read and cleared). Trade-off, off by default: fire or lava that appears in the cube while the wave stays in the same block is left until the wave enters a new block (or for good, if it never does). Runtime flag refinedmodWaveTerrainScanLean. Helper bons.furious.patch.refinedmod_coo49.RefinedFixes.",
+      "license": "Refined Mod (All Rights Reserved): no code carried, the injections carry only our own logic"
+    }
+  }
+}

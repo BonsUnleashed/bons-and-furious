@@ -1,0 +1,54 @@
+{
+  "group": "simplyswords_footfalls",
+  "keys": {
+    "simplyswords_footfalls_unheld_skip": {
+      "mod": "simplyswords",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.simplyswords_footfalls.HelperMethodsFootfallsMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/sweenus/simplyswords/util/HelperMethods",
+          "method": "createFootfalls",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;ILnet/minecraft/core/particles/SimpleParticleType;Lnet/minecraft/core/particles/SimpleParticleType;Lnet/minecraft/core/particles/SimpleParticleType;Z)V",
+          "note": "the whole body behind instanceof Player, Config.getBoolean and the main-hand reference test; the skipped path calls only those two methods",
+          "sha256": "1c8cd43215fb2d0c8cb9e29323d670f5b22e97c816c405f6eccd6aed14df10e0"
+        },
+        {
+          "class": "net/sweenus/simplyswords/config/Config",
+          "method": "getBoolean",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;Z)Z",
+          "note": "safeValueFetch, then a read of the BOOLEAN table (and a print when the key is missing)",
+          "sha256": "9f76af767ac1eca7da5be64f7a96b7719449f21f3c13024687036f6172aba367"
+        },
+        {
+          "class": "net/sweenus/simplyswords/config/Config",
+          "method": "safeValueFetch",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)V",
+          "note": "the refresh every Config.getX runs before it reads: file read, parse, puts into the four private tables",
+          "sha256": "02b377a3e0e5c07a2eeb73219ac354b889bd2ab1011c2ba8235cd9bc08591249"
+        },
+        {
+          "class": "net/sweenus/simplyswords/config/Config",
+          "method": "*",
+          "desc": "",
+          "note": "the declared methods of Config: no other reader or writer of its tables",
+          "sha256": "118429e0d6a099ace35a7f89dd60966ac3e7c804c8594ff3d5b73b2ad5a1406d"
+        },
+        {
+          "class": "net/minecraft/world/entity/player/Player",
+          "method": "m_6844_",
+          "desc": "(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;",
+          "note": "getItemBySlot: the read the method tests and the switch asks first (a read of the inventory)",
+          "sha256": "705bc937e6ec3e8321b1ac4ee87b9c4105b907ed7525d3ce5d11ef9c5f62c954"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@ModifyVariable (argsOnly, HEAD, capturing the stack argument) on HelperMethods.createFootfalls: a player whose main-hand stack is not this stack (the method's own reference test) reaches the method as a null entity, so its first test (instanceof Player) returns at once; every other call runs the original unchanged (helper bons.furious.patch.simplyswords_footfalls.FootfallsUnheld, runtime flag)",
+      "license": "Simply Swords: Timefall Development License (custom): no-copy; the mixin carries only our own test, the mod's code stays in its jar"
+    }
+  }
+}

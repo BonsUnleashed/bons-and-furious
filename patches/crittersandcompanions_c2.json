@@ -231,7 +231,7 @@
         }
       ],
       "cancel": [],
-      "conversion": "MixinExtras @WrapMethod on the vanilla AvoidEntityGoal.canUse; acts only for goals whose avoided class is named com.github.eterdelta.crittersandcompanions.entity.RedPandaEntity (the goals Critters and Companions 2.3.5 adds through its NeutralMobsMixin) and only while vanilla_entity_class_count_layer says the level holds none",
+      "conversion": "MixinExtras @WrapMethod on the vanilla AvoidEntityGoal.canUse; acts only for goals whose avoided class is named com.github.eterdelta.crittersandcompanions.entity.RedPandaEntity (the goals Critters and Companions 2.3.5 adds through its NeutralMobsMixin) or, since 1.0.49, io.github.bonsaistudi0s.crittersandcompanions.common.entity.RedPandaEntity (2.7.1, the same goals; registered by bons_and_furious.crittersandcompanions_c2.entity_classes.json), and only while vanilla_entity_class_count_layer says the level holds none",
       "license": "Minecraft (Mojang): no-copy; no Critters and Companions code is touched (MIT). The mixin carries only our own logic (helpers RedPandaGate, EntityClassCounts)"
     }
   }

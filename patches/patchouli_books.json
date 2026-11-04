@@ -1,0 +1,82 @@
+{
+  "group": "patchouli_books",
+  "keys": {
+    "patchouli_book_item_prefilter": {
+      "mod": "patchouli",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.patchouli_books.PatchouliBookLookupMixin",
+        "bons.furious.mixin.patchouli_books.PatchouliBookRegistryMixin"
+      ],
+      "guard": [
+        {
+          "class": "vazkii/patchouli/common/util/ItemStackUtil",
+          "method": "getBookFromStack",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Lvazkii/patchouli/common/book/Book;",
+          "note": "getItem() instanceof ItemModBook -> ItemModBook.getBook; else books.values() in order, first ItemStack.isSameItem(book.getBookItem(), stack); null",
+          "sha256": "be97fcd185a3956966c475e8752ed3be81188b51089654376615726ce212edc0"
+        },
+        {
+          "class": "vazkii/patchouli/common/book/BookRegistry",
+          "method": "loadBook",
+          "desc": "(Lvazkii/patchouli/xplat/XplatModContainer;Lnet/minecraft/resources/ResourceLocation;Ljava/io/InputStream;Z)V",
+          "note": "the only write of books: books.put(id, new Book(...))",
+          "sha256": "09897b056761232a4f2ae01e9327ace9ba92a6ccbc014d478bc0789d50fa1430"
+        },
+        {
+          "class": "vazkii/patchouli/common/book/BookRegistry",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "books = new HashMap<>() (final)",
+          "sha256": "358eaf56fb98382306dde7a10631ae8911a5fa70b1fd34927aaf9c9b6c181277"
+        },
+        {
+          "class": "vazkii/patchouli/common/book/Book",
+          "method": "getBookItem",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "bookItem.get(): a Suppliers.memoize supplier",
+          "sha256": "7fdddb36b999117c0977e01cb93122b6939965f7a2d610380584ed6e863624e0"
+        },
+        {
+          "class": "vazkii/patchouli/common/book/Book",
+          "method": "<init>",
+          "desc": "(Lcom/google/gson/JsonObject;Lvazkii/patchouli/xplat/XplatModContainer;Lnet/minecraft/resources/ResourceLocation;Z)V",
+          "note": "bookItem = Suppliers.memoize(...) (custom item or ItemModBook.forBook), its only write",
+          "sha256": "dc38a7c8febb81eb8156a803075ac6e0c2273d20a91c4190e48e98e100f73879"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41656_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+          "note": "isSameItem(a, b) = a.is(b.getItem())",
+          "sha256": "722d4417ab0bf0c2cf7d4378e07b72318296bd74ab65d0f20bd89b818c60bc3e"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_150930_",
+          "desc": "(Lnet/minecraft/world/item/Item;)Z",
+          "note": "is(item) = getItem() == item",
+          "sha256": "c86f1f6d54703519c2d4d8c5537a9020c76acc703dd19a491c36d3dbcbf84eea"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41720_",
+          "desc": "()Lnet/minecraft/world/item/Item;",
+          "note": "getItem = isEmpty() ? AIR : delegate.get() (delegate final)",
+          "sha256": "ce7982961328f6d190746b117db6ef59920bc2a9dcbb28fadc3c325294da242c"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41619_",
+          "desc": "()Z",
+          "note": "isEmpty: EMPTY, count <= 0 or the AIR item",
+          "sha256": "8f98b32b0197e0943c848b64db2e019736072716a7da9afd7bf61b23ad3a46e1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod of ItemStackUtil.getBookFromStack (priority 1500): an index of the loaded books' items (book order kept, getBookItem() called where Patchouli's loop would until every book is known) answers non-book stacks; MixinExtras @WrapOperation of the books.put call in BookRegistry.loadBook marks the index stale; helper bons.furious.patch.patchouli_books.PatchouliBooks; shadow mode -Dbons_and_furious.patchouliBookItemPrefilter.shadow=true",
+      "license": "Patchouli is CC BY-NC-SA 3.0: no Patchouli code is carried (the wrapper decides which books Patchouli's own comparison is asked about; the original method runs otherwise); Minecraft (Mojang): no code carried"
+    }
+  }
+}

@@ -1,0 +1,249 @@
+{
+  "group": "shake_gates_c49",
+  "keys": {
+    "dodosmobs_shake_scan_presence_gate": {
+      "mod": "dodosmobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.shake_gates_c49.DodosShakeGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/dodo/dodosmobs/client/event/ClientEvent",
+          "method": "onCameraSetup",
+          "desc": "(Lnet/minecraftforge/client/event/ViewportEvent$ComputeCameraAngles;)V",
+          "note": "getEntitiesOfClass(ScreenShake_Entity, player box +-20), then the shake sum over the list",
+          "sha256": "ac7eae45757553e48f2a1dd1098f044b0e21114f266b653757f9fa24f6c8f54b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass (m_45976_) call in ClientEvent.onCameraSetup: while vanilla_entity_class_count_layer says the client level holds no ScreenShake_Entity, the call is marked EMPTY so that vanilla_entity_walk_skip leaves out its empty section walk; the call itself runs (helper bons.furious.patch.shake_gates_c49.ShakeGates49)",
+      "license": "Dodo's Mobs (licence unresolved, treated as all rights reserved): no code carried, the wrapper carries only our own logic"
+    },
+    "eeeabsmobs_shake_scan_presence_gate": {
+      "mod": "eeeabsmobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.shake_gates_c49.EeeabsShakeGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/eeeab/eeeabsmobs/sever/handler/ClientEventHandler",
+          "method": "onSetupCamera",
+          "desc": "(Lnet/minecraftforge/client/event/ViewportEvent$ComputeCameraAngles;)V",
+          "note": "getEntitiesOfClass(EntityCameraShake, player box +-20), then the shake sum over the list",
+          "sha256": "a7bd01f2a3dc464a92deaefe7a0120dddb725d95b4da06666f7922de7ff6d9a5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass (m_45976_) call in ClientEventHandler.onSetupCamera: while vanilla_entity_class_count_layer says the client level holds no EntityCameraShake, the call is marked EMPTY so that vanilla_entity_walk_skip leaves out its empty section walk; the call itself runs (helper bons.furious.patch.shake_gates_c49.ShakeGates49)",
+      "license": "EEEAB's Mobs (LGPL-3.0): no code carried, the wrapper carries only our own logic"
+    },
+    "fromtheshadows_shake_scan_presence_gate": {
+      "mod": "fromtheshadows",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.shake_gates_c49.FromTheShadowsShakeGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/sonmok14/fromtheshadows/client/ClientEvents",
+          "method": "onCameraSetup",
+          "desc": "(Lnet/minecraftforge/client/event/ViewportEvent$ComputeCameraAngles;)V",
+          "note": "getEntitiesOfClass(ScreenShakeEntity, player box +-20), then the shake sum over the list",
+          "sha256": "e4e48137302aec19477f26db5b58b34e01635dffa04c141d187dd3e0c2c42afb"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass (m_45976_) call in ClientEvents.onCameraSetup: while vanilla_entity_class_count_layer says the client level holds no ScreenShakeEntity, the call is marked EMPTY so that vanilla_entity_walk_skip leaves out its empty section walk; the call itself runs (helper bons.furious.patch.shake_gates_c49.ShakeGates49)",
+      "license": "From The Shadows Reborn (all rights reserved): no code carried, the wrapper carries only our own logic"
+    },
+    "mythsandlegends_shake_scan_presence_gate": {
+      "mod": "mythsandlegends",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.shake_gates_c49.MythsShakeGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ovinter/mythsandlegends/event/ClientEvents",
+          "method": "onCameraSetup",
+          "desc": "(Lnet/minecraftforge/client/event/ViewportEvent$ComputeCameraAngles;)V",
+          "note": "1.0.6 (tested): getEntitiesOfClass(EffectScreenShake, player box +-20), then the shake sum over the list",
+          "sha256": "ed5725d79c55e0b7545d49bbd5b18a1fc0fb3956d219bf8d52f701916596f8d1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass (m_45976_) call in ClientEvents.onCameraSetup (1.0.6): while vanilla_entity_class_count_layer says the client level holds no EffectScreenShake, the call is marked EMPTY so that vanilla_entity_walk_skip leaves out its empty section walk; the call itself runs (helper bons.furious.patch.shake_gates_c49.ShakeGates49). The 0.0.8.8 build (COO's pin) is mythsandlegends_legacy_shake_scan_presence_gate",
+      "license": "Myths and Legends (all rights reserved): no code carried, the wrapper carries only our own logic"
+    },
+    "mythsandlegends_legacy_shake_scan_presence_gate": {
+      "mod": "mythsandlegends",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.shake_gates_c49.MythsLegacyShakeGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ovinter/mythsandlegends/event/EventBusClientEvents",
+          "method": "onCameraSetup",
+          "desc": "(Lnet/minecraftforge/client/event/ViewportEvent$ComputeCameraAngles;)V",
+          "note": "0.0.8.8 only (COO's pin): the same listener under its older class name; absent in 1.0.6 (tested build), present in the 0.0.8.8 build (sha256_also, identical to 1.0.6's ClientEvents.onCameraSetup)",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "0.0.8.8",
+              "sha256": "ed5725d79c55e0b7545d49bbd5b18a1fc0fb3956d219bf8d52f701916596f8d1"
+            }
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass (m_45976_) call in EventBusClientEvents.onCameraSetup (Myths and Legends 0.0.8.8, COO's pinned build): while vanilla_entity_class_count_layer says the client level holds no EffectScreenShake, the call is marked EMPTY so that vanilla_entity_walk_skip leaves out its empty section walk; the call itself runs (helper bons.furious.patch.shake_gates_c49.ShakeGates49). A key of its own so the build that lacks the class is ABSENT",
+      "license": "Myths and Legends (all rights reserved): no code carried, the wrapper carries only our own logic"
+    },
+    "saintsdragons_shake_scan_presence_gate": {
+      "mod": "saintsdragons",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.shake_gates_c49.SaintsDragonsShakeGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/leon/saintsdragons/forge/client/event/ClientEventHandler",
+          "method": "onComputeCamera",
+          "desc": "(Lnet/minecraftforge/client/event/ViewportEvent$ComputeCameraAngles;)V",
+          "note": "getEntitiesOfClass(Mob, camera entity box +-64, mob -> mob instanceof ShakesScreen); Math.random draws only when something shakes",
+          "sha256": "635c97961ad5a019cfa27c26e4fc88649e22d048291f00d034512e5da39d88d6"
+        },
+        {
+          "class": "com/leon/saintsdragons/forge/client/event/ClientEventHandler",
+          "method": "lambda$onComputeCamera$0",
+          "desc": "(Lnet/minecraft/world/entity/Mob;)Z",
+          "note": "the predicate: instanceof ShakesScreen",
+          "sha256": "7efbb8a44773ee9130a7cee6e8eb4dbcaff757299d307f20092d917ded4b967a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the ClientLevel.getEntitiesOfClass (m_6443_) call in ClientEventHandler.onComputeCamera: while vanilla_entity_class_count_layer says no entity of the client level implements ShakesScreen, the call is marked EMPTY so that vanilla_entity_walk_skip leaves out its section walk (which only tests the predicate on other mobs); the call itself runs (helper bons.furious.patch.shake_gates_c49.ShakeGates49)",
+      "license": "Saint's Dragons (MIT code, assets all rights reserved): no code carried, the wrapper carries only our own logic"
+    },
+    "saintsdragons_skyfall_scan_presence_gate": {
+      "mod": "saintsdragons",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.shake_gates_c49.SaintsDragonsSkyfallGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/leon/saintsdragons/client/camera/IgnivorusSkyfallScreenEffects",
+          "method": "sample",
+          "desc": "(F)[F",
+          "note": "loops over entitiesForRendering; only Ignivorus entities change the three values it returns",
+          "sha256": "9686199531bef7fd5b702d5e569c14df537650a0d48d5f5f40885060ec9a09a6"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel",
+          "method": "m_104735_",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "entitiesForRendering = getEntities().getAll(): the client's entity lookup",
+          "sha256": "4ccf94cc5c03f8e06360248ccbce8b8f3468445798aa4b5c5e56434b4c5561d4"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/LevelEntityGetterAdapter",
+          "method": "m_142273_",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "getAll: the lookup's entities",
+          "sha256": "9d30e2cc61f9b6f46461df04c561bcdb4f5ecb246e12685650112b315cf2c151"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/TransientEntitySectionManager",
+          "method": "m_157653_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)V",
+          "note": "addEntity: the lookup and a section take the entity together",
+          "sha256": "5f2f67f1c20294f5b4d354e0053fef4f1d87d67c0b0cd4eee5d600193300259c"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/TransientEntitySectionManager$Callback",
+          "method": "m_142472_",
+          "desc": "(Lnet/minecraft/world/entity/Entity$RemovalReason;)V",
+          "note": "onRemove: the section and the lookup let it go together",
+          "sha256": "8d56d9c22965d3e4130a39575f3c966b9e709dc11a0901cc43e93249579a15a6"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/TransientEntitySectionManager$Callback",
+          "method": "m_142044_",
+          "desc": "()V",
+          "note": "onMove: section to section",
+          "sha256": "d1e857c9bcf30c6d1c78c7e1e3b3586a18cf1cb8cd690a3f0885f21a54d1e0c8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the ClientLevel.entitiesForRendering (m_104735_) call in IgnivorusSkyfallScreenEffects.sample: while vanilla_entity_class_count_layer says the client level holds no Ignivorus, an empty iterable instead (sample then returns {0,0,0} as after the full loop); otherwise the call (helper bons.furious.patch.shake_gates_c49.ShakeGates49)",
+      "license": "Saint's Dragons (MIT code): no code carried; Minecraft (Mojang): no-copy, the wrapper carries only our own logic"
+    },
+    "cnc_wechuge_fog_scan_presence_gate": {
+      "mod": "cnc",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.shake_gates_c49.CncFogColorGateMixin",
+        "bons.furious.mixin.shake_gates_c49.CncFogDistanceGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/FogColorSetupProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDD)V",
+          "note": "two getEntitiesOfClass(WechugeEntity, box 24 / 12, e -> true); each result only tested with isEmpty",
+          "sha256": "618bde8d7af903ad0653ef13877a66054714f02a1e9991cde7ae7878b30feb4b"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/FogColorSetupProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/imasillylittleguy/cnc/entity/WechugeEntity;)Z",
+          "note": "e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/FogColorSetupProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/imasillylittleguy/cnc/entity/WechugeEntity;)Z",
+          "note": "e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/FogDistanceSetupProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDD)V",
+          "note": "two getEntitiesOfClass(WechugeEntity, box 24 / 12, e -> true); each result only tested with isEmpty",
+          "sha256": "a995fb2967a8f622f3104dcb6e9e160ae63e1384b9525578c52bce13e9564036"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/FogDistanceSetupProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/imasillylittleguy/cnc/entity/WechugeEntity;)Z",
+          "note": "e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/FogDistanceSetupProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/imasillylittleguy/cnc/entity/WechugeEntity;)Z",
+          "note": "e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on both LevelAccessor.getEntitiesOfClass (m_6443_) calls of FogColorSetupProcedure.execute and FogDistanceSetupProcedure.execute: while vanilla_entity_class_count_layer says the level holds no WechugeEntity, each call is marked EMPTY so that vanilla_entity_walk_skip leaves out its empty section walk; the calls themselves run (helper bons.furious.patch.shake_gates_c49.ShakeGates49)",
+      "license": "Critters n' Crawlers (all rights reserved): no code carried, the wrappers carry only our own logic"
+    }
+  }
+}

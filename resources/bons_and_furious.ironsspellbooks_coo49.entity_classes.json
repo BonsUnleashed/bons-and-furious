@@ -1,0 +1,11 @@
+{
+  "layer": "vanilla_entity_class_count_layer",
+  "entries": [
+    {"class": "io.redspace.ironsspellbooks.api.entity.IMagicEntity", "key": "irons_spellbooks_caster_scan_gate", "mod": "irons_spellbooks",
+     "why": "Iron's Spells 'n Spellbooks 3.16.3 ClientPlayerEvents.onPlayerTick searches Players and IMagicEntity mobs in a 128-block box every client tick; only they can be casting (an INTERFACE entry; IMagicEntity part entities are checked by the gate)"},
+    {"class": "net.minecraft.world.entity.player.Player", "key": "irons_spellbooks_caster_scan_gate", "mod": "irons_spellbooks",
+     "why": "Iron's caster gate: the Player count must equal the AbstractClientPlayer count (every player of the sections is in level.players()); counted only while Iron's is installed"},
+    {"class": "net.minecraft.client.player.AbstractClientPlayer", "key": "irons_spellbooks_caster_scan_gate", "mod": "irons_spellbooks",
+     "why": "Iron's caster gate: client players (ClientLevel's tracking callbacks keep each of them in level.players()); no such class on a dedicated server"}
+  ]
+}

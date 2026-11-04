@@ -1,0 +1,289 @@
+{
+  "group": "xaerominimap_c49",
+  "keys": {
+    "xaerominimap_hidden_radar_skip": {
+      "mod": "xaerominimap",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.xaerominimap_c49.MmHiddenRadarTickMixin",
+        "bons.furious.mixin.xaerominimap_c49.MmMinimapDrawnMixin",
+        "bons.furious.mixin.xaerominimap_c49.MmHiddenFrameMixin"
+      ],
+      "guard": [
+        {
+          "class": "xaero/common/minimap/MinimapProcessor",
+          "method": "onClientTick",
+          "desc": "()V",
+          "note": "player, its ClientLevel, the camera entity, then radarSession.update(world, renderEntity, player), then the support mods tick",
+          "sha256": "5ae2a4753c21fe5057e9c1eb4824fec019c97fab79c0a2578707fae41ae1e1e7"
+        },
+        {
+          "class": "xaero/hud/minimap/radar/RadarSession",
+          "method": "update",
+          "desc": "(Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/player/Player;)V",
+          "note": "stateUpdater.update(world, renderEntity, player)",
+          "sha256": "013d5bceb036e8a581ec00232f310b9f75fb76444dae6c7401ba2c1df6d0b60c"
+        },
+        {
+          "class": "xaero/hud/minimap/radar/state/RadarStateUpdater",
+          "method": "update",
+          "desc": "(Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/player/Player;)V",
+          "note": "empties every radar list, then (world, entity, player, rules allowing) adds each entity to its category list",
+          "sha256": "b49ad4f20c5b94066ea40eae1787a4f53a3c802f2a8f973cb2aaf06897eb1ee8"
+        },
+        {
+          "class": "xaero/common/minimap/render/MinimapRenderer",
+          "method": "renderMinimap",
+          "desc": "(Lxaero/hud/minimap/module/MinimapSession;Lnet/minecraft/client/gui/GuiGraphics;Lxaero/common/minimap/MinimapProcessor;IIIIDIFLxaero/common/graphics/CustomVertexConsumers;)V",
+          "note": "the minimap draw of the framebuffer and the safe-mode renderer (renderChunks of each)",
+          "sha256": "8205aa416d5c5296e9b368847f8a10d20c98bd61058474102023db6211b7da9d"
+        },
+        {
+          "class": "xaero/hud/minimap/radar/state/RadarState",
+          "method": "getRadarLists",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "the list the updater fills (getUpdatableLists)",
+          "sha256": "a98022cf6fb3d6dbcb8cc93d44b3d46518c0201caf72286a7f503225e64cf25d"
+        },
+        {
+          "class": "xaero/hud/minimap/radar/state/RadarState",
+          "method": "getUpdatableLists",
+          "desc": "()Ljava/util/List;",
+          "note": "the same list",
+          "sha256": "a98022cf6fb3d6dbcb8cc93d44b3d46518c0201caf72286a7f503225e64cf25d"
+        },
+        {
+          "class": "xaero/hud/minimap/radar/state/RadarList",
+          "method": "clearEntities",
+          "desc": "()V",
+          "note": "entities.clear()",
+          "sha256": "c6e458f4bc91cb3e63a6b895d66296c120339f7cb33c2812d8eddf20cbeef2e4"
+        },
+        {
+          "class": "net/minecraft/client/renderer/GameRenderer",
+          "method": "m_109093_",
+          "desc": "(FJZ)V",
+          "note": "render: once per frame, the HUD (and the minimap) is drawn inside it",
+          "sha256": "b3d30ea94475a46c894be4fe1ae26574612e278c409632414625d31a0f0ecfc2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on MinimapProcessor.onClientTick's RadarSession.update call: left out while no screen is open and MinimapRenderer.renderMinimap (@Inject HEAD) did not run in the last frame (GameRenderer.render HEAD @Inject counts frames); the first update left out empties every radar list, the next renderMinimap runs RadarSession.update with the last tick's world, camera entity and player before drawing; updates without a world always run. Shares the wrapped call with xaerominimap_radar_after_frame (the outer wrapper decides for both). Runtime flag xaerominimapHiddenRadarSkip. Helper bons.furious.patch.xaerominimap_c49.RadarPacing.",
+      "license": "All Rights Reserved (Xaero's Minimap): none of its code is carried; the wrapper only decides when its radar update runs"
+    },
+    "xaerominimap_radar_after_frame": {
+      "mod": "xaerominimap",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.xaerominimap_c49.MmRadarDeferTickMixin",
+        "bons.furious.mixin.xaerominimap_c49.MmRadarAfterFrameMixin"
+      ],
+      "guard": [
+        {
+          "class": "xaero/common/minimap/MinimapProcessor",
+          "method": "onClientTick",
+          "desc": "()V",
+          "note": "player, its ClientLevel, the camera entity, then radarSession.update(world, renderEntity, player), then the support mods tick",
+          "sha256": "5ae2a4753c21fe5057e9c1eb4824fec019c97fab79c0a2578707fae41ae1e1e7"
+        },
+        {
+          "class": "xaero/hud/minimap/radar/RadarSession",
+          "method": "update",
+          "desc": "(Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/player/Player;)V",
+          "note": "stateUpdater.update(world, renderEntity, player)",
+          "sha256": "013d5bceb036e8a581ec00232f310b9f75fb76444dae6c7401ba2c1df6d0b60c"
+        },
+        {
+          "class": "xaero/hud/minimap/radar/state/RadarStateUpdater",
+          "method": "update",
+          "desc": "(Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/player/Player;)V",
+          "note": "empties every radar list, then (world, entity, player, rules allowing) adds each entity to its category list",
+          "sha256": "b49ad4f20c5b94066ea40eae1787a4f53a3c802f2a8f973cb2aaf06897eb1ee8"
+        },
+        {
+          "class": "net/minecraft/client/Minecraft",
+          "method": "m_91383_",
+          "desc": "(Z)V",
+          "note": "runTick: tasks, client ticks, render, Window.updateDisplay (m_85435_, once), then the frame rate limit wait",
+          "sha256": "a3c46c3387b2a5c7eeb8896eeabcf6f12f415184c58ae57e44fac3673f5a1d0a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on MinimapProcessor.onClientTick's RadarSession.update call keeps (session, world, camera entity, player); @Inject in Minecraft.runTick after Window.updateDisplay (shift AFTER) runs RadarSession.update once with the last kept values; updates without a world run at once and drop a kept one. Runtime flag xaerominimapRadarAfterFrame. Helper bons.furious.patch.xaerominimap_c49.RadarPacing.",
+      "license": "All Rights Reserved (Xaero's Minimap): none of its code is carried; the wrapper only decides when its radar update runs"
+    },
+    "xaerominimap_map_redraw_cap": {
+      "mod": "xaerominimap",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.xaerominimap_c49.MmRedrawCapMixin"
+      ],
+      "guard": [
+        {
+          "class": "xaero/common/minimap/render/MinimapFBORenderer",
+          "method": "renderChunksToFBO",
+          "desc": "(Lxaero/hud/minimap/module/MinimapSession;Lnet/minecraft/client/gui/GuiGraphics;Lxaero/common/minimap/MinimapProcessor;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/resources/ResourceKey;DIFIZZIDDZLxaero/common/graphics/CustomVertexConsumers;)V",
+          "note": "the whole redraw: chunk textures and grid into scalingFramebuffer, the rotated copy into rotationFramebuffer, the element renderers; leaves the GL state as it found it",
+          "sha256": "360fd3770693360b752ffd0172dd03ce7ca9d733096f6d8ba78ecd0f2f4e6636"
+        },
+        {
+          "class": "xaero/common/minimap/render/MinimapFBORenderer",
+          "method": "renderChunks",
+          "desc": "(Lxaero/hud/minimap/module/MinimapSession;Lnet/minecraft/client/gui/GuiGraphics;Lxaero/common/minimap/MinimapProcessor;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/resources/ResourceKey;DIIFFIZZIDDZZLxaero/common/settings/ModSettings;Lxaero/common/graphics/CustomVertexConsumers;)V",
+          "note": "renderChunksToFBO under the writer lock, then restoreDefaultTarget and rotationFramebuffer.bindRead for the HUD blit",
+          "sha256": "f0336077d0e99bc937965623ce91fc8f1e083ecc2bac255711b2f840a15fb3d3"
+        },
+        {
+          "class": "xaero/common/minimap/render/MinimapRenderer",
+          "method": "getZoom",
+          "desc": "()D",
+          "note": "the zoom field",
+          "sha256": "8325943f7b3d562e8138c3c4f2134e164ec6453e5a4ef77222e83bc67cfcaa5b"
+        },
+        {
+          "class": "xaero/common/minimap/write/MinimapWriter",
+          "method": "getLoadedBlocks",
+          "desc": "()[[Lxaero/common/minimap/region/MinimapChunk;",
+          "note": "the loaded chunk array",
+          "sha256": "69fa894f4627b4c64ce601e276a137918d7663660977822f812d2ca62f17a227"
+        },
+        {
+          "class": "xaero/common/minimap/write/MinimapWriter",
+          "method": "getLoadedMapChunkX",
+          "desc": "()I",
+          "note": "loaded area origin x",
+          "sha256": "7dd6ac78130d587b9fe7068baf678c19a7fd40389f2f6680437316cc383db82e"
+        },
+        {
+          "class": "xaero/common/minimap/write/MinimapWriter",
+          "method": "getLoadedMapChunkZ",
+          "desc": "()I",
+          "note": "loaded area origin z",
+          "sha256": "2f861cd833fd04702d6e7f958d186c04cfcfbdb3ff9c71ad51af2a55e8ec4ba8"
+        },
+        {
+          "class": "xaero/common/minimap/write/MinimapWriter",
+          "method": "getLoadedLevels",
+          "desc": "()I",
+          "note": "loaded cave levels",
+          "sha256": "7cdad62f4b2b6ba90db78f75c645668e5667f68eb5b82cfc1550de223352f3d4"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on MinimapFBORenderer.renderChunksToFBO: the original runs when the last redraw is at least 1/value s old or any structural input changed (either framebuffer object or size, view size, shape, north lock, cave level, world map use, cave mode, map dimension and scale, zoom, the map writer's loaded array, origin and level count); otherwise it is left out and renderChunks shows the kept rotation framebuffer. Value PureConfig.intValue(\"xaerominimap_map_redraw_cap\", 60, 1, 1000) redraws per second. Runtime flag xaerominimapMapRedrawCap. Helper bons.furious.patch.xaerominimap_c49.MapRedrawCap.",
+      "license": "All Rights Reserved (Xaero's Minimap): none of its code is carried; the wrapper only decides whether its redraw runs"
+    },
+    "xaerominimap_empty_element_renderer_skip": {
+      "mod": "xaerominimap",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.xaerominimap_c49.MmElementSkipMixin",
+        "bons.furious.mixin.xaerominimap_c49.MmElementTickMixin"
+      ],
+      "guard": [
+        {
+          "class": "xaero/hud/minimap/element/render/MinimapElementRendererHandler",
+          "method": "render",
+          "desc": "(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/world/phys/Vec3;FLcom/mojang/blaze3d/pipeline/RenderTarget;DLnet/minecraft/resources/ResourceKey;)V",
+          "note": "per renderer: elementIndex = renderForRenderer(renderer, .., 0, ..); depth step by the count; indexLimit -= count",
+          "sha256": "06b62192991dd74353907336cf63fdf2eea095d07df9788a6f1da162193435b0"
+        },
+        {
+          "class": "xaero/hud/minimap/element/render/MinimapElementRendererHandler",
+          "method": "renderForRenderer",
+          "desc": "(Lxaero/hud/minimap/element/render/MinimapElementRenderer;Lnet/minecraft/client/gui/GuiGraphics;ILxaero/common/graphics/renderer/multitexture/MultiTextureRenderTypeRendererProvider;ILxaero/hud/minimap/element/render/MinimapElementRenderInfo;)I",
+          "note": "shouldRender, preRender, provider.begin, while provider.hasNext: element, isHidden, transformAndRender (count), provider.end, postRender",
+          "sha256": "2cd5c6a8f7cfd2eeb70d3dfc4ad6bcb1ba85a8415aedc3e30e462ffb3e352a53"
+        },
+        {
+          "class": "xaero/hud/minimap/element/render/MinimapElementRenderer",
+          "method": "getProvider",
+          "desc": "()Lxaero/hud/minimap/element/render/MinimapElementRenderProvider;",
+          "note": "the provider field",
+          "sha256": "e64da2cc1218e775c40546aa6a40d3c52237ceeec3cddab80c0f46db32224a8f"
+        },
+        {
+          "class": "xaero/common/minimap/MinimapProcessor",
+          "method": "onClientTick",
+          "desc": "()V",
+          "note": "player, its ClientLevel, the camera entity, then radarSession.update(world, renderEntity, player), then the support mods tick",
+          "sha256": "5ae2a4753c21fe5057e9c1eb4824fec019c97fab79c0a2578707fae41ae1e1e7"
+        },
+        {
+          "class": "xaero/hud/minimap/waypoint/render/AbstractWaypointRenderProvider",
+          "method": "begin",
+          "desc": "(Lxaero/hud/minimap/element/render/MinimapElementRenderLocation;Lxaero/hud/minimap/waypoint/render/AbstractWaypointRenderContext;)V",
+          "note": "collects, filters and sorts the waypoints of the frame",
+          "sha256": "c6ca0e19f8d1b6a6ab7017ce955eb741e83ca6a6260fae87a8b6016fdda1edb5"
+        },
+        {
+          "class": "xaero/hud/minimap/waypoint/render/AbstractWaypointRenderProvider",
+          "method": "end",
+          "desc": "(Lxaero/hud/minimap/element/render/MinimapElementRenderLocation;Lxaero/hud/minimap/waypoint/render/AbstractWaypointRenderContext;)V",
+          "note": "drops the frame's waypoint iterator",
+          "sha256": "d3bb65bcc5bc08fbb0f1163a27d9096481a0b28e5527b83c6566ce92c310b747"
+        },
+        {
+          "class": "xaero/hud/minimap/radar/render/element/RadarRenderProvider",
+          "method": "begin",
+          "desc": "(Lxaero/hud/minimap/element/render/MinimapElementRenderLocation;Lxaero/hud/minimap/radar/render/element/RadarRenderContext;)V",
+          "note": "iterator over the radar lists",
+          "sha256": "cfefdaefb5c38d695dcea3370b2187281a678aa538b0ec4f09f3511b91ef0819"
+        },
+        {
+          "class": "xaero/hud/minimap/radar/render/element/RadarRenderProvider",
+          "method": "end",
+          "desc": "(Lxaero/hud/minimap/element/render/MinimapElementRenderLocation;Lxaero/hud/minimap/radar/render/element/RadarRenderContext;)V",
+          "note": "drops it",
+          "sha256": "25b178317515707f6427c7c7519243cfc4912bbcf1a28403b20f951cc6e747ae"
+        },
+        {
+          "class": "xaero/hud/minimap/player/tracker/PlayerTrackerMinimapElementRenderProvider",
+          "method": "begin",
+          "desc": "(Lxaero/hud/minimap/element/render/MinimapElementRenderLocation;Ljava/lang/Object;)V",
+          "note": "iterator over the tracked players",
+          "sha256": "07b3916eb7e9ac2d9fc8e5980b4098a007a9aa8fe76f278243d61ab012aaefc4"
+        },
+        {
+          "class": "xaero/hud/minimap/player/tracker/PlayerTrackerMinimapElementRenderProvider",
+          "method": "end",
+          "desc": "(Lxaero/hud/minimap/element/render/MinimapElementRenderLocation;Ljava/lang/Object;)V",
+          "note": "drops it",
+          "sha256": "622ba04e99bb5d1a66f82edbfb182e314cbcb6399cc51975319c46370689bad2"
+        },
+        {
+          "class": "xaero/hud/minimap/waypoint/render/world/WaypointWorldRenderer$Builder",
+          "method": "build",
+          "desc": "()Lxaero/hud/minimap/waypoint/render/world/WaypointWorldRenderer;",
+          "note": "new WaypointsIngameRenderer(reader, WaypointWorldRenderProvider, context)",
+          "sha256": "ce95ec47f39e02ed131996fb89176960de14cec18d0727cc8a18a03a65861de6"
+        },
+        {
+          "class": "xaero/hud/minimap/waypoint/render/WaypointMapRenderer$Builder",
+          "method": "build",
+          "desc": "()Lxaero/hud/minimap/waypoint/render/WaypointMapRenderer;",
+          "note": "new WaypointsGuiRenderer(reader, WaypointRenderProvider, context)",
+          "sha256": "46c8f4173ab5efbd851f44166c3c1dd0f2dfb1232140e8deec9f3a7c7fa1389c"
+        },
+        {
+          "class": "xaero/hud/minimap/radar/render/element/RadarRenderer$Builder",
+          "method": "build",
+          "desc": "()Lxaero/hud/minimap/radar/render/element/RadarRenderer;",
+          "note": "new (common) RadarRenderer(icons, minimap, reader, RadarRenderProvider, context)",
+          "sha256": "9d0fd83756cf4d3b8012bf671100d17fa61510c52a8554b757b732b095f2fbbb"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on MinimapElementRendererHandler.render's renderForRenderer call: for the four renderers Xaero's Minimap builds (exact classes WaypointsIngameRenderer, WaypointsGuiRenderer, the radar's RadarRenderer, PlayerTrackerMinimapElementRenderer) the count drawn on the first frame of each client tick (MinimapProcessor.onClientTick HEAD @Inject; a radar rebuild outside the tick counts as a new tick) is kept per handler; on the tick's other frames a renderer that drew nothing runs renderForRenderer with its provider's begin / hasNext / end left out (@WrapOperation on those three calls), so preRender and postRender still run. Renderers of other mods always run. Runtime flag xaerominimapEmptyElementRendererSkip. Helper bons.furious.patch.xaerominimap_c49.EmptyElementSkip.",
+      "license": "All Rights Reserved (Xaero's Minimap): none of its code is carried; the wrappers only decide whether an element provider's walk runs"
+    }
+  }
+}

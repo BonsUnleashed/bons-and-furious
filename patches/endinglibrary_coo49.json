@@ -1,0 +1,141 @@
+{
+  "group": "endinglibrary_coo49",
+  "keys": {
+    "endinglibrary_cap_fallback_lazy": {
+      "mod": "ending_library",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.endinglibrary_coo49.CommonProxyCapMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/mega/endinglib/proxy/CommonProxy",
+          "method": "getCameraCap",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Lcom/mega/endinglib/common/capability/EndingLibraryPlayerCapability;",
+          "note": "player.getCapability(PLAYER_CAP.orElse(ELCapabilityManager.getCapability(NAME.toString()))).orElseThrow(NullPointerException::new)",
+          "sha256": "b4e1f513615fab4ced156a0661ddfa8d69ca6031e809de9a67218157e46b3da5"
+        },
+        {
+          "class": "com/mega/endinglib/proxy/CommonProxy",
+          "method": "getCameraCapOptional",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "player.getCapability(PLAYER_CAP.orElse(ELCapabilityManager.getCapability(NAME.toString())))",
+          "sha256": "b87947d93ec5ae6ac08aba3efdc5eedc224fefe3a0f3f10dd165c2bca652d1b6"
+        },
+        {
+          "class": "com/mega/endinglib/proxy/CommonProxy",
+          "method": "getLivingCapOptional",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "entity.getCapability(LIVING_CAP.orElse(ELCapabilityManager.getCapability(NAME.toString())))",
+          "sha256": "c4fdfbcdbc49fdb3240cfab56b08cc59871aae51d9799e86ca32c8c3b22fa798"
+        },
+        {
+          "class": "com/mega/endinglib/proxy/CommonProxy",
+          "method": "getEntityCapOptional",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "entity.getCapability(ENTITY_CAP.orElse(ELCapabilityManager.getCapability(NAME.toString())))",
+          "sha256": "5bb346c8507d4cf716b6650e44208c57819e756b9cb4697ac6944c967952fb86"
+        },
+        {
+          "class": "com/mega/endinglib/proxy/CommonProxy",
+          "method": "getTextCapOptional",
+          "desc": "(Lnet/minecraft/world/entity/Display$TextDisplay;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "entity.getCapability(TEXT_CAP.orElse(ELCapabilityManager.getCapability(NAME.toString())))",
+          "sha256": "44751dccd2cb60eec021cc4ac6c13b9d9c6970f82801d51290720b32aa5fc8d6"
+        },
+        {
+          "class": "com/mega/endinglib/proxy/CommonProxy",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "the four static LazyOptional.of(supplier) fields",
+          "sha256": "af6fc3c3038448dda21b1998607df3bd8fbcbc635fd39041bc23ff9887126a3d"
+        },
+        {
+          "class": "com/mega/endinglib/proxy/CommonProxy",
+          "method": "lambda$static$0",
+          "desc": "()Lnet/minecraftforge/common/capabilities/Capability;",
+          "note": "PLAYER_CAP's supplier: ELCapabilityManager.getCapability(EndingLibraryPlayerCapability.NAME.toString()), the getter's own fallback",
+          "sha256": "f7094b43c637a59f0b89c20fb1470254c2586cda52103f5073c9fb6080e47170"
+        },
+        {
+          "class": "com/mega/endinglib/proxy/CommonProxy",
+          "method": "lambda$static$1",
+          "desc": "()Lnet/minecraftforge/common/capabilities/Capability;",
+          "note": "LIVING_CAP's supplier (EndingLibraryLivingCapability.NAME)",
+          "sha256": "077e82315bfff70698be702df537d4481ff8aaa6cd3bd1f7744540f3362f3a52"
+        },
+        {
+          "class": "com/mega/endinglib/proxy/CommonProxy",
+          "method": "lambda$static$2",
+          "desc": "()Lnet/minecraftforge/common/capabilities/Capability;",
+          "note": "ENTITY_CAP's supplier (EndingLibraryEntityCapability.NAME)",
+          "sha256": "5e0be95e512073e1fc70dbc4e3f171daec5e83f4474979734c177cfd07f1ba49"
+        },
+        {
+          "class": "com/mega/endinglib/proxy/CommonProxy",
+          "method": "lambda$static$3",
+          "desc": "()Lnet/minecraftforge/common/capabilities/Capability;",
+          "note": "TEXT_CAP's supplier (TextDisplayCapability.NAME)",
+          "sha256": "4a3b8e912eac393d172aadaaf4d2b3c2e0f74243f578790a65b36c6ec12281f6"
+        },
+        {
+          "class": "com/mega/endinglib/api/capability/ELCapabilityManager",
+          "method": "getCapability",
+          "desc": "(Ljava/lang/String;)Lnet/minecraftforge/common/capabilities/Capability;",
+          "note": "CAPABILITY_MAP.get(name).capability; an unknown name throws NullPointerException (no other effect)",
+          "sha256": "7b76ef2232e85199de842fa1e067ecaacaa97077434e93509107f6eaff61b583",
+          "sha256_also": [
+            {
+              "build": "EndingLibraryTweaked 2.2.1fix",
+              "sha256": "976ba2cf09b8105c6de4df7a6cc7309bf2ccb4fd7a293d918fd9563caf708343"
+            }
+          ]
+        },
+        {
+          "class": "com/mega/endinglib/api/capability/ELCapabilityManager",
+          "method": "regsterCapability",
+          "desc": "(Ljava/util/function/Supplier;Lnet/minecraftforge/common/capabilities/CapabilityToken;)Lnet/minecraftforge/common/capabilities/Capability;",
+          "note": "the registration map's only writes are puts (no registration is ever removed: the premise of the fast path)",
+          "sha256": "3ae8999125812f0a2fdaeb9fb07acb5e7cb78d4bd1d656c796655c89f6638f1b",
+          "sha256_also": [
+            {
+              "build": "EndingLibraryTweaked 2.2.1fix",
+              "sha256": "4e66e91d7284a31bd083a87f5f4248d088a1c385dc1833f1bf35092af504b68f"
+            }
+          ]
+        },
+        {
+          "class": "com/mega/endinglib/api/capability/ELCapabilityManager",
+          "method": "attachEntityCapabilities",
+          "desc": "(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V",
+          "note": "walks the registration map (keys or entries) without removing anything",
+          "sha256": "698836f56c2108b6cf7aa8c78b1e0d6f736b186b72b06bfbcf566275ab24cefe",
+          "sha256_also": [
+            {
+              "build": "EndingLibraryTweaked 2.2.1fix",
+              "sha256": "ff568e23f4e21e95b127ed4bbdb2fe00ac6a68d3ec91e9b40dd31b373bbee60b"
+            }
+          ]
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "orElse",
+          "desc": "(Ljava/lang/Object;)Ljava/lang/Object;",
+          "note": "getValue() or the argument",
+          "sha256": "28cc736150f375e63b5bb2b18a75e6a6fd4174c63e31bee4e8bc428c049cb292"
+        },
+        {
+          "class": "net/minecraftforge/common/util/LazyOptional",
+          "method": "getValue",
+          "desc": "()Ljava/lang/Object;",
+          "note": "null while invalid; resolves the supplier once under the lock (a null answer is logged and kept)",
+          "sha256": "0be5fedce9c2d2707e842939887abfc1dfae08adea3717a2939f6d5259045627"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on four of CommonProxy's five capability getters and a cancellable HEAD @Inject on getCameraCap (its return type is EndingLibrary's class): with the static LazyOptional holding the capability (CapFallbacks.present: orElse(marker)), the getter's body runs with it and no fallback is built; else the getter as shipped; @Inject at the TAIL of <clinit> captures the four static LazyOptional fields (@Shadow)",
+      "license": "MIT (EndingLibrary): the five one-line getter bodies are repeated on the fast path; no other EndingLibrary code is carried"
+    }
+  }
+}

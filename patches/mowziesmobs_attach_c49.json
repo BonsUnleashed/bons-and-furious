@@ -1,0 +1,117 @@
+{
+  "group": "mowziesmobs_attach_c49",
+  "keys": {
+    "mowziesmobs_capability_attach_dedupe": {
+      "mod": "mowziesmobs",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mowziesmobs_attach_c49.MowzieAttachDedupeMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/capability/CapabilityHandler",
+          "method": "attachEntityCapability",
+          "desc": "(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V",
+          "note": "LivingEntity: living_cap + frozen_cap providers; Player: also player_cap + ability_cap",
+          "sha256": "3cf640a7a41a41891fb99e158e1e1e2887807a87e61ada8dbecec0b90083c846"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/ServerEventHandler",
+          "method": "onAttachCapabilities",
+          "desc": "(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V",
+          "note": "LivingEntity: frozen, last_damage, ability providers; Player: also player (the first set, the one every lookup answers)",
+          "sha256": "2350c253721be2b32cf2a6bdd609b2cd592d98c3e59f36574e541df81d70bd5d"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/capability/FrozenCapability$FrozenProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "FROZEN_CAPABILITY.orEmpty(cap, instance.cast()): always present for its own capability",
+          "sha256": "81c665a13a199ebb668b67e2b15c8ca31ff4aaf049db5ace0b9a6d00038ada56"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/capability/FrozenCapability$FrozenProvider",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "instance = LazyOptional.of(...) (final, never invalidated)",
+          "sha256": "bc725ff69e1fbdd9a112a8f51c43451ef12d9696cf6de13e474e5b5dc321ae28"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/capability/LivingCapability$LivingProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "LIVING_CAPABILITY.orEmpty(cap, instance.cast())",
+          "sha256": "90ba56cb842abb09e650107207f33c246099bfdb761598e2e4dd9be1e9804d9e"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/capability/LivingCapability$LivingProvider",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "instance = LazyOptional.of(...)",
+          "sha256": "6f04662f3b6707320cc3f5164db5b5c882a9ea93061e6ef41a32fef4a4adabf8"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/capability/PlayerCapability$PlayerProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "PLAYER_CAPABILITY.orEmpty(cap, instance.cast())",
+          "sha256": "f43d5e2ac8647ffd59d054e6a886a07f630cddc44a252cdd7689fb3677a75ba2"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/capability/PlayerCapability$PlayerProvider",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "instance = LazyOptional.of(...)",
+          "sha256": "4e71326f1873849a02c4cc38296e688e51810c2135a8f52f1101d6dd5d9e5f53"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/capability/AbilityCapability$AbilityProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "ABILITY_CAPABILITY.orEmpty(cap, instance.cast())",
+          "sha256": "9f81cebd5cd60f8d3865ec6d5c1b0ba9d701b500111f8ca3fdcb85c41648138b"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/capability/AbilityCapability$AbilityProvider",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "instance = LazyOptional.of(...)",
+          "sha256": "b97f0c7a1855b1e9467acb51a1ffef73a50180947b73b6fc0cff31e4994e83c7"
+        },
+        {
+          "class": "net/minecraftforge/event/AttachCapabilitiesEvent",
+          "method": "addCapability",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraftforge/common/capabilities/ICapabilityProvider;)V",
+          "note": "duplicate-key check, then caps.put (a LinkedHashMap: insertion order)",
+          "sha256": "43ff24eb879cc0cb2f278b66631e77ea368f1ef575d5301234e81eb2939b0afb"
+        },
+        {
+          "class": "net/minecraftforge/event/AttachCapabilitiesEvent",
+          "method": "getCapabilities",
+          "desc": "()Ljava/util/Map;",
+          "note": "the unmodifiable view of caps",
+          "sha256": "4ff65f60f0d6cf2c10a649dbd12edcd3837420d7c14d6b41bf1056c10c61738c"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityDispatcher",
+          "method": "<init>",
+          "desc": "(Ljava/util/Map;Ljava/util/List;Lnet/minecraftforge/common/capabilities/ICapabilityProvider;)V",
+          "note": "providers in the map's iteration order",
+          "sha256": "ee034b4b7980acaa753f9db9dbb759f74fd0c7ddaf35b35a4fba5267b7a452b2"
+        },
+        {
+          "class": "net/minecraftforge/common/capabilities/CapabilityDispatcher",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "the first provider whose answer is present",
+          "sha256": "aff7dbc58d1187f3f6603f119e7235c01bad0b716e879dac45d07ba84ecb5696"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: @Inject HEAD cancellable on CapabilityHandler.attachEntityCapability: returns when the event already holds Mowzie's own first set of providers for every capability it would add (helper bons.furious.patch.mowziesmobs_attach_c49.MowzieAttachDedupe)",
+      "license": "Mowzie's Mobs licence (treated as All Rights Reserved): no Mowzie code is carried, only an early return in front of its second listener"
+    }
+  }
+}

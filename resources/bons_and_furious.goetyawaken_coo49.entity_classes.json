@@ -1,0 +1,11 @@
+{
+  "layer": "vanilla_entity_class_count_layer",
+  "entries": [
+    {"class": "com.k1sak1.goetyawaken.common.entities.hostile.undead.necromancer.NamelessOne", "key": "goetyawaken_scan_presence_gates",
+     "why": "Goety Awaken 1.3.9.4 ClientEvents.onRenderFog and onGetFogColor search it +-64 blocks around the player per fog event"},
+    {"class": "com.k1sak1.goetyawaken.common.entities.ally.illager.SorcererServant", "key": "goetyawaken_scan_presence_gates",
+     "why": "Goety Awaken 1.3.9.4 ClientEvents.onRenderLevelStage searches it +-64 blocks every frame for spell beams"},
+    {"class": "com.k1sak1.goetyawaken.common.entities.ally.undead.BoundSorcerer", "key": "goetyawaken_scan_presence_gates",
+     "why": "Goety Awaken 1.3.9.4 ClientEvents.onRenderLevelStage searches it +-64 blocks every frame for spell beams"}
+  ]
+}

@@ -61,6 +61,22 @@ import org.apache.logging.log4j.Logger;
  * no UNKNOWN ticket for the chunk at all. The chunk lands in the same lookup cache either way. Blocks, entities, fire,
  * saved data, RNG and visuals are unchanged. The only effect is on ticket bookkeeping: a level-33 border chunk that lost
  * every other ticket in the same tick may start unloading one tick earlier.
+ *
+ * Since 1.0.49, the client as well (both hooks run there too: leaf drips and Entity.isInRain ask isRainingAt, every
+ * entity's baseTick reads its block):
+ *  - WetAir.check (isRainingAt) is answered from the palettes for a ClientLevel too, on the client's own main thread only
+ *    (WetAirGateClient: its chunk cache's getChunk(x, z, FULL, load = false), the lookup the original's reads make; the
+ *    client has no chunk tickets). Client palettes change on the main thread only (chunk packets refill them through
+ *    read(), which resets the kept scan; block updates append), so the kept scans stay exact there. Any other thread, an
+ *    unloaded chunk or a debug world runs Slice & Dice's code as before. The baseTick read keeps the server-only palette
+ *    answer: on the client it has no ticket to save and costs what the verdict costs;
+ *  - the baseTick read is skipped (the handler gets a block that is not wet air) for an entity that is not burning:
+ *    remainingFireTicks is 0, so the handler's clearFire() would write the 0 it already holds. Only for classes that keep
+ *    Entity's own clearFire and setRemainingFireTicks (checked once per class); the one mod hook on setRemainingFireTicks
+ *    in this pack (Ars Nouveau's) acts only for values above 0. A value below 0 (fire immunity frames) or above 0 still
+ *    reads, as before. On the client the fire ticks are 0 at that point for practically every entity.
+ * Sub-switches (both on): -Dbons_and_furious.sliceanddiceWetAirGate.client=false keeps the client on Slice & Dice's
+ * reads; -Dbons_and_furious.sliceanddiceWetAirGate.unlit=false reads for unlit entities as before.
  * Slice & Dice's licence is not bundled (mods.toml points to its repository): no Slice & Dice code is carried here.
  */
 public final class WetAirGate {
@@ -71,8 +87,28 @@ public final class WetAirGate {
     public static final boolean SHADOW = Boolean.getBoolean("bons_and_furious.sliceanddiceWetAirGate.shadow");
     public static final AtomicLong SHADOW_CHECKS = new AtomicLong();
     public static final AtomicLong SHADOW_MISMATCHES = new AtomicLong();
+    /** Since 1.0.49: the palette answers on the client's main thread too (-D...sliceanddiceWetAirGate.client=false: not). */
+    public static volatile boolean client = !"false".equalsIgnoreCase(System.getProperty("bons_and_furious.sliceanddiceWetAirGate.client", "true"));
+    /** Since 1.0.49: no baseTick read for an unlit entity (-D...sliceanddiceWetAirGate.unlit=false: read as before). */
+    public static volatile boolean unlit = !"false".equalsIgnoreCase(System.getProperty("bons_and_furious.sliceanddiceWetAirGate.unlit", "true"));
+    public static final AtomicLong UNLIT_SKIPS = new AtomicLong();
     /** What the baseTick read returns when the gate answers: a block that is not wet air (the handler only compares). */
     public static final BlockState NOT_WET = Blocks.f_50016_.m_49966_();
+    /** Classes that override Entity's clearFire or setRemainingFireTicks (then the unlit skip stays off for them). */
+    private static final ClassValue<Boolean> OWN_FIRE_WRITES = new ClassValue<>() {
+        @Override
+        protected Boolean computeValue(Class<?> type) {
+            for (Class<?> c = type; c != null && c != net.minecraft.world.entity.Entity.class; c = c.getSuperclass()) {
+                for (java.lang.reflect.Method m : c.getDeclaredMethods()) {
+                    if (Modifier.isStatic(m.getModifiers())) continue;
+                    if (m.getName().equals("m_20095_") && m.getParameterCount() == 0) return true;
+                    if (m.getName().equals("m_7311_") && m.getParameterCount() == 1 && m.getParameterTypes()[0] == int.class) return true;
+                }
+            }
+            return false;
+        }
+    };
+    private static volatile boolean announcedUnlit;
 
     static final int WET = 1;
     static final int CROP = 2;
@@ -111,15 +147,39 @@ public final class WetAirGate {
     }
 
     /**
-     * The column's chunk, or null when the original must run: not a server level, a debug world, not the server thread,
-     * or no full chunk loaded there. getChunk(x, z, FULL, load = false) is the original reads' own lookup (vanilla's or
-     * Radium's 4-entry cache, then the chunk map) without the ticket a load = true lookup adds; it leaves the chunk in
-     * that cache as the original's first read would, so the reads that follow in the same tick still find it there.
+     * The column's chunk, or null when the original must run: a debug world, a server level off the server thread, a
+     * client level off the client's main thread (or the client path switched off), or no full chunk loaded there. On the
+     * server getChunk(x, z, FULL, load = false) is the original reads' own lookup (vanilla's or Radium's 4-entry cache,
+     * then the chunk map) without the ticket a load = true lookup adds; it leaves the chunk in that cache as the original's
+     * first read would, so the reads that follow in the same tick still find it there. On the client see WetAirGateClient.
      */
     private static LevelChunk loadedChunk(Level level, BlockPos pos) {
-        if (!(level instanceof ServerLevel server) || level.m_46659_() || !server.m_7654_().m_18695_()) return null;
-        ChunkAccess chunk = server.m_7726_().m_7587_(pos.m_123341_() >> 4, pos.m_123343_() >> 4, ChunkStatus.f_62326_, false);
-        return chunk instanceof LevelChunk levelChunk ? levelChunk : null;
+        if (level.m_46659_()) return null;
+        if (level instanceof ServerLevel server) {
+            if (!server.m_7654_().m_18695_()) return null;
+            ChunkAccess chunk = server.m_7726_().m_7587_(pos.m_123341_() >> 4, pos.m_123343_() >> 4, ChunkStatus.f_62326_, false);
+            return chunk instanceof LevelChunk levelChunk ? levelChunk : null;
+        }
+        // since 1.0.49: a ClientLevel on the client's main thread (a separate class: no client class on a dedicated server)
+        return level.f_46443_ && client ? WetAirGateClient.loadedChunk(level, pos) : null;
+    }
+
+    /**
+     * Since 1.0.49: true when the baseTick read can be skipped because the entity is not burning (its remainingFireTicks,
+     * read by the caller, is 0): clearFire() would write that 0 again, as long as the class keeps Entity's own clearFire
+     * and setRemainingFireTicks.
+     */
+    public static boolean unlitSkip(Object entity) {
+        if (!enabled || !unlit || OWN_FIRE_WRITES.get(entity.getClass())) return false;
+        if (SHADOW) UNLIT_SKIPS.incrementAndGet();   // counted in shadow mode only (this runs for every entity every tick)
+        if (!announcedUnlit) announceUnlit();
+        return true;
+    }
+
+    private static synchronized void announceUnlit() {
+        if (announcedUnlit) return;
+        announcedUnlit = true;
+        LOGGER.info("Bons and Furious: sliceanddice_wet_air_gate: Slice & Dice's wet-air extinguish check skips entities that are not burning");
     }
 
     /** True when WetAir.check(level, pos) would read no wet air and return false (decided without a ticketing lookup). */
@@ -152,9 +212,13 @@ public final class WetAirGate {
         return true;
     }
 
-    /** True when the block at pos is known not to be wet air (decided without a ticketing lookup). */
+    /**
+     * True when the block at pos is known not to be wet air (decided without a ticketing lookup). Server side only: on the
+     * client the read has no chunk ticket to save and costs what the palette verdict costs, so a burning entity's read
+     * stays as it was there (an unlit one skips the read altogether, see unlitSkip).
+     */
     public static boolean cellHidden(Level level, BlockPos pos) {
-        if (!enabled || pos == null || CONTAINER_DATA == null) return false;
+        if (!enabled || pos == null || CONTAINER_DATA == null || level.f_46443_) return false;
         Block wet = wetAir();
         if (wet == null) return false;
         LevelChunk chunk = loadedChunk(level, pos);

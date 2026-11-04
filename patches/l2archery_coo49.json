@@ -1,0 +1,180 @@
+{
+  "group": "l2archery_coo49",
+  "keys": {
+    "l2archery_arrow_texture_memo": {
+      "mod": "l2archery",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.l2archery_coo49.ArrowTextureMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/xkmc/l2archery/content/entity/GenericArrowRenderer",
+          "method": "getTextureLocation",
+          "desc": "(Ldev/xkmc/l2archery/content/entity/GenericArrowEntity;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "the data's arrow item, or the starter arrow when it is no GenericArrowItem; ForgeRegistries.ITEMS.getKey; new ResourceLocation(namespace, textures/entity/arrow/arrow.png)",
+          "sha256": "1c82ed72be2183effe70be620b2618487e16e18405df3a4675b06e088f2dbf36"
+        },
+        {
+          "class": "dev/xkmc/l2archery/content/entity/GenericArrowEntity$ArrowEntityData",
+          "method": "arrow",
+          "desc": "()Ldev/xkmc/l2archery/content/item/ArrowData;",
+          "note": "record accessor",
+          "sha256": "c99ba5cc41cf7907fb19e86dd9e6b81a8b71e8cd89f0d08e0bf96a46e2af182a"
+        },
+        {
+          "class": "dev/xkmc/l2archery/content/item/ArrowData",
+          "method": "item",
+          "desc": "()Lnet/minecraft/world/item/Item;",
+          "note": "record accessor: the key the memo keeps per",
+          "sha256": "87e734995ba7158fa371fb5279c8ef7d1ad17c136c2eb3df258b7275c20d261f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) + MixinExtras @ModifyReturnValue at RETURN of GenericArrowRenderer.getTextureLocation(GenericArrowEntity): one kept location per arrow item (helper bons.furious.patch.l2archery_coo49.ArrowTextures)",
+      "license": "LGPL-2.1 (L2 Archery): no L2 Archery code is carried"
+    },
+    "l2archery_bow_upgrades_memo": {
+      "mod": "l2archery",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.l2archery_coo49.BowUpgradesMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/xkmc/l2archery/content/item/GenericBowItem",
+          "method": "getUpgrades",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Ljava/util/List;",
+          "note": "getOrCreateTag().contains(upgrades) -> ItemCompoundTag.of(stack).getSubList(upgrades, 8).getOrCreate(); per id UPGRADE.get().getValue(new ResourceLocation(id)), nulls skipped; one return: the location goes to the registry's getValue only (the one NEW we redirect)",
+          "sha256": "5c9652af64e0f04738dc60115e7f154994a82da511bf63471f6b99f20f79e67c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the one new ResourceLocation(String) in GenericBowItem.getUpgrades: the location kept per id string (at most 4,096; an invalid id is never kept: the constructor throws as shipped); helper bons.furious.patch.l2archery_coo49.BowUpgrades",
+      "license": "LGPL-2.1 (L2 Archery): no L2 Archery code is carried"
+    },
+    "l2archery_fov_config_memo": {
+      "mod": "l2archery",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.l2archery_coo49.BowFovMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/xkmc/l2archery/events/GenericEventHandler",
+          "method": "fov",
+          "desc": "(Lnet/minecraftforge/client/event/ComputeFovModifierEvent;)V",
+          "note": "main-hand GenericBowItem: BowData.of(bow, stack) once, data.getConfig().fov_time() and data.getConfig().fov(), the factor from those two and the pull ticks; the two numbers are the only use of the BowData",
+          "sha256": "dec7cb9d6d6adc2f3a9df49594714539db03072c2929c9642929f83a8caba422"
+        },
+        {
+          "class": "dev/xkmc/l2archery/content/item/BowData",
+          "method": "getConfig",
+          "desc": "()Ldev/xkmc/l2archery/content/item/IBowConfig;",
+          "note": "the bow's final config field wrapped in one CompoundBowConfig per StatFeature of the upgrades (list order) and enchantments (map iteration order): reads the record's three parts only",
+          "sha256": "d27244d3d066fc3988dda5267980c5d5b284d8782d76945807ff6045a631268a"
+        },
+        {
+          "class": "dev/xkmc/l2archery/content/item/BowConfig",
+          "method": "getValue",
+          "desc": "(Ldev/xkmc/l2archery/content/stats/BowArrowStatType;)D",
+          "note": "BowArrowStatConfig.get().bow_stats per bow, else the stat's default",
+          "sha256": "1792f4dd6373a5553ca09b8fe9889e4fc8fbaa46c5d84ba4865aaa6248d1e4eb"
+        },
+        {
+          "class": "dev/xkmc/l2archery/content/item/BowConfig",
+          "method": "fov_time",
+          "desc": "()I",
+          "note": "(int) getValue(FOV_TIME)",
+          "sha256": "32246d251036d2c601af64b8d2aab8ab1fbcfc49db62187a2ac154f99a66d93e"
+        },
+        {
+          "class": "dev/xkmc/l2archery/content/item/BowConfig",
+          "method": "fov",
+          "desc": "()F",
+          "note": "(float) getValue(FOV)",
+          "sha256": "bca7c539758fea8e76f74b2389767bc8c210789697c54816dfb5ab9cc4b61234"
+        },
+        {
+          "class": "dev/xkmc/l2archery/content/feature/core/CompoundBowConfig",
+          "method": "fov_time",
+          "desc": "()I",
+          "note": "config.fov_time() + feature.fov_time()",
+          "sha256": "48731863f4483b552ac6d2887a3824f58ac63830db6258192767e9475133cf8f"
+        },
+        {
+          "class": "dev/xkmc/l2archery/content/feature/core/CompoundBowConfig",
+          "method": "fov",
+          "desc": "()F",
+          "note": "1 - 1 / min(10, old * feature.fov())",
+          "sha256": "5ffd9da7f513b4bb02ee189dafe07b0619fe8015581785b41af5778d096da674"
+        },
+        {
+          "class": "dev/xkmc/l2archery/content/feature/core/StatFeature",
+          "method": "*",
+          "desc": "",
+          "note": "a record: final fields, accessors only",
+          "sha256": "9c776253f926cb14b2858a3282ba1effe0cd8f404e9630445af1e310b6ecf1d4"
+        },
+        {
+          "class": "dev/xkmc/l2archery/content/config/BowArrowStatConfig",
+          "method": "get",
+          "desc": "()Ldev/xkmc/l2archery/content/config/BowArrowStatConfig;",
+          "note": "L2Archery.STATS.getMerged(): the merged config object the memo is keyed on",
+          "sha256": "492c512b10ca50b74a6d8d667510efea5b965335add7e31717e6b043de0dd80e"
+        },
+        {
+          "class": "dev/xkmc/l2archery/content/upgrade/Upgrade",
+          "method": "getFeature",
+          "desc": "()Ldev/xkmc/l2archery/content/feature/BowArrowFeature;",
+          "note": "the Lazy-made feature (stat upgrades), or a config-made potion feature (potion upgrades: not a StatFeature)",
+          "sha256": "d1830ea9f8f8761b27deb2caa9a88faeeaeb06226c12e28bc7f9b6837b53a3eb"
+        },
+        {
+          "class": "dev/xkmc/l2archery/content/enchantment/GenericBowEnchantment",
+          "method": "getFeature",
+          "desc": "(I)Ldev/xkmc/l2archery/content/feature/BowArrowFeature;",
+          "note": "features made in the constructor, by level",
+          "sha256": "5144e92f71d4b1a925844b854582148d24ae1b37d4741f7e3bc18ad0f4ac41db"
+        },
+        {
+          "class": "dev/xkmc/l2archery/content/enchantment/PotionArrowEnchantment",
+          "method": "getFeature",
+          "desc": "(I)Ldev/xkmc/l2archery/content/feature/BowArrowFeature;",
+          "note": "a potion feature from the merged config (not a StatFeature)",
+          "sha256": "2423654bbfa1eb4c2b0b5378e10a482d649930ea6081c88868232d55fd92a197"
+        },
+        {
+          "class": "dev/xkmc/l2library/serial/config/ConfigTypeEntry",
+          "method": "getMerged",
+          "desc": "()Ldev/xkmc/l2library/serial/config/BaseConfig;",
+          "note": "audited (L2 Library, which L2 Archery requires): MergedConfigType.load() of the channel's type",
+          "audit": true,
+          "sha256": "dd50372b80d5492c14fb2b021e63b4f92f94db634e7aeda90ba8a46fe6195d35"
+        },
+        {
+          "class": "dev/xkmc/l2library/serial/config/MergedConfigType",
+          "method": "load",
+          "desc": "()Ldev/xkmc/l2library/serial/config/BaseConfig;",
+          "note": "audited (L2 Library): the kept result, or a new merged object built from the configs",
+          "audit": true,
+          "sha256": "c25c49cbcc91c8a5dec05a07a623f6f1c7d326cf0750a447b7b474974a02c365"
+        },
+        {
+          "class": "dev/xkmc/l2library/serial/config/MergedConfigType",
+          "method": "afterReload",
+          "desc": "()V",
+          "note": "audited (L2 Library): result = null after every reload or sync, so the next load() builds a new object",
+          "audit": true,
+          "sha256": "2d6ef6b2f99bbbbe63bccb41e13b1b718596206c40b8f372cb66fe3bc3c4dbed"
+        }
+      ],
+      "cancel": [],
+      "conversion": "two @Redirect in GenericEventHandler.fov: BowData.of (the shipped call still made; the kept BowData handed out when the new one holds the same item, upgrade objects and enchantments in the same order under the same merged stat config object) and the two BowData.getConfig calls (a fixed config with the kept fov_time() and fov() for the kept BowData); helper bons.furious.patch.l2archery_coo49.BowFov",
+      "license": "LGPL-2.1 (L2 Archery, L2 Library): none of their code is carried"
+    }
+  }
+}

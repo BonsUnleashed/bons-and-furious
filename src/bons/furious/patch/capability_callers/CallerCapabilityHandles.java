@@ -8,6 +8,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityDispatcher;
 import net.minecraftforge.common.capabilities.CapabilityProvider;
@@ -49,6 +50,11 @@ import org.apache.logging.log4j.Logger;
  *
  * The shadow mode of each switch (its .shadow property) asks the entity again on every hand-out and counts answers that
  * are not the identical object (the asked answer is then returned).
+ *
+ * 1.0.49: the same table on Level (LevelCallerHandlesMixin, for level capabilities such as Torchmaster's TEB_REGISTRY:
+ * lookupLevel, handle form and absent entries, kept only for Level classes that do not override getCapability below
+ * CapabilityProvider), and the facade CapabilityHandleApi through which switches in OTHER groups register and look up
+ * (they reach it by MethodHandle). Nothing changes for the 1.0.46 callers.
  */
 public final class CallerCapabilityHandles {
     private static final Logger LOGGER = LogManager.getLogger("Bons and Furious");
@@ -56,6 +62,9 @@ public final class CallerCapabilityHandles {
     private static volatile int registeredSlots;
     /** The layer's mixins are in the game (forge_capability_handle_layer on): otherwise every switch asks the entity. */
     static final boolean LAYER = CallerHandleTableHolder.class.isAssignableFrom(LivingEntity.class)
+            && CapabilityProviderCallerStateAccessor.class.isAssignableFrom(CapabilityProvider.class);
+    /** 1.0.49: the Level half of the layer is in the game (otherwise lookupLevel asks the level). */
+    static final boolean LEVEL_LAYER = CallerHandleTableHolder.class.isAssignableFrom(Level.class)
             && CapabilityProviderCallerStateAccessor.class.isAssignableFrom(CapabilityProvider.class);
     public static final Object ABSENT = new Object() {
         @Override
@@ -123,6 +132,18 @@ public final class CallerCapabilityHandles {
         }
     };
 
+    /** 1.0.49: true for Level classes whose getCapability is CapabilityProvider's (no override below it). */
+    static final ClassValue<Boolean> PLAIN_LEVEL = new ClassValue<>() {
+        @Override
+        protected Boolean computeValue(Class<?> type) {
+            for (Class<?> k = type; k != null && k != CapabilityProvider.class; k = k.getSuperclass()) {
+                if (declaresGetCapability(k)) return Boolean.FALSE;
+                if (k == Object.class) return Boolean.FALSE;
+            }
+            return Boolean.TRUE;
+        }
+    };
+
     private static boolean declaresGetCapability(Class<?> k) {
         try {
             for (java.lang.reflect.Method m : k.getDeclaredMethods()) {
@@ -162,6 +183,45 @@ public final class CallerCapabilityHandles {
             else if (owner.absent && answer == LazyOptional.empty()) keep(holder, slot, dispatcher, ABSENT, null, owner);
         }
         return answer;
+    }
+
+    /**
+     * 1.0.49: level.getCapability(cap), answered from the level's kept LazyOptional or absent entry when that is the same
+     * answer (the rules of lookup, for Level classes that do not override getCapability).
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> LazyOptional<T> lookupLevel(Level level, Capability<T> cap, Owner owner) {
+        if (!LEVEL_LAYER || level == null) return level.getCapability(cap);
+        int slot = owner.slot(cap);
+        if (slot < 0) return level.getCapability(cap);
+        CapabilityProviderCallerStateAccessor state = (CapabilityProviderCallerStateAccessor) level;
+        CallerHandleTableHolder holder = (CallerHandleTableHolder) level;
+        boolean valid = state.bons$callerCapsValid();
+        CapabilityDispatcher dispatcher = state.bons$callerCapDispatcher();
+        Object[] table = holder.bons$callerHandles();
+        if (table != null && dispatcher != null && table[0] == dispatcher && 2 + 2 * slot < table.length) {
+            Object kept = table[1 + 2 * slot];
+            if (kept == ABSENT) {
+                LazyOptional<T> empty = LazyOptional.empty();
+                return owner.shadow ? shadowLevel(level, cap, owner, empty) : empty;
+            }
+            if (kept instanceof LazyOptional<?> optional && table[2 + 2 * slot] == null && valid && optional.isPresent())
+                return owner.shadow ? shadowLevel(level, cap, owner, (LazyOptional<T>) optional) : (LazyOptional<T>) optional;
+        }
+        LazyOptional<T> answer = level.getCapability(cap);
+        if (valid && dispatcher != null && PLAIN_LEVEL.get(level.getClass())) {
+            if (answer.isPresent()) keep(holder, slot, dispatcher, answer, null, owner);
+            else if (owner.absent && answer == LazyOptional.empty()) keep(holder, slot, dispatcher, ABSENT, null, owner);
+        }
+        return answer;
+    }
+
+    private static <T> LazyOptional<T> shadowLevel(Level level, Capability<T> cap, Owner owner, LazyOptional<T> kept) {
+        LazyOptional<T> asked = level.getCapability(cap);
+        owner.shadowChecks.incrementAndGet();
+        if (asked != kept && owner.shadowMismatches.incrementAndGet() <= 20)
+            LOGGER.warn("Bons and Furious: {} shadow mismatch on {} for {}", owner.key, level, cap.getName());
+        return asked;
     }
 
     /**

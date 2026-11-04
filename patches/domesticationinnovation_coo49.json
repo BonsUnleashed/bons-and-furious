@@ -1,0 +1,101 @@
+{
+  "group": "domesticationinnovation_coo49",
+  "keys": {
+    "domesticationinnovation_tame_type_memo": {
+      "mod": "domesticationinnovation",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.domesticationinnovation_coo49.TameableUtilsTameTypeMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe668/domesticationinnovation/server/entity/TameableUtils",
+          "method": "isTamed",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "Axolotl/Fox/Rabbit/Frog branches (config reads inside), then ModifedToBeTameable.isTame() || TamableAnimal.isTame(); false when none of the six types matches",
+          "sha256": "ca233d1cc798d7b6b5c4781e2ca7c521ab87661ce04f510cd3e2d27588fd981d"
+        },
+        {
+          "class": "com/github/alexthe668/domesticationinnovation/server/entity/TameableUtils",
+          "method": "couldBeTamed",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "instanceof ModifedToBeTameable || instanceof TamableAnimal",
+          "sha256": "73b43f106b8a0ba576f0b9818ad042bd7479d805e9469f74036296ef3c62a978"
+        },
+        {
+          "class": "com/github/alexthe668/domesticationinnovation/server/entity/TameableUtils",
+          "method": "getOwnerOf",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/entity/Entity;",
+          "note": "ModifedToBeTameable.getTameOwner / TamableAnimal.getOwner, else null",
+          "sha256": "14cc8ed7236f4f718e13f7676f282bf8737b1f33b369025cc423e6613d9728e1"
+        },
+        {
+          "class": "com/github/alexthe668/domesticationinnovation/server/entity/TameableUtils",
+          "method": "getOwnerUUIDOf",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Ljava/util/UUID;",
+          "note": "ModifedToBeTameable.getTameOwnerUUID / TamableAnimal.getOwnerUUID, else null",
+          "sha256": "155dfdb4b5ff42d73b596528a5cf7a38e908caa5f710b36587e0ec1166c040ff"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the one `instanceof ModifedToBeTameable` (constant classValue) in each of TameableUtils.isTamed, couldBeTamed, getOwnerOf, getOwnerUUIDOf: answered as `entity != null && ModifedToBeTameable.class.isAssignableFrom(entity.getClass())` from a ClassValue (a loaded class's supertypes never change), without the secondary-supers scan a failing interface test costs; the rest of the four methods is unchanged. Runtime flag domesticationTameTypeMemo, shadow mode .shadow. Helper bons.furious.patch.domesticationinnovation_coo49.TameTypes.",
+      "license": "Domestication Innovation (LGPL-3.0): no code carried; the wrapper answers one type test from our own cache"
+    },
+    "domesticationinnovation_enchant_id_compare": {
+      "mod": "domesticationinnovation",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.domesticationinnovation_coo49.TameableUtilsEnchantIdMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe668/domesticationinnovation/server/entity/TameableUtils",
+          "method": "getEnchantLevel",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/enchantment/Enchantment;)I",
+          "note": "per entry: res = EnchantmentHelper.getEnchantmentId(entry); if (res == null || !res.equals(ENCHANTMENTS.getKey(enchantment))) continue; else return the entry's level",
+          "sha256": "9666dc0ece803dbf8eef325f82c83bda0c6ac9f1c506d6b4070990302c68be53"
+        },
+        {
+          "class": "net/minecraft/world/item/enchantment/EnchantmentHelper",
+          "method": "m_182446_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "getEnchantmentId = ResourceLocation.tryParse(tag.getString(\"id\"))",
+          "sha256": "1e2c4ba9171679fefd9597f6950edc298010706033592b94da9570486192bdd6"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "m_135820_",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "tryParse: new ResourceLocation(id) or null when invalid",
+          "sha256": "b5ce38752bd5d15aaa2a30c61c05e03138f8015b7a6e940a0f208d4433557738"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "m_135832_",
+          "desc": "(Ljava/lang/String;C)[Ljava/lang/String;",
+          "note": "decompose: splits at the FIRST ':'; a ':' at index 0 keeps namespace minecraft",
+          "sha256": "99e3f1ebf7d08df4960db8338065c2522513b5c8918af2dadedd1dde43af683e"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "toString",
+          "desc": "()Ljava/lang/String;",
+          "note": "namespace + ':' + path: the memoised key text",
+          "sha256": "bfbaac15eab73dfae46cd682c078e8c2d64610ba49f535318278e7b7794d682c"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "note": "namespace and path equal",
+          "sha256": "3fef9a4090052f7b438d4823b18d1ded716f96c874bf4f62525161a717558c2a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the one EnchantmentHelper.getEnchantmentId(CompoundTag) call in TameableUtils.getEnchantLevel (+ @Local of the enchantment argument): the enchantment's registry key itself when the entry's id is the key's text, null when the id's first ':' is at index >= 1 and the id differs, the original parse otherwise (no ':' or a leading ':', unregistered enchantment). Runtime flag domesticationEnchantIdCompare, shadow mode .shadow. Helper bons.furious.patch.domesticationinnovation_coo49.EnchantIds.",
+      "license": "Domestication Innovation (LGPL-3.0): no code carried; the wrapper calls only our comparison or DI's own call"
+    }
+  }
+}

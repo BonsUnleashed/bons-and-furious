@@ -1,0 +1,123 @@
+{
+  "group": "cognition_coo49",
+  "keys": {
+    "cognition_client_infection_skip": {
+      "mod": "experienceobelisk",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cognition_coo49.InfectAdjacentClientMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/cyanogen/experienceobelisk/block_entities/bibliophage/AbstractInfectiveEntity",
+          "method": "infectAdjacent",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V",
+          "note": "reads the six neighbours, asks getInfectedBlockState, one Math.random() pick, then BibliophageItem.infectBlock",
+          "sha256": "f1e6722f822e4cbd612c7830f9fab364fb6cf9d038a60065bbf16d81a6174b65"
+        },
+        {
+          "class": "com/cyanogen/experienceobelisk/item/BibliophageItem",
+          "method": "infectBlock",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z",
+          "note": "its whole body is if (!level.isClientSide): on a client level it changes nothing and answers false",
+          "sha256": "fe4206dee4fd83df63f9e2cb4f46273a505e224951bab38aaa70f32f03564af7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of AbstractInfectiveEntity.infectAdjacent: returns at once on a client level. Exact variant: the client no longer draws one Math.random() value there (JVM-wide unseeded generator). Runtime flag cognitionClientInfectionSkip. Helper bons.furious.patch.cognition_coo49.InfectionSkip.",
+      "license": "Cognition (MIT): no code carried; the hook only returns early"
+    },
+    "cognition_infecting_recipe_memo": {
+      "mod": "experienceobelisk",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cognition_coo49.InfectingRecipeMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/cyanogen/experienceobelisk/recipe/InfectingRecipe",
+          "method": "getInfectedBlockState",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "the block's item default stack, first matching infecting recipe, its result block's default state or null",
+          "sha256": "25946719c74c1cd692325735805c803ab5ceeb3f53272c792fb287f85a3ec922"
+        },
+        {
+          "class": "com/cyanogen/experienceobelisk/recipe/InfectingRecipe",
+          "method": "getRecipe",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;)Lcom/cyanogen/experienceobelisk/recipe/InfectingRecipe;",
+          "note": "getAllRecipesFor(infecting type) in list order, the first whose matches(stack) is true",
+          "sha256": "fd59ac7895558f72ff3b80ded3e9edfdf4751f7bd1508e5c681df6e8bb79f82d"
+        },
+        {
+          "class": "com/cyanogen/experienceobelisk/recipe/InfectingRecipe",
+          "method": "matches",
+          "desc": "(Lnet/minecraft/world/SimpleContainer;Lnet/minecraft/world/level/Level;)Z",
+          "note": "ingredientBlock.test(slot 0)",
+          "sha256": "2e705131a3d07742db4fa7b687e7f0487b93862c3d34c0b2748f16067a8f9646"
+        },
+        {
+          "class": "com/cyanogen/experienceobelisk/recipe/InfectingRecipe",
+          "method": "assemble",
+          "desc": "(Lnet/minecraft/world/SimpleContainer;Lnet/minecraft/core/RegistryAccess;)Lnet/minecraft/world/item/ItemStack;",
+          "note": "a copy of the fixed result stack",
+          "sha256": "0817e8ba25632a656fbe4aa42b7bd28c06f51c367130dd31822ec32a178dedcf"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on InfectingRecipe.getInfectedBlockState (static): per RecipeManager a Block -> answer memo (null kept) valid while the vanilla_cooking_recipe_item_index layer's recipe generation token is current (same recipe table, no tag rebind, Forge's ingredient counter unchanged) and every infecting recipe is a plain InfectingRecipe; otherwise the method runs as shipped. Exact: the answer depends only on the block. Runtime flag cognitionInfectingRecipeMemo, shadow cognitionInfectingRecipeMemo.shadow. Helper bons.furious.patch.cognition_coo49.InfectingMemo.",
+      "license": "Cognition (MIT): no code carried; the wrapper calls the original"
+    },
+    "cognition_tooltip_owner_first": {
+      "mod": "experienceobelisk",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cognition_coo49.DescriptionTooltipOwnerMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/cyanogen/experienceobelisk/event/DescriptionTooltips",
+          "method": "handleTooltip",
+          "desc": "(Lnet/minecraftforge/event/entity/player/ItemTooltipEvent;)V",
+          "note": "creator mod id first, then the description string and the shift key polls; lines only for experienceobelisk items",
+          "sha256": "cdc06ebf1940bc2c721e3d8a5ea853efbb794a9e1ab94ba5a437f80b5f7b153c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of DescriptionTooltips.handleTooltip: returns at once when the item's creator mod id (stock's first statement) is not experienceobelisk; Cognition's own items run the method unchanged. Runtime flag cognitionTooltipOwnerFirst. Helper bons.furious.patch.cognition_coo49.TooltipOwner.",
+      "license": "Cognition (MIT): no code carried; the hook only returns early"
+    },
+    "cognition_player_scan_lean": {
+      "mod": "experienceobelisk",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cognition_coo49.FountainPlayerScanMixin",
+        "bons.furious.mixin.cognition_coo49.ObeliskPlayerScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/cyanogen/experienceobelisk/block_entities/ExperienceFountainEntity",
+          "method": "tick",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Ljava/lang/Object;)V",
+          "note": "getEntitiesOfClass(Player, the box above the fountain): only isEmpty() is read",
+          "sha256": "27a84ecc5221943f7892c79ee17807b2606e0f8073e9ee9f938f47e30a725c70"
+        },
+        {
+          "class": "com/cyanogen/experienceobelisk/block_entities/ExperienceObeliskEntity",
+          "method": "checkAroundForMemorized",
+          "desc": "()V",
+          "note": "once a second: getEntitiesOfClass(Player, radius box), the first alive linked player with experience to recover is served",
+          "sha256": "5519e1090de9173aa67e3550aed778807ef48791387123719b697bd00ee38afa"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass (m_45976_) Player search of ExperienceFountainEntity.tick and ExperienceObeliskEntity.checkAroundForMemorized: answered from level.players() (non-spectators whose bounding box intersects the box, in player-list order; the profiler count kept). Trade-off, off by default: the obelisk serves several matching players in join order instead of entity-section order; stands aside while Valkyrien Skies is installed. Runtime flag cognitionPlayerScanLean. Helper bons.furious.patch.cognition_coo49.PlayerScan.",
+      "license": "Cognition (MIT): no code carried; the wrappers carry only our own logic"
+    }
+  }
+}

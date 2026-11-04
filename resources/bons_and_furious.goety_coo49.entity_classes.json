@@ -1,0 +1,9 @@
+{
+  "layer": "vanilla_entity_class_count_layer",
+  "entries": [
+    {"class": "com.Polarice3.Goety.common.entities.util.CameraShake", "key": "goety_shake_scan_presence_gate",
+     "why": "Goety 2.5.60.0 ClientEvents.onSetupCamera searches it +-20 blocks around the player every frame"},
+    {"class": "com.Polarice3.Goety.common.entities.hostile.Wight", "key": "goety_wight_scan_presence_gate",
+     "why": "Goety 2.5.60.0 Wight.findWight searches it +-64 blocks from the fog events, the Dread overlay and the client tick"}
+  ]
+}

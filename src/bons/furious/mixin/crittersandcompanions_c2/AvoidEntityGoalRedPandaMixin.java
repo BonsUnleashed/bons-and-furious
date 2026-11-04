@@ -38,9 +38,9 @@ public abstract class AvoidEntityGoalRedPandaMixin {
         if (RedPandaGate.enabled) {
             byte kind = this.bons$redPandaGoal;
             if (kind == 0) this.bons$redPandaGoal = kind = RedPandaGate.kind(this.f_25020_);
-            if (kind == RedPandaGate.RED_PANDA_GOAL) {
+            if (kind != RedPandaGate.OTHER_GOAL) {   // since 1.0.49 also the C&C 2.7.1 red panda (RED_PANDA_271_GOAL)
                 Level level = this.f_25015_.m_9236_();
-                if (RedPandaGate.nothingToAvoid(level)) {
+                if (RedPandaGate.nothingToAvoid(level, kind)) {
                     if (RedPandaGate.SHADOW) return RedPandaGate.shadow(original, () -> this.f_25016_, level);
                     level.m_46473_().m_6174_("getEntities");
                     this.f_25016_ = null;

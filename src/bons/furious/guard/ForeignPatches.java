@@ -85,7 +85,79 @@ final class ForeignPatches {
         }
     }
 
+    /**
+     * Since 1.0.49 (compat.json "orphan_of"): another mod's mixin that only works together with a companion mixin of the same
+     * mod (it reads state the companion keeps). Collections Of Optimizations 5.8 leaves its Bosses of Mass Destruction tracker
+     * (MixinBmdChunkBlockCacheTracker) out next to Bons and Furious but keeps the ward and monolith gates that read it: mob
+     * wards then block no spawn and monoliths change no explosion. Such a mixin is left out whenever the other mod's own
+     * mixin plugin leaves its companion out; {@code key} is the switch of ours that makes the same change.
+     */
+    record Orphan(String mixin, String companion, String key, String mod, String name) {
+        String shortMixin() {
+            return mixin.substring(mixin.lastIndexOf('.') + 1);
+        }
+
+        String shortCompanion() {
+            return companion.substring(companion.lastIndexOf('.') + 1);
+        }
+    }
+
+    private static final Map<String, Boolean> ORPHANED = new HashMap<>();             // orphan mixin -> left out (since 1.0.49)
+
     private ForeignPatches() {}
+
+    /** Since 1.0.49, guard-table line: orphan mixin companion key mod name. */
+    static Orphan parseOrphan(String[] f) {
+        return new Orphan(f[1], f[2], f[3], f[4], f[5]);
+    }
+
+    /**
+     * Since 1.0.49: true when the orphan mixin must be left out: the other mod lists it for this side but not its companion,
+     * or its own mixin plugin leaves the companion out of every target (the same answer twice, asked as Mixin asks it), or
+     * the plugin cannot be asked (then it is left out to be safe: the switch named in the row makes the same change, and
+     * without the companion the orphan would work on state nothing keeps). Decided once per mixin; one INFO (or WARN) line.
+     */
+    static synchronized boolean orphaned(Orphan o) {
+        Boolean known = ORPHANED.get(o.mixin());
+        if (known != null) return known;
+        boolean out = false;
+        String why = null, version = null;
+        try {
+            version = modVersion(o.mod());
+            if (version != null && listed(o.mod()).contains(o.mixin())) {
+                if (!listed(o.mod()).contains(o.companion())) {
+                    out = true;
+                    why = "it does not list " + o.shortCompanion() + " for this side";
+                } else {
+                    Asked a;
+                    try {
+                        a = ask(new Yield(o.key(), o.mod(), o.name(), o.companion(), null, null, null, true, List.of(), null));
+                    } catch (Throwable t) {
+                        a = new Asked(Verdict.UNKNOWN, "its mixin plugin threw " + t);
+                    }
+                    if (a.verdict() == Verdict.LEFT_OUT) {
+                        out = true;
+                        why = "its own mixin plugin leaves " + o.shortCompanion() + " out (" + a.detail() + ")";
+                    } else if (a.verdict() == Verdict.UNKNOWN) {
+                        out = true;
+                        why = "its mixin plugin could not be asked about " + o.shortCompanion() + " (" + a.detail() + "), so it is left out to be safe";
+                    }
+                }
+            }
+        } catch (Throwable t) {
+            out = true;
+            why = "its mixin configs could not be read (" + t + "), so it is left out to be safe";
+        }
+        ORPHANED.put(o.mixin(), out);
+        if (out) {
+            String text = "Bons and Furious: {} {}'s {} is left out: it relies on {}, and {}; {} makes the same change";
+            if (why.endsWith("left out to be safe"))
+                LOGGER.warn(text, o.name(), version, o.shortMixin(), o.shortCompanion(), why, o.key());
+            else
+                LOGGER.info(text, o.name(), version, o.shortMixin(), o.shortCompanion(), why, o.key());
+        }
+        return out;
+    }
 
     /** guard-table line: yield key mod name mixin config master option default unless [conflict] ("-" = none). */
     static Yield parse(String[] f) {

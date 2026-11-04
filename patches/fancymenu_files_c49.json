@@ -1,0 +1,139 @@
+{
+  "group": "fancymenu_files_c49",
+  "keys": {
+    "fancymenu_internet_probe_interval": {
+      "mod": "fancymenu",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.fancymenu_files_c49.WebUtilsProbeIntervalMixin"
+      ],
+      "guard": [
+        {
+          "class": "de/keksuccino/fancymenu/util/WebUtils",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "builds the monitor: HTTPS probe of https://google.com, 3 s timeouts, a single-thread scheduler, refresh delay 20 s",
+          "sha256": "396c7873ace0e0a7f929e03b969c6a07a5ef0819d22c3da27bc581780139b5c8"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/util/WebUtils",
+          "method": "isInternetAvailable",
+          "desc": "()Z",
+          "note": "the readers' view: the last published probe answer",
+          "sha256": "e06a26b24b11798cf7aded7fd00806b8678a04cca1d3ea7321884a284ce17e27"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/util/InternetAvailabilityMonitor",
+          "method": "<init>",
+          "desc": "(Lde/keksuccino/fancymenu/util/InternetAvailabilityProbe;Ljava/util/function/Supplier;Ljava/time/Duration;Ljava/util/function/Consumer;)V",
+          "note": "the refresh delay must be positive",
+          "sha256": "8c41e06554f6453e76bb55481b3cf6b1413b284206895bf1fe7a34a10c45356e"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/util/InternetAvailabilityMonitor",
+          "method": "init",
+          "desc": "()V",
+          "note": "scheduleWithFixedDelay(refresh, ZERO, refreshDelay): the first probe at once, then one per delay",
+          "sha256": "f4a67f07684e1b7692a31b2aa8655894df3b4b879848e361204e86457dc33a48"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/util/InternetAvailabilityMonitor",
+          "method": "refresh",
+          "desc": "(J)V",
+          "note": "one probe, then the published answer",
+          "sha256": "66ac3edc4adcab397df8bfb82f4a4364b9f6fc873499d3c5bb47f6484734eb77"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@ModifyArg (index 2) of the InternetAvailabilityMonitor constructor call in WebUtils.<clinit>: Duration.ofSeconds(the switch's value) in place of 20 s (helper bons.furious.patch.fancymenu_files_c49.ProbeInterval, PureConfig.intValue)",
+      "license": "FancyMenu custom licence (DSMSL): none of its code is carried; the injector only changes the delay argument"
+    },
+    "fancymenu_local_source_memo": {
+      "mod": "fancymenu",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.fancymenu_files_c49.LocalSourceMemoMixin",
+        "bons.furious.mixin.fancymenu_files_c49.ReloadEpochMixin"
+      ],
+      "guard": [
+        {
+          "class": "de/keksuccino/fancymenu/util/file/LocalSourcePathResolver",
+          "method": "resolve",
+          "desc": "(Ljava/lang/String;)Lde/keksuccino/fancymenu/util/file/LocalSourcePathResolver$ResolvedPath;",
+          "note": "lexical checks of the raw path against the resolver's fixed roots, then ConfinedPathResolver.resolve (the disk walk)",
+          "sha256": "76bcf61744ee6f123aa033880b2a62a8ff95ac1644fb91a95911f1ad192c3ca9"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/util/file/LocalSourcePathResolver",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: the roots are final fields captured at construction",
+          "sha256": "f75209d7bc4236cd3da3a940615222e23f735a65fd4a82c83c334123036d3da3"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/util/file/LocalSourcePathResolver$ResolvedPath",
+          "method": "*",
+          "desc": "",
+          "note": "a result holds only the root and the lexical path (final fields); revalidate checks the disk again",
+          "sha256": "48950ba8183f07d10e7f7edf4e6135b9a374ba2eb8b514de12ceb701f6dfbc67"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/util/file/ConfinedPathResolver",
+          "method": "resolve",
+          "desc": "(Ljava/nio/file/Path;)Lde/keksuccino/fancymenu/util/file/ConfinedPathResolver$ResolvedPath;",
+          "note": "normalise, startsWith the lexical root, then revalidate (two projectRealPath walks)",
+          "sha256": "82fc2e01a17c3477ed15e46b99925ecba5c43656fcf24f44cdb4beea43c0fe70"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/util/file/ConfinedPathResolver$ResolvedPath",
+          "method": "revalidate",
+          "desc": "()Ljava/nio/file/Path;",
+          "note": "the use-time check every reader runs right before reading",
+          "sha256": "d40f09d3397f6f1a88b6ca77088c95fc43544f226b00371019951ef84cd86f70"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/customization/ScreenCustomization",
+          "method": "reloadFancyMenu",
+          "desc": "()V",
+          "note": "FancyMenu's reload: kept results are dropped at its start",
+          "sha256": "3f9d9c6d97fa8358f0f4a448ac0aceb288d259bb1cda0f06ca1e6dc4bb310c87"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/util/resource/ResourceSource",
+          "method": "getValidatedLocalFile",
+          "desc": "()Ljava/io/File;",
+          "note": "reader: revalidate, else null",
+          "sha256": "8e5939d55737088b82197315eb59e93a3c3b88efafebf48f672fefa9f22fe9f5"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/customization/placeholder/placeholders/advanced/FileTextPlaceholder",
+          "method": "loadFromFile",
+          "desc": "(Ljava/lang/String;Lde/keksuccino/fancymenu/util/file/LocalSourcePathResolver;)Ljava/util/List;",
+          "note": "reader: resolve, revalidate, read through revalidate's path",
+          "sha256": "06b0347bef75684a19ac4a61f15556fe0e6da14b9434bb7c95a03c51a29f17b6"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/customization/placeholder/placeholders/advanced/JsonPlaceholder",
+          "method": "readLocalJson",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;Lde/keksuccino/fancymenu/util/file/LocalSourcePathResolver;)Lde/keksuccino/fancymenu/customization/placeholder/placeholders/advanced/JsonPlaceholder$LocalJsonLookup;",
+          "note": "reader: resolve, revalidate before reading",
+          "sha256": "b66b6a4183b69742670543a890d75a41df689213de565ea1f953855d7a309303"
+        },
+        {
+          "class": "de/keksuccino/fancymenu/util/rinku/RinkuVideoSourceResolver",
+          "method": "resolveLocal",
+          "desc": "(Ljava/lang/String;Lde/keksuccino/fancymenu/util/file/LocalSourcePathResolver;)Ljava/lang/String;",
+          "note": "reader: resolve, revalidate, hand out revalidate's path",
+          "sha256": "3ba20af56de85e8d64ebe5ead23d974164749c17f81fec991d3ac6a42469118d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@WrapMethod of LocalSourcePathResolver.resolve(String): a per-resolver memo (@Unique field) of successful results per raw path, never of exceptions; @Inject HEAD of ScreenCustomization.reloadFancyMenu drops every kept result (helper bons.furious.patch.fancymenu_files_c49.LocalSourceMemo)",
+      "license": "FancyMenu custom licence (DSMSL): none of its code is carried; the injectors keep results FancyMenu's own resolver returned"
+    }
+  }
+}

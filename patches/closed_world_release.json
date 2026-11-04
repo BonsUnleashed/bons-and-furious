@@ -1,0 +1,159 @@
+{
+  "group": "closed_world_release",
+  "keys": {
+    "closed_world_reference_release": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "fix",
+      "mixins": [
+        "bons.furious.mixin.closed_world_release.ServerLifecycleReleaseMixin",
+        "bons.furious.mixin.closed_world_release.ClientLevelClosingReleaseMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraftforge/server/ServerLifecycleHooks",
+          "method": "handleServerStopping",
+          "desc": "(Lnet/minecraft/server/MinecraftServer;)V",
+          "note": "the stopping hook: allowLogins off, posts ServerStoppingEvent, returns (our TAIL inject stops Simply Swords' loops)",
+          "sha256": "827e390b599b02141dd1ad88c6823db021ec37114951000d87d756caa0499749"
+        },
+        {
+          "class": "net/minecraftforge/server/ServerLifecycleHooks",
+          "method": "handleServerStopped",
+          "desc": "(Lnet/minecraft/server/MinecraftServer;)V",
+          "note": "the stopped hook: posts ServerStoppedEvent, then currentServer = null (our inject runs right before), then the exit latch",
+          "sha256": "06a80feca45b72d009053886921ed3ee64825ab3b17ed1c755d88542d0f4dcdf"
+        },
+        {
+          "class": "net/minecraftforge/client/ForgeHooksClient",
+          "method": "handleClientLevelClosing",
+          "desc": "(Lnet/minecraft/client/multiplayer/ClientLevel;)V",
+          "note": "called once by Minecraft.clearLevel when the client leaves its world (our HEAD inject drops Citadel's previews)",
+          "sha256": "be8a598fe709b4790aef318c441f9fd94a4b58aa83a84bdedaf3fdf24b7152bd"
+        },
+        {
+          "class": "net/minecraft/server/MinecraftServer",
+          "method": "m_129918_",
+          "desc": "()Z",
+          "note": "isStopped: the stopped flag runServer sets before stopServer; xaerolib's getServer drops the server when it is true",
+          "sha256": "81d3b4f45fc449546b1b613de1d379c19aa7e17b0553e1a1366b4b1636db4b6e"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "m_7654_",
+          "desc": "()Lnet/minecraft/server/MinecraftServer;",
+          "note": "getServer: the Opposing Force part keeps entries of other servers",
+          "sha256": "2e292d318679a9d3c9d49d5ad1957c2076766b21a616cc59b10e7968686140f3"
+        },
+        {
+          "class": "com/github/alexthe666/citadel/client/gui/EntityLinkButton",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "audited: renderedEntites = new HashMap (and a constant rotation): a pure static initialiser",
+          "audit": true,
+          "sha256": "a1333bc8a8688c79a0fd6bb0f931f758a5344999228bcc3ee2c63e5189786912"
+        },
+        {
+          "class": "com/github/alexthe666/citadel/client/gui/EntityLinkButton",
+          "method": "m_87963_",
+          "desc": "(Lnet/minecraft/client/gui/GuiGraphics;IIF)V",
+          "note": "audited: renderWidget, the only writer: renderedEntites.putIfAbsent(id, type.create(Minecraft.level)), never removed",
+          "audit": true,
+          "sha256": "54d7218c476532ec553a1100a660c67acfb03850d38cbe83088913198e7bc98c"
+        },
+        {
+          "class": "com/unusualmodding/opposing_force/utils/CommonProxy",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "audited: SKYVERN_SPAWNER_MAP = new HashMap",
+          "audit": true,
+          "sha256": "495edb6f8a52c0dae46c3e92d5971ac6aadd8632f617057ecc3b00d2ba7e3615"
+        },
+        {
+          "class": "com/unusualmodding/opposing_force/utils/CommonProxy",
+          "method": "onServerTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$LevelTickEvent;)V",
+          "note": "audited: the only writer: put(serverLevel, new SkyvernSpawner(serverLevel)) when absent, never removed",
+          "audit": true,
+          "sha256": "5d01239a347712fbaf97960bc754eca1c48976e7d4f1163a39b44861b8a10a57"
+        },
+        {
+          "class": "xaero/lib/common/config/server/ServerConfigManager",
+          "method": "getServer",
+          "desc": "()Lnet/minecraft/server/MinecraftServer;",
+          "note": "audited: drops the server when server.isStopped(), then returns it: the release calls exactly this",
+          "audit": true,
+          "sha256": "a85d345d9599c0fc628cd54c8d7c94ac9adabfb7c07dfc2ebd4b0514dc2f85d6"
+        },
+        {
+          "class": "xaero/lib/common/config/server/ServerConfigManager",
+          "method": "setServer",
+          "desc": "(Lnet/minecraft/server/MinecraftServer;)V",
+          "note": "audited: the only other writer of server",
+          "audit": true,
+          "sha256": "0557e7afd4e30a683324115510c3882a16512800e23ab8b971894d82f2f9a252"
+        },
+        {
+          "class": "xaero/lib/common/config/channel/register/ConfigChannelRegistry",
+          "method": "register",
+          "desc": "(Lxaero/lib/common/config/channel/ConfigChannel;)V",
+          "note": "audited: channels map keyed by channel id: every config channel (and so every ServerConfigManager) is in it",
+          "audit": true,
+          "sha256": "4c794ccea7fae57d336f9eec07e4ba56dc895221ef7b8404dd5a487e4de02719"
+        },
+        {
+          "class": "xaero/lib/common/config/channel/ConfigChannel",
+          "method": "getServerConfigManager",
+          "desc": "()Lxaero/lib/common/config/server/ServerConfigManager;",
+          "note": "audited: returns the channel's final manager field",
+          "audit": true,
+          "sha256": "9e7268a454021d04c2bf0e39074addf138f753f18ccf0e49dbaa1125373f0339"
+        },
+        {
+          "class": "xaero/lib/common/event/CommonEvents",
+          "method": "serverStarting",
+          "desc": "(Lnet/minecraft/server/MinecraftServer;)V",
+          "note": "audited: the only setServer caller: every registered channel's manager gets the starting server",
+          "audit": true,
+          "sha256": "bc441d6037dd9812b0af84ea55fa1f9cf4bd33cdca7a5b298107691c2f7f49d0"
+        },
+        {
+          "class": "net/sweenus/simplyswords/util/SoundHelper",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "audited: soundSchedulers = new ConcurrentHashMap",
+          "audit": true,
+          "sha256": "4df1934a358215b1c600e6ed0df4c111bcb1e75bfceed6d6ff94326f0b362410"
+        },
+        {
+          "class": "net/sweenus/simplyswords/util/SoundHelper",
+          "method": "loopSound",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/resources/ResourceLocation;I)V",
+          "note": "audited: one newSingleThreadScheduledExecutor per sound id, scheduleAtFixedRate of the loop lambda",
+          "audit": true,
+          "sha256": "3730b75f3ebc7d90b986060cb23a299af062361a54a16b739dcbdad12444a473"
+        },
+        {
+          "class": "net/sweenus/simplyswords/util/SoundHelper",
+          "method": "lambda$loopSound$0",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/sounds/SoundEvent;Lnet/minecraft/resources/ResourceLocation;)V",
+          "note": "audited: the loop: playSound while the entity is alive with Elemental Vortex, else stopLoopingSound",
+          "audit": true,
+          "sha256": "1e639cfb9f6f7270724fbd09e812d03946df257a181861a88c8b4c5b54424e6f"
+        },
+        {
+          "class": "net/sweenus/simplyswords/util/SoundHelper",
+          "method": "stopLoopingSound",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/resources/ResourceLocation;)V",
+          "note": "audited: remove(soundId), then shutdownNow: the release does the same for every loop",
+          "audit": true,
+          "sha256": "062871762a5c15ae6294510492bca3b8f43a22fd1363cbb5fe11dc835bb69788"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors only: @Inject at the TAIL of Forge's ServerLifecycleHooks.handleServerStopping and right before handleServerStopped's PUTSTATIC currentServer (common), @Inject at the HEAD of ForgeHooksClient.handleClientLevelClosing (client); helper bons.furious.patch.closed_world_release.ClosedWorldRelease (reflection on already-loaded classes only; each mod's part applies only when its class is loaded and its field has the expected static type; the mods' guard lines are audit lines, satisfied while that mod is not installed)",
+      "license": "Forge (LGPL-2.1) and Minecraft: no code carried. Citadel (LGPL-3.0), Opposing Force (MIT), xaerolib (All Rights Reserved), Simply Swords (Timefall Development License): none of their code is carried; the helper clears their fields by reflection and calls their own public getServer(); our logic only"
+    }
+  }
+}

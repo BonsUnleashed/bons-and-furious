@@ -1,0 +1,231 @@
+{
+  "group": "cataclysm_client_c49",
+  "keys": {
+    "cataclysm_tentacle_light_memo": {
+      "mod": "cataclysm",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cataclysm_client_c49.LeviathanTongueLightMixin",
+        "bons.furious.mixin.cataclysm_client_c49.TidalTentacleLightMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/entity/The_Leviathan_Renderer",
+          "method": "render",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/The_Leviathan/The_Leviathan_Entity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+          "sha256": "09e20765f297f05ab0670ec9789a9746d1291f285e4f899700fcdb779ce4e908"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/entity/The_Leviathan_Renderer",
+          "method": "getLightColor",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;)I",
+          "sha256": "92fbb25736b047cba2d62a2c3b0dc2937b9831fd0191fb1bb25e05ce93c3f721"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/entity/Tidal_Tentacle_Renderer",
+          "method": "render",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/projectile/Tidal_Tentacle_Entity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+          "sha256": "1698ddde9abdfa8933ce5e21e3474cd7cba65ede1af37ad50c6a889ba74e1db0"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/entity/Tidal_Tentacle_Renderer",
+          "method": "getLightColor",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;)I",
+          "sha256": "92fbb25736b047cba2d62a2c3b0dc2937b9831fd0191fb1bb25e05ce93c3f721"
+        },
+        {
+          "class": "net/minecraft/client/renderer/LevelRenderer",
+          "method": "m_109541_",
+          "desc": "(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;)I",
+          "sha256": "94a2877031547bea68a405031ea1f0bc3613dc195d783c0bc445ffd1a1e66c0a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on both private getLightColor(Entity, Vec3) calls of The_Leviathan_Renderer.render and of Tidal_Tentacle_Renderer.render (@Share per render() call): each block position's answer is kept for the rest of that call (helper bons.furious.patch.cataclysm_client_c49.TentacleLight)",
+      "license": "L_Ender's Cataclysm: CC-BY-NC-ND-4.0: no-copy; the wrappers carry only our own logic (Idea: Collections Of Optimizations cataclysm.cacheTentacleLight, idea text only)"
+    },
+    "cataclysm_pose_reset_loop": {
+      "mod": "cataclysm",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cataclysm_client_c49.ModelPoseResetMixin",
+        "bons.furious.mixin.cataclysm_client_c49.ModelPartChildrenAccessor"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ancient_Remnant_Rework_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/IABossMonsters/Ancient_Remnant/Ancient_Remnant_Entity;FFFFF)V",
+          "sha256": "a8c206eb5d3a0dbad0c926f868e815729dff08c6f199b6412ee1c1cbb2aff2d5",
+          "sha256_also": [
+            {
+              "build": "cataclysm 3.31",
+              "sha256": "15e194477b0ce32b2510186f0ec28d6173249836b7d2745a0145c4a2af088b6c"
+            }
+          ]
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Aptrgangr_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/Draugar/Aptrgangr_Entity;FFFFF)V",
+          "sha256": "09291461135f85ddc782762de5df2875ef736a460ebeac7fb10ae0421fedda9a"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ceraunus_Model",
+          "method": "m_6973_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;FFFFF)V",
+          "sha256": "ff8bf7d5723e0308a9ad6d169c5219c9bb3b9df4f3fad45d7b3bacf583d24599"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Cindaria_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/AcropolisMonsters/Cindaria_Entity;FFFFF)V",
+          "sha256": "175c3b137508634a4135dd56b951d1322cfc2c370c093c93e5cc9fa65a56f32e"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Clawdian_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/AcropolisMonsters/Clawdian_Entity;FFFFF)V",
+          "sha256": "674695ec6838e2e2d027cb4503f01f7fec075a749943ca4c1f64928ae7fa5c8b",
+          "sha256_also": [
+            {
+              "build": "cataclysm 3.31",
+              "sha256": "faa81c8d19a3ede168428662136320ca16d6b3b220f7de4b431783ba302612be"
+            }
+          ]
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Draugr_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/Draugar/Draugr_Entity;FFFFF)V",
+          "sha256": "afb66d95a0ed31a8251e5ccb67174e1f32cde948fbf460504662e3f1cb466258"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Elemental_Spear_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/projectile/Elemental_Spear_Entity;FFFFF)V",
+          "sha256": "29c4b82aa28fa0d7d1f43c36bd9afb90d91272136441340cbbdbb4b8e1a1cba3"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Elite_Draugr_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/Draugar/Elite_Draugr_Entity;FFFFF)V",
+          "sha256": "cd4aaa9fa003c6176e40ddea7b6a946c7a0e36e02b851c04f0a98a172549e457"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Hippocamtus_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/AcropolisMonsters/Hippocamtus_Entity;FFFFF)V",
+          "sha256": "2ae9fec0543aa0eb7de59c8dab759562cbcd112db88c0b9d7516975a2b9883d7"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ignited_Berserker_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/Ignited_Berserker_Entity;FFFFF)V",
+          "sha256": "1879817704f6c421a5984e4ef48496f3388c917a3b3994c1efd0787b48f6c217"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Kobolediator_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/Kobolediator_Entity;FFFFF)V",
+          "sha256": "a8ebc3e67753f4561fea3f6e5edfcdbd9f1de8ae38742bfcd484990600721535",
+          "sha256_also": [
+            {
+              "build": "cataclysm 3.31",
+              "sha256": "c2dcfd76016ea3bddcee87f0f13a8864cc1090e1498d0227b4f7490607bd5b2c"
+            }
+          ]
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Maledictus_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/IABossMonsters/Maledictus/Maledictus_Entity;FFFFF)V",
+          "sha256": "95d13a1b58a34421fdd3c50b3a7fa252dad4ac875870898aaaa18894e7f4f051"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Netherite_Ministrosity_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/Pet/Netherite_Ministrosity_Entity;FFFFF)V",
+          "sha256": "153121fcd73e8b65b7f6bd4cbde04f5cb803f31f93a0203ced4f1a27bc0412c6",
+          "sha256_also": [
+            {
+              "build": "cataclysm 3.31",
+              "sha256": "7f7277076fa7407b0904c1eab6bb19774f4816ae34b78644a8e95fbcd2871a3d"
+            }
+          ]
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Netherite_Monstrosity_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/IABossMonsters/NewNetherite_Monstrosity/Netherite_Monstrosity_Entity;FFFFF)V",
+          "sha256": "1bc6daef3d6d6cebae2854cac287c07a4a14eb787ef6a0ab2b393635e5dda18a",
+          "sha256_also": [
+            {
+              "build": "cataclysm 3.31",
+              "sha256": "7a06c85195260277a6d1ed9ba325c3b5dd259070d7cace0f534515a04be30034"
+            }
+          ]
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Royal_Draugr_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/Draugar/Royal_Draugr_Entity;FFFFF)V",
+          "sha256": "a4c20b428eb2aaaf492f53ba906af941e444c2f30863a32a4b29e93002ea892e"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Scylla_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/IABossMonsters/Scylla/Scylla_Entity;FFFFF)V",
+          "sha256": "173c2fff9c8df4e07cb04558ad63b00bc5bb06acc2ff2324de312a6ca35ad2a9"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Storm_Serpent_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/projectile/Storm_Serpent_Entity;FFFFF)V",
+          "sha256": "a59894c80abc8d9788421e76a8a63f8be4cb67ffe0ce7e08ddd2cf38daffa303"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Symbiocto_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/AcropolisMonsters/Symbiocto_Entity;FFFFF)V",
+          "sha256": "64bd0dadcb7ebe32e10dd196c113aea0105340f01359bf4b25ea86ee64493fd9"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/The_Prowler_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/The_Prowler_Entity;FFFFF)V",
+          "sha256": "8708fc978169c160a139b6ce55162adf5cafa6d5b64c98c114859cb16482270d"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Urchinkin_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/AcropolisMonsters/Urchinkin_Entity;FFFFF)V",
+          "sha256": "2e38b9ea0c836b32ad3beac35169d20a27f4461cf22201259c1f3c3a9cd3ae00"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Wave_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/effect/Wave_Entity;FFFFF)V",
+          "sha256": "c59b3985ef40a33591689bf59dccfa77de3bd156a70f68abff60ba863399070e"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/ModelPart",
+          "method": "m_171331_",
+          "desc": "()Ljava/util/stream/Stream;",
+          "sha256": "d2c586167387d503ed861621199939a0b86f745a7573e309520246c000a2a69a"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/ModelPart",
+          "method": "m_233569_",
+          "desc": "()V",
+          "sha256": "a4562bb158d9e4946116b105cde33bc00b7f96275b4dda89b5543de9396fcba2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on root().getAllParts() and on Stream.forEach in setupAnim of 21 models (@Share): a tree whose parts are all plain ModelParts is reset by a pre-order walk calling resetPose, anything else takes the original stream; accessor on ModelPart.children (helper bons.furious.patch.cataclysm_client_c49.PoseReset); with Embeddium's ModelPart mixin in (ModelPart implements org.embeddedt.embeddium.render.entity.ModelPartExtended, checked once) the helper stands aside and the original stream runs: Embeddium's part list already makes it cheap",
+      "license": "L_Ender's Cataclysm: CC-BY-NC-ND-4.0: no-copy; the wrappers carry only our own logic (Idea: Collections Of Optimizations cataclysm.leanPoseReset, idea text only); Minecraft: no-copy"
+    }
+  }
+}

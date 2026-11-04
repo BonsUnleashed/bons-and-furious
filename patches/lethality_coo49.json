@@ -1,0 +1,110 @@
+{
+  "group": "lethality_coo49",
+  "keys": {
+    "lethality_sos_name_server_fallback": {
+      "mod": "lethality",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.lethality_coo49.LethalitySosNameMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/daphne/lethality/item/custom/curios/BackupSOSItem",
+          "method": "addColorGradientText",
+          "desc": "(Lnet/minecraft/network/chat/Component;FF[[I)Lnet/minecraft/network/chat/MutableComponent;",
+          "note": "tickCount = (Integer) DistExecutor.unsafeCallWhenOn(CLIENT, lambda 1) unboxed: NullPointerException on a dedicated server",
+          "sha256": "23d12685e614a278027c0956a65bd4d5a48eaabcac48863316fb92fab385d327"
+        },
+        {
+          "class": "net/daphne/lethality/item/custom/curios/BackupSOSItem",
+          "method": "addColorGradientTextWithFont",
+          "desc": "(Lnet/minecraft/network/chat/Component;Lnet/minecraft/resources/ResourceLocation;FF[[I)Lnet/minecraft/network/chat/MutableComponent;",
+          "note": "the same read (lambda 3)",
+          "sha256": "b9f6aff50436faa886ad37eb83c34d759e1ba43e215c77b7dce76a0739f6d428"
+        },
+        {
+          "class": "net/daphne/lethality/item/custom/curios/BackupSOSItem",
+          "method": "lambda$addColorGradientText$0",
+          "desc": "()Ljava/lang/Integer;",
+          "note": "the client supplier: the local player's tickCount, else currentTimeMillis / 50 (never null)",
+          "sha256": "555f8a3480a9dfe720c85f82ba43c0481676769f615bdd6c755b57567825bc1c"
+        },
+        {
+          "class": "net/daphne/lethality/item/custom/curios/BackupSOSItem",
+          "method": "lambda$addColorGradientTextWithFont$2",
+          "desc": "()Ljava/lang/Integer;",
+          "note": "the same client supplier",
+          "sha256": "555f8a3480a9dfe720c85f82ba43c0481676769f615bdd6c755b57567825bc1c"
+        },
+        {
+          "class": "net/daphne/lethality/item/custom/curios/UltraBackupSOSItem",
+          "method": "addColorGradientText",
+          "desc": "(Lnet/minecraft/network/chat/Component;FF[[I)Lnet/minecraft/network/chat/MutableComponent;",
+          "note": "the pasted copy: the same unboxed read",
+          "sha256": "2f516a3f41dd572fba09292a25240c5fbcb49f84b752d33be25185eef35b1ddd"
+        },
+        {
+          "class": "net/daphne/lethality/item/custom/curios/UltraBackupSOSItem",
+          "method": "addColorGradientTextWithFont",
+          "desc": "(Lnet/minecraft/network/chat/Component;Lnet/minecraft/resources/ResourceLocation;FF[[I)Lnet/minecraft/network/chat/MutableComponent;",
+          "note": "the pasted copy: the same unboxed read",
+          "sha256": "13b387fb05488f4eebec190c6c9b68ae02fd20d5fb3cc9caea07b7f97c1ed772"
+        },
+        {
+          "class": "net/daphne/lethality/item/custom/curios/UltraBackupSOSItem",
+          "method": "lambda$addColorGradientText$0",
+          "desc": "()Ljava/lang/Integer;",
+          "note": "the client supplier (never null)",
+          "sha256": "555f8a3480a9dfe720c85f82ba43c0481676769f615bdd6c755b57567825bc1c"
+        },
+        {
+          "class": "net/daphne/lethality/item/custom/curios/UltraBackupSOSItem",
+          "method": "lambda$addColorGradientTextWithFont$2",
+          "desc": "()Ljava/lang/Integer;",
+          "note": "the client supplier (never null)",
+          "sha256": "555f8a3480a9dfe720c85f82ba43c0481676769f615bdd6c755b57567825bc1c"
+        },
+        {
+          "class": "net/daphne/lethality/util/ModUtils",
+          "method": "getTickCount",
+          "desc": "()I",
+          "note": "Lethality's own helper: a null answer -> (int) (currentTimeMillis / 50), the fallback the fix uses",
+          "sha256": "f0754be51c4ac823e0b55fd018f8acd42db08c8234c4e4b8408d90ed6a9e15f7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on the DistExecutor.unsafeCallWhenOn call of BackupSOSItem's and UltraBackupSOSItem's addColorGradientText(Component, float, float, int[]...) and addColorGradientTextWithFont: a null answer (a dedicated server) becomes (int) (System.currentTimeMillis() / 50), the fallback of Lethality's own ModUtils.getTickCount, so the charms' names and tooltips are built instead of throwing NullPointerException; on a client the call never answers null and nothing changes. Runtime flag lethalitySosNameServerFallback. Helper bons.furious.patch.lethality_coo49.LethalitySos.",
+      "license": "Lethality (MIT): no Lethality code carried, the wrapper carries only our own logic"
+    },
+    "lethality_blade_mode_end_phase_only": {
+      "mod": "lethality",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.lethality_coo49.LethalityBladeModePhaseMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/daphne/lethality/client/BladeModeEvents",
+          "method": "onPlayerTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "no phase check; server only: Blade Mode -> Slowness(20, 2) for every Mob within 5 blocks + the two modifiers if missing, else both modifiers removed by UUID",
+          "sha256": "8bf9b7ae377d6fb564c7d4a991b6f84490e6d593cb06ae5988a1469670754f41"
+        },
+        {
+          "class": "net/daphne/lethality/events/HFMeowrasamaEvents",
+          "method": "onPlayerTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "no phase check; server only: resets the HF Meowrasama's CustomModelData when Blade Mode is gone; the rest reads only",
+          "sha256": "f087470bbb9a37bd3df787e6b5a02ace820eb2d162383dacdb25c81e163434a0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of BladeModeEvents.onPlayerTick and HFMeowrasamaEvents.onPlayerTick: the handler returns unless the event's phase is END, so Blade Mode's area slowness and speed modifiers run once per player tick instead of twice. Trade-off, off by default: on the tick Blade Mode ends nearby mobs miss the START refresh (their slowness ends a tick earlier), the speed modifiers change at the END of a tick instead of its START, and listeners see one MobEffectEvent pair less per mob per tick. Runtime flag lethalityBladeModeEndPhaseOnly. Helper bons.furious.patch.lethality_coo49.LethalityBladeMode.",
+      "license": "Lethality (MIT): no Lethality code carried, the injection carries only our own logic"
+    }
+  }
+}

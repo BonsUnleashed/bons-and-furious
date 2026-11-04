@@ -1,0 +1,385 @@
+{
+  "group": "mahoutsukai_coo49",
+  "keys": {
+    "mahoutsukai_ripper_effect_first": {
+      "mod": "mahoutsukai",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mahoutsukai_coo49.MahouRipperFirstMixin"
+      ],
+      "guard": [
+        {
+          "class": "stepsword/mahoutsukai/item/spells/secret/ripper/TheRipper",
+          "method": "ripperLivingTick",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "living != null && (main hand item != off hand item || main hand item != the Ripper) && EffectUtil.hasBuff(living, RIPPER_INVISIBILITY) guards the whole body (debuff + notifyNotInvisible); the first two parts only read",
+          "sha256": "d143cfb6adb1d65e410c0ccc0fd96773fc9aca5f0f1e1bd777cafb19b7b22a30"
+        },
+        {
+          "class": "stepsword/mahoutsukai/util/EffectUtil",
+          "method": "hasBuff",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraftforge/registries/RegistryObject;)Z",
+          "note": "e != null && e.hasEffect(potion.get())",
+          "sha256": "12bf1c3b193eb7ff0fdb6bdca2803105c0d2e7c9d58d665d2855eb63592ade69"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21023_",
+          "desc": "(Lnet/minecraft/world/effect/MobEffect;)Z",
+          "note": "hasEffect: activeEffects.containsKey",
+          "sha256": "3032c33ad02513f51f8c3e3ab5699b7eb0ad0dfc215062fbc1f20892906660a2"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21205_",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "getMainHandItem: a read",
+          "sha256": "527e4271cfee67a7c2566bcb89d703b044425dd4838d7482046d4319609cb95d"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21206_",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "getOffhandItem: a read",
+          "sha256": "c85db0b1a46aaf954cd2807127a981b5593ce942873ffaea171e8fe119ef2ad6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@ModifyVariable at the HEAD of TheRipper.ripperLivingTick: the parameter becomes null, so the handler's own opening null test ends it, when the shipped handler would do nothing: the entity lacks RIPPER_INVISIBILITY (the hand-stack reads before that test are pure), or both its hands hold the Ripper (the shipped hand test ends it the same way). An entity found with the Ripper in both hands has its id remembered (a 64-slot open-addressing int set, home slot id & 63 with linear probing, so users sharing a home slot sit side by side: a hint for the order of the checks only), so the Ripper's own user is answered from two hand reads; with the effect and other hand items the parameter is unchanged and the handler runs as shipped. Runtime flag mahoutsukaiRipperEffectFirst. Helper bons.furious.patch.mahoutsukai_coo49.MahouTicks.",
+      "license": "Mahou Tsukai (All Rights Reserved): no code carried, the hook carries only our own logic"
+    },
+    "mahoutsukai_authority_client_skip": {
+      "mod": "mahoutsukai",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mahoutsukai_coo49.MahouAuthorityClientMixin"
+      ],
+      "guard": [
+        {
+          "class": "stepsword/mahoutsukai/potion/BorrowedAuthorityPotion",
+          "method": "authorityLivingUpdate",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "entity != null, getLivingMahou, getAuthorityHit, getDeltaMovement; every write is inside if (!level.isClientSide)",
+          "sha256": "f22b67394a3ed3253d567125ab300d1debeed193940bf0f0c1eef7353e04c03d"
+        },
+        {
+          "class": "stepsword/mahoutsukai/util/Utils",
+          "method": "getLivingMahou",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lstepsword/mahoutsukai/capability/livingmahou/ILivingMahou;",
+          "note": "getCapability(LIVING_MAHOU) + orElseThrow inside try/catch (null on failure)",
+          "sha256": "51b779a5519eae931b2fcc83488bddbbba520e22a16b41c5ae268e2ccb2f6b35"
+        },
+        {
+          "class": "stepsword/mahoutsukai/capability/livingmahou/LivingMahouProvider",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "mahouImpl = LazyOptional.of(LivingMahou::new): created on first resolve",
+          "sha256": "82db683e6c06472a74e75b2c23c1e1abdfdcbe75351eb4f33161397cfa0b3581"
+        },
+        {
+          "class": "stepsword/mahoutsukai/capability/livingmahou/LivingMahouProvider",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraftforge/common/capabilities/Capability;Lnet/minecraft/core/Direction;)Lnet/minecraftforge/common/util/LazyOptional;",
+          "note": "MAHOU: the kept optional, else empty",
+          "sha256": "0f083d5e6abe0e07767df58e3b38a0ff61042626049398adfbb6cc48e893aa65"
+        },
+        {
+          "class": "stepsword/mahoutsukai/capability/livingmahou/LivingMahou",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "defaults only (no side effect)",
+          "sha256": "636e762b264d79544dc6ef73e60c9a4777345560ee82cbe6cfd58934751e3bb6"
+        },
+        {
+          "class": "stepsword/mahoutsukai/capability/livingmahou/LivingMahou",
+          "method": "getAuthorityHit",
+          "desc": "()Z",
+          "note": "a field read",
+          "sha256": "5e1f9dacfe82a62910b52e70028d6577627c2b05ce429b23e3b72df14a5139cd"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@ModifyVariable at the HEAD of BorrowedAuthorityPotion.authorityLivingUpdate (client dist): on a client level the parameter becomes null, so the handler's opening null test ends it; on the client the handler only reads (capability, authority flag, motion). Runtime flag mahoutsukaiAuthorityClientSkip. Helper bons.furious.patch.mahoutsukai_coo49.MahouTicks.",
+      "license": "Mahou Tsukai (All Rights Reserved): no code carried, the hook carries only our own logic",
+      "kind": "change"
+    },
+    "mahoutsukai_insight_target_purge": {
+      "mod": "mahoutsukai",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mahoutsukai_coo49.MahouInsightMapMixin"
+      ],
+      "guard": [
+        {
+          "class": "stepsword/mahoutsukai/potion/InsightEyesPotion",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "hadTargets = new HashMap<>() (public static Map<Player, Boolean>)",
+          "sha256": "4d68be854e15509a5a23acf7e28c6bb38d23667828bd8de03a41c8bde51e588f"
+        },
+        {
+          "class": "stepsword/mahoutsukai/potion/InsightEyesPotion",
+          "method": "insightEyesPlayerTick",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "note": "the map's only user: put(player, true) while a target is shown; containsKey / get / remove + the off packet on the first tick without one",
+          "sha256": "f4b077d5de62af4933eeb5636ec9736fabcbd517f14da589299283aa23b7a1c8"
+        },
+        {
+          "class": "stepsword/mahoutsukai/handlers/ServerHandler",
+          "method": "tickCheck",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "calls insightEyesPlayerTick only for players on server levels (every 10 ticks of tickCounter, END phase)",
+          "sha256": "5f465be7a5df3960ea7b3250bea9ae41b7e3d799f48d87e1cc70ccdf000b32e3"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "note": "equal = same entity id",
+          "sha256": "000f7cb48e2b39bc86ee1a95b8cb3118171a2244b7283fbeacb468976cc6cadf"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "hashCode",
+          "desc": "()I",
+          "note": "the entity id",
+          "sha256": "4873322f2d7f913668bc9548ab9af71e9c84e085a28162a1b923e1f18cbd2ec8"
+        },
+        {
+          "class": "net/minecraft/server/players/PlayerList",
+          "method": "m_11286_",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "note": "remove (logout, quit-to-title, every player at server stop): posts PlayerLoggedOutEvent",
+          "sha256": "76edce53b64c99e23a540d85829499fabd3c7f25d8eec1d66872a187a2b3f92b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix: @Inject at the RETURN of InsightEyesPotion.<clinit> (@Shadow of its public static hadTargets) hands the map to bons.furious.patch.mahoutsukai_coo49.MahouInsightMap, whose PlayerLoggedOutEvent listener removes the leaving player's entry and whose ServerStoppedEvent listener empties the rest. Runtime flag mahoutsukaiInsightTargetPurge.",
+      "license": "Mahou Tsukai (All Rights Reserved): no code carried; the mixin hands over a map reference and our listeners remove entries"
+    },
+    "mahoutsukai_staff_sensitivity_local_only": {
+      "mod": "mahoutsukai",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mahoutsukai_coo49.MahouStaffSensitivityMixin"
+      ],
+      "guard": [
+        {
+          "class": "stepsword/mahoutsukai/handlers/ServerHandler",
+          "method": "tickCheck",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "last block: tickCounter % 100 == 0 and the ticked player not using a Mystic Staff -> MahouTsukaiMod.proxy.speedUp() (both sides, both phases)",
+          "sha256": "5f465be7a5df3960ea7b3250bea9ae41b7e3d799f48d87e1cc70ccdf000b32e3"
+        },
+        {
+          "class": "stepsword/mahoutsukai/proxy/CommonProxy",
+          "method": "speedUp",
+          "desc": "()V",
+          "note": "empty on a dedicated server",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "stepsword/mahoutsukai/proxy/ClientProxy",
+          "method": "speedUp",
+          "desc": "()V",
+          "note": "if the staff lowered the sensitivity, put the local Options value back",
+          "sha256": "0bcd16d1a2e4afe09ca277db1de7e437c08b2e2f8d4d4a0691a44ffe062075bf"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Gameplay fix, off by default: MixinExtras @WrapWithCondition on the CommonProxy.speedUp call at the end of ServerHandler.tickCheck (client dist), the PlayerTickEvent captured: on a client level the call is made only for Minecraft's local player; calls on server levels run as shipped. Runtime flag mahoutsukaiStaffSensitivityLocalOnly. Helper bons.furious.patch.mahoutsukai_coo49.MahouStaffClient.",
+      "license": "Mahou Tsukai (All Rights Reserved): no code carried; the hook decides whether the mod's own call runs"
+    },
+    "mahoutsukai_all_entities_memo": {
+      "mod": "mahoutsukai",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mahoutsukai_coo49.MahouAllEntitiesRenderMixin",
+        "bons.furious.mixin.mahoutsukai_coo49.MahouAllEntitiesSpatialMixin",
+        "bons.furious.mixin.mahoutsukai_coo49.MahouEntityLookupMixin",
+        "bons.furious.mixin.mahoutsukai_coo49.MahouEntityIdMixin",
+        "bons.furious.mixin.mahoutsukai_coo49.MahouLevelEntitiesInvoker",
+        "bons.furious.mixin.mahoutsukai_coo49.MahouGetterAdapterAccessor"
+      ],
+      "guard": [
+        {
+          "class": "stepsword/mahoutsukai/render/RenderUtils",
+          "method": "entityRenders",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lcom/mojang/blaze3d/vertex/PoseStack;F)V",
+          "note": "getAllEntities(Minecraft.level) into a local that is only tested for null, sized and iterated",
+          "sha256": "81f51748302666773ea68221a0d723d2e48cd9258318f1287cba1ed4be586386"
+        },
+        {
+          "class": "stepsword/mahoutsukai/render/entity/RenderSpatialDisorientationMahoujinEntity",
+          "method": "spatialRender",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lcom/mojang/blaze3d/vertex/PoseStack;F)V",
+          "note": "getAllEntities(Minecraft.level) into a local that is only tested for null, sized and iterated",
+          "sha256": "0e3b7ff121d9fa439304d152fe771343bf546207b33e8292dfeb9f00d5e26d4a"
+        },
+        {
+          "class": "stepsword/mahoutsukai/proxy/ClientProxy",
+          "method": "getAllEntities",
+          "desc": "(Lnet/minecraft/client/multiplayer/ClientLevel;)Ljava/util/HashSet;",
+          "note": "new HashSet<>(stream(level.getEntities().getAll()).collect(toSet()))",
+          "sha256": "dca9640cf4812d656d461aa903d0ec76c5f1046a8aa6bb5c4d5499fbe45fc86f"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntityLookup",
+          "method": "m_156814_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)V",
+          "note": "add: the byUuid / byId puts (a duplicate UUID is refused)",
+          "sha256": "55294288c8c74f668751b70ad730c5fa56ab360a78eefdf3f913c97c3d90e3f1"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntityLookup",
+          "method": "m_156822_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)V",
+          "note": "remove: the byUuid / byId removes",
+          "sha256": "9319cb41032d0995646641cf4d0bfaf72827ff1c677e320a643da9c47c247fac"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntityLookup",
+          "method": "m_156811_",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "getAllEntities: an unmodifiable view of byId's values (insertion order)",
+          "sha256": "00ca10679396199b19f3d1ad11067b1f0a9652f737ab958ac83e91fca720cc0c"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/LevelEntityGetterAdapter",
+          "method": "m_142273_",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "getAll = the lookup's getAllEntities",
+          "sha256": "9d30e2cc61f9b6f46461df04c561bcdb4f5ecb246e12685650112b315cf2c151"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/TransientEntitySectionManager",
+          "method": "m_157645_",
+          "desc": "()Lnet/minecraft/world/level/entity/LevelEntityGetter;",
+          "note": "getEntityGetter: the adapter over the manager's lookup",
+          "sha256": "c93996ef7e226335c6773e7935af2dce14ff0e1a8bb86d7061808ff4f15f4b9b"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel",
+          "method": "m_142646_",
+          "desc": "()Lnet/minecraft/world/level/entity/LevelEntityGetter;",
+          "note": "getEntities = the transient manager's getter",
+          "sha256": "659f1cf9475445d9c119cc105d2bceed263c2a2c30cdf55b75cfdffa66503a60"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_20234_",
+          "desc": "(I)V",
+          "note": "setId: the id field",
+          "sha256": "023d7a1d000775ebb5461c3c96c64384adaddd49d1b57f0232b8668e8bafd9e0"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+          "note": "the one constructor: every entity passes its RETURN (the class check that raises oddSeen)",
+          "sha256": "6c443a6ee2d93319c99a1eeae662b1bf2f09265e7987cf14ef63093aed3761b4"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "hashCode",
+          "desc": "()I",
+          "note": "the entity id",
+          "sha256": "4873322f2d7f913668bc9548ab9af71e9c84e085a28162a1b923e1f18cbd2ec8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Exact variant: MixinExtras @WrapOperation on the ClientProxy.getAllEntities calls in RenderUtils.entityRenders and RenderSpatialDisorientationMahoujinEntity.spatialRender hands out the set built for the client level's EntityLookup again while that lookup saw no add / remove (MahouEntityLookupMixin: @ModifyVariable counters at the HEAD of m_156814_ / m_156822_, the kept set in @Unique fields), no Entity.setId happened (MahouEntityIdMixin) and no entity whose class has its own hashCode or equals was offered to it (checked once per class at the RETURN of Entity's constructor, MahouEntityIdMixin; an add looks at the class only after such a class exists); only for the vanilla LevelEntityGetterAdapter over a vanilla EntityLookup with no other mod's mixin merged (MixinMerged census). Invoker MahouLevelEntitiesInvoker (Level.m_142646_), accessor MahouGetterAdapterAccessor (f_156940_). Runtime flag mahoutsukaiAllEntitiesMemo, shadow mahoutsukaiAllEntitiesMemo.shadow. Helper bons.furious.patch.mahoutsukai_coo49.MahouEntitySets.",
+      "license": "Mahou Tsukai (All Rights Reserved): no code carried, the wrappers carry only our own logic; the EntityLookup / Entity hooks only count calls and look at classes"
+    },
+    "mahoutsukai_projector_enchant_precheck": {
+      "mod": "mahoutsukai",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mahoutsukai_coo49.MahouProjectorPrecheckMixin",
+        "bons.furious.mixin.mahoutsukai_coo49.MahouEffectUtilProbeMixin",
+        "bons.furious.mixin.mahoutsukai_coo49.MahouEnchantmentHelperProbeMixin",
+        "bons.furious.mixin.mahoutsukai_coo49.MahouItemStackProbeMixin",
+        "bons.furious.mixin.mahoutsukai_coo49.MahouForgeItemStackProbeMixin",
+        "bons.furious.mixin.mahoutsukai_coo49.MahouForgeItemProbeMixin"
+      ],
+      "guard": [
+        {
+          "class": "stepsword/mahoutsukai/render/enchant/RenderProjectorEnchant",
+          "method": "renderProjectorEnchantment",
+          "desc": "(Lnet/minecraftforge/client/event/RenderLivingEvent$Pre;)V",
+          "note": "per armour stack: EffectUtil.hasEnchantment(stack, PROJECTOR) || skip, then getProjectorNBT and the projector render",
+          "sha256": "93e5047a6940199d565950893776896d32da0dc6a19c6a925bfdf1958994fa01"
+        },
+        {
+          "class": "stepsword/mahoutsukai/util/EffectUtil",
+          "method": "hasEnchantment",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/enchantment/Enchantment;)Z",
+          "note": "getEnchantmentLevel(s, e) > 0",
+          "sha256": "b8551232c61f413ad7db81ece05ea6b51e14e551570812035f9130a98721999c"
+        },
+        {
+          "class": "stepsword/mahoutsukai/util/EffectUtil",
+          "method": "getEnchantmentLevel",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/enchantment/Enchantment;)I",
+          "note": "EnchantmentHelper.getItemEnchantmentLevel(e, s)",
+          "sha256": "bc5eaa178901de5d2cab0f7063d116991882766c3c0119bd31fac1ecd0f2f48a"
+        },
+        {
+          "class": "net/minecraft/world/item/enchantment/EnchantmentHelper",
+          "method": "m_44843_",
+          "desc": "(Lnet/minecraft/world/item/enchantment/Enchantment;Lnet/minecraft/world/item/ItemStack;)I",
+          "note": "Forge: stack.getEnchantmentLevel(enchantment)",
+          "sha256": "eb81d8c24a2ee83b92ec4ee237e1e36f8a7201427d00b5c777b5ba33af339cc9"
+        },
+        {
+          "class": "net/minecraft/world/item/enchantment/EnchantmentHelper",
+          "method": "getTagEnchantmentLevel",
+          "desc": "(Lnet/minecraft/world/item/enchantment/Enchantment;Lnet/minecraft/world/item/ItemStack;)I",
+          "note": "empty -> 0; else the enchantment's key and a walk of getEnchantmentTags() (a new empty list without a tag) -> 0",
+          "sha256": "00b02e978e3f406ddfbfa40fd6e6cbfa26865995454884072e545e65fa17df46"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41785_",
+          "desc": "()Lnet/minecraft/nbt/ListTag;",
+          "note": "getEnchantmentTags: tag != null ? tag.getList(\"Enchantments\", 10) : new ListTag()",
+          "sha256": "a54dfa4636f5bbc841f4946a5a5a767cf29c4bf300f0131a6411c95237ed9839"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41783_",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "getTag: the tag field",
+          "sha256": "52a5721be98fab658ea43b7a6883ff37506a83d79a1cd704bc00c7c44af5779c"
+        },
+        {
+          "class": "net/minecraftforge/common/extensions/IForgeItemStack",
+          "method": "getEnchantmentLevel",
+          "desc": "(Lnet/minecraft/world/item/enchantment/Enchantment;)I",
+          "note": "self().getItem().getEnchantmentLevel(self(), enchantment)",
+          "sha256": "a05f64bb2659f5b9b778f059b32e079594510bada6d38a8be297336dfb520556"
+        },
+        {
+          "class": "net/minecraftforge/common/extensions/IForgeItem",
+          "method": "getEnchantmentLevel",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/enchantment/Enchantment;)I",
+          "note": "EnchantmentHelper.getTagEnchantmentLevel(enchantment, stack)",
+          "sha256": "1a7a8701068dd46f20a605d27f18988c0d2fa39409e06e2fbe388adba1191b2b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the EffectUtil.hasEnchantment call in RenderProjectorEnchant.renderProjectorEnchantment (no Operation and no argument array where the stock call runs): false without the call for a stack without a tag whose item class keeps IForgeItem's default getEnchantmentLevel (reflection, ClassValue) while EffectUtil, EnchantmentHelper, ItemStack, IForgeItemStack and IForgeItem's chain is as shipped after every other mod's mixins (five probe mixins at priority 3000, verdicts in MahouPlugin.postApply / MahouProjectorProbe); else the same call, made directly. A probe that refused before the renderer is transformed leaves the redirect out of it (MahouPlugin.shouldApplyMixin). Runtime flag mahoutsukaiProjectorEnchantPrecheck, shadow mahoutsukaiProjectorEnchantPrecheck.shadow. Helper bons.furious.patch.mahoutsukai_coo49.MahouProjector.",
+      "license": "Mahou Tsukai (All Rights Reserved): no code carried, the redirect carries only our own logic and calls the mod's own EffectUtil.hasEnchantment; the probe mixins add only empty unique methods",
+      "kind": "change"
+    }
+  }
+}

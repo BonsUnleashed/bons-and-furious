@@ -1,0 +1,191 @@
+{
+  "group": "iceandfire_dens_c49",
+  "keys": {
+    "iceandfire_structure_dens": {
+      "mod": "iceandfire",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.iceandfire_dens_c49.DragonCaveDenMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/iceandfire/world/gen/WorldGenDragonCave",
+          "method": "m_142674_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/feature/FeaturePlaceContext;)Z",
+          "note": "the wrapped place: nothing while the structure caves are in place; its gates, depth and dragon are restated",
+          "sha256": "4fe2f499b88c59632f30cb78c1bdba8b799987fe2921f6181965d60e7f076752"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/world/gen/WorldGenDragonCave",
+          "method": "generateCave",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;IILnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;)V",
+          "note": "called by the cave structure",
+          "sha256": "ee4526ca735d82fbfc9d894cebf38686c767fbbcb428a65f47f3cc450a1bc53b"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/world/gen/WorldGenDragonCave",
+          "method": "createShell",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/util/RandomSource;Ljava/util/Set;)V",
+          "note": "reads only block entities and unbreakable blocks",
+          "sha256": "065f51b4e471537451889f1568164f446078e71dcc92fc256b1c71f61ad5a9b1"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/world/gen/WorldGenDragonCave",
+          "method": "hollowOut",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Ljava/util/Set;)V",
+          "note": "reads only block entities",
+          "sha256": "793297e127cff17f89d8e2f0d232164721ae74a557ea68c5a6b6339e4bc6e60d"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/world/gen/WorldGenDragonCave",
+          "method": "lambda$createShell$0",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/util/RandomSource;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Lnet/minecraft/core/BlockPos;)V",
+          "note": "the shell rule: block entities and unbreakable blocks are left",
+          "sha256": "1952027682907c1d238972d863d6c855e53902e056849589f89a64350bf2237e"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/world/gen/WorldGenDragonCave",
+          "method": "lambda$hollowOut$1",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;)V",
+          "note": "the hollow rule: block entities are left",
+          "sha256": "5aac81ee0f1e69c5a71238cd2be22b79465868b9080635e9142e0fc0bdc01c6f"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/world/gen/WorldGenDragonCave",
+          "method": "decorateCave",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/util/RandomSource;Ljava/util/Set;Ljava/util/List;Lnet/minecraft/core/BlockPos;)V",
+          "sha256": "665fc99347621bbc9204d91126bf2ed3265a99fa7263f089b6d12311724e1c3b"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/world/gen/WorldGenDragonCave",
+          "method": "lambda$decorateCave$2",
+          "desc": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/util/RandomSource;Lnet/minecraft/core/BlockPos;)V",
+          "note": "the treasure floor test (its own shell or base stone below)",
+          "sha256": "5ce3b0636c18992466475b7cd9dedc643ec1ddec8dcbce05e8a0a4488db7ccd4"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/world/gen/WorldGenDragonCave",
+          "method": "setGoldPile",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;Lnet/minecraft/util/RandomSource;)V",
+          "note": "reads the isMale field the cave sets",
+          "sha256": "59022b392bd5841da6524b39229b7ee83327c609ceccfebaf0724352fc0728f4"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/world/gen/WorldGenDragonCave",
+          "method": "createDragon",
+          "desc": "(Lnet/minecraft/world/level/WorldGenLevel;Lnet/minecraft/util/RandomSource;Lnet/minecraft/core/BlockPos;I)Lcom/github/alexthe666/iceandfire/entity/EntityDragonBase;",
+          "note": "restated by DragonMaker.REAL",
+          "sha256": "bc744ae8d3c35883da62ae45865dfc37bb07831cdc3b0754e6feac235b56e12d"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/world/gen/WorldGenDragonCave",
+          "method": "*",
+          "desc": "",
+          "note": "no new or overriding method",
+          "sha256": "ea413ee5859e13aad213b8a98ec73ad7f14653d58cb9a1a333f13ba984c9b821"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/world/gen/WorldGenFireDragonCave",
+          "method": "*",
+          "desc": "",
+          "note": "no override of place or generateCave",
+          "sha256": "67cea14bd9244a51521cbbb7a530a37ab49a19708590a3e737f1871f12665d19"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/world/gen/WorldGenFireDragonCave",
+          "method": "getDragonType",
+          "desc": "()Lnet/minecraft/world/entity/EntityType;",
+          "note": "DenKind.dragonType",
+          "sha256": "0db173d60d0404a98cbeb07681ba653b6dbb2d7aa09ff08a052de573f8c4b599"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/world/gen/WorldGenIceDragonCave",
+          "method": "*",
+          "desc": "",
+          "note": "no override of place or generateCave",
+          "sha256": "67cea14bd9244a51521cbbb7a530a37ab49a19708590a3e737f1871f12665d19"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/world/gen/WorldGenIceDragonCave",
+          "method": "getDragonType",
+          "desc": "()Lnet/minecraft/world/entity/EntityType;",
+          "note": "DenKind.dragonType",
+          "sha256": "6f02b1806384141c4fc10634fa8e63b6e4f3a063495d59979ee0288fcf7ab0c9"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/world/gen/WorldGenLightningDragonCave",
+          "method": "*",
+          "desc": "",
+          "note": "no override of place or generateCave",
+          "sha256": "67cea14bd9244a51521cbbb7a530a37ab49a19708590a3e737f1871f12665d19"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/world/gen/WorldGenLightningDragonCave",
+          "method": "getDragonType",
+          "desc": "()Lnet/minecraft/world/entity/EntityType;",
+          "note": "DenKind.dragonType",
+          "sha256": "83dbdb754cbe920c65910e5b6380d2e66281dc94ba31988a388124dc80e810a8"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/world/IafWorldRegistry",
+          "method": "isFarEnoughFromSpawn",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "restated by DenStructure",
+          "sha256": "0aac9b959c7fd1198f1a502a96246f1601e7dba1e4343f4ba65392a66773a9f5"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/world/CustomBiomeFilter",
+          "method": "m_213917_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/placement/PlacementContext;Lnet/minecraft/util/RandomSource;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "the cave biome rule DenStructure restates",
+          "sha256": "ee2b6bd58152b402e47693369884b035aa0badfec939d85c7a666cc1420e9ee5"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/world/gen/WorldGenCaveStalactites",
+          "method": "generate",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/util/RandomSource;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "the cave box",
+          "sha256": "0c8787d38b04e1ce67b4272cf18209fd8ec4ba79a52d23563f19a157382e4ce4"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/util/ShapeBuilder$1",
+          "method": "computeNext",
+          "desc": "()Lnet/minecraft/core/BlockPos;",
+          "note": "the sphere extents of the cave box",
+          "sha256": "8bf36a59f897bfbd0ce61f5114b538ec8184c10644593d9da9ce53e0640168bd"
+        },
+        {
+          "class": "com/github/alexthe666/iceandfire/util/ShapeBuilder$2",
+          "method": "computeNext",
+          "desc": "()Lnet/minecraft/core/BlockPos;",
+          "note": "the hollow extents of the cave box",
+          "sha256": "6b3e22e6c900891b3fae80b54f7a64da89bd41fdcb00e9cb73834a72f1bba122"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on WorldGenDragonCave.place (nothing while the structure caves are in place); a structure type, a piece type and a built-in data pack registered only while the switch applies; each cave generated once by Ice and Fire's generateCave against a view that reads unwritten blocks as stone, every chunk writing its part (helpers bons.furious.patch.iceandfire_dens_c49.*)",
+      "license": "Ice and Fire: LGPL-3.0: the cave structures call its cave generator and restate its gates, depth and dragon set-up (Idea: Collections Of Optimizations iafdragonfix.structureDens, idea text only)"
+    },
+    "iceandfire_structure_dens_cave_spawn_distance": {
+      "mod": "iceandfire",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [],
+      "guard": [
+        {
+          "class": "com/github/alexthe666/iceandfire/world/IafWorldRegistry",
+          "method": "isFarEnoughFromSpawn",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "the distance rule the value replaces for the cave structures",
+          "sha256": "0aac9b959c7fd1198f1a502a96246f1601e7dba1e4343f4ba65392a66773a9f5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "a value read by the cave structures only (DenStructure, PureConfig.intValue(\"iceandfire_structure_dens_cave_spawn_distance\", 800, 0, 30000000)); off: Ice and Fire's \"Dangerous World Gen Dist From Spawn\"; no mixin",
+      "license": "Ice and Fire: LGPL-3.0: the cave structures call its cave generator and restate its gates, depth and dragon set-up (Idea: Collections Of Optimizations iafdragonfix.caveSpawnDistance, idea text only)"
+    }
+  }
+}

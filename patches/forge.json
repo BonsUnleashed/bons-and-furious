@@ -2,7 +2,10 @@
   "group": "forge",
   "keys": {
     "forge_render_layer_memo": {
-      "mod": "oculus",
+      "mod": "forge",
+      "target_mods": [
+        "oculus"
+      ],
       "scripts": [],
       "since": "1.0.23",
       "mixins": [
@@ -26,23 +29,29 @@
           "class": "net/irisshaders/iris/mixin/MixinItemBlockRenderTypes",
           "method": "iris$setCustomRenderType",
           "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "audited (Oculus installed): HEAD of getRenderLayers answers from the shader pack block-type map; the memo keys on that map object",
+          "audit": true,
           "sha256": "0b4d1c02649db80320ae9e63977e437c8f06d0e3fe51b1fbf1f5246b52fcd24b"
         },
         {
           "class": "net/irisshaders/iris/shaderpack/materialmap/WorldRenderingSettings",
           "method": "getBlockTypeIds",
           "desc": "()Ljava/util/Map;",
+          "note": "audited (Oculus installed): returns the map object the memo keys on; without Oculus there is no such map",
+          "audit": true,
           "sha256": "b96e6fc06cb27788cc7d61bbdc2b817059ee7cd758869226f690792b3875098c"
         },
         {
           "class": "net/irisshaders/iris/shaderpack/materialmap/WorldRenderingSettings",
           "method": "setBlockTypeIds",
           "desc": "(Ljava/util/Map;)V",
+          "note": "audited (Oculus installed): a shader reload replaces the map object (new key, the memo asks again)",
+          "audit": true,
           "sha256": "6901d55cdf790c02a7be081fa9b378c90886f3965aa5ed0154319f74772111c5"
         }
       ],
       "cancel": [],
-      "conversion": "injectors (MixinExtras @WrapMethod around getRenderLayers, @Inject at the start and return of setRenderLayer)",
+      "conversion": "injectors (MixinExtras @WrapMethod around getRenderLayers, @Inject at the start and return of setRenderLayer); since 1.0.49 also without Oculus: the three Oculus lines are audit lines (checked only while Oculus is installed), and without Oculus the memo keys on the block and Forge's map alone (a fixed marker in place of the shader pack map; Oculus's classes are touched only when it is installed)",
       "license": "Forge (LGPL-2.1) and Oculus (LGPL-3.0): no Forge or Oculus code is carried; the wrapper calls the original method (helper bons.furious.patch.forge.RenderLayerMemo)"
     },
     "forge_status_ping_channel_groups": {

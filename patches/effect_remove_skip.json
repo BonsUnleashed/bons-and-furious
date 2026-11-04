@@ -1,0 +1,40 @@
+{
+  "group": "effect_remove_skip",
+  "keys": {
+    "forge_absent_effect_remove_skip": {
+      "mod": "forge",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.effect_remove_skip.LivingEntityAbsentEffectRemoveMixin"
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapMethod on LivingEntity.m_21195_ (removeEffect) returning false without MobEffectEvent.Remove for an effect the entity does not hold (helper bons.furious.patch.effect_remove_skip.AbsentEffectRemove)",
+      "license": "Minecraft/Forge: no code is carried, the wrapper only reads the effect map",
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21195_",
+          "desc": "(Lnet/minecraft/world/effect/MobEffect;)Z",
+          "note": "post(new MobEffectEvent.Remove(this, effect)) -> false if cancelled; i = removeEffectNoUpdate(effect); i != null -> onEffectRemoved(i), true; else false",
+          "sha256": "beb67418f23d54fcd81718f09f76c19100530ac4be8d6247a8e88c26e9b5c8bd"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_6234_",
+          "desc": "(Lnet/minecraft/world/effect/MobEffect;)Lnet/minecraft/world/effect/MobEffectInstance;",
+          "note": "removeEffectNoUpdate: activeEffects.remove(effect) (null when absent)",
+          "sha256": "03b6713613517a64ab924efe4c1c8c78ce54856c5f1ee61663a4a9030903ca5a"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21023_",
+          "desc": "(Lnet/minecraft/world/effect/MobEffect;)Z",
+          "note": "hasEffect: activeEffects.containsKey(effect), the test the switch uses",
+          "sha256": "3032c33ad02513f51f8c3e3ab5699b7eb0ad0dfc215062fbc1f20892906660a2"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "group": "terramity_client_c49",
+  "keys": {
+    "terramity_phasing_shader_local_only": {
+      "mod": "terramity",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.terramity_client_c49.TerramityPhasingShaderMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mcreator/terramity/procedures/PhasingShaderProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "wrapped; its four effect loads and one shut-down are wrapped",
+          "sha256": "bee5658d0b03b7a7e83132d00dd0b7445ac1d8f9a2802df88da49820d2589e03"
+        },
+        {
+          "class": "net/mcreator/terramity/procedures/PhasingShaderProcedure",
+          "method": "onPlayerTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "the only caller: the ticking player",
+          "sha256": "510c4342b17edd58f6cf4a260778f2b23a921de93b215dbba35f684238f57832"
+        },
+        {
+          "class": "net/mcreator/terramity/procedures/PhasingShaderProcedure",
+          "method": "*",
+          "desc": "",
+          "note": "no other entry",
+          "sha256": "8ab7b2a8f133c0a7352142dd1afbfa19767e728ba22e5fa159fac5356b3ac2e8"
+        },
+        {
+          "class": "net/mcreator/terramity/procedures/ScouterOverlayDisplayOverlayIngameProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "the fourth effect state, read for the ticking player",
+          "sha256": "4eb1c9c6ca99d93cfe076f964c4ff6edaa12ee2f0928e5214a88e095e4d941e0"
+        },
+        {
+          "class": "net/minecraft/client/renderer/GameRenderer",
+          "method": "m_109128_",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)V",
+          "note": "loadEffect: the new chain becomes the current effect",
+          "sha256": "b1198359e400d8c871f10a396d186b7382aebe2450b613619b8dfa7aa96b2d35"
+        },
+        {
+          "class": "net/minecraft/client/renderer/GameRenderer",
+          "method": "m_109086_",
+          "desc": "()V",
+          "note": "shutdownEffect: closes the current effect",
+          "sha256": "723b94b8998571174278929c98f8fb4ec546aed00ca667cbf02ed1e8c1e2bed2"
+        },
+        {
+          "class": "net/minecraft/client/renderer/GameRenderer",
+          "method": "m_109149_",
+          "desc": "()Lnet/minecraft/client/renderer/PostChain;",
+          "note": "currentEffect",
+          "sha256": "5dd6e77c3e8173cff46836d2da9f824b1ad819acfb7d5d41288b76de9c85f171"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on PhasingShaderProcedure.execute (on a client level only the client's own player's tick runs it), @WrapOperation on its four GameRenderer.loadEffect calls (the chain they make is remembered) and on its GameRenderer.shutdownEffect call (only that chain is shut down) (helper bons.furious.patch.terramity_client_c49.PhasingShader)",
+      "license": "Terramity (All Rights Reserved): no Terramity code is carried; the injectors carry only our own logic (Idea: Collections Of Optimizations terramity.fixPhasingShaderStomp, idea text only)"
+    }
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "group": "elysium_sound_memo",
+  "keys": {
+    "elysium_sound_transformer_memo": {
+      "mod": "elysium_api",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.elysium_sound_memo.ElysiumSoundMemoMixin",
+        "bons.furious.mixin.elysium_sound_memo.HolderReferenceTagsAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/jadenxgamer/elysium_api/impl/mixin/block/BlockMixin",
+          "method": "elysium$soundTransformer",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "HEAD of Block.getSoundType: registryAccess != null -> registryOrThrow(BLOCK_SOUND_TRANSFORMER).stream().filter(blocks contains holder).findFirst(); empty -> return; contains again -> cir.setReturnValue(toSoundType())",
+          "sha256": "d4ef2f7f71a0b5765d847396027cd6882a85db8b68205c9955473744d8f4b403"
+        },
+        {
+          "class": "net/jadenxgamer/elysium_api/impl/mixin/block/BlockMixin",
+          "method": "lambda$elysium$soundTransformer$0",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/jadenxgamer/elysium_api/impl/sound_transformer/SoundTransformer;)Z",
+          "note": "the filter: s.blocks().contains(state.getBlockHolder())",
+          "sha256": "40607371b9a74cf924b390117d83c962f804a61545d3535ed5fe74ea82c18018"
+        },
+        {
+          "class": "net/jadenxgamer/elysium_api/impl/sound_transformer/SoundTransformer",
+          "method": "toSoundType",
+          "desc": "()Lnet/minecraft/world/level/block/SoundType;",
+          "note": "a new SoundType from the record's components",
+          "sha256": "84bc72833e29458de26bdb24dcc1f43fef9a1925ba383bae9fb1692509e06e3e"
+        },
+        {
+          "class": "net/jadenxgamer/elysium_api/impl/sound_transformer/SoundTransformer",
+          "method": "blocks",
+          "desc": "()Lnet/minecraft/core/HolderSet;",
+          "note": "record accessor",
+          "sha256": "b250f3e2cda34d002e1a4a9cfa7c8be58845f0b50ed3426ad6f17697728b05b4"
+        },
+        {
+          "class": "net/jadenxgamer/elysium_api/impl/event/ElysiumEvents",
+          "method": "onServerAboutToStart",
+          "desc": "(Lnet/minecraftforge/event/server/ServerAboutToStartEvent;)V",
+          "note": "Elysium.registryAccess = server.registryAccess() (frozen)",
+          "sha256": "70ae910e0a35faf38adedd99c2158ac36b2b8ac6a9b5c6b22b3acdb40182c347"
+        },
+        {
+          "class": "net/minecraft/world/level/block/Block",
+          "method": "m_49962_",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/SoundType;",
+          "note": "getSoundType = this.soundType (Elysium's HEAD injection decides first)",
+          "sha256": "ab713255fc882a490326238d6503c9b6ddaec7188002523fb621ce7f49afa5e9"
+        },
+        {
+          "class": "net/minecraft/world/level/block/Block",
+          "method": "m_204297_",
+          "desc": "()Lnet/minecraft/core/Holder$Reference;",
+          "note": "builtInRegistryHolder: the final intrusive holder",
+          "sha256": "1da1c07e5ce534a5a95f90d8feccb3ee3d74571bf58dca4d3fa11914ebf209aa"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase",
+          "method": "m_222976_",
+          "desc": "()Lnet/minecraft/core/Holder;",
+          "note": "getBlockHolder = owner.builtInRegistryHolder()",
+          "sha256": "88f987504fb69528ee01408f61080f74e44f872b6f25a48d3509d1ec48999f17"
+        },
+        {
+          "class": "net/minecraft/core/Holder$Reference",
+          "method": "m_203656_",
+          "desc": "(Lnet/minecraft/tags/TagKey;)Z",
+          "note": "is(tag) = tags.contains(tag)",
+          "sha256": "02ebca0f873704a76002edae5d15afa8a847425d7f8a78b824592c534ce1a33f"
+        },
+        {
+          "class": "net/minecraft/core/Holder$Reference",
+          "method": "m_205769_",
+          "desc": "(Ljava/util/Collection;)V",
+          "note": "bindTags: tags = Set.copyOf(...), a new immutable set on every reload",
+          "sha256": "49dae7d8e16107c737b626c8751ee3e4d6bcd399782e7e2a7d47d2eb99a7c8fb"
+        },
+        {
+          "class": "net/minecraft/core/HolderSet$Named",
+          "method": "m_203333_",
+          "desc": "(Lnet/minecraft/core/Holder;)Z",
+          "note": "contains = holder.is(key)",
+          "sha256": "57a3b1b30ab1f9b074ae896f85ad64dee824f66848fae417cd58c10fa3f87067"
+        },
+        {
+          "class": "net/minecraft/core/HolderSet$Direct",
+          "method": "m_203333_",
+          "desc": "(Lnet/minecraft/core/Holder;)Z",
+          "note": "contains = Set.copyOf(contents) (lazily) contains holder",
+          "sha256": "97d6a17ebdfeb648d460a9eee4be16dcaae3681261cc8904dd68437ff862bf15"
+        },
+        {
+          "class": "net/minecraft/core/MappedRegistry",
+          "method": "m_203704_",
+          "desc": "(ILnet/minecraft/resources/ResourceKey;Ljava/lang/Object;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/core/Holder$Reference;",
+          "note": "registerMapping: validateWrite first (throws while frozen), then byId.set(id, ...) (duplicates only log through Util.pauseInIde)",
+          "sha256": "b81b1f01c4ecac6009eaec6f236c6a1819e9695410f25103a8c6207d8a12df40"
+        },
+        {
+          "class": "net/minecraft/core/MappedRegistry",
+          "method": "m_205921_",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;)V",
+          "note": "validateWrite: IllegalStateException while frozen (the server's registry access is frozen before Elysium reads it)",
+          "sha256": "065236c0b356af9b723f1759e3e7215a4e813b6d582c818d96e4ef043492d566"
+        },
+        {
+          "class": "net/minecraft/core/MappedRegistry",
+          "method": "m_255290_",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;Ljava/lang/Object;Lcom/mojang/serialization/Lifecycle;)Lnet/minecraft/core/Holder$Reference;",
+          "note": "register = registerMapping(byId.size(), ...): an entry added before freezing gets a new id, so the size changes",
+          "sha256": "8eda4e90b0b68586ed5144397235d2650106541e693f400ccad54225986620a5"
+        },
+        {
+          "class": "net/minecraft/core/MappedRegistry",
+          "method": "iterator",
+          "desc": "()Ljava/util/Iterator;",
+          "note": "byId in id order: the order of Elysium's stream and of the memo's registry check",
+          "sha256": "41f14e2bc57e6d09ebd0b6a6a0a3576973be341a8f114ca89ca7c7c4ebf30d99"
+        },
+        {
+          "class": "net/minecraft/core/MappedRegistry",
+          "method": "m_13562_",
+          "desc": "()I",
+          "note": "size",
+          "sha256": "a00fa7d0c77dc2b448277b8fbd1a347acb9caa0c4b4e09e01487d3b58ceeab5d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinSquared @TargetHandler @Inject at the HEAD of ElysiumAPI's BlockMixin.elysium$soundTransformer handler (merged into Block.getSoundType, m_49962_), cancellable, require = 0, expect = 0, priority 70000 (after ElysiumAPI's 69420): per-Block memo (a @Unique volatile field, duck interface bons.furious.patch.elysium_sound_memo.ElysiumMemoHolder) of the first matching transformer keyed on (registry object, size, block holder, the holder's tag set object), used only when every transformer's block set is a vanilla HolderSet.Named or Direct; @Accessor on Holder.Reference.tags (f_205749_); helper bons.furious.patch.elysium_sound_memo.ElysiumSoundMemo; shadow mode -Dbons_and_furious.elysiumSoundTransformerMemo.shadow=true",
+      "license": "ElysiumAPI is GPL-2.0 (Modrinth) / LGPL-2.1 (GitHub): the HEAD injection is a modified version of its handler logic (helper bons.furious.patch.elysium_sound_memo.ElysiumSoundMemo); Minecraft (Mojang): no code carried"
+    }
+  }
+}

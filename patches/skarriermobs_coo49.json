@@ -1,0 +1,539 @@
+{
+  "group": "skarriermobs_coo49",
+  "keys": {
+    "skarriermobs_region_scan_narrowing": {
+      "mod": "skarrier_mobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.skarriermobs_coo49.NarrowBreacherMixin",
+        "bons.furious.mixin.skarriermobs_coo49.NarrowCarnagerMixin",
+        "bons.furious.mixin.skarriermobs_coo49.NarrowCarnifloreMixin",
+        "bons.furious.mixin.skarriermobs_coo49.NarrowZombifloreMixin",
+        "bons.furious.mixin.skarriermobs_coo49.NarrowFloreHeadMixin",
+        "bons.furious.mixin.skarriermobs_coo49.NarrowFloreHeadTrailMixin",
+        "bons.furious.mixin.skarriermobs_coo49.NarrowSereneMixin",
+        "bons.furious.mixin.skarriermobs_coo49.NarrowSorcererMixin",
+        "bons.furious.mixin.skarriermobs_coo49.NarrowStoneGolemMixin",
+        "bons.furious.mixin.skarriermobs_coo49.NarrowTrawlerMixin",
+        "bons.furious.mixin.skarriermobs_coo49.NarrowTunnelGoreMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mcreator/skarriermobs/procedures/BreacherOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "searches 0 (getEntitiesOfClass(Entity.class, box, e -> true)): the list feeds only stream().sorted().toList() and one loop whose first test is the narrowed predicate",
+          "sha256": "3592fa2d3b3684c168ef05416e48bf3658f9a0e26d8ab80a046309e86732c25d"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/BreacherOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 0's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/CarnagerOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "searches 4 (getEntitiesOfClass(Entity.class, box, e -> true)): the list feeds only stream().sorted().toList() and one loop whose first test is the narrowed predicate",
+          "sha256": "e1405cb29c0503a1f9f6f3b5809bd174795d2fcc31b34d8e026f0b1f3ad0b0b8"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/CarnagerOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$6",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 4's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/CarnifloreOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "searches 1 (getEntitiesOfClass(Entity.class, box, e -> true)): the list feeds only stream().sorted().toList() and one loop whose first test is the narrowed predicate",
+          "sha256": "4518a02b4f4c370f0807e9bf53d4b85a3068e25417ffe392fa353be3057929f9"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/CarnifloreOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 1's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/ZombifloreOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "searches 1 (getEntitiesOfClass(Entity.class, box, e -> true)): the list feeds only stream().sorted().toList() and one loop whose first test is the narrowed predicate",
+          "sha256": "a456facfe554014c3fec2d22bf487fc70e5e26c1fc166402427feab67b0bfbd8"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/ZombifloreOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 1's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/FloreHeadOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "searches 0 (getEntitiesOfClass(Entity.class, box, e -> true)): the list feeds only stream().sorted().toList() and one loop whose first test is the narrowed predicate",
+          "sha256": "d6179d19a0b534c4b736c286a27be12d3046dcbe0b537afce9e2debf72b51e9c"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/FloreHeadOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 0's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/FloreHeadParticleTrailProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "searches 1, 3 (getEntitiesOfClass(Entity.class, box, e -> true)): the list feeds only stream().sorted().toList() and one loop whose first test is the narrowed predicate",
+          "sha256": "3e8b0312b402b3add72cf7f708704b404f106f1df0c013f61d649d698a4b1818"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/FloreHeadParticleTrailProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 1's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/FloreHeadParticleTrailProcedure",
+          "method": "lambda$execute$4",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 3's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/SereneOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "searches 0, 1, 6 (getEntitiesOfClass(Entity.class, box, e -> true)): the list feeds only stream().sorted().toList() and one loop whose first test is the narrowed predicate",
+          "sha256": "624a7b113bec1de36242dd4fca8e07e929b0c3a71a77058c7a3ffa6f574ab35d"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/SereneOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 0's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/SereneOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 1's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/SereneOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$8",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 6's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/SorcererOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "searches 0, 1, 3 (getEntitiesOfClass(Entity.class, box, e -> true)): the list feeds only stream().sorted().toList() and one loop whose first test is the narrowed predicate",
+          "sha256": "712c25962137bcf95509f9ef64d575d9a2410963ddc90c7d9be104d2c1824179"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/SorcererOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 0's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/SorcererOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 1's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/SorcererOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$6",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 3's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/StoneGolemOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "searches 0 (getEntitiesOfClass(Entity.class, box, e -> true)): the list feeds only stream().sorted().toList() and one loop whose first test is the narrowed predicate",
+          "sha256": "0f48998e41b1771099bfac5b59954174a94d424029095fb382e18610a427a8b1"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/StoneGolemOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 0's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/TrawlerOnTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "searches 1 (getEntitiesOfClass(Entity.class, box, e -> true)): the list feeds only stream().sorted().toList() and one loop whose first test is the narrowed predicate",
+          "sha256": "dc5a9b00990729a7448f91ccdb8fee57180850aa568671665d14b672b1b55618"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/TrawlerOnTickUpdateProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 1's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/TunnelGoreOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "searches 0, 1, 2, 3, 4, 5, 6, 8, 9, 10 (getEntitiesOfClass(Entity.class, box, e -> true)): the list feeds only stream().sorted().toList() and one loop whose first test is the narrowed predicate",
+          "sha256": "3ddf9adba790b63aa4a9b6a9cd083e37587b3c5a892e4412630e40704d9375a6",
+          "sha256_also": [
+            {
+              "build": "skarrier_mobs-1.0.6",
+              "sha256": "b745abc4f96ef4417fcea29d09b8954d3843475d081c84db076c25f4b25b01f5"
+            }
+          ]
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/TunnelGoreOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 0's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/TunnelGoreOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 1's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/TunnelGoreOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$4",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 2's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/TunnelGoreOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$6",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 3's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/TunnelGoreOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$8",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 4's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/TunnelGoreOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$10",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 5's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/TunnelGoreOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$12",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 6's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/TunnelGoreOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$16",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 8's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/TunnelGoreOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$18",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 9's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/TunnelGoreOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$20",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 10's predicate: e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Mixin @ModifyArg (index 2) on 25 LevelAccessor.getEntitiesOfClass (m_6443_) calls in 11 Skarrier Mobs procedures: the \"always true\" predicate becomes SkarrierScans.PLAYER / SERVER_PLAYER / MONSTER / LIVING / FLORE_HEAD / FLORE_HOST / RAIDER, the loop's own first test; the same section walk collects exactly the elements of the original list that pass it, in the same order, and the stable sort keeps their order. Exact; runtime flag skarriermobsRegionScanNarrowing. Helper bons.furious.patch.skarriermobs_coo49.SkarrierScans.",
+      "license": "Skarrier Mobs (All Rights Reserved): no code carried; the hooks only hand the mod's own searches another predicate"
+    },
+    "skarriermobs_region_scan_narrowing_all": {
+      "mod": "skarrier_mobs",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.skarriermobs_coo49.NarrowAllCarnagerMixin",
+        "bons.furious.mixin.skarriermobs_coo49.NarrowAllEndorahBodyMixin",
+        "bons.furious.mixin.skarriermobs_coo49.EntityBoundDataAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/mcreator/skarriermobs/procedures/CarnagerOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "search 2 (+-5, sorted) feeds a loop whose first statement skips elements whose getPersistentData().getString(CarnagerRidingTag) is not the Carnager's UUID string",
+          "sha256": "e1405cb29c0503a1f9f6f3b5809bd174795d2fcc31b34d8e026f0b1f3ad0b0b8"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/CarnagerOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$2",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 2's predicate: always true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/EndorahBodyOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "searches 1, 3, 5 (+-10, sorted) feed loops whose first statement skips elements whose getPersistentData().getString(EndorahBindingTag) is not the body's UUID string",
+          "sha256": "d46d27f53c433ca78e49d86f8250645a478955c58be5345fb5916fd9dc276108",
+          "sha256_also": [
+            {
+              "build": "skarrier_mobs-1.0.6",
+              "sha256": "c5ea84d47c33099171de0f41fd769676512b9d1e17c9da015a55bedc42ee1c48"
+            }
+          ]
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/EndorahBodyOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 1's predicate: always true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/EndorahBodyOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$4",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 3's predicate: always true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/EndorahBodyOnEntityTickUpdateProcedure",
+          "method": "lambda$execute$7",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "search 5's predicate: always true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "getPersistentData",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "Forge: creates persistentData when null, else returns it (the predicate reads the field without creating it)",
+          "sha256": "1355a99782fa41f3f4e5ab09b04e4a97f6beee3ef09f2d211b96ccc318e77ba1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on four LevelAccessor.getEntitiesOfClass (m_6443_) calls (CarnagerOnEntityTickUpdateProcedure.execute ordinal 2; EndorahBodyOnEntityTickUpdateProcedure.execute ordinals 1, 3, 5): the always-true predicate becomes the loop's first test (the element's saved data string CarnagerRidingTag / EndorahBindingTag equals the procedure entity's UUID), read through its own Entity persistentData accessor (EntityBoundDataAccessor) without creating the compound. Trade-off, off by default: entities in the box that fail the test no longer get an empty ForgeData compound. Runtime flag skarriermobsRegionScanNarrowingAll. Helper bons.furious.patch.skarriermobs_coo49.SkarrierScans.narrowBound.",
+      "license": "Skarrier Mobs (All Rights Reserved): no code carried; the hooks hand the mod's own searches another predicate"
+    },
+    "skarriermobs_resisteel_set_lean": {
+      "mod": "skarrier_mobs",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.skarriermobs_coo49.ResisteelSetLeanMixin",
+        "bons.furious.mixin.skarriermobs_coo49.EntityResisteelDataAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/mcreator/skarriermobs/procedures/ResisteelArmorEquippedEffectProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "the body (1.1.2: every 10th tick; 1.0.6: every tick) starts with the head slot read (the inject point): four slot tests write five Resisteel doubles, then effects added or (set 0) two removeEffect calls",
+          "sha256": "1f4f968c911063a26c5965c4297d022ab4db021f9353acd0ebacf97bf5744a3f",
+          "sha256_also": [
+            {
+              "build": "skarrier_mobs-1.0.6",
+              "sha256": "de648fd24c2ad639c2a5f38ccd5d8cbfaf6aa6293ceabce67104939b6e084ddd"
+            }
+          ]
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "getPersistentData",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "Forge: the persistentData field the accessor reads, created here on demand",
+          "sha256": "1355a99782fa41f3f4e5ab09b04e4a97f6beee3ef09f2d211b96ccc318e77ba1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Mixin @Inject (cancellable) before the first LivingEntity.getItemBySlot (m_6844_) call of ResisteelArmorEquippedEffectProcedure.execute(Event, Entity), i.e. where the body starts: cancelled when SkarrierScans.resisteelUnused (no Resisteel piece in the four slots, neither effect active, every Resisteel key absent or a plain 0.0, read through the @Accessor EntityResisteelDataAccessor without creating the compound). Trade-off, off by default; runtime flag skarriermobsResisteelSetLean.",
+      "license": "Skarrier Mobs (All Rights Reserved): no code carried; the hook decides whether the mod's own handler body runs"
+    },
+    "skarriermobs_target_proximity_scan_lean": {
+      "mod": "skarrier_mobs",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.skarriermobs_coo49.TargetOnlyFirstSiteMixin",
+        "bons.furious.mixin.skarriermobs_coo49.TargetOnlyBothSitesMixin",
+        "bons.furious.mixin.skarriermobs_coo49.TargetOnlyFourthSiteMixin",
+        "bons.furious.mixin.skarriermobs_coo49.TargetOnlyFloreHeadMixin",
+        "bons.furious.mixin.skarriermobs_coo49.TargetOnlyEndorahBodyMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mcreator/skarriermobs/procedures/BlareOnTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "search 0: a sorted loop acting only on the element == the mob's target",
+          "sha256": "2a6a2a56f403fd63e60c7cbd05c73624102c679648e252d3365cb9b052f0f2d5"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/BowlderOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "search 0: a sorted loop acting only on the element == the mob's target",
+          "sha256": "00ffdd92842c7806285e08fa178ccd50b3ef4dc5e0f83a8a1eaf1d469e6e83ab"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/DraggerOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "search 0: a sorted loop acting only on the element == the mob's target",
+          "sha256": "8e91dfb9ccbdd7519668ac99148ad5b4c6d35b7f19c2fb31c7860c4a0b3f5cda"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/EaterOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "search 0: a sorted loop acting only on the element == the mob's target",
+          "sha256": "a8bbddd178b2ec9600cc1b5810612d49a6b4d5290e0052d4ad6e02915948bc6d"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/QuakeOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "search 0: a sorted loop acting only on the element == the mob's target",
+          "sha256": "018374668f6d417c669cb6b672e7504a9dbc0c1e5fa2bbb471e93fabc885ffcc",
+          "sha256_standdown": [
+            {
+              "build": "skarrier_mobs-1.0.6",
+              "sha256": "311cb770fbc6ecd2fcea8e20a2a3bd319aa4daf913205bdf02f4e387d551aabe"
+            }
+          ]
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/SlitherMatriarchOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "search 0: a sorted loop acting only on the element == the mob's target",
+          "sha256": "b4d6e1312b659bd4046bb8e7cb96dd352b2f0d8e16ce4cd3fd49e7d3d551d109"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/TrawlerOnTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "search 0: a sorted loop acting only on the element == the mob's target",
+          "sha256": "dc5a9b00990729a7448f91ccdb8fee57180850aa568671665d14b672b1b55618"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/DangleOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "both searches: a sorted loop acting only on the element == the mob's target",
+          "sha256": "82b28f2225aa530399ddd3a237ceb84679f7db7d8ac08f01268ef4e6439df6c1"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/GorgerOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "both searches: a sorted loop acting only on the element == the mob's target",
+          "sha256": "9f94f4b023ce868a88659d9f7e666dbb51ca4f4b1bd61325c6cce4360ef0e0a2"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/WroughtOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "both searches: a sorted loop acting only on the element == the mob's target",
+          "sha256": "1c882e1688b3ab8be71449e8daa50ead7cc66b4f3d3be11ae881d39f3ed0a8db"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/CarnagerOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "search 3: a sorted loop acting only on the element == the mob's target",
+          "sha256": "e1405cb29c0503a1f9f6f3b5809bd174795d2fcc31b34d8e026f0b1f3ad0b0b8"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/EndoraHeadMeleeOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "search 3: a sorted loop acting only on the element == the mob's target",
+          "sha256": "7b157ed07600e9e32da71de8218276e376944049a0e6843ab94b29951a8c4152",
+          "sha256_standdown": [
+            {
+              "build": "skarrier_mobs-1.0.6",
+              "sha256": "f21e03c469ceddf57cfdbbb1c0d736677aeee53718d3caea57071b136f9b0798"
+            }
+          ]
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/EndorahHeadRangedOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "search 3: a sorted loop acting only on the element == the mob's target",
+          "sha256": "0d153322764cf58730f8e107407774924ebccc442a0e3b5ec6a1ac8a612b34d5",
+          "sha256_standdown": [
+            {
+              "build": "skarrier_mobs-1.0.6",
+              "sha256": "847c280f33a010caf635279c8bfb43113d3c715c82fd90959b97a85783f6a0a9"
+            }
+          ]
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/FloreHeadOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "search 17: a sorted loop acting only on the element == the mob's target",
+          "sha256": "d6179d19a0b534c4b736c286a27be12d3046dcbe0b537afce9e2debf72b51e9c"
+        },
+        {
+          "class": "net/mcreator/skarriermobs/procedures/EndorahBodyOnEntityTickUpdateProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "search 6: a sorted loop acting only on the element == the mob's target",
+          "sha256": "d46d27f53c433ca78e49d86f8250645a478955c58be5345fb5916fd9dc276108",
+          "sha256_standdown": [
+            {
+              "build": "skarrier_mobs-1.0.6",
+              "sha256": "c5ea84d47c33099171de0f41fd769676512b9d1e17c9da015a55bedc42ee1c48"
+            }
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation (with @Local argsOnly: the procedure entity) on 18 LevelAccessor.getEntitiesOfClass (m_6443_) calls in 15 Skarrier Mobs procedures whose sorted loop acts only on the element that is the mob's target: SkarrierScans.targetOnly answers [target] (in this level, not removed, its section inside the range the walk visits, box intersects, the original predicate true) or an empty list; one profiler getEntities count as the search. Trade-off, off by default; runtime flag skarriermobsTargetProximityScanLean.",
+      "license": "Skarrier Mobs (All Rights Reserved): no code carried; the hooks answer the mod's own searches"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "group": "manybows_coo49",
+  "keys": {
+    "manybows_origins_quiver_gate": {
+      "mod": "too_many_bows",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.manybows_coo49.OriginsQuiverGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/bandit/many_bows/compat/OriginsQuiverCompat",
+          "method": "*",
+          "desc": "",
+          "note": "4.1.2 (not in this pack's 3.6.7: absent in the tested build, sha256_also manybows-4.1.2): the declared methods; findProjectile holds the only TRACKED_STACKS.put",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "manybows-4.1.2",
+              "sha256": "74521b8a844a97539704a02a2bf199aa4343664de447bd722a82d8b694eb429b"
+            }
+          ]
+        },
+        {
+          "class": "net/bandit/many_bows/compat/OriginsQuiverCompat",
+          "method": "findProjectile",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Ljava/util/function/Predicate;)Lnet/minecraft/world/item/ItemStack;",
+          "note": "inventory powers -> first supported arrow: TRACKED_STACKS.put(stack, slot) (the wrapped put), returns it",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "manybows-4.1.2",
+              "sha256": "63827b749f44c4d6394dc423a9edfca61e4e23da50894eff482c586d5227d45f"
+            }
+          ]
+        },
+        {
+          "class": "net/bandit/many_bows/compat/OriginsQuiverCompat",
+          "method": "onTrackedStackShrunk",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)V",
+          "note": "TRACKED_STACKS.remove(stack) (the wrapped remove); null -> return; else refresh the slot",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "manybows-4.1.2",
+              "sha256": "c939b906fc5ddd9a19343ee462becf21174e57d02f4290ad100a03c0551846f4"
+            }
+          ]
+        },
+        {
+          "class": "net/bandit/many_bows/compat/OriginsQuiverCompat",
+          "method": "getInventoryPowers",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Ljava/util/Collection;",
+          "note": "initialize() (the wrapped call), then available ? getPowers(player, InventoryPower) : empty",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "manybows-4.1.2",
+              "sha256": "8280da626855462a3c03ed95dfd65461bedc9f99e5896a4c499f657e449eed00"
+            }
+          ]
+        },
+        {
+          "class": "net/bandit/many_bows/compat/OriginsQuiverCompat",
+          "method": "initialize",
+          "desc": "()V",
+          "note": "static synchronized; returns at once once initialized; else looks Apoli up and sets inventoryPowerClass, getPowersMethod, available",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "manybows-4.1.2",
+              "sha256": "8b64b86cf341fb1482ade4e27caa7ab7f8f6791a3881756a0d18c88765f95573"
+            }
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on three calls of OriginsQuiverCompat (string target, @Pseudo): the TRACKED_STACKS.put in findProjectile sets a never-cleared flag first; the TRACKED_STACKS.remove in onTrackedStackShrunk returns null without the call while the flag is unset (the map has never had an entry); the initialize() call in getInventoryPowers is skipped once it has returned. Runtime flag manybowsOriginsQuiverGate. Helper bons.furious.patch.manybows_coo49.QuiverGate.",
+      "license": "Too Many Bows (All Rights Reserved): no code carried; the hooks only skip its own calls"
+    }
+  }
+}

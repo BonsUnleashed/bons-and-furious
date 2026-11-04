@@ -1,0 +1,48 @@
+{
+  "group": "vanilla_bone_memo_c49",
+  "keys": {
+    "vanilla_model_bone_lookup_memo": {
+      "mod": "minecraft",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_bone_memo_c49.BoneMemoMixin",
+        "bons.furious.mixin.vanilla_bone_memo_c49.ModelPartChildrenMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/model/HierarchicalModel",
+          "method": "m_233393_",
+          "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+          "note": "getAnyDescendantWithName: \"root\" -> root(); else the first part in getAllParts order with hasChild(name), mapped to getChild(name)",
+          "sha256": "bc260558c72327762a0771013897cbea97a579dbd4f09bab94c561b59bef2f12"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/ModelPart",
+          "method": "m_171331_",
+          "desc": "()Ljava/util/stream/Stream;",
+          "note": "getAllParts: this, then each child's parts in children.values() order (pre-order)",
+          "sha256": "d2c586167387d503ed861621199939a0b86f745a7573e309520246c000a2a69a"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/ModelPart",
+          "method": "m_233562_",
+          "desc": "(Ljava/lang/String;)Z",
+          "note": "hasChild: children.containsKey",
+          "sha256": "d6677e3652b8eb1f2dd11a14c60c7a24ed8c1b7398fb07831a65e0d2c7735a90"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/ModelPart",
+          "method": "m_171324_",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/client/model/geom/ModelPart;",
+          "note": "getChild: children.get, throws for a missing name",
+          "sha256": "b5dc1d568cd04e431dedb834b7e526bab665332292a3e84ee3ece0bccf6c2db9"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapMethod on HierarchicalModel.getAnyDescendantWithName (priority 1002, around vanilla's body or Embeddium's overwrite) with a per-model @Unique memo checked on every hit against the parent's child map (@Accessor); helper bons.furious.patch.vanilla_bone_memo_c49.BoneMemo",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic"
+    }
+  }
+}

@@ -78,10 +78,11 @@ public abstract class EntityClassCountSectionMixin implements EntityClassCounts.
         this.bons$trackedMembers = members;
     }
 
+    /** Shadow mode only. Since 1.0.49 asks the layer's per-class index list (any number of entries; was a 32-bit mask). */
     @Override
     public int bons$trackedTruth(int index) {
         int n = 0;
-        for (EntityAccess e : this.f_156827_) if ((EntityClassCounts.mask(e) & (1 << index)) != 0) n++;
+        for (EntityAccess e : this.f_156827_) if (EntityClassCounts.tracks(e, index)) n++;
         return n;
     }
 }

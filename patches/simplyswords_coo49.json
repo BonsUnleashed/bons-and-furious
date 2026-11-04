@@ -1,0 +1,94 @@
+{
+  "group": "simplyswords_coo49",
+  "keys": {
+    "simplyswords_incapacitated_lockfree": {
+      "mod": "simplyswords",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.simplyswords_coo49.IncapacitatedRegistryMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/sweenus/simplyswords/api/IncapacitatingStatusEffectRegistry",
+          "method": "*",
+          "desc": "",
+          "note": "declares register, isIncapacitated, registeredEffects (+ <init>, <clinit>, the stream lambda): register is the only writer of the private EFFECTS set",
+          "sha256": "c5acc62c70e96f97da0a8c7c7b74d7419b577379acdb3fe4c347d2cf9f5e1739"
+        },
+        {
+          "class": "net/sweenus/simplyswords/api/IncapacitatingStatusEffectRegistry",
+          "method": "register",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)V",
+          "note": "static synchronized: null -> IllegalArgumentException, else EFFECTS.add(id); our RETURN inject republishes the snapshot inside the monitor",
+          "sha256": "604ed94032dbd848a1617468ed0865cac8ee8d7cb92e2a933f37b3a7170f57bf"
+        },
+        {
+          "class": "net/sweenus/simplyswords/api/IncapacitatingStatusEffectRegistry",
+          "method": "isIncapacitated",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "static synchronized: entity == null || EFFECTS.isEmpty() -> false, else getActiveEffects().stream().map(MOB_EFFECT.getKey(effect)).anyMatch(EFFECTS::contains); replaced by a lock-free twin",
+          "sha256": "619de754f9346c086063446bdd7d9a20cd220db1898946fd5e6520b4ca0a173d"
+        },
+        {
+          "class": "net/sweenus/simplyswords/api/IncapacitatingStatusEffectRegistry",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "EFFECTS = new LinkedHashSet<>() (starts empty, as the snapshot does)",
+          "sha256": "f3871ef8789ecbc966549f5b802fea08dd9e239349896e47650378790bc334bb"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21220_",
+          "desc": "()Ljava/util/Collection;",
+          "note": "getActiveEffects: the values view of activeEffects, read in the same order",
+          "sha256": "44604c235c1bcf915e7b0f26132feb6206c0719266772489c7fa67c8d42fbcc0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Overwrite of IncapacitatingStatusEffectRegistry.isIncapacitated(LivingEntity) (the replacement is not synchronized; its body only calls our helper) + @Inject at RETURN of register(ResourceLocation) that republishes an immutable copy of the registry's set (volatile, written inside register's monitor). The check reads the copy without the class monitor: null entity or empty set -> false, else the entity's active effects in order, each registry key tested with Set.contains, first hit wins. Runtime flag simplyswordsIncapacitatedLockfree (off: the same check under the class monitor against the registry's own set); shadow mode .shadow. Helper bons.furious.patch.simplyswords_coo49.IncapacitatedSnapshot.",
+      "license": "Simply Swords (Timefall Development License, treated as All Rights Reserved): no Simply Swords code is carried; the replacement method's body and the RETURN hook call only our own logic (IncapacitatedSnapshot)"
+    },
+    "simplyswords_pity_loot_deque_keep": {
+      "mod": "simplyswords",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.simplyswords_coo49.PityLootDequeKeepMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/sweenus/simplyswords/loot/PityLootContext",
+          "method": "*",
+          "desc": "",
+          "note": "declares capture, take (+ <init>, <clinit>): the thread's deque is reached only through CAPTURED_TABLES.get() in these two",
+          "sha256": "a6b581f5fd9cc7fc1ecf0a2e5546bb4f5d5568a18a37373cce1d8f1ad648a033"
+        },
+        {
+          "class": "net/sweenus/simplyswords/loot/PityLootContext",
+          "method": "take",
+          "desc": "()Lnet/minecraft/resources/ResourceLocation;",
+          "note": "the two CAPTURED_TABLES.remove() calls this switch skips: on an empty deque, and after popping the last entry",
+          "sha256": "8b8845a4d81bbb268a9c19888b86472fb01d85143e4da12ff86ebfc7b1c56653"
+        },
+        {
+          "class": "net/sweenus/simplyswords/loot/PityLootContext",
+          "method": "capture",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)V",
+          "note": "CAPTURED_TABLES.get().push(new CapturedTable(table))",
+          "sha256": "f9ffaca5203ceec66e7463bebaadd486d97c58454902cb0bd387121b4af31e83"
+        },
+        {
+          "class": "net/sweenus/simplyswords/loot/PityLootContext",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "CAPTURED_TABLES = ThreadLocal.withInitial(ArrayDeque::new): the empty deque the kept one equals",
+          "sha256": "2933c11cf72c1e1d843e9aa4c871713686b690bac545b636dc4f999967fa2815"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on both ThreadLocal.remove() calls in PityLootContext.take(): skipped while the runtime flag simplyswordsPityLootDequeKeep is on (the thread keeps its empty deque, which is what withInitial builds next). Helper bons.furious.patch.simplyswords_coo49.PityLootDeque.",
+      "license": "Simply Swords (Timefall Development License, treated as All Rights Reserved): no Simply Swords code is carried; the wrapper only decides whether Simply Swords' own call runs"
+    }
+  }
+}

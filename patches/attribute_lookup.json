@@ -1,0 +1,203 @@
+{
+  "group": "attribute_lookup",
+  "keys": {
+    "vanilla_attribute_instance_fast_lookup": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.attribute_lookup.AttributeMapFastLookupMixin"
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapMethod on AttributeMap.m_22146_ (getInstance) answering a held instance from the map and an attribute the supplier lacks with null, else the original (helper bons.furious.patch.attribute_lookup.AttributeLookup; the ATTRIBUTE_REAPPLY API AttributeReapply lives in this group)",
+      "license": "Minecraft: no code is carried, the wrapper only reads the map and the supplier",
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeMap",
+          "method": "m_22146_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/Attribute;)Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;",
+          "note": "attributes.computeIfAbsent(attribute, a -> supplier.createInstance(this::onAttributeModified, a))",
+          "sha256": "19b9318b1c17b68d602cee0a772f66ed03324aa80d20b973633ec28652ff29bd"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeMap",
+          "method": "m_22187_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/Attribute;)Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;",
+          "note": "the lambda: supplier.createInstance(this::onAttributeModified, a)",
+          "sha256": "8b16cfe451a546e395f7fabb3192004e42e1518e116c9e70a8173b3ef9926f39"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeSupplier",
+          "method": "m_22250_",
+          "desc": "(Ljava/util/function/Consumer;Lnet/minecraft/world/entity/ai/attributes/Attribute;)Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;",
+          "note": "createInstance: instances.get(attribute) == null -> null, else a new instance copied from it",
+          "sha256": "435f04c3ef6c51abff0bb09594bcb4ffabf4effb8a0a1e9834f04f2227f78f67"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeSupplier",
+          "method": "m_22258_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/Attribute;)Z",
+          "note": "hasAttribute: instances.containsKey(attribute)",
+          "sha256": "8ec381cde1ed841540adb7f58be02c52aa98f2abb2ab06f73a8bce21e9f2d6cc"
+        }
+      ]
+    },
+    "projectiledamage_weapon_modifier_unchanged_skip": {
+      "mod": "projectile_damage",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.attribute_lookup.ProjectileDamageReapplyMixin",
+        "bons.furious.mixin.attribute_lookup.AttributeMapReapplyAccessor"
+      ],
+      "cancel": [],
+      "conversion": "injectors: a MixinSquared @TargetHandler @WrapOperation of the AttributeMap.addTransientAttributeModifiers call in Projectile Damage's ServerWorldMixin.pre_spawnEntity handler (merged into ServerLevel.addFreshEntity), skipped when every weapon modifier is already held unchanged and transient; an @Accessor for AttributeMap's instance map and supplier (helpers bons.furious.patch.attribute_lookup.ProjectileReapply, AttributeReapply)",
+      "license": "Projectile Damage (GPL-3.0): no Projectile Damage code is carried, the injection only wraps one call with our own check",
+      "guard": [
+        {
+          "class": "net/projectile_damage/mixin/ServerWorldMixin",
+          "method": "pre_spawnEntity",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "arrow with a living owner and a ranged weapon: owner.getAttributes().addTransientAttributeModifiers(weapon.getAttributeModifiers(slot)), then reads GENERIC_PROJECTILE_DAMAGE",
+          "sha256": "9d103a43ac6302fb6239f0530aff11d00f9d502b03e62d8abedf5d64fc7fbbc7"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeMap",
+          "method": "m_22178_",
+          "desc": "(Lcom/google/common/collect/Multimap;)V",
+          "note": "addTransientAttributeModifiers: per entry getInstance; when not null removeModifier(modifier) + addTransientModifier(modifier)",
+          "sha256": "c37d5a21a48e6cbfe09d9f13f90a7e2fdd6a1a0e3372ab47a0c584640a75b7b4"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22118_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "note": "addTransientModifier = addModifier",
+          "sha256": "2a8a80759bde722846a1e3e820ad49523a423adf85ab210c25298a9259e7eeb7"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22111_",
+          "desc": "(Ljava/util/UUID;)Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;",
+          "note": "getModifier: modifierById.get(uuid)",
+          "sha256": "7a9e9d9c7855dd3f342c69a5deea906a408d045960683bb81281e5813a135607"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22130_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "note": "removeModifier: operation set, id map and permanent set remove (by UUID), then setDirty",
+          "sha256": "1a36bba283103cf86bf1f38843281b2ddab1793edce903a3d2947560718afcdd"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22133_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "note": "addModifier: putIfAbsent by UUID (throws when present), operation set add, setDirty",
+          "sha256": "a04c6fff95e4fd1f662cffb1e88ba8919562222fe7c5dc816224eb60235f900a"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeModifier",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "note": "equal by UUID",
+          "sha256": "a8f7833c5e55e2b47869ff3d89996883f9be66a35890c372de00a920a90f6f0a"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeModifier",
+          "method": "hashCode",
+          "desc": "()I",
+          "note": "the UUID hash",
+          "sha256": "eb31329eae434df1e3f884bec78dbcb6e88818661aedf10898f311083d9e1f42"
+        }
+      ]
+    },
+    "vanilla_effect_refresh_modifier_keep": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.attribute_lookup.LivingEntityEffectRefreshMixin",
+        "bons.furious.mixin.attribute_lookup.MobEffectTemplatesAccessor",
+        "bons.furious.mixin.attribute_lookup.AttributeMapRefreshAccessor"
+      ],
+      "cancel": [],
+      "conversion": "injectors: two MixinExtras @WrapOperation of the MobEffect.removeAttributeModifiers / addAttributeModifiers calls in LivingEntity.onEffectUpdated (m_141973_), both skipped when the refresh would leave every modifier as it is; @Accessor for MobEffect's attribute templates and AttributeMap's instance map and supplier (helpers bons.furious.patch.attribute_lookup.EffectRefreshKeep, AttributeReapply)",
+      "license": "Minecraft: no code is carried, the wrappers only read the maps",
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_141973_",
+          "desc": "(Lnet/minecraft/world/effect/MobEffectInstance;ZLnet/minecraft/world/entity/Entity;)V",
+          "note": "effectsDirty = true; forced && !clientSide -> effect.removeAttributeModifiers(this, getAttributes(), amp) then addAttributeModifiers(...)",
+          "sha256": "4fe575f7118c3254e04a8b0bb5868f368e503af17e37d710a739b1f3b246801f"
+        },
+        {
+          "class": "net/minecraft/world/effect/MobEffect",
+          "method": "m_6386_",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/ai/attributes/AttributeMap;I)V",
+          "note": "removeAttributeModifiers: per template getInstance; when not null removeModifier(template)",
+          "sha256": "a00af9dffa5927f719d3c9b08fc7bbe5be15146587438df1c42f28fa65757b62"
+        },
+        {
+          "class": "net/minecraft/world/effect/MobEffect",
+          "method": "m_6385_",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/ai/attributes/AttributeMap;I)V",
+          "note": "addAttributeModifiers: per template getInstance; when not null removeModifier(template) + addPermanentModifier(new AttributeModifier(id, getDescriptionId() + \" \" + amp, getAttributeModifierValue(amp, template), operation))",
+          "sha256": "70da6ebc3f9f0343d508727a9b41715aa73b938ae887b8263ccbb14072c96c63"
+        },
+        {
+          "class": "net/minecraft/world/effect/MobEffect",
+          "method": "m_7048_",
+          "desc": "(ILnet/minecraft/world/entity/ai/attributes/AttributeModifier;)D",
+          "note": "template.getAmount() * (amp + 1)",
+          "sha256": "4057157ee99c3df4f444939562dd7e9d9a2128e2d80b8996cc00415e83f2e260"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22125_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "note": "addPermanentModifier: addModifier + permanent set add",
+          "sha256": "dd565b98501db203b5f4ab67f0bd34049c4f5e4072b9798f39ce588047ce4cb8"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22111_",
+          "desc": "(Ljava/util/UUID;)Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;",
+          "note": "getModifier: modifierById.get(uuid)",
+          "sha256": "7a9e9d9c7855dd3f342c69a5deea906a408d045960683bb81281e5813a135607"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22130_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "note": "removeModifier: operation set, id map and permanent set remove (by UUID), then setDirty",
+          "sha256": "1a36bba283103cf86bf1f38843281b2ddab1793edce903a3d2947560718afcdd"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22133_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "note": "addModifier: putIfAbsent by UUID (throws when present), operation set add, setDirty",
+          "sha256": "a04c6fff95e4fd1f662cffb1e88ba8919562222fe7c5dc816224eb60235f900a"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeModifier",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "note": "equal by UUID",
+          "sha256": "a8f7833c5e55e2b47869ff3d89996883f9be66a35890c372de00a920a90f6f0a"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeModifier",
+          "method": "hashCode",
+          "desc": "()I",
+          "note": "the UUID hash",
+          "sha256": "eb31329eae434df1e3f884bec78dbcb6e88818661aedf10898f311083d9e1f42"
+        }
+      ]
+    }
+  }
+}

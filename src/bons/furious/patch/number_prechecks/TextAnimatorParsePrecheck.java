@@ -36,6 +36,22 @@ import snownee.textanimator.effect.params.TypedParams;
  *      NumberFormatException handler makes. Every other call goes to Effect.create unchanged.
  * Effect.create itself cannot be hooked: it is a static interface method and Mixin 0.8.5 has no injectors there.
  *
+ * Since 1.0.49 the same pre-check can also serve the Effect.create(String, boolean) call in TypewriterEffect.find: that is
+ * its own switch, textanimator_typewriter_prechecks (TextAnimatorTypewriterMixin, kind change, off by default: the check
+ * in front of create made well-formed typewriter tags 52 -> 62 ns and 278 -> 344 ns per find; runtime flag
+ * -Dbons_and_furious.textanimatorTypewriterPrechecks=false; Idea: Collections Of Optimizations
+ * (textanimator.stacklessEffectErrors), idea text only).
+ * find runs for every literal text visit (Text Animator's LiteralContentsMixin / TranslatableContentsMixin) and returns at
+ * once unless the text starts with "<typewriter"; for such a text it calls create on the tag content and its
+ * catch (Exception) block discards whatever create throws (javap of 2.5.4: astore_2, never read; the method then returns
+ * null), so a malformed typewriter tag ("<typewriterX>", "<typewriter speed=fast>") threw an exception with a full render
+ * stack trace on every visit of that text, i.e. every frame while it is shown. createTag splits the tag content exactly as
+ * create(String, boolean) does (StringUtils.split on ' ', reproduced by splitSpaces) and takes the same two quiet paths as
+ * above: an unregistered type throws the stackless exception into find's catch, a registered type with a non-numeric value
+ * is built by createQuietly; every other tag goes to Effect.create(String[], boolean) with those tokens, which is what
+ * create(String, boolean) does after its own split. Other callers of Effect.create (Text Animator's style deserializer,
+ * its Hermes compat, other mods) are not touched: they keep the stack traces they may log.
+ *
  * -Dbons_and_furious.textanimatorParsePrechecks=false switches it off at run time.
  * -Dbons_and_furious.textanimatorParsePrechecks.shadow=true (verification runs only): Effect.create runs for every tag as
  * in Text Animator; SHADOW_CHECKS counts tags, SHADOW_SKIPPABLE the exceptions the switch would leave out,
@@ -45,6 +61,8 @@ import snownee.textanimator.effect.params.TypedParams;
 public final class TextAnimatorParsePrecheck {
     static final String KEY = "textanimator_parse_prechecks";
     public static volatile boolean enabled = !"false".equalsIgnoreCase(System.getProperty("bons_and_furious.textanimatorParsePrechecks", "true"));
+    /** textanimator_typewriter_prechecks (TypewriterEffect.find's create call): its own runtime flag. */
+    public static volatile boolean typewriterEnabled = !"false".equalsIgnoreCase(System.getProperty("bons_and_furious.textanimatorTypewriterPrechecks", "true"));
     public static final boolean SHADOW = Boolean.getBoolean("bons_and_furious.textanimatorParsePrechecks.shadow");
     public static final AtomicLong SHADOW_CHECKS = new AtomicLong(), SHADOW_MISMATCHES = new AtomicLong(), SHADOW_SKIPPABLE = new AtomicLong();
     private static volatile boolean announced;
@@ -67,6 +85,135 @@ public final class TextAnimatorParsePrecheck {
             return createQuietly(split, allowTypewriter);
         }
         return original.call(split, allowTypewriter);
+    }
+
+    /**
+     * TypewriterEffect.find: its Effect.create(String, boolean) call on the tag content (since 1.0.49; a @Redirect, so the
+     * shipped call costs nothing extra when it is made). create(String, boolean) is create(StringUtils.split(tagContent,
+     * ' '), allowTypewriter). Fast path, no allocation: when the first token is "typewriter" (every well-formed typewriter
+     * tag) and no parameter value would make Double.parseDouble throw, Effect.create(tagContent, allowTypewriter) is called
+     * exactly as shipped. Otherwise the content is split as create splits it (splitSpaces) and the two quiet paths apply.
+     */
+    public static Effect createTag(String tagContent, boolean allowTypewriter) {
+        if (!typewriterEnabled || tagContent == null) return Effect.create(tagContent, allowTypewriter);
+        int n = tagContent.length();
+        if (n >= 10 && tagContent.startsWith("typewriter") && (n == 10 || tagContent.charAt(10) == ' ')) {
+            if (!allowTypewriter || SHADOW || !hasQuietValueIn(tagContent, 10, n)) return Effect.create(tagContent, allowTypewriter);
+        }
+        return createTagSlow(tagContent, allowTypewriter);
+    }
+
+    private static Effect createTagSlow(String tagContent, boolean allowTypewriter) {
+        String[] split = splitSpaces(tagContent);
+        if (split.length == 0) return Effect.create(tagContent, allowTypewriter);   // create's "Empty input", as shipped
+        if (SHADOW) return shadowTag(tagContent, split, allowTypewriter);
+        String type = split[0];
+        boolean typewriter = !allowTypewriter && "typewriter".equals(type);
+        if (typewriter || !EffectFactory.listTypes().contains(type)) {
+            if (!announced) announce();
+            throw new QuietIllegalArgumentException(type, typewriter);
+        }
+        if (split.length > 1 && hasQuietValue(split)) {
+            if (!announced) announce();
+            return createQuietly(split, allowTypewriter);
+        }
+        return Effect.create(split, allowTypewriter);
+    }
+
+    /**
+     * hasQuietValue over the space-separated tokens of s[from, to) without splitting: each run of characters between ' '
+     * separators (empty runs dropped, as StringUtils.split drops them) is one parameter, judged exactly as hasQuietValue
+     * judges it.
+     */
+    static boolean hasQuietValueIn(String s, int from, int to) {
+        int i = from;
+        while (i < to) {
+            while (i < to && s.charAt(i) == ' ') i++;
+            if (i >= to) break;
+            int start = i;
+            while (i < to && s.charAt(i) != ' ') i++;
+            int end = i, k = start;
+            while (k < end && s.charAt(k) == '=') k++;          // separators before the key
+            int key = k;
+            while (k < end && s.charAt(k) != '=') k++;          // the key
+            if (k == key || k == end) continue;                 // no key or no separator: a flag
+            while (k < end && s.charAt(k) == '=') k++;          // the separator run
+            if (k == end) continue;                             // "key=": a flag
+            int len = end - k;
+            if (len == 4 && s.startsWith("true", k) || len == 5 && s.startsWith("false", k)) continue;
+            if (FloatGrammar.mustThrow(s, k, end)) return true;
+        }
+        return false;
+    }
+
+    private static final String[] NO_TOKENS = new String[0];
+
+    /**
+     * StringUtils.split(s, ' ') (commons-lang3, the call Effect.create(String, boolean) makes): the runs of characters
+     * between ' ' separators, empty runs dropped, each a substring of s (s itself when it is one whole token), in order;
+     * an empty array for an empty or all-space s. Counted first, so it builds one array and no list.
+     */
+    static String[] splitSpaces(String s) {
+        int n = s.length(), count = 0;
+        boolean in = false;
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == ' ') in = false;
+            else if (!in) {
+                in = true;
+                count++;
+            }
+        }
+        if (count == 0) return NO_TOKENS;
+        String[] out = new String[count];
+        int k = 0, start = -1;
+        for (int i = 0; i <= n; i++) {
+            if (i == n || s.charAt(i) == ' ') {
+                if (start >= 0) {
+                    out[k++] = s.substring(start, i);
+                    start = -1;
+                }
+            } else if (start < 0) {
+                start = i;
+            }
+        }
+        return out;
+    }
+
+    private static Effect shadowTag(String tagContent, String[] split, boolean allowTypewriter) {
+        if (!announced) announce();
+        SHADOW_CHECKS.incrementAndGet();
+        String type = split[0];
+        boolean skip = !allowTypewriter && "typewriter".equals(type) || !EffectFactory.listTypes().contains(type);
+        boolean quietValues = !skip && split.length > 1 && hasQuietValue(split);
+        Effect stock;
+        try {
+            stock = Effect.create(tagContent, allowTypewriter);
+        } catch (RuntimeException e) {
+            if (skip || quietValues) SHADOW_SKIPPABLE.incrementAndGet();
+            if (quietValues) {
+                try {
+                    Effect ours = createQuietly(split, allowTypewriter);
+                    PrecheckLog.mismatch(KEY, SHADOW_MISMATCHES, "Effect.create threw " + e + " for tag " + tagContent + " but the pre-checked copy built " + describe(ours));
+                } catch (RuntimeException expected) {
+                    // both threw: find's catch discards either exception
+                }
+            }
+            throw e;
+        }
+        if (skip) {
+            PrecheckLog.mismatch(KEY, SHADOW_MISMATCHES, "Effect.create accepted tag " + tagContent + " although the switch would skip it");
+        } else if (quietValues) {
+            SHADOW_SKIPPABLE.incrementAndGet();
+            String ours;
+            try {
+                ours = describe(createQuietly(split, allowTypewriter));
+            } catch (RuntimeException e) {
+                ours = "an exception " + e;
+            }
+            if (!ours.equals(describe(stock)))
+                PrecheckLog.mismatch(KEY, SHADOW_MISMATCHES, "for tag " + tagContent + " Effect.create built " + describe(stock) + ", the pre-checked copy " + ours);
+        }
+        return stock;
     }
 
     /**

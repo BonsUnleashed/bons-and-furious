@@ -1,0 +1,200 @@
+{
+  "group": "xaeroworldmap_c49",
+  "keys": {
+    "xaeroworldmap_lazy_tile_heights": {
+      "mod": "xaeroworldmap",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.xaeroworldmap_c49.WmLazyHeightsMixin"
+      ],
+      "guard": [
+        {
+          "class": "xaero/map/region/texture/RegionTexture",
+          "method": "<init>",
+          "desc": "(Lxaero/map/region/LeveledRegion;)V",
+          "note": "region, versions, then heightValues / topHeightValues = new ConsistentBitArray(13, 4096)",
+          "sha256": "85c4dd32a0bb981fda77e50df9ed164a0cf27593a74ae61b8c3f65e8a3557acc"
+        },
+        {
+          "class": "xaero/map/region/texture/RegionTexture",
+          "method": "putHeight",
+          "desc": "(II)V",
+          "note": "heightValues.set(index, 0x1000 | h & 0xFFF)",
+          "sha256": "0767e734ecb577a06407a5a4613408ede20d162be94e24f11490be9af1572ac9"
+        },
+        {
+          "class": "xaero/map/region/texture/RegionTexture",
+          "method": "putHeight",
+          "desc": "(III)V",
+          "note": "putHeight((z << 6) + x, h)",
+          "sha256": "cb0573c078e0189e60f4ad8eb2a7308b14a5794ad9674d3b68048135c61e842c"
+        },
+        {
+          "class": "xaero/map/region/texture/RegionTexture",
+          "method": "removeHeight",
+          "desc": "(II)V",
+          "note": "heightValues.set((z << 6) + x, 0)",
+          "sha256": "26802923071d0039f5490a7bfe551fafdc5ceb51e899bb91a4035870466c67ba"
+        },
+        {
+          "class": "xaero/map/region/texture/RegionTexture",
+          "method": "putTopHeight",
+          "desc": "(II)V",
+          "note": "topHeightValues.set(index, 0x1000 | h & 0xFFF)",
+          "sha256": "f1aa6dbd7b812485d38284ca761b84fd5d129c4d0606c8370783510284d43a7f"
+        },
+        {
+          "class": "xaero/map/region/texture/RegionTexture",
+          "method": "putTopHeight",
+          "desc": "(III)V",
+          "note": "putTopHeight((z << 6) + x, h)",
+          "sha256": "5527bc9b07d01e0bcc2995c67d09a151cdae12a66cb085bde3fe4e41c5eb0905"
+        },
+        {
+          "class": "xaero/map/region/texture/RegionTexture",
+          "method": "removeTopHeight",
+          "desc": "(II)V",
+          "note": "topHeightValues.set((z << 6) + x, 0)",
+          "sha256": "ca718008d5669b72e158d142442794f8647d3211002d03677a09905253fe24d4"
+        },
+        {
+          "class": "xaero/map/region/texture/RegionTexture",
+          "method": "getHeight",
+          "desc": "(II)I",
+          "note": "heightValues.get: 0 -> Short.MAX_VALUE",
+          "sha256": "bfbf751a9bb48799973fb061a51f86c884fa9f16c063c60354da9e7fd09119c1"
+        },
+        {
+          "class": "xaero/map/region/texture/RegionTexture",
+          "method": "getTopHeight",
+          "desc": "(II)I",
+          "note": "topHeightValues.get: 0 -> Short.MAX_VALUE",
+          "sha256": "e49d566c5e0fb889e88672b35e1dce6849f2b033aa9bc820c89210ce22493153"
+        },
+        {
+          "class": "xaero/map/region/texture/RegionTexture",
+          "method": "readCacheData",
+          "desc": "(IILjava/io/DataInputStream;[B[BLxaero/map/region/LeveledRegion;Lxaero/map/MapProcessor;IIZ)V",
+          "note": "setData ordinals: 0 and 2 the old-format thread-local table, 1 heightValues, 3 and 4 topHeightValues (1,024 longs each); old saves go through putHeight / putTopHeight",
+          "sha256": "e54f7db84b9a3ec1d978db6bd455cfd2769a4a7b66c56b912379cce4b7daa2f5"
+        },
+        {
+          "class": "xaero/map/region/texture/RegionTexture",
+          "method": "writeCacheMapData",
+          "desc": "(Ljava/io/DataOutputStream;[B[BLxaero/map/region/LeveledRegion;)V",
+          "note": "writes heightValues / topHeightValues getData(): reads only",
+          "sha256": "a07052e303e18a2b1d3641e60493add280ac06ebbeda0298847ae67c8142c72b"
+        },
+        {
+          "class": "xaero/map/region/texture/LeafRegionTexture",
+          "method": "resetHeights",
+          "desc": "()V",
+          "note": "Misc.clearHeightsData1024 of both tables: zeros",
+          "sha256": "2039efb55352c46452eed646405ac831642b21d16ed1419f3fdbf65f697b52d5"
+        },
+        {
+          "class": "xaero/map/region/texture/LeafRegionTexture",
+          "method": "<init>",
+          "desc": "(Lxaero/map/region/MapTileChunk;)V",
+          "note": "super(tileChunk.getInRegion())",
+          "sha256": "8052e1c9118ce3b2cfe33935e62c9c7e4f62ccacc7c2df9a3061da85e09fc9c0"
+        },
+        {
+          "class": "xaero/map/misc/Misc",
+          "method": "clearHeightsData1024",
+          "desc": "([J)V",
+          "note": "arraycopy of 1,024 zeros",
+          "sha256": "67b928f4bd13433492bb4c2689650f5997a0a60bfa1b05285d936b872ec89dba"
+        },
+        {
+          "class": "xaero/map/misc/ConsistentBitArray",
+          "method": "<init>",
+          "desc": "(II)V",
+          "note": "this(bits, entries, null)",
+          "sha256": "facd66a2a1484a48e9841a39ea95b2ac458b9903667bd92f63d875c5530859d5"
+        },
+        {
+          "class": "xaero/map/misc/ConsistentBitArray",
+          "method": "<init>",
+          "desc": "(II[J)V",
+          "note": "length check, then the fields",
+          "sha256": "d17ad06c00d936d423385de12e69c41065b769281e5d0457ba860f82ae380db7"
+        },
+        {
+          "class": "xaero/map/misc/ConsistentBitArray",
+          "method": "get",
+          "desc": "(I)I",
+          "note": "index >= entries throws, then data[index / 4] (throws for index < -3)",
+          "sha256": "16e212139acc2869086712be5682090c2ff2a18b4cf1880d480291043acc2958"
+        },
+        {
+          "class": "xaero/map/misc/ConsistentBitArray",
+          "method": "set",
+          "desc": "(II)V",
+          "note": "the same index test and array access as get, then the bit write",
+          "sha256": "cde95d0ea9cae4bef57b6be308b8817bb8889fcc5f0285668f1193ac5dd066e5"
+        },
+        {
+          "class": "xaero/map/misc/ConsistentBitArray",
+          "method": "setData",
+          "desc": "([J)V",
+          "note": "data = the array, no check",
+          "sha256": "27d8a5de4cb74bc106f4261f3cc5fd1242dae6c3fd37da7ff4b41cf4576785a8"
+        },
+        {
+          "class": "xaero/map/misc/ConsistentBitArray",
+          "method": "getData",
+          "desc": "()[J",
+          "note": "the data field",
+          "sha256": "961147e67eabea055d765ac74c1fcee1ae25b9e9e23b3eab2491c5c496bedf67"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the two new ConsistentBitArray(13, 4096) of the RegionTexture constructor (one shared all-zero table), @ModifyExpressionValue on the heightValues / topHeightValues read in front of the set call of putHeight / putTopHeight (the texture gets its own table first; no allocation on the path), and @WrapOperation on readCacheData's setData calls on the two fields (own table from the read data); removeHeight / removeTopHeight run as shipped (0 over 0 on the shared table). Runtime flag xaeroworldmapLazyTileHeights (shadow .shadow). Helper bons.furious.patch.xaeroworldmap_c49.LazyHeights.",
+      "license": "All Rights Reserved (Xaero's World Map): none of its code is carried; the wrappers only choose which table object a texture uses"
+    },
+    "xaeroworldmap_upload_headroom": {
+      "mod": "xaeroworldmap",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.xaeroworldmap_c49.WmUploadHeadroomMixin"
+      ],
+      "guard": [
+        {
+          "class": "xaero/map/MapProcessor",
+          "method": "onRenderProcess",
+          "desc": "(Lnet/minecraft/client/Minecraft;)V",
+          "note": "uploadUntil = uploadStart + max(3000000, totalTime - passed) / 4 (the only 3000000L), uploads while nanoTime < uploadUntil",
+          "sha256": "8f8ca88d7811f9c19108412108691d8301a0956d645b2820c656a5f84839f664"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@ModifyConstant on the 3000000L of MapProcessor.onRenderProcess: the value (microseconds) while the world map screen is not open. Runtime flag xaeroworldmapUploadHeadroom. Helper bons.furious.patch.xaeroworldmap_c49.MapFramePacing.",
+      "license": "All Rights Reserved (Xaero's World Map): none of its code is carried"
+    },
+    "xaeroworldmap_upload_pass_interval": {
+      "mod": "xaeroworldmap",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.xaeroworldmap_c49.WmUploadPassMixin"
+      ],
+      "guard": [
+        {
+          "class": "xaero/map/MapProcessor",
+          "method": "onRenderProcess",
+          "desc": "(Lnet/minecraft/client/Minecraft;)V",
+          "note": "map writer, then if (pauseUploading == 0 && mapWorldUsable && currentWorldId != null) the upload pass; then the VRAM check and lastRenderProcessTime",
+          "sha256": "8f8ca88d7811f9c19108412108691d8301a0956d645b2820c656a5f84839f664"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on the first pauseUploading read of MapProcessor.onRenderProcess: non-zero (the upload pass is left out) outside the world map screen while the last pass started less than the value (milliseconds) ago. Runtime flag xaeroworldmapUploadPassInterval. Helper bons.furious.patch.xaeroworldmap_c49.MapFramePacing.",
+      "license": "All Rights Reserved (Xaero's World Map): none of its code is carried"
+    }
+  }
+}

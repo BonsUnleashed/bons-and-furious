@@ -1,0 +1,40 @@
+{
+  "group": "dynamictrees_c49",
+  "keys": {
+    "dynamictrees_leaf_site_single_read": {
+      "mod": "dynamictrees",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.dynamictrees_c49.LeafSiteReadsMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ferreusveritas/dynamictrees/block/leaves/DynamicLeavesBlock",
+          "method": "isLocationSuitableForNewLeaves",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lcom/ferreusveritas/dynamictrees/block/leaves/LeavesProperties;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "the body site() copies with single reads: target, below, below again; writes only in the tall grass / large fern branch; then isEmptyBlock(target) || getBlockState(target).canBeReplaced(), then hasAdequateLight(first target read)",
+          "sha256": "6ac527eedcf121854daeb478db16a829323472f1904fb24150ae04768281a9be"
+        },
+        {
+          "class": "com/ferreusveritas/dynamictrees/block/leaves/DynamicLeavesBlock",
+          "method": "hasAdequateLight",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelAccessor;Lcom/ferreusveritas/dynamictrees/block/leaves/LeavesProperties;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "the body light() copies: canSeeSky, smother count over the positions above compared once with the limit after the loop, sky light",
+          "sha256": "6ff15621bdacd40330459c38b8f858256fee4df5cc71a8182893a0f51731b354"
+        },
+        {
+          "class": "net/minecraft/world/level/LevelReader",
+          "method": "m_46859_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Z",
+          "note": "isEmptyBlock default: getBlockState(pos).isAir() (used only for level classes that keep this default)",
+          "sha256": "9abb5dbc0446832bec2777531bf45ee96ba2ab81043f7de81aace295102df664"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on DynamicLeavesBlock.isLocationSuitableForNewLeaves and on hasAdequateLight: modified copies of the shipped bodies that read each block once (the second read of the block below and the final target reads answered from the first reads unless the tall-plant branch wrote; the smother count stops at the first position that is not a tree part); hasAdequateLight still called virtually (helper bons.furious.patch.dynamictrees_c49.DtLean)",
+      "license": "MIT (Dynamic Trees): the two bodies are modified copies of Dynamic Trees' own; Minecraft (Mojang): no-copy"
+    }
+  }
+}

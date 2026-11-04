@@ -1,0 +1,283 @@
+{
+  "group": "immersiveweathering_c49",
+  "keys": {
+    "immersiveweathering_growth_table": {
+      "mod": "immersive_weathering",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.immersiveweathering_c49.BlockGrowthHandlerTableMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ordana/immersive_weathering/data/block_growths/BlockGrowthHandler",
+          "method": "tickBlock",
+          "desc": "(Lcom/ordana/immersive_weathering/data/block_growths/TickSource;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)V",
+          "note": "config read, IConditionalGrowingBlock check, memoized biome supplier, universal set then the block's set, tryGrowing per growth in set order",
+          "sha256": "f06f582645a0bbcf1fb3e095cd074fd510836a443d1e1492d3896395e72c9a4c"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/block_growths/BlockGrowthHandler",
+          "method": "lambda$tickBlock$1",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/Holder;",
+          "note": "the biome supplier's body: level.getBiome(pos)",
+          "sha256": "7eb45894678613e3ec3f9d2acaed7efb2cc0f07eb789f6f8f3629f71eb8fc0ca"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/block_growths/BlockGrowthHandler",
+          "method": "getBlockGrowths",
+          "desc": "(Lcom/ordana/immersive_weathering/data/block_growths/TickSource;Lnet/minecraft/world/level/block/Block;)Ljava/util/Optional;",
+          "note": "GROWTH_FOR_BLOCK.get(source).get(block)",
+          "sha256": "01a4d6025aa2dc028d0b6f526368409ede4d05907fc84f4611dfda31876968ae"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/block_growths/BlockGrowthHandler",
+          "method": "parse",
+          "desc": "(Ljava/util/Map;Lnet/minecraft/core/RegistryAccess;)V",
+          "note": "the only writer of both maps: clear, then new sets and maps through computeIfAbsent",
+          "sha256": "90f14ae25f6c0e7dc9fd2495279215014018f6006f532d0cb75ea59310355109"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/block_growths/BlockGrowthHandler",
+          "method": "lambda$parse$6",
+          "desc": "(Ljava/util/Map;Lcom/ordana/immersive_weathering/data/block_growths/growths/IBlockGrowth;Lnet/minecraft/world/level/block/Block;)V",
+          "note": "per owner block: computeIfAbsent(block, new HashSet).add(growth)",
+          "sha256": "5534cdddaaeb58b69d87cd8d8a0310ddcb80cf0f11f44a6019c68753437ae602"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/block_growths/growths/ConfigurableBlockGrowth",
+          "method": "canGrow",
+          "desc": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Level;Ljava/util/function/Supplier;)Z",
+          "note": "growthChance == 0 -> false before any draw",
+          "sha256": "d79b071e594051c5265cac1773b966c56057c725b7366705bcc4b1b489b92f9b"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/block_growths/growths/ConfigurableBlockGrowth",
+          "method": "tryGrowing",
+          "desc": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Ljava/util/function/Supplier;)V",
+          "note": "everything happens only after canGrow returned true",
+          "sha256": "b19fd049951ff12f2c234254af1cd0c528522299bea16a8298ac1acf44fbf5cd"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/block_growths/growths/ConfigurableBlockGrowth",
+          "method": "getGrowthChance",
+          "desc": "()F",
+          "note": "returns the final growthChance field",
+          "sha256": "17e182f91bfebca786de0f965a04d2e0abc8fe5b5907277aea4aba2d994aa88b"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/block_growths/growths/builtin/NoOpBlockGrowth",
+          "method": "tryGrowing",
+          "desc": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Ljava/util/function/Supplier;)V",
+          "note": "empty",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on BlockGrowthHandler.tickBlock: the same body over a per-source table without no-op entries, rebuilt whenever Immersive Weathering's map objects change (helper bons.furious.patch.immersiveweathering_c49.GrowthTable)",
+      "license": "LGPLv3 (Immersive Weathering): tickBlock's body is carried in GrowthTable in a modified form, as LGPLv3 permits"
+    },
+    "immersiveweathering_growth_roll_batch": {
+      "mod": "immersive_weathering",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.immersiveweathering_c49.LegacyRandomSourceSeedMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ordana/immersive_weathering/data/block_growths/growths/ConfigurableBlockGrowth",
+          "method": "canGrow",
+          "desc": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Level;Ljava/util/function/Supplier;)Z",
+          "note": "the first draw is level.random.nextFloat() < growthChance; a failing draw returns false",
+          "sha256": "d79b071e594051c5265cac1773b966c56057c725b7366705bcc4b1b489b92f9b"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/block_growths/growths/ConfigurableBlockGrowth",
+          "method": "tryGrowing",
+          "desc": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/server/level/ServerLevel;Ljava/util/function/Supplier;)V",
+          "note": "canGrow first, nothing before it",
+          "sha256": "b19fd049951ff12f2c234254af1cd0c528522299bea16a8298ac1acf44fbf5cd"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/LegacyRandomSource",
+          "method": "m_64707_",
+          "desc": "(I)I",
+          "note": "next(bits): seed * 0x5DEECE66D + 11 mod 2^48, compare-and-set, (seed >> 48 - bits)",
+          "sha256": "1e37aca06233fb6d00fedd9859bd8a4618369b1be745ce2a023130a1a3382bfa"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/BitRandomSource",
+          "method": "m_188501_",
+          "desc": "()F",
+          "note": "nextFloat = next(24) * 2^-24",
+          "sha256": "ad58ca86d515352d0dcf8da3f0df9dabcda92fb2cdc33a656ce14856f10fa4b3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "a mixin class on LegacyRandomSource exposing its seed through bons.furious.patch.immersiveweathering_c49.SeedAccess; the roll loop lives in GrowthTable (needs immersiveweathering_growth_table)",
+      "license": "Minecraft (Mojang): no code carried, the LCG step is the documented java.util.Random formula; LGPLv3 (Immersive Weathering): see immersiveweathering_growth_table"
+    },
+    "immersiveweathering_area_scan_table": {
+      "mod": "immersive_weathering",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.immersiveweathering_c49.AreaCheckTableMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ordana/immersive_weathering/data/block_growths/area_condition/AreaCheck",
+          "method": "test",
+          "desc": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Level;Lcom/ordana/immersive_weathering/data/block_growths/growths/ConfigurableBlockGrowth;)Z",
+          "note": "yOffset, RandomSource from Mth.getSeed, grabBlocksAroundRandomly, the counting walk with its early returns",
+          "sha256": "69c048296731cd4bde19e3ad25634d9d16cb5ca2ef754d79c2229b79d0305ccb"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/util/WeatheringHelper",
+          "method": "grabBlocksAroundRandomly",
+          "desc": "(Lnet/minecraft/core/BlockPos;III)Ljava/util/List;",
+          "note": "withinManhattanStream copied into an ArrayList, Collections.shuffle(new Random(Mth.getSeed(center)))",
+          "sha256": "b3f65e3e7d9884a8cf14103fcb19913637d20154d6d83e7dfabf5baee544a8b0"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "m_121985_",
+          "desc": "(Lnet/minecraft/core/BlockPos;III)Ljava/util/stream/Stream;",
+          "note": "withinManhattanStream = a stream over withinManhattan",
+          "sha256": "3f6b5308870a2b517de5421e0d173f0865cc8ce3ae59b9df02901ee5696c1168"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on AreaCheck.test with the box offsets kept in a @Unique field (helper bons.furious.patch.immersiveweathering_c49.AreaScan)",
+      "license": "LGPLv3 (Immersive Weathering): AreaCheck.test is carried in AreaScan in a modified form, as LGPLv3 permits"
+    },
+    "immersiveweathering_leaf_pile_tint_memo": {
+      "mod": "immersive_weathering",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.immersiveweathering_c49.LeafPileTintMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ordana/immersive_weathering/ImmersiveWeatheringClient",
+          "method": "getLeafTypeColor",
+          "desc": "(Lnet/mehvahdjukaar/moonlight/api/platform/ClientHelper$BlockColorEvent;Lnet/mehvahdjukaar/moonlight/api/set/leaves/LeavesType;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;I)I",
+          "note": "event.getColor(leaves default state), then RGB->LAB mix with 0x7D5212 at AGE / 10 -> RGB int",
+          "sha256": "9031853503fb0bf3130cba13b3962d4b94fc2c2a64a98672792509770d224505"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on ImmersiveWeatheringClient.getLeafTypeColor answering from a lock-free (colour, AGE) table (helper bons.furious.patch.immersiveweathering_c49.LeafTint)",
+      "license": "LGPLv3 (Immersive Weathering): getLeafTypeColor's expression is carried in LeafTint, as LGPLv3 permits"
+    },
+    "immersiveweathering_fluid_generator_lean": {
+      "mod": "immersive_weathering",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.immersiveweathering_c49.AdjacentBlocksAccessor",
+        "bons.furious.mixin.immersiveweathering_c49.FluidGeneratorsLeanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ordana/immersive_weathering/data/fluid_generators/FluidGeneratorsHandler",
+          "method": "generate",
+          "desc": "(Ljava/util/List;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Level;Lcom/google/common/collect/ImmutableList;)Ljava/util/Optional;",
+          "note": "non-empty list and isAreaLoaded(pos, 3), one EnumMap cache, generators in list order, the first result mapped to (pos, sound)",
+          "sha256": "8fa6ddf717b2a90d1d1d9260b5474c0e726e372e5ef1419ba05c8e6c4f039177"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/fluid_generators/FluidGeneratorsHandler",
+          "method": "lambda$generate$5",
+          "desc": "(Lcom/ordana/immersive_weathering/data/fluid_generators/IFluidGenerator;Lnet/minecraft/core/BlockPos;)Lcom/mojang/datafixers/util/Pair;",
+          "note": "Pair.of(pos, generator.getSound())",
+          "sha256": "5cf506359b2bb8874836533185b66fc257ae6b31ab41043eaec6f940b00e8bef"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/fluid_generators/SelfFluidGenerator",
+          "method": "tryGenerating",
+          "desc": "(Ljava/util/List;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Level;Ljava/util/Map;)Ljava/util/Optional;",
+          "note": "isMet, then setBlockAndUpdate(pos, growth) and Optional.of(pos)",
+          "sha256": "f0047f8c5e1571d5d6d1235c0af3008cf3415bd9fdcd4b3b469e9da00d7f86dc"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/fluid_generators/SelfFluidGenerator$AdjacentBlocks",
+          "method": "isMet",
+          "desc": "(Ljava/util/List;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Level;Ljava/util/Map;Ljava/util/Optional;)Z",
+          "note": "any rules over Direction.values(), side rules over the horizontal flow directions, then up and down",
+          "sha256": "dd37d20136d1575426a87bc2fdf8becc2e68766fe849e58c5907055a0e4f3f2b"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/fluid_generators/SelfFluidGenerator$AdjacentBlocks",
+          "method": "testFails",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/templatesystem/RuleTest;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Level;Ljava/util/Map;Ljava/util/Optional;Ljava/util/function/Supplier;Lnet/minecraft/core/Direction;)Z",
+          "sha256": "d203b68f5d24f0b2271b6b01606a8104d968e9ac4a6cb88714cd681b70a5e222"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/fluid_generators/SelfFluidGenerator$AdjacentBlocks",
+          "method": "lambda$isMet$7",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/Holder;",
+          "note": "the biome supplier: level.getBiome(pos)",
+          "sha256": "097a090f60cbddb2fad9535375d586c3d907f82c0aec6dbec10ff1ed87af762a"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/fluid_generators/SelfFluidGenerator$AdjacentBlocks",
+          "method": "lambda$isMet$8",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "neighbour cache fill: level.getBlockState(side)",
+          "sha256": "b676ea6eff6f05bec1ca3102e9d6d860308cf9a89c4356db82e82a0fd20fb02b"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/fluid_generators/SelfFluidGenerator$AdjacentBlocks",
+          "method": "lambda$isMet$9",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "b676ea6eff6f05bec1ca3102e9d6d860308cf9a89c4356db82e82a0fd20fb02b"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/fluid_generators/SelfFluidGenerator$AdjacentBlocks",
+          "method": "lambda$testFails$10",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "b676ea6eff6f05bec1ca3102e9d6d860308cf9a89c4356db82e82a0fd20fb02b"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/fluid_generators/OtherFluidGenerator",
+          "method": "tryGenerating",
+          "desc": "(Ljava/util/List;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Level;Ljava/util/Map;)Ljava/util/Optional;",
+          "note": "per flow direction: cache read, target.test(state, level.random), position test, setBlockAndUpdate(side, growth)",
+          "sha256": "2386b82d38ffbde68ba0cf93a1744e716df1e43c990cd0d09afde1d4e9ae7a33"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/fluid_generators/OtherFluidGenerator",
+          "method": "lambda$tryGenerating$1",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/Holder;",
+          "sha256": "097a090f60cbddb2fad9535375d586c3d907f82c0aec6dbec10ff1ed87af762a"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/fluid_generators/OtherFluidGenerator",
+          "method": "lambda$tryGenerating$2",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "b676ea6eff6f05bec1ca3102e9d6d860308cf9a89c4356db82e82a0fd20fb02b"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/fluid_generators/builtin/BurnMossGenerator",
+          "method": "tryGenerating",
+          "desc": "(Ljava/util/List;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Level;Ljava/util/Map;)Ljava/util/Optional;",
+          "note": "per flow direction: cache read, Mossable.getUnaffectedMossBlock, setBlockAndUpdate(side, unaffected with WEATHERABLE STABLE)",
+          "sha256": "a941d96d03f3835db936ab9878dfb805c28919f2c613c211d6473514c4abfdc1"
+        },
+        {
+          "class": "com/ordana/immersive_weathering/data/fluid_generators/builtin/BurnMossGenerator",
+          "method": "lambda$tryGenerating$1",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "sha256": "b676ea6eff6f05bec1ca3102e9d6d860308cf9a89c4356db82e82a0fd20fb02b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on FluidGeneratorsHandler.generate answering from a twin of the three generator classes over a BlockState[6] cache + an @Accessor interface on SelfFluidGenerator$AdjacentBlocks (helper bons.furious.patch.immersiveweathering_c49.FluidLean); a list with any other generator class keeps the original body",
+      "license": "LGPLv3 (Immersive Weathering): generate and the three generators' tryGenerating / isMet / testFails are carried in FluidLean in a modified form, as LGPLv3 permits"
+    }
+  }
+}

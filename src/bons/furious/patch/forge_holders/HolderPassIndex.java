@@ -103,9 +103,21 @@ public final class HolderPassIndex {
         applyFilter = null;
     }
 
-    /** applyObjectHolders(filter) starts (any caller). */
+    /**
+     * applyObjectHolders(filter) starts (any caller). Since 1.0.49 only a call inside the GameData registry pass on the
+     * pass's own thread is noted; any other call clears the note (isRegistryPass is false for it either way). Calls from
+     * elsewhere (Forge reverting or injecting registries when a single-player world starts or stops, on the integrated
+     * server's thread) used to stay noted until the next call: the static Thread kept that finished server thread, whose
+     * task still holds the closed world's whole IntegratedServer.
+     */
     public static void noteApply(Predicate<?> filter) {
-        applyThread = Thread.currentThread();
+        Thread t = Thread.currentThread();
+        if (passThread != t) {
+            applyThread = null;
+            applyFilter = null;
+            return;
+        }
+        applyThread = t;
         applyFilter = filter;
     }
 

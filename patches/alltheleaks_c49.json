@@ -1,0 +1,239 @@
+{
+  "group": "alltheleaks_c49",
+  "keys": {
+    "alltheleaks_dead_ref_hash_spread": {
+      "mod": "alltheleaks",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.alltheleaks_c49.TrackableStrategyMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/uncandango/alltheleaks/mixin/Trackable$1",
+          "method": "hashCode",
+          "desc": "(Ljava/lang/ref/WeakReference;)I",
+          "note": "Objects.hashCode(ref.get()): 0 for every dead reference (byte-identical in 1.1.4)",
+          "sha256": "cd9cde86c04dd293b67c58695b174c051e72c2207eac09b2295f80a2e4ec5f6c"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/mixin/Trackable$1",
+          "method": "equals",
+          "desc": "(Ljava/lang/ref/WeakReference;Ljava/lang/ref/WeakReference;)Z",
+          "note": "k1 != null && k1.get() == o.get(): unchanged; dead == dead, dead != live",
+          "sha256": "b59d73d343809d04676019690db85f2ce0aa918458c4aa682205b565d1010d6c"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/mixin/Trackable$2",
+          "method": "trim",
+          "desc": "()Z",
+          "note": "removeIf(dead) then the set's own trim (rehash)",
+          "sha256": "0bcec8cfbf7260c97d01c781f6769d568c3fcf416a6f696a907969cbfe859c04"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/mixin/Trackable",
+          "method": "startTracking",
+          "desc": "()V",
+          "note": "the only insert: a reference to a live object, under LOCK",
+          "sha256": "6ee793b358b770fe78526a951e95fe0b882f9793d7b298097535b56d499de0fe"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/mixin/Trackable",
+          "method": "getSummary",
+          "desc": "()Ljava/util/Map;",
+          "note": "counts live referents per class (order of the inner map follows the set's order)",
+          "sha256": "7a126d9281a567267f2f750b4c6c38b72aa5a80954ff508863b54200e0e4eb1d"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/mixin/Trackable",
+          "method": "createWeakRefBasedSet",
+          "desc": "()Lit/unimi/dsi/fastutil/objects/ObjectOpenCustomHashSet;",
+          "sha256": "44ea6feea8dddb79bf232c2c491a7cd73a92f521e4050e5991975bdf13b8f136"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/mixin/Trackable",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "WEAK_REFERENCE_STRATEGY = new Trackable$1()",
+          "sha256": "9488819923a153fbc4dd1c37885c4e3ba3aeacd6cbd205b99f5e58822770f4a0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyReturnValue (+ @Local argsOnly) on Trackable$1.hashCode(WeakReference): 0 from a dead reference -> System.identityHashCode(reference) (helper bons.furious.patch.alltheleaks_c49.AtlLean)",
+      "license": "MIT (AllTheLeaks): no AllTheLeaks code is carried"
+    },
+    "alltheleaks_unread_summary_skip": {
+      "mod": "alltheleaks",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.alltheleaks_c49.ReportTaskMixin",
+        "bons.furious.mixin.alltheleaks_c49.ReportManagerTasksMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/uncandango/alltheleaks/report/ReportManager$ReportTask",
+          "method": "tick",
+          "desc": "()V",
+          "note": "shouldRun -> task.run() in try / finally lastTickReported = getCurrentTick()",
+          "sha256": "ebdf45055a2b21d1f8b0cdcb10249f59ea0ced0adcb2297b1107c8785095c823"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/report/ReportManager$ReportTask",
+          "method": "shouldRun",
+          "desc": "()Z",
+          "note": "!stopped && currentTick - lastTickReported > tickInterval",
+          "sha256": "5f4f15b6e3135b3f0778d76ad9d7022b1f1f9c6497e36668930c1217722840e9"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/report/ReportManager",
+          "method": "tick",
+          "desc": "()V",
+          "note": "++currentTick, then every task",
+          "sha256": "ae3bd97d5ace9d4bd1148d3866120d1096e0f4ede86b0b0d42a97614bd140c54"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/report/ReportManager",
+          "method": "registerTask",
+          "desc": "(Ljava/lang/String;ILjava/lang/Runnable;)V",
+          "sha256": "2a13fc8a50b44e191f6b3c523d3aefadddd04bbfa0fff164afc46e919fb79dee"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/report/ReportManager",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "tasks = new HashMap() once (static final): the map handed to the helper",
+          "sha256": "c540b7d20eb09a1c73f722233ae1993fe0902357af64d8cdc2fc3a6adc035470"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/report/ReportManager",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: stop / isRegistered / getCurrentTick and nothing else touches the schedule",
+          "sha256": "45c089ec7e1151dc1e873dd932cfd17d23ce4f3fe0592ebb1efae7699dc47cd9"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/events/common/ModEvent",
+          "method": "lambda$onModLoadComplete$1",
+          "desc": "()V",
+          "note": "registers update_leak_summary (100) and passive_memory_leak_report (logIntervalInMinutes * 1200) once",
+          "sha256": "280e477ef04a8665a0d530782aca67c343c69cd830fd65e17a6ae8ebb159f194"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/events/common/ModEvent",
+          "method": "lambda$onModLoadComplete$0",
+          "desc": "()V",
+          "note": "the log task: logFullSummary -> getFullSummary -> CACHED_SUMMARY",
+          "sha256": "f424340c27132fd6f40be202015bb62564ab8edf65d0ceafe700c8ad69d46225"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/feature/common/mods/minecraft/MemoryMonitor",
+          "method": "updateLeakSummary",
+          "desc": "()V",
+          "note": "the rebuild: CACHED_SUMMARY from Trackable.getSummary(); no other effect",
+          "sha256": "b8890629306252851c7cf6e24da94d3d5443fa11872036d87aba81404fdc368a"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/feature/common/mods/minecraft/MemoryMonitor",
+          "method": "getFormattedSummary",
+          "desc": "(Ljava/lang/String;)Ljava/util/List;",
+          "note": "the only reader of CACHED_SUMMARY (via getFullSummary)",
+          "sha256": "8aebe42cb62c3a4831c771c9df0a7d179564e74dad3f358b969f4cba170a138d"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/feature/common/mods/minecraft/MemoryMonitor",
+          "method": "getFullSummary",
+          "desc": "(Ljava/lang/String;Z)Ljava/util/List;",
+          "sha256": "cf051b15f875e7f97dbbcfc6e870358b5313bb1c3c9990473c86027664efa18d"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/events/client/GameBusEvent",
+          "method": "onDebugRender",
+          "desc": "(Lnet/minecraftforge/client/event/CustomizeGuiOverlayEvent$DebugText;)V",
+          "note": "debug reader 1: only with showSummaryOnDebugScreen",
+          "sha256": "32230e38a7637da6e2a5e32717b9a3416d2f500c9105cdabacb73a310cc817a5"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/mixin/core/main/DebugScreenOverlayMixin",
+          "method": "atl$addLeftText",
+          "desc": "(Ljava/util/List;)Ljava/util/List;",
+          "note": "debug reader 2: only with showSummaryOnDebugScreen",
+          "sha256": "fba60f6520ca2c94b0cd5ef3e89f6ae075bd22e821c3b1e5c7ed2342c3d4979c"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/commands/ATLCommands",
+          "method": "checkLeaking",
+          "desc": "(Lnet/minecraft/commands/CommandSourceStack;Z)I",
+          "note": "force_refresh / memory warning: builds its own summary",
+          "sha256": "9a1c0259a90ed2292c2c6b72d4ca2122e257764897de3b146f03d991d5523a95"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on Runnable.run in ReportManager$ReportTask.tick (update_leak_summary left out when no reader can read it before the next run; the task's bookkeeping untouched), @Shadow getters (interface ReportTaskView) and a <clinit> RETURN @Inject on ReportManager handing its static final task map to the helper (helper bons.furious.patch.alltheleaks_c49.AtlLean)",
+      "license": "MIT (AllTheLeaks): no AllTheLeaks code is carried"
+    },
+    "alltheleaks_crash_report_gc_skip": {
+      "mod": "alltheleaks",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.alltheleaks_c49.CrashReportGcMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/uncandango/alltheleaks/events/common/ModEvent",
+          "method": "generateReportForCrashReport",
+          "desc": "()Ljava/lang/String;",
+          "note": "++reports % 2 == 1 -> runExplicitGc (result discarded), then the section text",
+          "sha256": "e750b97ee01523b4cd92027c8a280145cc64ea1bf93eb1942ac9bfc0a563875b"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/feature/common/mods/minecraft/MemoryMonitor",
+          "method": "runExplicitGc",
+          "desc": "()Z",
+          "note": "System.gc() (or the diagnostic gcRun) and LAST_RUN_GC = now",
+          "sha256": "2e4b1309f7d3f42857aa0446aa51700b7ee53605f180134d2b4421e0e3b03a78"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Trade-off (off by default): MixinExtras @WrapOperation on MemoryMonitor.runExplicitGc() in ModEvent.generateReportForCrashReport: not called (helper bons.furious.patch.alltheleaks_c49.AtlLean)",
+      "license": "MIT (AllTheLeaks): no AllTheLeaks code is carried"
+    },
+    "alltheleaks_world_close_gc_background": {
+      "mod": "alltheleaks",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.alltheleaks_c49.WorldCloseGcMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/uncandango/alltheleaks/events/common/GameBusEvent",
+          "method": "onClosedServer",
+          "desc": "(Lnet/minecraftforge/event/server/ServerStoppedEvent;)V",
+          "note": "runExplicitGc, clearNullReferences, SERVER_STOP.increment",
+          "sha256": "d7fe2044ac63d6294892f7a73634fcc59c30ba848225dd83638cde59a4e3b3d0"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/feature/common/mods/minecraft/MemoryMonitor",
+          "method": "runExplicitGc",
+          "desc": "()Z",
+          "sha256": "2e4b1309f7d3f42857aa0446aa51700b7ee53605f180134d2b4421e0e3b03a78"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/mixin/Trackable",
+          "method": "clearNullReferences",
+          "desc": "()V",
+          "note": "under AllTheLeaks' LOCK: safe from another thread",
+          "sha256": "66a721f8b18a9c015fe3e67203a1493e1568c34c86fa184539d64f57f0c014c6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Trade-off (off by default): MixinExtras @WrapOperation on both calls of GameBusEvent.onClosedServer: runExplicitGc + clearNullReferences run on one daemon thread (helper bons.furious.patch.alltheleaks_c49.AtlLean)",
+      "license": "MIT (AllTheLeaks): no AllTheLeaks code is carried"
+    }
+  }
+}

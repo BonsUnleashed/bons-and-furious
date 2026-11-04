@@ -1,0 +1,101 @@
+{
+  "group": "boss_music_c49",
+  "keys": {
+    "cataclysm_boss_music_stop_once": {
+      "mod": "cataclysm",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.boss_music_c49.CataclysmBossMusicStopOnceMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/etc/Animation_Monsters",
+          "method": "m_8119_",
+          "desc": "()V",
+          "note": "server, boss music set: SimpleChannel.send #0 = MessageMusic(id, true) while canPlayMusic, #1 = MessageMusic(id, false) else; every tick",
+          "sha256": "e8bd0e602ea44366d564331fca30259862ea3e628d13f7ca7360fba49fe0fb97"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/message/MessageMusic$Handler",
+          "method": "lambda$onMessage$0",
+          "desc": "(Lcom/github/L_Ender/cataclysm/message/MessageMusic;)V",
+          "note": "client: play -> BossMusicPlayer.playBossMusic, stop -> BossMusicPlayer.stopBossMusic for that entity",
+          "sha256": "ec57034bc16ecfacf570c1dfe3ee9e7265b8a3dfe6a3f7f65c371ef9e0c266f4"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/sound/BossMusicPlayer",
+          "method": "stopBossMusic",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/etc/Animation_Monsters;)V",
+          "note": "client: acts only while the playing sound's boss is this entity object (then unbinds it): a repeated stop does nothing",
+          "sha256": "646f1283cefdbdc990dc5bdf61ba5339afc2edd01eeb5745c323ffafac2202ac",
+          "sha256_also": [
+            {
+              "build": "3.31",
+              "sha256": "3d58a240e484d475cb1c4055fb7ce7a33f8c130eb652fb4dbae4a90572ea8df0"
+            }
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapWithCondition on the two SimpleChannel.send calls of Animation_Monsters.tick (m_8119_) plus one @Unique boolean per boss (not saved): the play send clears it and runs; the stop send runs only while it is clear, then sets it (helper bons.furious.patch.boss_music_c49.BossMusicStops)",
+      "license": "CC-BY-NC-ND-4.0 (L_Ender's Cataclysm): no Cataclysm code is carried; the wrappers carry only our own logic"
+    },
+    "mowziesmobs_boss_music_stop_once": {
+      "mod": "mowziesmobs",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.boss_music_c49.MowzieBossMusicStopOnceMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/entity/MowzieEntity",
+          "method": "m_8119_",
+          "desc": "()V",
+          "note": "server, boss music set: Level.broadcastEntityEvent #0 = 67 (play) while canPlayMusic, #1 = 68 (stop) else; every tick",
+          "sha256": "1681c5dda3151404e0e2f7a8c6f99259cc6a84ab940a548a3d5c4da876e96f00",
+          "sha256_also": [
+            {
+              "build": "1.8.2",
+              "sha256": "65cd4a5fa524671d3dda28c2739c9d290c5660c2b687c61ce9d106b2a734dbd6"
+            },
+            {
+              "build": "1.8.2_dedicated_server",
+              "sha256": "65cd4a5fa524671d3dda28c2739c9d290c5660c2b687c61ce9d106b2a734dbd6"
+            }
+          ]
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/entity/MowzieEntity",
+          "method": "m_7822_",
+          "desc": "(B)V",
+          "note": "client: 67 -> BossMusicPlayer.requestBossMusic, 68 -> BossMusicPlayer.stopBossMusic (subclasses handle other events and call this)",
+          "sha256": "ba1ff040e09433f0e41f22356556977f4aff8d0ed55dbd27fe3512ce380bd22c"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/sound/BossMusicPlayer",
+          "method": "stopBossMusic",
+          "desc": "(Lcom/bobmowzie/mowziesmobs/server/entity/MowzieEntity;)V",
+          "note": "client: acts only while the current music's boss is this entity object (then unbinds it): a repeated stop does nothing",
+          "sha256": "4fcb601da7bc6211aa5bee6320d530ea97512ca47a1efec74f310474c2492366",
+          "sha256_also": [
+            {
+              "build": "dedicated_server",
+              "sha256": null
+            },
+            {
+              "build": "1.8.2_dedicated_server",
+              "sha256": null
+            }
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapWithCondition on the two Level.broadcastEntityEvent calls of MowzieEntity.tick (m_8119_) plus one @Unique boolean per boss (not saved): the play event clears it and runs; the stop event runs only while it is clear, then sets it (helper bons.furious.patch.boss_music_c49.BossMusicStops)",
+      "license": "Mowzie's Mobs (custom licence): no code carried, the wrappers carry only our own logic"
+    }
+  }
+}

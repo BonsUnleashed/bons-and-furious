@@ -1,0 +1,68 @@
+{
+  "group": "arselemental_coo49",
+  "keys": {
+    "arselemental_heal_boost_focus_only": {
+      "mod": "ars_elemental",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.arselemental_coo49.HealBoostFocusMixin"
+      ],
+      "guard": [
+        {
+          "class": "alexthw/ars_elemental/event/DamageEvents",
+          "method": "handleHealing",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingHealEvent;)V",
+          "note": "if (EnableGlyphEmpowering || player with an earth focus) amount *= 1.5 (the wrapped setAmount, ordinal 0); Frozen cancels; Magic Fire x1.25 and invulnerableTime 0",
+          "sha256": "5a8101469783bb7f7ce92cb32ec89d62c94caa5748ad2a2cc56e1f0d3948b63e"
+        },
+        {
+          "class": "alexthw/ars_elemental/api/item/ISchoolFocus",
+          "method": "hasFocus",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lcom/hollingsworth/arsnouveau/api/spell/SpellSchool;",
+          "note": "the focus lookup the hook calls again (school provider, hands, then the Curios slots): reads only",
+          "sha256": "04b93445d249843a5ae8c8dbe7605e91e014d5d9ac61e9149b59d938bab965e7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the first LivingHealEvent.setAmount call in DamageEvents.handleHealing (the 1.5 heal bonus): it runs only when glyph empowering is on AND the healed entity is a player AND Ars Elemental's own ISchoolFocus.hasFocus answers the earth school. Gameplay fix, off by default. Runtime flag arselementalHealBoostFocusOnly. Helper bons.furious.patch.arselemental_coo49.HealBoostFix.",
+      "license": "Ars Elemental (LGPL-3.0): no code carried; the wrapper decides whether its own setAmount call runs"
+    },
+    "arselemental_curio_pouch_keybind": {
+      "mod": "ars_elemental",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.arselemental_coo49.CurioPouchKeyMixin"
+      ],
+      "guard": [
+        {
+          "class": "alexthw/ars_elemental/client/ClientEvents",
+          "method": "*",
+          "desc": "",
+          "note": "the declared methods: static mod-bus handlers (particles, renderers, key mappings, client setup) and the one instance handler openBackpackGui",
+          "sha256": "73c984671384811c0b78e79bfde1c9485ca7148b4ab60575469e00eb3b3416d0"
+        },
+        {
+          "class": "alexthw/ars_elemental/client/ClientEvents",
+          "method": "registerKeyBindings",
+          "desc": "(Lnet/minecraftforge/client/event/RegisterKeyMappingsEvent;)V",
+          "note": "registers CURIO_BAG_KEYBINDING (the hook's point, once at client start)",
+          "sha256": "204a3130878870f66badb01595bc2fb3ffe885ccf1887abec865f80576371ded"
+        },
+        {
+          "class": "alexthw/ars_elemental/client/ClientEvents",
+          "method": "openBackpackGui",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$ClientTickEvent;)V",
+          "note": "instance @SubscribeEvent: client dist, no pouch screen open, key clicked, pouch equipped -> OpenCurioBagPacket to the server",
+          "sha256": "3565eee65bfde0f284bea7037c86db3e13b6db767b672b865193abe5a84e6370"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at the TAIL of ClientEvents.registerKeyBindings (client, once): one new ClientEvents() is registered on MinecraftForge.EVENT_BUS, which subscribes its instance @SubscribeEvent methods = openBackpackGui, Ars Elemental's own pouch key handler (never registered before: the class is subscribed to the mod bus as a class, which takes static methods only). Gameplay fix, off by default. Runtime flag arselementalCurioPouchKeybind. Helper bons.furious.patch.arselemental_coo49.PouchKeyFix.",
+      "license": "Ars Elemental (LGPL-3.0): no code carried; its own handler is registered"
+    }
+  }
+}

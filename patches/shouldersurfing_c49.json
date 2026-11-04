@@ -1,0 +1,213 @@
+{
+  "group": "shouldersurfing_c49",
+  "keys": {
+    "shouldersurfing_camera_sweep_prefilter": {
+      "mod": "shouldersurfing",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.shouldersurfing_c49.DynamicOffsetsPrescanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/exopandora/shouldersurfing/client/event/handler/ComputeTargetCameraOffsetEventHandlerImpl$DynamicOffsets",
+          "method": "calcDynamicOffsets",
+          "desc": "(Lnet/minecraft/client/Camera;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;",
+          "note": "tested build 5.2.0: the 1/32-block sweep, one ObjectPicker.clip per step (COLLIDER, Fluid.NONE, the camera entity), hits only shorten |x| and |y|; no hit = (signum(x) |x|, signum(y) |y|, z)",
+          "sha256": "a00c80326f07c7a06be4aa55abae7592fe4466d2745d7e6d0a9dd91916f1955e",
+          "sha256_standdown": [
+            {
+              "build": "shouldersurfing 5.0.11",
+              "sha256": "f34e8691cdf48fc5efafaa9037a9a4c3377697a787c10fed07ec93edc3a13ab2"
+            }
+          ]
+        },
+        {
+          "class": "com/github/exopandora/shouldersurfing/client/event/handler/ComputeTargetCameraOffsetEventHandlerImpl$DynamicOffsets",
+          "method": "getBlockCollisionPredicate",
+          "desc": "()Lcom/github/exopandora/shouldersurfing/api/client/world/phys/BlockCollisionPredicate;",
+          "note": "the predicate the loop hands to clip (the plan asks the same method)",
+          "sha256": "5692a97e38fbbcf189b47d9e88d350ab83d111bbac21748ebb23b5792cfe1cd6",
+          "sha256_standdown": [
+            {
+              "build": "shouldersurfing 5.0.11",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "com/github/exopandora/shouldersurfing/client/event/handler/ComputeTargetCameraOffsetEventHandlerImpl$DynamicOffsets",
+          "method": "lambda$getBlockCollisionPredicate$0",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "the predicate: hasNoCollision, then the pillar test when ignoring block pillars: reads only",
+          "sha256": "4a383d06f357678ddba1f1f455a02d52cc039935f6013747e67a28bf6efaf987",
+          "sha256_standdown": [
+            {
+              "build": "shouldersurfing 5.0.11",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "com/github/exopandora/shouldersurfing/client/world/phys/ObjectPicker",
+          "method": "clip",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/world/level/ClipContext;Lcom/github/exopandora/shouldersurfing/api/client/world/phys/BlockCollisionPredicate;)Lnet/minecraft/world/phys/BlockHitResult;",
+          "note": "vanilla traversal; a block hit needs the context's block shape to be hit and the predicate false; Fluid.NONE gives an empty fluid shape",
+          "sha256": "c3edaef9dccec112759a6a49cf275e88aa8481e56ff3101944f49bd7f6a459ab",
+          "sha256_standdown": [
+            {
+              "build": "shouldersurfing 5.0.11",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "com/github/exopandora/shouldersurfing/client/world/phys/ObjectPicker",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods incl. the clip lambdas (tester and miss result)",
+          "sha256": "fad92b98281093d8bed67232e766cdeb13eae51e826e0d42bacfc0ade7fb666f",
+          "sha256_standdown": [
+            {
+              "build": "shouldersurfing 5.0.11",
+              "sha256": "934ad3e115077db6aeac97373780ff00eb1495720cca743833e357f296689b41"
+            }
+          ]
+        },
+        {
+          "class": "com/github/exopandora/shouldersurfing/client/ShoulderSurfing",
+          "method": "getObjectPicker",
+          "desc": "()Lcom/github/exopandora/shouldersurfing/client/world/phys/ObjectPicker;",
+          "note": "the picker is a final ObjectPicker field (the plan stands aside for any other picker class)",
+          "sha256": "c57d9e73a2e81dec5d0a0b833f3703f3090af41f3a9dabfbf8d6ef9e1469abf0"
+        },
+        {
+          "class": "net/minecraft/world/level/BlockGetter",
+          "method": "m_151361_",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Ljava/lang/Object;Ljava/util/function/BiFunction;Ljava/util/function/Function;)Ljava/lang/Object;",
+          "note": "traverseBlocks: visits only cells of the segment extended by 1e-7 x its length at both ends",
+          "sha256": "6894f5938d142c8a08a653fa51fd125953a084d96912bbd24b425b8b4ed40d44"
+        },
+        {
+          "class": "net/minecraft/world/level/ClipContext",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/level/ClipContext$Block;Lnet/minecraft/world/level/ClipContext$Fluid;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "the collision context is CollisionContext.of(entity), the one the plan builds",
+          "sha256": "c977019338dac976e45cc31dc9d60704d8c7e920ed7913241ceba7f267f5b595"
+        },
+        {
+          "class": "net/minecraft/world/level/ClipContext",
+          "method": "m_45694_",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "note": "getBlockShape: the Block mode's shape for the context's collision context",
+          "sha256": "7a6796c8354548f0a75e244ee45aba2a6076b76d5a4d8ad4578a16b8d986eef7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on DynamicOffsets.calcDynamicOffsets: one pass over the blocks of the swept region's box keeps the blocks that can be hit (non-empty collision shape for the camera entity, not exempted by the method's own predicate); none: the method's no-hit result; @Redirect of the loop's IObjectPicker.clip: a step whose segment box holds no kept block answers a shared miss result; a plan that does not pay (over 16 kept blocks, or under 8 traces skipped) leaves the next 1, 2, 4 ... 32 calls unplanned (helper bons.furious.patch.shouldersurfing_c49.CameraSweep)",
+      "license": "Shoulder Surfing Reloaded (MIT): no Shoulder Surfing code is carried; the pre-scan calls the mod's own predicate and Minecraft's shape methods"
+    },
+    "shouldersurfing_idle_crosshair_pick_skip": {
+      "mod": "shouldersurfing",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.shouldersurfing_c49.CrosshairPickSkipMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/exopandora/shouldersurfing/client/renderer/CrosshairRenderer",
+          "method": "computeCrosshairOffset",
+          "desc": "(Lcom/github/exopandora/shouldersurfing/api/client/IShoulderSurfing;Lnet/minecraft/client/Camera;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;ZF)Lcom/github/exopandora/shouldersurfing/api/math/Vec2f;",
+          "note": "the two picks, the projection, the indicator distance test; null when not shoulder surfing or without a player",
+          "sha256": "c3270c28ec3d53935224529a90795d4a5884584e7167d9a17f18bdf415098c52"
+        },
+        {
+          "class": "com/github/exopandora/shouldersurfing/client/renderer/CrosshairRenderer",
+          "method": "renderTick",
+          "desc": "(Lnet/minecraft/client/Camera;Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;F)V",
+          "note": "the offset feeds only the three visibility computations and the field",
+          "sha256": "eb33eacafd1beb1fabf32b0c12f79760049323db7337ee1ad697bbdf9c45a52e"
+        },
+        {
+          "class": "com/github/exopandora/shouldersurfing/client/renderer/CrosshairRenderer",
+          "method": "computeIsCrosshairVisible",
+          "desc": "(Lcom/github/exopandora/shouldersurfing/api/client/IShoulderSurfing;Lcom/github/exopandora/shouldersurfing/api/math/Vec2f;Z)Z",
+          "note": "reads the offset only as null-and-dynamic",
+          "sha256": "32df3bc07b7a10880263f16da3386ad95e9277f7bc5933872ffe766bc859dbb0"
+        },
+        {
+          "class": "com/github/exopandora/shouldersurfing/client/renderer/CrosshairRenderer",
+          "method": "computeIsObstructionIndicatorVisible",
+          "desc": "(Lcom/github/exopandora/shouldersurfing/api/client/IShoulderSurfing;Lcom/github/exopandora/shouldersurfing/api/math/Vec2f;Z)Z",
+          "note": "false first for: offset null, indicator disabled, dynamic, only-when-aiming and not aiming",
+          "sha256": "aae8efaa0ecddb9f596de17bc8620af70de5328d7725653860977549770d7c39"
+        },
+        {
+          "class": "com/github/exopandora/shouldersurfing/client/renderer/CrosshairRenderer",
+          "method": "computeIsObstructionCrosshairVisible",
+          "desc": "(Lcom/github/exopandora/shouldersurfing/api/client/IShoulderSurfing;Z)Z",
+          "note": "!isShoulderSurfing && isAiming && indicator visible: never true while shoulder surfing",
+          "sha256": "9fb716261f62b5ba64a3fd53389e548a4558fbe7b1000225fc1f38ef75d33876"
+        },
+        {
+          "class": "com/github/exopandora/shouldersurfing/client/renderer/CrosshairRenderer",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: the offset field is read only by setupPoseStack / resetPoseStack (called when dynamic, obstruction crosshair or indicator visible); no getter",
+          "sha256": "cf882ef300230e036c3cf8814acb601d01b970526619799645f48c1b8d329e97"
+        },
+        {
+          "class": "com/github/exopandora/shouldersurfing/client/world/phys/ObjectPicker",
+          "method": "pick",
+          "desc": "(Lcom/github/exopandora/shouldersurfing/api/client/world/phys/PickContext;DFLnet/minecraft/client/multiplayer/MultiPlayerGameMode;)Lnet/minecraft/world/phys/HitResult;",
+          "note": "a pick writes no state (block clip + entity scan)",
+          "sha256": "0da93ce8b7368d056f2c7e8d390b064eaeb41c97486273012576fe0d90324741"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of renderTick's call of CrosshairRenderer.computeCrosshairOffset (its only caller; the method itself stays as shipped, called through @Shadow): null without picking while shoulder surfing with a static crosshair when the obstruction indicator is disabled or shows only while aiming and the player is not aiming (helper bons.furious.patch.shouldersurfing_c49.CrosshairPickSkip)",
+      "license": "Shoulder Surfing Reloaded (MIT): no Shoulder Surfing code is carried; the inject only reads Shoulder Surfing's own state and config"
+    },
+    "shouldersurfing_item_pattern_memo": {
+      "mod": "shouldersurfing",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.shouldersurfing_c49.UtilPatternMemoMixin",
+        "bons.furious.mixin.shouldersurfing_c49.AimStatePatternMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/exopandora/shouldersurfing/api/util/Util",
+          "method": "expressionToMatchPredicate",
+          "desc": "(Ljava/lang/String;)Ljava/util/function/Predicate;",
+          "note": "tested build 5.2.0: Pattern.compile(expression).asMatchPredicate(), expression::equals on any Exception (absent in 5.0.11)",
+          "sha256": "450118d13d5620dc74da6890932c27ce3cedc5d51b2746b29067c6b94bd02689",
+          "sha256_also": [
+            {
+              "build": "shouldersurfing 5.0.11",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "com/github/exopandora/shouldersurfing/client/event/handler/ComputePlayerAimStateEventHandlerImpl",
+          "method": "expressionToMatchPredicate",
+          "desc": "(Ljava/lang/String;)Ljava/util/function/Predicate;",
+          "note": "absent in the tested build 5.2.0; 5.0.11's private copy of the same method (the accepted alternative build)",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "shouldersurfing 5.0.11",
+              "sha256": "450118d13d5620dc74da6890932c27ce3cedc5d51b2746b29067c6b94bd02689"
+            }
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of Pattern.compile(String) inside expressionToMatchPredicate (5.2.0: api.util.Util; 5.0.11: ComputePlayerAimStateEventHandlerImpl, offered by the group's plugin per matched build): the Pattern kept for that expression, or its compile's exception rethrown into the method's own catch; once 1,024 are kept the memo is bypassed (helper bons.furious.patch.shouldersurfing_c49.PatternMemo)",
+      "license": "Shoulder Surfing Reloaded (MIT): no Shoulder Surfing code is carried; the redirect returns the JDK's Pattern for the same expression"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "group": "tooltipoverhaul_c49",
+  "keys": {
+    "tooltipoverhaul_frame_tag_keys_memo": {
+      "mod": "tooltipoverhaul",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.tooltipoverhaul_c49.FrameTagKeysMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/xylonity/tooltipoverhaul/client/frame/CustomFrameData",
+          "method": "matchScore",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "note": "conditions, item list, then for each getTagKeys() entry stack.is(tag) (the list is only iterated), namespace, rarities",
+          "sha256": "bbb991888274c0ba2c17738498d170aa990363f9d3fe42bd560565640a7cb6f9"
+        },
+        {
+          "class": "dev/xylonity/tooltipoverhaul/client/frame/CustomFrameData",
+          "method": "getTagKeys",
+          "desc": "()Ljava/util/List;",
+          "note": "tags.stream().map(name -> TagKey.create(ITEM, new ResourceLocation(name))).collect(toList()): a fresh list from the tags list alone",
+          "sha256": "532630a23ad31ef27d0a4b8819bbe16aac33372235b25c28363654c69ff0e2a8"
+        },
+        {
+          "class": "dev/xylonity/tooltipoverhaul/client/frame/CustomFrameData",
+          "method": "lambda$getTagKeys$5",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/tags/TagKey;",
+          "note": "the per-name step: new ResourceLocation(name) (throws for an invalid name), TagKey.create",
+          "sha256": "609ae4687626082cb18a805b3e34dc450e93ea57e91976e036b8bfaf8c3e756e"
+        },
+        {
+          "class": "net/minecraft/tags/TagKey",
+          "method": "m_203882_",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/tags/TagKey;",
+          "note": "create: VALUES.intern(new TagKey(registry, location)), equal keys for equal inputs",
+          "sha256": "9f2ed852b1a7ff8bf40c67b07db96933ed61ecc88f5a26367e571aa0d60ec0ef"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation (require = 0) on the getTagKeys() call in CustomFrameData.matchScore: the definition keeps the built list (@Unique field) with the size and element references of the tags list it came from, and answers with it while they hold; otherwise getTagKeys() as shipped (an exception is never kept). Runtime flag tooltipoverhaulFrameTagKeysMemo (shadow .shadow). Helper bons.furious.patch.tooltipoverhaul_c49.FrameTagKeys.",
+      "license": "GPL-3.0 (Tooltip Overhaul): no Tooltip Overhaul code is carried, the wrapper keeps and hands back the list the mod's own method built"
+    }
+  }
+}

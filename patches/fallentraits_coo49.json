@@ -1,0 +1,438 @@
+{
+  "group": "fallentraits_coo49",
+  "keys": {
+    "fallentraits_devourer_index": {
+      "mod": "fallen_traits",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.fallentraits_coo49.FtDevourerIndexMixin",
+        "bons.furious.mixin.fallentraits_coo49.FtDevourerHealGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/kayn/fallen_traits/events/FTEvents",
+          "method": "onDevourerHeal",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingHealEvent;)V",
+          "note": "server, amount > 0; the LivingEntity search of the box grown by devourerRadiusPerLevel x getMaxLevel feeds only the loop: the first candidate with Devourer level > 0 inside its radius cancels the heal and takes it as overheal",
+          "sha256": "b063e4e788383ae9f308b0fcbb2756b96e31a9aaafede365962ad4ed1024061c"
+        },
+        {
+          "class": "net/kayn/fallen_traits/events/FTEvents",
+          "method": "lambda$onDevourerHeal$4",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "the search predicate: not the healed entity, alive, has the trait capability (pure)",
+          "sha256": "e69e0bdaa8a2b1d34859fa7b8a877deb7790be27ea27c374a207bc9595d4a9df"
+        },
+        {
+          "class": "dev/xkmc/l2hostility/content/capability/mob/MobTraitCap",
+          "method": "tick",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "the per-tick capability tick the index is fed from (one exit at the end)",
+          "sha256": "7e4466c32073d4d15002c2fbd8346e81c991073b88e2a9fbf13da5051bcdbbca",
+          "audit": true
+        },
+        {
+          "class": "dev/xkmc/l2hostility/content/capability/mob/MobTraitCap",
+          "method": "getTraitLevel",
+          "desc": "(Ldev/xkmc/l2hostility/content/traits/base/MobTrait;)I",
+          "note": "traits.getOrDefault(trait, 0)",
+          "sha256": "c0253c9781f310d656859af90b53fb6bf834e834019dd2b8c24a0e5e0555468d",
+          "audit": true
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at the end (TAIL) of L2 Hostility's MobTraitCap.tick(mob) records server-side mobs whose Devourer level is above 0 (weak, by identity) and forgets the others; MixinExtras @WrapOperation on the Level.getEntitiesOfClass (m_6443_) search of FTEvents.onDevourerHeal runs it as shipped only when an indexed mob is in the level, not removed, and its box meets the search box (a Devourer's own heal included: the search's predicate leaves the healed entity out), else answers an empty list. Trade-off, off by default: a Devourer that has not ticked since it got the trait or was loaded takes no heals until its first tick. Runtime flag fallentraitsDevourerIndex. Helper bons.furious.patch.fallentraits_coo49.FtDevourers.",
+      "license": "Fallen Traits & Relics (LGPL-2.1-or-later) and L2 Hostility (mods.toml All Rights Reserved): no code carried, the hooks carry only our own logic"
+    },
+    "fallentraits_infernal_follow_range_cap": {
+      "mod": "fallen_traits",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.fallentraits_coo49.FtInfernalPathMixin",
+        "bons.furious.mixin.fallentraits_coo49.FtInfernalTargetMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/kayn/fallen_traits/content/traits/legendary/InfernalTrait",
+          "method": "initialize",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;I)V",
+          "note": "TraitManager.addAttribute(FOLLOW_RANGE, \"fallen_traits_infernal_follow_range\", 2048, ADDITION): the modifier the cap looks for",
+          "sha256": "f7615b8b75628af17ac5e4c20ae232de8499b7c945de8d8d7a0f49e68303cb4d"
+        },
+        {
+          "class": "dev/xkmc/l2library/util/math/MathHelper",
+          "method": "getUUIDFromString",
+          "desc": "(Ljava/lang/String;)Ljava/util/UUID;",
+          "note": "the modifier's UUID from its name",
+          "sha256": "e4987bbf8a9d6e6f024e8e1b67f2640483502f409b497f97a78ae85a1d5b6e72",
+          "audit": true
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/navigation/PathNavigation",
+          "method": "m_148222_",
+          "desc": "(Ljava/util/Set;IZIF)Lnet/minecraft/world/level/pathfinder/Path;",
+          "note": "createPath: the follow range sizes the PathNavigationRegion and the path finder's maximum distance",
+          "sha256": "6dd6037e8a8b9d5b0dd00a8856161d1570f34ffee2d173982c74448a67bef89d"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal",
+          "method": "m_26073_",
+          "desc": "()V",
+          "note": "findTarget: getFollowDistance() feeds only getTargetSearchArea for non-player target types",
+          "sha256": "cf99316852c2181605c44899eff2400581b8d669544244e3fda8ad7fe2079a86"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal",
+          "method": "m_7255_",
+          "desc": "(D)Lnet/minecraft/world/phys/AABB;",
+          "note": "getTargetSearchArea: the mob's box grown by the distance (4 vertically)",
+          "sha256": "e8a0ccebdcc60c643ba260a3d2366f4976e895f13fe7eaa706ed4558e64c74ca"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@ModifyVariable at the head of PathNavigation.createPath (m_148222_) on its follow-range argument and MixinExtras @ModifyExpressionValue on the getFollowDistance() (m_7623_) call of NearestAttackableTargetGoal.findTarget (m_26073_): for a mob whose FOLLOW_RANGE instance holds Fallen Traits' Infernal modifier (L2 Library's UUID for fallen_traits_infernal_follow_range) a value above 256 becomes 256; anything at or below 256 is untouched without a lookup. Trade-off, off by default: an Infernal mob's paths toward targets farther than 256 blocks end at the closest point reached and it picks no new non-player targets beyond 256 blocks; keeping a target and player targeting keep the full range. Runtime flag fallentraitsInfernalFollowRangeCap. Helper bons.furious.patch.fallentraits_coo49.FtInfernal.",
+      "license": "Fallen Traits & Relics (LGPL-2.1-or-later): no code carried; Minecraft: the hooks carry only our own logic; L2 Library: its public MathHelper is called"
+    },
+    "fallentraits_relic_modifier_unchanged_skip": {
+      "mod": "fallen_traits",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.fallentraits_coo49.FtRelicModifierMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/kayn/fallen_traits/content/item/curio/FuryOfInfernal",
+          "method": "setOrRemoveModifier",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/ai/attributes/Attribute;Ljava/util/UUID;Ljava/lang/String;DLnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;)V",
+          "note": "ins = getAttribute(attr), return if null; getModifier(id) != null -> removeModifier(id); value != 0 -> addTransientModifier(new AttributeModifier(id, name, value, op))",
+          "sha256": "fd65efd4ba38ba1f10862a6f8d8ff7d4316e015f97477b61e93671cffdb6ac76"
+        },
+        {
+          "class": "net/kayn/fallen_traits/content/item/curio/LawOfScale",
+          "method": "setOrRemoveModifier",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/ai/attributes/Attribute;Ljava/util/UUID;Ljava/lang/String;DLnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;)V",
+          "note": "the same body as FuryOfInfernal's",
+          "sha256": "fd65efd4ba38ba1f10862a6f8d8ff7d4316e015f97477b61e93671cffdb6ac76"
+        },
+        {
+          "class": "net/kayn/fallen_traits/content/item/curio/TitansHeart",
+          "method": "setOrRemoveModifier",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/ai/attributes/Attribute;Ljava/util/UUID;Ljava/lang/String;DLnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;)V",
+          "note": "the same body as FuryOfInfernal's",
+          "sha256": "fd65efd4ba38ba1f10862a6f8d8ff7d4316e015f97477b61e93671cffdb6ac76"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22111_",
+          "desc": "(Ljava/util/UUID;)Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;",
+          "note": "getModifier(UUID): the id map read",
+          "sha256": "7a9e9d9c7855dd3f342c69a5deea906a408d045960683bb81281e5813a135607"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22120_",
+          "desc": "(Ljava/util/UUID;)V",
+          "note": "removeModifier(UUID): removes the held modifier and marks dirty",
+          "sha256": "55f6e5482ef6bb9694021818f9bd11ad23273ea9092fd0c29a57a6b52d08a8e8"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22118_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "note": "addTransientModifier: add to the operation set and the id map, mark dirty",
+          "sha256": "2a8a80759bde722846a1e3e820ad49523a423adf85ab210c25298a9259e7eeb7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on wearer.getAttribute(attr) (m_21051_) at the head of the private setOrRemoveModifier of FuryOfInfernal, LawOfScale and TitansHeart (with the id, name, value and operation arguments): null is answered (the method's own early return) when value != 0 and the instance already holds a transient modifier with the id and the same name, amount bits and operation; otherwise the instance and the method as shipped. Exact variant: no dirty mark for an unchanged re-apply. Runtime flag fallentraitsRelicModifierUnchangedSkip. Helpers bons.furious.patch.fallentraits_coo49.FtRelics + bons.furious.patch.attribute_lookup.AttributeReapply (method handle).",
+      "license": "Fallen Traits & Relics (LGPL-2.1-or-later): no code carried, the wrapper carries only our own logic; Minecraft: read only"
+    },
+    "fallentraits_render_scale_frame_memo": {
+      "mod": "fallen_traits",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.fallentraits_coo49.FtRenderScaleMixin",
+        "bons.furious.mixin.fallentraits_coo49.FtScaleMemoMixin",
+        "bons.furious.mixin.fallentraits_coo49.FtWorldRenderMixin",
+        "bons.furious.mixin.fallentraits_coo49.FtClientTickMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/kayn/fallen_traits/content/traits/legendary/SizeTrait",
+          "method": "getScale",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)F",
+          "note": "1 for non-living entities and the inventory preview; else the Titan / Dwarf levels (trait map + ForgeData) and the SIZE_SCALE attribute: reads only",
+          "sha256": "2fc2376bed45aa8f633dba896b72039e911309a5af3f58d2241981a9eaf2b0c6"
+        },
+        {
+          "class": "net/kayn/fallen_traits/client/SizeRenderContext",
+          "method": "isInventoryPreview",
+          "desc": "()Z",
+          "note": "the preview flag getScale answers 1 for",
+          "sha256": "4bfe458a152480ffd1635ed64314239b70187c73480663edb089f6cf6c6f767a"
+        },
+        {
+          "class": "net/minecraft/client/renderer/LevelRenderer",
+          "method": "m_109599_",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;FJZLnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/GameRenderer;Lnet/minecraft/client/renderer/LightTexture;Lorg/joml/Matrix4f;)V",
+          "note": "renderLevel: the world render the mark spans",
+          "sha256": "1b0476ce4324f88f476ff5cc106fb1e5b33ca719a769f84e41d9b1bd6556f120"
+        },
+        {
+          "class": "net/minecraft/client/Minecraft",
+          "method": "m_91398_",
+          "desc": "()V",
+          "note": "tick: the client tick that clears the mark",
+          "sha256": "ea491bb23a8736f5fb65d49b90294514fc2c0e2eefc937eae766385e0e09f335"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on SizeTrait.getScale(entity): while LevelRenderer.renderLevel runs on this thread (an @Inject at its head and returns sets / clears our mark; an @Inject at the head of Minecraft.tick clears it too) a living entity's scale is taken once per entity tick (tickCount, two @Unique fields on LivingEntity through the FtScaleMemo interface) and the kept value answered until its next tick; every other call (ticks, other threads, the inventory preview) runs as shipped. Trade-off, off by default: a size change shows on screen up to one tick late. Runtime flag fallentraitsRenderScaleFrameMemo. Helpers bons.furious.patch.fallentraits_coo49.FtScale, FtScaleMemo.",
+      "license": "Fallen Traits & Relics (LGPL-2.1-or-later): no code carried, the wrapper carries only our own logic; Minecraft: the marks add no behaviour"
+    },
+    "fallentraits_root_slot_list_lazy": {
+      "mod": "fallen_traits",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.fallentraits_coo49.FtRootSlotListMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/kayn/fallen_traits/content/item/curio/YggdrasilRoot",
+          "method": "curioTick",
+          "desc": "(Ltop/theillusivec4/curios/api/SlotContext;Lnet/minecraft/world/item/ItemStack;)V",
+          "note": "server, alive; list = CurioCompat.getItemAccess(le) first; the YggdrasilRoot-tag branch never reads it; the other branch reads it only to find SealedItem stacks (each found one is taken, sealed and recorded)",
+          "sha256": "25c86de44af9b53c83cfd1ce1a62c5247d33341d0a695611acfb0f5abe609463"
+        },
+        {
+          "class": "dev/xkmc/l2hostility/compat/curios/CurioCompat",
+          "method": "getItemAccess",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/List;",
+          "note": "a new list: one EquipmentSlotAccess per EquipmentSlot, then getItemAccessImpl when Curios is loaded",
+          "sha256": "c4b759027a3ea75986656cde7cf3c0422f797b8a04b153e716cd50b2bfdebe00",
+          "audit": true
+        },
+        {
+          "class": "dev/xkmc/l2hostility/compat/curios/CurioCompat",
+          "method": "getItemAccessImpl",
+          "desc": "(Ljava/util/List;Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "one CurioSlotAccess per equipped slot of every slot type (getCurios, getStacks, getSlots): reads and allocates",
+          "sha256": "88aac0970c8be68b4b8b858478273f28cfc851cc6331a4ac4e1d6c8904531a3a",
+          "audit": true
+        },
+        {
+          "class": "dev/xkmc/l2hostility/compat/curios/EquipmentSlotAccess",
+          "method": "get",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "le.getItemBySlot(slot)",
+          "sha256": "f1c7500af3aae69563f3e8893df3c10f051506bc0ac8d9a26d88e3543e1a28ac",
+          "audit": true
+        },
+        {
+          "class": "dev/xkmc/l2hostility/compat/curios/CurioCompat$CurioSlotAccess",
+          "method": "get",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "the handler's stack in the slot, EMPTY past its size",
+          "sha256": "4ce1d99c478f30c4b9e9c70e78c8c22ac87c4b5a2724e1a7a891912c42311d8a",
+          "audit": true
+        },
+        {
+          "class": "top/theillusivec4/curios/common/inventory/CurioStacksHandler",
+          "method": "getStacks",
+          "desc": "()Ltop/theillusivec4/curios/api/type/inventory/IDynamicStackHandler;",
+          "audit": true,
+          "note": "applies a pending slot-count update first (the skip needs none pending)",
+          "sha256": "6675e74182e8b58193b191461d657ffc8cffe58a6ce8fd39570de6bd30155c22"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/inventory/CurioStacksHandler",
+          "method": "update",
+          "desc": "()V",
+          "audit": true,
+          "note": "the pending slot-count update the skip must not leave out",
+          "sha256": "2f365d2637d4c1ed755d7e1cb85f45f41073d3eb27d698d2d6710ebf26304387"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on CurioCompat.getItemAccess(wearer) in YggdrasilRoot.curioTick (with the stack argument): an empty list is answered when the stack carries the YggdrasilRoot tag and CuriosPresence.quiet(wearer) (a Curios walk would only read), or when none of the six equipment slots holds a SealedItem and CuriosPresence.wornAny(wearer, instanceof SealedItem) == 0 (certain: no equipped curio slot holds one, no pending update); otherwise the list is built as shipped. CuriosPresence (group curios_presence) is reached by method handles; absent, off or unsure answers keep the stock path. Runtime flag fallentraitsRootSlotListLazy. Helper bons.furious.patch.fallentraits_coo49.FtRoot.",
+      "license": "Fallen Traits & Relics (LGPL-2.1-or-later) and L2 Hostility (mods.toml All Rights Reserved): no code carried, the wrapper carries only our own logic; Curios (LGPL-3.0): read through our presence layer"
+    },
+    "fallentraits_unset_persistent_data_skip": {
+      "mod": "fallen_traits",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.fallentraits_coo49.FtPersistentDataAccessor",
+        "bons.furious.mixin.fallentraits_coo49.FtClonePeekMixin",
+        "bons.furious.mixin.fallentraits_coo49.FtWrathPeekMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/kayn/fallen_traits/events/FTEvents",
+          "method": "onCloneTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "server; getPersistentData().getBoolean(fallen_traits_is_clone) false -> return",
+          "sha256": "0e4710cdcbe73fb98a35a9cd4d5fdf466d21a2bdd86d1116ac953c04fe636e00"
+        },
+        {
+          "class": "net/kayn/fallen_traits/events/FTEvents",
+          "method": "onCloneDamaged",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V",
+          "note": "server; getPersistentData().getBoolean(fallen_traits_is_clone) false -> return",
+          "sha256": "a2f16c30b1cb985ff0179f1baa3bf3b78066e1f7dc4abf83d9d0cbb5d452d5ae"
+        },
+        {
+          "class": "net/kayn/fallen_traits/events/FTEvents",
+          "method": "onCloneDeath",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingDeathEvent;)V",
+          "note": "server; getPersistentData().getBoolean(fallen_traits_is_clone) false -> return",
+          "sha256": "7be08a148b0f5119bc09a338486193a33b83b50492c45f365777fc4f2f00faca"
+        },
+        {
+          "class": "net/kayn/fallen_traits/content/item/curio/WrathOfFenrir",
+          "method": "restoreExpiredTraits",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "server, trait capability; getPersistentData().contains(ft.wrath_disabled_traits, 9) false -> return",
+          "sha256": "468c9a69645250dbcb6cd79233fdf182ad84db92a7768a75e64f5b9a33bb9629"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "getPersistentData",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "Forge: creates the compound on the first ask",
+          "sha256": "1355a99782fa41f3f4e5ab09b04e4a97f6beee3ef09f2d211b96ccc318e77ba1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the first entity.getPersistentData() of FTEvents.onCloneTick, onCloneDamaged and onCloneDeath and of WrathOfFenrir.restoreExpiredTraits: Forge's persistentData field when set, else one shared empty compound that nothing writes (each site only reads it and returns when the key is absent); an entity class that declares its own getPersistentData() is asked through it (class state kept per entity: @Shadow of Forge's persistentData field + one @Unique byte on Entity, FtPersistentDataAccessor). Exact variant: entities nothing writes ForgeData to no longer save an empty ForgeData tag. Runtime flag fallentraitsUnsetPersistentDataSkip. Helper bons.furious.patch.fallentraits_coo49.FtPeek.",
+      "license": "Fallen Traits & Relics (LGPL-2.1-or-later): no code carried, the redirects carry only our own logic; Forge: its field is read"
+    },
+    "fallentraits_unused_streak_reset_skip": {
+      "mod": "fallen_traits",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.fallentraits_coo49.FtStreakMarkMixin",
+        "bons.furious.mixin.fallentraits_coo49.FtStreakResetMixin",
+        "bons.furious.mixin.fallentraits_coo49.FtStreakStateMixin"
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the two EntityCakyHandler.resolveWith calls of FTEvents.onHurt (the Rage Glove / Hand of Creation streak resets with reviewer 1, answers dropped) and @ModifyArg on the entity argument of the resolveWith call in RageGlove.getStack and HandOfCreation.getStack (the relics' only streak reads, reviewer 0): an entity whose streak a relic asked for is marked (one @Unique byte on LivingEntity) and gets the shipped reset; for an unmarked one the reset is left out, the first time with one marker entry of ours so that its Fallen Lib cache is made with the reset's type exactly when the reset would make it. Helper bons.furious.patch.fallentraits_coo49.FtStreaks.",
+      "license": "Fallen Traits & Relics and Fallen Lib (LGPL-2.1-or-later): no code carried, the hooks carry only our own logic and call Fallen Lib's public EntityCakyHandler",
+      "guard": [
+        {
+          "class": "net/kayn/fallen_traits/events/FTEvents",
+          "method": "onHurt",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V",
+          "note": "amount > 0: resolveWith(entity, ft.glove_stack / ft.hand_of_creation_stack, MANUAL, new Stack, reviewer 1), answers dropped",
+          "sha256": "7bf6cedd28c361d29a1c9f2db318c82af89c4207764ec8a65274910fc8563da1"
+        },
+        {
+          "class": "net/kayn/fallen_traits/events/FTEvents",
+          "method": "lambda$onHurt$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lnet/kayn/fallen_traits/content/item/curio/RageGlove$Stack;",
+          "note": "new RageGlove.Stack()",
+          "sha256": "1bc0d843b2c8cc4db2f8b5746b9291af2327c2be74b1b7956a71347fc35d8439"
+        },
+        {
+          "class": "net/kayn/fallen_traits/events/FTEvents",
+          "method": "lambda$onHurt$1",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)I",
+          "note": "reviewer 1",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/kayn/fallen_traits/events/FTEvents",
+          "method": "lambda$onHurt$2",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lnet/kayn/fallen_traits/content/item/curio/HandOfCreation$Stack;",
+          "note": "new HandOfCreation.Stack()",
+          "sha256": "af622ba965cbb491b86a3055e5e9c130ace8c7a74a4632aa827b0ee186215da5"
+        },
+        {
+          "class": "net/kayn/fallen_traits/events/FTEvents",
+          "method": "lambda$onHurt$3",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)I",
+          "note": "reviewer 1",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/kayn/fallen_traits/content/item/curio/RageGlove",
+          "method": "getStack",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lnet/kayn/fallen_traits/content/item/curio/RageGlove$Stack;",
+          "note": "resolveWith(wearer, ft.glove_stack, MANUAL, new Stack, reviewer 0)",
+          "sha256": "d27c3976ce1ad4d03900e591527e876113b08a3709073ec54d29ea06e732678e"
+        },
+        {
+          "class": "net/kayn/fallen_traits/content/item/curio/RageGlove",
+          "method": "lambda$getStack$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lnet/kayn/fallen_traits/content/item/curio/RageGlove$Stack;",
+          "note": "new RageGlove.Stack()",
+          "sha256": "1bc0d843b2c8cc4db2f8b5746b9291af2327c2be74b1b7956a71347fc35d8439"
+        },
+        {
+          "class": "net/kayn/fallen_traits/content/item/curio/RageGlove",
+          "method": "lambda$getStack$1",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)I",
+          "note": "reviewer 0",
+          "sha256": "a9057d062fb197564c8e845386d2280bde1a1cc2fd7f4098adc42ac45ea65ea5"
+        },
+        {
+          "class": "net/kayn/fallen_traits/content/item/curio/HandOfCreation",
+          "method": "getStack",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lnet/kayn/fallen_traits/content/item/curio/HandOfCreation$Stack;",
+          "note": "resolveWith(wearer, ft.hand_of_creation_stack, MANUAL, new Stack, reviewer 0)",
+          "sha256": "d4a0576ca4d603fe6fa0dfe30e469580c964305c5ef908336895f6a6c25068c4"
+        },
+        {
+          "class": "net/kayn/fallen_traits/content/item/curio/HandOfCreation",
+          "method": "lambda$getStack$6",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lnet/kayn/fallen_traits/content/item/curio/HandOfCreation$Stack;",
+          "note": "new HandOfCreation.Stack()",
+          "sha256": "af622ba965cbb491b86a3055e5e9c130ace8c7a74a4632aa827b0ee186215da5"
+        },
+        {
+          "class": "net/kayn/fallen_traits/content/item/curio/HandOfCreation",
+          "method": "lambda$getStack$7",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)I",
+          "note": "reviewer 0",
+          "sha256": "a9057d062fb197564c8e845386d2280bde1a1cc2fd7f4098adc42ac45ea65ea5"
+        },
+        {
+          "class": "net/rtxyd/fallen/lib/runtime/forgemod/util/EntityCakyHandler",
+          "method": "resolveWith",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Ljava/lang/String;Lnet/rtxyd/fallen/lib/util/IObjectCaky$Type;Lnet/rtxyd/fallen/lib/util/IObjectCaky$CakyLoader;Lnet/rtxyd/fallen/lib/util/IObjectCaky$CakyReviewer;)Ljava/lang/Object;",
+          "note": "the entity cast to its cache handler",
+          "audit": true,
+          "sha256": "0df8d04746559b95a2aab8826453f818d5f7ef09421a034f2d71fd7534b80209"
+        },
+        {
+          "class": "net/rtxyd/fallen/lib/runtime/forgemod/mixin/LivingEntityMixin",
+          "method": "fallen_lib$getObjectCakyWith",
+          "desc": "(Ljava/lang/String;Lnet/rtxyd/fallen/lib/util/IObjectCaky$Type;Lnet/rtxyd/fallen/lib/util/IObjectCaky$CakyLoader;Lnet/rtxyd/fallen/lib/util/IObjectCaky$CakyReviewer;)Ljava/lang/Object;",
+          "note": "the first use fixes the cache type (FINAL / MANUAL)",
+          "audit": true,
+          "sha256": "83c8a3bc5f74c7e4c5835cc96f9cdaf4beb739bb0100a3d77c92e948d2486bbc"
+        },
+        {
+          "class": "net/rtxyd/fallen/lib/util/ManualObjectCaky",
+          "method": "resolve",
+          "desc": "(Ljava/lang/Object;Ljava/lang/String;Lnet/rtxyd/fallen/lib/util/IObjectCaky$CakyLoader;Lnet/rtxyd/fallen/lib/util/IObjectCaky$CakyReviewer;)Ljava/lang/Object;",
+          "note": "missing: load + entry(reviewer); present and reviewer differs: reload",
+          "audit": true,
+          "sha256": "afb8af3ecbd60d2096fc3871daf93dc588be53700e5cba054752ac6c33ca4e01"
+        }
+      ]
+    }
+  }
+}

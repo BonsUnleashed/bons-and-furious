@@ -1,0 +1,76 @@
+{
+  "group": "blessfulled_c49",
+  "keys": {
+    "blessfulled_geckolib_overlay_null_source": {
+      "mod": "blessfulled",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "fix",
+      "mixins": [
+        "bons.furious.mixin.blessfulled_c49.FrostboundGeoLayerNullSourceMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/aqutheseal/blessfulled/integration/BSGeckoLib$FrostboundGeoLayer",
+          "method": "render",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/client/renderer/RenderType;Lnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/VertexConsumer;FII)V",
+          "note": "a LivingEntity animatable: shouldRenderOverlay(getLastDamageSource()) without a null check, then one reRender with alpha hurtTime / 10 into entityTranslucent(texture)",
+          "sha256": "ffff6b5c1e22fa02ace6811efb6cb938238d2453a7694ec77a437940dd42ab8b"
+        },
+        {
+          "class": "org/aqutheseal/blessfulled/integration/BSGeckoLib$FrostboundGeoLayer",
+          "method": "getRenderType",
+          "desc": "(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;)Lnet/minecraft/client/renderer/RenderType;",
+          "note": "RenderType.entityTranslucent (fragments below alpha 0.1 discarded)",
+          "sha256": "9a23c641ca3222fb34130a71cd9ca87f9386b0b1159c314fd5d33eef7820a3a7"
+        },
+        {
+          "class": "org/aqutheseal/blessfulled/triggers/HurtOverlayTriggers",
+          "method": "shouldRenderOverlay",
+          "desc": "(Lnet/minecraft/world/damagesource/DamageSource;)Z",
+          "note": "ONLY_BY_PLAYER: source.getDirectEntity() instanceof Player (throws for a null source); DISABLED: false; otherwise true",
+          "sha256": "31fdae474f76f6fe5870bfb0d874eb1b254799ed0d7b96cd41656d55827955eb"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on BSGeckoLib$FrostboundGeoLayer.render: returns for a LivingEntity without a damage source when the setting is ONLY_BY_PLAYER or hurtTime <= 1 (helper bons.furious.patch.blessfulled_c49.HurtOverlaySkip)",
+      "license": "All Rights Reserved (Blessfulled): no Blessfulled code is carried; the injector and its decision are ours"
+    },
+    "blessfulled_invisible_overlay_skip": {
+      "mod": "blessfulled",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.blessfulled_c49.FrostboundGeoLayerInvisibleMixin",
+        "bons.furious.mixin.blessfulled_c49.HurtOverlayTriggersInvisibleMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/aqutheseal/blessfulled/integration/BSGeckoLib$FrostboundGeoLayer",
+          "method": "render",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/client/renderer/RenderType;Lnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/VertexConsumer;FII)V",
+          "note": "the overlay's alpha is hurtTime / 10; nothing else is drawn or changed",
+          "sha256": "ffff6b5c1e22fa02ace6811efb6cb938238d2453a7694ec77a437940dd42ab8b"
+        },
+        {
+          "class": "org/aqutheseal/blessfulled/triggers/HurtOverlayTriggers",
+          "method": "renderOverlay",
+          "desc": "(Lnet/minecraft/client/renderer/entity/LivingEntityRenderer;Lnet/minecraft/world/entity/LivingEntity;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;)V",
+          "note": "a non-null source passing shouldRenderOverlay: the renderer's model once more into entityTranslucent(texture) with alpha hurtTime / 10; nothing else",
+          "sha256": "8b01804d4a8a05834b26a4a4dedc06b9a0f23e5ad64bac9a95478d8e69fce935"
+        },
+        {
+          "class": "org/aqutheseal/blessfulled/mixin/LivingEntityRendererMixin",
+          "method": "*",
+          "desc": "",
+          "note": "renderOverlay is called right after LivingEntityRenderer.render's own model.renderToBuffer (same model, same pose)",
+          "sha256": "046cccf7050c8083d7f00415041cb4d0c4892d255c9c77a817581c69fc213c5c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on BSGeckoLib$FrostboundGeoLayer.render and on HurtOverlayTriggers.renderOverlay: return while hurtTime <= 1 (vertex alpha 0 or 25 of 255, below the 0.1 cut of the entity translucent shader) (helper bons.furious.patch.blessfulled_c49.HurtOverlaySkip)",
+      "license": "All Rights Reserved (Blessfulled): no Blessfulled code is carried; the injectors and their decision are ours"
+    }
+  }
+}

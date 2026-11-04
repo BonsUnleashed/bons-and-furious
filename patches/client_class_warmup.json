@@ -1,0 +1,42 @@
+{
+  "group": "client_class_warmup",
+  "keys": {
+    "client_class_warmup": {
+      "mod": "minecraft",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.client_class_warmup.TitleScreenWarmupMixin",
+        "bons.furious.mixin.client_class_warmup.ClientPacketListenerWarmupMixin",
+        "bons.furious.mixin.client_class_warmup.MinecraftWarmupLeaveMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/gui/screens/TitleScreen",
+          "method": "m_7856_",
+          "desc": "()V",
+          "note": "init: the title screen is shown (first time = the warm-up starts)",
+          "sha256": "fdce91baaf61bd0f878bbcb18d2ba7cc964c297c848cd4298233e2855379c09c"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientPacketListener",
+          "method": "m_5998_",
+          "desc": "(Lnet/minecraft/network/protocol/game/ClientboundLoginPacket;)V",
+          "note": "handleLogin: ensureRunningOnSameThread first, then the client level is created (the join)",
+          "sha256": "716f2e1689f4ebf49410046de1ad1384563d41c83bacacbbe6e420ccb2dc44eb"
+        },
+        {
+          "class": "net/minecraft/client/Minecraft",
+          "method": "m_91320_",
+          "desc": "(Lnet/minecraft/client/gui/screens/Screen;)V",
+          "note": "clearLevel: leaving the world",
+          "sha256": "02591f35024373ee84f2ad18bffb1192e32c221903a0f0f109b99421a5301c78"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject RETURN of TitleScreen.init (warm-up thread once per launch + JFR class-define recorder), @Inject RETURN of ClientPacketListener.handleLogin (join: 3-minute recorded window, warm-up limit join + 10 s), @Inject HEAD of Minecraft.clearLevel(Screen) (leave: window closes, warm-up stops); helpers bons.furious.patch.client_class_warmup.ClassWarmup (list file, fingerprint, warm-up: Class.forName(name, false, gameLoader) + getDeclaredConstructors) and ClassDefineRecorder (jdk.jfr RecordingStream, jdk.ClassDefine only); require = 0",
+      "license": "Minecraft (Mojang) and Forge: no code of either is carried; the helpers are our own and only load and link classes the game itself defined before (JDK Flight Recorder for the list)"
+    }
+  }
+}

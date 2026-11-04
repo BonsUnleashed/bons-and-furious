@@ -1,0 +1,32 @@
+{
+  "group": "createsolar_c49",
+  "keys": {
+    "createsolar_goggles_reflection_memo": {
+      "mod": "createsolar",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.createsolar_c49.ClientIntegrationGogglesMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/hachirouwu/createsolar/ClientIntegration",
+          "method": "onRenderGui",
+          "desc": "(Lnet/minecraftforge/client/event/RenderGuiEvent$Post;)V",
+          "note": "createChecked probe; per frame Class.forName(gogglesClassName).getMethod(\"isWearing\", Player.class).invoke(null, player) in a try that returns on any Exception",
+          "sha256": "5d62155ea3313851ddeb88640925635b8af6af4b8b8b7b958c6d61e790a32471"
+        },
+        {
+          "class": "com/hachirouwu/createsolar/ClientIntegration",
+          "method": "*",
+          "desc": "",
+          "note": "gogglesClassName / createChecked / createPresent are written only by onRenderGui's first-use probe",
+          "sha256": "ba9e5331b1bba46a5d5aeb552ec93521e73582b4c9fe1842595a4c46e2f2ffa8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@WrapOperation on the per-frame Class.forName (ordinal 1) and Class.getMethod calls of ClientIntegration.onRenderGui, answered from the last answer of the same call (helper bons.furious.patch.createsolar_c49.GogglesMemo)",
+      "license": "MIT (Create: Solar Powered): no mod code is carried; the wrappers and the memo are ours"
+    }
+  }
+}

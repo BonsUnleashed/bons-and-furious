@@ -1,0 +1,46 @@
+{
+  "group": "copycats_migration_c49",
+  "keys": {
+    "copycats_migration_fast_path": {
+      "mod": "copycats",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.copycats_migration_c49.MigrationManagerFastMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/copycatsplus/copycats/foundation/copycat/MigrationManager",
+          "method": "migrateBlockEntity",
+          "desc": "(Lnet/minecraft/world/level/chunk/LevelChunk;Lnet/minecraft/world/level/block/entity/BlockEntity;)Lnet/minecraft/world/level/block/entity/BlockEntity;",
+          "note": "migrationDisabled() -> return; state read; isCopycatAndNeedingConversion; else return the block entity",
+          "sha256": "a43d8fde0bde174ff03048fe30a0bb9f99743e302ed652d8b64f7d7b0ebaf884"
+        },
+        {
+          "class": "com/copycatsplus/copycats/foundation/copycat/MigrationManager",
+          "method": "isCopycatAndNeedingConversion",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/BlockEntity;)Z",
+          "note": "BLOCK_ENTITY_TYPE.getKey(type) null -> false; id.toString().equalsIgnoreCase(\"create:copycat\") && block namespace copycats",
+          "sha256": "08070ae25beb0059f3970eb03d6b2b12ef9cadbbd832c45feaee0ed618ba274f"
+        },
+        {
+          "class": "com/copycatsplus/copycats/foundation/copycat/MigrationManager",
+          "method": "migrateStructure",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;)Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;",
+          "note": "both conversions need a MultiStateCopycatBlock or a CCCopycatBlock; else the same info",
+          "sha256": "db009bf105794f591de0ae434ab4bca5469e2094cea2c4e757f08e8ca43ec20f"
+        },
+        {
+          "class": "com/copycatsplus/copycats/foundation/copycat/MigrationManager",
+          "method": "migrationDisabled",
+          "desc": "()Z",
+          "note": "safeGetter around a config read; no other effect",
+          "sha256": "e93f455d07415d77ceb705b57b2d96ee4b18a9365cd4b3b3c579338e3913ec24"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on MigrationManager.migrateBlockEntity (type is not create:copycat -> the block entity) and migrateStructure (block neither MultiStateCopycatBlock nor CCCopycatBlock -> the info) (helper bons.furious.patch.copycats_migration_c49.MigrationFastPath)",
+      "license": "All Rights Reserved (Copycats+): no Copycats+ code is carried; the injectors and checks are ours"
+    }
+  }
+}

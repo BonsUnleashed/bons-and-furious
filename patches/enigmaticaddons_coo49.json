@@ -1,0 +1,178 @@
+{
+  "group": "enigmaticaddons_coo49",
+  "keys": {
+    "enigmaticaddons_idle_frost_skip": {
+      "mod": "enigmaticaddons",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.enigmaticaddons_coo49.EaFrostTickMixin",
+        "bons.furious.mixin.enigmaticaddons_coo49.EaFrostEnchantMixin",
+        "bons.furious.mixin.enigmaticaddons_coo49.EaFrostLivingLookMixin",
+        "bons.furious.mixin.enigmaticaddons_coo49.EaFrostEntityLookMixin"
+      ],
+      "guard": [
+        {
+          "class": "auviotre/enigmatic/addon/mixin/MixinLivingEntity",
+          "method": "tickMix",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "end of LivingEntity.tick: client frost particles, then if (!canFreeze() && getTicksFrozen() > 0) setTicksFrozen(0); canFreeze() is its only call of it",
+          "sha256": "9a970bc5e69aaeffb1e8861606bbfe9519369acc15a42122683b07edcb5b40bc"
+        },
+        {
+          "class": "auviotre/enigmatic/addon/mixin/MixinLivingEntity",
+          "method": "canFreezeMix",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "RETURN of canFreeze: hasEffect, two curio lookups, an enchantment level; reads only (with no Curios update pending)",
+          "sha256": "62c7910f5f9414377334d8b3efb5b919d2692d411162a0c7a51cf43dc3637ea6"
+        },
+        {
+          "class": "auviotre/enigmatic/addon/handlers/AddonEventHandler",
+          "method": "onTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "ends with level = getEnchantmentLevel(FROST_PROTECTION, entity) (its only call): level >= 16 sets 0 frozen ticks, levels 1-15 set max(frozen - 1, 0) on some ticks; nothing reads level afterwards",
+          "sha256": "ee006d8626b8d29f0e81c52c64d54a70543473029473f28bb13004d700cf34f5"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_142079_",
+          "desc": "()Z",
+          "note": "canFreeze: spectator and armour tag reads, then Entity.canFreeze",
+          "sha256": "28734b40606c431bf82f65e09fcb3e5bd95c0514c2c6526f565f3eb012b721f5"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_142079_",
+          "desc": "()Z",
+          "note": "canFreeze: entity type tag read",
+          "sha256": "f5992600af7d31c8d3a341d5a0c632a1b0e645eebef7888391f3801f7b7da3ee"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_146888_",
+          "desc": "()I",
+          "note": "getTicksFrozen: synched data read",
+          "sha256": "65bb9a196731eb1ada248166820b724190a0575331c61517809faa4408df63e3"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_146917_",
+          "desc": "(I)V",
+          "note": "setTicksFrozen: SynchedEntityData.set",
+          "sha256": "bbb7c9bd359994868397c557711031fe81a761c6e126393940eff7aef84a8253"
+        },
+        {
+          "class": "net/minecraft/network/syncher/SynchedEntityData",
+          "method": "m_135381_",
+          "desc": "(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V",
+          "note": "set(accessor, value) = set(accessor, value, false)",
+          "sha256": "c494049370da7e08308e96ae22c92d0b8a23b9dfdebc1bc13e2833d92d06a3b2"
+        },
+        {
+          "class": "net/minecraft/network/syncher/SynchedEntityData",
+          "method": "m_276349_",
+          "desc": "(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;Z)V",
+          "note": "an equal value (ObjectUtils.notEqual false) changes nothing",
+          "sha256": "88ecebba168b7197eb267383c3ecdd33d519f277368df21eae0cdc9b3bf8073c"
+        },
+        {
+          "class": "net/minecraft/world/item/enchantment/EnchantmentHelper",
+          "method": "m_44836_",
+          "desc": "(Lnet/minecraft/world/item/enchantment/Enchantment;Lnet/minecraft/world/entity/LivingEntity;)I",
+          "note": "getEnchantmentLevel(enchantment, entity): reads the slot items",
+          "sha256": "a64e23135e26a0bc55b8649afeb72c39e1296af5877e20e92093d0175d0c874a"
+        },
+        {
+          "class": "top/theillusivec4/curios/mixin/core/MixinLivingEntity",
+          "method": "curio$canFreeze",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "Curios' TAIL handler of canFreeze: CuriosUtilMixinHooks.isFreezeImmune",
+          "audit": true,
+          "sha256": "9caba05ec4b2f04c6d62f5c825bf58947a6cd9f01f042440dcb012db0d3d4240"
+        },
+        {
+          "class": "top/theillusivec4/curios/mixin/CuriosUtilMixinHooks",
+          "method": "isFreezeImmune",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "getCuriosInventory().map(a read of the curios)",
+          "audit": true,
+          "sha256": "0c953bb151a76283cdf2ea86aa2417d2ff32cb0e3b5ef827f34e6933fdf0748b"
+        },
+        {
+          "class": "team/recrafted/blastfromthepast/mixin/EntityMixin",
+          "method": "canFreeze",
+          "desc": "(Z)Z",
+          "note": "Blast from the Past's ModifyReturnValue of Entity.canFreeze: false when wearing the frostbite set",
+          "audit": true,
+          "sha256": "6bf2f22abcbf018b0bde91e6d6302fb1b902c03a2f3cf70dbbd4c43c57aa5658"
+        },
+        {
+          "class": "team/recrafted/blastfromthepast/util/EntityHelper",
+          "method": "isWearingFrostbiteSet",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "four armour slot reads",
+          "audit": true,
+          "sha256": "bbed3e9dde3ae9cac6219c4ecdc53aa0424d4cb03fd01f1b7349827eee781291"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinSquared @TargetHandler + MixinExtras @WrapOperation (priority 1500) on the canFreeze() call inside Enigmatic Addons' tickMix handler (merged into LivingEntity.tick): while the entity has no frozen ticks, its class does not override canFreeze, the merged canFreeze bodies of LivingEntity and Entity hold only Minecraft's calls and handlers of the reviewed read-only mixins (Curios' MixinLivingEntity, Enigmatic Addons' MixinLivingEntity, Blast from the Past's EntityMixin; the group plugin's look through two empty mixins of priority 999999, and no mixin of another mod with priority 999999 or more on those classes) and curios_presence's quiet() says a curio walk would only read, the call is left out and true is passed on (the condition is false either way). MixinExtras @WrapOperation on the getEnchantmentLevel call of AddonEventHandler.onTick: while the entity has no frozen ticks the lookup is left out and 0 passed on (both writes would set 0 on a 0, which SynchedEntityData ignores). Runtime flag enigmaticaddonsIdleFrostSkip, shadow enigmaticaddonsIdleFrostSkip.shadow. Helpers bons.furious.patch.enigmaticaddons_coo49.FrostSkip, EaPlugin.",
+      "license": "Enigmatic Addons (All Rights Reserved): no code carried, the wrappers carry only our own logic; Curios (LGPL-3.0), Blast from the Past and Minecraft: read only (the look mixins are empty)"
+    },
+    "enigmaticaddons_annihilating_sword_bonus_memo": {
+      "mod": "enigmaticaddons",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.enigmaticaddons_coo49.EaSwordBonusMixin"
+      ],
+      "guard": [
+        {
+          "class": "auviotre/enigmatic/addon/contents/items/AnnihilatingSword",
+          "method": "onTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "server branch: removeAttributeModifiers(getAttackSpeedBonus()) is the second getAttackSpeedBonus call (the first feeds addTransientAttributeModifiers, left as shipped)",
+          "sha256": "af58eb2e6c45cff5ec22f9188cc4d3f87e7a47ef8474a96d5a7909562eccc382"
+        },
+        {
+          "class": "auviotre/enigmatic/addon/contents/items/AnnihilatingSword",
+          "method": "getAttackSpeedBonus",
+          "desc": "()Lcom/google/common/collect/Multimap;",
+          "note": "builds a new one-entry ImmutableMultimap of constants (no inputs)",
+          "sha256": "48491d862c41aa1a56e4ee0fdc567a44bc57c291678733fe4b72dfe864ce355c"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeMap",
+          "method": "m_22161_",
+          "desc": "(Lcom/google/common/collect/Multimap;)V",
+          "note": "removeAttributeModifiers: per entry, the instance's removeModifier",
+          "sha256": "49280e154b0e2a7a7dc6eb2b5e5270ba7fced7a459684585853d54e66bcc431f"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22130_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "note": "removeModifier: by operation and equality (the id), stores nothing",
+          "sha256": "1a36bba283103cf86bf1f38843281b2ddab1793edce903a3d2947560718afcdd"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeModifier",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "note": "equal by id",
+          "sha256": "a8f7833c5e55e2b47869ff3d89996883f9be66a35890c372de00a920a90f6f0a"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeModifier",
+          "method": "hashCode",
+          "desc": "()I",
+          "note": "removeModifier takes the modifier out of a hash set: id-based, as equals",
+          "sha256": "eb31329eae434df1e3f884bec78dbcb6e88818661aedf10898f311083d9e1f42"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the getAttackSpeedBonus call of AnnihilatingSword.onTick that feeds removeAttributeModifiers (the second one): its first result, a one-entry ImmutableMultimap of a modifier with constant id, name, amount and operation built from nothing, is kept and handed out again. Runtime flag enigmaticaddonsAnnihilatingSwordBonusMemo (shadow .shadow). Helper bons.furious.patch.enigmaticaddons_coo49.SwordBonus.",
+      "license": "Enigmatic Addons (All Rights Reserved): no code carried, the wrapper carries only our own logic"
+    }
+  }
+}

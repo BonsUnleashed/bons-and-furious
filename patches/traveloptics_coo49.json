@@ -1,0 +1,98 @@
+{
+  "group": "traveloptics_coo49",
+  "keys": {
+    "traveloptics_caster_effect_precheck": {
+      "mod": "traveloptics",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.traveloptics_coo49.ToBlackoutCastPrecheckMixin",
+        "bons.furious.mixin.traveloptics_coo49.ToCastingCastPrecheckMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/gametechbc/traveloptics/effects/Blackout/BlackoutHandler",
+          "method": "onEntityCast",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "blackout = entity.hasEffect(BLACKOUT.get()) (the wrapped call); only inside instanceof AbstractSpellCastingMob: a server-level caster with it cancels its cast",
+          "sha256": "505e95a3b9bf6b4c3a072063b2a5105150b7e9b3ee3b240c24282af1dd014652"
+        },
+        {
+          "class": "com/gametechbc/traveloptics/effects/Casting/CastingHandler",
+          "method": "onEntityCast",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "casting = entity.hasEffect(CASTING.get()) (the wrapped call); only inside instanceof AbstractSpellCastingMob: a server-level caster with it cancels its cast",
+          "sha256": "5ada510181b450021acc22dae18100e723d121487de048dc58cb1ef373f06266"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21023_",
+          "desc": "(Lnet/minecraft/world/effect/MobEffect;)Z",
+          "note": "hasEffect: activeEffects.containsKey(effect), a read",
+          "sha256": "3032c33ad02513f51f8c3e3ab5699b7eb0ad0dfc215062fbc1f20892906660a2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the LivingEntity.hasEffect (m_21023_) call of BlackoutHandler.onEntityCast and of CastingHandler.onEntityCast: for an entity that is not an AbstractSpellCastingMob (whose answer the handler never reads) false stands in without the call; casters and a null entity run the original. Runtime flag travelopticsCasterEffectPrecheck. Helper bons.furious.patch.traveloptics_coo49.ToCasterEffects.",
+      "license": "T.O Magic 'n Extras (All Rights Reserved): no T.O code is carried; the wrappers decide from one instanceof"
+    },
+    "traveloptics_climb_curio_effect_first": {
+      "mod": "traveloptics",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.traveloptics_coo49.ToClimbCurioPrecheckMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/gametechbc/traveloptics/events/ForgeServerEvents",
+          "method": "applyClimbOnCurio",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "sigil = CuriosApi.getCuriosInventory(entity) (the wrapped call).map(lambda$3).orElse(false); doWallClimb only when sigil && hasEffect(SPIDER_ASPECT)",
+          "sha256": "159f2ef3c0515984dada4c67903a658d42eb55c49d902e5ba34365e9070bb160"
+        },
+        {
+          "class": "com/gametechbc/traveloptics/events/ForgeServerEvents",
+          "method": "lambda$applyClimbOnCurio$3",
+          "desc": "(Ltop/theillusivec4/curios/api/type/capability/ICuriosItemHandler;)Ljava/lang/Boolean;",
+          "note": "!inventory.findCurios(lambda$2).isEmpty()",
+          "sha256": "2f00c34afde232cedaa84b7f2e9d885b885ba9cc2b2d4b40b0bcaa70e6ff98d6"
+        },
+        {
+          "class": "com/gametechbc/traveloptics/events/ForgeServerEvents",
+          "method": "lambda$applyClimbOnCurio$2",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "note": "stack != null && stack.is(SIGIL_OF_THE_SPIDER_SORCERER.get()): reads",
+          "sha256": "d2cf4a767b9571274259e8f960a387037fdaae5b9708419bb71c50b67c5be0a6"
+        },
+        {
+          "class": "com/gametechbc/traveloptics/events/ForgeServerEvents",
+          "method": "doWallClimb",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "the handler's only effect, behind the test",
+          "sha256": "855b47d16fb0f2fa6af0ae96d861346b079a277071e2d4a1a054fd122b7495c9"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21023_",
+          "desc": "(Lnet/minecraft/world/effect/MobEffect;)Z",
+          "note": "hasEffect: activeEffects.containsKey(effect), a read",
+          "sha256": "3032c33ad02513f51f8c3e3ab5699b7eb0ad0dfc215062fbc1f20892906660a2"
+        },
+        {
+          "class": "top/theillusivec4/curios/common/capability/CurioInventoryCapability$CurioInventoryWrapper",
+          "method": "findCurios",
+          "desc": "(Ljava/util/function/Predicate;)Ljava/util/List;",
+          "audit": true,
+          "note": "Curios 5.14.1 (installed library): walks getCurios(): getStacks (applies a pending slot update), getSlots, getStackInSlot, the filter, getRenders, new SlotResult; reads only when the shared Curios layer says quiet",
+          "sha256": "a6764d14e407b4b25833ce178cd67ee06f4fddc79c32142551b6ee6967a18b0a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the CuriosApi.getCuriosInventory call of ForgeServerEvents.applyClimbOnCurio: when the original answer holds an inventory, the entity does not have Spider Aspect and the shared Curios layer (CuriosPresence.quiet of the curios_presence group, reached by name) says a walk now would only read, the empty optional stands in, so the handler's findCurios walk is not made (its sigil-AND-Spider-Aspect test is false either way); otherwise the original answer. Runtime flag travelopticsClimbCurioEffectFirst. Helper bons.furious.patch.traveloptics_coo49.ToClimbCurio.",
+      "license": "T.O Magic 'n Extras (All Rights Reserved): no T.O code is carried; the wrapper decides from an effect read and the Curios layer"
+    }
+  }
+}

@@ -1,0 +1,298 @@
+{
+  "group": "crittersandcompanions_coo49",
+  "keys": {
+    "crittersandcompanions_necklace_loop": {
+      "mod": "crittersandcompanions",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.crittersandcompanions_coo49.NecklaceLoopEterdeltaMixin",
+        "bons.furious.mixin.crittersandcompanions_coo49.NecklaceLoopBonsaiMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/eterdelta/crittersandcompanions/item/PearlNecklaceItem",
+          "method": "getWearing",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Ljava/util/Optional;",
+          "note": "2.3.5: non-player -> empty; else getEquipment(player).map(getItem).filter(necklace).map(cast).max(comparing(getLevel))",
+          "sha256": "e9b0e5994f132989916113d6c8dc20f177ed38eb51ca8533a3653e5913302304",
+          "sha256_also": [
+            {
+              "build": "crittersandcompanions-2.7.1",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "com/github/eterdelta/crittersandcompanions/item/PearlNecklaceItem",
+          "method": "getEquipment",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Ljava/util/stream/Stream;",
+          "note": "2.3.5: Stream.of(inventory.items.stream(), Services.PLATFORM.getAdditionalEquipment(player)).flatMap(identity)",
+          "sha256": "275355a563f6117efa450dc8faaf65d39a6b0b5e76cde9d55d23f0a80ad96530",
+          "sha256_also": [
+            {
+              "build": "crittersandcompanions-2.7.1",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "com/github/eterdelta/crittersandcompanions/item/PearlNecklaceItem",
+          "method": "getLevel",
+          "desc": "()I",
+          "sha256": "429bd9e0839ce231c2fa78dd3ef22567d64d40d7a67b94ccedb6f3dbb54379f9",
+          "sha256_also": [
+            {
+              "build": "crittersandcompanions-2.7.1",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "io/github/bonsaistudi0s/crittersandcompanions/common/item/PearlNecklaceItem",
+          "method": "getWearing",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Ljava/util/Optional;",
+          "note": "2.7.1 (not in this pack: absent in the tested build, sha256_also crittersandcompanions-2.7.1): same pipeline",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "crittersandcompanions-2.7.1",
+              "sha256": "51568c09ae7a5ad67d0524107de54ef777bb79fd070683bd66a2a5a6f80b16b9"
+            }
+          ]
+        },
+        {
+          "class": "io/github/bonsaistudi0s/crittersandcompanions/common/item/PearlNecklaceItem",
+          "method": "getEquipment",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Ljava/util/stream/Stream;",
+          "note": "2.7.1: Stream.of(inventory.items.stream(), PlatformHooks.getAdditionalEquipment(player)).flatMap(identity)",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "crittersandcompanions-2.7.1",
+              "sha256": "448873b496ff5b5c6f3f6e08e864e5249e59d6cc4b45936bf992ae5782c4dc57"
+            }
+          ]
+        },
+        {
+          "class": "io/github/bonsaistudi0s/crittersandcompanions/common/item/PearlNecklaceItem",
+          "method": "getLevel",
+          "desc": "()I",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "crittersandcompanions-2.7.1",
+              "sha256": "11af37450de6203d322aeac24ea4b32489dd5701128a9615f7431bef752c0a7d"
+            }
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of PearlNecklaceItem.getWearing in both packages (2.3.5 com.github.eterdelta, 2.7.1 io.github.bonsaistudi0s; @Pseudo, and the group's mixin plugin CrittersandcompanionsPlugin offers Mixin only the mixin of the build the guard matched, so the other package's class is never looked up): a non-player -> Optional.empty(); a player -> one consumer over the class's own getEquipment stream keeping the first necklace of the highest level (Stream.max keeps the first of equals). Runtime flag crittersandcompanionsNecklaceLoop. Helper bons.furious.patch.crittersandcompanions_coo49.NecklaceLoop.",
+      "license": "Critters and Companions 2.3.5 (MIT) / 2.7.1 (All Rights Reserved): no code carried; our own loop over its own equipment stream"
+    },
+    "crittersandcompanions_leash_render_empty_skip": {
+      "mod": "crittersandcompanions",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.crittersandcompanions_coo49.LeashEmptyEterdeltaMixin",
+        "bons.furious.mixin.crittersandcompanions_coo49.LeashEmptyBonsaiMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/eterdelta/crittersandcompanions/client/renderer/SilkLeashRenderer",
+          "method": "renderSilkLeash",
+          "desc": "(Lsoftware/bernie/geckolib/event/GeoRenderEvent$Entity$Post;)V",
+          "note": "2.3.5 (GeckoLib render event): living entity with silk-leash state -> for each holder in getLeashedByEntities() draw the leash (the wrapped Set.iterator())",
+          "sha256": "2fed171d396dfb94b9d633fa670ff8a5d594c82b8be2a8df0402eff0e24606f3",
+          "sha256_also": [
+            {
+              "build": "crittersandcompanions-2.7.1",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "io/github/bonsaistudi0s/crittersandcompanions/client/renderer/SilkLeashRenderer",
+          "method": "renderSilkLeash",
+          "desc": "(Lnet/minecraft/world/entity/Entity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;)V",
+          "note": "2.7.1 (not in this pack: absent in the tested build, sha256_also crittersandcompanions-2.7.1): same loop, called after LivingEntityRenderer and GeckoLib renders",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "crittersandcompanions-2.7.1",
+              "sha256": "3a268fa22f6f1f9a0c78be460cb2bb28c6a1e7fa92d1fd4bcb3a4b1c165b33b1"
+            }
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the one Set.iterator() call in SilkLeashRenderer.renderSilkLeash in both packages (2.3.5 com.github.eterdelta, 2.7.1 io.github.bonsaistudi0s; @Pseudo, and CrittersandcompanionsPlugin offers Mixin only the mixin of the build the guard matched): an empty leash-holder set gets Collections.emptyIterator() (the loop ends at once, as over the set's own iterator), a non-empty one its own iterator. Client only. Runtime flag crittersandcompanionsLeashRenderEmptySkip. Helper bons.furious.patch.crittersandcompanions_coo49.LeashSkip.",
+      "license": "Critters and Companions 2.3.5 (MIT) / 2.7.1 (All Rights Reserved): no code carried; the wrapper picks the iterator the mod's own loop walks"
+    },
+    "crittersandcompanions_food_scan_interval": {
+      "mod": "crittersandcompanions",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.crittersandcompanions_coo49.FoodScanEterdeltaMixin",
+        "bons.furious.mixin.crittersandcompanions_coo49.FoodScanBonsaiOtterMixin",
+        "bons.furious.mixin.crittersandcompanions_coo49.FoodScanBonsaiLeafMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/eterdelta/crittersandcompanions/entity/OtterEntity$SearchFoodGoal",
+          "method": "*",
+          "desc": "",
+          "note": "2.3.5: the declared methods (canUse, tick, start; no canContinueToUse or stop: the mixin adds canContinueToUse)",
+          "sha256": "6d6113e726291f22c54b816fb40bd7341ee959efadb06ad2bf467f9a4c9a1a5f",
+          "sha256_also": [
+            {
+              "build": "crittersandcompanions-2.7.1",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "com/github/eterdelta/crittersandcompanions/entity/OtterEntity$SearchFoodGoal",
+          "method": "m_8036_",
+          "desc": "()Z",
+          "note": "2.3.5 canUse: main hand empty -> getEntitiesOfClass(ItemEntity, box inflated 8, filter) not empty (the wrapped call)",
+          "sha256": "a0f6e023ab5cd4cb33dbc2c716b560c8d79c896b3ce7c56df36ba7e6495d08a5",
+          "sha256_also": [
+            {
+              "build": "crittersandcompanions-2.7.1",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "io/github/bonsaistudi0s/crittersandcompanions/common/entity/brain/goal/SearchFoodGoal",
+          "method": "*",
+          "desc": "",
+          "note": "2.7.1 (not in this pack: absent in the tested build, sha256_also crittersandcompanions-2.7.1)",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "crittersandcompanions-2.7.1",
+              "sha256": "491e1972ad78775be9d9c0f5cb28735976cdb6164992df7b09e83a7d66bb92c5"
+            }
+          ]
+        },
+        {
+          "class": "io/github/bonsaistudi0s/crittersandcompanions/common/entity/brain/goal/SearchFoodGoal",
+          "method": "m_8036_",
+          "desc": "()Z",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "crittersandcompanions-2.7.1",
+              "sha256": "36ff5dfbcdfd56c3cb86a2602a0850675f7c60bbf42a21df010791f6e4128a18"
+            }
+          ]
+        },
+        {
+          "class": "io/github/bonsaistudi0s/crittersandcompanions/common/entity/brain/goal/LeafInsectSearchLeavesGoal",
+          "method": "*",
+          "desc": "",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "crittersandcompanions-2.7.1",
+              "sha256": "6e2f53bdc85fe428fe0cd0462b07791b724536c2949225f17f8517d7e10a3608"
+            }
+          ]
+        },
+        {
+          "class": "io/github/bonsaistudi0s/crittersandcompanions/common/entity/brain/goal/LeafInsectSearchLeavesGoal",
+          "method": "m_8036_",
+          "desc": "()Z",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "crittersandcompanions-2.7.1",
+              "sha256": "6f3ee861b6e27af09ace1860c1197a982229260e2a430c1be8816601a275eac4"
+            }
+          ]
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/goal/Goal",
+          "method": "m_8045_",
+          "desc": "()Z",
+          "note": "canContinueToUse = canUse() (the mixins' override marks those calls)",
+          "sha256": "6e28b473b35f206ba7dbac4ddaf0e3082b50ff61e2c1537ea19a0c4f6128f0a6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "In each food goal (2.3.5 OtterEntity$SearchFoodGoal; 2.7.1 SearchFoodGoal and LeafInsectSearchLeavesGoal; @Pseudo, CrittersandcompanionsPlugin offers only the matched build's mixins): MixinExtras @WrapOperation on the item search (Level.getEntitiesOfClass) in canUse: when the goal is not running and fewer than INTERVAL game ticks passed since this goal's last search, an empty list (what an empty search returns) instead; an added canContinueToUse override (Goal's own: it asks canUse) marks the calls of a running goal, which always search. INTERVAL = PureConfig.intValue(\"crittersandcompanions_food_scan_interval\", 4, 1, 200). Trade-off, off by default. Runtime flag crittersandcompanionsFoodScanInterval. Helper bons.furious.patch.crittersandcompanions_coo49.FoodScan.",
+      "license": "Critters and Companions 2.3.5 (MIT) / 2.7.1 (All Rights Reserved): no code carried; the wrapper decides whether the goal's own search runs"
+    },
+    "crittersandcompanions_behaviour_fast_path": {
+      "mod": "crittersandcompanions",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.crittersandcompanions_coo49.BehaviourFastPathBonsaiMixin"
+      ],
+      "guard": [
+        {
+          "class": "io/github/bonsaistudi0s/crittersandcompanions/common/entity/brain/behaviour/Behaviours",
+          "method": "*",
+          "desc": "",
+          "note": "2.7.1 only (not in this pack: absent in the tested build 2.3.5, sha256_also crittersandcompanions-2.7.1): the declared method set (add, all, forEach, optional, the, the identity lambda)",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "crittersandcompanions-2.7.1",
+              "sha256": "0509c07b844560b4edf84b21318e33f69bc9f011311c77eb6ef5b8a0554d3788"
+            }
+          ]
+        },
+        {
+          "class": "io/github/bonsaistudi0s/crittersandcompanions/common/entity/brain/behaviour/Behaviours",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "entries = new LinkedHashMap (insertion order: what forEach walks)",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "crittersandcompanions-2.7.1",
+              "sha256": "56b36f89fc5f78469cebff2e7e0b06caa64215dbc024ce6ed43c0d6482c9cb2e"
+            }
+          ]
+        },
+        {
+          "class": "io/github/bonsaistudi0s/crittersandcompanions/common/entity/brain/behaviour/Behaviours",
+          "method": "optional",
+          "desc": "(Ljava/lang/Class;)Ljava/util/Optional;",
+          "note": "Optional.ofNullable((Behaviour) entries.get(type)).map(identity)",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "crittersandcompanions-2.7.1",
+              "sha256": "5592a3f88b4c4741e25ceac79cf6de1772800955cfd022983b47f91848f4cc8e"
+            }
+          ]
+        },
+        {
+          "class": "io/github/bonsaistudi0s/crittersandcompanions/common/entity/brain/behaviour/Behaviours",
+          "method": "the",
+          "desc": "(Ljava/lang/Class;)Lio/github/bonsaistudi0s/crittersandcompanions/common/entity/brain/behaviour/Behaviour;",
+          "note": "optional(type).orElseThrow()",
+          "sha256": null,
+          "sha256_also": [
+            {
+              "build": "crittersandcompanions-2.7.1",
+              "sha256": "f7204dcf89f557a0f9ce25afb3af2f8057dc10825fdf3286ffc47a5583e13ea5"
+            }
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of Critters and Companions 2.7.1 Behaviours.the(Class) (@Pseudo string target; CrittersandcompanionsPlugin offers the mixin only when the guard matched the 2.7.1 classes, 2.3.5 has no Behaviours), active only for a plain Behaviours holder (runtime class == the target, read in the merged static initializer; a subclass keeps the original method): returns entries.get(type) when non-null; null falls through to the original, which throws its own NoSuchElementException. forEach and optional keep their own code (measured: not a dependable gain there); optional is guarded because the() stands in for optional(type).orElseThrow(). Runtime flag crittersandcompanionsBehaviourFastPath. Helper bons.furious.patch.crittersandcompanions_coo49.BehaviourFastPath.",
+      "license": "Critters and Companions 2.7.1 (All Rights Reserved): no code carried; our own map reads in front of its methods"
+    }
+  }
+}

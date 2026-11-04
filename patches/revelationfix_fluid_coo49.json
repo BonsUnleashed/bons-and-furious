@@ -1,0 +1,55 @@
+{
+  "group": "revelationfix_fluid_coo49",
+  "keys": {
+    "revelationfix_fluid_walk_scan": {
+      "mod": "revelationfix",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.revelationfix_fluid_coo49.RfFluidStandScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/mega/revelationfix/mixin/EntityMixin",
+          "method": "fluidCollision",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;",
+          "note": "Entity.move collide-result handler: not living or y > 0 = the movement; else twelve fluid lookups of the entity's block and its west / north / lower neighbours, the highest surface the inflated box touches above the movement's y; found = a new StandOnFluidEvent posted on MinecraftForge.EVENT_BUS, cancelled = fallDistance 0, setOnGround(true) and a new movement at that height; otherwise the movement",
+          "sha256": "cf0203cf5a0d3c4964aaba56fda5390dbc43f8c70fc498324eaeb0df5d4c82d4"
+        },
+        {
+          "class": "com/mega/revelationfix/common/event/handler/ArmorEventsHandler",
+          "method": "standOnFluidEventEvent",
+          "desc": "(Lcom/mega/revelationfix/api/event/entity/StandOnFluidEvent;)V",
+          "note": "the event's only listener in the Goety family: cancels only for a Player wearing Apocalyptium boots (ArmorUtils.findBoots) who is not sneaking",
+          "sha256": "0378357380208e7965eda7c1bbeefcd94dd9a98225e790eaa5f74f5721a3e8b6"
+        },
+        {
+          "class": "com/mega/revelationfix/api/event/entity/StandOnFluidEvent",
+          "method": "*",
+          "desc": "",
+          "note": "a cancelable LivingEvent that stores the fluid state (no other effect)",
+          "sha256": "e85951a9827e3fdcce2fe093f0347730ea487b94474d1f2897dee238cd3f3b6c"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "m_6478_",
+          "desc": "(Lnet/minecraft/world/entity/MoverType;Lnet/minecraft/world/phys/Vec3;)V",
+          "note": "move: RevelationFix's injection point (the local holding collide's result)",
+          "sha256": "17b339289be52d730ba555a5d266c77e87b2baee7061ba2e547ea971795ba8bc"
+        },
+        {
+          "class": "com/mega/endinglib/util/mc/entity/armor/ArmorUtils",
+          "method": "findBoots",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/item/ArmorMaterial;)Z",
+          "note": "the boots test of the listener: the FEET item is an ArmorItem of that material (reads only)",
+          "audit": true,
+          "sha256": "daac90ff7e3a09090d7ad4e89c0ab9e1e099791384bd6400df7bad0ef6d55b82"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinSquared @TargetHandler + MixinExtras @ModifyExpressionValue on the first read of the movement's y inside RevelationFix's EntityMixin.fluidCollision handler merged into Entity.move (its 'moves up' test, after its 'not living' return): for a living entity that does not move up and is not a Player, while the live listener census of MinecraftForge.EVENT_BUS (forge_listener_guard's ListenerCensus, allow-list ArmorEventsHandler.standOnFluidEventEvent) answers 0 or 1, the test reads a positive y and the handler returns the movement it was given (the same reference) before its scan; after an answer of 'another listener' the census is asked again every 256 calls (helper bons.furious.patch.revelationfix_fluid_coo49.RfFluidWalk)",
+      "license": "RevelationFix (All Rights Reserved), EndingLib (MIT): no code carried, the modifier carries only our own logic"
+    }
+  }
+}

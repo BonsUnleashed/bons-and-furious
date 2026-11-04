@@ -1,0 +1,95 @@
+{
+  "group": "sophisticatedbackpacks_coo49",
+  "keys": {
+    "sophisticatedbackpacks_living_tick_fast_exit": {
+      "mod": "sophisticatedbackpacks",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.sophisticatedbackpacks_coo49.SbLivingTickMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/p3pp3rf1y/sophisticatedbackpacks/common/EntityBackpackAdditionHandler",
+          "method": "onLivingUpdate",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "client side or player -> return; monster and hasPendingBackpackAddition -> clear it, add a backpack to an empty chest slot; !hasSpawnedJukeboxUpgrade -> return; else the jukebox upgrade",
+          "sha256": "244e6579b53bb8f8cea37c2e21e61bb454269142fa6414699dc76c3622b09fd8"
+        },
+        {
+          "class": "net/p3pp3rf1y/sophisticatedbackpacks/common/EntityBackpackAdditionHandler",
+          "method": "removeBackpackUuid",
+          "desc": "(Lnet/minecraft/world/entity/monster/Monster;Lnet/minecraft/world/level/Level;)V",
+          "note": "client side or !hasSpawnedBackpack -> return; else clears the spawned backpack's data",
+          "sha256": "6fc577ff18f6d578ff016a35a93388dc1f4c3733f70559b1696a0cb269c51579"
+        },
+        {
+          "class": "net/p3pp3rf1y/sophisticatedbackpacks/common/EntityBackpackAdditionHandler",
+          "method": "hasPendingBackpackAddition",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "getBackpackEntityData(entity).getBoolean(\"pendingBackpackAddition\")",
+          "sha256": "76d923f8f4d206cbdec4992a9f17b3fc1ab0ac1927e85ae7d4e95ac11f78a848"
+        },
+        {
+          "class": "net/p3pp3rf1y/sophisticatedbackpacks/common/EntityBackpackAdditionHandler",
+          "method": "hasSpawnedJukeboxUpgrade",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "getBackpackEntityData(entity).getBoolean(\"spawnedWithJukeboxUpgrade\")",
+          "sha256": "6c03c34664bdcf1a968f9c97447d19f42419286273b9aaf11660f37f5bbec276"
+        },
+        {
+          "class": "net/p3pp3rf1y/sophisticatedbackpacks/common/EntityBackpackAdditionHandler",
+          "method": "hasSpawnedBackpack",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "getBackpackEntityData(entity).getBoolean(\"spawnedWithBackpack\")",
+          "sha256": "23a15d4f275fbc8fa399822db3e6f740e7fb39060aa0f368872c71cb88850767"
+        },
+        {
+          "class": "net/p3pp3rf1y/sophisticatedbackpacks/common/EntityBackpackAdditionHandler",
+          "method": "getBackpackEntityData",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "entity.getPersistentData().getCompound(\"sophisticatedbackpacks\")",
+          "sha256": "b30057b1c552b07dd45151671e554953e9fa2efeb712153a019450e686d647cb"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "getPersistentData",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "Forge: the persistentData field, a new compound stored there on the first call (asked as many times as before, so it is created on the same call)",
+          "sha256": "1355a99782fa41f3f4e5ab09b04e4a97f6beee3ef09f2d211b96ccc318e77ba1"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "m_128469_",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "getCompound: the held compound when contains(key, 10) (the key's tag, its type id 10), else a new empty one (nothing stored)",
+          "sha256": "fa6f576ec439f422a5ba594988988da5a710a9c345f06dec5a6eb9fa17d7ba42"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "m_128423_",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/nbt/Tag;",
+          "note": "get: the tag held under the key (the read getCompound makes), nothing stored",
+          "sha256": "3341e171515894460262ff95105e7603a9ac816518c7abb1473e59323c8098e7"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "m_128425_",
+          "desc": "(Ljava/lang/String;I)Z",
+          "note": "contains(key, type): the held tag's type id equals type (10 here; 99 not used); the switch asks the same id",
+          "sha256": "7d6fe3f6dad1e30fe16bfdcc7db15e6cf17c1eec92771b8fc17565b114be09d7"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "m_128471_",
+          "desc": "(Ljava/lang/String;)Z",
+          "note": "getBoolean: false on an empty compound; on the held compound asked exactly as the mod asks it",
+          "sha256": "b70cfb0c812a6c5ce36dca4ab11860841d167aec61c4d9d4a047bed38f4af924"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the hasPendingBackpackAddition and hasSpawnedJukeboxUpgrade calls of EntityBackpackAdditionHandler.onLivingUpdate and the hasSpawnedBackpack call of removeBackpackUuid: the same getPersistentData().getCompound(\"sophisticatedbackpacks\").getBoolean(flag) with one read of the key: getPersistentData() once per question as the mod asks it, nothing under the key or a type id other than 10 -> false (what the new empty compound answered), a compound -> its getBoolean(flag); persistent data of a CompoundTag subclass, or a type id 10 that is no compound -> the mod's own expression. Runtime flag sophisticatedbackpacksLivingTickFastExit (off: the mod's methods). Helper bons.furious.patch.sophisticatedbackpacks_coo49.SbEntityData.",
+      "license": "Sophisticated Backpacks (All Rights Reserved): no code carried, the hooks carry only our own logic"
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "group": "brutalbosses_coo49",
+  "keys": {
+    "brutalbosses_living_boss_capability": {
+      "mod": "brutalbosses",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.brutalbosses_coo49.BossCapabilityAttachMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/brutalbosses/event/EventHandler",
+          "method": "attachCapabilities",
+          "desc": "(Lnet/minecraftforge/event/AttachCapabilitiesEvent;)V",
+          "note": "entity null or level null -> return; isClientSide || BossTypeManager.instance.isValidBossEntity(entity) -> addCapability(BossCapability.ID, new BossCapability(entity)): on a client level every entity gets one",
+          "sha256": "e4287f96d917a75911299d3cdefb3ad9c57012393f894db294a1019b34c0f349"
+        },
+        {
+          "class": "com/brutalbosses/event/ClientEventHandler",
+          "method": "checkEntity",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "client BOSS_CAP reader: instanceof LivingEntity first",
+          "sha256": "25e78337a352c71b02555abd7da34daf833ed337527448793a4a7be34f2d325b"
+        },
+        {
+          "class": "com/brutalbosses/mixin/PlayerInteractDistScaling",
+          "method": "canReach",
+          "desc": "(Lnet/minecraft/world/entity/Entity;D)Z",
+          "note": "client BOSS_CAP reader for any entity: orElse(null), null or a non-boss capability give the same reach",
+          "sha256": "1c8435491190ac280bd29ec2b46be421edefe622a5da4add83fb2b87035ac45c"
+        },
+        {
+          "class": "com/brutalbosses/network/BossCapMessage",
+          "method": "lambda$handle$0",
+          "desc": "()V",
+          "note": "the server sends boss data only for its boss mobs (living)",
+          "sha256": "23cc2a84b097f14ceef4126dcab204b242e1c673620fc125cf96967290d95162"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Exact variant (client mixin): @Inject at HEAD (cancellable) of EventHandler.attachCapabilities returns for a non-living entity on a client level (no BossCapability attached; such entities answer getCapability(BOSS_CAP) empty instead of with a never-a-boss capability). Server levels (the integrated server's included) run the original. Runtime flag brutalbossesLivingBossCapability. Helper bons.furious.patch.brutalbosses_coo49.BossCaps.",
+      "license": "Brutal Bosses (All Rights Reserved): no code carried; the checks are ours"
+    },
+    "brutalbosses_boss_bar_local_player": {
+      "mod": "brutalbosses",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.brutalbosses_coo49.BossBarLocalPlayerMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/brutalbosses/event/ClientEventHandler",
+          "method": "onPlayerTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "no phase test; client level and gameTime % 5 == 0: checkEntity(crosshair entity); per kept boss bar: update, drop dead or timed-out bosses, event.player.hasLineOfSight(boss) -> timeOut = gameTime + 600",
+          "sha256": "cce770765aee4a70b7735b66164563973dbaa45b1bdab38aed58b0a72540fef6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Gameplay fix, off by default: @Inject at HEAD (cancellable) of ClientEventHandler.onPlayerTick returns unless the event is the local player's (Minecraft.player) END phase. Runtime flag brutalbossesBossBarLocalPlayer. Helper bons.furious.patch.brutalbosses_coo49.BossBarLocal.",
+      "license": "Brutal Bosses (All Rights Reserved): no code carried; the check is ours"
+    }
+  }
+}

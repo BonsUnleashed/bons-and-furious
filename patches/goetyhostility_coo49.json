@@ -1,0 +1,73 @@
+{
+  "group": "goetyhostility_coo49",
+  "keys": {
+    "goetyhostility_squall_golem_scan_skip": {
+      "mod": "goetyhostility",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goetyhostility_coo49.GhSquallGolemScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ratrod/goetyhostility/common/entities/hostile/HostileSquallGolem",
+          "method": "m_8119_",
+          "desc": "()V",
+          "note": "proximity mode: getEntitiesOfClass(LivingEntity, box +6); last entity with isOwnedTargetable(this, it) && it.hasLineOfSight(this); activeTime = 100 when found or getTarget() != null",
+          "sha256": "2f20a0d50637c752f7ae9d330d77a1087267e3eac7a4bcf435fddb61e5ef5a23"
+        },
+        {
+          "class": "com/Polarice3/Goety/utils/MobUtil",
+          "method": "isOwnedTargetable",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "for an Enemy attacker that is not IOwned and has no owner: target instanceof Player && not creative / spectator",
+          "sha256": "5443c89ef7f1c47a5ed2803c58b0119e939e89e13b3b0462484d00411217435c"
+        },
+        {
+          "class": "com/Polarice3/Goety/utils/MobUtil",
+          "method": "getOwner",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "null for an entity that is neither IOwned, OwnableEntity nor Projectile",
+          "sha256": "1ec915fd5dbdf54ccbb30219742c9b563884bd7a079c48786075dc9607ba0323"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_142582_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "hasLineOfSight: same level, distance, a block clip; reads only",
+          "sha256": "acca80b0a94ae9569a709f58dbeb8fbb3ba4a9f1f8cc90e370e5f7454f0d1819"
+        },
+        {
+          "class": "net/minecraft/world/level/EntityGetter",
+          "method": "m_45976_",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;",
+          "note": "getEntitiesOfClass(class, box) = the three-argument search with NO_SPECTATORS",
+          "sha256": "02b741b674cda0ec6d8bfa9662b11dd0e9065674d64257adc716432fd5c3b338"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass (m_45976_) call of HostileSquallGolem.tick: while the golem has a target (and its class is an Enemy that is not IOwned, with Mob's own getTarget), the call is marked UNUSED so that vanilla_entity_walk_skip leaves out its walk over the entity sections; the call itself runs (helper bons.furious.patch.goetyhostility_coo49.GhScans)",
+      "license": "Goety Hostility (all rights reserved) and Goety (MIT): no code carried, the wrapper carries only our own logic"
+    },
+    "goetyhostility_wildfire_drop_probe_lean": {
+      "mod": "goetyhostility",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goetyhostility_coo49.GhWildfireDropProbeMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ratrod/goetyhostility/common/entities/hostile/HostileWildfire",
+          "method": "steepDropBelow",
+          "desc": "()Z",
+          "note": "for i in 0..7: getBlockState(new BlockPos(x, y - i, z)).isAir(), any non-air -> false",
+          "sha256": "60ae1b66afd48375a29922a8a4a4a3f86c0decef108b2f687cda5ccf1cca44c7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at HEAD (cancellable) of HostileWildfire.steepDropBelow: the same eight-block column, read from the top with one mutable position, answers at the first non-air block (helper bons.furious.patch.goetyhostility_coo49.GhScans.steepDropBelow)",
+      "license": "Goety Hostility (all rights reserved): no code carried, the probe is our own logic"
+    }
+  }
+}

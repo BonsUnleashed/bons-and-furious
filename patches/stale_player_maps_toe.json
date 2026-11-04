@@ -1,0 +1,75 @@
+{
+  "group": "stale_player_maps_toe",
+  "keys": {
+    "stale_player_map_purge_tonsofenchants": {
+      "mod": "tonsofenchants",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.stale_player_maps_toe.ToeExcavatorMapMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/Enchantments/Excavator",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "map = new HashMap<>() (private static final Map<Player, Boolean>)",
+          "sha256": "33a05ec38b61f2d0d766ea4a76603d9d83be259773614d3213d57b16cd63241d"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/Enchantments/Excavator",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: the private map is touched only by destroyBlocks and excavate",
+          "sha256": "ed8efd229c1acfd2501ac648a4d5d490deb654a7a06b2c26bcf130316ba44fcc"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/Enchantments/Excavator",
+          "method": "destroyBlocks",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Level;)V",
+          "note": "put(player, true) ... put(player, false)",
+          "sha256": "5d1a1787af64165857ef231323ad0c5e59b7688da853cc7a9e8f072265037c37"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/Enchantments/Excavator",
+          "method": "excavate",
+          "desc": "(Lnet/minecraftforge/event/level/BlockEvent$BreakEvent;)V",
+          "note": "containsKey / get for the breaking player (BreakEvent: server only)",
+          "sha256": "51129ce31335a066508f16b82e6aab337f07574ddc75c1d4af307a38ff5e296d"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "note": "equal = same entity id: a respawned player equals its predecessor",
+          "sha256": "000f7cb48e2b39bc86ee1a95b8cb3118171a2244b7283fbeacb468976cc6cadf"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "hashCode",
+          "desc": "()I",
+          "note": "the entity id",
+          "sha256": "4873322f2d7f913668bc9548ab9af71e9c84e085a28162a1b923e1f18cbd2ec8"
+        },
+        {
+          "class": "net/minecraft/server/players/PlayerList",
+          "method": "m_11286_",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "note": "remove (logout, server stop): removal reason UNLOADED_WITH_PLAYER",
+          "sha256": "76edce53b64c99e23a540d85829499fabd3c7f25d8eec1d66872a187a2b3f92b"
+        },
+        {
+          "class": "net/minecraft/server/players/PlayerList",
+          "method": "m_11236_",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;Z)Lnet/minecraft/server/level/ServerPlayer;",
+          "note": "respawn: the old player removed with DISCARDED, the new one gets its id",
+          "sha256": "a6697761f40183511931f6225f5b00a6cd22a2c15a9126e9f7168e6a2a8e036f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix: @Inject at RETURN of Excavator.<clinit> (@Shadow of its private static map) hands the map to the shared stale-player-map layer bons.furious.patch.stale_player_maps.StalePlayerKeys as a server ID map, bound by name through a MethodHandle (helper bons.furious.patch.stale_player_maps_toe.ToeMaps); the layer's listeners swap a respawned player's key and purge at logout",
+      "license": "MIT (Tons of Enchants): no Tons of Enchants code is carried; the mixin hands over a map reference"
+    }
+  }
+}

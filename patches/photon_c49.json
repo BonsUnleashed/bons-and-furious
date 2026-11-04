@@ -1,0 +1,136 @@
+{
+  "group": "photon_c49",
+  "keys": {
+    "photon_block_effect_cache_prune": {
+      "mod": "photon",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "fix",
+      "mixins": [
+        "bons.furious.mixin.photon_c49.BlockEffectCachePruneMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/lowdragmc/photon/client/fx/BlockEffect",
+          "method": "start",
+          "desc": "()V",
+          "note": "the one Map.computeIfAbsent we redirect (CACHE, pos, lambda$start$1); then dead effects removed, same-fx skip when !allowMulti, the runtime made and emitted, then effects.add(this) to that same list",
+          "sha256": "3105060871a2aa0b0e16adcd08da78c01c7d386abb555abe6dd2192da6cc96a6"
+        },
+        {
+          "class": "com/lowdragmc/photon/client/fx/BlockEffect",
+          "method": "lambda$start$1",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Ljava/util/List;",
+          "note": "start's mapping function: new ArrayList() (the NEW we redirect); it runs only when the position had no entry",
+          "sha256": "a35d1b2543f0428d094205f6e002e32952c48e2fa63c2a626c71c418e877a033"
+        },
+        {
+          "class": "com/lowdragmc/photon/client/fx/BlockEffect",
+          "method": "updateFXObjectTick",
+          "desc": "(Lcom/lowdragmc/photon/client/gameobject/IFXObject;)V",
+          "note": "where stock leaves the empty entries: destroy, then CACHE.computeIfAbsent(pos, lambda$updateFXObjectTick$0).remove(this); not changed",
+          "sha256": "a2dd43d2562b4a5727bfbdfe730047b094270a6a9bab495d851cd0310d3d5e41"
+        },
+        {
+          "class": "com/lowdragmc/photon/client/fx/BlockEffect",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: CACHE is read only by start and updateFXObjectTick in this class",
+          "sha256": "a0302d1366baa37f183e8931aeb520df45ab4f5b6c2d56acf03169a165668937"
+        },
+        {
+          "class": "com/lowdragmc/photon/command/RemoveBlockEffectCommand",
+          "method": "execute",
+          "desc": "(Lcom/lowdragmc/lowdraglib/networking/IHandlerContext;)V",
+          "note": "reader: CACHE.get(pos) null-checked (missing = nothing to remove), then iterator removal",
+          "sha256": "7891338e5400a901fcf4fe0a291c7dd2150b59774fc5c393fe87c7825c6a89a6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the new ArrayList() in BlockEffect's lambda$start$1 (start's mapping function: sets a flag when start adds a new entry) and @Redirect of start's Map.computeIfAbsent: after a new entry, once CACHE has reached its mark (at least 64, then twice the entries kept) every other entry with an empty list is removed (helper bons.furious.patch.photon_c49.PhotonCachePrune); updateFXObjectTick is not touched",
+      "license": "Photon (mods.toml: GPL-3.0; its Modrinth page: custom licence): none of its code is carried; the redirects build the same empty list, make the same lookup and only remove the empty lists the stock code leaves in the map"
+    },
+    "photon_particle_light_pos_reuse": {
+      "mod": "photon",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.photon_c49.TileParticleLightPosMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/lowdragmc/photon/client/gameobject/particle/TileParticle",
+          "method": "getLightColor",
+          "desc": "()I",
+          "note": "getWorldPos, new BlockPos((int) x, (int) y, (int) z) (the NEW we wrap), emitter.getLightColor(pos)",
+          "sha256": "0f0ac615c22c523d19d8934ebf362aa3e3219268c3076e8582583dafa0b4b0c8"
+        },
+        {
+          "class": "com/lowdragmc/photon/client/gameobject/emitter/Emitter",
+          "method": "getLightColor",
+          "desc": "(Lnet/minecraft/core/BlockPos;)I",
+          "note": "the only IParticleEmitter.getLightColor in Photon: lightCache.computeIfAbsent(pos, ..) (pos = key only)",
+          "sha256": "d4bf3b2471105c9343d5e0196f9b8729f80018c1ce87a75cdc021a4c0858c106"
+        },
+        {
+          "class": "com/lowdragmc/photon/client/gameobject/emitter/Emitter",
+          "method": "lambda$getLightColor$1",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Ljava/lang/Integer;",
+          "note": "reads only: level.hasChunkAt(pos) / DummyWorld, LevelRenderer.getLightColor(level, pos)",
+          "sha256": "c2bf40c13d8f059e648f8f0b22bd1373edf965fac5a13a91e3e0d5d8beda8b5f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of new BlockPos(III) in TileParticle.getLightColor(): the particle's last BlockPos is returned again while the three truncated coordinates equal it, else a new BlockPos(x, y, z) is built and kept in a @Unique field (helper bons.furious.patch.photon_c49.PhotonLightPos)",
+      "license": "Photon (mods.toml: GPL-3.0; its Modrinth page: custom licence): none of its code is carried; the wrapper compares the coordinates Photon computed and returns an equal immutable BlockPos"
+    },
+    "photon_particle_quad_scratch": {
+      "mod": "photon",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.photon_c49.TileParticleQuadScratchMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/lowdragmc/photon/client/gameobject/particle/TileParticle",
+          "method": "renderInternal",
+          "desc": "(Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/client/Camera;F)V",
+          "note": "billboard branch: Vector3f[4] of four new Vector3f(FFF) corners (the only four in the method, the NEWs we redirect), each scaled, rotated (Quaternionf.transform), scaled and moved in place, then four vertex calls reading them; Model branch untouched",
+          "sha256": "6067cbb21be9643f6c52d1c360fc13ccf58b3602bcb469f2c6a5b172eff5712f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the four new Vector3f(FFF) of TileParticle.renderInternal to four reused corner vectors set to the same components on the render thread (new vectors on other threads) (helper bons.furious.patch.photon_c49.PhotonQuadScratch)",
+      "license": "Photon (mods.toml: GPL-3.0; its Modrinth page: custom licence): none of its code is carried; the redirect only hands Photon's own code a reused vector with the components it asked for"
+    },
+    "photon_trail_ribbon_scratch": {
+      "mod": "photon",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.photon_c49.TrailTailArrayScratchMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/lowdragmc/photon/client/gameobject/particle/TrailParticle$TailArray",
+          "method": "renderInternal",
+          "desc": "(Lcom/mojang/blaze3d/vertex/VertexConsumer;FLorg/joml/Vector3f;Lorg/joml/Vector4f;I)V",
+          "note": "the method's new Vector3f number 3 (segment direction -> normal -> lastNormal), 6 (segment upper edge -> lastUp) and 10 (head upper edge -> lastUp), counted over all its new Vector3f, are the NEWs we redirect; lastNormal is read by the next segment's average normal and the head, lastUp only null-checked and pushed at the end",
+          "sha256": "a35908acf51f9282f20801bec9a690fc770d25b019a40b601935510d855db947"
+        },
+        {
+          "class": "com/lowdragmc/photon/client/gameobject/particle/TrailParticle$TailArray",
+          "method": "pushVertex",
+          "desc": "(Lcom/mojang/blaze3d/vertex/VertexConsumer;ILorg/joml/Vector3f;FFFFFF)V",
+          "note": "reads pos.x / y / z into the vertex call only",
+          "sha256": "abfcb6a5f8f095654f3b0f5b4c61c9662e22008ca2dcefb46774252797e9275d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the new Vector3f(Vector3fc) at NEW ordinals 3, 6 and 10 of TrailParticle$TailArray.renderInternal to two alternating reused vectors each (normal; upper edge) with the same components on the render thread (new vectors on other threads) (helper bons.furious.patch.photon_c49.PhotonTrailScratch)",
+      "license": "Photon (mods.toml: GPL-3.0; its Modrinth page: custom licence): none of its code is carried; the redirect only hands Photon's own code a reused vector with the components it asked for"
+    }
+  }
+}

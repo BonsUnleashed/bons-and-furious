@@ -1,0 +1,65 @@
+{
+  "group": "goety_boss_music_gates",
+  "keys": {
+    "goety_boss_music_class_gate": {
+      "mod": "goety",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goety_boss_music_gates.GoetyBossMusicGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/Polarice3/Goety/client/events/ClientEvents",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "every effect (novelty / attack sounds, pre-boss and boss music) sits behind an instanceof test of one of the 14 listed classes (10 in 2.5.58.4); the rest reads the option, the capability target, the owner and a tag",
+          "sha256": "3478cc21cb956589c3cbff1655537350223f3c9a845a40e3f391866cab5f6123",
+          "sha256_also": [
+            {
+              "build": "2.5.58.4",
+              "sha256": "000e6d2fff3b1f9ece8d696d2f0f434abe1174bb53cd31178c46ec0d14b57df1"
+            }
+          ]
+        },
+        {
+          "class": "com/Polarice3/Goety/utils/MiscCapHelper",
+          "method": "getMobTarget",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/entity/Entity;",
+          "note": "a read: the capability's target id, then Level.getEntity",
+          "sha256": "551ef46a1babb5ffa941555c3e675f8a4cb9caa7fff517fd7cabce1addca8c51"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Mixin @Inject at the head of ClientEvents.onEntityTick (cancellable): returns at once when the ticked entity's class is none of the 14 classes the handler acts on (decided once per class by name through its superclasses: bons.furious.patch.goety_boss_music_gates.GoetyMusicGates); otherwise the handler runs unchanged",
+      "license": "Goety (MIT): no code carried, the injector carries only our own logic"
+    },
+    "goetyhostility_boss_music_class_gate": {
+      "mod": "goetyhostility",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goety_boss_music_gates.GoetyHostilityBossMusicGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ratrod/goetyhostility/client/event/GHClientForgeEvents",
+          "method": "onEntityTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "the only effect (the Wildfire theme) sits behind an instanceof HostileWildfire test; the rest reads the option, the capability target, the owner and a tag",
+          "sha256": "0635a9cf8f4c2aedc83478b7743e75f1dbe66059abe30ab642a26d1410dc3f3d"
+        },
+        {
+          "class": "com/Polarice3/Goety/utils/MiscCapHelper",
+          "method": "getMobTarget",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/entity/Entity;",
+          "note": "a read: the capability's target id, then Level.getEntity",
+          "sha256": "551ef46a1babb5ffa941555c3e675f8a4cb9caa7fff517fd7cabce1addca8c51"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Mixin @Inject at the head of GHClientForgeEvents.onEntityTick (cancellable): returns at once unless the ticked entity is a HostileWildfire (decided once per class by name: bons.furious.patch.goety_boss_music_gates.GoetyMusicGates); otherwise the handler runs unchanged",
+      "license": "Goety Hostility (All Rights Reserved): no code carried, the injector carries only our own logic"
+    }
+  }
+}

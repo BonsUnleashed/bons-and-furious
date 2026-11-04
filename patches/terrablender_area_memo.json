@@ -1,0 +1,54 @@
+{
+  "group": "terrablender_area_memo",
+  "keys": {
+    "terrablender_area_thread_memo": {
+      "mod": "terrablender",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.terrablender_area_memo.AreaThreadMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "terrablender/worldgen/noise/Area",
+          "method": "get",
+          "desc": "(II)I",
+          "sha256": "520bfeb15579b2d1121c330a67b6d4df8121271bcb715e313c6124dd2b3eb07d"
+        },
+        {
+          "class": "terrablender/worldgen/noise/Area",
+          "method": "<init>",
+          "desc": "(Lterrablender/worldgen/noise/PixelTransformer;I)V",
+          "sha256": "33e3c2bb1f20692bb544c40a76e7a3bd78bec8add88bd5403d3876ba9485d3d5"
+        },
+        {
+          "class": "terrablender/worldgen/noise/Area",
+          "method": "*",
+          "desc": "",
+          "sha256": "664e3ad0246c4f1ac8d5ad8008f7540fa140f33b1a0f53ec88eb2cf45f681c8f"
+        },
+        {
+          "class": "terrablender/worldgen/noise/AreaContext",
+          "method": "initRandom",
+          "desc": "(JJ)V",
+          "sha256": "b06e2c25f75901e66d08b0e9b159992b2ab41e471901f5adcff06c9eb6f2fbdd"
+        },
+        {
+          "class": "terrablender/worldgen/noise/AreaContext",
+          "method": "nextRandom",
+          "desc": "(I)I",
+          "sha256": "4f40fa5de6e108a8cdd07af4d252f45a81cf0cd6fe28bb13356a4ad6d034c4a7"
+        },
+        {
+          "class": "terrablender/worldgen/noise/AreaContext",
+          "method": "*",
+          "desc": "",
+          "sha256": "2254299d919e53a7cb412a7f8618fea4df6d0e3ea7a56d53f06e5f74df182d16"
+        }
+      ],
+      "cancel": [],
+      "conversion": "cancellable @Inject(HEAD) on Area.get(II)I answers from a per-thread direct-mapped table (area id, x, z) without the StampedLock; MixinExtras @ModifyReturnValue keeps get's own answer; TerraBlender's get runs unchanged on every miss",
+      "license": "LGPL-3.0 (TerraBlender): no TerraBlender code carried; injectors with our own logic (helper bons.furious.patch.terrablender_area_memo.AreaMemo)"
+    }
+  }
+}

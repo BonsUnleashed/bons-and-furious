@@ -1,0 +1,97 @@
+{
+  "group": "betterspellcasting_coo49",
+  "keys": {
+    "better_spellcasting_queued_spell_expiry": {
+      "mod": "better_spellcasting",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.betterspellcasting_coo49.BscComboStateAccessor",
+        "bons.furious.mixin.betterspellcasting_coo49.BscQueuedSpellExpiryMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/kayn/better_spellcasting/event/AttackSpellHandler",
+          "method": "onLivingHurt",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingHurtEvent;)V",
+          "note": "server level, source entity a player: pending.remove(uuid) (the wrapped call), null returns, else the queued spell is cast at the victim or the caster",
+          "sha256": "5ac2ce4a384601361bdef2ec3e5865bbce14798e4ce333046155932841c8633a"
+        },
+        {
+          "class": "net/kayn/better_spellcasting/event/AttackSpellHandler",
+          "method": "trackSwingServerSide",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "every path that writes serverCombo (new ComboState with the swing's game time) also puts or removes the pending spell; no weapon or no attacks removes both",
+          "sha256": "75fc2e5057a2d022a164c60d95da2f898e11bffae820f31aa413f5c4662d37a0"
+        },
+        {
+          "class": "net/kayn/better_spellcasting/event/AttackSpellHandler",
+          "method": "resetComboFor",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "note": "removes both entries together",
+          "sha256": "d5659d8b8eaf7b8a81e2c614547b17fd28f00dae624a8b0520ac9dde31c5a0e8"
+        },
+        {
+          "class": "net/kayn/better_spellcasting/event/AttackSpellHandler$ComboState",
+          "method": "<init>",
+          "desc": "(IJLnet/minecraft/resources/ResourceLocation;)V",
+          "note": "record (index, lastSwingTick, weaponId): the field the accessor reads",
+          "sha256": "8d6732f71213c86be9b06e84e1c68ac07c41f00f691045951e17cac398e0115e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the pending ConcurrentHashMap.remove call in AttackSpellHandler.onLivingHurt (the LivingHurtEvent captured): the entry is removed as shipped; when the arming swing's combo state is missing or its lastSwingTick (read through the BscComboStateAccessor duck) is more than the window (value line, default 40, range 1-1200) ticks before the attacker's game time, or in the future, the wrapper answers null and the handler returns without casting. Runtime flag betterSpellcastingQueuedSpellExpiry. Helper bons.furious.patch.betterspellcasting_coo49.BscSpells.",
+      "license": "Better Spellcasting (LGPL-2.1-or-later): no code carried; the wrapper decides whether the mod's own queued spell goes on"
+    },
+    "better_spellcasting_server_swing_only": {
+      "mod": "better_spellcasting",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.betterspellcasting_coo49.BscSwingPacketMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/kayn/better_spellcasting/event/AttackSpellHandler",
+          "method": "onClientAttackEntity",
+          "desc": "(Lnet/minecraftforge/event/entity/player/AttackEntityEvent;)V",
+          "note": "client level only (the wrapped isClientSide test): CHANNEL.sendToServer(new SwingMessage()); its only effect",
+          "sha256": "4d59c1630624a2ad6a023f8036c6c170a233f8b438b28cc7bdabd41879676955"
+        },
+        {
+          "class": "net/kayn/better_spellcasting/event/AttackSpellHandler",
+          "method": "onLeftClickEmpty",
+          "desc": "(Lnet/minecraftforge/event/entity/player/PlayerInteractEvent$LeftClickEmpty;)V",
+          "note": "swings at the air keep their SwingMessage (untouched)",
+          "sha256": "1ade6c542780dc6710bcca04bcb0c4833a7ce5789e4c2a1fb9e1565ea079c9e4"
+        },
+        {
+          "class": "net/kayn/better_spellcasting/event/AttackSpellHandler",
+          "method": "onServerAttackEntity",
+          "desc": "(Lnet/minecraftforge/event/entity/player/AttackEntityEvent;)V",
+          "note": "the server tracks every accepted hit itself: trackSwingServerSide(player, target)",
+          "sha256": "c1f4f43f7f792158359a925d5176af5825a052279ec4986afb5af078b48013a2"
+        },
+        {
+          "class": "net/kayn/better_spellcasting/event/AttackSpellHandler",
+          "method": "onClientSwingFromPacket",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "note": "the SwingMessage's server side: trackSwingServerSide(player, null)",
+          "sha256": "fb43cc52d1f6aa358cff9b3245ced7f4918337b16b17959ea7f94d91b91d65a9"
+        },
+        {
+          "class": "net/kayn/better_spellcasting/event/AttackSpellHandler",
+          "method": "trackSwingServerSide",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "a second swing on the same tick with the same weapon is dropped; any other one advances the combo (and may cast)",
+          "sha256": "75fc2e5057a2d022a164c60d95da2f898e11bffae820f31aa413f5c4662d37a0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on the Level.isClientSide() (m_5776_) test of AttackSpellHandler.onClientAttackEntity: while on it reads false, so the handler returns before sending its SwingMessage (as on a server level); onLeftClickEmpty untouched. Runtime flag betterSpellcastingServerSwingOnly. Helper bons.furious.patch.betterspellcasting_coo49.BscSpells.",
+      "license": "Better Spellcasting (LGPL-2.1-or-later): no code carried; the hook decides whether the mod's own send runs"
+    }
+  }
+}

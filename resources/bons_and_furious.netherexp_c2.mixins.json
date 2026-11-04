@@ -8,6 +8,8 @@
     "defaultRequire": 1
   },
   "mixins": [
-    "AntidoteEffectGuardMixin"
+    "AntidoteEffectGuardMixin",
+    "AntidoteLookupMemoMixin",
+    "AntidoteTagReadMixin"
   ]
 }

@@ -1,0 +1,26 @@
+{
+  "group": "primitivemobs_coo49",
+  "keys": {
+    "primitivemobs_skip_villager_goblin_avoid": {
+      "mod": "primitive_mobs",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.primitivemobs_coo49.VillagerGoblinAvoidSkipMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/misanthropy/primitive_mobs/core/PrimitiveMobsEvents",
+          "method": "onEntityJoin",
+          "desc": "(Lnet/minecraftforge/event/entity/EntityJoinLevelEvent;)V",
+          "note": "server level and a villager: goalSelector.addGoal(1, new AvoidEntityGoal(villager, Goblin.class, 8, 0.6, 0.6)), the only call of the handler that the switch leaves out",
+          "sha256": "67af184e031916515fb9a38400b765a896ddf964132c0c696657b54f4dfcb92d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapWithCondition on GoalSelector.addGoal (m_25352_) in PrimitiveMobsEvents.onEntityJoin: false (left out) while the switch is on. Trade-off, off by default: villagers no longer flee goblins. Runtime flag primitivemobsSkipVillagerGoblinAvoid. Helper bons.furious.patch.primitivemobs_coo49.PrimitiveScans.",
+      "license": "Primitive Mobs (CC BY 3.0): no code carried; the hook leaves out one call of the mod's own handler"
+    }
+  }
+}

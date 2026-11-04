@@ -6,7 +6,9 @@
       "scripts": [],
       "since": "1.0.30",
       "mixins": [
-        "bons.furious.mixin.netherexp_c2.AntidoteEffectGuardMixin"
+        "bons.furious.mixin.netherexp_c2.AntidoteEffectGuardMixin",
+        "bons.furious.mixin.netherexp_c2.AntidoteLookupMemoMixin",
+        "bons.furious.mixin.netherexp_c2.AntidoteTagReadMixin"
       ],
       "guard": [
         {
@@ -34,6 +36,20 @@
           "sha256": "f331d4783cbdcedc1d62ab38c3c9e1a70aff1c2d7380101887a4008c0ec1502b"
         },
         {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41783_",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "since 1.0.49: getTag, the tag or null (what readTag hands on)",
+          "sha256": "52a5721be98fab658ea43b7a6883ff37506a83d79a1cd704bc00c7c44af5779c"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41784_",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "since 1.0.49: getOrCreateTag attaches a new empty tag to a tagless stack (the bug readTag avoids)",
+          "sha256": "7ea9014caa1536a93f44d8b4951c9dca0a0b6a3b9078a56ac69f60578375a879"
+        },
+        {
           "class": "net/jadenxgamer/netherexp/registry/item/custom/AntidoteItem",
           "method": "*",
           "desc": "",
@@ -41,7 +57,7 @@
         }
       ],
       "cancel": [],
-      "conversion": "MixinExtras @WrapOperation on the ResourceLocation constructor and the Objects.requireNonNull call in AntidoteItem.getAntidoteEffect (malformed or unregistered id -> null, the method's own 'no effect' answer)",
+      "conversion": "MixinExtras @WrapOperation on the ResourceLocation constructor and the Objects.requireNonNull call in AntidoteItem.getAntidoteEffect (malformed or unregistered id -> null, the method's own 'no effect' answer); since 1.0.49 also @Redirect of ItemStack.getOrCreateTag in getAntidoteEffect, getColor, getDuration, appendHoverText and getDescriptionId (the stack's tag or a shared read-only empty tag, no tag attached) and @WrapOperation of the mob-effect registry lookup (a bounded memo of found effects; the parse wrapper keeps a bounded memo too)",
       "license": "CC-BY-NC-SA-4.0: no-copy; the wrappers carry only our own handling (helper bons.furious.patch.netherexp_c2.AntidoteGuard)",
       "kind": "fix"
     }

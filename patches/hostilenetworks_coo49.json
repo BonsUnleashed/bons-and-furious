@@ -1,0 +1,141 @@
+{
+  "group": "hostilenetworks_coo49",
+  "keys": {
+    "hostilenetworks_model_holder_memo": {
+      "mod": "hostilenetworks",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.hostilenetworks_coo49.HnnStoredModelMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/shadowsoffire/hostilenetworks/item/DataModelItem",
+          "method": "getStoredModel",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Ldev/shadowsoffire/placebo/reload/DynamicHolder;",
+          "note": "data_model tag; empty / no tag / no id -> emptyHolder(); else INSTANCE.holder(new ResourceLocation(tag.getString(\"id\")))",
+          "sha256": "2bce2b7d65e59cb51cde5949d648bf012a796c2741c63e665fd750d158838888"
+        },
+        {
+          "class": "dev/shadowsoffire/hostilenetworks/data/DataModelRegistry",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: no override of Placebo's holder(ResourceLocation)",
+          "sha256": "c4957ad0695d4d17a3564f87c81fc62fe268c9d42a405c594c9d031e631107d6"
+        },
+        {
+          "class": "dev/shadowsoffire/placebo/reload/DynamicRegistry",
+          "method": "holder",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Ldev/shadowsoffire/placebo/reload/DynamicHolder;",
+          "note": "audited (Placebo, which Hostile Neural Networks requires): holders.computeIfAbsent(id, new DynamicHolder): one holder per id",
+          "audit": true,
+          "sha256": "7ff0005a15f075bbe23ee7b55292090bce753c1f14ba59bfd13ab1057abe84a2"
+        },
+        {
+          "class": "dev/shadowsoffire/placebo/reload/DynamicRegistry",
+          "method": "beginReload",
+          "desc": "()V",
+          "note": "audited (Placebo): reload: holders.values().forEach(unbind), nothing removed",
+          "audit": true,
+          "sha256": "ffe673e7cb59623bdc933b5197d900ffb5811b2c2404e270fed9e1b507f65cda"
+        },
+        {
+          "class": "dev/shadowsoffire/placebo/reload/DynamicRegistry",
+          "method": "onReload",
+          "desc": "()V",
+          "note": "audited (Placebo): reload: holders.values().forEach(bind), nothing removed",
+          "audit": true,
+          "sha256": "dc9244626d18039ed5d34396a92f67fe482be684a2d401246f58fce6a1ec197a"
+        },
+        {
+          "class": "dev/shadowsoffire/placebo/reload/DynamicRegistry",
+          "method": "register",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;Ldev/shadowsoffire/placebo/codec/CodecProvider;)V",
+          "note": "audited (Placebo): holders.computeIfAbsent(key, new DynamicHolder): never replaces a holder",
+          "audit": true,
+          "sha256": "608168baaf195df3c8fcc0f90242057bb50006d3bbcbaf28b64290d04a24ff19"
+        },
+        {
+          "class": "dev/shadowsoffire/placebo/reload/DynamicRegistry",
+          "method": "<init>",
+          "desc": "(Lorg/apache/logging/log4j/Logger;Ljava/lang/String;ZZ)V",
+          "note": "audited (Placebo): creates the holders map; the jar census found it read only by <init>, holder, register, beginReload and onReload",
+          "audit": true,
+          "sha256": "14d8fa1156e6c11a00e74919b9dbeb8072357700a629507e3acd25911bf294e8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of DataModelItem.getStoredModel: a stack whose data_model tag names an id gets the holder from a memo of the id string (filled by the registry's own holder call on a miss, at most 4,096 strings); empty / untagged / id-less stacks and the switch off run the original. Runtime flag hostilenetworksModelHolderMemo; shadow hostilenetworksModelHolderMemo.shadow. Helper bons.furious.patch.hostilenetworks_coo49.HnnModelHolders.",
+      "license": "Hostile Neural Networks (MIT) and Placebo (MIT): no code carried; the hook answers from the holders the registry handed out"
+    },
+    "hostilenetworks_client_entity_cache_lean": {
+      "mod": "hostilenetworks",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.hostilenetworks_coo49.HnnClientEntityCacheMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/shadowsoffire/hostilenetworks/util/ClientEntityCache",
+          "method": "computeIfAbsent",
+          "desc": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "CACHE.computeIfAbsent(level, new IdentityHashMap) then inner.computeIfAbsent(type, create + load)",
+          "sha256": "24d2244ccc8fd43564e21d5f06f46fe26ae57f565b1549fcfaf4c7ad8fb8710f"
+        },
+        {
+          "class": "dev/shadowsoffire/hostilenetworks/util/ClientEntityCache",
+          "method": "tick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$ClientTickEvent;)V",
+          "note": "START phase: stream over every cached entity, tickCount++",
+          "sha256": "e8730c33633ebd80a11af2ce5fd89d57ca1f554a48b64aca9b630211e001270d"
+        },
+        {
+          "class": "dev/shadowsoffire/hostilenetworks/util/ClientEntityCache",
+          "method": "lambda$tick$2",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "the tick's action: tickCount + 1",
+          "sha256": "169385b392ac284cb6b96d51f6bf1f52c0f5968dbf30d88113c88c8cdc5559b0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@WrapMethod of ClientEntityCache.computeIfAbsent (a cached level + type answers from two map reads, else the original) and of tick (START phase: two loops adding one to each cached entity's tickCount; END phase: the original). Runtime flag hostilenetworksClientEntityCacheLean. Helper bons.furious.patch.hostilenetworks_coo49.HnnClientCache.",
+      "license": "Hostile Neural Networks (MIT): no code carried"
+    },
+    "hostilenetworks_unbound_model_kill_fix": {
+      "mod": "hostilenetworks",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.hostilenetworks_coo49.HnnUnboundModelKillMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/shadowsoffire/hostilenetworks/HostileEvents",
+          "method": "updateModels",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/EntityType;I)V",
+          "note": "skip test reads empty || ((!bound || type mismatch) && !get().subtypes().contains(type)): an unbound holder reaches get() and throws",
+          "sha256": "ad56ceccd781d013abf81b83d119ebf1d4042b74ee786807623ed2ba0174af34"
+        },
+        {
+          "class": "dev/shadowsoffire/hostilenetworks/item/DeepLearnerItem",
+          "method": "getItemHandler",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraftforge/items/ItemStackHandler;",
+          "note": "a new ItemStackHandler(4) deserialised from the learner's tag on every call",
+          "sha256": "4fb0ca7eccac70ac87767ca6d1cce3b6b02e6de7623dc63066f38a0417faccf8"
+        },
+        {
+          "class": "dev/shadowsoffire/hostilenetworks/item/DeepLearnerItem",
+          "method": "saveItems",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraftforge/items/ItemStackHandler;)V",
+          "note": "writes the handler back into the learner's tag",
+          "sha256": "4efda5a7bf003c96064c2bd9346523672fef04ddafc22cf26942b49b7a080df7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of HostileEvents.updateModels: only when a non-empty slot holds an unbound data model, the corrected loop runs (skip empty, unbound, or type mismatch without a subtype match; same getData / ModelTier.getByData / setData / saveItems) and the method returns; every other learner runs the original. Fix: no NullPointerException out of the kill event; the unbound slot is left alone. Runtime flag hostilenetworksUnboundModelKillFix. Helper bons.furious.patch.hostilenetworks_coo49.HnnKillFix.",
+      "license": "Hostile Neural Networks (MIT): the corrected loop repeats its own four calls per slot (permitted by MIT)"
+    }
+  }
+}

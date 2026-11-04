@@ -1,0 +1,131 @@
+{
+  "group": "cnb_coo49",
+  "keys": {
+    "cnb_cactem_become_elder_scan_interval": {
+      "mod": "cnb",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cnb_coo49.CactemBecomeElderScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/cgessinger/creaturesandbeasts/entities/CactemEntity$BecomeElderGoal",
+          "method": "m_8036_",
+          "desc": "()Z",
+          "note": "canUse = !isElderNear(); no state is read or written besides the search",
+          "sha256": "678b5b431cef7633c33749d3db6f27f6a9e73e4b2e3bfb80a88a94f1c43450ff"
+        },
+        {
+          "class": "com/cgessinger/creaturesandbeasts/entities/CactemEntity$BecomeElderGoal",
+          "method": "isElderNear",
+          "desc": "()Z",
+          "note": "getEntitiesOfClass(CactemEntity, bb.inflate(elderRadius, 16, elderRadius)), true on the first isElder()",
+          "sha256": "a268a731900a1c8392b0418b9805552aec1dd652be57e3ffda3b6ba09b754b5d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on CactemEntity$BecomeElderGoal.canUse (m_8036_): after a check whose search found an elder (canUse false) the next N - 1 checks answer false without the search (one profiler getEntities count each, as the search counts); any other check runs the original. Trade-off, off by default; N = PureConfig.intValue(\"cnb_cactem_become_elder_scan_interval\", 20, 1, 200). Runtime flag cnbCactemBecomeElderScanInterval. Helper bons.furious.patch.cnb_coo49.CnbScans.",
+      "license": "Creatures and Beasts: Continued (LGPL-3.0): no code carried; the hook decides when its own search runs"
+    },
+    "cnb_cactem_follow_elder_scan_interval": {
+      "mod": "cnb",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cnb_coo49.CactemFollowElderScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/cgessinger/creaturesandbeasts/entities/CactemEntity$FollowElderGoal",
+          "method": "m_8036_",
+          "desc": "()Z",
+          "note": "canUse: getEntitiesOfClass(CactemEntity, bb.inflate(32, 4, 32)), closest elder; false without one or nearer than 20 blocks (elder untouched), else elder = it, true",
+          "sha256": "e55eaa89b37c87440eebe43260c6e7ff77da219456de58aa704ddca074e3e735"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on CactemEntity$FollowElderGoal.canUse (m_8036_): after a check that answered false the next N - 1 checks answer false without the search (one profiler getEntities count each); any other check runs the original. Trade-off, off by default; N = PureConfig.intValue(\"cnb_cactem_follow_elder_scan_interval\", 10, 1, 200). Runtime flag cnbCactemFollowElderScanInterval. Helper bons.furious.patch.cnb_coo49.CnbScans.",
+      "license": "Creatures and Beasts: Continued (LGPL-3.0): no code carried; the hook decides when its own search runs"
+    },
+    "cnb_cactem_heal_scan_reuse": {
+      "mod": "cnb",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cnb_coo49.CactemHealScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/cgessinger/creaturesandbeasts/entities/CactemEntity$HealGoal",
+          "method": "cactemNeedsHeal",
+          "desc": "(Lcom/cgessinger/creaturesandbeasts/entities/CactemEntity;Lnet/minecraft/world/level/Level;)Z",
+          "note": "getEntitiesOfClass(CactemEntity, bb.inflate(healRadius, 4, healRadius)) (the wrapped search); the list is only iterated: true on the first non-elder at half health or less",
+          "sha256": "120e363b9af3fa0d1f361e9618f5d3ddfeddff59ed625a6659b578497a49c703"
+        },
+        {
+          "class": "com/cgessinger/creaturesandbeasts/entities/CactemEntity$HealGoal",
+          "method": "m_8036_",
+          "desc": "()Z",
+          "note": "canUse: one cactemNeedsHeal call (canContinueToUse calls canUse)",
+          "sha256": "e8559cb33db17bc97e1b0091f395019cae03bd6e5d40d52683276e9890c865ad"
+        },
+        {
+          "class": "com/cgessinger/creaturesandbeasts/entities/CactemEntity$HealGoal",
+          "method": "m_8037_",
+          "desc": "()V",
+          "note": "tick: cactemNeedsHeal while the heal cooldown is over; the heal itself (performHeal) makes its own search",
+          "sha256": "c7b0150fa4cc4b6f6dcf7a8751b3d9846ef45d2ef168f3111013230c081f922f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass (m_45976_) call in CactemEntity$HealGoal.cactemNeedsHeal: the goal keeps its last search's list (@Unique fields behind the duck interface CactemHealScanHolder) and for the next N - 1 calls answers it filtered by the current box with the search's own intersects test; a removed cactem in it or a level change searches again at once. Trade-off, off by default; N = PureConfig.intValue(\"cnb_cactem_heal_scan_reuse\", 10, 1, 200). Runtime flag cnbCactemHealScanReuse. Helper bons.furious.patch.cnb_coo49.CnbScans.",
+      "license": "Creatures and Beasts: Continued (LGPL-3.0): no code carried; the hook decides when its own search runs"
+    },
+    "cnb_cactem_trade_scan_interval": {
+      "mod": "cnb",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cnb_coo49.CactemTradeScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/cgessinger/creaturesandbeasts/entities/CactemEntity$TradeGoal",
+          "method": "m_8036_",
+          "desc": "()Z",
+          "note": "canUse: only while itemInstance == null and getTarget() == null: getEntitiesOfClass(ItemEntity, bb.inflate(range, 3, range)), the first totem of undying item sets path and itemInstance; otherwise false with nothing changed",
+          "sha256": "c56d4adba92c99b795ace9ad4106f695c8670aa40664b79352c0eb184b6a1706"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on CactemEntity$TradeGoal.canUse (m_8036_): when a searching check (itemInstance and target null) ended with itemInstance still null, the next N - 1 searching checks answer false without the search (one profiler getEntities count each); every other check runs the original. Trade-off, off by default; N = PureConfig.intValue(\"cnb_cactem_trade_scan_interval\", 10, 1, 200). Runtime flag cnbCactemTradeScanInterval. Helper bons.furious.patch.cnb_coo49.CnbScans.",
+      "license": "Creatures and Beasts: Continued (LGPL-3.0): no code carried; the hook decides when its own search runs"
+    },
+    "cnb_sporeling_convert_scan_interval": {
+      "mod": "cnb",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cnb_coo49.SporelingConvertScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/cgessinger/creaturesandbeasts/entities/ai/ConvertItemGoal",
+          "method": "m_8036_",
+          "desc": "()Z",
+          "note": "canUse: false while sitting; only while itemInstance == null: getEntitiesOfClass(ItemEntity, bb.inflate(range, 3, range)), the first dirt or cursed enchanted item sets path and itemInstance; otherwise false with nothing changed",
+          "sha256": "a30090f9783b0b08ee687052766918d5dfea125e9df38158fe1cf578ac1294ee"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on ConvertItemGoal.canUse (m_8036_): when a searching check (not sitting, itemInstance null) ended with itemInstance still null, the next N - 1 searching checks answer false without the search (one profiler getEntities count each); every other check runs the original. Trade-off, off by default; N = PureConfig.intValue(\"cnb_sporeling_convert_scan_interval\", 10, 1, 200). Runtime flag cnbSporelingConvertScanInterval. Helper bons.furious.patch.cnb_coo49.CnbScans.",
+      "license": "Creatures and Beasts: Continued (LGPL-3.0): no code carried; the hook decides when its own search runs"
+    }
+  }
+}

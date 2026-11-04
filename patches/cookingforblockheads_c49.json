@@ -1,0 +1,240 @@
+{
+  "group": "cookingforblockheads_c49",
+  "keys": {
+    "cookingforblockheads_recipe_book_item_index": {
+      "mod": "cookingforblockheads",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cookingforblockheads_c49.RecipeBookIndexMixin",
+        "bons.furious.mixin.cookingforblockheads_c49.SourceSearchIndexMixin",
+        "bons.furious.mixin.cookingforblockheads_c49.FridgeProviderStacksMixin",
+        "bons.furious.mixin.cookingforblockheads_c49.CuttingBoardProviderStackMixin",
+        "bons.furious.mixin.cookingforblockheads_c49.SinkProviderStacksMixin",
+        "bons.furious.mixin.cookingforblockheads_c49.MilkJarProviderStacksMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/blay09/mods/cookingforblockheads/menu/RecipeBookMenu",
+          "method": "findAndSendItemList",
+          "desc": "()V",
+          "note": "getItemProviders once, then getRecipeStatus for every food recipe; no slot is changed",
+          "sha256": "f805e98125f992a8bc40b96d69c5bf1793416bc54d3579fc2145c3b4a5d51be4"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/menu/RecipeBookMenu",
+          "method": "findAndSendRecipes",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Z)V",
+          "note": "getItemProviders once, then resetSimulation + findSourceCandidates per ingredient and getRecipeStatus; no slot is changed",
+          "sha256": "cfc7034241b453ca3ec045875e99ab49243d47988bb5dcc1c08d4116cbc6f73a"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/registry/CookingRegistry",
+          "method": "getItemProviders",
+          "desc": "(Lnet/blay09/mods/cookingforblockheads/KitchenMultiBlock;Lnet/minecraft/world/entity/player/Inventory;)Ljava/util/List;",
+          "note": "a new list every call (the kitchen's, or one provider over the player's inventory)",
+          "sha256": "45d94edce7e4937a4c5400fd4df70b5f0159e6c82371b079e9b63649077846dc"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/KitchenMultiBlock",
+          "method": "getItemProviders",
+          "desc": "(Lnet/minecraft/world/entity/player/Inventory;)Ljava/util/List;",
+          "note": "a new ArrayList: the kitchen's providers plus a new DefaultKitchenItemProvider over the inventory",
+          "sha256": "85bb76773f9fd8ccb740ad2bf28950b3caaba783e4a8b0c44889469c17a17a44"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/registry/CookingRegistry",
+          "method": "findAnyItemStack",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Ljava/util/List;Z)Lnet/blay09/mods/cookingforblockheads/api/SourceItem;",
+          "note": "empty -> null; else the first non-null findSource(predicate, 1, providers, requireBucket, true) of the providers in order",
+          "sha256": "cce5e8964d362cf94785055d806dc120e195c27055eb1baa84ea7236ab88c965"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/registry/CookingRegistry",
+          "method": "lambda$findAnyItemStack$1",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;I)Z",
+          "note": "the predicate: isSameItemSameTags(candidate, asked) and count above 0 (the same item is required)",
+          "sha256": "626d7d0e75586eae4f9c4b292547f852e88ed3e32975c09bfa45c990d975a866"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/registry/CookingRegistry",
+          "method": "findSourceCandidates",
+          "desc": "(Lnet/blay09/mods/cookingforblockheads/registry/recipe/FoodIngredient;Ljava/util/List;ZZ)Ljava/util/List;",
+          "note": "findAnyItemStack per accepted item; a null answer adds the same placeholder or tool entry as before",
+          "sha256": "0a6a72ce9b089d5fc88629351e24dbeda19e83e3c351284767c8eb2bb6ae8d2d"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/registry/IngredientPredicateWithCacheImpl",
+          "method": "test",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;I)Z",
+          "note": "delegates to the wrapped predicate",
+          "sha256": "2aee4a207b809d1b9fef2b406d69efc54a66fe7c3478f64d449cab456a735792"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/registry/IngredientPredicateWithCacheImpl",
+          "method": "lambda$and$0",
+          "desc": "(Lnet/blay09/mods/cookingforblockheads/api/capability/IngredientPredicate;Lnet/blay09/mods/cookingforblockheads/api/capability/IngredientPredicate;Lnet/minecraft/world/item/ItemStack;I)Z",
+          "note": "and(): both predicates must hold",
+          "sha256": "3e58adab3510636b6601504c13a618bbd4bbd697cba0fba990ef194d66316319"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/api/capability/AbstractKitchenItemProvider",
+          "method": "findSource",
+          "desc": "(Lnet/blay09/mods/cookingforblockheads/api/capability/IngredientPredicate;ILjava/util/List;ZZ)Lnet/blay09/mods/cookingforblockheads/api/SourceItem;",
+          "note": "the slot walk: a SourceItem only for a non-empty slot stack the predicate accepts",
+          "sha256": "d71e8a46a4fd6e4309e04e076d6e8eb4e4e94d5fa4707bb6a7693cb710ebbeab"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/api/capability/DefaultKitchenItemProvider",
+          "method": "*",
+          "desc": "",
+          "note": "the declared methods: findSource, getSlots and getStackInSlot as listed below",
+          "sha256": "8004a52c4e7d8a5eef4c88160ed7b4ca8eec5dc13a002477aab8e3e3dec74a62"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/api/capability/DefaultKitchenItemProvider",
+          "method": "findSource",
+          "desc": "(Lnet/blay09/mods/cookingforblockheads/api/capability/IngredientPredicate;ILjava/util/List;ZZ)Lnet/blay09/mods/cookingforblockheads/api/SourceItem;",
+          "note": "with a preservation upgrade an extra condition is and-ed, then the base slot walk",
+          "sha256": "aaae3bd45891c4118e6763de8b411c3dfdf5344f9905f140ac35709c65566cf2"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/api/capability/DefaultKitchenItemProvider",
+          "method": "getStackInSlot",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "note": "container.getItem(slot)",
+          "sha256": "c8f73041ec858f864c4d9b04dc0060d89567266af89ea19b63b3323420dd086c"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/api/capability/DefaultKitchenItemProvider",
+          "method": "getSlots",
+          "desc": "()I",
+          "note": "container.getContainerSize()",
+          "sha256": "7bf5eb2fcdc1743160d6048ab5509a5df9284ba01e923d205ec4f83ae79815f6"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/compat/ItemHandlerKitchenItemProvider",
+          "method": "*",
+          "desc": "",
+          "note": "the declared methods: no findSource of its own",
+          "sha256": "91cb1198f81e9bec912019bf662b950c5245901bdda4e516a27fafff56ee5e7d"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/compat/ItemHandlerKitchenItemProvider",
+          "method": "getStackInSlot",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "note": "itemHandler.getStackInSlot(slot)",
+          "sha256": "52c3ad5c9700538918c8aa69bf0990e01b17e43ec39b3f152a1b2ca76bce116f"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/compat/ItemHandlerKitchenItemProvider",
+          "method": "getSlots",
+          "desc": "()I",
+          "note": "itemHandler.getSlots()",
+          "sha256": "55e0e404a145629a32a9d9df0df1c7e0acd5917e72ec1411bb988bfd61a7bf54"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/tile/CounterBlockEntity$2",
+          "method": "*",
+          "desc": "",
+          "note": "a DefaultKitchenItemProvider that only answers hasPreservationUpgrade",
+          "sha256": "f24251f7c741ca1dd56d0af3e15cb263988b426255d64e47e976128a39dcf7ef"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/tile/FruitBasketBlockEntity$2",
+          "method": "*",
+          "desc": "",
+          "note": "a DefaultKitchenItemProvider that only answers hasPreservationUpgrade",
+          "sha256": "0fac59b3cca25bb312dfb4a8eeec2dd7208818cd9f68c521768dac533d17ca0a"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/tile/SpiceRackBlockEntity$2",
+          "method": "*",
+          "desc": "",
+          "note": "a DefaultKitchenItemProvider that only answers hasPreservationUpgrade",
+          "sha256": "6e0f1b5725a0a5b5831ab1ae282b049c9e2271fbb9ab2ebd9de734c9846ae46e"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/tile/FridgeBlockEntity$2",
+          "method": "*",
+          "desc": "",
+          "note": "the declared methods: applyIceUnit, findSource, findSourceAndMarkAsUsed, hasPreservationUpgrade",
+          "sha256": "b077ad0a3b30c613f92f3bb87b7639725c87d31d66581fc039e0e9abef967abd"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/tile/FridgeBlockEntity$2",
+          "method": "findSource",
+          "desc": "(Lnet/blay09/mods/cookingforblockheads/api/capability/IngredientPredicate;ILjava/util/List;ZZ)Lnet/blay09/mods/cookingforblockheads/api/SourceItem;",
+          "note": "applyIceUnit, then DefaultKitchenItemProvider.findSource",
+          "sha256": "3296a2d1f026ec816e7ddc07b4228532cab32ce075ba49fa79f5ba66dd1c4ecf"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/tile/FridgeBlockEntity$2",
+          "method": "applyIceUnit",
+          "desc": "(Lnet/blay09/mods/cookingforblockheads/api/capability/IngredientPredicate;I)Lnet/blay09/mods/cookingforblockheads/api/SourceItem;",
+          "note": "only the snowStack and iceStack fields are offered",
+          "sha256": "d2272af2cb419c61483120f6194897d5f213519b5391ceae256ddb02bace4776"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/tile/CuttingBoardBlockEntity$1",
+          "method": "*",
+          "desc": "",
+          "note": "the declared methods: returnItemStack and findSource",
+          "sha256": "c76eaaa7c32d11bb8a246fd0b5d8292380ae5a14666dd23374ea0571e64720e9"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/tile/CuttingBoardBlockEntity$1",
+          "method": "findSource",
+          "desc": "(Lnet/blay09/mods/cookingforblockheads/api/capability/IngredientPredicate;ILjava/util/List;ZZ)Lnet/blay09/mods/cookingforblockheads/api/SourceItem;",
+          "note": "the cuttingBoard field's stack, then the base slot walk",
+          "sha256": "e0697321aab8e4fdf38211c5b72386ec292da2676d17581d1dc1fa3cc5e65b2c"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/tile/SinkBlockEntity$SinkItemProvider",
+          "method": "*",
+          "desc": "",
+          "note": "the declared methods: no findSource of its own",
+          "sha256": "fff4e468e445c3f94ae882fbb9125fa7937c29f7643d821dc7dcb6a59f2f8894"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/tile/SinkBlockEntity$SinkItemProvider",
+          "method": "getStackInSlot",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "note": "EMPTY or itemStacks.get(slot)",
+          "sha256": "6143594495389fba555bcea65bd25cf34627bb4b8f500a2d5180d5428f60b601"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/tile/SinkBlockEntity$SinkItemProvider",
+          "method": "getSlots",
+          "desc": "()I",
+          "note": "itemStacks.size()",
+          "sha256": "a21830756715fdfaf5db06ef7e6ac893a6788394a424216c12702cdf10a8e5d2"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/tile/MilkJarBlockEntity$MilkJarItemProvider",
+          "method": "*",
+          "desc": "",
+          "note": "the declared methods: no findSource of its own",
+          "sha256": "1a4587761314ff7f5eae953ea3cce1736ec127af4ea406d9b067de4599eec3d8"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/tile/MilkJarBlockEntity$MilkJarItemProvider",
+          "method": "getStackInSlot",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "note": "EMPTY or itemStacks.get(slot)",
+          "sha256": "d27af41bdb6b869c4c467931220bc5a2983162f48ce97ca7a408f09d1feca889"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/tile/MilkJarBlockEntity$MilkJarItemProvider",
+          "method": "getSlots",
+          "desc": "()I",
+          "note": "itemStacks.size()",
+          "sha256": "04a245b3e77ed902416e765a8a9839666253bbe09082a523a74d62161b4e2194"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: @WrapOperation of CookingRegistry.getItemProviders in RecipeBookMenu.findAndSendItemList and findAndSendRecipes (index the provider list) with @WrapMethod around both (drop the index), @WrapOperation of findAnyItemStack in CookingRegistry.findSourceCandidates (answer null for an item no provider holds), four @Accessor interfaces on the fridge, cutting board, sink and milk jar providers (helper bons.furious.patch.cookingforblockheads_c49.KitchenIndex)",
+      "license": "All Rights Reserved (Cooking for Blockheads): no Cooking for Blockheads code is carried; the mixins carry only our own logic"
+    }
+  }
+}

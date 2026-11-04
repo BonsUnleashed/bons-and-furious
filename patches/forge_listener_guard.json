@@ -1,0 +1,168 @@
+{
+  "group": "forge_listener_guard",
+  "keys": {
+    "forge_listener_prologue_guard": {
+      "mod": "forge",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.forge_listener_guard.ForgeEventFactoryPostMixin",
+        "bons.furious.mixin.forge_listener_guard.ForgeHooksPostMixin",
+        "bons.furious.mixin.forge_listener_guard.ForgeHooksClientPostMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraftforge/event/ForgeEventFactory",
+          "method": "onPreClientTick",
+          "desc": "()V",
+          "note": "MinecraftForge.EVENT_BUS.post(new TickEvent.ClientTickEvent(START)), the only post call",
+          "sha256": "f282cdd07ff0fd80e56ab8082176e93fb41929365f43f82843ebb465a11f9d15"
+        },
+        {
+          "class": "net/minecraftforge/event/ForgeEventFactory",
+          "method": "onPostClientTick",
+          "desc": "()V",
+          "sha256": "f07605e2de567926a7a1ba1b2dd4259a770808eeaa78a9c04a14a04b2b601f5f"
+        },
+        {
+          "class": "net/minecraftforge/event/ForgeEventFactory",
+          "method": "onPlayerPreTick",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "sha256": "605a57c8c66b07f2d8a5cfcde302203b2aca4d8a17c0645c5e526024650e83ba"
+        },
+        {
+          "class": "net/minecraftforge/event/ForgeEventFactory",
+          "method": "onPlayerPostTick",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "sha256": "49bb30739f7c5de12c6b2addbfea6e1c00a20d275b2c974816e5fe2f4fb61486"
+        },
+        {
+          "class": "net/minecraftforge/event/ForgeEventFactory",
+          "method": "onPreServerTick",
+          "desc": "(Ljava/util/function/BooleanSupplier;Lnet/minecraft/server/MinecraftServer;)V",
+          "sha256": "87d0b33ecc838cf21138f52abd4f3acab123eda7b5adfc3fc15a822dc9659fbc"
+        },
+        {
+          "class": "net/minecraftforge/event/ForgeEventFactory",
+          "method": "onPostServerTick",
+          "desc": "(Ljava/util/function/BooleanSupplier;Lnet/minecraft/server/MinecraftServer;)V",
+          "sha256": "e85100fe29faa274c590aac58df629c4e478223dc3e893b5da10c4caf7d95b47"
+        },
+        {
+          "class": "net/minecraftforge/event/ForgeEventFactory",
+          "method": "onPreLevelTick",
+          "desc": "(Lnet/minecraft/world/level/Level;Ljava/util/function/BooleanSupplier;)V",
+          "sha256": "ea9c7f73c4b126c8ce7d5489e8047b2b1c5988771d52982c2b6441d23ecdf7ad"
+        },
+        {
+          "class": "net/minecraftforge/event/ForgeEventFactory",
+          "method": "onPostLevelTick",
+          "desc": "(Lnet/minecraft/world/level/Level;Ljava/util/function/BooleanSupplier;)V",
+          "sha256": "31c636fedbe51566c063531022e7990c1e4c6ac8610d5583cb26d6eaffa97ef7"
+        },
+        {
+          "class": "net/minecraftforge/event/ForgeEventFactory",
+          "method": "onRenderTickStart",
+          "desc": "(F)V",
+          "sha256": "59719e02d86c812b5fabf706b569d3945945d12efc956f8df35211590e7065f9"
+        },
+        {
+          "class": "net/minecraftforge/event/ForgeEventFactory",
+          "method": "onRenderTickEnd",
+          "desc": "(F)V",
+          "sha256": "251a01a69d8487a13995cdec96e4a81004606cfa8d8b378ff40d91ff64b5a561"
+        },
+        {
+          "class": "net/minecraftforge/common/ForgeHooks",
+          "method": "onLivingTick",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "return MinecraftForge.EVENT_BUS.post(new LivingEvent.LivingTickEvent(entity))",
+          "sha256": "7323eb60f477ced99c9fb7d017ec9769ca3faaaea63d463826e41513bceaab4e"
+        },
+        {
+          "class": "net/minecraftforge/client/ForgeHooksClient",
+          "method": "dispatchRenderStage",
+          "desc": "(Lnet/minecraftforge/client/event/RenderLevelStageEvent$Stage;Lnet/minecraft/client/renderer/LevelRenderer;Lcom/mojang/blaze3d/vertex/PoseStack;Lorg/joml/Matrix4f;ILnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/culling/Frustum;)V",
+          "note": "profiler push, MinecraftForge.EVENT_BUS.post(new RenderLevelStageEvent(...)), profiler pop",
+          "sha256": "ae0ae59245a4a1e0eabfd3c105e3e04dba705af4ac380b97d0b4782952453998"
+        },
+        {
+          "class": "net/minecraftforge/event/TickEvent",
+          "method": "<init>",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$Type;Lnet/minecraftforge/fml/LogicalSide;Lnet/minecraftforge/event/TickEvent$Phase;)V",
+          "note": "the final fields type, side, phase are set once here",
+          "sha256": "270552ce11123e9b9d54403a84a01fcd6e4b8da6dd27395d14f895e56bdffc80"
+        },
+        {
+          "class": "net/minecraftforge/event/TickEvent$LevelTickEvent",
+          "method": "<init>",
+          "desc": "(Lnet/minecraftforge/fml/LogicalSide;Lnet/minecraftforge/event/TickEvent$Phase;Lnet/minecraft/world/level/Level;Ljava/util/function/BooleanSupplier;)V",
+          "note": "final field level",
+          "sha256": "154b82d5598d5f1c64b105dd9b522105582557e8a9e485d2e0d282bade7d9f77"
+        },
+        {
+          "class": "net/minecraftforge/event/TickEvent$PlayerTickEvent",
+          "method": "<init>",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$Phase;Lnet/minecraft/world/entity/player/Player;)V",
+          "note": "final field player; side from player instanceof ServerPlayer",
+          "sha256": "aef9ed106c34893788f5bcd6bd394c965f8e15965821425918c05a209e435591"
+        },
+        {
+          "class": "net/minecraftforge/event/TickEvent$ClientTickEvent",
+          "method": "<init>",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$Phase;)V",
+          "sha256": "67b7ba9910ed418251b07ef0b0bec21ce02ca48f3fd21052a2ea4d6a87da4ca1"
+        },
+        {
+          "class": "net/minecraftforge/event/TickEvent$ServerTickEvent",
+          "method": "<init>",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$Phase;Ljava/util/function/BooleanSupplier;Lnet/minecraft/server/MinecraftServer;)V",
+          "sha256": "990b518f2702710e1ecdf75af45c66c6f09c8220a8a8d72ee7857062772a3fe3"
+        },
+        {
+          "class": "net/minecraftforge/event/TickEvent$RenderTickEvent",
+          "method": "<init>",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$Phase;F)V",
+          "sha256": "c848c38f150abe887473ba193a2be572acc8e28612ec4d77a6a54a72dbf9b64d"
+        },
+        {
+          "class": "net/minecraftforge/event/entity/living/LivingEvent",
+          "method": "getEntity",
+          "desc": "()Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "return livingEntity (private final)",
+          "sha256": "37432747cf9699c15af8dd6f12b3f5ca07eb75b375d1fa4e15aa4f86fc904985"
+        },
+        {
+          "class": "net/minecraftforge/event/entity/living/LivingEvent",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "livingEntity set once",
+          "sha256": "1c519ba9495a0fd3740389173a7544650172c107621d79da5d7dde5607c90100"
+        },
+        {
+          "class": "net/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent",
+          "method": "getEntity",
+          "desc": "()Lnet/minecraft/world/entity/Entity;",
+          "note": "bridge: invokespecial LivingEvent.getEntity()LivingEntity",
+          "sha256": "18f9206bcdee55a177911ed30598d2bf38ab83ec3d6207c789955505cabc977b"
+        },
+        {
+          "class": "net/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "sha256": "1862ebddf972a746aab3edaa1fbff727e393f7ef55bde519d93ecce57b645ba8"
+        },
+        {
+          "class": "net/minecraftforge/client/event/RenderLevelStageEvent",
+          "method": "getStage",
+          "desc": "()Lnet/minecraftforge/client/event/RenderLevelStageEvent$Stage;",
+          "note": "return stage (private final)",
+          "sha256": "a0080c9b0ebe9b3f01a13fd537467b62647632b377d8f80818c13f7462f05542"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation (priority 1500, require = 0) of the single IEventBus.post call in ForgeEventFactory.onPre/PostClientTick, onPlayerPre/PostTick, onPre/PostServerTick, onPre/PostLevelTick, onRenderTickStart/End, ForgeHooks.onLivingTick and ForgeHooksClient.dispatchRenderStage(Stage, ...) (its RenderType overload calls that one): for MinecraftForge.EVENT_BUS the post is replayed as eventbus 6.2.33's EventBus.post loop (helper bons.furious.patch.forge_listener_guard.GuardedDispatch) that leaves out a listener only when its proven early return holds (GuardTable, PrologueAnalyser, ListenerTargets, EventFacts, Profiles, AuditTrail); BusShape fingerprints the eventbus and LogicalSide methods at run time (boot-layer library classes the guard table cannot read); the group's config plugin ListenerGuardPlugin (the standard plugin plus one look at the merged class) makes a site stand down when another mod's mixin selects that method, replaces it or changes its post call; PrologueProbe = shadow verification; ListenerCensus = the read-only live listener census other switches ask by method handle",
+      "license": "Forge (LGPL-2.1): no Forge code is carried; eventbus 6.2.33 (LGPL-2.1): GuardedDispatch.dispatch is a modified copy of EventBus.post (the same loop plus the skip test); Minecraft (Mojang): no code; listener classes of other mods are only read, never copied (shadow probes are built at run time from the installed class files and never stored)"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "group": "castercuriosbonus_coo49",
+  "keys": {
+    "caster_curios_bonus_mana_to_health_server_only": {
+      "mod": "caster_curios_bonus",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.castercuriosbonus_coo49.CcbMindToMatterServerOnlyMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/rinko1231/ccb/item/necklace/MindToMatter",
+          "method": "curioTick",
+          "desc": "(Ltop/theillusivec4/curios/api/SlotContext;Lnet/minecraft/world/item/ItemStack;)V",
+          "note": "super.curioTick, then slotContext.entity() (the wrapped read) instanceof Player, the item counter to 10, the max-health modifier from max mana x the COMMON config multiplier; no side check",
+          "sha256": "5cde26d89c5b4111bd574ac99fee5044f1a3f1c6c66b543e70700ac36e59dbf8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the SlotContext.entity() read in MindToMatter.curioTick: on a client level it answers null, so the necklace's instanceof Player test ends the tick (no counter, no client-side modifier); on a server level the wearer as shipped. Runtime flag casterCuriosBonusManaToHealthServerOnly. Helper bons.furious.patch.castercuriosbonus_coo49.CcbRefresh.",
+      "license": "Caster Curios Bonus (GPLv3): no code carried; the wrapper decides on which side the mod's own tick goes on"
+    },
+    "caster_curios_bonus_per_wearer_refresh": {
+      "mod": "caster_curios_bonus",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.castercuriosbonus_coo49.CcbEurekaPerWearerMixin",
+        "bons.furious.mixin.castercuriosbonus_coo49.CcbMindToMatterPerWearerMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/rinko1231/ccb/item/charm/Eureka",
+          "method": "curioTick",
+          "desc": "(Ltop/theillusivec4/curios/api/SlotContext;Lnet/minecraft/world/item/ItemStack;)V",
+          "note": "player wearer on a server level: ++tickCounter, tickCounter < 20 returns, else tickCounter = 0 and the cooldown-reduction modifier refresh (the two wrapped writes and the wrapped test read)",
+          "sha256": "7c7bc0eb6769def051033a80dae3a6c59e256cc92933928b882d184591b76087"
+        },
+        {
+          "class": "com/rinko1231/ccb/item/necklace/MindToMatter",
+          "method": "curioTick",
+          "desc": "(Ltop/theillusivec4/curios/api/SlotContext;Lnet/minecraft/world/item/ItemStack;)V",
+          "note": "player wearer: ++tickCounterHTM, tickCounterHTM < 10 returns, else tickCounterHTM = 0 and the max-health modifier refresh (the two wrapped writes and the wrapped test read)",
+          "sha256": "5cde26d89c5b4111bd574ac99fee5044f1a3f1c6c66b543e70700ac36e59dbf8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on both tickCounter / tickCounterHTM writes (left out while on) and on the read of the counter test in Eureka.curioTick and MindToMatter.curioTick (answers due when floorMod(wearer.tickCount + wearer.getId(), 20 / 10) == 0): each wearer is refreshed on its own schedule, the refresh body as shipped. Runtime flag casterCuriosBonusPerWearerRefresh. Helper bons.furious.patch.castercuriosbonus_coo49.CcbRefresh.",
+      "license": "Caster Curios Bonus (GPLv3): no code carried; the wrappers decide when the mod's own refresh runs"
+    }
+  }
+}

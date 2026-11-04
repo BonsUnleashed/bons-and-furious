@@ -1,0 +1,63 @@
+{
+  "group": "species_c49",
+  "keys": {
+    "species_limpet_scare_scan_interval": {
+      "mod": "species",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.species_c49.LimpetScareScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ninni/species/server/entity/mob/update_1/Limpet",
+          "method": "m_8107_",
+          "desc": "()V",
+          "sha256": "ad40ad2aa94f644452a579bd5a9c04ff9bb3479bd747ea677c6fc687a172c623"
+        },
+        {
+          "class": "com/ninni/species/server/entity/mob/update_1/Limpet",
+          "method": "lambda$aiStep$0",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "sha256": "25f845301155d9be8e7e196c7a5cc5c9404ff9e8765b5720b7a61cd09995d432"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass(Player, box, filter) call of Limpet.aiStep: it runs when (tickCount + id) % N == 0, else answers an empty list (N = PureConfig.intValue(\"species_limpet_scare_scan_interval\", 10, 1, 200), helper bons.furious.patch.species_c49.ScanIntervals)",
+      "license": "Species (all rights reserved): no Species code is carried; the wrapper carries only our own logic (Idea: Collections Of Optimizations species.limpetScareScanInterval, idea text only)"
+    },
+    "species_wicked_haunt_scan_interval": {
+      "mod": "species",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.species_c49.WickedHauntScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ninni/species/server/entity/mob/update_3/Wicked",
+          "method": "m_8119_",
+          "desc": "()V",
+          "sha256": "af2da9e4a00c82d1186cb6c7fe9b2f6d6364070f9099b6c3a717c5280d4117f0"
+        },
+        {
+          "class": "com/ninni/species/server/entity/mob/update_3/Wicked",
+          "method": "lambda$tick$1",
+          "desc": "(Lnet/minecraft/world/entity/Mob;)Z",
+          "sha256": "485e6a3e078e10aa5fa3d61d0920d66c3cfddd23394aa9d45e292b7bd964c121"
+        },
+        {
+          "class": "com/ninni/species/server/entity/mob/update_3/Wicked",
+          "method": "lambda$tick$2",
+          "desc": "(Lnet/minecraft/world/entity/Mob;)V",
+          "sha256": "03c563505ed539bd76a7e596d483cb72e7914fc7fecd4e0a0b2cfdc868c60171"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass(Mob, box, filter) call of Wicked.tick (made while the wicked has its haunted mob's id but not the mob): it runs when (tickCount + id) % N == 0, else answers an empty list (N = PureConfig.intValue(\"species_wicked_haunt_scan_interval\", 20, 1, 200), helper bons.furious.patch.species_c49.ScanIntervals)",
+      "license": "Species (all rights reserved): no Species code is carried; the wrapper carries only our own logic (Idea: Collections Of Optimizations species.wickedHauntScanInterval, idea text only)"
+    }
+  }
+}

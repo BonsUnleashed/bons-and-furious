@@ -1,0 +1,40 @@
+{
+  "group": "simplyswords_reread_c49",
+  "keys": {
+    "simplyswords_config_reread_interval": {
+      "mod": "simplyswords",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.simplyswords_reread_c49.ConfigRereadWindowMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/sweenus/simplyswords/config/Config",
+          "method": "safeValueFetch",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)V",
+          "note": "config dir exists -> read and parse the parent's json5 -> put every entry of that type into the type's map (BOOLEAN / FLOAT / DOUBLE / INT); writes nothing else",
+          "sha256": "02b377a3e0e5c07a2eeb73219ac354b889bd2ab1011c2ba8235cd9bc08591249"
+        },
+        {
+          "class": "net/sweenus/simplyswords/config/Config",
+          "method": "getFloat",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;F)F",
+          "note": "safeValueFetch(\"float\", parent), then a read of FLOAT with the default when absent (the getters only read their type's map)",
+          "sha256": "a15a02ded65182ea35882adcbe592b64ba5fc1cf867bbf8e211ab7b892deb410"
+        },
+        {
+          "class": "net/sweenus/simplyswords/config/Config",
+          "method": "*",
+          "desc": "",
+          "note": "the method set: only safeValueFetch writes the four maps",
+          "sha256": "118429e0d6a099ace35a7f89dd60966ac3e7c804c8594ff3d5b73b2ad5a1406d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapMethod on Config.safeValueFetch (outer, priority 1100): returns while the type's last fetch was for the same parent and finished within the switch's value in ms (helper bons.furious.patch.simplyswords_reread_c49.RereadWindow)",
+      "license": "Timefall Development License (Simply Swords): no Simply Swords code is carried; our own logic only"
+    }
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "group": "lithostitched_c49",
+  "keys": {
+    "lithostitched_template_shuffle_arrays": {
+      "mod": "lithostitched",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.lithostitched_c49.TemplatesShuffleMixin",
+        "bons.furious.mixin.lithostitched_c49.WeightedEntryAccessor"
+      ],
+      "guard": [
+        {
+          "class": "dev/worldgen/lithostitched/worldgen/structure/LithostitchedTemplates",
+          "method": "shuffle",
+          "desc": "(Lnet/minecraft/util/RandomSource;)Ljava/util/List;",
+          "note": "copies, one nextFloat per entry in index order, stable comparingDouble sort, Stream.toList",
+          "sha256": "1df6231360e3d808a9dcc11c318e0a1cf1a9b312a7e3bea9cdc45344ef6462af"
+        },
+        {
+          "class": "dev/worldgen/lithostitched/worldgen/structure/LithostitchedTemplates",
+          "method": "add",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/pools/StructurePoolElement;I)Ldev/worldgen/lithostitched/worldgen/structure/LithostitchedTemplates;",
+          "note": "entries appended in order",
+          "sha256": "55db99107f968284ac9adad500982501fe6f8a4cff7f43b7a2a6c257900395ea"
+        },
+        {
+          "class": "dev/worldgen/lithostitched/worldgen/structure/LithostitchedTemplates$WeightedEntry",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/pools/StructurePoolElement;II)V",
+          "note": "prioritized = element instanceof DelegatingPoolElement && prioritized()",
+          "sha256": "dcb3df56105472899342777e0e63f8a0c525a4f0f68cd4d9f2c3c2a18d1d624e"
+        },
+        {
+          "class": "dev/worldgen/lithostitched/worldgen/structure/LithostitchedTemplates$WeightedEntry",
+          "method": "copy",
+          "desc": "()Ldev/worldgen/lithostitched/worldgen/structure/LithostitchedTemplates$WeightedEntry;",
+          "sha256": "730eb52c40ae9700b7f94d984a84096a823c9e9b11c11a2371f495806988ef4c"
+        },
+        {
+          "class": "dev/worldgen/lithostitched/worldgen/structure/LithostitchedTemplates$WeightedEntry",
+          "method": "setRandom",
+          "desc": "(F)V",
+          "note": "-pow(value, 1f / weight) + (prioritized ? -2 : 0)",
+          "sha256": "98ade6b3401e757796acaa2dc741d6086bccf2391248f4490146bc1227ab3095"
+        },
+        {
+          "class": "dev/worldgen/lithostitched/worldgen/structure/LithostitchedTemplates$WeightedEntry",
+          "method": "getRandWeight",
+          "desc": "()D",
+          "sha256": "cc4082ca4aa9ccc7689e0da1cb71990e0dc70bac2dde6ac48f4878f315d637e7"
+        },
+        {
+          "class": "dev/worldgen/lithostitched/worldgen/structure/LithostitchedTemplates$WeightedEntry",
+          "method": "getElement",
+          "desc": "()Lnet/minecraft/world/level/levelgen/structure/pools/StructurePoolElement;",
+          "sha256": "460fe9640fc5bb70c43e53cd8d14fda205279fd46d113ebc3769af848d89cb3e"
+        },
+        {
+          "class": "dev/worldgen/lithostitched/worldgen/poolelement/DelegatingPoolElement",
+          "method": "prioritized",
+          "desc": "()Z",
+          "note": "config.forcedCount().isPresent(): asked once per entry per shuffle, as the copy constructor does",
+          "sha256": "e729e29f55135fff1015c76f499b4a3c3ce0f12df03596f133e68123303705bf"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on LithostitchedTemplates.shuffle(RandomSource) answering from plain arrays (helper bons.furious.patch.lithostitched_c49.TemplateShuffle) + an @Accessor interface on LithostitchedTemplates$WeightedEntry (element, weight)",
+      "license": "MIT (Lithostitched): the shuffle is written from its formula; no Lithostitched code is carried"
+    },
+    "lithostitched_block_swap_table": {
+      "mod": "lithostitched",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.lithostitched_c49.BlockSwapProcessorMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/worldgen/lithostitched/worldgen/processor/BlockSwapStructureProcessor",
+          "method": "m_7382_",
+          "desc": "(Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructurePlaceSettings;)Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;",
+          "note": "getKey, containsKey, BLOCK.get(map.get(key)).withPropertiesOf(state), same pos and nbt; else the current info",
+          "sha256": "ff2f1c510e47348852a71c15efb58fcfaf1465cbfa7d5aeb6a50766854364319"
+        },
+        {
+          "class": "dev/worldgen/lithostitched/worldgen/processor/BlockSwapStructureProcessor",
+          "method": "<init>",
+          "desc": "(Ljava/util/Map;)V",
+          "note": "the map field is final and set once",
+          "sha256": "9beeaebaf0b041cd57c45a894b8b527e392059ebb454133e727edffc467e8f24"
+        },
+        {
+          "class": "dev/worldgen/lithostitched/worldgen/processor/BlockSwapStructureProcessor",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: blockSwapMap is read only by processBlock and its getter",
+          "sha256": "949c4b784523f59013a17aaab3dda90a5011f66ec04e8dde1d0663e7185251f9"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on BlockSwapStructureProcessor.processBlock (m_7382_) answering from a per-processor identity table Block -> Block (helper bons.furious.patch.lithostitched_c49.SwapTable, a volatile @Unique field); shadow: @Inject RETURN compares",
+      "license": "MIT (Lithostitched): no Lithostitched code is carried; Minecraft (Mojang): no-copy"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "group": "legendarymonsters_zoom_c49",
+  "keys": {
+    "legendary_monsters_dead_zoom_skip": {
+      "mod": "legendary_monsters",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.legendarymonsters_zoom_c49.DeadZoomSkipMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/miauczel/legendary_monsters/client/event/ClientEvent",
+          "method": "setDynamicZoom",
+          "desc": "(Lnet/minecraftforge/client/event/ViewportEvent$ComputeCameraAngles;)V",
+          "note": "per zoom entity in range: d = invokeGetMaxZoom(4 + zoom) stored in a local that is never read",
+          "sha256": "38948d96139e409004888dd764e83ca845f7816e3059272a39c4ec81fdc241a4"
+        },
+        {
+          "class": "net/minecraft/client/Camera",
+          "method": "m_90566_",
+          "desc": "(D)D",
+          "note": "getMaxZoom: eight level.clip raycasts, returns a distance, writes no field",
+          "sha256": "8226e50ee853f879616777591523810b4b82842b94d3222a441e8db5c1bff2c5"
+        },
+        {
+          "class": "net/saksolm/monsterexpansion/mixin/ArborixCameraMixin",
+          "method": "customMountZoom",
+          "desc": "(DLorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "audited (Monster Expansion installed): HEAD of getMaxZoom, reads the camera and the level, sets a return value, writes no field",
+          "audit": true,
+          "sha256": "43307eb0bd1eada6da4a81055454d711d6f983e640ca591221cff34f9b34af8d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapOperation of the CameraInvoker.legendaryMonsters$invokeGetMaxZoom call in ClientEvent.setDynamicZoom: answers 0 without the call (its result is never read; helper bons.furious.patch.legendarymonsters_zoom_c49.DeadZoom)",
+      "license": "All Rights Reserved (Legendary Monsters): no Legendary Monsters code is carried; Minecraft (Mojang): no-copy"
+    }
+  }
+}

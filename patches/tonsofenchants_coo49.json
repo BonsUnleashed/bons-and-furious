@@ -1,0 +1,347 @@
+{
+  "group": "tonsofenchants_coo49",
+  "keys": {
+    "tonsofenchants_absent_modifier_removal_skip": {
+      "mod": "tonsofenchants",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.tonsofenchants_coo49.ToeAttributeInstanceAccessor",
+        "bons.furious.mixin.tonsofenchants_coo49.ToeRemoveAbsentMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/deltajay/tonsofenchants/util/PU$AttributeHelper",
+          "method": "lambda$removeModifier$3",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;)V",
+          "note": "the consumer removeModifier hands to the instance's Optional: instance.removeModifier(modifier), nothing else (the wrapped call)",
+          "sha256": "dc6224e471c8a4ad31eab0532de096e9ef7fbfdc7beadffb5320f307ac48334a"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/util/PU$AttributeHelper",
+          "method": "removeModifier",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/ai/attributes/Attribute;Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "note": "getPlayerCurrentAttribute(e, a).getFirst().ifPresent(lambda$removeModifier$3 bound to the modifier): the only user of the lambda",
+          "sha256": "31366fd13d1e80c7cbe49b771d82e3dca96e83891a26fb921c62a33dc04d47ba"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22130_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "note": "removeModifier: getModifiers(op).remove(m), modifierById.remove(id), permanentModifiers.remove(m), setDirty(): with m in none of them only setDirty acts",
+          "sha256": "1a36bba283103cf86bf1f38843281b2ddab1793edce903a3d2947560718afcdd"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22104_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;)Ljava/util/Set;",
+          "note": "getModifiers(op): modifiersByOperation.computeIfAbsent (the helper asks it, as the original removal's first call does)",
+          "sha256": "1fc965f11dbf17f266b037d7e3d8c64cd912d4bd9bb2524b59e18770008da9f5"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22111_",
+          "desc": "(Ljava/util/UUID;)Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;",
+          "note": "getModifier(uuid): modifierById.get",
+          "sha256": "7a9e9d9c7855dd3f342c69a5deea906a408d045960683bb81281e5813a135607"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22133_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "note": "addModifier: modifierById.putIfAbsent first (throws when taken), then the operation set, then setDirty",
+          "sha256": "a04c6fff95e4fd1f662cffb1e88ba8919562222fe7c5dc816224eb60235f900a"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22125_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "note": "addPermanentModifier: addModifier, then permanentModifiers.add (a later removal by a same-UUID modifier of another class drops the map entry but not the permanent one, hence the permanent-set test)",
+          "sha256": "dd565b98501db203b5f4ab67f0bd34049c4f5e4072b9798f39ce588047ce4cb8"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22113_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "load: each modifier into modifierById, its operation set and permanentModifiers together",
+          "sha256": "2db2822784aa067412406bca44c0cbb98afb1d3b6a3bf2fb4201e19d460ebbbc"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22102_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;)V",
+          "note": "replaceFrom: copies modifierById, permanentModifiers and the operation sets together",
+          "sha256": "f13586252034300cbd30c536cce685f6badb3c5cd84b2be8dfc5a588c6771124"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22127_",
+          "desc": "(Ljava/util/UUID;)Z",
+          "note": "removePermanentModifier: through getModifier + removeModifier",
+          "sha256": "eb54f95c97f56cf5983cc8abb7f35e0e509005fae0abebcb0e0e309b0178b04b"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22129_",
+          "desc": "()V",
+          "note": "setDirty: dirty = true, onDirty.accept(this) (AttributeMap marks a synced attribute for the attribute packet); the skip keeps the first half",
+          "sha256": "62cbcd898d6ab0d8d9c70d9cd4befc6af356e81764d4466eaee30098ddbb3978"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "m_22135_",
+          "desc": "()D",
+          "note": "getValue: when the mark is set, calculateValue and clear it: the recompute the skip keeps",
+          "sha256": "6f72a3562c49f9869c27a47096da567242eb4f60acbbdc9012542b05252a2095"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/Attribute;Ljava/util/function/Consumer;)V",
+          "note": "the fields the accessor reads and writes: permanentModifiers (f_22091_, an ObjectArraySet), the recompute mark (f_22093_, true at first), onDirty",
+          "sha256": "92a5f5371f630cb1e2c6d3b5a1acf214d772a2ae9f5978634ce76df88fe6db73"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeMap",
+          "method": "m_22157_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;)V",
+          "note": "onAttributeModified, every instance's onDirty: a client-synced attribute goes into the set ServerEntity sends as the attribute packet (the notice the skip leaves out)",
+          "sha256": "596aa2eb0c8831e26a08b08a966cfabb880e2f93541658125d8884c1e8e99bbc"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeModifier",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "note": "same class and UUID: what the sets' remove and contains compare",
+          "sha256": "a8f7833c5e55e2b47869ff3d89996883f9be66a35890c372de00a920a90f6f0a"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeModifier",
+          "method": "hashCode",
+          "desc": "()I",
+          "note": "the UUID's hash",
+          "sha256": "eb31329eae434df1e3f884bec78dbcb6e88818661aedf10898f311083d9e1f42"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapWithCondition on the AttributeInstance.removeModifier call in PU.AttributeHelper's removeModifier lambda: left out when the modifier is in none of the instance's collections (ToeLean.removeIsNoOp: modifierById by UUID, the operation's set asked through getModifiers(op) as the original's first call asks it, and the permanent set through the accessor ToeAttributeInstanceAccessor); the instance then gets the recompute mark setDirty would set (through the accessor), so values are worked out as before, and only setDirty's change notice goes (no attribute packet); otherwise as shipped. Runtime flag tonsofenchantsAbsentModifierRemovalSkip. Helper bons.furious.patch.tonsofenchants_coo49.ToeLean.",
+      "license": "Tons Of Enchants (MIT): no code carried; the condition is ours"
+    },
+    "tonsofenchants_attribute_lookup_once": {
+      "mod": "tonsofenchants",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.tonsofenchants_coo49.ToeAttributeLookupMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/deltajay/tonsofenchants/util/PU$AttributeHelper",
+          "method": "getPlayerCurrentAttribute",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/ai/attributes/Attribute;)Lcom/deltajay/tonsofenchants/util/PU$OptionalPair;",
+          "note": "new OptionalPair(e.getAttribute(a), e.getAttribute(a) == null ? 0.0 : requireNonNull(e.getAttribute(a)).getValue()): three lookups for one pair",
+          "sha256": "54e7598023cdacd915fbda39bd08f329af47f9c8cfb1d5dbfb3e86c017f2544a"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/util/PU$OptionalPair",
+          "method": "<init>",
+          "desc": "(Ljava/lang/Object;Ljava/lang/Object;)V",
+          "note": "first = Optional.ofNullable(a), second = Optional.ofNullable(b)",
+          "sha256": "5bb1ca0a174565b2e3c8f1daf1aad34de40a85b50d77097e60af865c132d5bf7"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21051_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/Attribute;)Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;",
+          "note": "getAttribute: getAttributes().getInstance(a)",
+          "sha256": "4a64442b0a28f239245fe3c5c1284ed3afc850ae038b6d2f63875c5070c7aee7"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeMap",
+          "method": "m_22146_",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/Attribute;)Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;",
+          "note": "getInstance: attributes.computeIfAbsent(a, supplier.createInstance): the same instance on every call once created, null on every call when the supplier lacks it",
+          "sha256": "19b9318b1c17b68d602cee0a772f66ed03324aa80d20b973633ec28652ff29bd"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Cancellable @Inject at the HEAD of PU.AttributeHelper.getPlayerCurrentAttribute: the same pair (the instance, its value or 0.0, built with the mod's own OptionalPair constructor) from one entity.getAttribute call instead of three (ToeLean.currentAttribute). Runtime flag tonsofenchantsAttributeLookupOnce. Helper bons.furious.patch.tonsofenchants_coo49.ToeLean.",
+      "license": "Tons Of Enchants (MIT): the two-line body is rebuilt in our helper with one lookup; nothing else is carried"
+    },
+    "tonsofenchants_frostbite_server_only": {
+      "mod": "tonsofenchants",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.tonsofenchants_coo49.ToeFrostbiteClientMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/Enchantments/Frostbite",
+          "method": "doWhenFrostbit",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "config check, then PU.doForEachEntity(player, 10, 3, lambda$doWhenFrostbit$2) (the wrapped call)",
+          "sha256": "cbf45bd561a34b19d47e8f456add051f21b3dd5985f960072c41dd2a04eeea08"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/Enchantments/Frostbite",
+          "method": "lambda$doWhenFrostbit$2",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "per scanned entity: getPersistentData().getBoolean(\"Frostbitten\") or return; the rest only for flagged entities",
+          "sha256": "e424ed920f2400f5e38cec37a6adf8f8a4c933f69aa447b25421789b9aad4109"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/Enchantments/Frostbite",
+          "method": "m_7677_",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;I)V",
+          "note": "doPostAttack: the only writer of Frostbitten = true (runs where the hit is dealt: the server)",
+          "sha256": "23eef29155c8083e98b3cc80ec963b2a8d62daebc80b970afa718ed7150222fb"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/util/PU",
+          "method": "doForEachEntity",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;IILjava/util/function/Consumer;)V",
+          "note": "null player returns; level.getEntities(player, box), then forEach(consumer)",
+          "sha256": "9262a73221595deb7770d234db81405fdc1a87e6f0c66e8474cfe64a09a572eb"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapWithCondition on the PU.doForEachEntity call of Frostbite.doWhenFrostbit (after its config check): left out for a player on a client level (ToeLean.frostbiteScan); on the server as shipped. Runtime flag tonsofenchantsFrostbiteServerOnly. Helper bons.furious.patch.tonsofenchants_coo49.ToeLean.",
+      "license": "Tons Of Enchants (MIT): no code carried; the condition is ours"
+    },
+    "tonsofenchants_player_tick_end_only": {
+      "mod": "tonsofenchants",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.tonsofenchants_coo49.ToeTickEndOnlyMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/ArmorEnchantments/chest/Vitality",
+          "method": "regen",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "no phase check",
+          "sha256": "5f49f7ac7e7060e234a2f9e3236772a88d628e152e498f2f6b3669a3eb87f87a"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/ArmorEnchantments/feet/HorseShoe",
+          "method": "horseShoe",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "no phase check",
+          "sha256": "83de5f0d89d19b7e1072cd53b3c0a3906489fbdde5dfaa6db18ff1afdff7cb2f"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/ArmorEnchantments/feet/LavaWalker",
+          "method": "lavaWalk",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "no phase check",
+          "sha256": "888919c3288af5c64e8fc07047c664ac43ab7f55c4748abce5ef620d3e8473dc"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/ArmorEnchantments/feet/Magnetize",
+          "method": "magnetize",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "no phase check",
+          "sha256": "eba2fc111971ec7a8dce39067da21b9d69e377f1832d3594323f64953899244a"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/ArmorEnchantments/feet/SwimmersBoots",
+          "method": "swimFaster",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "no phase check",
+          "sha256": "4aec717875aadf94624105ff8117d5eddbefd41eb55db49ac253d3962b06b177"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/ArmorEnchantments/head/FinalStand",
+          "method": "checkIf",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "no phase check",
+          "sha256": "3f6e7fa068bd435b345fd70d8bed1df828bc14d636502ec75c84ff4eaa435ce6"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/ArmorEnchantments/head/Nutrition",
+          "method": "feedPlayer",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "no phase check",
+          "sha256": "d545f4ecb265a0e0e75286ca8dabb21d037e6856015ced82a31099902f5ff714"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/ArmorEnchantments/head/enchNightVision",
+          "method": "seeNight",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "no phase check",
+          "sha256": "d8d2e768b2bfb0aada94d8944eabe05f25a6fca80da2a82b3e49e5bffc3c78e8"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/ArmorEnchantments/head/enchWaterBreathing",
+          "method": "breatheWater",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "no phase check",
+          "sha256": "44e3e9f4b377ceb5b08552434ff19ed1c3621db3bb4b8b4a094ab75af759c58a"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/EEnchantments/EnhancedHandling",
+          "method": "handleEnhancedHandling",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "no phase check",
+          "sha256": "e2a887b2ec231ec189828be6e0d9b792383c74e8c4e1db0038f2283b1e504468"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/Enchantments/BlessedItem",
+          "method": "makeHeal",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "no phase check",
+          "sha256": "d922feda612190641f0eecbeab50281a063cebc588461d14644d3e3d24a8f2e1"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/Enchantments/Frostbite",
+          "method": "doWhenFrostbit",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "no phase check",
+          "sha256": "cbf45bd561a34b19d47e8f456add051f21b3dd5985f960072c41dd2a04eeea08"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/Enchantments/PraiseTheSun",
+          "method": "repairArmor",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "no phase check",
+          "sha256": "5da2cb26daccb5bfac0d1995738a331b3fe927b314bfe3073f02a02cbe7d8939"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/NegativeEnchantments/Decay",
+          "method": "decayDurability",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "no phase check",
+          "sha256": "8e524b550dcb030f2c98ce39289accc270d3c9c37606abb954998d5bfd9cb743"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/NegativeEnchantments/Hunger",
+          "method": "onPlayerTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "no phase check",
+          "sha256": "630b047797b68821f4efe71a48ef49881469e2e947cce62be9d56b16618de5f1"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/NegativeEnchantments/Slowness",
+          "method": "handleSlowness",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "no phase check",
+          "sha256": "8ed3bdd7a7bd3e7b6f364c3ed7301fe22441c2789c6c7a9597619f59a7232609"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantments/NegativeEnchantments/Spilling",
+          "method": "spillItems",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$PlayerTickEvent;)V",
+          "note": "no phase check",
+          "sha256": "dbafbf159e141b5ef29fee78a99ef6e48c74b19e56d866d3c947ff32dd53cc01"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Cancellable @Inject at the HEAD of each of Tons Of Enchants' 17 PlayerTickEvent listeners: the START phase returns at once (ToeLean.skipStartPhase), the END phase runs the listener as shipped. Trade-off (off by default): each listener runs once per tick instead of twice. Runtime flag tonsofenchantsPlayerTickEndOnly. Helper bons.furious.patch.tonsofenchants_coo49.ToeLean.",
+      "license": "Tons Of Enchants (MIT): no code carried; the phase test is ours"
+    }
+  }
+}

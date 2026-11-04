@@ -1,0 +1,398 @@
+{
+  "group": "brutality_coo49",
+  "keys": {
+    "brutality_seal_type_no_throw": {
+      "mod": "brutality",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.brutality_coo49.BrutalitySealTypeMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/goo/brutality/entity/capabilities/EntityCapabilities$EntitySealTypeCap",
+          "method": "deserializeNBT",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "name = getString(\"seal_type\"); try setSealType(SEAL_TYPE.valueOf(name)) catch IllegalArgumentException -> setSealType(NONE)",
+          "sha256": "955410d5118190d8ff9830f19b88d67b4eea0bc2fdd48e121d8493f1b797dbca"
+        },
+        {
+          "class": "net/goo/brutality/entity/capabilities/EntityCapabilities$EntitySealTypeCap",
+          "method": "setSealType",
+          "desc": "(Lnet/goo/brutality/util/SealUtils$SEAL_TYPE;)V",
+          "note": "the plain field write both paths end in",
+          "sha256": "dcadec60200a1a59918b532643bcc78ed67dac0e5ad6e56bcc7252231527921b"
+        },
+        {
+          "class": "net/goo/brutality/util/SealUtils$SEAL_TYPE",
+          "method": "valueOf",
+          "desc": "(Ljava/lang/String;)Lnet/goo/brutality/util/SealUtils$SEAL_TYPE;",
+          "note": "the compiler's Enum.valueOf: no constant has an empty name",
+          "sha256": "d2ecf0511681d07d0339da409153176b6a2e8fcf5673a69df42f67c4fdbd7df8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the SEAL_TYPE.valueOf call of EntitySealTypeCap.deserializeNBT(CompoundTag): the empty name (the capability saves under \"boosterType\" and loads \"seal_type\", so it always reads \"\") answers NONE without building the IllegalArgumentException the original throws and catches; the try block then calls setSealType(NONE), the call the catch block makes. Every other name goes to the original call. Runtime flag brutalitySealTypeNoThrow. Helper bons.furious.patch.brutality_coo49.BrutalitySeal.",
+      "license": "Brutality (MIT): no Brutality code carried, the wrapper carries only our own logic"
+    },
+    "brutality_tick_counter_phase": {
+      "mod": "brutality",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.brutality_coo49.BrutalityServerTickPhaseMixin",
+        "bons.furious.mixin.brutality_coo49.BrutalityClientTickPhaseMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/goo/brutality/event/forge/ServerTickHandler",
+          "method": "onServerTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$ServerTickEvent;)V",
+          "note": "no phase check: ++serverTick, every 20 counts a ClientboundSyncTickPacket to all players",
+          "sha256": "17f43c1469297a8233707c30d4c012e5f312900b9e2e87c949c09aa58edd2869"
+        },
+        {
+          "class": "net/goo/brutality/event/forge/client/ClientTickHandler",
+          "method": "onClientTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$ClientTickEvent;)V",
+          "note": "no phase check: ++clientTick",
+          "sha256": "bf7c22139e328b3e85c755cac983c2fabca1bc06190265a403306b0bb3890845"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of ServerTickHandler.onServerTick and ClientTickHandler.onClientTick: the handler returns unless the event's phase is END, so Brutality's server and client tick counters count once per tick (the Sine and Cosine charms and its GUI animation run at the speed they were written for) and the tick sync packet goes out every 20 ticks instead of every 10. Gameplay fix, off by default; set it the same on the server and its clients. Runtime flag brutalityTickCounterPhase. Helper bons.furious.patch.brutality_coo49.BrutalityTicks.",
+      "license": "Brutality (MIT): no Brutality code carried, the injections carry only our own logic"
+    },
+    "brutality_blight_scan_idle_skip": {
+      "mod": "brutality",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.brutality_coo49.BrutalityEffectCapWatchMixin",
+        "bons.furious.mixin.brutality_coo49.BrutalityBlightScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/goo/brutality/event/forge/client/ForgeClientParticleHandler",
+          "method": "spawnMiracleBlightParticles",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/Level;)V",
+          "note": "getEntitiesOfClass(LivingEntity, player box inflated by 50), then per entity getCapability(ENTITY_EFFECT_CAP).ifPresent(the particle lambda); nothing else",
+          "sha256": "63f521dd8b231cfbe4bad6dd9da96e45be55cb239295bdc1d4543abb57b6968b"
+        },
+        {
+          "class": "net/goo/brutality/event/forge/client/ForgeClientParticleHandler",
+          "method": "lambda$spawnMiracleBlightParticles$0",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lnet/goo/brutality/entity/capabilities/EntityCapabilities$EntityEffectCap;)V",
+          "note": "random draws and the particle only when cap.isMiracleBlighted()",
+          "sha256": "a01f044c1eb73b157190f5554a574fc9fe1529f7ce3ef1753641075808081a3e"
+        },
+        {
+          "class": "net/goo/brutality/entity/capabilities/EntityCapabilities$EntityEffectCap",
+          "method": "*",
+          "desc": "",
+          "note": "the private miracleBlighted field is written only by setMiracleBlighted and deserializeNBT (which calls it); read by isMiracleBlighted",
+          "sha256": "8e4d55eb7d440e51bd671fc2f366306fb14763e8291e7d5b0890c2b96568aabd"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_142425_",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+          "note": "getEntities: the profiler's \"getEntities\" counter, then the walk into a new list (what the skipped search does)",
+          "sha256": "f19100e812512ca77f0e46444b8eae9a444752b14c71779440b88a3270c8c94e"
+        },
+        {
+          "class": "net/minecraft/world/level/EntityGetter",
+          "method": "m_45976_",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;",
+          "note": "getEntitiesOfClass(Class, AABB) -> getEntitiesOfClass(Class, AABB, NO_SPECTATORS)",
+          "sha256": "02b741b674cda0ec6d8bfa9662b11dd0e9065674d64257adc716432fd5c3b338"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject RETURN of EntityEffectCap.setMiracleBlighted and deserializeNBT keeps a weak identity set of the capabilities whose miracleBlighted flag is set; @Inject HEAD (cancellable) of ForgeClientParticleHandler.spawnMiracleBlightParticles: while that set is empty (no Brutality effect capability anywhere in this JVM is blighted) the method counts the profiler's \"getEntities\" as the search would and returns: the search could act on nothing (random draws and particles happen only for blighted capabilities). Otherwise it runs as shipped. Client mixins. Runtime flag brutalityBlightScanIdleSkip, shadow brutalityBlightScanIdleSkip.shadow. Helper bons.furious.patch.brutality_coo49.BrutalityBlight.",
+      "license": "Brutality (MIT): no Brutality code carried, the injections carry only our own logic; Minecraft: read only"
+    },
+    "brutality_proximity_scan_presence_gate": {
+      "mod": "brutality",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.brutality_coo49.BrutalityProximityGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/goo/brutality/event/forge/client/ForgeClientPlayerStateHandler",
+          "method": "onClientTick",
+          "desc": "(Lnet/minecraftforge/event/TickEvent$ClientTickEvent;)V",
+          "note": "three StreamSupport.stream(level.entitiesForRendering().spliterator()).anyMatch(test) walks whose answers go only to EnvironmentColorManager.apply",
+          "sha256": "aa527e04b31162eb6cdb794205e11fa3455124343c12af7102d2d56dc623bd75"
+        },
+        {
+          "class": "net/goo/brutality/event/forge/client/ForgeClientPlayerStateHandler",
+          "method": "lambda$onClientTick$3",
+          "desc": "(Lnet/minecraft/client/player/LocalPlayer;Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "walk test: getType() == BLACK_HOLE_ENTITY && distanceToSqr(player) <= 100",
+          "sha256": "2e1642b96b02d083bbc8e739a0a98af6e39de38529420377750028c824c55593"
+        },
+        {
+          "class": "net/goo/brutality/event/forge/client/ForgeClientPlayerStateHandler",
+          "method": "lambda$onClientTick$4",
+          "desc": "(Lnet/minecraft/client/player/LocalPlayer;Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "walk test: instanceof Player && isHolding(Blade of the Ruined King) && distanceToSqr(player) <= 100",
+          "sha256": "e3180fd5cfb90797713ec73c29c8828007be3fbfddfa26b82081a4ac6def87e0"
+        },
+        {
+          "class": "net/goo/brutality/event/forge/client/ForgeClientPlayerStateHandler",
+          "method": "lambda$onClientTick$5",
+          "desc": "(Lnet/minecraft/client/player/LocalPlayer;Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "walk test: getType() == EXPLOSION_RAY && distanceToSqr(player) <= 2500",
+          "sha256": "ef3ac1e69eae9db5c879e09fc4d4b6e103ada0f2804701f67563ef9bca0796c7"
+        },
+        {
+          "class": "net/goo/brutality/registry/BrutalityModEntities",
+          "method": "*",
+          "desc": "",
+          "note": "BLACK_HOLE_ENTITY is built with BlackHole::new, EXPLOSION_RAY with ExplosionRay::new",
+          "sha256": "dcc047569be65d23e9ff48eadf01cbb672eb2f0a6057254d7d7cf251ae6372c4"
+        },
+        {
+          "class": "net/goo/brutality/item/weapon/spear/EventHorizonSpear",
+          "method": "spawnBlackHole",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;)V",
+          "note": "the only other user of BLACK_HOLE_ENTITY: new BlackHole(type, ...)",
+          "sha256": "272b559a90c1c7cf3c1d36d2fcf12715b0c239ffcb16b55cbab0ff6907c08f98"
+        },
+        {
+          "class": "net/goo/brutality/item/weapon/generic/FirstExplosionStaff",
+          "method": "m_5551_",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;I)V",
+          "note": "the only other user of EXPLOSION_RAY: new ExplosionRay(type, ...)",
+          "sha256": "3a8b4c69aefd2cc7c2f82a3e6346cdd670ffbe54a680c0e38ab1309c02a9ad47"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel",
+          "method": "m_104735_",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "entitiesForRendering: every entity of the level's entity lookup",
+          "sha256": "4ccf94cc5c03f8e06360248ccbce8b8f3468445798aa4b5c5e56434b4c5561d4"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel$EntityCallbacks",
+          "method": "m_141985_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "onTrackingStart: an AbstractClientPlayer joins ClientLevel.players",
+          "sha256": "d9ff9d8ea5f8ec407363cddd5bb44d0310a53f46637915e3986ef5aa3f258314"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel$EntityCallbacks",
+          "method": "m_141981_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "onTrackingEnd: it leaves ClientLevel.players",
+          "sha256": "7ad00f9e2acf5d8e6979c8843dea155f4e0af281ce5b623fc6cc1ffbebfb9bec"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "m_21055_",
+          "desc": "(Lnet/minecraft/world/item/Item;)Z",
+          "note": "isHolding(Item): reads the hand stacks only",
+          "sha256": "f40eedd2b82fd18425e23d96fdae5099fcf97f72ff039ceca44bbd88c6d0840b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the three ClientLevel.entitiesForRendering (m_104735_) calls of ForgeClientPlayerStateHandler.onClientTick (black hole walk, Blade of the Ruined King walk, explosion ray walk): while vanilla_entity_class_count_layer says the level's sections hold no BlackHole / no ExplosionRay (registration bons_and_furious.brutality_coo49.entity_classes.json) the call answers an empty list (no entity can pass the walk's type test: those types are built only by their classes' constructors); while the layer's Player count equals ClientLevel.players().size() the player walk's call answers players() (its test can only pass for a Player and is pure). The stream, its test and every colour-manager call run as shipped. Client mixin. Runtime flag brutalityProximityScanPresenceGate, shadow brutalityProximityScanPresenceGate.shadow. Helpers bons.furious.patch.brutality_coo49.BrutalityProximity, EntityPresenceLink.",
+      "license": "Brutality (MIT): no Brutality code carried, the wrappers carry only our own logic; Minecraft: read only"
+    },
+    "brutality_effect_sync_tracking_scope": {
+      "mod": "brutality",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.brutality_coo49.BrutalitySyncTrackersMixin",
+        "bons.furious.mixin.brutality_coo49.BrutalityCoo49ChunkMapAccessor",
+        "bons.furious.mixin.brutality_coo49.BrutalityCoo49TrackedEntityAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/goo/brutality/event/forge/ForgeEffectSyncHandler",
+          "method": "onAddEffect",
+          "desc": "(Lnet/minecraftforge/event/entity/living/MobEffectEvent$Added;)V",
+          "note": "on a ServerLevel: getCapability(ENTITY_EFFECT_CAP).ifPresent(lambda 0 with the effect and the entity)",
+          "sha256": "4ba325a6637cfd1082d01570e17a0dac9958d2ba1a6162999113156726c7fa0d"
+        },
+        {
+          "class": "net/goo/brutality/event/forge/ForgeEffectSyncHandler",
+          "method": "onRemoveEffect",
+          "desc": "(Lnet/minecraftforge/event/entity/living/MobEffectEvent$Remove;)V",
+          "note": "the same with lambda 1",
+          "sha256": "4c92ecd2d1c920710e4d9e012077738ed526943fc7873df033b8d90bbdb5f0cb"
+        },
+        {
+          "class": "net/goo/brutality/event/forge/ForgeEffectSyncHandler",
+          "method": "onExpiredEffect",
+          "desc": "(Lnet/minecraftforge/event/entity/living/MobEffectEvent$Expired;)V",
+          "note": "the same with lambda 2",
+          "sha256": "3343e558863e710d127af2d025dfee16d46693073ec990f8c73970066e3251ee"
+        },
+        {
+          "class": "net/goo/brutality/event/forge/ForgeEffectSyncHandler",
+          "method": "lambda$onAddEffect$0",
+          "desc": "(Lnet/minecraft/world/effect/MobEffect;Lnet/minecraft/world/entity/LivingEntity;Lnet/goo/brutality/entity/capabilities/EntityCapabilities$EntityEffectCap;)V",
+          "note": "flag setters for the four own effects, then new ClientboundSyncCapabilitiesPacket(id, entity) -> PacketHandler.sendToAllClients",
+          "sha256": "2a420d1057a05f5f11c62a8a5bc888b0500a4bec070a9299ee5c79b5884c81d6"
+        },
+        {
+          "class": "net/goo/brutality/event/forge/ForgeEffectSyncHandler",
+          "method": "lambda$onRemoveEffect$1",
+          "desc": "(Lnet/minecraft/world/effect/MobEffect;Lnet/minecraft/world/entity/LivingEntity;Lnet/goo/brutality/entity/capabilities/EntityCapabilities$EntityEffectCap;)V",
+          "note": "the same, flags cleared",
+          "sha256": "8b6c44c101e7042b530254157b8d9d95c9a8fd68078235d99d97fe91cde08322"
+        },
+        {
+          "class": "net/goo/brutality/event/forge/ForgeEffectSyncHandler",
+          "method": "lambda$onExpiredEffect$2",
+          "desc": "(Lnet/minecraft/world/effect/MobEffect;Lnet/minecraft/world/entity/LivingEntity;Lnet/goo/brutality/entity/capabilities/EntityCapabilities$EntityEffectCap;)V",
+          "note": "the same, flags cleared",
+          "sha256": "8b6c44c101e7042b530254157b8d9d95c9a8fd68078235d99d97fe91cde08322"
+        },
+        {
+          "class": "net/goo/brutality/network/PacketHandler",
+          "method": "sendToAllClients",
+          "desc": "(Ljava/lang/Object;)V",
+          "note": "NETWORK_CHANNEL.send(PacketDistributor.ALL.noArg(), msg)",
+          "sha256": "83f738ccab57e0feea1e773d6d10ab96449d0b9e19d75bce91bfe3e8f40d94e4"
+        },
+        {
+          "class": "net/goo/brutality/network/ClientboundSyncCapabilitiesPacket",
+          "method": "<init>",
+          "desc": "(ILnet/minecraft/world/entity/Entity;)V",
+          "note": "serializes the entity's synced capabilities (reads only)",
+          "sha256": "10270abc6f3962e9da95bab81c43f11eef421c5b28fdffedb61309af8f2f3d5b"
+        },
+        {
+          "class": "net/goo/brutality/network/ClientboundSyncCapabilitiesPacket",
+          "method": "handle",
+          "desc": "(Ljava/util/function/Supplier;)V",
+          "note": "client: ClientAccess.syncCapabilities(entityId, data) on the main thread",
+          "sha256": "f3038c39e33554eac9fde0c20ec3862fbecb08ee6978fe95c6a37be2a7d33728"
+        },
+        {
+          "class": "net/goo/brutality/client/ClientAccess",
+          "method": "syncCapabilities",
+          "desc": "(ILjava/util/Map;)V",
+          "note": "returns when the client level is null or level.getEntity(id) is null: a client that does not hold the entity drops the packet",
+          "sha256": "8011fcb420e27790037ed862c17e9c5b6718bcd360e47c902a08dc09ac7f59f2"
+        },
+        {
+          "class": "net/minecraftforge/network/simple/SimpleChannel",
+          "method": "send",
+          "desc": "(Lnet/minecraftforge/network/PacketDistributor$PacketTarget;Ljava/lang/Object;)V",
+          "note": "target.send(toVanillaPacket(message, target.getDirection()))",
+          "sha256": "62592d1272959553df6be270ab7cc76b361096d21d1082cd63d3a837cfa201a0"
+        },
+        {
+          "class": "net/minecraftforge/network/simple/SimpleChannel",
+          "method": "toVanillaPacket",
+          "desc": "(Ljava/lang/Object;Lnet/minecraftforge/network/NetworkDirection;)Lnet/minecraft/network/protocol/Packet;",
+          "note": "the packet both paths send",
+          "sha256": "a85e1eccedff92d2211c42f32538b3672685cfd19092d2ac4d32f30b3eabd897"
+        },
+        {
+          "class": "net/minecraft/server/players/PlayerList",
+          "method": "m_11268_",
+          "desc": "(Lnet/minecraft/network/protocol/Packet;)V",
+          "note": "broadcastAll (what PacketDistributor.ALL ends in): every listed player's connection.send(packet)",
+          "sha256": "780a25b654ba1ccf6c5a65c9ef3fa568525abc1e4e3d86a458638b40286b3b3c"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap$TrackedEntity",
+          "method": "m_140497_",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "note": "updatePlayer: seenBy.add + addPairing (the spawn packets) / seenBy.remove + removePairing together",
+          "sha256": "b588545b21ee38ded75e7e1a14d45ef1000544252a4bb22d33d131bdaceeb28c"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap$TrackedEntity",
+          "method": "m_140485_",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "note": "removePlayer: seenBy.remove + removePairing together",
+          "sha256": "f210582f376da33a5f26cb6b4ae0a31a8112e9d82ea894e9f9e1f436d1669cbe"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap$TrackedEntity",
+          "method": "m_140482_",
+          "desc": "()V",
+          "note": "broadcastRemoved: removePairing to every seenBy connection",
+          "sha256": "eb76a995bde4411d343877506a40953375ab20e0f88c0e70ec3fa563cfa51bf5"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap",
+          "method": "m_140199_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "addEntity: the entity's TrackedEntity goes into entityMap under its id (and a player gets every tracker's updatePlayer)",
+          "sha256": "c1c5d14a496452ba4cfc13151c4ed114177be56fa19176b2e935ccd86ef7aa59"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap",
+          "method": "m_140331_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "removeEntity: the TrackedEntity leaves entityMap with broadcastRemoved (a player leaves every seenBy)",
+          "sha256": "56b7bf26ca2b44fc657e8fd3f7c3a6e5dab323ecb44172e10e48e542880045e0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the new ClientboundSyncCapabilitiesPacket(id, entity) and on the PacketHandler.sendToAllClients call of ForgeEffectSyncHandler's three capability lambdas: on the server thread the packet goes to the connections in the entity's ChunkMap TrackedEntity.seenBy whose player is in the PlayerList plus the entity itself when it is a ServerPlayer in the PlayerList, encoded once by Brutality's own channel (the packet PacketDistributor.ALL builds); with no such recipient it is not built. Exact variant: no packet to a player whose client does not hold the entity (ClientAccess.syncCapabilities drops it unread). Off the server thread, or without the channel, the stock send runs. @Accessor reads of ChunkMap.entityMap and TrackedEntity.seenBy. Runtime flag brutalityEffectSyncTrackingScope. Helper bons.furious.patch.brutality_coo49.BrutalitySync.",
+      "license": "Brutality (MIT): no Brutality code carried, the wrappers carry only our own logic; Minecraft: read only (accessors)"
+    },
+    "brutality_effect_sync_own_effects_only": {
+      "mod": "brutality",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.brutality_coo49.BrutalitySyncOwnEffectsMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/goo/brutality/event/forge/ForgeEffectSyncHandler",
+          "method": "lambda$onAddEffect$0",
+          "desc": "(Lnet/minecraft/world/effect/MobEffect;Lnet/minecraft/world/entity/LivingEntity;Lnet/goo/brutality/entity/capabilities/EntityCapabilities$EntityEffectCap;)V",
+          "note": "flag setters for MIRACLE_BLIGHT / ENRAGED / THE_VOID / LIGHT_BOUND only, then the packet for every effect",
+          "sha256": "2a420d1057a05f5f11c62a8a5bc888b0500a4bec070a9299ee5c79b5884c81d6"
+        },
+        {
+          "class": "net/goo/brutality/event/forge/ForgeEffectSyncHandler",
+          "method": "lambda$onRemoveEffect$1",
+          "desc": "(Lnet/minecraft/world/effect/MobEffect;Lnet/minecraft/world/entity/LivingEntity;Lnet/goo/brutality/entity/capabilities/EntityCapabilities$EntityEffectCap;)V",
+          "note": "the same, flags cleared",
+          "sha256": "8b6c44c101e7042b530254157b8d9d95c9a8fd68078235d99d97fe91cde08322"
+        },
+        {
+          "class": "net/goo/brutality/event/forge/ForgeEffectSyncHandler",
+          "method": "lambda$onExpiredEffect$2",
+          "desc": "(Lnet/minecraft/world/effect/MobEffect;Lnet/minecraft/world/entity/LivingEntity;Lnet/goo/brutality/entity/capabilities/EntityCapabilities$EntityEffectCap;)V",
+          "note": "the same, flags cleared",
+          "sha256": "8b6c44c101e7042b530254157b8d9d95c9a8fd68078235d99d97fe91cde08322"
+        },
+        {
+          "class": "net/goo/brutality/network/PacketHandler",
+          "method": "sendToAllClients",
+          "desc": "(Ljava/lang/Object;)V",
+          "note": "NETWORK_CHANNEL.send(PacketDistributor.ALL.noArg(), msg)",
+          "sha256": "83f738ccab57e0feea1e773d6d10ab96449d0b9e19d75bce91bfe3e8f40d94e4"
+        },
+        {
+          "class": "net/goo/brutality/network/ClientboundSyncCapabilitiesPacket",
+          "method": "<init>",
+          "desc": "(ILnet/minecraft/world/entity/Entity;)V",
+          "note": "serializes the entity's synced capabilities (reads only)",
+          "sha256": "10270abc6f3962e9da95bab81c43f11eef421c5b28fdffedb61309af8f2f3d5b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the new ClientboundSyncCapabilitiesPacket(id, entity) and on the PacketHandler.sendToAllClients call of ForgeEffectSyncHandler's three capability lambdas: the capability sync is built and sent only for events of Brutality's four own effects (MIRACLE_BLIGHT, ENRAGED, THE_VOID, LIGHT_BOUND, compared as the lambda compares them); the flag setters run as shipped. Trade-off, off by default: values Brutality changes without their own sync (star count, sticky bomb, rage, mana, combo) reach clients at the next Brutality effect event instead of with the next effect event of any kind (client display only; nothing saved changes). Runtime flag brutalityEffectSyncOwnEffectsOnly. Helper bons.furious.patch.brutality_coo49.BrutalitySync.",
+      "license": "Brutality (MIT): no Brutality code carried, the wrappers carry only our own logic"
+    }
+  }
+}

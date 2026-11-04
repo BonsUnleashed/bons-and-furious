@@ -1,0 +1,33 @@
+{
+  "group": "rpl_c49",
+  "keys": {
+    "rpl_idle_chunk_manager_skip": {
+      "mod": "ritchiesprojectilelib",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.rpl_c49.ChunkManagerIdleMixin"
+      ],
+      "guard": [
+        {
+          "class": "rbasamoyai/ritchiesprojectilelib/chunkloading/ChunkManager",
+          "method": "tick",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;)V",
+          "note": "getForcedChunks, four config reads, the loaded-map walk, poll count min(.., queue.size()), the expired loop, four trims, setDirty",
+          "sha256": "2d0c136dabfc704a2f9128f61d41a5285b5a776b425cf4dbb81f7599fe7107a3"
+        },
+        {
+          "class": "rbasamoyai/ritchiesprojectilelib/chunkloading/ChunkManager",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: chunks / queue / inQueue / loaded change only in the constructor, queueForceLoad (adds to all three) and tick",
+          "sha256": "949e64e581484197a4bd14013eada28c193b4f554335796acc495664f8466d8a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on ChunkManager.tick(ServerLevel): returns at once when chunks, queue, inQueue and loaded are all empty and a full tick already started with them empty since they last held anything (a @Unique flag set at the head of that tick, cleared by any tick that finds them non-empty) (helper bons.furious.patch.rpl_c49.RplIdleSkip)",
+      "license": "MIT (Ritchie's Projectile Library): no library code is carried; the check reads the manager's own four collections"
+    }
+  }
+}

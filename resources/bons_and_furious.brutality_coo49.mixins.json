@@ -1,0 +1,24 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.brutality_coo49",
+  "compatibilityLevel": "JAVA_17",
+  "plugin": "bons.pure.config.PureMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "BrutalitySealTypeMixin",
+    "BrutalityServerTickPhaseMixin",
+    "BrutalitySyncOwnEffectsMixin",
+    "BrutalitySyncTrackersMixin",
+    "BrutalityCoo49ChunkMapAccessor",
+    "BrutalityCoo49TrackedEntityAccessor"
+  ],
+  "client": [
+    "BrutalityClientTickPhaseMixin",
+    "BrutalityEffectCapWatchMixin",
+    "BrutalityBlightScanMixin",
+    "BrutalityProximityGateMixin"
+  ]
+}

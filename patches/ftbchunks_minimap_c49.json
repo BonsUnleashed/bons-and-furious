@@ -1,0 +1,189 @@
+{
+  "group": "ftbchunks_minimap_c49",
+  "keys": {
+    "ftbchunks_minimap_upload_coalesce": {
+      "mod": "ftbchunks",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.ftbchunks_minimap_c49.MinimapUploadCoalesceMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/FTBChunksClient",
+          "method": "renderHud",
+          "desc": "(Lnet/minecraft/client/gui/GuiGraphics;F)V",
+          "note": "the 15 x 15 rebuild loop: one 16 x 16 NativeImage.upload per chunk tile, row-major, offsets (ox & 31) * 16, (oz & 31) * 16",
+          "sha256": "7e40971dfa86adac2aa50f6df21485a42bb156e7718c54c12f0af305cbb38879"
+        },
+        {
+          "class": "com/mojang/blaze3d/platform/NativeImage",
+          "method": "m_85013_",
+          "desc": "(IIIIIIIZZZZ)V",
+          "note": "upload: off the render thread it is recorded, on it _upload runs",
+          "sha256": "f8b41a1d0e0b707c93f8425b9a9a5690c85f7fee3d565b1754dca513edf75392"
+        },
+        {
+          "class": "com/mojang/blaze3d/platform/NativeImage",
+          "method": "m_85090_",
+          "desc": "(IIIIIIIZZZZ)V",
+          "note": "_upload: filter, ROW_LENGTH (0 for full width, else the image width), SKIP_PIXELS, SKIP_ROWS, ALIGNMENT, glTexSubImage2D",
+          "sha256": "c1e86754a91cafb497377181736147744ac14f64f5cb85865a9903009ed919e3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@WrapOperation of the rebuild loop's NativeImage.upload in FTBChunksClient.renderHud: the 225 tile uploads of one rebuild become at most four rectangle uploads (one per region image) plus the last tile, through the wrapped call (helper bons.furious.patch.ftbchunks_minimap_c49.MinimapUploadCoalesce)",
+      "license": "FTB Chunks is All Rights Reserved: none of its code is carried; the wrapper only groups the loop's own upload calls"
+    },
+    "ftbchunks_minimap_region_memo": {
+      "mod": "ftbchunks",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.ftbchunks_minimap_c49.MinimapRegionMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/FTBChunksClient",
+          "method": "renderHud",
+          "desc": "(Lnet/minecraft/client/gui/GuiGraphics;F)V",
+          "note": "the rebuild loop between the write of updateMinimapScheduled and the write of currentPlayerChunkX: getRegion + getRenderedMapImage per tile",
+          "sha256": "7e40971dfa86adac2aa50f6df21485a42bb156e7718c54c12f0af305cbb38879"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/map/MapDimension",
+          "method": "getRegion",
+          "desc": "(Ldev/ftb/mods/ftblibrary/math/XZ;)Ldev/ftb/mods/ftbchunks/client/map/MapRegion;",
+          "note": "returns the region its map holds for the position, creating it only when absent",
+          "sha256": "d7df05fb8a18e05e4cdf82d8ddcb98ab903f322164fe6aef0a388e0843786cc4"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/map/MapRegion",
+          "method": "getRenderedMapImage",
+          "desc": "()Lcom/mojang/blaze3d/platform/NativeImage;",
+          "note": "creates the image once, submits the render task when one is due",
+          "sha256": "98a456a1cfcb0a85dc20975dd662d6f5803baa56141a4bc732fae3522d213468"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/map/MapRegion",
+          "method": "update",
+          "desc": "(Z)V",
+          "note": "a requested re-render also schedules a minimap rebuild",
+          "sha256": "9ce2cf8d48874303da06b831f3063f57c4cf8975ec394341b32478d6bbd4a601"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/map/MapRegion",
+          "method": "afterImageRenderTask",
+          "desc": "()V",
+          "note": "a finished render schedules a minimap rebuild",
+          "sha256": "3d257849ddfa5ac19b61894cf94e8cc9a42c2b3876fe7df70f51c63921893d63"
+        },
+        {
+          "class": "dev/ftb/mods/ftblibrary/math/XZ",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "audit": true,
+          "note": "FTB Library: the region map's key equality, which the memo's x / z comparison mirrors",
+          "sha256": "8a9ac6fe2a5d5c55c9b9f28b614d1b19b851e4026b75b88ce3cccc2882d16b3e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@WrapOperation of MapDimension.getRegion and MapRegion.getRenderedMapImage in FTBChunksClient.renderHud's rebuild loop, kept per region (at most four) from the loop's start to its end (two @Inject at the loop's field writes); helper bons.furious.patch.ftbchunks_minimap_c49.MinimapRegionMemo",
+      "license": "FTB Chunks is All Rights Reserved: none of its code is carried; the wrappers return the objects the first call returned"
+    },
+    "ftbchunks_hidden_minimap_upload_defer": {
+      "mod": "ftbchunks",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.ftbchunks_minimap_c49.MinimapHiddenDeferMixin",
+        "bons.furious.mixin.ftbchunks_minimap_c49.MinimapHiddenReleaseMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/FTBChunksClient",
+          "method": "renderHud",
+          "desc": "(Lnet/minecraft/client/gui/GuiGraphics;F)V",
+          "note": "the rebuild loop runs before the hidden check (hideGui, MINIMAP_ENABLED, MINIMAP_VISIBILITY, shouldShowMinimap); MINIMAP_PROPORTIONAL is read first after it",
+          "sha256": "7e40971dfa86adac2aa50f6df21485a42bb156e7718c54c12f0af305cbb38879"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/FTBChunksClient",
+          "method": "getMinimapTextureId",
+          "desc": "()I",
+          "note": "the only way FTB Chunks' claim screen (and any other mod) reads the minimap texture",
+          "sha256": "33f0538e019be7e68bbb84832cef5369688fbdd5c639b1993384f44af3900908"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/map/MapRegion",
+          "method": "releaseMapImage",
+          "desc": "()V",
+          "note": "the only place a region image is closed",
+          "sha256": "170b44ca22ecd0d171f998360200cd76f584b8f83373fbd7533f33b74d0f5cf6"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/map/MapRegion",
+          "method": "getRenderedMapImage",
+          "desc": "()Lcom/mojang/blaze3d/platform/NativeImage;",
+          "note": "creates the image once",
+          "sha256": "98a456a1cfcb0a85dc20975dd662d6f5803baa56141a4bc732fae3522d213468"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/map/MapRegion",
+          "method": "setRenderedMapImageRGBA",
+          "desc": "(III)V",
+          "note": "the only writer of region image pixels",
+          "sha256": "a59d0d2a46fa6f66d5a940568831b4d0f97d4fb172182d661d657a0ba7466ae4"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/map/MapRegion",
+          "method": "afterImageRenderTask",
+          "desc": "()V",
+          "note": "a finished render schedules a minimap rebuild",
+          "sha256": "3d257849ddfa5ac19b61894cf94e8cc9a42c2b3876fe7df70f51c63921893d63"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/map/RenderMapImageTask",
+          "method": "*",
+          "desc": "",
+          "note": "the map-thread render: writes pixels through setRenderedMapImageRGBA, ends with afterImageRenderTask",
+          "sha256": "1a19c94f6bae0b87fb2294321b4460710d92cd3e186b1faa5c8854040caa23bc"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/gui/ChunkScreen",
+          "method": "drawBackground",
+          "desc": "(Lnet/minecraft/client/gui/GuiGraphics;Ldev/ftb/mods/ftblibrary/ui/Theme;IIII)V",
+          "note": "draws the minimap texture, read through getMinimapTextureId",
+          "sha256": "256344721d198859775c4d479c28a3c01fc9b61755b985b18be83747a3576caf"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/FTBChunksWorldConfig",
+          "method": "shouldShowMinimap",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Z",
+          "note": "part of the hidden condition",
+          "sha256": "ad8bf5b2a2e3203adff04b63ab27b8e01bebb45083182e468dfd238ed36b7c48"
+        },
+        {
+          "class": "dev/ftb/mods/ftblibrary/ui/ScreenWrapper",
+          "method": "getGui",
+          "desc": "()Ldev/ftb/mods/ftblibrary/ui/BaseScreen;",
+          "audit": true,
+          "note": "FTB Library: the claim screen is an FTB Library screen inside this wrapper",
+          "sha256": "277be757d48885dedcc8449011009c31bbf45d0e120750bf0217530c3c487ef9"
+        },
+        {
+          "class": "com/mojang/blaze3d/platform/NativeImage",
+          "method": "m_85090_",
+          "desc": "(IIIIIIIZZZZ)V",
+          "note": "_upload: the pixel-store state a kept-back upload would have left",
+          "sha256": "c1e86754a91cafb497377181736147744ac14f64f5cb85865a9903009ed919e3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@WrapWithCondition of the rebuild loop's NativeImage.upload in FTBChunksClient.renderHud (kept back while the minimap is hidden, decided at the loop's start), the kept uploads sent at the first shown frame (@ModifyExpressionValue of the MINIMAP_PROPORTIONAL read right after the visibility check), in getMinimapTextureId (@ModifyReturnValue) and before MapRegion.releaseMapImage closes a listed image (@Inject HEAD); helper bons.furious.patch.ftbchunks_minimap_c49.MinimapHiddenDefer",
+      "license": "FTB Chunks is All Rights Reserved: none of its code is carried; the hooks only hold back and later send the loop's own upload calls"
+    }
+  }
+}

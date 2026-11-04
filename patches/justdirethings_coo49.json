@@ -1,0 +1,74 @@
+{
+  "group": "justdirethings_coo49",
+  "keys": {
+    "justdirethings_area_preview_no_copy": {
+      "mod": "justdirethings",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.justdirethings_coo49.AreaPreviewNoCopyMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/direwolf20/justdirethings/client/events/RenderLevelLast",
+          "method": "renderAreaPreviews",
+          "desc": "(Lnet/minecraftforge/client/event/RenderLevelStageEvent;Lnet/minecraft/world/entity/player/Player;)V",
+          "note": "13 x 13 chunks: getChunkNow, new ArrayList(chunk.getBlockEntities().values()), for each AreaAffectingBE with renderArea: pose, getAABB / getAABBOffsetOnly, lines and boxes; no block entity added or removed",
+          "sha256": "942ed8bd58c13b1811085d909c5cd0a2e91cbabd561d0078c0fee59c3c7be6d5"
+        },
+        {
+          "class": "com/direwolf20/justdirethings/common/blockentities/basebe/AreaAffectingBE",
+          "method": "getAABB",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/AABB;",
+          "note": "reads the area data only",
+          "sha256": "6d594b22c1f03b015583fc44f37b012fca4015cc53c0b9ebb609af3446dcc7bc"
+        },
+        {
+          "class": "com/direwolf20/justdirethings/common/blockentities/basebe/AreaAffectingBE",
+          "method": "getAABBOffsetOnly",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/AABB;",
+          "note": "reads the area data only",
+          "sha256": "5b49676b14a8ddcf465b4e10d91898cb83ce55e28f15c4d6cbd21e24f2321db3"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunk",
+          "method": "m_62954_",
+          "desc": "()Ljava/util/Map;",
+          "note": "getBlockEntities: the chunk's own map",
+          "sha256": "e676715c512b84629a77a83ef812e201b6e8c67f6b3e55bc67e71ac54798a601"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on renderAreaPreviews' new ArrayList(chunk.getBlockEntities().values()): an ArrayList whose iterator walks the live values (no copy). The loop body never adds or removes a block entity and a client chunk's map changes only on the render thread, so the same elements are visited in the same order. Runtime flag justdirethingsAreaPreviewNoCopy, shadow mode justdirethingsAreaPreviewNoCopy.shadow. Helper bons.furious.patch.justdirethings_coo49.AreaPreviews.",
+      "license": "MIT (Just Dire Things): call wrapper only, no Just Dire Things code is carried"
+    },
+    "justdirethings_area_preview_chunk_memo": {
+      "mod": "justdirethings",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.justdirethings_coo49.AreaPreviewChunkMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/direwolf20/justdirethings/client/events/RenderLevelLast",
+          "method": "renderAreaPreviews",
+          "desc": "(Lnet/minecraftforge/client/event/RenderLevelStageEvent;Lnet/minecraft/world/entity/player/Player;)V",
+          "note": "a chunk draws something only through an AreaAffectingBE whose data has renderArea set",
+          "sha256": "942ed8bd58c13b1811085d909c5cd0a2e91cbabd561d0078c0fee59c3c7be6d5"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunk",
+          "method": "m_62954_",
+          "desc": "()Ljava/util/Map;",
+          "note": "getBlockEntities",
+          "sha256": "e676715c512b84629a77a83ef812e201b6e8c67f6b3e55bc67e71ac54798a601"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on renderAreaPreviews' chunk.getBlockEntities(): per chunk (identity, weak) the switch keeps for one second whether the chunk held an AreaAffectingBE with renderArea set; while it held none, an empty map is answered and the chunk is not walked. Trade-off (off by default): a preview switched on, or a new block with its preview on, can show up to one second later; chunks with a shown preview are walked every frame. Runtime flag justdirethingsAreaPreviewChunkMemo. Helper bons.furious.patch.justdirethings_coo49.AreaPreviews.",
+      "license": "MIT (Just Dire Things): call wrapper only, no Just Dire Things code is carried"
+    }
+  }
+}

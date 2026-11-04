@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -16,6 +17,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.server.packs.resources.ReloadInstance;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.level.LevelEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import org.slf4j.Logger;
 
 /**
@@ -168,6 +172,7 @@ public final class ItemRendererReuse {
         if (fresh != null && site.proven(fresh.getClass())) {
             s.renderer = fresh;
             s.generation = gen;
+            if (fresh instanceof ReuseReset) resettable(s);
             site.builds.incrementAndGet();
             if (!site.announced) {
                 site.announced = true;
@@ -183,6 +188,38 @@ public final class ItemRendererReuse {
             }
         }
         return fresh;
+    }
+
+    // ------------------------------------------------------------------ client level unload (since 1.0.49)
+
+    /**
+     * Slots whose kept renderer has per-draw caches (ReuseReset: Alex's Caves' dread bow arrow, Alex's Mobs' entity
+     * cache). Those caches hold entities made for the client level of the last draw, and the reset ran only before the
+     * next hand-out: after leaving a world its ClientLevel (chunks, entities, packet listener) stayed reachable until
+     * that item was drawn again. A new renderer per draw, without the switch, kept nothing. Weak keys (Slot keeps
+     * Object's identity equals), render thread only.
+     */
+    private static final Map<Slot, Boolean> RESETTABLE = new WeakHashMap<>();
+    private static boolean unloadHooked;
+
+    private static void resettable(Slot s) {
+        RESETTABLE.put(s, Boolean.TRUE);
+        if (unloadHooked) return;
+        unloadHooked = true;
+        try {
+            MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, true, LevelEvent.Unload.class, ItemRendererReuse::onLevelUnload);
+        } catch (Throwable t) {
+            LOGGER.warn("Bons and Furious: item renderer reuse could not listen for level unloads ({}); a closed world may stay in memory "
+                    + "until its items are drawn again", t.toString());
+        }
+    }
+
+    /** A client level unloads (render thread): every kept renderer with per-draw caches gets them reset now. */
+    static void onLevelUnload(LevelEvent.Unload event) {
+        if (!event.getLevel().m_5776_() || !onRenderThread()) return;   // m_5776_ = isClientSide
+        for (Slot s : RESETTABLE.keySet()) {
+            if (s.renderer instanceof ReuseReset z) z.bons$resetForReuse();
+        }
     }
 
     // ------------------------------------------------------------------ shadow verification

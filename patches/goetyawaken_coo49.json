@@ -1,0 +1,40 @@
+{
+  "group": "goetyawaken_coo49",
+  "keys": {
+    "goetyawaken_scan_presence_gates": {
+      "mod": "goetyawaken",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goetyawaken_coo49.GaFogGateMixin",
+        "bons.furious.mixin.goetyawaken_coo49.GaBeamGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/k1sak1/goetyawaken/client/ClientEvents",
+          "method": "onRenderFog",
+          "desc": "(Lnet/minecraftforge/client/event/ViewportEvent$RenderFog;)V",
+          "note": "getEntitiesOfClass(NamelessOne, player box +64); acts (fog distances, cancel) only inside the loop, for a living, non-sleeping one",
+          "sha256": "9b7e0aebeb307a2781cc10f38de2853cf5acc179531da525f1b662a2329a9608"
+        },
+        {
+          "class": "com/k1sak1/goetyawaken/client/ClientEvents",
+          "method": "onGetFogColor",
+          "desc": "(Lnet/minecraftforge/client/event/ViewportEvent$ComputeFogColor;)V",
+          "note": "getEntitiesOfClass(NamelessOne, player box +64); sets the colour only inside the loop",
+          "sha256": "0cb1b6c6adc2a68fff3cb22633748baf4bbe81b69b4ae8419fc8357d41645efe"
+        },
+        {
+          "class": "com/k1sak1/goetyawaken/client/ClientEvents",
+          "method": "onRenderLevelStage",
+          "desc": "(Lnet/minecraftforge/client/event/RenderLevelStageEvent;)V",
+          "note": "AFTER_TRANSLUCENT_BLOCKS: getEntitiesOfClass(SorcererServant / BoundSorcerer, +64); beams only inside the loops",
+          "sha256": "ed93c24c1276c0ca80edcbcadd64b83cd01781ecabb1e9e0970cd347ede2adab"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the four ClientLevel.getEntitiesOfClass (m_45976_) calls of Goety Awaken's ClientEvents (onRenderFog, onGetFogColor, onRenderLevelStage x2): while vanilla_entity_class_count_layer says the client level holds none of the searched class, the call is marked EMPTY so that vanilla_entity_walk_skip leaves out its empty section walk; the call itself runs (helper bons.furious.patch.goetyawaken_coo49.GaGates)",
+      "license": "Goety Awaken (LGPL-2.1 code): no code carried, the wrappers carry only our own logic"
+    }
+  }
+}

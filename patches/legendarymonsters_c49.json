@@ -1,0 +1,100 @@
+{
+  "group": "legendarymonsters_c49",
+  "keys": {
+    "legendary_monsters_boss_music_trackers": {
+      "mod": "legendary_monsters",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.legendarymonsters_c49.BossMusicTrackersMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/miauczel/legendary_monsters/entity/AnimatedMonster/OriginClasses/IAnimatedBoss",
+          "method": "m_8119_",
+          "desc": "()V",
+          "sha256": "7f6d845eb840a4b0dbf99eb93508bb9621a78b2271baf1f5dbc9748c924b91fb"
+        },
+        {
+          "class": "net/miauczel/legendary_monsters/LegendaryMonsters",
+          "method": "sendMSGToAll",
+          "desc": "(Ljava/lang/Object;)V",
+          "sha256": "21b09266f74a994c110e74d0ca7574bb75efd9ca51599c53b81689b3272e20dd"
+        },
+        {
+          "class": "net/miauczel/legendary_monsters/LegendaryMonsters",
+          "method": "sendNonLocal",
+          "desc": "(Ljava/lang/Object;Lnet/minecraft/server/level/ServerPlayer;)V",
+          "sha256": "4cfb101d3bcc4a9643caaa46a375dd3c07ce4ff9ec5b7a82a7b051912c3113d6"
+        },
+        {
+          "class": "net/miauczel/legendary_monsters/Message/PlayBossMusicMessage$Handler",
+          "method": "onMessage",
+          "desc": "(Lnet/miauczel/legendary_monsters/Message/PlayBossMusicMessage;Ljava/util/function/Supplier;)Z",
+          "note": "client handler: acts only when the client level holds an IAnimatedBoss under the id",
+          "sha256": "b3d13244e3ec8b6bc93689c633f9850c3f7ad78ab9c7663e421475e64921f087"
+        },
+        {
+          "class": "net/miauczel/legendary_monsters/Message/PlayBossMusicMessage$Handler",
+          "method": "lambda$onMessage$0",
+          "desc": "(Lnet/miauczel/legendary_monsters/Message/PlayBossMusicMessage;)V",
+          "sha256": "833acbe186e899b58d085d1de92d6a0b65f577757b92588d219d3fe23575f0d1"
+        },
+        {
+          "class": "net/minecraftforge/network/simple/SimpleChannel",
+          "method": "sendTo",
+          "desc": "(Ljava/lang/Object;Lnet/minecraft/network/Connection;Lnet/minecraftforge/network/NetworkDirection;)V",
+          "sha256": "c388ac01248ceb96722fa422de3f3a344f1fc924ffadffee82d31fa934098f47"
+        },
+        {
+          "class": "net/minecraftforge/network/simple/SimpleChannel",
+          "method": "toVanillaPacket",
+          "desc": "(Ljava/lang/Object;Lnet/minecraftforge/network/NetworkDirection;)Lnet/minecraft/network/protocol/Packet;",
+          "sha256": "a85e1eccedff92d2211c42f32538b3672685cfd19092d2ac4d32f30b3eabd897"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerChunkCache",
+          "method": "m_8445_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/network/protocol/Packet;)V",
+          "sha256": "12732ac7998b4beff7c835b2ec561135d6ad9cce20d5d98837f2c7ec9e247b81"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap",
+          "method": "m_140201_",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/network/protocol/Packet;)V",
+          "sha256": "2d61a12c75f0146e4fe0ad497b2fe7e7955210b70bf826958f083029c194f0c9"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap$TrackedEntity",
+          "method": "m_140489_",
+          "desc": "(Lnet/minecraft/network/protocol/Packet;)V",
+          "sha256": "707dcec26de69d20c190fee4b0325ef970ac3d3567b379258f6305820c0fae72"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on both LegendaryMonsters.sendMSGToAll calls in IAnimatedBoss.m_8119_ (tick): the message is encoded once by Legendary Monsters' channel (SimpleChannel.toVanillaPacket) and sent with ServerChunkCache.broadcast to the boss's trackers (helper bons.furious.patch.legendarymonsters_c49.BossMusicTrackers); the runtime flag off calls the original",
+      "license": "Legendary Monsters: All Rights Reserved: no-copy; the wrapper carries only our own logic and calls the mod's public channel (Idea: Collections Of Optimizations legendarymonsters.bossMusicInterval, idea text only)"
+    },
+    "legendary_monsters_annihilator_proc_chance": {
+      "mod": "legendary_monsters",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.legendarymonsters_c49.AnnihilatorChanceMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/miauczel/legendary_monsters/event/ForgeEvents",
+          "method": "onLivingHurt",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingAttackEvent;)V",
+          "sha256": "7204c312525b5645b8ae090382315a79af7f034cae4f09d77c9d454a3289c616"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the one RandomSource.nextInt() (m_188502_) call of ForgeEvents.onLivingHurt: the original draw, mapped to 0 when floorMod(raw, 100) < 25 and 1 otherwise (helper bons.furious.patch.legendarymonsters_c49.AnnihilatorChance)",
+      "license": "Legendary Monsters: All Rights Reserved: no-copy; the wrapper carries only our own logic (Idea: Collections Of Optimizations legendarymonsters.fixAnnihilatorProcChance, idea text only)"
+    }
+  }
+}

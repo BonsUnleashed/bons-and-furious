@@ -1,0 +1,68 @@
+{
+  "group": "celestialenchantments_coo49",
+  "keys": {
+    "celestialenchantments_tick_enchant_precheck": {
+      "mod": "celestial_enchantments",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.celestialenchantments_coo49.CeTickPrecheckMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/xiaoyue/celestial_enchantments/event/CEGeneralEventHandler",
+          "method": "onLivingTick",
+          "desc": "(Lnet/minecraftforge/event/entity/living/LivingEvent$LivingTickEvent;)V",
+          "note": "tickCount % 4 test (else return), getAllEnch loop (LivingTickEnch), per-slot getEnch loop (ToolTickEnch); nothing else",
+          "sha256": "3c6f825d4acb1c8a7646d46d1c13ce64a3f3bdcf7e3a15f59a836c287b3dc414"
+        },
+        {
+          "class": "com/xiaoyue/celestial_enchantments/utils/IEnchUtils",
+          "method": "getAllEnch",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Ljava/util/Map;",
+          "note": "getEnch(entity, EquipmentSlot.values())",
+          "sha256": "74cb04e13fa5fad3528d328a667e410889ea53e0383b75fcfe3fd40f05637f8b"
+        },
+        {
+          "class": "com/xiaoyue/celestial_enchantments/utils/IEnchUtils",
+          "method": "getEnch",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;[Lnet/minecraft/world/entity/EquipmentSlot;)Ljava/util/Map;",
+          "note": "a new HashMap; per slot getItemBySlot and merge",
+          "sha256": "1f381f9e2edb0210932fd09a097875f649ca52b42745485f88fd973f5f1a8a4d"
+        },
+        {
+          "class": "com/xiaoyue/celestial_enchantments/utils/IEnchUtils",
+          "method": "merge",
+          "desc": "(Ljava/util/Map;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/EquipmentSlot;)V",
+          "note": "acts only for stack.isEnchanted(): enabled CE enchantments whose slots hold the slot",
+          "sha256": "c4e4ab3bab616a24807a92e8fb35c6f9af631f3540ac14760e0c1961c66b47fd"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41793_",
+          "desc": "()Z",
+          "note": "isEnchanted: tag != null and a non-empty Enchantments list (an untagged stack is never enchanted)",
+          "sha256": "9a5d1b3b55daa4a073a368abc057112cd88cb0e00cc58370ad34db0312242418"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "m_41783_",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "getTag: the tag field",
+          "sha256": "52a5721be98fab658ea43b7a6883ff37506a83d79a1cd704bc00c7c44af5779c"
+        },
+        {
+          "class": "net/bettercombat/mixin/PlayerEntityMixin",
+          "method": "getEquippedStack_Pre",
+          "desc": "(Lnet/minecraft/world/entity/EquipmentSlot;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "audited (Better Combat 1.8.6, our pack's only hook on getItemBySlot): reads the hand stacks and the weapon registry, answers an empty off hand for two-handed weapons; no other effect",
+          "audit": true,
+          "sha256": "714fe8a5fbeab7d700be58df7e513f85d7760e1ed6b8dd6b11839d6b0fd4fc36"
+        }
+      ],
+      "cancel": [],
+      "conversion": "three @Redirects in CEGeneralEventHandler.onLivingTick, all past its tickCount % 4 test (the event captured from the handler's argument): IEnchUtils.getAllEnch (an empty map without the call when no slot's stack has a tag), the per-slot loop's EquipmentSlot.values() (no slots after an empty getAllEnch map of the same call: the per-slot maps are its parts), the per-slot IEnchUtils.getEnch (an empty map for a slot whose stack has no tag); otherwise the shipped calls; helper bons.furious.patch.celestialenchantments_coo49.CeTickPrecheck",
+      "license": "LGPL-2.1 (Celestial Enchantments): no Celestial Enchantments code is carried; Minecraft: no code"
+    }
+  }
+}

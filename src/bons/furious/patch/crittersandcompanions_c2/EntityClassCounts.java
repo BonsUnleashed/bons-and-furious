@@ -1,6 +1,9 @@
 package bons.furious.patch.crittersandcompanions_c2;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 import net.minecraft.world.level.Level;
@@ -37,6 +40,10 @@ import org.apache.logging.log4j.Logger;
  *   IA_VEHICLE       Immersive Aircraft 1.1.8 VehicleEntity          (immersiveaircraft_vehicle_trace_gate; also Immersive
  *                    Machinery's and Man of Many Planes' vehicles, which extend it)
  *   BONE_HITBOX      KnightLib 2.0.3 BoneHitboxHolder, an INTERFACE  (knightlib_bone_hitbox_gate)
+ * Since 1.0.49: any number of further entries, which other groups REGISTER from their own resources
+ * (bons_and_furious.&lt;group&gt;.entity_classes.json, see EntityClassRegistrations), numbered after the twelve above; a gate
+ * finds its entry with {@link #trackedIndex(String)}. The twelve built-in entries keep their indices and their behaviour;
+ * the per-class index list replaced the 32-bit mask, so the number of entries has no limit.
  * An interface entry counts every entity whose class (or a superclass) implements it, directly or through another
  * interface (the runtime class's interfaces, so an interface a mixin adds counts too).
  * A gate asks {@link #none(Level, int)}; true only when the level's storage holds no instance of that class, the asking
@@ -45,7 +52,7 @@ import org.apache.logging.log4j.Logger;
  * only other effect is the profiler counter "getEntities", which the gates keep. For an interface entry, none() says that
  * no entity in the level's entity sections implements it; part entities are not in sections, so a gate that uses an
  * interface entry must show by itself that no part entity can reach its search (the Alex's Caves gate searches Mob, and a
- * PartEntity is never a Mob).
+ * PartEntity is never a Mob). Since 1.0.49 {@link #count(Level, int)} answers the number itself under the same conditions.
  *
  * Exactness of the counts. Per storage, count[c] = the number of entries of class c (or a subclass) in the "all instances"
  * lists of its sections. An add counts the entity when the multimap took it; a removal of a tracked entity (or any removal
@@ -55,8 +62,8 @@ import org.apache.logging.log4j.Logger;
  * storage, a section that no storage created) marks the storage (or every storage) as doubtful for good: its gates then
  * always run the original search. -Dbons_and_furious.entityClassCountLayer=false turns the gates' use of the layer off.
  * SHADOW MODE for rigs: -Dbons_and_furious.entityClassCountLayer.shadow=true recounts the asked class by walking every
- * section whenever a gate would be told "none", counts SHADOW_CHECKS / SHADOW_MISMATCHES (WARN for the first 20) and
- * answers "unknown", so every gate runs its original search.
+ * section whenever a gate would be told "none" (or a count), counts SHADOW_CHECKS / SHADOW_MISMATCHES (WARN for the first
+ * 20) and answers "unknown", so every gate runs its original search.
  */
 public final class EntityClassCounts {
     /** Runtime switch. -Dbons_and_furious.entityClassCountLayer=false: none() always answers false (gates run the original). */
@@ -70,7 +77,8 @@ public final class EntityClassCounts {
     public static final int SCREEN_SHAKE = 4, LM_CAMERA_SHAKE = 5, LM_CAMERA_ZOOM = 6, MOWZIE_SHAKE = 7, CF_SHAKE = 8, SHAKES_SCREEN = 9;
     /** Since 1.0.46: the projectile hit-test gates (group projectile_gates; they find these through trackedIndex). */
     public static final int IA_VEHICLE = 10, BONE_HITBOX = 11;
-    static final String[] TRACKED = {
+    /** The entries of 1.0.48, in their index order (unchanged). */
+    private static final String[] BUILT_IN = {
             "com.github.eterdelta.crittersandcompanions.entity.RedPandaEntity",
             "com.finderfeed.fdbosses.content.entities.base.BossSpawnerEntity",
             "com.finderfeed.fdbosses.content.entities.chesed_boss.kinetic_field.ChesedKineticFieldEntity",
@@ -83,9 +91,27 @@ public final class EntityClassCounts {
             "com.github.alexmodguy.alexscaves.server.entity.util.ShakesScreen",
             "immersive_aircraft.entity.VehicleEntity",
             "dev.xylonity.knightlib.api.entity.hitbox.BoneHitboxHolder"};
-    public static final int TRACKED_COUNT = TRACKED.length;
+    /** Number of built-in entries (the registered ones follow them). */
+    public static final int BUILT_IN_COUNT = BUILT_IN.length;
+    /** Every tracked name in index order: BUILT_IN, then the registered ones (since 1.0.49). */
+    static final String[] TRACKED;
+    /** The group that registered each entry ("" = built in), for the start-up line and probes. */
+    private static final String[] REGISTERED_BY;
+    public static final int TRACKED_COUNT;
+    private static final Map<String, Integer> BY_NAME = new HashMap<>();
+    private static final EntityClassRegistrations.Table TABLE;
+
+    static {
+        TABLE = EntityClassRegistrations.load(BUILT_IN);
+        TRACKED = TABLE.names();
+        REGISTERED_BY = TABLE.groups();
+        TRACKED_COUNT = TRACKED.length;
+        for (int i = 0; i < TRACKED.length; i++) BY_NAME.putIfAbsent(TRACKED[i], i);
+    }
+
     /** Marker for "no element of the section equals the entity being removed" (beforeRemove's null means "nothing to do"). */
     public static final Object ABSENT = new Object();
+    private static final int[] NOTHING = new int[0];
 
     private static final Logger LOGGER = LogManager.getLogger("Bons and Furious");
     private static volatile boolean announced;
@@ -93,39 +119,37 @@ public final class EntityClassCounts {
     private static int warnings;
 
     /**
-     * Bit i set when TRACKED[i] is the class, one of its superclasses, or (since 1.0.45) an interface any of them implements,
-     * directly or through another interface.
+     * The tracked indices (ascending) whose entry is the class, one of its superclasses, or (since 1.0.45) an interface any
+     * of them implements, directly or through another interface. Since 1.0.49 an index list instead of a 32-bit mask (any
+     * number of entries); the shared empty array for every untracked class.
      */
-    private static final ClassValue<Integer> MASK = new ClassValue<>() {
+    private static final ClassValue<int[]> MASKS = new ClassValue<>() {
         @Override
-        protected Integer computeValue(Class<?> type) {
-            int m = 0;
+        protected int[] computeValue(Class<?> type) {
+            java.util.BitSet bits = new java.util.BitSet();
             for (Class<?> c = type; c != null; c = c.getSuperclass()) {
-                m |= bits(c.getName());
-                m |= interfaceBits(c);
+                bit(bits, c.getName());
+                interfaceBits(bits, c);
             }
-            return m;
+            return bits.isEmpty() ? NOTHING : bits.stream().toArray();
         }
     };
 
-    private static int bits(String name) {
-        int m = 0;
-        for (int i = 0; i < TRACKED.length; i++) if (TRACKED[i].equals(name)) m |= 1 << i;
-        return m;
+    private static void bit(java.util.BitSet bits, String name) {
+        Integer i = BY_NAME.get(name);
+        if (i != null) bits.set(i);
     }
 
-    /** The bits of every interface {@code c} declares, and of the interfaces those extend (each visited once). */
-    private static int interfaceBits(Class<?> c) {
-        int m = 0;
-        java.util.ArrayDeque<Class<?>> todo = new java.util.ArrayDeque<>(java.util.Arrays.asList(c.getInterfaces()));
+    /** The entries of every interface {@code c} declares, and of the interfaces those extend (each visited once). */
+    private static void interfaceBits(java.util.BitSet bits, Class<?> c) {
+        java.util.ArrayDeque<Class<?>> todo = new java.util.ArrayDeque<>(Arrays.asList(c.getInterfaces()));
         Set<Class<?>> seen = new java.util.HashSet<>();
         while (!todo.isEmpty()) {
             Class<?> i = todo.pop();
             if (!seen.add(i)) continue;
-            m |= bits(i.getName());
-            todo.addAll(java.util.Arrays.asList(i.getInterfaces()));
+            bit(bits, i.getName());
+            todo.addAll(Arrays.asList(i.getInterfaces()));
         }
-        return m;
     }
 
     /**
@@ -194,8 +218,20 @@ public final class EntityClassCounts {
 
     // ------------------------------------------------------------------------------------------ counting (mixin hooks)
 
-    public static int mask(Object entity) {
-        return MASK.get(entity.getClass());
+    /** Since 1.0.49: whether the entity counts for tracked entry {@code index} (its class, a superclass or an interface). */
+    public static boolean tracks(Object entity, int index) {
+        for (int i : MASKS.get(entity.getClass())) if (i == index) return true;
+        return false;
+    }
+
+    /** Since 1.0.49: whether the entity counts for any tracked entry. */
+    public static boolean tracksAny(Object entity) {
+        return MASKS.get(entity.getClass()).length != 0;
+    }
+
+    /** Since 1.0.49: the tracked indices the entity counts for (ascending; shared, never modify it). */
+    public static int[] trackedIndices(Class<?> type) {
+        return MASKS.get(type);
     }
 
     /**
@@ -210,9 +246,8 @@ public final class EntityClassCounts {
         @Override
         protected Integer computeValue(Class<?> c) {
             if (c.isInterface() || PartEntity.class.isAssignableFrom(c)) return -1;
-            String n = c.getName();
-            for (int i = 0; i < TRACKED.length; i++) if (TRACKED[i].equals(n)) return i;
-            return -1;
+            Integer i = BY_NAME.get(c.getName());
+            return i == null ? -1 : i;
         }
     };
 
@@ -220,11 +255,17 @@ public final class EntityClassCounts {
      * Since 1.0.45: the index of a tracked class or interface by its exact name, or -1. For a gate that must ask about a
      * type it does not search for directly (alexscaves_shake_scan_presence_gate searches Mob for ShakesScreen mobs); such a
      * gate asks {@link #none(Level, int)} and answers for part entities itself (see the class comment). Reached through a
-     * method handle, so that group compiles on its own.
+     * method handle, so that group compiles on its own. Since 1.0.49 also the way every registering group finds its entry
+     * (-1: not registered in this JVM, e.g. its key is off, its mod absent or its file unreadable: the gate stays off).
      */
     public static int trackedIndex(String name) {
-        for (int i = 0; i < TRACKED.length; i++) if (TRACKED[i].equals(name)) return i;
-        return -1;
+        Integer i = name == null ? null : BY_NAME.get(name);
+        return i == null ? -1 : i;
+    }
+
+    /** Since 1.0.49: the exact name of tracked entry {@code index} (for log lines), or null. */
+    public static String trackedName(int index) {
+        return index >= 0 && index < TRACKED_COUNT ? TRACKED[index] : null;
     }
 
     /**
@@ -241,15 +282,20 @@ public final class EntityClassCounts {
     public static void storageCreated() {
         if (!announced) {
             announced = true;
-            LOGGER.info("Bons and Furious: vanilla_entity_class_count_layer counts {} entity classes per level for crittersandcompanions_red_panda_gate, "
-                    + "fdbosses_spawner_presence_gate, the camera-shake presence gates and the projectile hit-test gates{}", TRACKED.length, SHADOW ? " (SHADOW MODE: the gates always run their original searches)" : "");
+            StringBuilder reg = new StringBuilder();
+            Map<String, Integer> perGroup = new java.util.TreeMap<>();
+            for (int i = BUILT_IN_COUNT; i < TRACKED_COUNT; i++) perGroup.merge(REGISTERED_BY[i], 1, Integer::sum);
+            perGroup.forEach((g, n) -> reg.append(reg.length() == 0 ? "" : ", ").append(g).append(' ').append(n));
+            LOGGER.info("Bons and Furious: vanilla_entity_class_count_layer counts {} entity classes per level ({} built in, {} registered from {}{}){}",
+                    TRACKED_COUNT, BUILT_IN_COUNT, TRACKED_COUNT - BUILT_IN_COUNT, TABLE.source(), reg.length() == 0 ? "" : ": " + reg,
+                    SHADOW ? " (SHADOW MODE: the gates always run their original searches)" : "");
         }
     }
 
     /** EntitySection.add, after the multimap took the entity. */
     public static void added(Section section, Object entity) {
-        int m = MASK.get(entity.getClass());
-        if (m == 0) return;
+        int[] m = MASKS.get(entity.getClass());
+        if (m.length == 0) return;
         Storage s = section.bons$classCountStorage();
         if (s == null) {
             doubtAll("a tracked entity entered a section that no entity storage created");
@@ -260,7 +306,7 @@ public final class EntityClassCounts {
             return;
         }
         int[] c = s.bons$classCounts();
-        for (int i = 0; i < c.length; i++) if ((m & (1 << i)) != 0) c[i]++;
+        for (int i : m) c[i]++;
         section.bons$trackedMembers(section.bons$trackedMembers() + 1);
     }
 
@@ -270,7 +316,7 @@ public final class EntityClassCounts {
      * instances" list (the first one the entity equals), or ABSENT.
      */
     public static Object beforeRemove(Section section, Iterable<?> members, Object entity) {
-        if (section.bons$trackedMembers() == 0 && MASK.get(entity.getClass()) == 0) return null;
+        if (section.bons$trackedMembers() == 0 && MASKS.get(entity.getClass()).length == 0) return null;
         Storage s = section.bons$classCountStorage();
         if (s == null) {
             doubtAll("a tracked entity left a section that no entity storage created");
@@ -300,10 +346,10 @@ public final class EntityClassCounts {
             doubt(s, "removing " + entity + " took out another entity with the same id (" + first + ")");
             return;
         }
-        int m = MASK.get(entity.getClass());
-        if (m == 0) return;
+        int[] m = MASKS.get(entity.getClass());
+        if (m.length == 0) return;
         int[] c = s.bons$classCounts();
-        for (int i = 0; i < c.length; i++) if ((m & (1 << i)) != 0) c[i]--;
+        for (int i : m) c[i]--;
         int left = section.bons$trackedMembers() - 1;
         section.bons$trackedMembers(left);
         if (left < 0) doubt(s, "a section's tracked-member count went below zero");
@@ -327,6 +373,14 @@ public final class EntityClassCounts {
 
     // ------------------------------------------------------------------------------------------ the gates' question
 
+    /** The level's counted storage when its counts may be used by this thread now, else null. */
+    private static Storage usable(Level level, int index) {
+        if (!enabled || unattributed || index < 0 || index >= TRACKED_COUNT || !(level instanceof CountedLevel counted)) return null;
+        Storage s = counted.bons$classCountStorage();
+        if (s == null || s.bons$classCountOwner() != Thread.currentThread() || s.bons$classCountsDoubtful()) return null;
+        return VANILLA_SEARCH.get(level.getClass()) ? s : null;
+    }
+
     /**
      * True only when {@code level}'s entity searches certainly find no instance of tracked class {@code index}: the layer is
      * applied and enabled, the level searches the vanilla way, the calling thread owns the level's entity storage, the counts
@@ -334,6 +388,7 @@ public final class EntityClassCounts {
      */
     public static boolean none(Level level, int index) {
         if (!enabled || unattributed || !(level instanceof CountedLevel counted)) return false;
+        if (index < 0 || index >= TRACKED_COUNT) return false;
         Storage s = counted.bons$classCountStorage();
         if (s == null || s.bons$classCountOwner() != Thread.currentThread() || s.bons$classCountsDoubtful()) return false;
         if (s.bons$classCounts()[index] != 0 || !VANILLA_SEARCH.get(level.getClass())) return false;
@@ -347,5 +402,26 @@ public final class EntityClassCounts {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Since 1.0.49: the number of entities of tracked class {@code index} in {@code level}'s entity sections (hidden ones
+     * included), under the same conditions as {@link #none}; -1 means "unknown" (the caller runs its original code). In
+     * shadow mode the number is recounted by walking every section, compared, and -1 is answered.
+     */
+    public static int count(Level level, int index) {
+        Storage s = usable(level, index);
+        if (s == null) return -1;
+        int n = s.bons$classCounts()[index];
+        if (SHADOW) {
+            SHADOW_CHECKS.incrementAndGet();
+            int truth = s.bons$classCountTruth(index);
+            if (truth != n && SHADOW_MISMATCHES.incrementAndGet() <= 20) {
+                LOGGER.warn("Bons and Furious: vanilla_entity_class_count_layer SHADOW MISMATCH {}: count {} for {} in {} but {} found by walking every section",
+                        SHADOW_MISMATCHES.get(), n, TRACKED[index], level, truth);
+            }
+            return -1;
+        }
+        return n;
     }
 }

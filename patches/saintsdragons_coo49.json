@@ -1,0 +1,26 @@
+{
+  "group": "saintsdragons_coo49",
+  "keys": {
+    "saintsdragons_ride_hud_once_per_frame": {
+      "mod": "saintsdragons",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.saintsdragons_coo49.DragonHudOncePerFrameMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/leon/saintsdragons/forge/client/event/DragonUIEventHandler",
+          "method": "onRenderGuiOverlay",
+          "desc": "(Lnet/minecraftforge/client/event/RenderGuiOverlayEvent$Post;)V",
+          "note": "three hotbar-only parts, then from the second player.getVehicle() call on every layer: setDragon, the melee toast, the Ignivorus / Raevyx / Volitans meters, the ride health bar (0.9.85: the same bytes)",
+          "sha256": "70956866e99a13bbfa4d58d92c3ec2ce2cea2cdc19fdb69f4088f34bcfb15792"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Mixin @Inject (cancellable) before the second LocalPlayer.getVehicle (m_20202_) call of DragonUIEventHandler.onRenderGuiOverlay (the start of the per-layer riding HUD part): left out on every layer while SaintsHud's RenderGuiEvent.Post listener (HIGHEST priority, registered on first use) runs the mod's own listener once per frame for a non-hotbar layer. Trade-off, off by default. Runtime flag saintsdragonsRideHudOncePerFrame. Helper bons.furious.patch.saintsdragons_coo49.SaintsHud.",
+      "license": "Saint's Dragons (MIT): no code carried; the hook decides on which event the mod's own listener draws"
+    }
+  }
+}

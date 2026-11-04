@@ -1,0 +1,47 @@
+{
+  "group": "l2library_effects_c49",
+  "keys": {
+    "l2library_tracked_effect_memo": {
+      "mod": "l2library",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.l2library_effects_c49.ForgeRegistryTagContentsMixin",
+        "bons.furious.mixin.l2library_effects_c49.TrackedEffectMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/xkmc/l2library/init/events/EffectSyncEvents",
+          "method": "tracked",
+          "desc": "(Lnet/minecraft/world/effect/MobEffect;)Z",
+          "note": "TRACKED.contains(effect) || MOB_EFFECTS.tags().getTag(TRACKED_EFFECTS).contains(effect)",
+          "sha256": "ac0b2e1d909ebaba21b513a41f546112d81e6cd3ae8e0665ac175636c2025d2f"
+        },
+        {
+          "class": "net/minecraftforge/registries/ForgeRegistryTag",
+          "method": "contains",
+          "desc": "(Ljava/lang/Object;)Z",
+          "note": "getContents().contains(value)",
+          "sha256": "cfd09ba1b36954e46bb1e3231b16abf7048cac3647c99040ff55048d4c911449"
+        },
+        {
+          "class": "net/minecraftforge/registries/ForgeRegistryTag",
+          "method": "getContents",
+          "desc": "()Ljava/util/List;",
+          "note": "the contents list, built once per bind from the holder set (Stream.toList)",
+          "sha256": "af785b8ea8e39f8ae6c6d1dabd2f9ded14b6d3fa622c3b6568ee0aa37e2e5b70"
+        },
+        {
+          "class": "net/minecraftforge/registries/ForgeRegistryTag",
+          "method": "bind",
+          "desc": "(Lnet/minecraft/core/HolderSet;)V",
+          "note": "the only writer: new holder set, contents = null",
+          "sha256": "aaa9c330042bf136d8d363373474312d3efa0270f51ca820df5e9eb288b7c58c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapOperation of ITag.contains in EffectSyncEvents.tracked (an identity set kept with ForgeRegistryTag's contents list, reached by an @Invoker on getContents); helper bons.furious.patch.l2library_effects_c49.TrackedEffects",
+      "license": "LGPL-2.1 (L2 Library): no L2 Library code is carried; Forge (LGPL-2.1): an invoker only"
+    }
+  }
+}

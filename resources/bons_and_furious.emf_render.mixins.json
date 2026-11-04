@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "bons.furious.mixin.emf_render",
   "compatibilityLevel": "JAVA_17",
-  "plugin": "bons.pure.config.PureMixinPlugin",
+  "plugin": "bons.furious.patch.emf_render.EmfRenderPlugin",
   "injectors": {
     "defaultRequire": 1
   },
@@ -13,6 +13,7 @@
     "EmfModelPartChildrenAccessor",
     "EmfPoseCacheAccessor",
     "EmfVariableDefaultMixin",
-    "EmfAngerMapMixin"
+    "EmfAngerMapMixin",
+    "EmfMathAngerMapMixin"
   ]
 }

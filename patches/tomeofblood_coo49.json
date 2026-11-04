@@ -1,0 +1,75 @@
+{
+  "group": "tomeofblood_coo49",
+  "keys": {
+    "tomeofblood_living_upgrade_uuid_memo": {
+      "mod": "tomeofblood",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.tomeofblood_coo49.TobLivingUpgradeUuidMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/mystchonky/tomeofblood/common/items/LivingMageArmorItem",
+          "method": "lambda$getAttributeModifiers$0",
+          "desc": "(Lwayoftime/bloodmagic/core/living/LivingStats;Lcom/google/common/collect/Multimap;Lwayoftime/bloodmagic/core/living/LivingUpgrade;Ljava/lang/Double;)V",
+          "note": "per trained upgrade with an attribute provider: handleAttributes(stats, modifiers, UUID.nameUUIDFromBytes(key.toString().getBytes()) (the wrapped call), upgrade, level)",
+          "sha256": "e18951cad3b67cfd7a095e1b894634966df09dd46eed347bf42c0c99f62dd59a"
+        },
+        {
+          "class": "com/mystchonky/tomeofblood/common/items/LivingMageArmorItem",
+          "method": "getAttributeModifiers",
+          "desc": "(Lnet/minecraft/world/entity/EquipmentSlot;Lnet/minecraft/world/item/ItemStack;)Lcom/google/common/collect/Multimap;",
+          "note": "the armour's modifiers plus, for the chest slot with living stats, the lambda per upgrade",
+          "sha256": "3e35c25f5cdfe56121283a3f51104c3dd42a23f5fd15f39a50f71191a72579e5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Exact variant: MixinExtras @WrapOperation on the UUID.nameUUIDFromBytes([B) call in LivingMageArmorItem.lambda$getAttributeModifiers$0: bytes seen before (equal content) are answered with the UUID the original computed for them, new bytes run the original and are kept (at most 4,096 keys); the key's toString and getBytes run as shipped; the one internal difference is one UUID object per key instead of a new equal one per call. Runtime flag tomeofbloodLivingUpgradeUuidMemo, shadow tomeofbloodLivingUpgradeUuidMemo.shadow. Helper bons.furious.patch.tomeofblood_coo49.TobUuids.",
+      "license": "Tome of Blood (LGPL-3.0): no Tome of Blood code is carried; the wrapper keeps the original's answers"
+    },
+    "tomeofblood_mimic_index_guard": {
+      "mod": "tomeofblood",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.tomeofblood_coo49.TobMimicIndexMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/mystchonky/tomeofblood/common/glyphs/AugmentMimic",
+          "method": "applyModifiers",
+          "desc": "(Lcom/hollingsworth/arsnouveau/api/spell/SpellStats$Builder;Lcom/hollingsworth/arsnouveau/api/spell/AbstractSpellPart;Lnet/minecraft/world/phys/HitResult;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;Lcom/hollingsworth/arsnouveau/api/spell/SpellContext;)Lcom/hollingsworth/arsnouveau/api/spell/SpellStats$Builder;",
+          "note": "part = spell.recipe.get(context.getCurrentIndex() - 1) (the redirected call, unchecked); an AbstractAugment part applies its modifiers; then the augment's own (none)",
+          "sha256": "7e1b7b7fa51a4736f689de906f836f77d7ba45f21cb33cb1b5f838a73b0354bb"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix: @Redirect of the List.get(I) call in AugmentMimic.applyModifiers (a redirect, not a MixinExtras wrap, so the in-range path pays one bounds test and no operation object): an index outside [0, size) answers null (not an AbstractAugment, so Mimic applies only its own modifiers) instead of throwing IndexOutOfBoundsException out of spell resolution; in-range reads make the same get call. Runtime flag tomeofbloodMimicIndexGuard. Helper bons.furious.patch.tomeofblood_coo49.TobMimic.",
+      "license": "Tome of Blood (LGPL-3.0): no Tome of Blood code is carried; the redirect only bounds-checks one read"
+    },
+    "tomeofblood_server_start_log_silence": {
+      "mod": "tomeofblood",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.tomeofblood_coo49.TobServerStartLogMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/mystchonky/tomeofblood/TomeOfBlood",
+          "method": "onServerStarting",
+          "desc": "(Lnet/minecraftforge/event/server/ServerStartingEvent;)V",
+          "note": "LOGGER.info(\"HELLO from server starting\") (the wrapped call) and nothing else",
+          "sha256": "f09dd3f277e63d7b05d1c17a413ad561b5ad29d6154dece5c2b89281050db79b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix: MixinExtras @WrapWithCondition on the Logger.info(String) call of TomeOfBlood.onServerStarting: the mod template's \"HELLO from server starting\" line is no longer written (only that exact text); nothing else in the method. Runtime flag tomeofbloodServerStartLogSilence. Helper bons.furious.patch.tomeofblood_coo49.TobStartLog.",
+      "license": "Tome of Blood (LGPL-3.0): no Tome of Blood code is carried; the condition drops one log call"
+    }
+  }
+}

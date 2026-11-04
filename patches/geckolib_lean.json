@@ -1,0 +1,196 @@
+{
+  "group": "geckolib_lean",
+  "keys": {
+    "geckolib_bone_lookup_memo": {
+      "mod": "geckolib",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.geckolib_lean.BakedGeoModelBoneMemoMixin",
+        "bons.furious.mixin.geckolib_lean.GeoBoneCountingChildrenMixin",
+        "bons.furious.mixin.geckolib_lean.BuiltinTopLevelListMixin"
+      ],
+      "guard": [
+        {
+          "class": "software/bernie/geckolib/cache/object/BakedGeoModel",
+          "method": "getBone",
+          "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+          "note": "for each top-level bone: searchForChildBone(bone, name); first hit -> Optional.of, else Optional.empty()",
+          "sha256": "d9a35fa33fbde463816093176b8ddfe4f94851993d8447703a71a809d2cb9f60"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/BakedGeoModel",
+          "method": "topLevelBones",
+          "desc": "()Ljava/util/List;",
+          "sha256": "5616b8bbe1eca4805ffc2523fb2a912a3d50febb73b87a0270174297c5834711"
+        },
+        {
+          "class": "software/bernie/geckolib/core/animatable/model/CoreBakedGeoModel",
+          "method": "searchForChildBone",
+          "desc": "(Lsoftware/bernie/geckolib/core/animatable/model/CoreGeoBone;Ljava/lang/String;)Lsoftware/bernie/geckolib/core/animatable/model/CoreGeoBone;",
+          "note": "pre-order: the bone, then each child's name, then that child's subtree",
+          "sha256": "49f733aa7e3bb6a067edf97fbb14169e5a731ae4306fd0fffcbf965af64232b3"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "<init>",
+          "desc": "(Lsoftware/bernie/geckolib/cache/object/GeoBone;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Double;Ljava/lang/Boolean;Ljava/lang/Boolean;)V",
+          "note": "children = new ObjectArrayList() (first NEW), cubes = new ObjectArrayList() (second)",
+          "sha256": "d2323f61b1682c95b620326e8f552ebb0017ce42584bdaf05564576807374133"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "getChildBones",
+          "desc": "()Ljava/util/List;",
+          "sha256": "fa088ba4bc29e96bee5078cff7261d3657c6fc9db5fa6c6efb3175b13697e40b"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "getName",
+          "desc": "()Ljava/lang/String;",
+          "sha256": "27bca21cb747ed700dec2df06c342c2646caf6520adcd918e150227a3e5d73cc"
+        },
+        {
+          "class": "software/bernie/geckolib/loading/object/BakedModelFactory$Builtin",
+          "method": "constructGeoModel",
+          "desc": "(Lsoftware/bernie/geckolib/loading/object/GeometryTree;)Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;",
+          "note": "bones = new ObjectArrayList(); one constructBone per top-level bone; new BakedGeoModel(bones, properties)",
+          "sha256": "1bd30cb222382f35291cf4d60d03825bcf3bf789328916a5631435b71ab4180e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod around BakedGeoModel.getBone (per-model memo in a new field, rebuilt when the bone-tree version moved); @Redirect of the first NEW ObjectArrayList in GeoBone.<init> (children) and of the NEW ObjectArrayList in BakedModelFactory$Builtin.constructGeoModel (top level) to CountingBoneList; helpers bons.furious.patch.geckolib_lean.GeckoBoneMemo, CountingBoneList",
+      "license": "MIT (GeckoLib): no GeckoLib code is carried; our wrapper answers from an index of its own tree"
+    },
+    "geckolib_distant_pose_hold": {
+      "mod": "geckolib",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.geckolib_lean.GeoModelPoseHoldMixin",
+        "bons.furious.mixin.geckolib_lean.AnimationProcessorEpochMixin",
+        "bons.furious.mixin.geckolib_lean.AnimationControllerTickOffsetAccessor"
+      ],
+      "guard": [
+        {
+          "class": "software/bernie/geckolib/model/GeoModel",
+          "method": "handleAnimations",
+          "desc": "(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;JLsoftware/bernie/geckolib/core/animation/AnimationState;)V",
+          "note": "time bookkeeping, molang setup, tickAnimation (wrapped) when bones are registered, setCustomAnimations",
+          "sha256": "e1d93d7b2327bba7fd977e8e8940396655d784f41556c6ee406c7966487f8c7b"
+        },
+        {
+          "class": "software/bernie/geckolib/core/animation/AnimationProcessor",
+          "method": "tickAnimation",
+          "desc": "(Lsoftware/bernie/geckolib/core/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/core/animatable/model/CoreGeoModel;Lsoftware/bernie/geckolib/core/animation/AnimatableManager;DLsoftware/bernie/geckolib/core/animation/AnimationState;Z)V",
+          "note": "processes every controller, poses the shared bones, resets their changed flags, finishFirstTick",
+          "sha256": "81d01a1279fb9a96c106330ffae904eb1483ec817c9b31f7bb8b53f242f7fb1d"
+        },
+        {
+          "class": "software/bernie/geckolib/core/animation/AnimationProcessor",
+          "method": "setActiveModel",
+          "desc": "(Lsoftware/bernie/geckolib/core/animatable/model/CoreBakedGeoModel;)V",
+          "sha256": "0d117c11f1b7ba6cecfa45800a08ab3f71f7970a7c21a6fd8915f2c1e3245c08"
+        },
+        {
+          "class": "software/bernie/geckolib/core/animation/AnimationProcessor",
+          "method": "getRegisteredBones",
+          "desc": "()Ljava/util/Collection;",
+          "sha256": "2355787d245e00e38bf4e87cc2e71236502ce2adad7f896a9b704f2b46abfdac"
+        },
+        {
+          "class": "software/bernie/geckolib/core/animation/AnimationProcessor",
+          "method": "resetBoneTransformationMarkers",
+          "desc": "()V",
+          "sha256": "5308cb14819b10c1b6a07db744ee7ff12519a9279eed5c1459298dbeb3a4bc12"
+        },
+        {
+          "class": "software/bernie/geckolib/core/animation/AnimationController",
+          "method": "process",
+          "desc": "(Lsoftware/bernie/geckolib/core/animatable/model/CoreGeoModel;Lsoftware/bernie/geckolib/core/animation/AnimationState;Ljava/util/Map;Ljava/util/Map;DZ)V",
+          "note": "state machine: transitions, triggered animations, stage ends, keyframe events",
+          "sha256": "46f9ae5dc449378aafd31e0db771f5f46cc1e2c4e8b882cbe9c99aec0566eec1"
+        },
+        {
+          "class": "software/bernie/geckolib/core/animation/AnimationController",
+          "method": "processCurrentAnimation",
+          "desc": "(DDZ)V",
+          "note": "stage end when adjustedTick >= length; sound/particle/custom keyframe events",
+          "sha256": "a0da780f22f60810ab11d9f2d4522c71c27d5f0eaa9d94dd807cef482a4d7c75"
+        },
+        {
+          "class": "software/bernie/geckolib/core/animation/AnimationController",
+          "method": "adjustTick",
+          "desc": "(D)D",
+          "note": "speed * max(seekTime - tickOffset, 0)",
+          "sha256": "314bc4e52fbbdd53db9909f663c18c9058e5a45751211ab048e3ed998935a7f5"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "setRotX",
+          "desc": "(F)V",
+          "sha256": "64f8abbc2a5cac9cbe7a71a33fa6af2fbd63ef603e8e7997f1a4c540a1d770fb"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "setRotY",
+          "desc": "(F)V",
+          "sha256": "9ec1897ddc74f4170408dfcc6ab219a4a9873b7e5199ce391c6d5ba0d62d0242"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "setRotZ",
+          "desc": "(F)V",
+          "sha256": "a22d8055f5aa41b4820348d5e6627ee0be736a3b7518c39ce830a9fcd61471ba"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "setPosX",
+          "desc": "(F)V",
+          "sha256": "7c4760480bbdb9c8b07a23363ee9d930b18b168943fd267a91af344a68d391d0"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "setPosY",
+          "desc": "(F)V",
+          "sha256": "5c85c9c6b4ab9e2e88ccfd329cd8c42da4b3ed0fea1dc1fb8c2f358b4b24ee36"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "setPosZ",
+          "desc": "(F)V",
+          "sha256": "ac1348c9d396bc5ec023e6317ffb54b1c5420b150069269b77ed9c6ef5522fd4"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "setScaleX",
+          "desc": "(F)V",
+          "sha256": "e8944161d89694d73693c65e29a8b6b9be5c48e22fe880e89d06548abad5487b"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "setScaleY",
+          "desc": "(F)V",
+          "sha256": "914ea87e3804c4de5580def3c96194026602b3bff4371ec27e1671a14d2ef5bb"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "setScaleZ",
+          "desc": "(F)V",
+          "sha256": "4af072cf45987cfef7d1c68d289777c9d26d3f487e33ca41d6a63dbea0a8a4d0"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "resetStateChanges",
+          "desc": "()V",
+          "sha256": "f1537c9e63948ab337303b9d3b0c75064cc6c82e0089848a666ee2b8d8b329cb"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation of AnimationProcessor.tickAnimation in GeoModel.handleAnimations (@Local instanceId); saved poses in a new GeoModel field; @Inject HEAD of AnimationProcessor.setActiveModel counts model switches (PoseHoldEpoch); @Accessor AnimationController.tickOffset; helper bons.furious.patch.geckolib_lean.PoseHold; the wrapping mixin has priority 1100 and the wrap require = 0 (1.0.49 fifth freeze): next to GeckoLibOculusCompat 1.0.1, which @Overwrites handleAnimations, the method is left to it with one log line (Guards.STAND_DOWN_EACH)",
+      "license": "MIT (GeckoLib): no GeckoLib code is carried; our wrapper decides whether the unchanged tickAnimation runs"
+    }
+  }
+}

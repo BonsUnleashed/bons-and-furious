@@ -1,0 +1,68 @@
+{
+  "group": "l2backpack_coo49",
+  "keys": {
+    "l2backpack_bag_count_from_nbt": {
+      "mod": "l2backpack",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.l2backpack_coo49.BagOccupiedMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/xkmc/l2backpack/content/bag/AbstractBag",
+          "method": "getOccupied",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "note": "getContent(stack), then the number of non-empty stacks",
+          "sha256": "1f91b7bcf78d5db6259c8a8d8ee41b8d16f1ba581b3023047fcb078ab9deabd0"
+        },
+        {
+          "class": "dev/xkmc/l2backpack/content/bag/AbstractBag",
+          "method": "getContent",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/core/NonNullList;",
+          "note": "NonNullList.withSize(getInvSize(stack), EMPTY); getOrCreateTagElement(\"BlockEntityTag\"); contains(\"Items\") -> ContainerHelper.loadAllItems",
+          "sha256": "95ab111051feb808ebb1283c22f4d2c01438e82a76d3c3526afc2aa62d41e8bb"
+        },
+        {
+          "class": "dev/xkmc/l2backpack/content/bag/AbstractBag",
+          "method": "getInvSize",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "note": "64 * getSizeFactor(stack)",
+          "sha256": "7459814fa908b8a5adbda9cb18064401cde7480c368382611596bf8caa27fab6"
+        },
+        {
+          "class": "dev/xkmc/l2backpack/content/bag/AbstractBag",
+          "method": "getSizeFactor",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "note": "max(1, getOrCreateTag().getInt(\"BagUpgrade\"))",
+          "sha256": "ed53ad9e3de29cbf0d4c0f4565e747187d3f81a6e0d0b677f6a9888330f76788"
+        },
+        {
+          "class": "net/minecraft/world/ContainerHelper",
+          "method": "m_18980_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/NonNullList;)V",
+          "note": "loadAllItems: getList(\"Items\", 10); per entry slot = getByte(\"Slot\") & 255; slot < size -> list.set(slot, ItemStack.of(entry)) (the last entry per slot wins)",
+          "sha256": "b409522a8655806043e166078eae9ade7d99f3b4e221c09732332045fdb68ce4"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "m_135820_",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "tryParse: null exactly when new ResourceLocation(id) throws, the case ItemStack.of answers EMPTY",
+          "sha256": "b5ce38752bd5d15aaa2a30c61c05e03138f8015b7a6e940a0f208d4433557738"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;)V",
+          "note": "the parse ItemStack(CompoundTag) makes of the entry's id",
+          "sha256": "0a6c843d2f00cd240fdaaf764417e090fdcb44f113b2dc3f262612b1c7a31443"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on AbstractBag.getOccupied (with @Shadow getInvSize / getContent): the used slots counted from the stored list (helper bons.furious.patch.l2backpack_coo49.BagCount); bag classes with their own getContent run the shipped method",
+      "license": "LGPL-2.1 (L2 Backpack): no L2 Backpack code is carried; Minecraft (Mojang): no-copy"
+    }
+  }
+}

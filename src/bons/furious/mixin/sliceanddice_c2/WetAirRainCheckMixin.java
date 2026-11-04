@@ -10,7 +10,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 /**
- * sliceanddice_wet_air_gate (Slice & Dice 3.6.0, both sides; the gate answers on the server thread), part 1 of 3.
+ * sliceanddice_wet_air_gate (Slice & Dice 3.6.0, both sides; the gate answers on the server thread and, since 1.0.49, on the
+ * client's main thread), part 1 of 3.
  *
  * Slice & Dice's LevelMixin.isRainingAt handler (merged into Level, HEAD of isRainingAt) calls WetAir.check(level, pos),
  * which reads the blocks above pos through Level.getBlockState. This redirect returns false without those reads when

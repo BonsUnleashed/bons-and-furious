@@ -1,0 +1,107 @@
+{
+  "group": "titanium_coo49",
+  "keys": {
+    "titanium_facing_single_state_read": {
+      "mod": "titanium",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.titanium_coo49.ActiveTileFacingMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/hrznstudio/titanium/block/tile/ActiveTile",
+          "method": "getFacingDirection",
+          "desc": "()Lnet/minecraft/core/Direction;",
+          "note": "level.getBlockState(worldPosition) up to three times: FACING_ALL present and its value, else FACING_HORIZONTAL present and its value, else NORTH",
+          "sha256": "80ed43a442a039033eb2430d0f32a366a33e7f14498b2d6a27ae7b84d1a435dd"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "m_8055_",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "getBlockState: the one read kept (build height check, chunk lookup, the chunk's state)",
+          "sha256": "cb0e4f7ff3d67591f62963ba1937adb91261c87b4c5adc352a50f532b8f8aa1b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of ActiveTile.getFacingDirection: one read of the machine's block state, then the same FACING_ALL / FACING_HORIZONTAL / NORTH chain on that state. Runtime flag titaniumFacingSingleStateRead. Helper bons.furious.patch.titanium_coo49.TitaniumFacing.",
+      "license": "Titanium (LGPL-3.0): no code carried; the hook holds only our own logic"
+    },
+    "titanium_progress_same_value_skip": {
+      "mod": "titanium",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.titanium_coo49.ProgressBarSameValueMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/hrznstudio/titanium/component/progress/ProgressBarComponent",
+          "method": "setProgress",
+          "desc": "(I)V",
+          "note": "stores the value, then always markComponentForUpdate(true) on the machine when it has one",
+          "sha256": "3023fc008a6237918446fd95c15ebe23e74eecd9419c3ac4944eac92ca30491b"
+        },
+        {
+          "class": "com/hrznstudio/titanium/block/tile/ActiveTile",
+          "method": "markComponentForUpdate",
+          "desc": "(Z)V",
+          "note": "true -> markComponentDirty -> BlockEntity.setChanged (chunk unsaved, comparator neighbours, the machine's own changed-hook)",
+          "sha256": "46f90cceca19c2f674d889bd405fda7ad0e4a5088dd772e789da7d08586dd579"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of ProgressBarComponent.setProgress: a write of the value the bar already holds returns at once, without markComponentForUpdate. Trade-off (off by default): same-value progress writes no longer mark the machine changed. Runtime flag titaniumProgressSameValueSkip (emergency off). Helper bons.furious.patch.titanium_coo49.TitaniumProgress.",
+      "license": "Titanium (LGPL-3.0): no code carried; the hook holds only our own logic"
+    },
+    "titanium_recipe_list_snapshot": {
+      "mod": "titanium",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.titanium_coo49.RecipeUtilSnapshotMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/hrznstudio/titanium/util/RecipeUtil",
+          "method": "getRecipes",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/crafting/RecipeType;)Ljava/util/List;",
+          "note": "ObfuscationReflectionHelper read of RecipeManager.f_44007_, the type's map, values().stream().collect(toList()); no map -> new ArrayList",
+          "sha256": "ca50f9a8fa391db48bd87c92d070e56ff4109345c4d1a739bdf3680a26eb34b3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of RecipeUtil.getRecipes: the recipe table through a VarHandle on RecipeManager.f_44007_; an immutable type map answers a new ArrayList copied from a template kept per recipe type while that map object is the same; other maps are copied with the same stream. Runtime flag titaniumRecipeListSnapshot. Helper bons.furious.patch.titanium_coo49.TitaniumRecipeLists.",
+      "license": "Titanium (LGPL-3.0): no code carried; the hook holds only our own logic"
+    },
+    "titanium_sided_transfer_empty_skip": {
+      "mod": "titanium",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.titanium_coo49.SidedTransferEmptyMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/hrznstudio/titanium/component/inventory/SidedInventoryComponent",
+          "method": "transfer",
+          "desc": "(Lcom/hrznstudio/titanium/util/FacingUtil$Sideness;Lnet/minecraftforge/items/IItemHandler;Lnet/minecraftforge/items/IItemHandler;I)Z",
+          "note": "simulated extract, then isValidForAnySlot(to, extracted), and only then the empty check: an empty stack moves the slot cache on and returns false",
+          "sha256": "a268b86b0eb915c87c588ebe9dacc97875cc44f8646af64ccca8032318b54516"
+        },
+        {
+          "class": "com/hrznstudio/titanium/component/inventory/SidedInventoryComponent",
+          "method": "isValidForAnySlot",
+          "desc": "(Lnet/minecraftforge/items/IItemHandler;Lnet/minecraft/world/item/ItemStack;)I",
+          "note": "only query methods of the destination (getSlots, isItemValid, getStackInSlot, getSlotLimit) and ItemHandlerHelper.canItemStacksStack",
+          "sha256": "7c461a473b2e9cc52e05b1c879d7492baeef5457c769eb68403186328ba47041"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the isValidForAnySlot call in SidedInventoryComponent.transfer: -1 without the scan for an empty simulated stack (the method then only moves the slot cache on, as before), else the original. Runtime flag titaniumSidedTransferEmptySkip. Helper bons.furious.patch.titanium_coo49.TitaniumSidedTransfer.",
+      "license": "Titanium (LGPL-3.0): no code carried; the hook holds only our own logic"
+    }
+  }
+}

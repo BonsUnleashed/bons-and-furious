@@ -1,0 +1,54 @@
+{
+  "group": "terrain_router_c49",
+  "keys": {
+    "terrain_router_shared_node_memo": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.terrain_router_c49.HolderHolderMemoMixin",
+        "bons.furious.mixin.terrain_router_c49.NoiseChunkFirstPassMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "<init>",
+          "desc": "(ILnet/minecraft/world/level/levelgen/RandomState;IILnet/minecraft/world/level/levelgen/NoiseSettings;Lnet/minecraft/world/level/levelgen/DensityFunctions$BeardifierOrMarker;Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;Lnet/minecraft/world/level/levelgen/blending/Blender;)V",
+          "note": "the constructor's first NoiseRouter.mapAll(this::wrap): the pass the memo serves",
+          "sha256": "4002da1eb3f5636a83ab187a1b58722401c681cc36856a9637687cf471c4f136"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_209213_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "note": "wrap: computeIfAbsent on the wrap table (deep equality), so a repeated mapping resolves to the stored objects",
+          "sha256": "a2908483a3208a4c5a86d21c9104c0adfebcab1a6b8b97ff609d527b54dfdd18"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_209233_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "note": "wrapNew: markers become caches, a HolderHolder becomes its holder's value",
+          "sha256": "291c1990c96d354f1b70484a90dcbb8a2c2d1fda67932799f7fc07843b312f6d"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$HolderHolder",
+          "method": "m_207456_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "note": "mapAll: visitor.apply(new HolderHolder(new Holder.Direct(value.mapAll(visitor))))",
+          "sha256": "e6e5e062ccace666dc718a343d9753f39c734b5050d10beaec3625880457e1b9"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseRouter",
+          "method": "m_224412_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/NoiseRouter;",
+          "note": "mapAll: each of the 15 fields mapped with the same visitor",
+          "sha256": "8bae8301ce02f7b5f81b78ffe31beb36376d80a935f875e2a6f5414763794b2a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: @ModifyArg of the first NoiseRouter.mapAll visitor in NoiseChunk.<init> (wrapped in a first-pass visitor that applies as the wrap visitor does, once per RandomState audited with bons.pure.terrain.DensityAudit) and MixinExtras @WrapMethod on DensityFunctions$HolderHolder.mapAll (identity memo of a shared node's result within that pass; helper bons.furious.patch.terrain_router_c49.RouterMemo)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic"
+    }
+  }
+}

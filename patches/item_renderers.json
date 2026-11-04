@@ -427,6 +427,13 @@
       "mod": "tacz",
       "scripts": [],
       "since": "1.0.36",
+      "redundant_since": [
+        {
+          "mod": "tacz",
+          "version": "1.1.8",
+          "note": "TaCZ 1.1.8 keeps each item renderer itself (AmmoItem, AttachmentItem and GunSmithTableItem hold their renderer in a field and create it on the first getCustomRenderer call), the same reuse; first seen in 1.1.8-hotfix2, 1.1.6 and 1.1.7 not checked"
+        }
+      ],
       "mixins": [
         "bons.furious.mixin.item_renderers.TaczRendererMixin"
       ],

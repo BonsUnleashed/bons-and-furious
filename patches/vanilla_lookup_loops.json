@@ -1,0 +1,186 @@
+{
+  "group": "vanilla_lookup_loops",
+  "keys": {
+    "vanilla_multiface_face_loop": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_lookup_loops.MultifaceBlockFaceLoopMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/block/MultifaceBlock",
+          "method": "m_153960_",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;)Z",
+          "sha256": "b788c59b6e4aa4391a190f20b84e457112d49ef2c974a7af48c003f853df5bb9"
+        },
+        {
+          "class": "net/minecraft/world/level/block/MultifaceBlock",
+          "method": "m_153962_",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;)Z",
+          "sha256": "1121563409a51d4da2098e38fadc37d1324f166ad4783694877659a693391d17"
+        },
+        {
+          "class": "net/minecraft/world/level/block/MultifaceBlock",
+          "method": "m_153900_",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;)Z",
+          "sha256": "db4a4f81cddfee4a32fcc3b745bcbee6eb741c6b483654282332a658b8d64f68"
+        },
+        {
+          "class": "net/minecraft/world/level/block/MultifaceBlock",
+          "method": "m_221581_",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;)Z",
+          "sha256": "5e9152caa0dd224abac53d6fa6e328a5d2dd8e42c36c847bb369e32d30bce177"
+        },
+        {
+          "class": "net/minecraft/world/level/block/MultifaceBlock",
+          "method": "m_221578_",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;)Z",
+          "sha256": "a4a57454dd84bbacb1ad8f401b42e039e2dd74faa702a1937180bc9b8eaf294f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "cancellable @Inject(HEAD) into the static hasAnyFace (m_153960_) and hasAnyVacantFace (m_153962_): a plain loop over the same direction array (f_153806_) calling the same static hasFace (m_153900_), first match returns, as the stock anyMatch over the lambdas m_221581_ / m_221578_",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own loop (helper bons.furious.patch.vanilla_lookup_loops.FaceLoops)"
+    },
+    "vanilla_block_range_counters": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_lookup_loops.BlockPosRangeCounterMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/core/BlockPos$3",
+          "method": "computeNext",
+          "desc": "()Lnet/minecraft/core/BlockPos;",
+          "sha256": "9633993f2a44eac6e5ddbf455c6c34a89a2b42928c70576c6157b5507b4ed8d3"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos$3",
+          "method": "<init>",
+          "desc": "(IIIIII)V",
+          "sha256": "d44b92c1e300d78874a8c695449246a3d1282716146748ee5292c86e13da3839"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos$3",
+          "method": "*",
+          "desc": "",
+          "sha256": "ff1f036396b0670a64317a09c3753475d79ae2a8d0a8f8edb66342f69c45b62e"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "m_121976_",
+          "desc": "(IIIIII)Ljava/lang/Iterable;",
+          "sha256": "6ad7169593cb9ee627f45c7d7810150dbd7033c0139fc0bcf179f98ecb003263"
+        }
+      ],
+      "cancel": [],
+      "conversion": "cancellable @Inject(HEAD) into BlockPos$3.computeNext (the betweenClosed iterator): counter mode decided once at the first position (positive width, height and count), then the same cursor set and index step as the original from three counters; any other iterator and the end of the range run the original body",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own counter logic (helper bons.furious.patch.vanilla_lookup_loops.RangeCounters)"
+    },
+    "vanilla_single_value_section_get": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_lookup_loops.PalettedContainerSingleValueMixin",
+        "bons.furious.mixin.vanilla_lookup_loops.SingleValuePaletteAccess"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/chunk/PalettedContainer",
+          "method": "m_63085_",
+          "desc": "(I)Ljava/lang/Object;",
+          "sha256": "c431234623e3e3d690d5f67ccf83bc8597b4ca48a3e2deaaa9ee8af1a5677ada"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/SingleValuePalette",
+          "method": "m_5795_",
+          "desc": "(I)Ljava/lang/Object;",
+          "sha256": "e443d92e81b7aeef1f73615a9aaef4e0476fcd59487193237ee8e964cc47c034"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/SingleValuePalette",
+          "method": "*",
+          "desc": "",
+          "sha256": "1188038108fb6ce26e3a729de17d1f9fa90b73b27d8dbcf11e6d23a668ee97fd"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the Palette.valueFor (m_5795_) call in PalettedContainer.get(int) (m_63085_): SingleValuePalette (exact class) with id 0 and a set value answers from its value field (accessor on f_188204_), every other case makes the original call",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own check (helper bons.furious.patch.vanilla_lookup_loops.SingleValueSections)"
+    },
+    "vanilla_clip_shape_box_memo": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_lookup_loops.VoxelShapeClipBoxesMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/phys/shapes/VoxelShape",
+          "method": "m_83220_",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/BlockHitResult;",
+          "sha256": "de629cc90fe259f63fd0fc042ada0ec06cd795f87e35c8ea3f5a7bb02af7671c"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/VoxelShape",
+          "method": "m_83299_",
+          "desc": "()Ljava/util/List;",
+          "sha256": "8cc0a5d60e35c3a5a1b5ed6f90cc400fa3953f03754776fc943f45d83c145a05"
+        },
+        {
+          "class": "net/minecraft/world/phys/AABB",
+          "method": "m_82342_",
+          "desc": "(Ljava/lang/Iterable;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/BlockHitResult;",
+          "sha256": "43702a4dd66e288d0cda7f07d1c2fc0fff6e3ddf9d71c6a3fb91bd742e33870e"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/ArrayVoxelShape",
+          "method": "*",
+          "desc": "",
+          "sha256": "9f5bf8876aad201b46519feab94fe4072e805c3717c5c981a769ec8bd33d4fa0"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/CubeVoxelShape",
+          "method": "*",
+          "desc": "",
+          "sha256": "5ba8b0e5afb2dd02d7c10c053bb631cb32fe56975bdb3529b423b862e4f12338"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/SliceShape",
+          "method": "*",
+          "desc": "",
+          "sha256": "b9111dad6a4e5810577809d900e0479411e0c2adaa2bad6eb006372cc6413a59"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the toAabbs (m_83299_) call inside VoxelShape.clip (m_83220_): an unmodifiable copy of the first list is kept per shape of vanilla's own classes and handed to AABB.clip (m_82342_) afterwards; AABB.clip unchanged",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own memo (helper bons.furious.patch.vanilla_lookup_loops.ClipBoxes)"
+    },
+    "vanilla_rl_string_memo": {
+      "mod": "minecraft",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_lookup_loops.ResourceLocationStringMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "toString",
+          "desc": "()Ljava/lang/String;",
+          "sha256": "bfbaac15eab73dfae46cd682c078e8c2d64610ba49f535318278e7b7794d682c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyReturnValue at the return of ResourceLocation.toString keeps the first string in an @Unique field; a cancellable @Inject(HEAD) returns it on later calls",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own memo (helper bons.furious.patch.vanilla_lookup_loops.RlStrings)"
+    }
+  }
+}
