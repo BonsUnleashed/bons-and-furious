@@ -1,0 +1,124 @@
+{
+  "group": "fluidium_coo49",
+  "keys": {
+    "fluidium_claim_lookup_memo": {
+      "mod": "fluidium",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.fluidium_coo49.ClaimLookupMemoMixin",
+        "bons.furious.mixin.fluidium_coo49.FtbClaimEpochMixin"
+      ],
+      "guard": [
+        {
+          "class": "me/kall/fluidium/common/integration/ClaimManager",
+          "method": "isClaimed",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "FTB_CHECKER != null and FTB_CHECKER.isClaimed (the wrapped first call), else / then OPAC_CHECKER.isClaimed (untouched)",
+          "sha256": "8dbb93f132a4391f694b15be295f4eb07417fdf50fe30f12c46b5fc0ae6fd0d4"
+        },
+        {
+          "class": "me/kall/fluidium/common/integration/ftbchunks/FTBChecker",
+          "method": "isClaimed",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "FTBChunksAPI.api(); !isManagerLoaded() -> false; getManager().getChunk(new ChunkDimPos(level, pos)) != null",
+          "sha256": "45676b591c932e5aca0f9a21b6a7ef225dd40aa1e2333ab1dce07d63ca4d09b1"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/data/ClaimedChunkManagerImpl",
+          "method": "registerClaim",
+          "desc": "(Ldev/ftb/mods/ftblibrary/math/ChunkDimPos;Ldev/ftb/mods/ftbchunks/api/ClaimedChunk;)V",
+          "note": "audited (FTB Chunks 2101.1.23, which the switch needs): claimedChunks.put(pos, impl) when the chunk is a ClaimedChunkImpl; the epoch bump at its return",
+          "audit": true,
+          "sha256": "9ce15834a7f14bf8447d43dfeebe789c08cb78511e7214ec3944e2cb810cc2b4"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/data/ClaimedChunkManagerImpl",
+          "method": "unregisterClaim",
+          "desc": "(Ldev/ftb/mods/ftblibrary/math/ChunkDimPos;)V",
+          "note": "audited (FTB Chunks): claimedChunks.remove(pos); the epoch bump at its return",
+          "audit": true,
+          "sha256": "8ed7df9745fd0a0665ac9d92738e5371ab8db4b6e66b122819bbf908d65a21c5"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/data/ClaimedChunkManagerImpl",
+          "method": "getChunk",
+          "desc": "(Ldev/ftb/mods/ftblibrary/math/ChunkDimPos;)Ldev/ftb/mods/ftbchunks/data/ClaimedChunkImpl;",
+          "note": "audited (FTB Chunks): claimedChunks.get(pos), nothing else (the ClaimedChunk bridge calls it)",
+          "audit": true,
+          "sha256": "72eecf6f7627533bce8b25c56e7e890365098d602a01b5b660323b5d24b60ee5"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/data/ClaimedChunkManagerImpl",
+          "method": "getAllClaimedChunks",
+          "desc": "()Ljava/util/Collection;",
+          "note": "audited (FTB Chunks): Collections.unmodifiableCollection(claimedChunks.values()), the map never leaves the class writable",
+          "audit": true,
+          "sha256": "163bb706bfc0ed4bb220a0b238a46108fb696436780f863f21ce8d0c5c300917"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/data/ClaimedChunkManagerImpl",
+          "method": "<init>",
+          "desc": "(Ldev/ftb/mods/ftbteams/api/TeamManager;)V",
+          "note": "audited (FTB Chunks): the only assignment of claimedChunks (a new HashMap); FluidiumPlugin's look checks no other method names the field",
+          "audit": true,
+          "sha256": "03a5303fff6ead1e5ad45e53b87d3ca5d49c690c5574a692bdfe2907292b74c2"
+        },
+        {
+          "class": "dev/ftb/mods/ftblibrary/math/ChunkDimPos",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V",
+          "note": "audited (FTB Library 2101.1): this(level.dimension(), pos.getX() >> 4, pos.getZ() >> 4) -> this(dim, new ChunkPos(x, z))",
+          "audit": true,
+          "sha256": "1b86aaf31685892e33c1a5bdd141e8e42aab329f5150a3f21bca2403d16ef67a"
+        },
+        {
+          "class": "dev/ftb/mods/ftblibrary/math/ChunkDimPos",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "note": "audited (FTB Library 2101.1): the record's equality of (dimension, chunkPos): the same dimension key object (ResourceKey keeps Object.equals) and ChunkPos.equals; the memo's key is that pair",
+          "audit": true,
+          "sha256": "eac2f6303e24fe25859be118bca0d3552f15e8075294722eb1ed4fea1a19bc1c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation of the first IChecker.isClaimed call in Fluidium's ClaimManager.isClaimed (the FTB Chunks checker; Open Parties and Claims' call is untouched) + @Pseudo @Inject RETURN of FTB Chunks' ClaimedChunkManagerImpl.registerClaim and unregisterClaim (a claim epoch). FTB's answer is kept in a 4,096-entry table keyed by (dimension key, chunk x, chunk z) with the manager it came from and the epoch, and reused only for the same manager, epoch and key; every other lookup asks FTB. The table belongs to one thread (the server thread). FluidiumPlugin checks the merged manager class (claim map private, assigned only by the constructor, used only by five known methods, both writers calling the bump) before the table is used. Runtime flag fluidiumClaimLookupMemo; shadow fluidiumClaimLookupMemo.shadow. Helpers bons.furious.patch.fluidium_coo49.ClaimMemo and FluidiumPlugin.",
+      "license": "Fluidium (MIT) and FTB Chunks / FTB Library (All Rights Reserved): no code carried, the hooks carry only our own logic"
+    },
+    "fluidium_departed_dimension_refresh": {
+      "mod": "fluidium",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.fluidium_coo49.DepartedDimensionMixin"
+      ],
+      "guard": [
+        {
+          "class": "me/kall/fluidium/common/data/ActiveChunks",
+          "method": "dimChange",
+          "desc": "(Lnet/neoforged/neoforge/event/entity/player/PlayerEvent$PlayerChangedDimensionEvent;)V",
+          "note": "a ServerPlayer: player.server.execute(the lambda below)",
+          "sha256": "45211919602502f9607d59b8201a61ceb0fc90a7cbfb32e86bacf54b274188fd"
+        },
+        {
+          "class": "me/kall/fluidium/common/data/ActiveChunks",
+          "method": "lambda$dimChange$1",
+          "desc": "(Lnet/neoforged/neoforge/event/entity/player/PlayerEvent$PlayerChangedDimensionEvent;)V",
+          "note": "UPDATE_REQUIRED.add(event.getTo().location()): only the dimension arrived in",
+          "sha256": "7b7eebd7e1477de4aa6f6073e09d5a3b0afd5a27c7ab15bdfeb4618d96a9b647"
+        },
+        {
+          "class": "me/kall/fluidium/common/data/ActiveChunks",
+          "method": "tickLevel",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/LevelTickEvent$Pre;)V",
+          "note": "a server level: UPDATE_REQUIRED.remove(dimension) -> the dimension's active chunks rebuilt from level.players()",
+          "sha256": "7c96878600db04af415878592a853e97607e7adee16e68d7502343987874b260"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject RETURN of Fluidium's ActiveChunks.dimChange: the departed dimension (event.getFrom()) is also queued for a rebuild, through server.execute as Fluidium queues the arrival dimension. Gameplay fix (off by default): after a portal trip, the fluids around the spot the player left go back to Fluidium's random update delay on that dimension's next tick instead of updating at full rate until another player moves there. Runtime flag fluidiumDepartedDimensionRefresh. Helper bons.furious.patch.fluidium_coo49.DepartedRefresh.",
+      "license": "Fluidium (MIT): no code carried"
+    }
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "group": "legendarymonsters_c49",
+  "keys": {
+    "legendary_monsters_boss_music_trackers": {
+      "mod": "legendary_monsters",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.legendarymonsters_c49.BossMusicTrackersMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/miauczel/legendary_monsters/entity/AnimatedMonster/OriginClasses/IAnimatedBoss",
+          "method": "tick",
+          "desc": "()V",
+          "note": "Legendary Monsters 2.2.3 for 1.21.1: on a server level with boss music, sendMSGToAll(new PlayBossMusicMessage(getId(), canPlayMusic())) every tick (two calls: play / stop), then super.tick()",
+          "sha256": "47724c83c9dd1b685617dbe69d66970af36b6067bb3cec394aff3a954ec6d83f"
+        },
+        {
+          "class": "net/miauczel/legendary_monsters/LegendaryMonsters",
+          "method": "sendMSGToAll",
+          "desc": "(Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload;)V",
+          "note": "PacketDistributor.sendToAllPlayers(payload): every online player of the server",
+          "sha256": "0aa5b677127043f55870dcef02324c5904f68caf1fefadec9ae5a991b65fe1f5"
+        },
+        {
+          "class": "net/miauczel/legendary_monsters/LegendaryMonsters",
+          "method": "setupMessages",
+          "desc": "(Lnet/neoforged/neoforge/network/event/RegisterPayloadHandlersEvent;)V",
+          "note": "registers PlayBossMusicMessage (legendary_monsters:boss_music) playToClient with LMServerPayLoadHandler::handleMusic",
+          "sha256": "57009bf14e7648a941a0e350a5dcfe8567a2324178fbb3b6d09a77c13f76750d"
+        },
+        {
+          "class": "net/miauczel/legendary_monsters/Network/LMServerPayLoadHandler",
+          "method": "handleMusic",
+          "desc": "(Lnet/miauczel/legendary_monsters/Message/PlayBossMusicMessage;Lnet/neoforged/neoforge/network/handling/IPayloadContext;)V",
+          "note": "client handler: context.enqueueWork(lambda$handleMusic$0) only",
+          "sha256": "22609af69ee1111fbdd0d375fb762dce4f37fab8284e791a7d4078e8dcd8baa6"
+        },
+        {
+          "class": "net/miauczel/legendary_monsters/Network/LMServerPayLoadHandler",
+          "method": "lambda$handleMusic$0",
+          "desc": "(Lnet/miauczel/legendary_monsters/Message/PlayBossMusicMessage;)V",
+          "note": "acts only when the client level holds an IAnimatedBoss under the id (play or stop its music)",
+          "sha256": "3f1b15da10888173f9a110381eb06fd183498b06c331ba41c39250f25c7345e9"
+        },
+        {
+          "class": "net/neoforged/neoforge/network/PacketDistributor",
+          "method": "sendToAllPlayers",
+          "desc": "(Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload;[Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload;)V",
+          "note": "server.getPlayerList().broadcastAll(makeClientboundPacket(payload, payloads))",
+          "sha256": "295c633388db202fe3c8a5978a914e7ceb35c6e2b5fb0bd312161ae731d1fe18"
+        },
+        {
+          "class": "net/neoforged/neoforge/network/PacketDistributor",
+          "method": "sendToPlayersTrackingEntity",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload;[Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload;)V",
+          "note": "the call the switch makes: ServerChunkCache.broadcast(entity, makeClientboundPacket(payload, payloads))",
+          "sha256": "66caa95088168e279a10f44f37f8f81691a65cd637be59228b343643ed41d016"
+        },
+        {
+          "class": "net/neoforged/neoforge/network/PacketDistributor",
+          "method": "makeClientboundPacket",
+          "desc": "(Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload;[Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload;)Lnet/minecraft/network/protocol/Packet;",
+          "note": "no extra payloads: new ClientboundCustomPayloadPacket(payload), the packet both paths send",
+          "sha256": "30f4d1cad44e9892f883d9963ab2414e8321cd9f8922ea3beb1e0c8ba1cf1d44"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerChunkCache",
+          "method": "broadcast",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/network/protocol/Packet;)V",
+          "note": "chunkMap.broadcast(entity, packet)",
+          "sha256": "55e60783b7f055a5f5a4945119e34a3590787d1cf01590457b604d89d9203b40"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap",
+          "method": "broadcast",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/network/protocol/Packet;)V",
+          "note": "the entity's TrackedEntity (by id), if any, broadcasts",
+          "sha256": "fe2bb1006b2b71f938c0e9d08a9994ad7b880286f361dcffc401556cbd35d603"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap$TrackedEntity",
+          "method": "broadcast",
+          "desc": "(Lnet/minecraft/network/protocol/Packet;)V",
+          "note": "send to every connection in seenBy",
+          "sha256": "ccaeba9314c30430d5fc72a0ce5725d428e968fa07bc35bc3ce5d5f3899050a2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on both LegendaryMonsters.sendMSGToAll calls in IAnimatedBoss.tick: on a server level the payload goes to the boss's trackers through PacketDistributor.sendToPlayersTrackingEntity (the same ClientboundCustomPayloadPacket sendToAllPlayers builds; helper bons.furious.patch.legendarymonsters_c49.BossMusicTrackers); the runtime flag off, or a level that is not a ServerLevel, calls the original",
+      "license": "Legendary Monsters: All Rights Reserved: no-copy; the wrapper carries only our own logic and calls NeoForge's PacketDistributor (Idea: Collections Of Optimizations legendarymonsters.bossMusicInterval, idea text only)"
+    },
+    "legendary_monsters_annihilator_proc_chance": {
+      "mod": "legendary_monsters",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.legendarymonsters_c49.AnnihilatorChanceMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/miauczel/legendary_monsters/event/ForgeEvents",
+          "method": "onLivingHurt",
+          "desc": "(Lnet/neoforged/neoforge/event/entity/living/LivingIncomingDamageEvent;)V",
+          "note": "Legendary Monsters 2.2.3 for 1.21.1: the one RandomSource.nextInt() of the handler, attacker.getRandom().nextInt() * 100 < 25 (imul overflow), gates the Annihilator Leggings blast",
+          "sha256": "d700c85f05889e534eca5f64673fc1eecdd1befb376560af6e1ed4e8b2e3eaec"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the one RandomSource.nextInt() call of ForgeEvents.onLivingHurt (LivingIncomingDamageEvent on NeoForge): the original draw, mapped to 0 when floorMod(raw, 100) < 25 and 1 otherwise (helper bons.furious.patch.legendarymonsters_c49.AnnihilatorChance)",
+      "license": "Legendary Monsters: All Rights Reserved: no-copy; the wrapper carries only our own logic (Idea: Collections Of Optimizations legendarymonsters.fixAnnihilatorProcChance, idea text only)"
+    }
+  }
+}

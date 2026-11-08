@@ -1,0 +1,82 @@
+{
+  "group": "modularrouters_coo49",
+  "keys": {
+    "modularrouters_extruder_side_fast_path": {
+      "mod": "modularrouters",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.modularrouters_coo49.RouterRedstoneMixin"
+      ],
+      "guard": [
+        {
+          "class": "me/desht/modularrouters/block/tile/ModularRouterBlockEntity",
+          "method": "calculateIncomingRedstonePower",
+          "desc": "(Lnet/minecraft/core/BlockPos;)I",
+          "note": "Modular Routers 13.2.7+mc1.21.1, private: six sides in MiscUtil.DIRECTIONS order: a side whose getExtensionData().getInt(\"ExtruderDist\" + side) is above 0 is skipped, else getSignal(pos.relative(side), side), 15 or more answers at once, else the maximum",
+          "sha256": "ce7c52d01835d69ee6c3d37ab4b1fbe6281ea15395e7a30e797710a54b98dcc9"
+        },
+        {
+          "class": "me/desht/modularrouters/block/tile/ModularRouterBlockEntity",
+          "method": "getExtensionData",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "the extension compound, created on first use",
+          "sha256": "f9a5e4ebd7afde9e564033f484c1abf73088b9db15796a265366718a52b7ef26"
+        },
+        {
+          "class": "me/desht/modularrouters/block/tile/ModularRouterBlockEntity",
+          "method": "nonNullLevel",
+          "desc": "()Lnet/minecraft/world/level/Level;",
+          "note": "Objects.requireNonNull(level)",
+          "sha256": "91f722fd2aefb009630be476ad79917ebcb8dca37d2604be439d00703ecdd95d"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "getInt",
+          "desc": "(Ljava/lang/String;)I",
+          "note": "getInt: 0 for a missing key (an empty compound answers 0 for every key)",
+          "sha256": "7c8e9afdfa7e7161e863567bf732446e66a518102b30ea270da510607dd020b1"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "isEmpty",
+          "desc": "()Z",
+          "note": "isEmpty: tags.isEmpty()",
+          "sha256": "d058823e0d9fb54952293e9465e4575095073f66bc4f2974105cd90577b9c689"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of ModularRouterBlockEntity.calculateIncomingRedstonePower: while the router's extension data is empty RouterExtruderSides.power answers it with the same six getExtensionData / nonNullLevel / getSignal calls in the same order, without building and looking up the ExtruderDist keys; with extension data the router's own code runs. Exact; shipped off by default under the speed rule (measured on Forge 1.20.1: a router with extension data pays the hook, 191 -> 199 ns, while every other router answers about twice as fast, 136 -> 65 ns). Runtime flag modularroutersExtruderSideFastPath. Helper bons.furious.patch.modularrouters_coo49.RouterExtruderSides.",
+      "license": "Modular Routers (MIT): the method's logic is restated in our helper (MIT permits it); no code copied verbatim"
+    },
+    "modularrouters_vacuum_negative_split_fix": {
+      "mod": "modularrouters",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.modularrouters_coo49.VacuumClampMixin"
+      ],
+      "guard": [
+        {
+          "class": "me/desht/modularrouters/logic/compiled/CompiledVacuumModule",
+          "method": "handleItemMode",
+          "desc": "(Lme/desht/modularrouters/block/tile/ModularRouterBlockEntity;)Z",
+          "note": "Modular Routers 13.2.7+mc1.21.1: room = (regulator > 0 ? min(maxStack, regulator) : maxStack) - buffered; stackOnGround.split(min(itemsPerTick, room)) then insertBuffer; the one split call",
+          "sha256": "73d32f96fca574f8a9a74fda9dff775ef5f2b8a326509f264f50bd5ff52fc542"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "split",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "note": "split: copyWithCount(min(amount, count)) and shrink by it (a negative amount grows the stack)",
+          "sha256": "2b8ba6e96b57d471410a39ff881cfc4f0828f250ceaea5b39849f4d8765f051f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@ModifyArg on the ItemStack.split argument in CompiledVacuumModule.handleItemMode: a negative amount becomes 0 (nothing taken, nothing inserted, no particles), every other amount unchanged. Gameplay fix (off by default): a vacuum module whose buffer already holds more than its regulator amount no longer duplicates the item on the ground; off by default under the speed rule (the hook costs about 2 ns on every vacuumed item, measured on Forge 1.20.1). Runtime flag modularroutersVacuumNegativeSplitFix. Helper bons.furious.patch.modularrouters_coo49.RouterVacuumClamp.",
+      "license": "Modular Routers (MIT): no code carried"
+    }
+  }
+}

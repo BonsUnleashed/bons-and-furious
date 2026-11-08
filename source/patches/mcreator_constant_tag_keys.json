@@ -1,0 +1,46 @@
+{
+  "group": "mcreator_constant_tag_keys",
+  "keys": {
+    "cnc_constant_tag_keys": {
+      "mod": "cnc",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mcreator_constant_tag_keys.CncSasquatchKnockTagMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/SasquatchWoodKnockProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "Critters n' Crawlers 2.2.5 for 1.21.1: the first ResourceLocation.parse(\"minecraft:logs\") straight into BlockTags.create, 216 times per sasquatch per tick",
+          "sha256": "5b8b4e4c738f70b0b0f2b5ba3101aa12ae52e97a9f699b7ec4478fa5a48f907f"
+        },
+        {
+          "class": "net/minecraft/tags/TagKey",
+          "method": "create",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/tags/TagKey;",
+          "note": "create: the weak interner's canonical key for (registry, location)",
+          "sha256": "2dec1d3d67f5bdf30ada5d79d98ea2d894cec70d6ee628ac93e5439329212448"
+        },
+        {
+          "class": "net/minecraft/tags/BlockTags",
+          "method": "create",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/tags/TagKey;",
+          "note": "NeoForge's create(location) = TagKey.create(Registries.BLOCK, location)",
+          "sha256": "5efd585463001f1decb46057ec274e27d2dbd8401ddbe4a9447add34cf8f2489"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "parse",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "parse = bySeparator(id, ':'): a pure function of the id (or the same exception)",
+          "sha256": "4ffa76c9eb65acbeb60efddb93ce6e8022d6ebfc66b17fe41249fa6489a23816"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Two @Redirects in SasquatchWoodKnockProcedure.execute (the first ResourceLocation.parse call and the BlockTags.create call) to the mcreator_constant_tag_keys layer (ConstantTagKeys.Caller, runtime flag cncConstantTagKeys)",
+      "license": "Critters n' Crawlers: All Rights Reserved (neoforge.mods.toml): no-copy; the mixin holds only our redirects, the mod's code stays in its jar"
+    }
+  }
+}

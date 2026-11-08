@@ -1,0 +1,47 @@
+{
+  "group": "effect_remove_skip",
+  "keys": {
+    "forge_absent_effect_remove_skip": {
+      "mod": "neoforge",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.effect_remove_skip.LivingEntityAbsentEffectRemoveMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "removeEffect",
+          "desc": "(Lnet/minecraft/core/Holder;)Z",
+          "note": "EventHooks.onEffectRemoved(this, effect, null) -> false if cancelled; i = removeEffectNoUpdate(effect); i != null -> onEffectRemoved(i), true; else false",
+          "sha256": "d5300e606936ed453ef82590b9e4000d2fa1e71811dc0b3d22b50a9d8193ae69"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "removeEffectNoUpdate",
+          "desc": "(Lnet/minecraft/core/Holder;)Lnet/minecraft/world/effect/MobEffectInstance;",
+          "note": "removeEffectNoUpdate: activeEffects.remove(effect) (null when absent)",
+          "sha256": "27dd31a8124fdb9cd184fc3ecb24e584df1672d733c6d921072a27ea2fff42ff"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "hasEffect",
+          "desc": "(Lnet/minecraft/core/Holder;)Z",
+          "note": "hasEffect: activeEffects.containsKey(effect), the test the switch uses",
+          "sha256": "32ceac256c1935ebada31e00d960e9ac72cebfc058becbc729e3c6cdc3575261"
+        },
+        {
+          "class": "net/neoforged/neoforge/event/EventHooks",
+          "method": "onEffectRemoved",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/core/Holder;Lnet/neoforged/neoforge/common/EffectCure;)Z",
+          "note": "the Holder overload removeEffect calls: NeoForge.EVENT_BUS.post(new MobEffectEvent.Remove(entity, effect, cure)).isCanceled(), nothing else",
+          "sha256": "fe769ab77d99f59eb54e72cebb724e621192a54d2ef96e6b3220c5b15b3a4602"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapMethod on LivingEntity.removeEffect(Holder) returning false without EventHooks.onEffectRemoved (MobEffectEvent.Remove) for an effect the entity does not hold, when its class inherits removeEffectNoUpdate (helper bons.furious.patch.effect_remove_skip.AbsentEffectRemove)",
+      "license": "Minecraft (Mojang) and NeoForge (LGPL-2.1): no code is carried, the wrapper only reads the effect map"
+    }
+  }
+}

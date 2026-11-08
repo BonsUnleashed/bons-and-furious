@@ -1,0 +1,42 @@
+{
+  "group": "arsnouveau_mop49",
+  "keys": {
+    "arsnouveau_dynamic_light_hook_lean": {
+      "mod": "ars_nouveau",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.arsnouveau_mop49.LightColorHookMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/hollingsworth/arsnouveau/common/mixin/light/LevelRendererMixin",
+          "method": "ars_nouveau$onGetLightmapCoordinates",
+          "desc": "(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "Ars Nouveau 5.13.2 (handler renamed from onGetLightmapCoordinates): the left-out handler: LightManager.shouldUpdateDynamicLight() and the level's block at pos not a solid render block -> setReturnValue(LightManager.getLightmapWithDynamicLight(pos, return value))",
+          "sha256": "55c0581fae47fd1782150d39c14c440dc1bd96e034b195b176b71fd429168061"
+        },
+        {
+          "class": "com/hollingsworth/arsnouveau/common/mixin/light/LevelRendererMixin",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: that handler only (the class is left out whole)",
+          "sha256": "a1e4d2929c5baf718cc36373b4a62bb6b62fc7346c9d35d51e4b919ed174581a"
+        },
+        {
+          "class": "net/minecraft/client/renderer/LevelRenderer",
+          "method": "getLightColor",
+          "desc": "(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)I",
+          "note": "client class: the emissive early return, then the packed light at the last return (TAIL)",
+          "sha256": "2a8fe461f61840753c59812d9f3ab890f7f844b86e115929d7a7afa2483fd122"
+        }
+      ],
+      "cancel": [
+        "com.hollingsworth.arsnouveau.common.mixin.light.LevelRendererMixin"
+      ],
+      "conversion": "canceller + replacement handler: a MixinExtras @ModifyReturnValue at the TAIL of LevelRenderer.getLightColor(BlockAndTintGetter, BlockState, BlockPos), at the left-out mixin's priority, makes Ars Nouveau's light.LevelRendererMixin handler's calls on the plain int (helper bons.furious.patch.arsnouveau_mop49.DynamicLightHook)",
+      "license": "GPL-3.0 (Ars Nouveau, mods.toml \"GNU GENERAL PUBLIC LICENSE\"): the handler's logic (one setting test, one block test, one call) is carried in our GPL-3.0 source; Minecraft: injection only"
+    }
+  }
+}

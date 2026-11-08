@@ -1,0 +1,165 @@
+{
+  "group": "ironsspellbooks_coo49",
+  "keys": {
+    "irons_spellbooks_caster_scan_gate": {
+      "mod": "irons_spellbooks",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.ironsspellbooks_coo49.IronsCasterScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "io/redspace/ironsspellbooks/player/ClientPlayerEvents",
+          "method": "onPlayerTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/PlayerTickEvent$Pre;)V",
+          "note": "local player, Pre: recasts / cooldowns / cast duration, then level.getEntities(null, box grown by 64, Player || IMagicEntity) (the wrapped call) and forEach(the loop lambda)",
+          "sha256": "d6fd37fe5ea5cfc9e6c3f0dc08027245d5b766d2b7d91a2ea14a8f0ded30727f"
+        },
+        {
+          "class": "io/redspace/ironsspellbooks/player/ClientPlayerEvents",
+          "method": "lambda$onPlayerTick$1",
+          "desc": "(Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "the loop: getSyncedSpellData; FIRE spin while spin-attacking -> burning dash particles; casting siphon / recall / raise hell -> their particles; nothing else",
+          "sha256": "54af39cbf695e49f0f760e143cceaa6aaf565eb3fb1989c762aaa6d5316d0ea9"
+        },
+        {
+          "class": "io/redspace/ironsspellbooks/player/ClientPlayerEvents",
+          "method": "lambda$onPlayerTick$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "the predicate: instanceof Player || instanceof IMagicEntity",
+          "sha256": "8936b49a9f35401df0b5b8a79cc12ff738a08a59d221aa4b598e9362d1da1d09"
+        },
+        {
+          "class": "io/redspace/ironsspellbooks/player/ClientMagicData",
+          "method": "getSyncedSpellData",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lio/redspace/ironsspellbooks/capabilities/magic/SyncedSpellData;",
+          "note": "Player: the synced map (getOrDefault, the shared empty data); IMagicEntity: its magic data; any other entity: a new default (not casting, spin RIPTIDE)",
+          "sha256": "cd0f6c5481cc43194b9ffbc593b6c3334e98cf66121fd0a9b85dbd609ac6a136"
+        },
+        {
+          "class": "io/redspace/ironsspellbooks/capabilities/magic/SyncedSpellData",
+          "method": "<init>",
+          "desc": "(I)V",
+          "note": "the default: isCasting false, spinAttackType RIPTIDE",
+          "sha256": "bf597b6c7d5b84f4b6630f8cb144f7de9308183afe9b8310970aa050c2e8724c"
+        },
+        {
+          "class": "io/redspace/ironsspellbooks/capabilities/magic/SyncedSpellData",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "this(id) plus the entity: the same defaults",
+          "sha256": "ea6cb9c4ba87c0404fce8a9c9e5c5e7126815a1bca14e534feb7cf5591109adf"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "getEntities",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+          "note": "getEntities: the profiler's getEntities count, the section walk into a new list, NeoForge's part pass (parts in the box passing the predicate)",
+          "sha256": "d5de4df402f9340dc4e51f23d6406970a5cf98f58c2290476f45e2386a22d641"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel$EntityCallbacks",
+          "method": "onTrackingStart",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "onTrackingStart: an AbstractClientPlayer joins level.players(); multipart parts into partEntities",
+          "sha256": "57801e2db89ba417c279b543a904dc9f37eb9f4afdffae4da7eecf6e212d39ae"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel$EntityCallbacks",
+          "method": "onTrackingEnd",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "onTrackingEnd: the player leaves level.players(); parts out of partEntities",
+          "sha256": "56c024c65f309482ef522f9e991f29f09a1f193925a7c21c99b1cde656e68e2f"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/TransientEntitySectionManager",
+          "method": "addEntity",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)V",
+          "note": "addEntity: lookup, section, then onCreated and onTrackingStart for every entity",
+          "sha256": "2e80a586e6440e5df6d72bf75e59ff892dc99e399b07001c8e7d7c5f48472c29"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/TransientEntitySectionManager$Callback",
+          "method": "onRemove",
+          "desc": "(Lnet/minecraft/world/entity/Entity$RemovalReason;)V",
+          "note": "onRemove: out of the section, then onTrackingEnd",
+          "sha256": "fcd6b852d1f62915657fc0421f4fd6fac501a278d1aa1f8cadf4e18f7fc31e83"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/LevelEntityGetterAdapter",
+          "method": "get",
+          "desc": "(Lnet/minecraft/world/phys/AABB;Ljava/util/function/Consumer;)V",
+          "note": "get(box, consumer): hands the walk to EntitySectionStorage.getEntities(box, ...)",
+          "sha256": "8a211f05a10cf5d5271622adbf6d648e51f09ff144da482bb9492497df294d6a"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntitySectionStorage",
+          "method": "getEntities",
+          "desc": "(Lnet/minecraft/world/phys/AABB;Lnet/minecraft/util/AbortableIterationConsumer;)V",
+          "note": "getEntities(box, consumer): every accessible section of the box, section.getEntities(box, consumer)",
+          "sha256": "4b8a0c04528c24f94bad11188cd3b9e9e997a9454a14e0a3c95d91be1c75c428"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntitySection",
+          "method": "getEntities",
+          "desc": "(Lnet/minecraft/world/phys/AABB;Lnet/minecraft/util/AbortableIterationConsumer;)Lnet/minecraft/util/AbortableIterationConsumer$Continuation;",
+          "note": "getEntities(box, consumer): lists an entity only when its bounding box intersects the box (the gate tests only those players)",
+          "sha256": "8f00d4fdb4268d280c6ca9d6344841c2e4bdeebca44331a6fe74deca3071d462"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the ClientLevel.getEntities(Entity, AABB, Predicate) call in ClientPlayerEvents.onPlayerTick(PlayerTickEvent.Pre): while vanilla_entity_class_count_layer says the client level holds no IMagicEntity (asked first; registration bons_and_furious.ironsspellbooks_coo49.entity_classes.json: IMagicEntity, Player and AbstractClientPlayer, counted while Iron's is installed and this switch is on), its Player count equals its AbstractClientPlayer count, no player of level.players() whose bounding box meets the search box is spin-attacking or casting (the player that kept the last search is tried first) and no part entity is an IMagicEntity, the search answers a new empty list after counting the profiler's getEntities line; otherwise the original. Runtime flag ironsSpellbooksCasterScanGate, shadow ironsSpellbooksCasterScanGate.shadow. Helper bons.furious.patch.ironsspellbooks_coo49.IronsCasterGate; layer link bons.furious.patch.ironsspellbooks_coo49.EntityPresenceLink (trackedIndex, none, count by name).",
+      "license": "Iron's Spells 'n Spellbooks (All Rights Reserved): no code carried, the wrapper carries only our own logic"
+    },
+    "irons_spellbooks_synced_data_session_clear": {
+      "mod": "irons_spellbooks",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.ironsspellbooks_coo49.IronsSyncedDataMixin"
+      ],
+      "guard": [
+        {
+          "class": "io/redspace/ironsspellbooks/player/ClientMagicData",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "playerSyncedDataLookup = new HashMap<>() (private static final)",
+          "sha256": "c83c60b49dcae5637d2e7fd23f4821d821c46fab21333735ce6f2ec3bd2c530f"
+        },
+        {
+          "class": "io/redspace/ironsspellbooks/player/ClientMagicData",
+          "method": "handlePlayerSyncedData",
+          "desc": "(Lio/redspace/ironsspellbooks/capabilities/magic/SyncedSpellData;)V",
+          "note": "the map's only writer: put(serverPlayerId, data)",
+          "sha256": "153459d1cd0225bf99f50fda560c07a74990ce11d6c163126e4bbb9c3098e00f"
+        },
+        {
+          "class": "io/redspace/ironsspellbooks/player/ClientMagicData",
+          "method": "getSyncedSpellData",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lio/redspace/ironsspellbooks/capabilities/magic/SyncedSpellData;",
+          "note": "the map's reader: getOrDefault(player id, the empty default)",
+          "sha256": "cd0f6c5481cc43194b9ffbc593b6c3334e98cf66121fd0a9b85dbd609ac6a136"
+        },
+        {
+          "class": "io/redspace/ironsspellbooks/player/ClientMagicData",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: no other accessor of the private map (no clear or remove anywhere in the class)",
+          "sha256": "bcbee0cdfe5966545cea82fab73a8f8193fe9599932d257300408285fe485d33"
+        },
+        {
+          "class": "io/redspace/ironsspellbooks/network/casting/SyncPlayerDataPacket",
+          "method": "handle",
+          "desc": "(Lio/redspace/ironsspellbooks/network/casting/SyncPlayerDataPacket;Lnet/neoforged/neoforge/network/handling/IPayloadContext;)V",
+          "note": "context.enqueueWork: the write runs on the client thread, after the login handling",
+          "sha256": "cf4c2bfd12b5ed7b7e96d1134305aabc413fb664ba2e6506ca60e77413c3dc3d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix: @Inject at the RETURN of ClientMagicData.<clinit> (@Shadow of its private static final playerSyncedDataLookup) hands the map to bons.furious.patch.ironsspellbooks_coo49.IronsSyncedData, whose ClientPlayerNetworkEvent.LoggingOut and .LoggingIn listeners (NeoForge.EVENT_BUS) empty it. Runtime flag ironsSpellbooksSyncedDataSessionClear.",
+      "license": "Iron's Spells 'n Spellbooks (All Rights Reserved): no code carried; the mixin hands over a map reference and our listeners empty it at session edges"
+    }
+  }
+}

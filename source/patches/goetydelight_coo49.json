@@ -1,0 +1,175 @@
+{
+  "group": "goetydelight_coo49",
+  "keys": {
+    "goetydelight_log_items_memo": {
+      "mod": "goetydelight",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goetydelight_coo49.GdNamedContentsAccessor",
+        "bons.furious.mixin.goetydelight_coo49.GdRecraftLogsMemoMixin",
+        "bons.furious.mixin.goetydelight_coo49.GdDisplayLogsMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/v_black_cat/goetydelight/events/recipe/RecraftBoatPlate",
+          "method": "getLogItems",
+          "desc": "()Ljava/util/List;",
+          "note": "BuiltInRegistries.ITEM.stream().filter(lambda$getLogItems$0).collect(toList()): a pure function of the registry order and the log tag",
+          "sha256": "7a24921ab37c5dc7a70b70d2a606cad8b82b6cb983a6b099e0a483bae1df27d4"
+        },
+        {
+          "class": "net/v_black_cat/goetydelight/events/recipe/RecraftBoatPlate",
+          "method": "assemble",
+          "desc": "(Lnet/minecraft/world/item/crafting/CraftingInput;Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/world/item/ItemStack;",
+          "note": "caller: only reads the list (isEmpty, getCurrentDisplayLog)",
+          "sha256": "354133e7290c580a8d0ee0e2284275a7d978ffbf24a015239e40fac8dccc4b0f"
+        },
+        {
+          "class": "net/v_black_cat/goetydelight/events/recipe/RecraftBoatPlate",
+          "method": "getResultItem",
+          "desc": "(Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/world/item/ItemStack;",
+          "note": "caller: only reads the list through getCurrentDisplayLog",
+          "sha256": "f15867fd936711a645fcbbc505b8557ac2845ad94145c43d446a0032d4da903c"
+        },
+        {
+          "class": "net/v_black_cat/goetydelight/events/recipe/RecraftBoatPlate",
+          "method": "getCurrentDisplayLog",
+          "desc": "(Ljava/util/List;)Lnet/minecraft/world/item/Item;",
+          "note": "reads isEmpty, size, get only",
+          "sha256": "5a8b2353079f37cd7291695bc9b5637e4e447af44d9eeff5cda6411034c6ed49"
+        },
+        {
+          "class": "net/v_black_cat/goetydelight/render/item/CraftingDisplayHandler",
+          "method": "getLogItems",
+          "desc": "()Ljava/util/List;",
+          "note": "the same scan as RecraftBoatPlate.getLogItems",
+          "sha256": "234179d038994f96d0da58017153acadca41b4b42df59a46a89513b69afa617c"
+        },
+        {
+          "class": "net/v_black_cat/goetydelight/render/item/CraftingDisplayHandler",
+          "method": "updateCraftingDisplay",
+          "desc": "(Lnet/minecraft/world/inventory/CraftingMenu;)V",
+          "note": "caller: only reads the list (isEmpty, size, get)",
+          "sha256": "11a00e1d245075ef02b67c62f1ddcb7ef6a643c08b4e4ed7fe0dd1a7c3e3f0bb"
+        },
+        {
+          "class": "net/minecraft/core/HolderSet$Named",
+          "method": "bind",
+          "desc": "(Ljava/util/List;)V",
+          "note": "bind: stores List.copyOf of the new contents (the identity the kept list is checked against)",
+          "sha256": "ef98a5c786a0a3195fe0f30c85836ad040c767bafbb3b610aff832f1d912a208"
+        },
+        {
+          "class": "net/minecraft/core/MappedRegistry",
+          "method": "bindTags",
+          "desc": "(Ljava/util/Map;)V",
+          "note": "bindTags: binds every tag's HolderSet.Named and the holders' tag sets together",
+          "sha256": "cede09f70449c2edbc6caf82411ba40b464d18bba64a6762394898dcaa404b11"
+        },
+        {
+          "class": "net/minecraft/core/MappedRegistry",
+          "method": "resetTags",
+          "desc": "()V",
+          "note": "resetTags: binds every HolderSet.Named and holder to empty",
+          "sha256": "2f555138193b2feb2f1d2b224e18dc4f78c1c5456a0dcc32c7b85a26886747b5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on RecraftBoatPlate.getLogItems and CraftingDisplayHandler.getLogItems (client) + an @Accessor of HolderSet.Named's contents (contents): the list the original builds is kept per method and handed out again while TagsUpdatedEvent / IdMappingEvent have not fired since (counters, listeners at HIGHEST registered on first use) and the minecraft:logs tag still holds the contents list it was built under (identity); otherwise the original runs and its list is kept (helper bons.furious.patch.goetydelight_coo49.GdLogs)",
+      "license": "Goety's Delight (LGPL-2.1 code): no code carried, the wrappers carry only our own logic; Minecraft (Mojang): an accessor only"
+    },
+    "goetydelight_log_scan_lean": {
+      "mod": "goetydelight",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.goetydelight_coo49.GdRecraftLogScanMixin",
+        "bons.furious.mixin.goetydelight_coo49.GdDisplayLogScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/v_black_cat/goetydelight/events/recipe/RecraftBoatPlate",
+          "method": "lambda$getLogItems$0",
+          "desc": "(Lnet/minecraft/world/item/Item;)Z",
+          "note": "item.getDefaultInstance().is(ItemTags.LOGS)",
+          "sha256": "7a27634d318800d4380e8acd1d04a5f392b44ebaf717c3af6835e21e5304a538"
+        },
+        {
+          "class": "net/v_black_cat/goetydelight/render/item/CraftingDisplayHandler",
+          "method": "lambda$getLogItems$0",
+          "desc": "(Lnet/minecraft/world/item/Item;)Z",
+          "note": "item.getDefaultInstance().is(ItemTags.LOGS)",
+          "sha256": "7a27634d318800d4380e8acd1d04a5f392b44ebaf717c3af6835e21e5304a538"
+        },
+        {
+          "class": "net/minecraft/world/item/Item",
+          "method": "getDefaultInstance",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "getDefaultInstance = new ItemStack(this) (classes that override it run the original test)",
+          "sha256": "181a4d96e4dddcaa127a3b429a7bccf88332c822928bbba3c47f3b6c996d502c"
+        },
+        {
+          "class": "net/minecraft/world/item/Item",
+          "method": "verifyComponentsAfterLoad",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)V",
+          "note": "empty in Item: the only item code the stack constructor runs (classes that override it run the original test)",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        },
+        {
+          "class": "net/minecraft/world/item/Item",
+          "method": "components",
+          "desc": "()Lnet/minecraft/core/component/DataComponentMap;",
+          "note": "the default component map the constructor wraps (a field read)",
+          "sha256": "75748f85a3f757e44f616fc91e08e28704daac85e3026b41a6ef95e3884b075b"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "is",
+          "desc": "(Lnet/minecraft/tags/TagKey;)Z",
+          "note": "is(TagKey) = getItem().builtInRegistryHolder().is(tag)",
+          "sha256": "3048e663c1ef94b6ab152ba8dc38efb0c3de8843c27da5a06aaa38b7d49fcb67"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "getItem",
+          "desc": "()Lnet/minecraft/world/item/Item;",
+          "note": "getItem: the item, AIR when empty",
+          "sha256": "3a6fb84c9fb8b13d8a893bf8ef0510480605b691247ef1d9962c46088e2e7612"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "isEmpty",
+          "desc": "()Z",
+          "note": "EMPTY, an AIR item or count <= 0 (a new stack of an item has count 1)",
+          "sha256": "721230359957c26dc8a8a9445b94644ecb03bd3dd37333dfc0f0a7dbf608579f"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/ItemLike;)V",
+          "note": "this(item, 1)",
+          "sha256": "a3c93b2d166872ca0ddc6742e55551bbfa2b1cd297561aeffa7b40309887cc0c"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/ItemLike;I)V",
+          "note": "this(item, count, new PatchedDataComponentMap(item.asItem().components()))",
+          "sha256": "47c6663fe40cb3f22b3242e84768f9db82471de01a9b84c49dd95dc4b8ce9ced"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/ItemLike;ILnet/minecraft/core/component/PatchedDataComponentMap;)V",
+          "note": "item = asItem(), count, components, then getItem().verifyComponentsAfterLoad(this): nothing outside the new stack",
+          "sha256": "ea98cf1e33296df6a81561bd098fd14062df0ba4703ccdbe1f1968d4d2864a5a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on the scan's test lambda$getLogItems$0(Item) of RecraftBoatPlate and CraftingDisplayHandler (client): for items whose class inherits Item's getDefaultInstance, builtInRegistryHolder, asItem, components and verifyComponentsAfterLoad, the item's registry holder answers is(ItemTags.LOGS) directly; otherwise the original test runs (helper bons.furious.patch.goetydelight_coo49.GdLogs)",
+      "license": "Goety's Delight (LGPL-2.1 code): no code carried, the wrappers carry only our own logic"
+    }
+  }
+}

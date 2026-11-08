@@ -7,7 +7,9 @@ package bons.furious.patch.vanilla_chunk_codecs;
  * by final-field semantics), writes take the table's lock (one reference store into an empty slot, or a new array
  * published through the volatile field when the table is half full). Keys are compared by identity, so equals/hashCode
  * overrides of a key's class do not matter (NeoForge 21's Holder.Reference compares by key: irrelevant here). Keys are kept
- * strongly: they are registry objects that live as long as the game. Carries no Minecraft code.
+ * strongly. Blocks and block states live as long as the game; biome holders do not (a world's biome registry is rebuilt
+ * at every world load), so since 1.0.49 PaletteDirectNbt keeps one table per biome registry and drops it when the server
+ * stops. Carries no Minecraft code.
  *
  * Ported to 1.21.1: unchanged (no Minecraft types).
  */

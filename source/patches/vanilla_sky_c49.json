@@ -1,0 +1,123 @@
+{
+  "group": "vanilla_sky_c49",
+  "keys": {
+    "vanilla_sky_color_sample_memo": {
+      "mod": "minecraft",
+      "kind": "opt",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_sky_c49.SkyColorSampleMixin",
+        "bons.furious.mixin.vanilla_sky_c49.SkyFrameMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel",
+          "method": "getSkyColor",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;F)Lnet/minecraft/world/phys/Vec3;",
+          "note": "getSkyColor: sample = CubicSampler.gaussianSampleVec3(pos.subtract(2,2,2).scale(0.25), biome sky colours of the BiomeManager local 5), then time of day, rain, thunder, flash",
+          "sha256": "b6891522e98dbb616ac2d2c5c805e39726604b4fe847ff4dfa0d5e68a0fa1965"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel",
+          "method": "lambda$getSkyColor$12",
+          "desc": "(Lnet/minecraft/world/level/biome/BiomeManager;III)Lnet/minecraft/world/phys/Vec3;",
+          "note": "the fetcher: Vec3.fromRGB24(manager.getNoiseBiomeAtQuart(x, y, z).value().getSkyColor())",
+          "sha256": "e57d7e79a73f616eef4855d2972ad64622b7115e0097ca61b66f5ff6454fc6bc"
+        },
+        {
+          "class": "net/minecraft/client/renderer/GameRenderer",
+          "method": "render",
+          "desc": "(Lnet/minecraft/client/DeltaTracker;Z)V",
+          "note": "render: the frame bracket, once per frame from Minecraft.runTick after runAllTasks",
+          "sha256": "60fac9c75b68a44e76acb5a22efc1b3b7a8dd2499f2b030534ea7bbfe4b07afa"
+        },
+        {
+          "class": "net/minecraft/util/CubicSampler",
+          "method": "gaussianSampleVec3",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/util/CubicSampler$Vec3Fetcher;)Lnet/minecraft/world/phys/Vec3;",
+          "note": "gaussianSampleVec3: a pure function of the position and the fetcher's answers NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ.",
+          "sha256": "6848ec40296ae26fd1abb90dd13f7768b77b6cb5a7227f5b503aa4fcba823890",
+          "sha256_variants": [
+            "6dd64527196a43d2afae002ce9870fac99a066d9038b0fb64a2951453098bba1"
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapOperation (with @Local BiomeManager) of CubicSampler.gaussianSampleVec3 in ClientLevel.getSkyColor, around Sodium 0.6.13's or Embeddium 1.0.15's FastCubicSampler @Redirect of the same call when present; @Inject at the start and return of GameRenderer.render(DeltaTracker, boolean) (helper bons.furious.patch.vanilla_sky_c49.SkySample)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic"
+    },
+    "vanilla_sky_color_sample_tick_memo": {
+      "mod": "minecraft",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_sky_c49.SkyTickCounterMixin",
+        "bons.furious.mixin.vanilla_sky_c49.SkyTickMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel",
+          "method": "getSkyColor",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;F)Lnet/minecraft/world/phys/Vec3;",
+          "note": "getSkyColor: the biome sample, then the per-frame time / weather part",
+          "sha256": "b6891522e98dbb616ac2d2c5c805e39726604b4fe847ff4dfa0d5e68a0fa1965"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel",
+          "method": "lambda$getSkyColor$12",
+          "desc": "(Lnet/minecraft/world/level/biome/BiomeManager;III)Lnet/minecraft/world/phys/Vec3;",
+          "note": "the fetcher reads only the biome manager it captured (the memo's key besides the level)",
+          "sha256": "e57d7e79a73f616eef4855d2972ad64622b7115e0097ca61b66f5ff6454fc6bc"
+        },
+        {
+          "class": "net/minecraft/client/Minecraft",
+          "method": "tick",
+          "desc": "()V",
+          "note": "tick: once per client tick (the memo's clock)",
+          "sha256": "53ade2e37b548acfd64f4420026dcb025ce155e3bd062a9e9872e14ee3fbf049"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapOperation of CubicSampler.gaussianSampleVec3 in ClientLevel.getSkyColor (outer, priority 1100) and @Inject at the start of Minecraft.tick (helper bons.furious.patch.vanilla_sky_c49.SkySample)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic"
+    },
+    "vanilla_fog_color_sample_tick_memo": {
+      "mod": "minecraft",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_sky_c49.FogTickCounterMixin",
+        "bons.furious.mixin.vanilla_sky_c49.FogTickMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/renderer/FogRenderer",
+          "method": "setupColor",
+          "desc": "(Lnet/minecraft/client/Camera;FLnet/minecraft/client/multiplayer/ClientLevel;IF)V",
+          "note": "setupColor: the fog sample's fetcher captures the level, the BiomeManager local 13 and the brightness in local 12",
+          "sha256": "598e42adc26b842f33f028341743f3825216ceef077361db5f5a025857889f82"
+        },
+        {
+          "class": "net/minecraft/client/renderer/FogRenderer",
+          "method": "lambda$setupColor$0",
+          "desc": "(Lnet/minecraft/client/multiplayer/ClientLevel;Lnet/minecraft/world/level/biome/BiomeManager;FIII)Lnet/minecraft/world/phys/Vec3;",
+          "note": "the fetcher: level.effects().getBrightnessDependentFogColor(Vec3.fromRGB24(biome fog colour), brightness)",
+          "sha256": "052da50f27c52fd8b18b9ad4d78d9bb855d28591c5c0142621fc5ace52006540"
+        },
+        {
+          "class": "net/minecraft/client/Minecraft",
+          "method": "tick",
+          "desc": "()V",
+          "note": "tick: once per client tick (the memo's clock)",
+          "sha256": "53ade2e37b548acfd64f4420026dcb025ce155e3bd062a9e9872e14ee3fbf049"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapOperation of CubicSampler.gaussianSampleVec3 in FogRenderer.setupColor (outer, priority 1100, around vanilla_fog_color_sample_memo's wrapper and Sodium's or Embeddium's redirect) and @Inject at the start of Minecraft.tick (helper bons.furious.patch.vanilla_sky_c49.SkySample)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic"
+    }
+  }
+}

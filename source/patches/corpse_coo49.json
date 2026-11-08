@@ -1,0 +1,95 @@
+{
+  "group": "corpse_coo49",
+  "keys": {
+    "corpse_idle_scan_streamless": {
+      "mod": "corpse",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.corpse_coo49.CorpseIdleScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "de/maxhenkel/corpse/entities/CorpseEntity",
+          "method": "isMainInventoryEmpty",
+          "desc": "()Z",
+          "note": "death.getMainInventory / getArmorInventory / getOffHandInventory, each stream().allMatch(ItemStack::isEmpty), short-circuit in that order",
+          "sha256": "4dcb5ecc5f95029790ada85ae3a20a50f4b8258fb7586dd1cbaa61395249218e"
+        },
+        {
+          "class": "de/maxhenkel/corpse/entities/CorpseEntity",
+          "method": "isAdditionalInventoryEmpty",
+          "desc": "()Z",
+          "note": "death.getAdditionalItems().stream().allMatch(ItemStack::isEmpty)",
+          "sha256": "669a2769a214025b7db8aad6c6b8ecc3ec43b292f809c6b59fc25406df323b6c"
+        },
+        {
+          "class": "de/maxhenkel/corpse/entities/CorpseEntity",
+          "method": "isEmpty",
+          "desc": "()Z",
+          "note": "isMainInventoryEmpty() && isAdditionalInventoryEmpty(); asked by the server tick every tick",
+          "sha256": "f5e545d065a1ee22fbe16287cbaa2f4198731f141f3ba181239a3dd6bc7509e4"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of CorpseEntity.isMainInventoryEmpty and isAdditionalInventoryEmpty: plain loops over the same lists, same order, same ItemStack.isEmpty calls, same short-circuit (CorpseScans; the death is @Shadow of the protected field). Runtime flag corpseIdleScanStreamless.",
+      "license": "Corpse (All Rights Reserved): no code carried; the handlers are ours and only read the death's lists"
+    },
+    "corpse_death_sweep_single_worker": {
+      "mod": "corpse",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.corpse_coo49.CorpseSweepWorkerMixin"
+      ],
+      "guard": [
+        {
+          "class": "de/maxhenkel/corpse/events/DeathEvents",
+          "method": "deleteOldDeaths",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;)V",
+          "note": "maxDeathAge (ModConfigSpec.IntValue) < 0 -> return; age = days * 24 * 60 * 60 * 1000 ms (locals 1 and 2); new Thread(() -> removeDeathsOlderThan(level, age)).start()",
+          "sha256": "e721fc19ce30ccbf4f9622a4fb105337036d109d5305c11a72b0f7d789096cda"
+        },
+        {
+          "class": "de/maxhenkel/corpse/events/DeathEvents",
+          "method": "lambda$deleteOldDeaths$0",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;J)V",
+          "note": "the thread's whole task: DeathManager.removeDeathsOlderThan(level, age)",
+          "sha256": "37cd060c7f6129da0a0e4bcc660f41270803582f3565c4236fdcf1f27a32b6a2"
+        },
+        {
+          "class": "de/maxhenkel/corpse/corelib/death/DeathManager",
+          "method": "removeDeathsOlderThan",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;J)V",
+          "note": "takes now when it runs; deletes every death file older than age (lastModified and the death's time stamp) of the server's deaths folder: a later sweep deletes a superset",
+          "sha256": "a091aacf44aea6790f2ce54a5cf6b4c138ab2de828512478349b3e2796c99668"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject before the NEW Thread of DeathEvents.deleteOldDeaths (cancellable, locals captured: days, age): the sweep goes to one shared worker thread (ThreadPoolExecutor 0..1 threads, keep-alive 0, threads made by new Thread(task)); a request is dropped while a sweep of the same server and age is queued and not started. Fix: sweeps never overlap (no race, no stack traces of a file another sweep deleted, no thread per death); same files deleted, same INFO lines. Runtime flag corpseDeathSweepSingleWorker. Helper bons.furious.patch.corpse_coo49.CorpseSweeps.",
+      "license": "Corpse (All Rights Reserved): no code carried; the hook calls Corpse's own DeathManager.removeDeathsOlderThan"
+    },
+    "corpse_death_sweep_interval": {
+      "mod": "corpse",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.corpse_coo49.CorpseSweepIntervalMixin"
+      ],
+      "guard": [
+        {
+          "class": "de/maxhenkel/corpse/events/DeathEvents",
+          "method": "deleteOldDeaths",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;)V",
+          "note": "every player death asks for one sweep of the old death files (DeathEvents.playerDeath)",
+          "sha256": "e721fc19ce30ccbf4f9622a4fb105337036d109d5305c11a72b0f7d789096cda"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of DeathEvents.deleteOldDeaths: a request within N seconds (the value, default 300) of the last accepted request of the same server is dropped; requests with maxDeathAge < 0 are never counted. Trade-off, off by default: expired death files can stay on disk until the first death after the interval. Value: PureConfig.intValue(\"corpse_death_sweep_interval\", 300, 1, 86400). Runtime flag corpseDeathSweepInterval. Helper bons.furious.patch.corpse_coo49.CorpseSweeps.",
+      "license": "Corpse (All Rights Reserved): no code carried; the hook only decides whether Corpse's sweep is requested"
+    }
+  }
+}

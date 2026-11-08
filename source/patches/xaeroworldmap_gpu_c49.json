@@ -1,0 +1,167 @@
+{
+  "group": "xaeroworldmap_gpu_c49",
+  "keys": {
+    "xaeroworldmap_unpack_pbo_orphan": {
+      "mod": "xaeroworldmap",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.xaeroworldmap_gpu_c49.WmUnpackPboMixin"
+      ],
+      "guard": [
+        {
+          "class": "xaero/map/region/texture/RegionTexture",
+          "method": "writeToUnpackPBO",
+          "desc": "(ILxaero/map/pool/buffer/PoolTextureDirectBufferUnit;Z)V",
+          "note": "bindUnpackPBO, PixelBuffers.glMapBuffer(GL_PIXEL_UNPACK_BUFFER, GL_WRITE_ONLY) (its only map call); null -> unbind, delete, drain errors, retry once; else checkGLError, mappedPBO.put(buffer.getDirectBuffer()), unmap, unbind, postBufferWrite",
+          "sha256": "fa7a8871620da299c034fbb069cb374756ca9100fdaf414fceda11864ac6078e"
+        },
+        {
+          "class": "xaero/map/region/texture/RegionTexture",
+          "method": "bindUnpackPBO",
+          "desc": "(I)V",
+          "note": "first use: glGenBuffers, bind, glBufferData(GL_PIXEL_UNPACK_BUFFER, 16384, GL_STREAM_DRAW); then bind",
+          "sha256": "44751300e7b2b366e5535c251066d5b159444a03bdff22e963d7f19e66e66f22"
+        },
+        {
+          "class": "xaero/map/graphics/PixelBuffers",
+          "method": "glMapBuffer",
+          "desc": "(II)Ljava/nio/ByteBuffer;",
+          "note": "buffersType 0 -> GL15.glMapBuffer(target, access), else null",
+          "sha256": "72ae934eaa4ccce72db7f7ca3ae47eccaa0753bbfe100c4f201d719149579cfe"
+        },
+        {
+          "class": "xaero/map/graphics/PixelBuffers",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "buffersType = 0 (its only write)",
+          "sha256": "9f32e553d32232e4df89ce6229f171ce1d0c536a55d8ff20eec42318cd7dc129"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at the head of RegionTexture.writeToUnpackPBO(int, PoolTextureDirectBufferUnit, boolean) notes the source buffer (render thread) and a MixinExtras @WrapOperation on its PixelBuffers.glMapBuffer(int, int) call: when that buffer has exactly 16,384 bytes left and the context has glMapBufferRange, GL30.glMapBufferRange(GL_PIXEL_UNPACK_BUFFER, 0, 16384, MAP_WRITE | MAP_INVALIDATE_BUFFER) (its buffer or null); otherwise the shipped call. Runtime flag xaeroworldmapUnpackPboOrphan. Helper bons.furious.patch.xaeroworldmap_gpu_c49.UnpackPbo.",
+      "license": "All Rights Reserved (Xaero's World Map): none of its code is carried; the wrapper only chooses the GL map call"
+    },
+    "xaeroworldmap_upload_benchmark_async": {
+      "mod": "xaeroworldmap",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.xaeroworldmap_gpu_c49.WmUploadTimerMixin",
+        "bons.furious.mixin.xaeroworldmap_gpu_c49.WmUploadFinishMixin"
+      ],
+      "guard": [
+        {
+          "class": "xaero/map/graphics/TextureUploader",
+          "method": "uploadTextures",
+          "desc": "()V",
+          "note": "for each request: unfinished type -> glFinish once per batch (prepared, its only glFinish), benchmark.pre(); run(); unfinished type -> benchmark.post(type); addToPool; then clear",
+          "sha256": "403db3ff852be12537dbda3bc62443e1e11fa5de84f612b4a42cdc7224ea2a43"
+        },
+        {
+          "class": "xaero/map/graphics/TextureUploader",
+          "method": "requestUpload",
+          "desc": "(Lxaero/map/graphics/TextureUpload;)J",
+          "note": "isFinished(type) ? min(getAverage(type), default) : default (1, -, 1, 3, 4, 1, 1 ms): the per-frame budget estimate",
+          "sha256": "cea73fb606bb915fb04f2142158d02e6794f249d1bba39607712054abf09c585"
+        },
+        {
+          "class": "xaero/map/graphics/TextureUploadBenchmark",
+          "method": "pre",
+          "desc": "()V",
+          "note": "Misc.timerPre()",
+          "sha256": "c8afdf4f82ba8721301e1f7015ef070db515b459eaa9119ca94db8851bdbad92"
+        },
+        {
+          "class": "xaero/map/graphics/TextureUploadBenchmark",
+          "method": "post",
+          "desc": "(I)V",
+          "note": "glFinish, Misc.timerResult(), accumulators += passed, totals++, totals == nOfElements -> finish(type)",
+          "sha256": "ec37d092c3eb15a84e9987a975b5fcebc3b3a1a1238cb7915b1685e6f19f3d6c"
+        },
+        {
+          "class": "xaero/map/graphics/TextureUploadBenchmark",
+          "method": "finish",
+          "desc": "(I)V",
+          "note": "results = accumulators / totals, finished, nOfFinished, allFinished",
+          "sha256": "ddc9ba795fe134310a14b5b5f6eb2d85ac4c2e4837fa9ef4f2d24294f5e9e7e6"
+        },
+        {
+          "class": "xaero/map/graphics/TextureUploadBenchmark",
+          "method": "isFinished",
+          "desc": "(I)Z",
+          "note": "finished[type]",
+          "sha256": "19d2994a57de6931bec4d2863e70f51bfb5e00aa37387224a154d6d395c5c129"
+        },
+        {
+          "class": "xaero/map/graphics/TextureUploadBenchmark",
+          "method": "getAverage",
+          "desc": "(I)J",
+          "note": "finished ? results : accumulators / totals",
+          "sha256": "f825e7e959a4ba70616c7c595f2fef5f698f2487c88bc488bec643d18ae5a233"
+        },
+        {
+          "class": "xaero/map/misc/Misc",
+          "method": "timerPre",
+          "desc": "()V",
+          "note": "cpuTimerPreTime = System.nanoTime()",
+          "sha256": "af8a9b21a4815b23481b5da8c11e37a516824d2628260331739614d3cf8cf822"
+        },
+        {
+          "class": "xaero/map/misc/Misc",
+          "method": "timerResult",
+          "desc": "()I",
+          "note": "(int) (System.nanoTime() - cpuTimerPreTime)",
+          "sha256": "59b083f03d805248b52ddf3dd2f066faf0963b2be262dadb4c6369e9fe326968"
+        }
+      ],
+      "cancel": [],
+      "conversion": "TextureUploadBenchmark: cancellable @Inject at the heads of pre() (a GL_TIMESTAMP query instead of the CPU timer) and post(int) (a second query, queued with the type; not while a result is handed back), MixinExtras @WrapOperation on post's glFinish (left out) and Misc.timerResult (the GPU time) while a result is handed back. TextureUploader: @Inject at the head of uploadTextures (available results handed to post(type), oldest first, dropped once the type is finished) and @WrapOperation on its glFinish (left out). Only with timer queries. Runtime flag xaeroworldmapUploadBenchmarkAsync. Helper bons.furious.patch.xaeroworldmap_gpu_c49.UploadTimer.",
+      "license": "All Rights Reserved (Xaero's World Map): none of its code is carried; the benchmark's own post() does the bookkeeping"
+    },
+    "xaeroworldmap_vram_poll_interval": {
+      "mod": "xaeroworldmap",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.xaeroworldmap_gpu_c49.WmVramPollMixin"
+      ],
+      "guard": [
+        {
+          "class": "xaero/map/MapLimiter",
+          "method": "updateAvailableVRAM",
+          "desc": "()V",
+          "note": "driverType -1 -> determineDriverType; 0: glGetIntegerv(0x9049), 1: glGetIntegerv(0x87FC) into vramBuffer, availableVRAM = vramBuffer.get(0); else nothing",
+          "sha256": "39bfa218e0b7248c3321310a0bb91871e24634cd31bcbcd9925d263544b7996e"
+        },
+        {
+          "class": "xaero/map/MapLimiter",
+          "method": "determineDriverType",
+          "desc": "()V",
+          "note": "NVX_gpu_memory_info -> 0, ATI_meminfo -> 1, else 2",
+          "sha256": "0b9a7b04ff42a3ac6eaef3441932dbdaf49b2a9f791451283aac38f955b1db15"
+        },
+        {
+          "class": "xaero/map/MapLimiter",
+          "method": "applyLimit",
+          "desc": "(Lxaero/map/world/MapWorld;Lxaero/map/MapProcessor;)V",
+          "note": "reads availableVRAM: -1 or below 204800 KiB",
+          "sha256": "37847c835c1df736cd0b77ff6ec5d4ec057b3363a77d3086e9e0de898a890014"
+        },
+        {
+          "class": "xaero/map/MapLimiter",
+          "method": "getAvailableVRAM",
+          "desc": "()I",
+          "note": "the field (GuiMap debug line)",
+          "sha256": "942c379d00b178d7e793ccec533c18fff436c9dc5963b57e750482897b0e8414"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Cancellable @Inject at the head of MapLimiter.updateAvailableVRAM: with driver type 0 or 1, the call is left out while the last query ran less than the value (milliseconds) ago. Runtime flag xaeroworldmapVramPollInterval. Helper bons.furious.patch.xaeroworldmap_gpu_c49.VramPoll.",
+      "license": "All Rights Reserved (Xaero's World Map): none of its code is carried"
+    }
+  }
+}

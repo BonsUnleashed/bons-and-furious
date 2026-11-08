@@ -21,7 +21,12 @@ final class PrimitiveProof47 {
   result.put("guard_helper_checks",GuardAlternativesProof.checks);
   bons.furious.guard.Guards.load();
   var guardsField=bons.furious.guard.Guards.class.getDeclaredField("GUARD");guardsField.setAccessible(true);
-  if(((Map<?,?>)guardsField.get(null)).size()!=256)throw new AssertionError("Incomplete production guard table");
+  Set<String> tableKeys=new HashSet<>();
+  try(var in=bons.furious.guard.Guards.class.getResourceAsStream("/bons_and_furious.guards.tsv")) {
+   for(String line:new String(Objects.requireNonNull(in).readAllBytes(),StandardCharsets.UTF_8).split("\\R")) if(line.startsWith("guard\t"))tableKeys.add(line.split("\t")[1]);
+  }
+  if(tableKeys.isEmpty()||!((Map<?,?>)guardsField.get(null)).keySet().equals(tableKeys))throw new AssertionError("Incomplete production guard table");
+  result.put("guarded_controls",tableKeys.size());
   var auditsField=bons.furious.guard.Guards.class.getDeclaredField("AUDIT");auditsField.setAccessible(true);
   if(!((Set<?>)auditsField.get(null)).contains("awcapi_collision_direct|com/cerbon/cerbons_api/mixin/multipart_entities/ShapesMixin|*|"))
    throw new AssertionError("Class-shape audit with empty descriptor was lost");

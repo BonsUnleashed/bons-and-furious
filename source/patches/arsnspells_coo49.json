@@ -1,0 +1,68 @@
+{
+  "group": "arsnspells_coo49",
+  "keys": {
+    "arsnspells_keep_cooldowns_on_clone": {
+      "mod": "ars_n_spells",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.arsnspells_coo49.AnsCooldownAttachmentMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/otectus/arsnspells/data/AttachmentTypes",
+          "method": "lambda$static$1",
+          "desc": "()Lnet/neoforged/neoforge/attachment/AttachmentType;",
+          "note": "Ars 'n' Spells 3.3.5 for NeoForge: the cooldown type's supplier: builder(CooldownData::new).serialize(CooldownData.CODEC).build(), without copyOnDeath (the affinity and progression suppliers have it)",
+          "sha256": "0437f56ae2c214a321279fbd4b2cc1ccb26dbdc8dd310ab74177f6eb0d5681ac"
+        },
+        {
+          "class": "com/otectus/arsnspells/data/AttachmentTypes",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "registers \"affinity\" (lambda$static$0), \"cooldown\" (lambda$static$1, COOLDOWN) and \"progression\" (lambda$static$2): the wrapped lambda is the cooldown type's",
+          "sha256": "86cb39f4cfe4e6d4d8d86f6c8a3886934f08b09c4f39f143ad8e553523a9b15f"
+        },
+        {
+          "class": "com/otectus/arsnspells/data/CooldownData",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "CODEC = unboundedMap(STRING, LONG) of category name -> end tick: the copy NeoForge makes through it is lossless",
+          "sha256": "013592f4276835fa2debbecad6fdaaf7e62a85f84340bab8ac63dc13d7773352"
+        },
+        {
+          "class": "com/otectus/arsnspells/events/CapabilityResyncHandler",
+          "method": "syncCooldowns",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "note": "on respawn and dimension change: every category's end tick (0 when over) to the client, so the client follows the copied cooldowns",
+          "sha256": "af6bef9f73190cce2c16562e724bd34f0ab1fb090e0baf11616189f80feb9ad5"
+        },
+        {
+          "class": "net/neoforged/neoforge/attachment/AttachmentInternals",
+          "method": "onPlayerClone",
+          "desc": "(Lnet/neoforged/neoforge/event/entity/player/PlayerEvent$Clone;)V",
+          "note": "NeoForge 21.1: event.getEntity().copyAttachmentsFrom(original, isWasDeath)",
+          "sha256": "bcf4535c047160dcaa8cab4602dd5bd41c2d24c19f84bf198cbd1aeae514a65e"
+        },
+        {
+          "class": "net/neoforged/neoforge/attachment/AttachmentInternals",
+          "method": "copyEntityAttachments",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;Z)V",
+          "note": "a death copies only copyOnDeath types, any other clone every serialized type, each through its copy handler (serialize, then read back)",
+          "sha256": "035c89cb2ce5285360a5f59ab4dae0b6bf9a77b04678e5d86742ab419e5bd622"
+        },
+        {
+          "class": "net/neoforged/neoforge/attachment/AttachmentType$Builder",
+          "method": "copyOnDeath",
+          "desc": "()Lnet/neoforged/neoforge/attachment/AttachmentType$Builder;",
+          "note": "requires the serializer, then sets copyOnDeath and returns the builder",
+          "sha256": "3bf009d3246c1a3270ed91c3b84a3ce90d980cdcf3e666acf6369e6732f8a9c6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on AttachmentType$Builder.build() in AttachmentTypes.lambda$static$1 (the cooldown type's supplier), require = 1, allow = 1: the builder is marked copyOnDeath first, so NeoForge's PlayerEvent.Clone copy carries the cooldowns through a death (helper bons.furious.patch.arsnspells_coo49.AnsCooldowns). Forge 1.0.49 hooked ModCapabilityProvider.onPlayerClone (before invalidateCaps) and copied through CooldownData.save / load; the 1.21.1 build keeps the data in NeoForge attachments and has neither",
+      "license": "Ars 'n' Spells (GPL-3.0, mods.toml \"GNU GPLv3\"): no code carried, the wrapper carries only our own logic through NeoForge's public attachment builder"
+    }
+  }
+}

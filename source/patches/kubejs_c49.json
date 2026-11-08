@@ -1,0 +1,88 @@
+{
+  "group": "kubejs_c49",
+  "keys": {
+    "kubejs_generated_pack_index": {
+      "mod": "kubejs",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.kubejs_c49.GeneratedPackIndexMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/latvian/mods/kubejs/script/data/KubeFileResourcePack",
+          "method": "listResources",
+          "desc": "(Lnet/minecraft/server/packs/PackType;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/server/packs/PackResources$ResourceOutput;)V",
+          "note": "own type only; folder gets a trailing slash; every entry of getGenerated() with namespace.equals and path.startsWith visited in iteration order",
+          "sha256": "3bade5e4983380c06382e899ff50e3965e894d8eda203d48b0431e8e3c6a5bf6"
+        },
+        {
+          "class": "dev/latvian/mods/kubejs/script/data/KubeFileResourcePack",
+          "method": "getGenerated",
+          "desc": "()Ljava/util/Map;",
+          "note": "lazily builds the map once (generate(map), then the files of kubejs/<type>) and freezes it with Map.copyOf; close() drops it",
+          "sha256": "b894d151b7713f3bd5a1df6c3085eeab89c084b5479a97ac1f4c2f8b3259938a"
+        },
+        {
+          "class": "dev/latvian/mods/kubejs/script/data/KubeFileResourcePack",
+          "method": "close",
+          "desc": "()V",
+          "note": "generated = null, generatedNamespaces = null: the next getGenerated() builds a new map object",
+          "sha256": "5c6c62cffb89130edaba6a1d9933a2241a0f9f6b13ab8f420f78036a27d03911"
+        },
+        {
+          "class": "dev/latvian/mods/kubejs/script/data/KubeFileResourcePack",
+          "method": "getResource",
+          "desc": "(Lnet/minecraft/server/packs/PackType;Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/server/packs/resources/IoSupplier;",
+          "note": "reads getGenerated(); the internal reload entry calls close() (a new map, so a new index)",
+          "sha256": "0b4ba522cba23728937a40338dedcc1e849aeb422df2d3e2df02432f8fd7cd67"
+        },
+        {
+          "class": "dev/latvian/mods/kubejs/script/data/KubeFileResourcePack",
+          "method": "generate",
+          "desc": "(Ljava/util/Map;)V",
+          "note": "empty in KubeJS's own pack (KubeJS creates KubeFileResourcePack directly, no subclass)",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on KubeFileResourcePack.listResources: matches from a per-map sorted index visited in the map's iteration order (helper bons.furious.patch.kubejs_c49.GeneratedPackIndex). 1.21.1: the file pack class is KubeFileResourcePack (KubeJS 7); the script-generated VirtualResourcePack is not touched.",
+      "license": "LGPL-3.0 (KubeJS): no KubeJS code is carried; the index is ours"
+    },
+    "kubejs_skip_file_probes": {
+      "mod": "kubejs",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.kubejs_c49.GeneratedPackProbesMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/latvian/mods/kubejs/script/data/KubeFileResourcePack",
+          "method": "scanForInvalidFiles",
+          "desc": "(Ljava/lang/String;Ljava/nio/file/Path;)V",
+          "note": "walk, isRegularFile + isReadable filters, then errors for invisible / upper-case / invalid-character names and one info line; nothing else (called from KubeJS's constructor)",
+          "sha256": "5bbbbd7cd71682d4bf1986ed203f603d63f266301439a110e09d89ecdf431b27"
+        },
+        {
+          "class": "dev/latvian/mods/kubejs/script/data/KubeFileResourcePack",
+          "method": "getGenerated",
+          "desc": "()Ljava/util/Map;",
+          "note": "the third Stream.filter is the Files::isReadable filter of the file walk (list isDirectory, walk isRegularFile, isReadable)",
+          "sha256": "b894d151b7713f3bd5a1df6c3085eeab89c084b5479a97ac1f4c2f8b3259938a"
+        },
+        {
+          "class": "dev/latvian/mods/kubejs/KubeJS",
+          "method": "<init>",
+          "desc": "(Lnet/neoforged/bus/api/IEventBus;Lnet/neoforged/api/distmarker/Dist;Lnet/neoforged/fml/ModContainer;)V",
+          "note": "start-up: scanForInvalidFiles(kubejs/assets/) on a client, scanForInvalidFiles(kubejs/data/)",
+          "sha256": "9a4ff7d5abd5ef1f5eb151d1a0e9251cbfc6b93cc20d86927f8c503e298d3385"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on KubeFileResourcePack.scanForInvalidFiles + MixinExtras @WrapOperation on getGenerated's Files::isReadable Stream.filter (helper bons.furious.patch.kubejs_c49.SkipFileProbes)",
+      "license": "LGPL-3.0 (KubeJS): no KubeJS code is carried"
+    }
+  }
+}

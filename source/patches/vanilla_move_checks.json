@@ -1,0 +1,68 @@
+{
+  "group": "vanilla_move_checks",
+  "keys": {
+    "vanilla_flying_kick_off": {
+      "mod": "minecraft",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_move_checks.FlyingKickMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/server/network/ServerGamePacketListenerImpl",
+          "method": "handleMovePlayer",
+          "desc": "(Lnet/minecraft/network/protocol/game/ServerboundMovePlayerPacket;)V",
+          "note": "an accepted move sets clientIsFloating = d7 >= -0.03125 && !verticalCollisionBelow && not spectator && !server.isFlightAllowed() (the one call) && !mayFly() && no levitation && not gliding && no spin attack && noBlocksAround(player)",
+          "sha256": "5623a8df2b877f01719b361700db1ad0793021915106fa1ccea5cf01eaeaec44"
+        },
+        {
+          "class": "net/minecraft/server/network/ServerGamePacketListenerImpl",
+          "method": "handleMoveVehicle",
+          "desc": "(Lnet/minecraft/network/protocol/game/ServerboundMoveVehiclePacket;)V",
+          "note": "an accepted vehicle move sets clientVehicleIsFloating = d11 >= -0.03125 && !verticalCollisionBelow && !server.isFlightAllowed() (the one call) && !isNoGravity() && noBlocksAround(vehicle)",
+          "sha256": "2bc4b101a4ddacf4c1394091d8bad6609415917bc6c007198bd1c98b681e88b6"
+        },
+        {
+          "class": "net/minecraft/server/network/ServerGamePacketListenerImpl",
+          "method": "tick",
+          "desc": "()V",
+          "note": "the only reader of the two hover flags: a counter per flag, kick with multiplayer.disconnect.flying above getMaximumFlyingTicks (80 at normal gravity), reset when the flag is false",
+          "sha256": "765d206a9e924f9fe9a5434f8081f9a7d5236bface381baa1c89e40d5ee2b669"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on the one MinecraftServer.isFlightAllowed call in handleMovePlayer and in handleMoveVehicle: true, so the hover flags tick() counts toward the getMaximumFlyingTicks kick stay false",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_move_checks.MoveChecks)"
+    },
+    "vanilla_movement_check_slack": {
+      "mod": "minecraft",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_move_checks.MovementSlackMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/server/network/ServerGamePacketListenerImpl",
+          "method": "handleMovePlayer",
+          "desc": "(Lnet/minecraft/network/protocol/game/ServerboundMovePlayerPacket;)V",
+          "note": "one float 300.0 and one float 100.0 (f2 = gliding ? 300 : 100; too quick when d10 - d9 > f2 * packets, while the tick rate runs normally) and one double 0.0625 (moved wrongly when d10 > 0.0625)",
+          "sha256": "5623a8df2b877f01719b361700db1ad0793021915106fa1ccea5cf01eaeaec44"
+        },
+        {
+          "class": "net/minecraft/server/network/ServerGamePacketListenerImpl",
+          "method": "handleMoveVehicle",
+          "desc": "(Lnet/minecraft/network/protocol/game/ServerboundMoveVehiclePacket;)V",
+          "note": "one double 100.0 (too quick when d10 - d9 > 100) and three doubles 0.0625: deflate before the move, the moved-wrongly tolerance (ordinal 1), deflate after the move",
+          "sha256": "2bc4b101a4ddacf4c1394091d8bad6609415917bc6c007198bd1c98b681e88b6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@ModifyConstant on handleMovePlayer's 300.0f / 100.0f speed caps and 0.0625 tolerance and on handleMoveVehicle's 100.0 cap and second 0.0625 (the tolerance; the other two deflate collision boxes and stay): constant x the vanilla_movement_check_slack.value multiplier (PureConfig.doubleValue, default 100.0, 1.0 = vanilla); priority 900 and require = 0 on each (Mixin gives a constant two @ModifyConstant injectors find to the higher priority and skips the other): a threshold another mod's constant modifier also targets is left to it with one log line (Guards.STAND_DOWN_EACH, constant form), the others keep the slack",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_move_checks.MoveChecks)"
+    }
+  }
+}

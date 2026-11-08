@@ -29,7 +29,10 @@ final class ProbeChecks {
             if(decision.state()==Guards.State.MISMATCH && !decision.detail().contains("not found"))failures.add(key+": "+decision.detail());
             if(decision.state()==Guards.State.APPLY) {
                 Map<String,Object> classes=new TreeMap<>();
-                for(var target:row.getAsJsonArray("targets")) {
+                // 1.0.49: a key with common mixins may have client-only ones too; a dedicated server cannot load their targets
+                List<JsonElement> names=new ArrayList<>();row.getAsJsonArray("targets").forEach(names::add);
+                if(client&&row.has("client_targets"))row.getAsJsonArray("client_targets").forEach(names::add);
+                for(var target:names) {
                     String name=target.getAsString();
                     if(row.has("per_target") && row.getAsJsonObject("per_target").has(name)) {
                         String mod=row.getAsJsonObject("per_target").getAsJsonObject(name).get("mod").getAsString();

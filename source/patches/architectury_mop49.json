@@ -1,0 +1,82 @@
+{
+  "group": "architectury_mop49",
+  "keys": {
+    "architectury_receiver_registration_lock": {
+      "mod": "architectury",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.architectury_mop49.NetworkAggregatorLockMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/architectury/impl/NetworkAggregator",
+          "method": "registerReceiver",
+          "desc": "(Ldev/architectury/networking/NetworkManager$Side;Lnet/minecraft/resources/ResourceLocation;Ljava/util/List;Ldev/architectury/networking/NetworkManager$NetworkReceiver;)V",
+          "note": "Architectury 13.0.11: new Type(id), C2S_TYPE / S2C_TYPE.put, then the private registerC2SReceiver / registerS2CReceiver: unsynchronized HashMap writes",
+          "sha256": "ab034b3b2968b5bd6953ea438e9ace31cc93b17b60f540b9ab0cc6151fa84bf6"
+        },
+        {
+          "class": "dev/architectury/impl/NetworkAggregator",
+          "method": "registerReceiver",
+          "desc": "(Ldev/architectury/networking/NetworkManager$Side;Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload$Type;Lnet/minecraft/network/codec/StreamCodec;Ljava/util/List;Ldev/architectury/networking/NetworkManager$NetworkReceiver;)V",
+          "note": "null checks, then registerC2SReceiver / registerS2CReceiver",
+          "sha256": "16c331c8fd93f32b13cde53bb4654e82e3cbd48ed415f413a1662f2d6afe54c2"
+        },
+        {
+          "class": "dev/architectury/impl/NetworkAggregator",
+          "method": "registerC2SReceiver",
+          "desc": "(Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload$Type;Lnet/minecraft/network/codec/StreamCodec;Ljava/util/List;Ldev/architectury/networking/NetworkManager$NetworkReceiver;)V",
+          "note": "PacketTransformer.concat, C2S_RECEIVER / C2S_CODECS / C2S_TRANSFORMERS.put, ADAPTOR.get().registerC2S; called only from the two registerReceiver",
+          "sha256": "dbf245678580b333c0bd6a4542a768f19b33a231b3d0f82f5836767cf5d15f52"
+        },
+        {
+          "class": "dev/architectury/impl/NetworkAggregator",
+          "method": "registerS2CReceiver",
+          "desc": "(Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload$Type;Lnet/minecraft/network/codec/StreamCodec;Ljava/util/List;Ldev/architectury/networking/NetworkManager$NetworkReceiver;)V",
+          "note": "PacketTransformer.concat, S2C_RECEIVER / S2C_CODECS / S2C_TRANSFORMERS.put, ADAPTOR.get().registerS2C; called only from the two registerReceiver",
+          "sha256": "3423ea7572393f264ba0690ec0ce04f70809d3c15de3c4207e88a1b5246237e0"
+        },
+        {
+          "class": "dev/architectury/impl/NetworkAggregator",
+          "method": "registerS2CType",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;Ljava/util/List;)V",
+          "note": "S2C_TYPE.put, then registerS2CType(Type, StreamCodec, List) (re-enters the lock)",
+          "sha256": "6058b947cd6695f2fba6d6f4b5288c6bd16f18c46d956ae7ecde1cadc6834a3c"
+        },
+        {
+          "class": "dev/architectury/impl/NetworkAggregator",
+          "method": "registerS2CType",
+          "desc": "(Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload$Type;Lnet/minecraft/network/codec/StreamCodec;Ljava/util/List;)V",
+          "note": "S2C_CODECS / S2C_TRANSFORMERS.put, ADAPTOR.get().registerS2CType",
+          "sha256": "ad1c28876cd41e87f09a021f2c0158b6b50f1cd7715029d77a504f36578e40b0"
+        },
+        {
+          "class": "dev/architectury/impl/NetworkAggregator",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "ADAPTOR = Suppliers.memoize(NetworkManager.getAdaptor); the eight maps are plain HashMaps",
+          "sha256": "2f832e8481b74a8b6dc0f004e249eb43794959eed5d991e2a1693a911152106a"
+        },
+        {
+          "class": "dev/architectury/networking/forge/NetworkManagerImpl$1",
+          "method": "registerC2S",
+          "desc": "(Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload$Type;Lnet/minecraft/network/codec/StreamCodec;Ldev/architectury/networking/NetworkManager$NetworkReceiver;)V",
+          "note": "what runs under the lock: EventBusesHooks.whenAvailable(\"architectury\", bus -> bus.addListener(RegisterPayloadHandlersEvent handler)); calls nothing back into the aggregator",
+          "sha256": "f7b6b4238e62c3f2475b00f6b6954b1bb99a4f7bcc910c46e8e7ba03a0657e41"
+        },
+        {
+          "class": "dev/architectury/networking/forge/NetworkManagerImpl$1",
+          "method": "registerS2C",
+          "desc": "(Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload$Type;Lnet/minecraft/network/codec/StreamCodec;Ldev/architectury/networking/NetworkManager$NetworkReceiver;)V",
+          "note": "as registerC2S, for the client-bound side",
+          "sha256": "c5bb43308f48ed10dd1315972a94a323acfe170e8754ea13f034a8b316859a19"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on the four public registration methods of dev.architectury.impl.NetworkAggregator (registerReceiver x2, registerS2CType x2): the original runs under one lock (helper bons.furious.patch.architectury_mop49.ReceiverLock). Forge 1.0.49 wrapped NetworkManagerImpl.registerS2CReceiver / registerC2SReceiver (Architectury 9.2.14); on 13.0.11 the maps and their writers moved to NetworkAggregator",
+      "license": "Architectury (LGPL-3.0, mods.toml \"GNU LGPLv3\"): no Architectury code is carried; the wraps only take a lock around the unchanged methods"
+    }
+  }
+}

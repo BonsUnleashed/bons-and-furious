@@ -1,0 +1,101 @@
+{
+  "group": "shake_gates_c49",
+  "keys": {
+    "cnc_wechuge_fog_scan_presence_gate": {
+      "mod": "cnc",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.shake_gates_c49.CncFogColorGateMixin",
+        "bons.furious.mixin.shake_gates_c49.CncFogDistanceGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/FogColorSetupProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDD)V",
+          "note": "two getEntitiesOfClass(WechugeEntity, box 24 / 12, e -> true); each result only tested with isEmpty",
+          "sha256": "75e032e8f8438666cd3301291ff76aae7e97f3ed925d39203eb1c6db956bc129"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/FogColorSetupProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/imasillylittleguy/cnc/entity/WechugeEntity;)Z",
+          "note": "e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/FogColorSetupProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/imasillylittleguy/cnc/entity/WechugeEntity;)Z",
+          "note": "e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/FogDistanceSetupProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDD)V",
+          "note": "two getEntitiesOfClass(WechugeEntity, box 24 / 12, e -> true); each result only tested with isEmpty",
+          "sha256": "6db9b01a180f62dc68f8919401d1f948ac25b192e12e3c8c5a6f8fd3a27d1aab"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/FogDistanceSetupProcedure",
+          "method": "lambda$execute$0",
+          "desc": "(Lnet/imasillylittleguy/cnc/entity/WechugeEntity;)Z",
+          "note": "e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/FogDistanceSetupProcedure",
+          "method": "lambda$execute$1",
+          "desc": "(Lnet/imasillylittleguy/cnc/entity/WechugeEntity;)Z",
+          "note": "e -> true",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on both LevelAccessor.getEntitiesOfClass calls of FogColorSetupProcedure.execute and FogDistanceSetupProcedure.execute: while vanilla_entity_class_count_layer says the level holds no WechugeEntity, each call is marked EMPTY so that vanilla_entity_walk_skip leaves out its empty section walk; the calls themselves run (helper bons.furious.patch.shake_gates_c49.CncWechugeFogGate, the layers bound by name; registration bons_and_furious.shake_gates_c49.entity_classes.json)",
+      "license": "Critters n' Crawlers (all rights reserved): no code carried, the wrappers carry only our own logic"
+    },
+    "fromtheshadows_shake_scan_presence_gate": {
+      "mod": "fromtheshadows",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.shake_gates_c49.FromTheShadowsShakeGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/sonmok14/fromtheshadows/client/ClientEvents",
+          "method": "onCameraSetup",
+          "desc": "(Lnet/neoforged/neoforge/client/event/ViewportEvent$ComputeCameraAngles;)V",
+          "note": "From The Shadows 3.0: player.level().getEntitiesOfClass(ScreenShakeEntity, player box +-20) (the one call wrapped), then the shake sum and the angle changes over the list",
+          "sha256": "15c7a62fc9adfff88d9ea73bed586e6f4746c85d495b6b09d9136a918784e009"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass call in ClientEvents.onCameraSetup: while vanilla_entity_class_count_layer says the client level holds no ScreenShakeEntity (registration bons_and_furious.shake_gates_c49.entity_classes.json), the call is marked EMPTY so that vanilla_entity_walk_skip leaves out its empty section walk; the call itself runs (helper bons.furious.patch.shake_gates_c49.ShakeGates49, layers reached through EntityPresenceLink)",
+      "license": "From The Shadows (all rights reserved): no code carried, the wrapper carries only our own logic"
+    },
+    "mythsandlegends_shake_scan_presence_gate": {
+      "mod": "mythsandlegends",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.shake_gates_c49.MythsShakeGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ovinter/mythsandlegends/event/ClientEvents",
+          "method": "onCameraSetup",
+          "desc": "(Lnet/neoforged/neoforge/client/event/ViewportEvent$ComputeCameraAngles;)V",
+          "note": "Myths & Legends 1.1.0: player.level().getEntitiesOfClass(EffectScreenShake, player box +-20) (the one call wrapped), then the shake sum over the list and the three angle changes",
+          "sha256": "7bf3a167244b21fd930e1cf703e6d622de00192ce54f6662ea89177bb42dcfab"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass (getEntitiesOfClass) call in ClientEvents.onCameraSetup: while vanilla_entity_class_count_layer says the client level holds no EffectScreenShake (registration bons_and_furious.shake_gates_c49.entity_classes.json), the call is marked EMPTY so that vanilla_entity_walk_skip leaves out its empty section walk; the call itself runs (helper bons.furious.patch.shake_gates_c49.MythsShakeGate, the layers bound by name)",
+      "license": "Myths and Legends (All Rights Reserved, neoforge.mods.toml of 1.1.0): no code carried, the wrapper carries only our own logic"
+    }
+  }
+}

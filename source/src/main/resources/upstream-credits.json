@@ -12,6 +12,32 @@
     "source_url": "https://github.com/terrarium-earth/Ad-Astra"
   },
   {
+    "id": "adamsarsplus",
+    "name": "Adams Ars Plus",
+    "version": "6.0.5",
+    "authors": "Adam",
+    "license": "GNU Lesser General Public License v3.0",
+    "jar": "adamsarsplus-1.21.1-6.0.5.jar",
+    "sha1": "47342d8c1008ae5e91b41b1cd1d5c0bc4251a717",
+    "sha256": "b55b93eff74aff94f873fcb88d4438ab0d63c03dcc6740666026d0c4faea0e1f",
+    "source_url": "https://www.curseforge.com/minecraft/mc-mods/ars-elemental-elemental-spell-foci",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. mods.toml displayURL points to an unrelated Ars Elemental CurseForge page; the jar comes from CurseForge file 8917630.",
+    "download_url": "https://edge.forgecdn.net/files/8917/630/adamsarsplus-1.21.1-6.0.5.jar"
+  },
+  {
+    "id": "alltheleaks",
+    "name": "All The Leaks",
+    "version": "1.1.14+1.21.1-neoforge",
+    "authors": "Uncandango",
+    "license": "MIT",
+    "jar": "alltheleaks-1.1.14-1.21.1-neoforge.jar",
+    "sha1": "9466eee51e9af6d3dd65d1dc164cd8ea98df1fcc",
+    "sha256": "b78b832e2c7b0d6697a8e6e846074430405f2522f14d275ba518dcf9220ebe5c",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. source_url from the link AllTheLeaks 1.1.14 itself prints (CommonEvents.LINK_TO_REPORT); mods.toml has none.",
+    "download_url": "https://edge.forgecdn.net/files/9360/134/alltheleaks-1.1.14-1.21.1-neoforge.jar"
+  },
+  {
     "id": "almostunified",
     "name": "AlmostUnified",
     "version": "1.21.1-1.4.2",
@@ -36,6 +62,32 @@
     "source_url": "https://github.com/CreativeMD/AmbientSounds"
   },
   {
+    "id": "amendments",
+    "name": "Amendments",
+    "version": "1.21-2.2.7",
+    "authors": "MehVahdJukaar, Plantkillable",
+    "license": "Supplementaries Team License v.1.5",
+    "jar": "amendments-1.21-2.2.7-neoforge.jar",
+    "sha1": "f8db6e9b5610fab90a7c545c374feb9140fc7832",
+    "sha256": "352d8d9752d9a3ca66a976535d28d622d21b8a1ec58d1876a3f34dbda6eb3253",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/6iTJugQR/versions/w19mjFoT/amendments-1.21-2.2.7-neoforge.jar"
+  },
+  {
+    "id": "animusnv",
+    "name": "Animus: NeoVitae",
+    "version": "5.2.25",
+    "authors": "TeamDman, Saereth",
+    "license": "MIT",
+    "jar": "animusnv-1.21.1-5.2.25.jar",
+    "sha1": "68f95305c324dca12f2632c81e8fe5f68a66782e",
+    "sha256": "6aed5a2092589bc50dc4a9e4de128c689e1a3972c3e2c621becab07b20c496ee",
+    "source_url": "https://github.com/TeamDman/Animus",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/tL9SPLdV/versions/eFv0F900/animusnv-1.21.1-5.2.25.jar"
+  },
+  {
     "id": "aquaculture",
     "name": "Aquaculture 2",
     "version": "2.7.21",
@@ -58,6 +110,45 @@
     "sha256": "9cc92f2c09533fc5482c60f993bd891c655a0e32b637037cdcb7c2b23adedeeb",
     "download_url": "https://cdn.modrinth.com/data/lhGA9TYQ/versions/1IiqEQGl/architectury-13.0.11-neoforge.jar",
     "source_url": "https://github.com/architectury/architectury"
+  },
+  {
+    "id": "armageddon_mod",
+    "name": "Armageddon",
+    "version": "3.3.0",
+    "authors": "choup, MCreator",
+    "license": "Academic Free License v3.0",
+    "jar": "Armageddon for NeoForge 1.21.1 (v3.3.0b) - Polished.jar",
+    "sha1": "92289d843e2643ad52c2f17d9399900b513ecf2b",
+    "sha256": "f94aa652713bdf5420f3bc00b2dda77bcb20768fc8c6882fd5cab220c68c588a",
+    "source_url": "https://www.curseforge.com/minecraft/mc-mods/armageddon",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/6EBQAueX/versions/lrHsYAKQ/Armageddon%20for%20NeoForge%201.21.1%20%28v3.3.0b%29%20-%20Polished.jar"
+  },
+  {
+    "id": "ars_additions",
+    "name": "Ars Additions",
+    "version": "1.21.1-21.3.0",
+    "authors": "Jarva",
+    "license": "LGPLv3",
+    "jar": "ars_additions-1.21.1-21.3.0.jar",
+    "sha1": "ce2440b606acb20b79a42bf7c6c24d163c93241f",
+    "sha256": "e634a3f0c39cd38007608cce1974a7c9bbad7d8202bfb6c75f17c2901f362c9b",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/GYK6Gk8R/versions/aQ0r5GD2/ars_additions-1.21.1-21.3.0.jar"
+  },
+  {
+    "id": "ars_n_spells",
+    "name": "Ars 'n' Spells",
+    "version": "3.3.5",
+    "authors": "otectus",
+    "license": "GNU GPLv3",
+    "jar": "ars_n_spells-3.3.5.jar",
+    "sha1": "2f7507857bed9f493b6b86d5289d15957de8a2e7",
+    "sha256": "652b0a355818a8b61e1b481972ea080773d67d6865c5bccf2c69cac79d057ceb",
+    "source_url": "https://github.com/otectus/ars-n-spells",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/NlMT8pQt/versions/5OeZngO7/ars_n_spells-3.3.5.jar"
   },
   {
     "id": "ars_nouveau",
@@ -110,6 +201,19 @@
     "download_url": "https://edge.forgecdn.net/files/9213/708/azurelib-neo-1.21.1-3.1.23-alpha.2.jar"
   },
   {
+    "id": "balm",
+    "name": "Balm",
+    "version": "21.0.67",
+    "authors": "BlayTheNinth",
+    "license": "All Rights Reserved",
+    "jar": "balm-neoforge-1.21.1-21.0.67.jar",
+    "sha1": "68c95ca8a6a87d26199d43ff6978bc94949329e3",
+    "sha256": "eaae887582a67a02f55a970ec2d7353f1886a99924ed6144aa4d898266606c34",
+    "source_url": "https://mods.twelveiterations.com/",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. jar from CurseForge file 9406246 (sha1 checked against the platform hash in work/neo-targets.json).",
+    "download_url": "https://edge.forgecdn.net/files/9406/246/balm-neoforge-1.21.1-21.0.67.jar"
+  },
+  {
     "id": "benssharks",
     "name": "Ben's Sharks",
     "version": "1.2.6",
@@ -123,6 +227,19 @@
     "notes": "Compatibility target only; no upstream classes or assets bundled. Author labels this NeoForge build beta and warns of upstream potion-effect bugs."
   },
   {
+    "id": "better_spellcasting",
+    "name": "Better Spellcasting",
+    "version": "1.0.0",
+    "authors": "Kayn",
+    "license": "LGPL-2.1-or-later",
+    "jar": "better_spellcasting-1.21.1-1.2.0.jar",
+    "sha1": "082c9c7c7acb62b77fde54f5e2a6dce4882b5a49",
+    "sha256": "6cc31d55b1ff0425dd44bb3d763a0334cb3d314fc6bc4d35c432e6e2d510cfd3",
+    "source_url": "https://www.curseforge.com/minecraft/mc-mods/better-spellcasting",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://edge.forgecdn.net/files/7571/236/better_spellcasting-1.21.1-1.2.0.jar"
+  },
+  {
     "id": "bettercombat",
     "name": "Better Combat",
     "version": "2.4.0+1.21.1",
@@ -133,6 +250,19 @@
     "sha256": "0446e9faa98b764ba010ac31e337d14ac96bbb2fbfeff9b599e1efd510dfde5a",
     "download_url": "https://cdn.modrinth.com/data/5sy6g3kz/versions/VhIOvcXP/bettercombat-neoforge-2.4.0%2B1.21.1.jar",
     "source_url": "https://github.com/ZsoltMolnarrr/BetterCombat"
+  },
+  {
+    "id": "biolith",
+    "name": "Biolith",
+    "version": "3.0.14",
+    "authors": "TerraformersMC, gniftygnome",
+    "license": "LGPL-3.0",
+    "jar": "biolith-neoforge-3.0.14.jar",
+    "sha1": "8b041bce1cd0c5f5223c285784a3e8498273d6ea",
+    "sha256": "ded9169efb903198046cf44cf91a290ec836ed83a28e29179087eb860e0e6ce9",
+    "source_url": "https://modrinth.com/mod/biolith",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/iGEl6Crx/versions/EAjbdreT/biolith-neoforge-3.0.14.jar"
   },
   {
     "id": "biomeswevegone",
@@ -172,6 +302,19 @@
     "source_url": null
   },
   {
+    "id": "brutalbosses",
+    "name": "brutalbosses mod",
+    "version": "8.6",
+    "authors": "Someaddon",
+    "license": "ARR",
+    "jar": "brutalbosses-1.21.1-8.6.jar",
+    "sha1": "47154ce207ca3bbcfba1bf56c6d2d6a58511a102",
+    "sha256": "b401d41cb2419f519df4ad65c069578f424b1ea797fbfe28d7b48b868708d75a",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://edge.forgecdn.net/files/7662/187/brutalbosses-1.21.1-8.6.jar"
+  },
+  {
     "id": "butterflies",
     "name": "Butterfly Mod",
     "version": "7.10.9",
@@ -209,6 +352,19 @@
     "download_url": "https://edge.forgecdn.net/files/8734/901/cable_facades-1.21.1-NeoForge-2.1.4.jar"
   },
   {
+    "id": "caster_curios_bonus",
+    "name": "Caster Curios Bonus",
+    "version": "1.21.1-1.1.1",
+    "authors": "Rinko1231",
+    "license": "GPLv3",
+    "jar": "CasterCuriosBonus-1.21.1-1.1.1.jar",
+    "sha1": "d4ca58fbc993fafe12a261b74d09872e990667b1",
+    "sha256": "ed4d1258a3f2fe2b5d12b2430f3a64caa872726094462d001e9e23b4588263b7",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://edge.forgecdn.net/files/8270/719/CasterCuriosBonus-1.21.1-1.1.1.jar"
+  },
+  {
     "id": "cataclysm",
     "name": "L_Ender's Cataclysm 1.21.1",
     "version": "3.33",
@@ -232,6 +388,32 @@
     "source_url": "",
     "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
     "download_url": "https://edge.forgecdn.net/files/8867/800/celestisynth-1.21.1-1.3.9.jar"
+  },
+  {
+    "id": "cerbons_api",
+    "name": "Cerbons API",
+    "version": "1.3.0",
+    "authors": "CerbonXD",
+    "license": "GNU LGPL 3.0",
+    "jar": "CerbonsAPI-NeoForge-1.21-1.3.0.jar",
+    "sha1": "3f0d3eed4633d9ef3a713de4b39ee4e683aa9389",
+    "sha256": "5c750762b31ab79127df6f455351fe79793d8c2b41e1a0f94b335a5a1123534d",
+    "source_url": "https://www.curseforge.com/minecraft/mc-mods/cerbons-api",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/GkIc6rRo/versions/5wbxkBQ1/CerbonsAPI-NeoForge-1.21-1.3.0.jar"
+  },
+  {
+    "id": "chimes",
+    "name": "Chimes",
+    "version": "2.1.1",
+    "authors": "CicadaBluw",
+    "license": "All Rights Reserved",
+    "jar": "Chimes-v2.1.1-1.21.1-NeoForge.jar",
+    "sha1": "991e81741231b73b2cd3cbe9ab41e73cbe99d7be",
+    "sha256": "83b83b60bb40f34b2422d785ca40e287eacb31a1fc3a4f9564ee9e7c3dcc283b",
+    "source_url": "https://www.curseforge.com/minecraft/mc-mods/chimes",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://edge.forgecdn.net/files/7573/270/Chimes-v2.1.1-1.21.1-NeoForge.jar"
   },
   {
     "id": "chunksending",
@@ -258,6 +440,45 @@
     "source_url": "https://github.com/Alex-the-666/Citadel"
   },
   {
+    "id": "cnb",
+    "name": "Creatures and Beasts: Unofficial Port",
+    "version": "1.7.17",
+    "authors": "Joosh, CGessinger, and HellionGames",
+    "license": "LGPLv3",
+    "jar": "CNB-1.21.1-neoforge-1.7.17.jar",
+    "sha1": "e83c333834abcb99fda5d6a79badee6729f5cb3f",
+    "sha256": "b519175838e0ecb94cea63a831737b81403049427804a02b5e15c4e306eedad5",
+    "source_url": "https://github.com/CreaturesAndBeasts/Creatures_And_Beasts-Forge",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://edge.forgecdn.net/files/8178/196/CNB-1.21.1-neoforge-1.7.17.jar"
+  },
+  {
+    "id": "cnc",
+    "name": "Critters n' Crawlers",
+    "version": "2.2.5",
+    "authors": "FaeStickenFool",
+    "license": "All Rights Reserved",
+    "jar": "Critters n' Crawlers-2.2.5-neo-mc1.21.1.jar",
+    "sha1": "559e32a6eec7faf04cae631ae10ae374f6275807",
+    "sha256": "18451666daf35b6facf126ca27afb182b6a68c12bd3f49985112e3c4b12dba4a",
+    "source_url": "https://curseforge.com/minecraft/mc-mods/critters-n-crawlers",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/JxyIfnWu/versions/WdCq8adl/Critters%20n%27%20Crawlers-2.2.5-neo-mc1.21.1.jar"
+  },
+  {
+    "id": "cognition",
+    "name": "Cognition",
+    "version": "2.4.13",
+    "authors": "Cyanog3n",
+    "license": "MIT",
+    "jar": "Cognition-v2.4.13-1.21.1.jar",
+    "sha1": "81e5779939a5b3df87ea1166b7eccf87b68b40f3",
+    "sha256": "aac0e35ca5ac111b547bfbb8e9249d6261db1d3145fb32ade764c7696ae46191",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/9GdSY2FZ/versions/cL9RvpFS/Cognition-v2.4.13-1.21.1.jar"
+  },
+  {
     "id": "colorwheel",
     "name": "Colorwheel",
     "version": "1.3.0+mc1.21.1",
@@ -268,6 +489,19 @@
     "sha256": "3c7c1f91b1add47053f40a58375de492b87ce83309be378527f100cb842c07c0",
     "download_url": "https://cdn.modrinth.com/data/BzHgFoGz/versions/8rq5KP4U/colorwheel-neoforge-1.3.0%2Bmc1.21.1.jar",
     "source_url": "https://github.com/djefrey/Colorwheel"
+  },
+  {
+    "id": "companions",
+    "name": "Companions!",
+    "version": "1.3.6",
+    "authors": "Xylonity, ModderG",
+    "license": "GNU GPL v3.0",
+    "jar": "companions-neoforge-1.21.1-1.3.6.jar",
+    "sha1": "ce962afe533a28902ecb5aa27b9650762d2f30b8",
+    "sha256": "84bf292c5bed1f83640ac425518fb401b1c5ed28f1c32e7723d0bdd35e69bcb5",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://edge.forgecdn.net/files/9056/538/companions-neoforge-1.21.1-1.3.6.jar"
   },
   {
     "id": "cookingforblockheads",
@@ -282,6 +516,45 @@
     "source_url": null
   },
   {
+    "id": "copycats",
+    "name": "Create: Copycats+",
+    "version": "3.0.9+mc.1.21.1-neoforge",
+    "authors": "Lysine, Bennyboy1695, Redcat_XVIII",
+    "license": "All Rights Reserved",
+    "jar": "copycats-3.0.9+mc.1.21.1-neoforge.jar",
+    "sha1": "74de17876c43f5f780bac478b9f9eb11e687b8d7",
+    "sha256": "d1efdd8688af6603dff9425299ac4547ef56a7d5cfee757716ead7853276694e",
+    "source_url": "https://github.com/copycats-plus/copycats",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/UT2M39wf/versions/bPYeUWZx/copycats-3.0.9%2Bmc.1.21.1-neoforge.jar"
+  },
+  {
+    "id": "corpse",
+    "name": "Corpse",
+    "version": "1.21.1-1.1.22",
+    "authors": "Max Henkel",
+    "license": "All rights reserved",
+    "jar": "corpse-neoforge-1.21.1-1.1.22.jar",
+    "sha1": "0d73e082e4d5c0f185aa8030bcefb68c259d1107",
+    "sha256": "3733d86452b9ac572e924c2946e15e6b7052cc8fc990911f1c79b36ac3651b9f",
+    "source_url": "https://www.curseforge.com/minecraft/mc-mods/corpse",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://edge.forgecdn.net/files/9289/316/corpse-neoforge-1.21.1-1.1.22.jar"
+  },
+  {
+    "id": "cosmeticarmorreworked",
+    "name": "CosmeticArmorReworked",
+    "version": "1.21.1-v1-neoforge",
+    "authors": "zlainsama",
+    "license": "Minecraft Mod Public License 1.0.1",
+    "jar": "cosmeticarmorreworked-1.21.1-v1-neoforge.jar",
+    "sha1": "5f1e699cd0888b857ec63f01adaeb3571848bfea",
+    "sha256": "6328049755735159c55f5918ac301cff53a8d8790c3fe63e32e7d8a0e37f123f",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://edge.forgecdn.net/files/5610/814/cosmeticarmorreworked-1.21.1-v1-neoforge.jar"
+  },
+  {
     "id": "create",
     "name": "Create",
     "version": "6.0.10",
@@ -292,6 +565,19 @@
     "sha256": "ef87fe5709f1ba1f5b8bb20a2925b5afb4669e178fd6d8bf10c167759eefe37a",
     "download_url": "https://cdn.modrinth.com/data/LNytGWDc/versions/UjX6dr61/create-1.21.1-6.0.10.jar",
     "source_url": null
+  },
+  {
+    "id": "createsolar",
+    "name": "Create: Solar Powered",
+    "version": "1.2.7",
+    "authors": "HachiroUwU",
+    "license": "MIT",
+    "jar": "createsolar-1.2.7.jar",
+    "sha1": "9fc6214441b7294a127e3d9a3817f7f2e3ffaa24",
+    "sha256": "99f0157bd1c0815c0f61e9728d887cd240a866027f32b3fa1e3e18cfd2940231",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/X6JWoJ2m/versions/mvAuvXi9/createsolar-1.2.7.jar"
   },
   {
     "id": "crittersandcompanions",
@@ -330,6 +616,32 @@
     "source_url": "https://github.com/TheIllusiveC4/Curios"
   },
   {
+    "id": "darkdoppelganger",
+    "name": "DarkDoppelganger",
+    "version": "4.0.0-1.21.1",
+    "authors": "Bandit-Bytes",
+    "license": "All Rights Reserved",
+    "jar": "darkdoppelganger-4.0.0-1.21.1.jar",
+    "sha1": "4486e03b750faed233b1931404a2dd727910971d",
+    "sha256": "85a7bbce27d12a498152b5c8c219ce7ed782a9973111db614d8364cea2b28b23",
+    "source_url": "https://pixeldreamstudios.net/",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/2vzHL83v/versions/XmtF5USk/darkdoppelganger-4.0.0-1.21.1.jar"
+  },
+  {
+    "id": "deeperdarker",
+    "name": "Deeper and Darker",
+    "version": "1.4.1",
+    "authors": "Kyanite Team",
+    "license": "GPL-3.0",
+    "jar": "deeperdarker-neoforge-1.21.1-1.4.1.jar",
+    "sha1": "b6094adde68bd4b909bc75c64901e1f3fb99ad8f",
+    "sha256": "eee3f51222b0bcc714def002ff089ac9e131d3cae4575b542fd0a7dd101fe0af",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/fnAffV0n/versions/TuD0Zvi3/deeperdarker-neoforge-1.21.1-1.4.1.jar"
+  },
+  {
     "id": "distanthorizons",
     "name": "Distant Horizons",
     "version": "3.3.3",
@@ -351,6 +663,19 @@
     "source_url": "https://gitlab.com/distant-horizons-team/distant-horizons"
   },
   {
+    "id": "dummmmmmy",
+    "name": "MmmMmmMmmMmm",
+    "version": "1.21-2.1.2",
+    "authors": "Mehvahdjukaar, Bonusboni, Gooigipunch, Plantkillable",
+    "license": "Supplementaries Team License v.1.5",
+    "jar": "dummmmmmy-1.21-2.1.2-neoforge.jar",
+    "sha1": "87fb529cbb220a33fedf45a4a6f2269b8e00fffe",
+    "sha256": "eaece070b290e8399d97dfd01f8e4c0d8da5772efe50d97c99343e35b116cb67",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/Adega8YN/versions/DldwQTMc/dummmmmmy-1.21-2.1.2-neoforge.jar"
+  },
+  {
     "id": "dungeonsdelight",
     "name": "Dungeon's Delight",
     "version": "1.5.0",
@@ -363,6 +688,19 @@
     "source_url": null
   },
   {
+    "id": "duplicationless",
+    "name": "Duplicationless",
+    "version": "1.21.1-1.2.1",
+    "authors": "Kall",
+    "license": "MIT",
+    "jar": "duplicationless-1.21.1-1.2.1.jar",
+    "sha1": "c3f8e32ee4239bb14c11940518085b66ca1cd5f5",
+    "sha256": "ca0ca19a49fe49e53bdd6a034ace47c1c99440bd2b5e5736ae53401708625487",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://edge.forgecdn.net/files/8646/414/duplicationless-1.21.1-1.2.1.jar"
+  },
+  {
     "id": "dynamictrees",
     "name": "Dynamic Trees",
     "version": "1.7.2",
@@ -373,6 +711,32 @@
     "sha256": "ef94737b99e68a0b489b56f901fcc71a3ac8e7a16e3a22ac8413c5f66df566f0",
     "download_url": "https://cdn.modrinth.com/data/vdjF5PL5/versions/G4uJ0UA0/dynamictrees-neoforge-1.21.1-1.7.2.jar",
     "source_url": null
+  },
+  {
+    "id": "easy_villagers",
+    "name": "Easy Villagers",
+    "version": "1.21.1-1.1.49",
+    "authors": "Max Henkel",
+    "license": "All rights reserved",
+    "jar": "easy-villagers-neoforge-1.21.1-1.1.49.jar",
+    "sha1": "bb021918037fb2ceba03456948eaa966c7f28d53",
+    "sha256": "430a4b534c27d2fbbdf6c40bc3b9887a89a59d1a8cad6301246afc66dc721715",
+    "source_url": "https://www.curseforge.com/minecraft/mc-mods/easy-villagers",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://edge.forgecdn.net/files/9289/481/easy-villagers-neoforge-1.21.1-1.1.49.jar"
+  },
+  {
+    "id": "elysium_api",
+    "name": "Elysium-API",
+    "version": "2.0.1",
+    "authors": "ThatJadenXgamer",
+    "license": "LGPL-2.1",
+    "jar": "ElysiumAPI-1.21.1-2.0.1.jar",
+    "sha1": "01754addbc1d0607d81fcd37e0605138bec4ceaf",
+    "sha256": "5deb92540de983319693e8022ad9389052f31f60c81440bfca29bcc8000a6759",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/6YTvv3aI/versions/d2JaQ362/ElysiumAPI-1.21.1-2.0.1.jar"
   },
   {
     "id": "embeddium",
@@ -459,6 +823,19 @@
     "source_url": null
   },
   {
+    "id": "fluidium",
+    "name": "Fluidium",
+    "version": "1.21.1-1.4.0",
+    "authors": "Kall",
+    "license": "MIT",
+    "jar": "fluidium-1.21.1-1.4.0.jar",
+    "sha1": "f056fb9c47f03be2d157957082a1d0745df39e7a",
+    "sha256": "967c8c3f0df8a9f74d310fc668d3c0b710490282785b3878dadcaed9d59fbd44",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://edge.forgecdn.net/files/7481/400/fluidium-1.21.1-1.4.0.jar"
+  },
+  {
     "id": "flywheel",
     "name": "Flywheel",
     "version": "1.0.6",
@@ -483,6 +860,45 @@
     "source_url": "https://github.com/aqariio/Fowl-Play"
   },
   {
+    "id": "fromtheshadows",
+    "name": "From the Shadows Reborn",
+    "version": "3.0",
+    "authors": "Sonmok14,L_Ender",
+    "license": "All Rights Reserved",
+    "jar": "fromtheshadows-3.0.jar",
+    "sha1": "233e51fd7302e1af54a6d2d4be67fa8e7e3d947b",
+    "sha256": "756e961dd7cbbc6675ca540018d4cd83e7a478a86c7b2e4ce986fb166401426a",
+    "source_url": "https://www.curseforge.com/minecraft/mc-mods/from-the-shadow-reborn",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://edge.forgecdn.net/files/8520/220/fromtheshadows-3.0.jar"
+  },
+  {
+    "id": "ftbchunks",
+    "name": "FTB Chunks",
+    "version": "2101.1.23",
+    "authors": "FTB Team",
+    "license": "All Rights Reserved",
+    "jar": "ftb-chunks-neoforge-2101.1.23.jar",
+    "sha1": "a99a51ef8e413af26ee32c4d33a11526fccdd1d1",
+    "sha256": "6750da28d725bfb4c7da43157bb9b82492226ce5acab595ef782d48f41ff5647",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://edge.forgecdn.net/files/9374/151/ftb-chunks-neoforge-2101.1.23.jar"
+  },
+  {
+    "id": "ftbxmodcompat",
+    "name": "FTB XMod Compat",
+    "version": "21.1.14",
+    "authors": "FTB Team",
+    "license": "All Rights Reserved",
+    "jar": "ftb-xmod-compat-neoforge-21.1.14.jar",
+    "sha1": "8dc3db7b8aa93eabac54237c5d53bfea15f92ba5",
+    "sha256": "143c79710af4e17dbff7bb933f2e17c667091353e188e5d53fdaab4220a5ff64",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://edge.forgecdn.net/files/9344/504/ftb-xmod-compat-neoforge-21.1.14.jar"
+  },
+  {
     "id": "fusion",
     "name": "Fusion",
     "version": "1.3.15+b",
@@ -505,6 +921,110 @@
     "sha256": "20a1995e4074f387ff549e2c57ea79dd7d41ee83c6afb9dd6a6e840e592d1c47",
     "download_url": "https://cdn.modrinth.com/data/8BmcQJ2H/versions/Grwn5rUB/geckolib-neoforge-1.21.1-4.9.3.jar",
     "source_url": "https://github.com/bernie-g/geckolib"
+  },
+  {
+    "id": "goblins_tyranny",
+    "name": "Goblin's Tyranny",
+    "version": "1.2.4",
+    "authors": "Nyra Studio",
+    "license": "All Rights Reserved",
+    "jar": "goblins_tyranny-1.2.4-neoforge-1.21.1.jar",
+    "sha1": "a7e7d4bb9f7abcadfcc1ac0063108488b71ec7ce",
+    "sha256": "ebda0aa872a5994964e47bebefc7730a5617e4f532e028a680028ec73883e8cc",
+    "source_url": "https://discord.gg/STtXPXJAjy",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. MCreator mod; mods.toml displayURL is a Discord invite (https://discord.gg/STtXPXJAjy).",
+    "download_url": "https://cdn.modrinth.com/data/pR2fUOHY/versions/VjcZbZjq/goblins_tyranny-1.2.4-neoforge-1.21.1.jar"
+  },
+  {
+    "id": "goety",
+    "name": "Goety",
+    "version": "3.2.2",
+    "authors": "Polarice3",
+    "license": "MIT License",
+    "jar": "goety-3.2.2.jar",
+    "sha1": "d7fe0abd288d279f6996d5e9e2bd4f74f476fc48",
+    "sha256": "507ad7c4462fe4d888a6458ad6dfbf1f320eadd626d714c96061c109493d888f",
+    "source_url": "https://github.com/Polarice3/Goety-2",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/4ZVIxU8x/versions/xLTYSsZD/goety-3.2.2.jar"
+  },
+  {
+    "id": "goety_cataclysm",
+    "name": "Goety Cataclysm",
+    "version": "1.21.1-1.8.4",
+    "authors": "Polarice3",
+    "license": "ARR",
+    "jar": "goety_cataclysm-1.21.1-1.8.4.jar",
+    "sha1": "b8b066f0ee12099505306043455cdc879e2d3949",
+    "sha256": "0c9a122cdd94eef65fe5d6b610b20b4a811659032707fa314756494fb9772738",
+    "source_url": "https://github.com/Polarice3/Goety_Cataclysm",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/YwmuwbXi/versions/gv1JY0TU/goety_cataclysm-1.21.1-1.8.4.jar"
+  },
+  {
+    "id": "goetydelight",
+    "name": "Goety Delight",
+    "version": "1.5.0-1.21.1-20260911_alpha-7",
+    "authors": "V_BlackCAT,wu1wu2,BaiXi_a,Upharsin,Kun_Zhong,Fracsail,bai_ze_li,vanilla_haozi,Xiao_wu,Lll252,sybsysj",
+    "license": "Code:LGPL-2.1-only,Assets:All Rights Reserved",
+    "jar": "goetydelight-1.5.0-1.21.1-20260911_alpha-7(1).jar",
+    "sha1": "1550a66f73d7c754d3e9678ea0070e7f6f9eb1c0",
+    "sha256": "91e6b43baf33a603681d56b0b5951a305d6865930a8f2255aa0a52ec1350c1a8",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/QTy3tT6m/versions/RnBqHDpE/goetydelight-1.5.0-1.21.1-20260911_alpha-7%281%29.jar"
+  },
+  {
+    "id": "goetyhostility",
+    "name": "Goety Hostility",
+    "version": "1.21.1-1.4.4",
+    "authors": "Not declared in the target JAR",
+    "license": "All Rights Reserved",
+    "jar": "goetyhostility-1.21.1-1.4.4.jar",
+    "sha1": "098930ca92f86bccadc52e268d3b95ef6ce273f8",
+    "sha256": "da30ac222703d203cfb39c538d0f9252a00ef7ca3d244dc788d9146f09dc4515",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://edge.forgecdn.net/files/8439/206/goetyhostility-1.21.1-1.4.4.jar"
+  },
+  {
+    "id": "gtbcs_spell_lib",
+    "name": "GTBC's SpellLib",
+    "version": "2.2.0-1.21.1",
+    "authors": "GameTechBC",
+    "license": "All rights reserved",
+    "jar": "gtbcs_spell_lib-2.2.0-1.21.1.jar",
+    "sha1": "36cce8ab3117e89ae992a84a566d596709db2ffe",
+    "sha256": "a2a020b85abe9e5ad2ce9e760db57e9c79aa57cf6dae56bbfd4eb0ed5d5928f9",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/wXoQ9BqX/versions/309MoFNN/gtbcs_spell_lib-2.2.0-1.21.1.jar"
+  },
+  {
+    "id": "hexerei",
+    "name": "Hexerei",
+    "version": "0.5",
+    "authors": "JoeFoxe",
+    "license": "MIT",
+    "jar": "hexerei-0.5.0.3.jar",
+    "sha1": "a0021f5ef5a285fdc8f80cd30d48c913d6f0765b",
+    "sha256": "743e80cb0526fa5fffdb660c5c3230df47d664fb268e48ca888771c4cf594240",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/IQSOHVhI/versions/9KSwA9O9/hexerei-0.5.0.3.jar"
+  },
+  {
+    "id": "hostilenetworks",
+    "name": "Hostile Neural Networks",
+    "version": "6.5.1",
+    "authors": "Shadows_of_Fire",
+    "license": "MIT License",
+    "jar": "HostileNeuralNetworks-1.21.1-6.5.1.jar",
+    "sha1": "5e5db7d37f1b0244183613cf7e594bd69a1b31b4",
+    "sha256": "dd56c109a76cdd2c2bf73a1e62aed7218d087fa1401a539b0d5576386f9ff545",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. mods.toml has no displayURL or issueTrackerURL; requires Placebo (already credited).",
+    "download_url": "https://cdn.modrinth.com/data/6bLUlbZn/versions/ikdLP02G/HostileNeuralNetworks-1.21.1-6.5.1.jar"
   },
   {
     "id": "hostilevillages",
@@ -544,6 +1064,32 @@
     "download_url": "https://edge.forgecdn.net/files/9224/351/immersive_aircraft-neoforge-1.7.0%2b1.21.1.jar"
   },
   {
+    "id": "immersive_armors",
+    "name": "Immersive Armors",
+    "version": "1.7.6+1.21.1",
+    "authors": "Luke100000",
+    "license": "GPL-3.0-only",
+    "jar": "immersive_armors-1.7.6+1.21.1-neoforge.jar",
+    "sha1": "4c5762af46c0beac0830d1f1e9c88332b120ceaa",
+    "sha256": "e9b6f1975ca5e1d92d73f60c5a86fe2d45d6be43497e3c1d013afe495e298ccc",
+    "source_url": "https://www.curseforge.com/minecraft/mc-mods/immersive-armors",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. source_url from the mods.toml issueTrackerURL.",
+    "download_url": "https://cdn.modrinth.com/data/eE2Db4YU/versions/B2YtQYCh/immersive_armors-1.7.6%2B1.21.1-neoforge.jar"
+  },
+  {
+    "id": "immersive_optimization",
+    "name": "Immersive Optimization",
+    "version": "0.2.0",
+    "authors": "Luke100000",
+    "license": "GPL-3.0",
+    "jar": "immersive_optimization-neoforge-1.21.1-0.2.0.jar",
+    "sha1": "7e6693dae264f9185b8b12cf99e8407e7e532041",
+    "sha256": "c30f5f599558f9776fac7f033b1e9774e5d2f9bba3c00e34d2f8b25022344de7",
+    "source_url": "https://conczin.net/",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. source_url from the mods.toml issueTrackerURL.",
+    "download_url": "https://cdn.modrinth.com/data/vNZgQmjg/versions/h2tTmurt/immersive_optimization-neoforge-1.21.1-0.2.0.jar"
+  },
+  {
     "id": "immersiveengineering",
     "name": "Immersive Engineering",
     "version": "12.4.2-194",
@@ -556,6 +1102,32 @@
     "source_url": null
   },
   {
+    "id": "industrialforegoing",
+    "name": "Industrial Foregoing",
+    "version": "1.21-3.6.39",
+    "authors": "Buuz135",
+    "license": "MIT",
+    "jar": "industrialforegoing-1.21-3.6.39.jar",
+    "sha1": "a653f5c2b56f51c82d008b473f2b89aeff5747fd",
+    "sha256": "abeb644675398e7729eb5f3637e1dfbe080e0dbdfcced1b19bd4ab595ccdd4bb",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. mods.toml has no displayURL or issueTrackerURL; the mixin names ModuleMisc by string, so Titanium is not needed at compile time.",
+    "download_url": "https://cdn.modrinth.com/data/lWxpUd04/versions/7otXKx1D/industrialforegoing-1.21-3.6.39.jar"
+  },
+  {
+    "id": "integrated_api",
+    "name": "Integrated API",
+    "version": "1.9.1",
+    "authors": "CraisinLord",
+    "license": "All rights reserved",
+    "jar": "integrated_api-neoforge-1.21.1-1.9.1.jar",
+    "sha1": "64ecc8e8336c9478d1357b142d8829297f22b371",
+    "sha256": "3621edbd54dec28b704e03b792cc392f6d37a2cecf832d7b11c485a1765d4a3d",
+    "source_url": "https://www.curseforge.com/minecraft/mc-mods/integrated_api",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. mods.toml displayURL is the CurseForge page https://www.curseforge.com/minecraft/mc-mods/integrated_api; injectors only, no code carried.",
+    "download_url": "https://cdn.modrinth.com/data/V6fKbpBN/versions/oddRiz2I/integrated_api-neoforge-1.21.1-1.9.1.jar"
+  },
+  {
     "id": "iris",
     "name": "Iris",
     "version": "1.8.12-snapshot+mc1.21.1-local",
@@ -566,6 +1138,19 @@
     "sha256": "3e3f94d2d5cdcb8145c4385d521974aa2d8669b2cc212351f70cf06488182e83",
     "download_url": "https://cdn.modrinth.com/data/YL57xq9U/versions/t3ruzodq/iris-neoforge-1.8.12%2Bmc1.21.1.jar",
     "source_url": "https://github.com/IrisShaders/Iris"
+  },
+  {
+    "id": "irons_spellbooks",
+    "name": "Iron's Spells 'n Spellbooks",
+    "version": "1.21.1-3.16.3",
+    "authors": "Iron431, Lab3",
+    "license": "All Rights Reserved",
+    "jar": "irons_spellbooks-1.21.1-3.16.3.jar",
+    "sha1": "e8832385c01db56b9fcb19c48fcedc76a3a70d92",
+    "sha256": "55a290db9b966e0c5d2f5c051d50775f3db6375cdb52730c4da528bcf5d5daa0",
+    "source_url": "https://www.curseforge.com/minecraft/mc-mods/irons-spells-n-spellbooks",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. source_url from the mods.toml issueTrackerURL.",
+    "download_url": "https://cdn.modrinth.com/data/s4OWxYQQ/versions/slKLosTb/irons_spellbooks-1.21.1-3.16.3.jar"
   },
   {
     "id": "jei",
@@ -605,6 +1190,71 @@
     "download_url": "https://edge.forgecdn.net/files/9190/296/knightlib-neoforge-1.21.1-2.0.5.jar"
   },
   {
+    "id": "konkrete",
+    "name": "Konkrete",
+    "version": "1.9.9",
+    "authors": "Keksuccino",
+    "license": "Apache-2.0",
+    "jar": "konkrete_neoforge_1.9.9_MC_1.21.jar",
+    "sha1": "97771eb287d5ac7fe667d1df9493d5e54c8ca1fa",
+    "sha256": "791c5538751dd3015ef3a2ce92d98719e1a28a48ebbd817b78506771256654cd",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. mods.toml has no displayURL or issueTrackerURL; minecraft range [1.21,).",
+    "download_url": "https://cdn.modrinth.com/data/J81TRJWm/versions/stJDU839/konkrete_neoforge_1.9.9_MC_1.21.jar"
+  },
+  {
+    "id": "kubejs",
+    "name": "KubeJS",
+    "version": "2101.7.2-build.381",
+    "authors": "latvian.dev",
+    "license": "GNU LGPLv3",
+    "jar": "kubejs-neoforge-2101.7.2-build.381.jar",
+    "sha1": "b282ba250cdd247f319c016df02ff9e600caadb1",
+    "sha256": "07d8cb7ac1f7ef81f17ae00bfd84c92c18ac0398e83e64a27d91717969316bc0",
+    "source_url": "https://kubejs.com",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. mods.toml displayURL https://kubejs.com.",
+    "download_url": "https://cdn.modrinth.com/data/umyGl7zF/versions/GDXCpKlp/kubejs-neoforge-2101.7.2-build.381.jar"
+  },
+  {
+    "id": "l2archery",
+    "name": "L2Archery",
+    "version": "3.0.4",
+    "authors": "lcy0x1",
+    "license": "LGPL-2.1",
+    "jar": "l2archery-3.0.4.jar",
+    "sha1": "ea423358262abdaa4b648d2eb2fb435c433cee27",
+    "sha256": "11e4cc13c3435e75492ae10634bc91ae5542c8292fd8b5c9ec963b20b01254cc",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. mods.toml has no displayURL; requires l2library and l2complements.",
+    "download_url": "https://cdn.modrinth.com/data/6hD6YA2r/versions/dljtwwQ7/l2archery-3.0.4.jar"
+  },
+  {
+    "id": "l2backpack",
+    "name": "L2Backpack",
+    "version": "3.1.5",
+    "authors": "lcy0x1",
+    "license": "LGPL-2.1",
+    "jar": "l2backpack-3.1.5.jar",
+    "sha1": "2da75bd8b970475638490d96bd24ca17aac948a5",
+    "sha256": "c042874daa823bf3b767ce6e9b624a96131fc68aab4835bef5771999cc361d16",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. mods.toml has no displayURL; requires l2library (L2Core in its Jar-in-Jar, credited as l2core).",
+    "download_url": "https://cdn.modrinth.com/data/1qkL7Png/versions/XaKBuDeF/l2backpack-3.1.5.jar"
+  },
+  {
+    "id": "l2complements",
+    "name": "L2Complements",
+    "version": "3.1.3",
+    "authors": "lcy0x1",
+    "license": "LGPL-2.1",
+    "jar": "l2complements-3.1.3.jar",
+    "sha1": "6d099233bc741904d5561239c6aa5ac4a78c27c8",
+    "sha256": "111968216d2088eda26eaee34619656c5a3e570f08da0f9c270e923130d20334",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. mods.toml has no displayURL; Forge 2.6.1's mods.toml said All Rights Reserved, 3.1.3's says LGPL-2.1.",
+    "download_url": "https://cdn.modrinth.com/data/oPrh2Lz3/versions/KTaffFua/l2complements-3.1.3.jar"
+  },
+  {
     "id": "l2core",
     "name": "L2Core",
     "version": "3.0.8+15",
@@ -615,6 +1265,19 @@
     "sha256": "e7853f90813605e7b6344223d7ad051387dfe6d630cfd47396d142ee25048647",
     "source_url": "",
     "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. Jar-in-Jar library supplied by the existing L2 target."
+  },
+  {
+    "id": "l2hostility",
+    "name": "L2Hostility",
+    "version": "3.0.18",
+    "authors": "lcy0x1",
+    "license": "LGPL-2.1",
+    "jar": "l2hostility-3.0.18.jar",
+    "sha1": "6483ecef91ed3cfd51c0e6f3f4e0beb6349b6abd",
+    "sha256": "8821952b49c5e9b1980b4d7ccecbcfa8e957204d39ac62d8d40dff34faaaf780",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. the build of baseline/targets (targets.lock.json of 1.0.47; extra-targets49.json points at it); neoforge.mods.toml has no source or issue URL. The Modrinth upload of 3.0.18 (sha1 8c09b463) differs from it only in META-INF/MANIFEST.MF (Implementation-Timestamp 14:55:20 vs 14:52:34): every class and nested jar is identical.",
+    "download_url": "https://edge.forgecdn.net/files/7815/611/l2hostility-3.0.18.jar"
   },
   {
     "id": "l2library",
@@ -654,6 +1317,19 @@
     "source_url": null
   },
   {
+    "id": "legendary_spellbooks",
+    "name": "Legendary Spellbooks",
+    "version": "0.3.2",
+    "authors": "Higurashi (Higurashi34m), saadlampy, Cutlery0980",
+    "license": "LGPL-3.0",
+    "jar": "legendary_spellbooks-1.21.1+neo-0.3.2.jar",
+    "sha1": "bda5b1fbe50ad834a6a76ad36789743c1057ebf5",
+    "sha256": "c1e5421a621e87f82158ad1fc179277b7053e924fa71c1a8c36ee1e0249872a0",
+    "source_url": "https://www.curseforge.com/minecraft/mc-mods/legendary-spellbooks",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. source_url from neoforge.mods.toml issueTrackerURL (https://github.com/Higurashi34m/LegendarySpellbooks/issues); CurseForge file 8255715.",
+    "download_url": "https://edge.forgecdn.net/files/8255/715/legendary_spellbooks-1.21.1%2bneo-0.3.2.jar"
+  },
+  {
     "id": "lionfishapi",
     "name": "lionfishapi",
     "version": "3.1",
@@ -678,6 +1354,19 @@
     "source_url": "https://github.com/caffeinemc/lithium-fabric"
   },
   {
+    "id": "lithostitched",
+    "name": "Lithostitched",
+    "version": "1.8.1",
+    "authors": "Apollo",
+    "license": "MIT",
+    "jar": "lithostitched-1.8.1-neoforge-21.1.jar",
+    "sha1": "88cdded5b617e19b4d2676948b5550699de23578",
+    "sha256": "e0da669fa5facc61a09b9b7bae21b322993de1fcd1eb05787adffb7309598cca",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. neoforge.mods.toml has no source or issue URL.",
+    "download_url": "https://cdn.modrinth.com/data/XaDC71GB/versions/cZu4cHY3/lithostitched-1.8.1-neoforge-21.1.jar"
+  },
+  {
     "id": "luminous_beasts",
     "name": "Luminous Beasts",
     "version": "1.2.8",
@@ -691,6 +1380,58 @@
     "download_url": "https://edge.forgecdn.net/files/9250/718/Luminous%20Beasts%20V1.2.8%20-%20NeoForge%201.21.1.jar"
   },
   {
+    "id": "macabre",
+    "name": "Macabre: Call of False Prophets",
+    "version": "1.0.1",
+    "authors": "Pixelgeist666",
+    "license": "Academic Free License v3.0",
+    "jar": "macabre-1.0.1-neoforge-1.21.1.jar",
+    "sha1": "7f236627d7690f476b4483b2fcaf3e29db554f26",
+    "sha256": "67b163419c923b4ea55da5a2d531b16c5a2c57406a5203126e59890f87982f9e",
+    "source_url": "https://www.curseforge.com/minecraft/mc-mods/macabre",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. neoforge.mods.toml displayURL is the CurseForge page https://www.curseforge.com/minecraft/mc-mods/macabre; CurseForge file 9427459.",
+    "download_url": "https://edge.forgecdn.net/files/9427/459/macabre-1.0.1-neoforge-1.21.1.jar"
+  },
+  {
+    "id": "mahoutsukai",
+    "name": "Mahou Tsukai",
+    "version": "1.21.1-v1.36.31",
+    "authors": "stepsword",
+    "license": "All Rights Reserved",
+    "jar": "mahoutsukai-1.21.1-v1.36.31.jar",
+    "sha1": "f08478d0a4ca206b9ca7c298910567515440bcb7",
+    "sha256": "4022fb3cee32b28df02994cc4c5b40069651583516f6abd04775789616739aad",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. mods.toml has no URL; the jar comes from CurseForge file 9396719.",
+    "download_url": "https://edge.forgecdn.net/files/9396/719/mahoutsukai-1.21.1-v1.36.31.jar"
+  },
+  {
+    "id": "mekaweapons",
+    "name": "Mekanism: Weapons",
+    "version": "4.2.1",
+    "authors": "oMeranha",
+    "license": "MIT",
+    "jar": "MekanismWeapons-1.21.1-4.2.1.jar",
+    "sha1": "55234485dccee9ae01ab4cbb9d74a53726be9377",
+    "sha256": "75a28e08233f2647340dc55d14c129bd49b28e5e9a78f4ca84d7fdc3f7a47422",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. mods.toml has no URL.",
+    "download_url": "https://cdn.modrinth.com/data/XpoGu4hu/versions/T8icFnPy/MekanismWeapons-1.21.1-4.2.1.jar"
+  },
+  {
+    "id": "mob_grinding_utils",
+    "name": "Mob Grinding Utils",
+    "version": "1.1.10+mc1.21.1",
+    "authors": "vadis365, flanks255",
+    "license": "All rights reserved",
+    "jar": "mob_grinding_utils-1.1.10+mc1.21.1.jar",
+    "sha1": "3dffde016ec61eb3961453e7142c85d11a4f4127",
+    "sha256": "9781e7a5cffc53a9b2879160aef0d39a7e416d7f4b5805240ca03eaff5f4ed06",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. mods.toml version is ${file.jarVersion}; the version is the manifest's Implementation-Version.",
+    "download_url": "https://edge.forgecdn.net/files/6804/869/mob_grinding_utils-1.1.10%2bmc1.21.1.jar"
+  },
+  {
     "id": "modernfix",
     "name": "ModernFix",
     "version": "5.27.24+mc1.21.1",
@@ -701,6 +1442,45 @@
     "sha256": "e6e9446890f0feb3aab3f6e73ae18cb17575c370f232179fef7baa30e61538fe",
     "download_url": "https://cdn.modrinth.com/data/nmDcB62a/versions/5HLHxQ2F/modernfix-neoforge-5.27.24%2Bmc1.21.1.jar",
     "source_url": "https://github.com/embeddedt/ModernFix"
+  },
+  {
+    "id": "modularrouters",
+    "name": "Modular Routers",
+    "version": "13.2.7",
+    "authors": "Not declared in the target JAR",
+    "license": "MIT",
+    "jar": "modular-routers-13.2.7+mc1.21.1.jar",
+    "sha1": "d67d3df00b08ea5135326cf1a063ae3032a53114",
+    "sha256": "3bb8ff7096c87920ecda1bc9d81a3ca5df6e7830b9dcfe1836be4e205ea02049",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/EuTS81Z3/versions/6qMDJ0mn/modular-routers-13.2.7%2Bmc1.21.1.jar"
+  },
+  {
+    "id": "moonlight",
+    "name": "Moonlight Lib",
+    "version": "1.21.1-3.8.1",
+    "authors": "MehVahdJukaar",
+    "license": "Supplementaries Team License v.1.5",
+    "jar": "moonlight-1.21.1-3.8.1-neoforge.jar",
+    "sha1": "0054e4dabc8623463b58ddeb1e2308e943c125bd",
+    "sha256": "d1f6ee5b723d4d1d261dbbea8110c1cd49ea1ed49321428c1322590b4b1e77ff",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/twkfQtEc/versions/Utlh1Gae/moonlight-1.21.1-3.8.1-neoforge.jar"
+  },
+  {
+    "id": "morerelics",
+    "name": "More Relics",
+    "version": "1.7.7-forRelics-0.12.8-1.0",
+    "authors": "Blorbilon",
+    "license": "All Rights Reserved",
+    "jar": "morerelics-1.7.7-forRelics-0.12.8-1.0-1.21.1.jar",
+    "sha1": "bc220ed291187c97bd1896f1fdd29b2377879ae1",
+    "sha256": "c3d71a841ef483d36e062fed5b17c4724260ce4e78ffe7ab9368264ab64d42d2",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. mods.toml has no URL.",
+    "download_url": "https://cdn.modrinth.com/data/NmYBBHLU/versions/vFU5WdGv/morerelics-1.7.7-forRelics-0.12.8-1.0-1.21.1.jar"
   },
   {
     "id": "mowziesmobs",
@@ -737,6 +1517,32 @@
     "sha256": "1e20340a6642dcd6e43399292825f8cd84a079e0b917e36cf7341e787b626a4f",
     "download_url": "https://cdn.modrinth.com/data/derP0ten/versions/dauEcrnZ/MutantMonsters-v21.1.1-1.21.1-NeoForge.jar",
     "source_url": null
+  },
+  {
+    "id": "mysticalagriculture",
+    "name": "Mystical Agriculture",
+    "version": "8.0.29",
+    "authors": "BlakeBr0",
+    "license": "MIT",
+    "jar": "MysticalAgriculture-1.21.1-8.0.29.jar",
+    "sha1": "4a774506f65899683aa40b92fec972ddcc4fdc4f",
+    "sha256": "15c2cbde18f25d228b8da26d8c6a040f217f24cc73084b8176d3e18e7140971e",
+    "source_url": "https://blakesmods.com/mystical-agriculture",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/C95ReXie/versions/4Wc9oVPI/MysticalAgriculture-1.21.1-8.0.29.jar"
+  },
+  {
+    "id": "mythsandlegends",
+    "name": "Myths & Legends",
+    "version": "1.1.0",
+    "authors": "oVinter",
+    "license": "All Rights Reserved",
+    "jar": "mythsandlegends-1.1.0.jar",
+    "sha1": "d4062b59b973ff36260981754605da2363545341",
+    "sha256": "03b95449a45ae7b374b9a97e440685259d3b3d65186040e0783b1e7547026d30",
+    "source_url": "https://www.curseforge.com/minecraft/mc-mods/myths-n-legends",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/JzgNbcKE/versions/iSzid89U/mythsandlegends-1.1.0.jar"
   },
   {
     "id": "naturesaura",
@@ -800,6 +1606,32 @@
     "source_url": null
   },
   {
+    "id": "particular",
+    "name": "Particular Reforged",
+    "version": "1.5.7",
+    "authors": "Leclowndu93150",
+    "license": "LGPL-3.0",
+    "jar": "particular-1.21.1-NeoForge-1.5.7.jar",
+    "sha1": "d6d33e8233481ad8fc6f8c351f52783ed431a800",
+    "sha256": "42c5ba95472c233a455da440e08a74be69cba616493292c0830cf47a47a9498e",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. neoforge.mods.toml has no source or issue URL; credits name Chai the goat for the original Particular.",
+    "download_url": "https://cdn.modrinth.com/data/pYFUU6cq/versions/WyRBAcBf/particular-1.21.1-NeoForge-1.5.7.jar"
+  },
+  {
+    "id": "patchouli",
+    "name": "Patchouli",
+    "version": "1.21.1-93-NEOFORGE",
+    "authors": "Vazkii",
+    "license": "CC BY-NC-SA 3.0",
+    "jar": "Patchouli-1.21.1-93-NEOFORGE.jar",
+    "sha1": "5413bb9b8fc35ebe46b06b48bf9afafbd8471140",
+    "sha256": "959af52ed6640c316c3a8469203420be4aeea11ad6603890ba83bf48f5d9f993",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/nU0bVIaL/versions/BIogJv2D/Patchouli-1.21.1-93-NEOFORGE.jar"
+  },
+  {
     "id": "pehkui",
     "name": "Pehkui",
     "version": "3.8.3+1.21-neoforge",
@@ -810,6 +1642,45 @@
     "sha256": "50aab835b0f98dedf33383483b021789c2991786f02b00e6d1b7152dc43570ec",
     "download_url": "https://cdn.modrinth.com/data/t5W7Jfwy/versions/nKHizsl6/Pehkui-3.8.3%2B1.21-neoforge.jar",
     "source_url": "https://github.com/Virtuoel/Pehkui"
+  },
+  {
+    "id": "peyroscythe",
+    "name": "Peyro's Scythe",
+    "version": "1.21.1-1.3.2",
+    "authors": "Rinko1231",
+    "license": "GPLv3",
+    "jar": "peyroscythe-1.21.1-1.21.1-1.3.2.jar",
+    "sha1": "876109a4af51fc10424326f7a944a4d8fc256c25",
+    "sha256": "0747d7ffc163afe521835a5627070703fe37620706719fab0ad38a210e181168",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. CurseForge file 7810212; extra-targets49 lists no mod id for it, the jar's neoforge.mods.toml declares modId peyroscythe (its comments confused the reader).",
+    "download_url": "https://edge.forgecdn.net/files/7810/212/peyroscythe-1.21.1-1.21.1-1.3.2.jar"
+  },
+  {
+    "id": "photon",
+    "name": "Photon",
+    "version": "2.2.10",
+    "authors": "KilaBash",
+    "license": "GPL-3.0 license",
+    "jar": "photon-neoforge-1.21.1-2.2.10-all.jar",
+    "sha1": "f23b27a1f116d0d90ce811fadce56c9a22f48673",
+    "sha256": "b5e5ca3697ccd90f28bdf29e5b01a6ea4fb93f1a77ebfd890679a363aa62376e",
+    "source_url": "https://github.com/Low-Drag-MC/Photon/",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/gzevkJbM/versions/nGIszLwl/photon-neoforge-1.21.1-2.2.10-all.jar"
+  },
+  {
+    "id": "pickupnotifier",
+    "name": "Pick Up Notifier",
+    "version": "21.1.1",
+    "authors": "Fuzs",
+    "license": "MPL-2.0",
+    "jar": "PickUpNotifier-v21.1.1-1.21.1-NeoForge.jar",
+    "sha1": "90d3fe207c95a3a5d849ebf8d70ffa885694e30f",
+    "sha256": "b49535698de9c7b5a879c8ec99175771d87d5261d5cc4c6152ba1fa51fc5676a",
+    "source_url": "https://github.com/Fuzss/pickupnotifier",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/ZX66K16c/versions/5NZounJc/PickUpNotifier-v21.1.1-1.21.1-NeoForge.jar"
   },
   {
     "id": "pipez",
@@ -836,6 +1707,19 @@
     "source_url": "https://github.com/Shadows-of-Fire/Placebo"
   },
   {
+    "id": "powah",
+    "name": "Powah",
+    "version": "6.2.10",
+    "authors": "owmii,Technici4n,shartte",
+    "license": "LGPLv3",
+    "jar": "Powah-6.2.10.jar",
+    "sha1": "f134ab3e0ace3793abf93129e318eb817898a4e1",
+    "sha256": "0e604a7356111c1dd44a00ea42fc1aa960d9faeb978261349df1138fcee4d0b4",
+    "source_url": "https://www.curseforge.com/minecraft/mc-mods/powah-rearchitected",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. source_url from the mods.toml issueTrackerURL (https://github.com/Technici4n/Powah/issues).",
+    "download_url": "https://cdn.modrinth.com/data/KZO4S4DO/versions/1prWLuga/Powah-6.2.10.jar"
+  },
+  {
     "id": "presencefootsteps",
     "name": "Presence Footsteps [FORGE]",
     "version": "1.0.0",
@@ -846,6 +1730,19 @@
     "sha256": "59910ff5bd1728d186520d36514e8e18d56c14618702ed55ecf84484dbdc61f0",
     "download_url": "https://cdn.modrinth.com/data/dLfueQtY/versions/APwizIWh/Presence%20Footsteps%20%5BNEOFORGE%5D%2B1.21-1.1.0.jar",
     "source_url": null
+  },
+  {
+    "id": "puffish_attributes",
+    "name": "Pufferfish's Attributes",
+    "version": "0.8.3",
+    "authors": "Pufferfish",
+    "license": "LGPL-3.0",
+    "jar": "puffish_attributes-0.8.3-1.21-neoforge.jar",
+    "sha1": "9e6a87f790fc9281ea2685f8d4f6435d0d7c6d1f",
+    "sha256": "b21c165e033360e112eb2c3426437e1ba4ebf70f971535b72b1b1891d04c87f0",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/FCFcFw09/versions/ZySEqrUb/puffish_attributes-0.8.3-1.21-neoforge.jar"
   },
   {
     "id": "punchy",
@@ -922,6 +1819,19 @@
     "source_url": null
   },
   {
+    "id": "ritchiesprojectilelib",
+    "name": "Ritchie's Projectile Library",
+    "version": "2.1.2",
+    "authors": "rbasamoyai",
+    "license": "MIT License",
+    "jar": "ritchiesprojectilelib-2.1.2+mc.1.21.1-neoforge.jar",
+    "sha1": "ec2e4996f8bee8714173e603e379fef8a6901765",
+    "sha256": "cc509060833736fb650aa4c36b1ce33a7eeeb9ca6e9f8e80a7c951c9e7487b24",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. source_url from the mods.toml issueTrackerURL.",
+    "download_url": "https://cdn.modrinth.com/data/B3pb093D/versions/hZ6B2Z0x/ritchiesprojectilelib-2.1.2%2Bmc.1.21.1-neoforge.jar"
+  },
+  {
     "id": "rustic_engineer",
     "name": "Rustic Engineer",
     "version": "1.1.4",
@@ -947,6 +1857,32 @@
     "source_url": "https://github.com/ThinkingStudios/LambDynamicLights-Forge/"
   },
   {
+    "id": "sanguine_networks",
+    "name": "Sanguine Neural Networks",
+    "version": "2.0.1",
+    "authors": "MtcLuna5",
+    "license": "MIT",
+    "jar": "sanguine_networks-1.21.1-2.0.1.jar",
+    "sha1": "3ed5197ead9902189ea06a7c4508b3444d1a73a2",
+    "sha256": "8d6de678b128acbfa1a8414f7bb7701ec894b699b2626bdcfd8620bb9b6f9ce0",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. mods.toml has no display or issue URL.",
+    "download_url": "https://cdn.modrinth.com/data/8TLnjuAB/versions/FVKDJKlM/sanguine_networks-1.21.1-2.0.1.jar"
+  },
+  {
+    "id": "shouldersurfing",
+    "name": "Shoulder Surfing Reloaded",
+    "version": "1.21.1-5.3.0",
+    "authors": "Not declared in the target JAR",
+    "license": "MIT",
+    "jar": "ShoulderSurfing-NeoForge-1.21.1-5.3.0.jar",
+    "sha1": "18dbbf3d47c100200aaacbd6eab58793885c905b",
+    "sha256": "6be971980420ce54f5e76d6f73f78c10e785429da78a6200a93f8fdc018464f0",
+    "source_url": "https://github.com/Exopandora/ShoulderSurfing",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/kepjj2sy/versions/5380Ijsk/ShoulderSurfing-NeoForge-1.21.1-5.3.0.jar"
+  },
+  {
     "id": "simplyswords",
     "name": "Simply Swords",
     "version": "1.70.2-1.21.1",
@@ -957,6 +1893,19 @@
     "sha256": "5e75bd66ea489079d60c9c1ed98762550fbc0bee88cd7af399f17bbeb56608c3",
     "download_url": "https://cdn.modrinth.com/data/bK3Ubu9p/versions/nS0Yahr5/simplyswords-neoforge-1.70.2-1.21.1.jar",
     "source_url": null
+  },
+  {
+    "id": "skyarena",
+    "name": "Sky Arena",
+    "version": "1.3.6-1.21.1",
+    "authors": "JrDemiurge",
+    "license": "MIT",
+    "jar": "SkyArena-1.3.6-1.21.1.jar",
+    "sha1": "e12dedb73aa62e9036a74449ccc6fc636bc0b751",
+    "sha256": "376accd0213cc4d7a7c02ec2c333b9179c2a98a7c334cb292b584b673e2cffbb",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. neoforge.mods.toml has no display or issue URL; the jar comes from CurseForge file 7053645.",
+    "download_url": "https://edge.forgecdn.net/files/7053/645/SkyArena-1.3.6-1.21.1.jar"
   },
   {
     "id": "slashblade",
@@ -996,6 +1945,19 @@
     "download_url": "https://edge.forgecdn.net/files/7470/43/smart_particles-21.8.10.jar"
   },
   {
+    "id": "snuffles",
+    "name": "Snuffles",
+    "version": "1.1.2",
+    "authors": "SchnappDragon, Edmord17",
+    "license": "MIT License",
+    "jar": "snuffles-1.1.2.jar",
+    "sha1": "a3a43993f9e95f9217c07a843d1af502f67a979b",
+    "sha256": "f866905235c4d3216517013d05062229ffca2624e7675be724eeac7e821ad6da",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. neoforge.mods.toml has no URL; the Forge 1.2.0.1 build names https://github.com/SnappyDragon18/Snuffles/issues.",
+    "download_url": "https://cdn.modrinth.com/data/NYGhKUS6/versions/YGfEgx7L/snuffles-1.1.2.jar"
+  },
+  {
     "id": "sodium",
     "name": "Sodium",
     "version": "0.6.13+mc1.21.1",
@@ -1006,6 +1968,19 @@
     "sha256": "7acd7af2ef75ec883a6872c17494ead65e38025151eb08a1d60e36d34377f403",
     "download_url": "https://cdn.modrinth.com/data/AANobbMI/versions/Pb3OXVqC/sodium-neoforge-0.6.13%2Bmc1.21.1.jar",
     "source_url": "https://github.com/CaffeineMC/sodium"
+  },
+  {
+    "id": "sophisticatedbackpacks",
+    "name": "Sophisticated Backpacks",
+    "version": "3.26.20",
+    "authors": "P3pp3rF1y, Ridanisaurus",
+    "license": "All Rights Reserved",
+    "jar": "sophisticatedbackpacks-1.21.1-3.26.20.2244.jar",
+    "sha1": "ff6142179739562fd084563d60263eda0820cb9f",
+    "sha256": "ba29bf715533b4efbadcbfedbc6327e445fd052ea8d494eb0cd192b194ed267e",
+    "source_url": "https://www.curseforge.com/minecraft/mc-mods/sophisticated-backpacks",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. source_url from the mods.toml issueTrackerURL (https://github.com/P3pp3rF1y/SophisticatedBackpacks/issues); Implementation-Version 1.21.1-3.26.20.2244.",
+    "download_url": "https://edge.forgecdn.net/files/9431/839/sophisticatedbackpacks-1.21.1-3.26.20.2244.jar"
   },
   {
     "id": "spawn",
@@ -1057,6 +2032,19 @@
     "download_url": "https://cdn.modrinth.com/data/4q8UOK1d/versions/ReUDmzrA/SubtleEffects-neoforge-1.21.1-1.15.1.jar"
   },
   {
+    "id": "supplementaries",
+    "name": "Supplementaries",
+    "version": "1.21.1-4.0.2",
+    "authors": "MehVahdJukaar, Plantkillable",
+    "license": "Supplementaries Team License v.1.5",
+    "jar": "supplementaries-1.21.1-4.0.2-neoforge.jar",
+    "sha1": "af25cb08a82c72b3fb67508071ce627714bd2b57",
+    "sha256": "2c2e0c98e0cc21874d8b2130bc773a2a5a6cadd854b9c8163d0e1f32e2ddffb0",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/fFEIiSDQ/versions/rWq0ko29/supplementaries-1.21.1-4.0.2-neoforge.jar"
+  },
+  {
     "id": "teallib",
     "name": "Teal Lib",
     "version": "1.3.teal",
@@ -1067,6 +2055,19 @@
     "sha256": "297004b131df16839a09f97ecd703ea20e89937289e5613d3711e385f9377218",
     "download_url": "https://cdn.modrinth.com/data/rLJ1qF79/versions/lZTBRemW/teallib-1.3.teal.jar",
     "source_url": null
+  },
+  {
+    "id": "terra_curio",
+    "name": "TerraCurio",
+    "version": "1.1.1",
+    "authors": "Westernat, XiaoHuNao",
+    "license": "LGPL-3.0",
+    "jar": "terra_curio-1.1.1.jar",
+    "sha1": "15b0fd7aea359280681918a8bdd4ed1d7b0534c8",
+    "sha256": "146526d445e209478ba4cb6e32f03d49e2dcf98f31942ebc95c55d505c54e2a3",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. source_url is the Modrinth project page: the jar names no source repository.",
+    "download_url": "https://cdn.modrinth.com/data/cylFY5iL/versions/mCth2g0T/terra_curio-1.1.1.jar"
   },
   {
     "id": "terrablender",
@@ -1094,6 +2095,84 @@
     "download_url": "https://edge.forgecdn.net/files/8292/303/TextAnimator-1.21.1-NeoForge-3.2.3.jar"
   },
   {
+    "id": "timm",
+    "name": "The Immersive Music Mod",
+    "version": "1.1",
+    "authors": "CrawKatt, Pardys",
+    "license": "GPL-3.0 License",
+    "jar": "timm-1.1-neoforge-1.21.jar",
+    "sha1": "85f907fcbebc25bba32e0af4abcdc55205c45146",
+    "sha256": "2566a6f86d5420a01723f54a3e3147daba0838253b40fb002a20cfdc39d5beb0",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. source_url is the Modrinth project page: the jar names no source repository.",
+    "download_url": "https://cdn.modrinth.com/data/EgBj3Bnf/versions/AoFYLDWr/timm-1.1-neoforge-1.21.jar"
+  },
+  {
+    "id": "titanium",
+    "name": "Titanium",
+    "version": "4.0.52",
+    "authors": "Not declared in the target JAR",
+    "license": "GNU LESSER GENERAL PUBLIC LICENSE",
+    "jar": "titanium-1.21-4.0.52.jar",
+    "sha1": "b46f625333c9c570eed9962a355f37687d39e731",
+    "sha256": "404beac4211b11172cabb2bb0ff5cad28c10d1d6f4ebff79aeb2888a981c3a41",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. version from MANIFEST.MF Implementation-Version (mods.toml says ${file.jarVersion}); source_url is the Modrinth project page.",
+    "download_url": "https://cdn.modrinth.com/data/1Ro7m06l/versions/ZrffET42/titanium-1.21-4.0.52.jar"
+  },
+  {
+    "id": "tonsofenchants",
+    "name": "Tons Of Enchants",
+    "version": "1.21.1-v1.0",
+    "authors": "ParitalDelta(aka DeltaJay/deltajay_) on CurseForge",
+    "license": "MIT License",
+    "jar": "TonsOfEnchants-NeoForge-1.21.1.jar",
+    "sha1": "d98da403b98455e16b6534da4878fba1c18ad200",
+    "sha256": "b6f0e874d3326b1013969153555fc72ec8d0863eb28963dba5342c8f3b822145",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. source_url is the issueTrackerURL of its mods.toml (CurseForge file 7813995).",
+    "download_url": "https://edge.forgecdn.net/files/7813/995/TonsOfEnchants-NeoForge-1.21.1.jar"
+  },
+  {
+    "id": "tooltipoverhaul",
+    "name": "Tooltip overhaul",
+    "version": "2.0.7",
+    "authors": "Xylonity, ModderG",
+    "license": "GNU GPLv3",
+    "jar": "tooltipoverhaul-neoforge-1.21.1-2.0.7.jar",
+    "sha1": "ea9873bce86ab65594ba41c13fb16d9fec5c0958",
+    "sha256": "7ecd818d30dacb8b9651d8abf177b73c06413e5b5b2c2afa2831ce4c0b200c8a",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. source_url is the Modrinth project page: the jar names no source repository.",
+    "download_url": "https://cdn.modrinth.com/data/vRFcG5n6/versions/zHL7vnJP/tooltipoverhaul-neoforge-1.21.1-2.0.7.jar"
+  },
+  {
+    "id": "torchmaster",
+    "name": "Torchmaster",
+    "version": "21.1.13",
+    "authors": "Xalcon",
+    "license": "MIT",
+    "jar": "torchmaster-neoforge-1.21.1-21.1.13.jar",
+    "sha1": "b139713195dc65bbe66dcdbde87a0d84aa407b5a",
+    "sha256": "661afe53647ef687d3d970e5df7b53107d94d080671e25317f67cb02b4349cba",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. license MIT in this build (the Forge 20.1.9 jar said All Rights Reserved); source_url is the Modrinth project page.",
+    "download_url": "https://cdn.modrinth.com/data/Tl8ESrhX/versions/JmlakQNo/torchmaster-neoforge-1.21.1-21.1.13.jar"
+  },
+  {
+    "id": "touch_n_motion",
+    "name": "Touch'n Motion",
+    "version": "1.0.4",
+    "authors": "STRadaT",
+    "license": "GNU GPL 3.0",
+    "jar": "touch_n_motion_neoforge_1.21.1_1.0.4.jar",
+    "sha1": "b6fba9ca4d73d2e1eb4968fb48cb6eb0fcadca36",
+    "sha256": "3754909bf0d12445b18a60de315619734c1229bcc621f88f315ccf076701ab56",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://edge.forgecdn.net/files/9205/893/touch_n_motion_neoforge_1.21.1_1.0.4.jar"
+  },
+  {
     "id": "treechop",
     "name": "HT's TreeChop",
     "version": "0.19.3",
@@ -1105,6 +2184,83 @@
     "source_url": "https://github.com/hammertater/treechop",
     "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
     "download_url": "https://edge.forgecdn.net/files/6254/465/TreeChop-1.21.1-neoforge-0.19.3.jar"
+  },
+  {
+    "id": "undergarden",
+    "name": "The Undergarden",
+    "version": "0.9.6",
+    "authors": "quek",
+    "license": "MIT",
+    "jar": "The_Undergarden-1.21.1-0.9.6.jar",
+    "sha1": "75f1753eefa0b7b8e3afd7377deaf9fe71392476",
+    "sha256": "49e3db6ce2cf6864e9d45f0633de95bc3ef72cbd5ebffee493fca7198d30ccb0",
+    "source_url": "https://www.curseforge.com/minecraft/mc-mods/the-undergarden",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/Ejfl5qDL/versions/sY4KZ9q3/The_Undergarden-1.21.1-0.9.6.jar"
+  },
+  {
+    "id": "w2w2",
+    "name": "Waystones2Waypoints2",
+    "version": "2.1.0",
+    "authors": "Love, Cheese and small house plants",
+    "license": "All rights reserved",
+    "jar": "xaeros_waystones_compatibility-NeoForge-1.21.1-2.1.0.jar",
+    "sha1": "88abd70fae3e78dc6c2fdfc726bc453f97494c19",
+    "sha256": "fcd0a18f5f5940b31353ee70ddb0194cf1cd9565a8bfc9557c93804e34422b89",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/7mLhyqIY/versions/k8wIAiWT/xaeros_waystones_compatibility-NeoForge-1.21.1-2.1.0.jar"
+  },
+  {
+    "id": "witherreincarnated",
+    "name": "Wither Reincarnated",
+    "version": "1.1.0",
+    "authors": "Alexander's Fun and Games",
+    "license": "All Rights Reserved",
+    "jar": "witherreincarnated-1.21.1-1.0.5.jar",
+    "sha1": "7d5b44a8ec9e6c4f4624382e3a804b32160450de",
+    "sha256": "624ab24f75054b609407d4c70bfb0c5df85fb01ab80316e3da44346ae5c29d7b",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/YDc8cRWF/versions/6d4I4VPO/witherreincarnated-1.21.1-1.0.5.jar"
+  },
+  {
+    "id": "xaerolib",
+    "name": "XaeroLib",
+    "version": "1.7.3",
+    "authors": "xaero96",
+    "license": "All Rights Reserved",
+    "jar": "xaerolib-neoforge-1.21.1-1.7.3.jar",
+    "sha1": "41cefa7cb94440f62fa668ebecfa7bf9476fb90b",
+    "sha256": "010dc4c2ff154aa8ba04c779600658b77ac0003eee3a98ac9453f6e7acd28898",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR. Jar-in-Jar library supplied by xaerominimap-neoforge-1.21.1-26.6.0.jar. jar-in-jar of Xaero's Minimap 26.6.0 and World Map 1.47.0 (identical file in both); no standalone download."
+  },
+  {
+    "id": "xaerominimap",
+    "name": "Xaero's Minimap",
+    "version": "26.6.0",
+    "authors": "xaero96",
+    "license": "All Rights Reserved",
+    "jar": "xaerominimap-neoforge-1.21.1-26.6.0.jar",
+    "sha1": "551e8e2aa3498b506cc949a74606cdc0380e5e00",
+    "sha256": "d3398221b2262abfe2d394b588122e5b3fd2e4d8c4bf66a5fd357352fcf51b2e",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/1bokaNcj/versions/irjR7dHk/xaerominimap-neoforge-1.21.1-26.6.0.jar"
+  },
+  {
+    "id": "xaeroworldmap",
+    "name": "Xaero's World Map",
+    "version": "1.47.0",
+    "authors": "xaero96",
+    "license": "All Rights Reserved",
+    "jar": "xaeroworldmap-neoforge-1.21.1-1.47.0.jar",
+    "sha1": "2936c9cb9dfbdab145fe6f1e8ae2c68915246a5f",
+    "sha256": "6a42b6f01bd96b496e5fcc07d4541bad1a699d9ec8ad58ad40d5dcfe23a7d4c7",
+    "source_url": "",
+    "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
+    "download_url": "https://cdn.modrinth.com/data/NcUtCpym/versions/SnQ4SoDe/xaeroworldmap-neoforge-1.21.1-1.47.0.jar"
   },
   {
     "id": "zeta",

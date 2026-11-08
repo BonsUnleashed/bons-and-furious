@@ -4,6 +4,7 @@ import com.github.L_Ender.lionfishapi.client.model.Animations.ModelAnimator;
 import com.github.L_Ender.lionfishapi.client.model.tools.AdvancedEntityModel;
 import com.github.L_Ender.lionfishapi.client.model.tools.AdvancedModelBox;
 import com.github.L_Ender.lionfishapi.server.animation.IAnimatedEntity;
+import java.lang.ref.WeakReference;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicLong;
 import org.apache.logging.log4j.LogManager;
@@ -52,16 +53,19 @@ public final class ShieldLayerPose {
         ModelAnimator bons$animator();
     }
 
-    // the last setupAnim one of the three models finished (render thread only)
-    private static Object lastModel, lastEntity;
+    private static final WeakReference<Object> NONE = new WeakReference<>(null);
+    // the last setupAnim one of the three models finished (render thread only). Since 1.0.49 held weakly: the entity
+    // reaches its client level, which stayed in memory after leaving a world until another of these mobs was drawn. The
+    // comparison is still by identity; a reference the collector cleared only misses (setupAnim then runs as shipped).
+    private static WeakReference<Object> lastModel = NONE, lastEntity = NONE;
     private static int lastA, lastB, lastC, lastD, lastE;
 
     private ShieldLayerPose() {
     }
 
     public static void finished(Object model, Object entity, float a, float b, float c, float d, float e) {
-        lastModel = model;
-        lastEntity = entity;
+        if (lastModel.get() != model) lastModel = new WeakReference<>(model);
+        if (lastEntity.get() != entity) lastEntity = new WeakReference<>(entity);
         lastA = Float.floatToRawIntBits(a);
         lastB = Float.floatToRawIntBits(b);
         lastC = Float.floatToRawIntBits(c);
@@ -70,7 +74,7 @@ public final class ShieldLayerPose {
     }
 
     private static boolean posedWith(Object model, Object entity, float a, float b, float c, float d, float e) {
-        return lastModel == model && lastEntity == entity && lastA == Float.floatToRawIntBits(a) && lastB == Float.floatToRawIntBits(b)
+        return lastModel.get() == model && lastEntity.get() == entity && lastA == Float.floatToRawIntBits(a) && lastB == Float.floatToRawIntBits(b)
                 && lastC == Float.floatToRawIntBits(c) && lastD == Float.floatToRawIntBits(d) && lastE == Float.floatToRawIntBits(e);
     }
 

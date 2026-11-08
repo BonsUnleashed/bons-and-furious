@@ -1,0 +1,33 @@
+{
+  "group": "brutalbosses_coo49",
+  "keys": {
+    "brutalbosses_boss_bar_local_player": {
+      "mod": "brutalbosses",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.brutalbosses_coo49.BossBarLocalPlayerMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/brutalbosses/event/ClientEventHandler",
+          "method": "onPlayerTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/PlayerTickEvent$Post;)V",
+          "note": "Post only (every player entity the client ticks); client level and gameTime % 5 == 0: checkEntity(crosshair entity); per kept boss bar: update, drop dead or timed-out bosses, event.getEntity().hasLineOfSight(boss) -> timeOut = gameTime + 600",
+          "sha256": "d56c96de03fc958a2f1c20c421c5c9688009624cefbd7080613e12affca714f6"
+        },
+        {
+          "class": "com/brutalbosses/event/ClientEventHandler",
+          "method": "checkEntity",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "opens or renews the bar of the crosshair target (the client's own hit result, the same for every run of a tick)",
+          "sha256": "ecdb34bc70a54c9bb31a41732ede65e4a545f146de31e2105d4a53af32cc1f35"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Gameplay fix, off by default: @Inject at HEAD (cancellable) of ClientEventHandler.onPlayerTick(PlayerTickEvent.Post) returns unless the event's player is the local player (Minecraft.player). Runtime flag brutalbossesBossBarLocalPlayer. Helper bons.furious.patch.brutalbosses_coo49.BossBarLocal.",
+      "license": "Brutal Bosses (All Rights Reserved): no code carried; the check is ours"
+    }
+  }
+}

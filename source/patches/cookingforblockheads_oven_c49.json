@@ -1,0 +1,40 @@
+{
+  "group": "cookingforblockheads_oven_c49",
+  "keys": {
+    "cookingforblockheads_oven_facing_from_state": {
+      "mod": "cookingforblockheads",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cookingforblockheads_oven_c49.OvenFacingMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/blay09/mods/cookingforblockheads/block/entity/OvenBlockEntity",
+          "method": "getFacing",
+          "desc": "()Lnet/minecraft/core/Direction;",
+          "note": "the facing field, NORTH while it is null",
+          "sha256": "352ae0b416aaad0d5233c0732d5b3c545eb611a5ff4230edab9f8c84db9de65c"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/block/entity/OvenBlockEntity",
+          "method": "serverTick",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)V",
+          "note": "the only write of the facing field: the first server tick, when the state has BaseKitchenBlock.FACING; the field is neither saved nor sent",
+          "sha256": "f2045238e63a99abdcc78bb6dc988d28e2aa2e672c76fcfb16bb439e807c16b3"
+        },
+        {
+          "class": "net/blay09/mods/cookingforblockheads/client/render/OvenRenderer",
+          "method": "render",
+          "desc": "(Lnet/blay09/mods/cookingforblockheads/block/entity/OvenBlockEntity;FLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V",
+          "note": "the only reader: the door handles are drawn with the light of pos.relative(getFacing())",
+          "sha256": "9836fec83651609338381de8e0cda8a09d21b2eb5c3609e8ede31386fbd49a28"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyReturnValue on OvenBlockEntity.getFacing (Cooking for Blockheads 21.1.24, package block.entity; string target, so Balm is not needed to compile): the facing of the oven's current block state (BaseKitchenBlock.FACING) when the state has it, else the original answer. Gameplay fix (off by default): the door handles of ovens facing south, east or west are lit from the block in front of the oven instead of the block to its north. Runtime flag cookingforblockheadsOvenFacingFromState. Helper bons.furious.patch.cookingforblockheads_oven_c49.OvenFacing.",
+      "license": "Cooking for Blockheads (All Rights Reserved): no code carried, the hook carries only our own logic"
+    }
+  }
+}

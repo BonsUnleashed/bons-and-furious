@@ -1,0 +1,116 @@
+{
+  "group": "lionfishapi_c49",
+  "keys": {
+    "lionfishapi_fluid_render_event_gate": {
+      "mod": "lionfishapi",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.lionfishapi_c49.LionfishFluidEventGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/lionfishapi/mixin/client/ItemBlockRenderTypesMixin",
+          "method": "lionfish_getFluidRenderLayer",
+          "desc": "(Lnet/minecraft/world/level/material/FluidState;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "Lionfish API 3.1: new EventGetFluidRenderType(state, cir.getReturnValue()), NeoForge.EVENT_BUS.post, setReturnValue(getRenderType()) only on its own Result.ALLOW",
+          "sha256": "3cf19641cea7eb96333181352fa50f73e13cbe65bf1b73cb42d01ea105f5fe61"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/event/EventGetFluidRenderType",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/material/FluidState;Lnet/minecraft/client/renderer/RenderType;)V",
+          "note": "stores its two arguments; result starts at Result.DEFAULT",
+          "sha256": "0ab570b4a92b4bc9e42eea9e44e480726683c195eff5002a1a0450bdafb4422e"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/event/EventGetFluidRenderType",
+          "method": "getResult",
+          "desc": "()Lcom/github/L_Ender/lionfishapi/client/event/EventGetFluidRenderType$Result;",
+          "note": "field read",
+          "sha256": "3120cce3b1e22f27f4f5bf4571f04b01e1e8910fd79736218c333a9790b4d61b"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/event/EventGetFluidRenderType",
+          "method": "getRenderType",
+          "desc": "()Lnet/minecraft/client/renderer/RenderType;",
+          "note": "field read",
+          "sha256": "47ea1383211814bfe5b223066080f43ff7a147600950b07c211bc9598043a970"
+        },
+        {
+          "class": "net/minecraft/client/renderer/ItemBlockRenderTypes",
+          "method": "getRenderLayer",
+          "desc": "(Lnet/minecraft/world/level/material/FluidState;)Lnet/minecraft/client/renderer/RenderType;",
+          "note": "getRenderLayer(FluidState): Lionfish's handler runs at its TAIL",
+          "sha256": "ca91f00678cbf2d51c4e96ab69b275f809b834d00b41c41b6fb9ae3eeb327a43"
+        }
+      ],
+      "cancel": [],
+      "conversion": "targethandler (MixinSquared @Inject HEAD cancellable on Lionfish's ItemBlockRenderTypesMixin.lionfish_getFluidRenderLayer, priority 1500, require 0: returns at once while the listener list NeoForge.EVENT_BUS posts EventGetFluidRenderType to (EventBus.getListenerList, read once through reflection as the cataclysm_client group reads Citadel's) has an empty getListeners() array; helper bons.furious.patch.lionfishapi_c49.FluidEventGate). The Forge build asked forge_listener_guard's ListenerCensus, which is not on NeoForge (forge_listener_prologue_guard retired); bus 8.0.5 keeps no phase markers in that array, so empty is the whole test.",
+      "license": "LGPL (Lionfish API): no Lionfish code is carried, only an early return in front of its handler"
+    },
+    "lionfishapi_box_rotation_reuse": {
+      "mod": "lionfishapi",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.lionfishapi_c49.LionfishBoxRotationMixin",
+        "bons.furious.mixin.lionfishapi_c49.LionfishPartRotationMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/tools/AdvancedModelBox",
+          "method": "translateAndRotate",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+          "note": "Lionfish API 3.1: translate(double), then mulPose(Axis.ZP / YP / XP.rotation(angle)) per non-zero angle (three invokeinterface rotation calls), then scale",
+          "sha256": "1ceb90b80c494343910b9dc96c1f1f858781fef449d941a05281eff81ea84a57"
+        },
+        {
+          "class": "com/github/L_Ender/lionfishapi/client/model/tools/BasicModelPart",
+          "method": "translateAndRotate",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;)V",
+          "note": "translate(float), mulPose(new Quaternionf().rotationZYX(z, y, x)) when any angle is non-zero, scale when not 1",
+          "sha256": "0fe3df59be208843f23415d1de6eba7abb9ab38f689ee2fb3406053bcc74c352"
+        },
+        {
+          "class": "com/mojang/math/Axis",
+          "method": "lambda$static$5",
+          "desc": "(F)Lorg/joml/Quaternionf;",
+          "note": "Axis.ZP: new Quaternionf().rotationZ(angle)",
+          "sha256": "11c9710086dda67a48a19bdcdf147a0d984bf95ff935639f81b753f9abf278e0"
+        },
+        {
+          "class": "com/mojang/math/Axis",
+          "method": "lambda$static$3",
+          "desc": "(F)Lorg/joml/Quaternionf;",
+          "note": "Axis.YP: new Quaternionf().rotationY(angle)",
+          "sha256": "65edb98f43b8231dd8fcce9599bef4da4f6649e4149dfc3190f3e888c0d4d325"
+        },
+        {
+          "class": "com/mojang/math/Axis",
+          "method": "lambda$static$1",
+          "desc": "(F)Lorg/joml/Quaternionf;",
+          "note": "Axis.XP: new Quaternionf().rotationX(angle)",
+          "sha256": "be223eda8d9a95febc9f9dc5eaff58fedea93fcc999ae519ba82283dfe373e8f"
+        },
+        {
+          "class": "com/mojang/math/Axis",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "which lambda each constant gets (XN XP YN YP ZN ZP)",
+          "sha256": "f41f41122b06ad227e00c5f72f05ad47d8f500a884004db0aa80df9c985f8984"
+        },
+        {
+          "class": "com/mojang/blaze3d/vertex/PoseStack",
+          "method": "mulPose",
+          "desc": "(Lorg/joml/Quaternionf;)V",
+          "note": "mulPose: rotates the top pose and normal matrices by the quaternion, keeps no reference",
+          "sha256": "073f9eeb120841e5e103818119360a273a08ba9d4667812acf0199f3f064a4a7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: @Redirect of Axis.rotation in AdvancedModelBox.translateAndRotate (require 3) and of new Quaternionf() in BasicModelPart.translateAndRotate (helper bons.furious.patch.lionfishapi_c49.BoxRotations: one render-thread quaternion filled by the same JOML rotation)",
+      "license": "LGPL (Lionfish API): no Lionfish code is carried; Minecraft (Mojang): no-copy"
+    }
+  }
+}

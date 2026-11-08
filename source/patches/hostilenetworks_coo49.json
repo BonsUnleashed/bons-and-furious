@@ -1,0 +1,53 @@
+{
+  "group": "hostilenetworks_coo49",
+  "keys": {
+    "hostilenetworks_client_entity_cache_lean": {
+      "mod": "hostilenetworks",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.hostilenetworks_coo49.HnnClientEntityCacheMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/shadowsoffire/hostilenetworks/util/ClientEntityCache",
+          "method": "computeIfAbsent",
+          "desc": "(Ldev/shadowsoffire/hostilenetworks/util/DisplayEntity;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/Entity;",
+          "note": "CACHE.computeIfAbsent(level, lambda$computeIfAbsent$0: new HashMap) then inner.computeIfAbsent(display, lambda$computeIfAbsent$1: create + load)",
+          "sha256": "e0c5ca9e1285c270ea721b860baf7fa13c7dbb1acf82aa338072b9fa0a38efff"
+        },
+        {
+          "class": "dev/shadowsoffire/hostilenetworks/util/ClientEntityCache",
+          "method": "lambda$computeIfAbsent$1",
+          "desc": "(Lnet/minecraft/world/level/Level;Ldev/shadowsoffire/hostilenetworks/util/DisplayEntity;Ldev/shadowsoffire/hostilenetworks/util/DisplayEntity;)Lnet/minecraft/world/entity/Entity;",
+          "note": "the miss path: type().create(level), load(display.nbt()); a null create throws before anything is stored, so the cache never holds null",
+          "sha256": "4d6da114f4a598e90f523decaf190e1f7d954ebe6489890949334b627cb7af67"
+        },
+        {
+          "class": "dev/shadowsoffire/hostilenetworks/util/ClientEntityCache",
+          "method": "tick",
+          "desc": "(Lnet/neoforged/neoforge/client/event/ClientTickEvent$Pre;)V",
+          "note": "every client tick (Pre): stream over every cached entity, tickCount++",
+          "sha256": "75d83af3aa52e92bdbb9e1988ea332df7862997f2ef15d405976cd12768908ad"
+        },
+        {
+          "class": "dev/shadowsoffire/hostilenetworks/util/ClientEntityCache",
+          "method": "lambda$tick$2",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "the tick's action: tickCount + 1",
+          "sha256": "a751b957299071fcc3bb49ca2912ed59fbc61b4cf4fbe0a4e5c7cbe4e2556362"
+        },
+        {
+          "class": "dev/shadowsoffire/hostilenetworks/util/ClientEntityCache",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "CACHE = new IdentityHashMap (private static final)",
+          "sha256": "80709f0237865cbcc418b5b71e89d16837cff4f365d2a540fb6341abaa67ac45"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@WrapMethod of ClientEntityCache.computeIfAbsent(DisplayEntity, Level) (a cached level + display entry answers from two map reads, else the original) and of tick(ClientTickEvent.Pre) (two loops adding one to each cached entity's tickCount). Runtime flag hostilenetworksClientEntityCacheLean. Helper bons.furious.patch.hostilenetworks_coo49.HnnClientCache. 1.21.1: the cache is keyed by DisplayEntity and holds Entity; the listener has no phases.",
+      "license": "Hostile Neural Networks (MIT): no code carried"
+    }
+  }
+}

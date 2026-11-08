@@ -1,4 +1,25 @@
-# 1.0.47+mc1.21.1 (2026-10-23)
+# 1.0.49+mc1.21.1 (2026-11-08)
+
+Runtime checks PASS for SHA-256 `94974453d5084439f0ed5b378ada0fc93495218d8b2ae1a11fad977b2d2dda3c`.
+The public source rebuild receipt is published separately and bound to the source archive hash.
+
+- 556 controls: all 260 previous NeoForge controls retained, 296 added; 552 guarded controls and 4,389 fingerprints taken from the 1.21.1 classes. Fingerprints that differ between the development and production game were compared instruction by instruction before being accepted.
+- Dedicated server with 180 mods at once, every server-side target of the port: boots, generates three dimensions, runs 401 ticks and stops cleanly. 234 controls applied, each applied control's target classes loaded; 2,811,362 comparisons of the original answer with ours, 0 mismatches. 5 controls stepped aside for another mod's copy of the change.
+- The same server with every switch that ships off turned on: 299 controls applied, 4,137,954 comparisons, 0 mismatches.
+- Every control added since 1.0.47 off versus on: identical block and biome hashes in three dimensions.
+- World starts with SuperChunk 0.6.1 and Lomka 0.7.0 for NeoForge: clean. Both bundle or replace code the controls touch; the controls step aside for them.
+- TerraBlender saved-layer regression: 510 checks, zero failures, 19,334,826 block positions.
+- Guard helper regression: 31 cases, the full guard table loaded for all 552 guarded controls; 131,072 exact noise samples; 252 ZIP listing comparisons with 6 close/reopen indexes.
+- Clients: Iris with a shader pack, Embeddium without Iris, and one client with every client target mod installed except the ones listed below (552 controls checked, its controls-off twin as the third-party baseline, and a run with every switch that ships off turned on; there, chunksending_solo_no_packet_cache runs its real path, since it only chooses between two existing branches of Chunk Sending and has nothing to compare). 6,736,298,069 comparisons in all, 0 mismatches.
+- Supplementaries 4.0.2 on a client: its own run on Embeddium, because it refuses Sodium below 0.8.12-beta.1 and the Iris pairing above uses Sodium 0.6.13. It is part of the all-at-once server.
+- Sodium 0.8.13, the current build for this game version: the standard client mods without Iris (no control targets Sodium itself) load a world, run 600 ticks and stop cleanly. 1,092,606,616 comparisons, 0 mismatches. This is a smoke test: the Iris controls are written for Iris 1.8.12 with Sodium 0.6.13 and stand aside on other Iris builds.
+- JEI recipe deferral enabled and disabled: identical ordered recipe dumps after a real disconnect and rejoin (3278 anvil and 9717 grindstone recipes).
+- Static checks over 430 jars: no crash-class conflicts. Overwrite access audit over 430 jars: 90 overwrites, all safe.
+- Mods the all-at-once runs leave out, and why: Radium (Create 6 refuses it; Lithium was used), Distant Horizons (a world-generation clash with Celestisynth 1.3.9 that also happens with every control off), JEI (the pinned build is refused by FTB XMod Compat; it has its own tests above), More Relics (needs a newer Relics than the pinned one; tested on its own), Supplementaries on the client (see above), and Macabre on the server (its own server tick handler crashes dedicated servers).
+
+These are targeted tests, not comprehensive multiplayer, every-species or long-session modpack coverage. Forge timings in switch descriptions were measured on Minecraft 1.20.1; no Minecraft 1.21.1 speed benchmark was run.
+
+# Historical: 1.0.47+mc1.21.1 (2026-10-23)
 
 Runtime checks PASS for SHA-256 `4c779d739d16ab8b7b48f28a0a14988946ca37bb4511da1ac441134af5c5c245`.
 The public source rebuild receipt is published separately and bound to the source archive hash.

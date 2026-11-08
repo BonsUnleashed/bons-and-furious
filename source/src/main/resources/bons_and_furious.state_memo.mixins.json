@@ -9,5 +9,9 @@
   },
   "mixins": [
     "SeaLifeWaterloggedMixin"
+  ],
+  "client": [
+    "ChestBubbleWaterloggedMixin",
+    "EnderChestBubbleWaterloggedMixin"
   ]
 }

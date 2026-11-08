@@ -1,0 +1,74 @@
+{
+  "group": "copycats_c49",
+  "keys": {
+    "copycats_occlusion_holder_memo": {
+      "mod": "copycats",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.copycats_c49.CopycatOcclusionMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/copycatsplus/copycats/mixin/foundation/copycat/BlockStateBaseMixin",
+          "method": "customOcclusion",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "HEAD of canOcclude: try { if (getBlockHolder().is(COPYCAT_BASE)) setReturnValue(false) } catch IllegalStateException; then instanceof BracketBlock",
+          "sha256": "cb1aa2742a155df287e28f2ed57402d168e5dca8febebf3f9d77b5a73b97759f"
+        },
+        {
+          "class": "com/copycatsplus/copycats/mixin/foundation/copycat/BlockStateBaseMixin",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "COPYCAT_BASE = ResourceLocation.fromNamespaceAndPath(Mods.CREATE.id(), \"copycat_base\"): the one location the handler passes",
+          "sha256": "b81de46512db32e24e1be53617289e1bdb44194908cf6b123922f2ede1ef4aaa"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase",
+          "method": "getBlockHolder",
+          "desc": "()Lnet/minecraft/core/Holder;",
+          "note": "getBlockHolder: the owner block's builtInRegistryHolder()",
+          "sha256": "5172ad7a93a5f3f6d9df4bc60fe12fc871d8339e4f70809438187f3bc48031f7"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase",
+          "method": "canOcclude",
+          "desc": "()Z",
+          "note": "canOcclude: the field read Copycats+' HEAD handler runs in front of",
+          "sha256": "9fff5a830b3d14f05b323f0d362ff3785ec0e918a4cb22f7b1ef573006784576"
+        },
+        {
+          "class": "net/minecraft/world/level/block/Block",
+          "method": "builtInRegistryHolder",
+          "desc": "()Lnet/minecraft/core/Holder$Reference;",
+          "note": "builtInRegistryHolder: a final field (BuiltInRegistries.BLOCK.createIntrusiveHolder(this))",
+          "sha256": "4da31b0b8ac8d65112e62422dde7073fa1b51ba4c7752c0d813a83d3bba028f4"
+        },
+        {
+          "class": "net/minecraft/core/Holder$Reference",
+          "method": "is",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Z",
+          "note": "is(location) = key().location().equals(location)",
+          "sha256": "ac8faaab78af697f182c7ddda706778e52bb4b3919a2c2e8e20546c32dc84c55"
+        },
+        {
+          "class": "net/minecraft/core/Holder$Reference",
+          "method": "key",
+          "desc": "()Lnet/minecraft/resources/ResourceKey;",
+          "note": "key(): throws IllegalStateException while unbound",
+          "sha256": "9f5357ecd23795e12ec2eee6746a6f945fad6dda53efcf72200d70f897237d77"
+        },
+        {
+          "class": "net/minecraft/core/Holder$Reference",
+          "method": "bindKey",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;)V",
+          "note": "bindKey: refuses a different key once bound",
+          "sha256": "669f9df378f37f2fce61167d544c336ba88c37bca8a74641c9955175b7a1e951"
+        }
+      ],
+      "cancel": [],
+      "conversion": "targethandler (MixinSquared @Redirect of Holder.is(ResourceLocation) inside Copycats+' BlockStateBaseMixin.customOcclusion; per-state @Unique byte memo; helper bons.furious.patch.copycats_c49.OcclusionMemo). Copycats+' BlockStateBaseCacheMixin (its WrapOperation of the canOcclude call in BlockStateBase$Cache's constructor) is not touched.",
+      "license": "All Rights Reserved (Copycats+): no Copycats+ code is carried; Minecraft (Mojang): no-copy"
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "group": "goetyhostility_coo49",
+  "keys": {
+    "goetyhostility_squall_golem_scan_skip": {
+      "mod": "goetyhostility",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goetyhostility_coo49.GhSquallGolemScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ratrod/goetyhostility/common/entities/hostile/HostileSquallGolem",
+          "method": "tick",
+          "desc": "()V",
+          "note": "proximity mode: getEntitiesOfClass(LivingEntity, box +6); last entity with isOwnedTargetable(this, it) && it.hasLineOfSight(this); activeTime = 100 when found or getTarget() != null",
+          "sha256": "f86711b384f55b7b4deb0d5d820a42180493336836e3576d4b2fdad57510e1c2"
+        },
+        {
+          "class": "com/Polarice3/Goety/utils/MobUtil",
+          "method": "isOwnedTargetable",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "for an Enemy attacker that is not IOwned: target instanceof Player && NO_CREATIVE_OR_SPECTATOR (owner from getOwner, a read)",
+          "sha256": "cc60f7e5b3ffff4dec19d72c64665513ad95144a67e5ee742d446c2f632f8f58"
+        },
+        {
+          "class": "com/Polarice3/Goety/utils/MobUtil",
+          "method": "getOwner",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "null for an entity that is neither IOwned, OwnableEntity nor Projectile",
+          "sha256": "c5fd1988640eb6a8d45423a388b0a3044ed3e266f0e003183b65a0299154e636"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "hasLineOfSight",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "hasLineOfSight: same level, distance, a block clip; reads only (asked only for a candidate isOwnedTargetable accepted: a player)",
+          "sha256": "c19f0723ecd46bb66eca66e5354995c63c3f9c9762a1fed11064be036e6b4bd9"
+        },
+        {
+          "class": "net/minecraft/world/level/EntityGetter",
+          "method": "getEntitiesOfClass",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;",
+          "note": "getEntitiesOfClass(class, box) = the three-argument search with NO_SPECTATORS",
+          "sha256": "e16e4930f257d382c7a5e263a7ba942adcf3253dbbe2e54ee34b39a48dd6a26f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass (getEntitiesOfClass) call of HostileSquallGolem.tick: while the golem has a target (and its class is an Enemy that is not IOwned, with Mob's own getTarget), the call is marked UNUSED so that vanilla_entity_walk_skip leaves out its walk over the entity sections; the call itself runs (helper bons.furious.patch.goetyhostility_coo49.GhScans)",
+      "license": "Goety Hostility (all rights reserved) and Goety (MIT): no code carried, the wrapper carries only our own logic"
+    },
+    "goetyhostility_wildfire_drop_probe_lean": {
+      "mod": "goetyhostility",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goetyhostility_coo49.GhWildfireDropProbeMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ratrod/goetyhostility/common/entities/hostile/HostileWildfire",
+          "method": "steepDropBelow",
+          "desc": "()Z",
+          "note": "for i in 0..7: getBlockState(new BlockPos(x, y - i, z)).isAir(), any non-air -> false",
+          "sha256": "63c3e22a4648ecbaa330a05404652d08af5893c598b1412464b0fd3cb269fb35"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at HEAD (cancellable) of HostileWildfire.steepDropBelow: the same eight-block column, read from the top with one mutable position, answers at the first non-air block (helper bons.furious.patch.goetyhostility_coo49.GhScans.steepDropBelow)",
+      "license": "Goety Hostility (all rights reserved): no code carried, the probe is our own logic"
+    }
+  }
+}

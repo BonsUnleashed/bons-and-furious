@@ -1,0 +1,20 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.adamsarsplus_coo49",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "bons.pure.config.PureMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "AapAuraClockMixin",
+    "AapDisruptionLeanWalkMixin",
+    "AapDisruptionPurgeMixin",
+    "AapFlameIntervalMixin",
+    "AapPurgeTailMixin"
+  ],
+  "client": [
+    "AapFlameServerOnlyMixin"
+  ]
+}

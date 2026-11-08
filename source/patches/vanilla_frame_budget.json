@@ -1,0 +1,153 @@
+{
+  "group": "vanilla_frame_budget",
+  "keys": {
+    "vanilla_frame_task_budget": {
+      "mod": "minecraft",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_frame_budget.MinecraftFrameTaskBudgetMixin",
+        "bons.furious.mixin.vanilla_frame_budget.ReentrantLoopRunningTaskInvoker"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/Minecraft",
+          "method": "runTick",
+          "desc": "(Z)V",
+          "note": "runTick: runAllTasks() once per frame (inside `if (renderLevel)`), before the client ticks",
+          "sha256": "d4dffb4d729f635000542d0a9eec3f62eb09382530b38dfb6430797588b7b58f"
+        },
+        {
+          "class": "net/minecraft/client/Minecraft",
+          "method": "disconnect",
+          "desc": "(Lnet/minecraft/client/gui/screens/Screen;Z)V",
+          "note": "disconnect(Screen, boolean): dropAllTasks() when a packet listener exists, then close, clearDownloadedResourcePacks, the forced runTick(false) and the level teardown",
+          "sha256": "0b295a19547c8697083a9798f9a159687ddc305fdd30f6a4b6e10ed1906ccb17"
+        },
+        {
+          "class": "net/minecraft/client/Minecraft",
+          "method": "clearClientLevel",
+          "desc": "(Lnet/minecraft/client/gui/screens/Screen;)V",
+          "note": "clearClientLevel (back to configuration): drops no queued task, so tasks a budgeted drain left keep their place for the next drains",
+          "sha256": "08f0d4dab38c1a49398c239d8b7642085c9e13826e5ff1b4c64e57d85fb5e83f"
+        },
+        {
+          "class": "net/minecraft/client/Minecraft",
+          "method": "shouldRun",
+          "desc": "(Ljava/lang/Runnable;)Z",
+          "note": "shouldRun = true: pollTask always runs the head task",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/minecraft/util/thread/BlockableEventLoop",
+          "method": "runAllTasks",
+          "desc": "()V",
+          "note": "runAllTasks = while (pollTask()) {}",
+          "sha256": "566c6375e0be0a5e3e35bbe3076868c09f0810a0796a4ed8ab11e155289bf970"
+        },
+        {
+          "class": "net/minecraft/util/thread/BlockableEventLoop",
+          "method": "pollTask",
+          "desc": "()Z",
+          "note": "pollTask: peek, shouldRun, remove + doRunTask",
+          "sha256": "7b2dc5ad43cf8da92d7160ae8804ceadae9f61f703f49c33a7c6223e13d85c42"
+        },
+        {
+          "class": "net/minecraft/util/thread/BlockableEventLoop",
+          "method": "getPendingTasksCount",
+          "desc": "()I",
+          "note": "getPendingTasksCount = queue size",
+          "sha256": "1a1e66388110f51cdf36f22990fa1d389610af72d9fbf0884964e142409ee979"
+        },
+        {
+          "class": "net/minecraft/util/thread/BlockableEventLoop",
+          "method": "dropAllTasks",
+          "desc": "()V",
+          "note": "dropAllTasks = queue clear",
+          "sha256": "eca0be986ec15030d19c8910ab2bbe4fffdb3ecdb1d2e18ae3fd1a625e23bd98"
+        },
+        {
+          "class": "net/minecraft/util/thread/ReentrantBlockableEventLoop",
+          "method": "runningTask",
+          "desc": "()Z",
+          "note": "runningTask = reentrantCount != 0",
+          "sha256": "35e51b65060ef3829f57b001df9983a78caca90009ea8f40df2b750a94d7309c"
+        },
+        {
+          "class": "net/minecraft/util/thread/ReentrantBlockableEventLoop",
+          "method": "doRunTask",
+          "desc": "(Ljava/lang/Runnable;)V",
+          "note": "doRunTask counts reentrantCount around the task",
+          "sha256": "03f70dbf6f566a7b1ac8829fac897ca6b7ebf244c67a7472f5535e880048c1fc"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on Minecraft.runTick(boolean)'s runAllTasks() call: while a world is played, pollTask() until 0.5 ms + 0.02 ms x queued-at-start have passed (at least one task, never more than stock); @WrapOperation on Minecraft.disconnect(Screen, boolean)'s dropAllTasks() call (1.21.1's counterpart of 1.20.1 clearLevel): the frame's deferred tasks run first unless a task is running; @Invoker for ReentrantBlockableEventLoop.runningTask; helper bons.furious.patch.vanilla_frame_budget.FrameBudget; require = 0",
+      "license": "Minecraft (Mojang): no-copy; the wrappers carry only our own logic (stock's own pollTask does the work)"
+    },
+    "vanilla_light_poll_budget": {
+      "mod": "minecraft",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_frame_budget.ClientLevelLightPollBudgetMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel",
+          "method": "pollLightUpdates",
+          "desc": "()V",
+          "note": "pollLightUpdates: i = size(); j = i < 1000 ? max(10, i / 10) : i; for (k < j && (r = poll()) != null) r.run()",
+          "sha256": "c23daed4d180b3fc15b727add740fb1490a9fc445d3cb4878eee688a27e9e6a6"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel",
+          "method": "queueLightUpdate",
+          "desc": "(Ljava/lang/Runnable;)V",
+          "note": "queueLightUpdate: the only writer of the queue (add at the tail)",
+          "sha256": "1e5117072a8bbe37e0ceb261a0ffd60b859249371214d3e25e6dd2e32ef895f5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on ClientLevel.pollLightUpdates' lightUpdateQueue.size() call (start + budget 0.5 ms + 0.02 ms x size while a world is played) and on its poll() call (null, the loop's own end, once a job ran and the budget is used); helper bons.furious.patch.vanilla_frame_budget.FrameBudget; require = 0",
+      "license": "Minecraft (Mojang): no-copy; the wrappers carry only our own logic (the stock loop runs)"
+    },
+    "vanilla_ambient_particle_defer": {
+      "mod": "minecraft",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_frame_budget.MinecraftAmbientParticleDeferMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/Minecraft",
+          "method": "tick",
+          "desc": "()V",
+          "note": "tick: level.animateTick(player.getBlockX/Y/Z) when not paused and the level's tick rate runs normally, right before the particle engine tick",
+          "sha256": "53ade2e37b548acfd64f4420026dcb025ce155e3bd062a9e9872e14ee3fbf049"
+        },
+        {
+          "class": "net/minecraft/client/Minecraft",
+          "method": "runTick",
+          "desc": "(Z)V",
+          "note": "runTick: the HEAD where the recorded call is made",
+          "sha256": "d4dffb4d729f635000542d0a9eec3f62eb09382530b38dfb6430797588b7b58f"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel",
+          "method": "animateTick",
+          "desc": "(III)V",
+          "note": "animateTick: 667 x 2 doAnimateTick around the given position; needs the player and the game mode",
+          "sha256": "4e8a91f605fc92129f3ea493abe56728ff2b0bd03ff90b6f8f00022ceb883e78"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapWithCondition on Minecraft.tick's ClientLevel.animateTick(III) call (recorded instead, with its arguments) + @Inject HEAD of Minecraft.runTick(boolean) (the recorded call is made when the client still plays that level with a player and a game mode; a second call recorded before that runs the first at once); helper bons.furious.patch.vanilla_frame_budget.FrameBudget; require = 0",
+      "license": "Minecraft (Mojang): no-copy; the injectors carry only our own logic (stock's own animateTick runs)"
+    }
+  }
+}

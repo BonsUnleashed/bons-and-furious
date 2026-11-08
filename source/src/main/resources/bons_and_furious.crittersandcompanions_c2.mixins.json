@@ -8,10 +8,10 @@
     "defaultRequire": 1
   },
   "mixins": [
-    "EntityClassCountStorageMixin",
+    "AvoidEntityGoalRedPandaMixin",
     "EntityClassCountSectionMixin",
-    "LevelClassCountMixin",
+    "EntityClassCountStorageMixin",
     "EntityGetterClassCountMixin",
-    "AvoidEntityGoalRedPandaMixin"
+    "LevelClassCountMixin"
   ]
 }

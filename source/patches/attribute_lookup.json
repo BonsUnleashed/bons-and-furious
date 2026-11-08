@@ -1,0 +1,191 @@
+{
+  "group": "attribute_lookup",
+  "keys": {
+    "vanilla_attribute_instance_fast_lookup": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.attribute_lookup.AttributeMapFastLookupMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeMap",
+          "method": "getInstance",
+          "desc": "(Lnet/minecraft/core/Holder;)Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;",
+          "note": "attributes.computeIfAbsent(attribute, a -> supplier.createInstance(this::onAttributeModified, a)): java.util.Map's default on the fastutil map (get; the function only on null; nothing stored for a null answer)",
+          "sha256": "6fbd67604d86e0bba48e3e61c1c79a86823328444b612a44d8a6bdfc09adb7f2"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeMap",
+          "method": "lambda$getInstance$1",
+          "desc": "(Lnet/minecraft/core/Holder;)Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;",
+          "note": "the lambda: supplier.createInstance(this::onAttributeModified, a)",
+          "sha256": "8f04fc16b438ef2726a720b4f5e15b3dabdd2015554a56500eabc8e251c12c64"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeMap",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeSupplier;)V",
+          "note": "attributes = new Object2ObjectOpenHashMap (Radium 0.13.1 puts an Object2ReferenceOpenHashMap there at RETURN); neither overrides computeIfAbsent(K, Function)",
+          "sha256": "05402eaca2da69b9ca726f89638e4919a6399614ee6e91ed235d9a506627747c"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeSupplier",
+          "method": "createInstance",
+          "desc": "(Ljava/util/function/Consumer;Lnet/minecraft/core/Holder;)Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;",
+          "note": "createInstance: instances.get(attribute) == null -> null, else a new instance copied from it",
+          "sha256": "1c275bee8792d62a2a0201f365244cb058ff4d02f87e2fcc3962dc0912259f51"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeSupplier",
+          "method": "hasAttribute",
+          "desc": "(Lnet/minecraft/core/Holder;)Z",
+          "note": "hasAttribute: instances.containsKey(attribute); the map's values are never null",
+          "sha256": "d0b12491e349b90c96e228a45460765b69963860d00a200bb1626bd37652c0f0"
+        },
+        {
+          "class": "net/puffish/attributesmod/mixin/AttributeContainerMixin",
+          "method": "modifyVariableAt",
+          "desc": "(Lnet/minecraft/core/Holder;)Lnet/minecraft/core/Holder;",
+          "note": "audited: Puffish Attributes 0.8.3's HEAD @ModifyVariable of getInstance replaces only its own RegistryEntryReferenceWrapper (a Holder.Reference subclass, never created in that jar) by the holder it wraps; the fast path runs the original for every holder that is not exactly Holder.Reference, Holder.Direct or a DeferredHolder",
+          "audit": true,
+          "sha256": "7bc01384c8804a71e383f07d2568cf11e71faca1e3c18958465f595e6cd9f590"
+        },
+        {
+          "class": "net/puffish/attributesmod/mixin/AttributeContainerMixin",
+          "method": "*",
+          "desc": "",
+          "note": "audited: declared-method set of Puffish's AttributeMap mixin (the one HEAD @ModifyVariable on getInstance, hasAttribute, hasModifier, getValue, getBaseValue, getModifierValue)",
+          "audit": true,
+          "sha256": "b57a64228e8d729b625c8a95fa26cd787650822c05421777dfd85e854fc2c1d2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapMethod on AttributeMap.getInstance(Holder) answering a held instance from the map and an attribute the supplier lacks with null, for plain holders (exactly Holder.Reference, Holder.Direct, or a NeoForge DeferredHolder), else the original (helpers bons.furious.patch.attribute_lookup.AttributeLookup and AttributeReapply.plainHolder; the ATTRIBUTE_REAPPLY API AttributeReapply lives in this group)",
+      "license": "Minecraft: no code is carried, the wrapper only reads the map and the supplier"
+    },
+    "vanilla_effect_refresh_modifier_keep": {
+      "mod": "minecraft",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.attribute_lookup.LivingEntityEffectRefreshMixin",
+        "bons.furious.mixin.attribute_lookup.MobEffectTemplatesAccessor",
+        "bons.furious.mixin.attribute_lookup.AttributeMapRefreshAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "onEffectUpdated",
+          "desc": "(Lnet/minecraft/world/effect/MobEffectInstance;ZLnet/minecraft/world/entity/Entity;)V",
+          "note": "effectsDirty = true; forced && !clientSide -> effect.removeAttributeModifiers(getAttributes()), addAttributeModifiers(getAttributes(), instance.getAmplifier()), refreshDirtyAttributes(); then sendEffectToPassengers on the server",
+          "sha256": "b0dfdf98eab858c5a659f2cc0f8df7b9851db99b148f0340f533b96aff9c6be6"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "refreshDirtyAttributes",
+          "desc": "()V",
+          "note": "onAttributeUpdated(instance.getAttribute()) for every instance in getAttributesToUpdate(), then clear",
+          "sha256": "ba60ba6348c13b3e55b4e1bff7f3a52a29707e10ec80be9faa9185b095065143"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "onAttributeUpdated",
+          "desc": "(Lnet/minecraft/core/Holder;)V",
+          "note": "MAX_HEALTH: health above the maximum is set to it; MAX_ABSORPTION: absorption likewise; nothing else",
+          "sha256": "aa5e60e739b18953bdb0bc40807e20caa43f572226f5cacca232179ae73e990a"
+        },
+        {
+          "class": "net/minecraft/world/effect/MobEffect",
+          "method": "removeAttributeModifiers",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeMap;)V",
+          "note": "removeAttributeModifiers: per template getInstance(attribute); when not null removeModifier(template.id())",
+          "sha256": "2c3d3e628a15b9032b63e87a6b3ec9de2ea3504cd58f0a50fc071d9e33abbbdd"
+        },
+        {
+          "class": "net/minecraft/world/effect/MobEffect",
+          "method": "addAttributeModifiers",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeMap;I)V",
+          "note": "addAttributeModifiers: per template getInstance(attribute); when not null removeModifier(template.id()) + addPermanentModifier(template.create(amplifier))",
+          "sha256": "d92b2464682407f0b202b541da4746cf42edf8734910d52810d1974ed1ad7ac7"
+        },
+        {
+          "class": "net/minecraft/world/effect/MobEffect$AttributeTemplate",
+          "method": "create",
+          "desc": "(I)Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;",
+          "note": "curve == null: new AttributeModifier(id, amount * (amplifier + 1), operation); with a NeoForge curve: curve.apply(amplifier) (the check then runs the stock calls)",
+          "sha256": "cae9869b7e4ea933f26e8476b9c576767fd3e7ee08283527514e1d0d7f4b5e16"
+        },
+        {
+          "class": "net/minecraft/world/effect/MobEffectInstance",
+          "method": "getAmplifier",
+          "desc": "()I",
+          "note": "returns the amplifier field: the remove wrapper reads it, the add call is given it right after",
+          "sha256": "34977f708295ccd6332a5a5189822773d95caa25e5100dfc081f532c40ff3c1b"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeMap",
+          "method": "getInstance",
+          "desc": "(Lnet/minecraft/core/Holder;)Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;",
+          "note": "the stock calls' lookup: computeIfAbsent, so a missing instance is created exactly when the supplier has the attribute",
+          "sha256": "6fbd67604d86e0bba48e3e61c1c79a86823328444b612a44d8a6bdfc09adb7f2"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeSupplier",
+          "method": "hasAttribute",
+          "desc": "(Lnet/minecraft/core/Holder;)Z",
+          "note": "hasAttribute: instances.containsKey(attribute)",
+          "sha256": "d0b12491e349b90c96e228a45460765b69963860d00a200bb1626bd37652c0f0"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "getModifier",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;",
+          "note": "getModifier: modifierById.get(id)",
+          "sha256": "4a75156b715d02e6c3bbbe01905cb9e07413f0bb7fe61d4bdaf4e03804eb2af9"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "removeModifier",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Z",
+          "note": "removeModifier: modifierById.remove(id); when present the operation map and permanentModifiers remove it, then setDirty",
+          "sha256": "1f0704140ca8e86ad2f7c23a0bd7905eb1e528b2fefe04a0de73467786eae683"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "addPermanentModifier",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "note": "addPermanentModifier: addModifier + permanentModifiers.put(id, modifier)",
+          "sha256": "f0af5110f615871b7ccd97cee9d80c836eeb9dd86274091d7589351c68ef4d54"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "addModifier",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "note": "addModifier: modifierById.putIfAbsent by id (throws when present), operation map put, setDirty",
+          "sha256": "9bb5b7dd7ea9fe99314a77ddf26fd1c7c28aa1e87de8c1ed2f020d8d55f91020"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "setDirty",
+          "desc": "()V",
+          "note": "dirty = true; onDirty.accept(this) (AttributeMap.onAttributeModified: attributesToUpdate, and attributesToSync for syncable attributes)",
+          "sha256": "f4e36b5f95669a0cb82587d773a2f56de1d7a5b37ce3abba2f1f2adfa6cd8500"
+        },
+        {
+          "class": "net/puffish/attributesmod/mixin/AttributeContainerMixin",
+          "method": "modifyVariableAt",
+          "desc": "(Lnet/minecraft/core/Holder;)Lnet/minecraft/core/Holder;",
+          "note": "audited: Puffish Attributes 0.8.3 replaces only its own RegistryEntryReferenceWrapper at HEAD of getInstance; the check reads the instance map for plain holders only (exactly Holder.Reference, Holder.Direct, a DeferredHolder), which reach the stock lookup unchanged",
+          "audit": true,
+          "sha256": "7bc01384c8804a71e383f07d2568cf11e71faca1e3c18958465f595e6cd9f590"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: two MixinExtras @WrapOperation of the MobEffect.removeAttributeModifiers(AttributeMap) / addAttributeModifiers(AttributeMap, int) calls in LivingEntity.onEffectUpdated, both skipped when the refresh would leave every modifier as it is (the remove wrapper takes the amplifier from the method's MobEffectInstance through @Local(argsOnly = true)); @Accessor for MobEffect's attribute templates and AttributeMap's instance map and supplier (helpers bons.furious.patch.attribute_lookup.EffectRefreshKeep, AttributeReapply)",
+      "license": "Minecraft: no code is carried, the wrappers only read the maps"
+    }
+  }
+}

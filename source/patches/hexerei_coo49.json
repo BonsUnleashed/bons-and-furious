@@ -1,0 +1,110 @@
+{
+  "group": "hexerei_coo49",
+  "keys": {
+    "hexerei_empty_light_scan_fast_path": {
+      "mod": "hexerei",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.hexerei_coo49.HexLightSourceCountMixin",
+        "bons.furious.mixin.hexerei_coo49.HexEmptyLightScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/joefoxe/hexerei/light/LightManager",
+          "method": "*",
+          "desc": "",
+          "note": "the light-source set (a HashSet made in <clinit>) is private to LightManager; only addLightSource, removeLightSource and clearLightSources change it, each inside the write lock; containsLightSource, getLightSourcesCount, updateAll and the two scans read it inside the read lock",
+          "sha256": "b370f97e86405fee921dd85ee645591e19482c9ea0b608bb5755bc2808e204a3"
+        },
+        {
+          "class": "net/joefoxe/hexerei/light/LightManager",
+          "method": "addLightSource",
+          "desc": "(Lnet/joefoxe/hexerei/light/LambHexereiDynamicLight;)V",
+          "note": "client level, shouldUpdateDynamicLight, not yet contained: write lock, set.add, unlock",
+          "sha256": "e51e5849ac1afb9912a7d22ee1f85e8aa7f957b4c8d877d6745d5a8c133d52a9"
+        },
+        {
+          "class": "net/joefoxe/hexerei/light/LightManager",
+          "method": "removeLightSource",
+          "desc": "(Lnet/joefoxe/hexerei/light/LambHexereiDynamicLight;)V",
+          "note": "write lock, iterator remove of the first equal source (+ chunk rebuild), unlock",
+          "sha256": "39f1e953b5730b3506eef87486ec6184a4f2a72ddb577c1487b0df2fa2a800f6"
+        },
+        {
+          "class": "net/joefoxe/hexerei/light/LightManager",
+          "method": "clearLightSources",
+          "desc": "()V",
+          "note": "write lock, iterator remove of every source (+ reset, chunk rebuild), unlock",
+          "sha256": "79917619126a06381e218f74cf135c0a73c16c57ed76c92499bf1938a44535c9"
+        },
+        {
+          "class": "net/joefoxe/hexerei/light/LightManager",
+          "method": "getDynamicLightLevel",
+          "desc": "(Lnet/minecraft/core/BlockPos;)D",
+          "note": "read lock, max over the set, unlock, Mth.clamp(result, 0, 15): 0.0 for an empty set",
+          "sha256": "cfc7b48808957c8598754b0b44f7e4a934bee0dd5941eb19fe7213d083c38114"
+        },
+        {
+          "class": "net/joefoxe/hexerei/light/LightManager",
+          "method": "getDynamicLightLevelWorld",
+          "desc": "(Lnet/minecraft/core/BlockPos;)D",
+          "note": "the same scan: 0.0 for an empty set",
+          "sha256": "cfc7b48808957c8598754b0b44f7e4a934bee0dd5941eb19fe7213d083c38114"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject before WriteLock.unlock() in LightManager.addLightSource / removeLightSource / clearLightSources (the set's size copied inside the lock) + @Inject at HEAD (cancellable) of getDynamicLightLevel / getDynamicLightLevelWorld: 0.0 at once while the copied size is 0 (helper bons.furious.patch.hexerei_coo49.HexLights)",
+      "license": "Hexerei (MIT): no code carried, the injectors carry only our own logic"
+    },
+    "hexerei_dynamic_lights_off": {
+      "mod": "hexerei",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.hexerei_coo49.HexDynamicLightsOffMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/joefoxe/hexerei/light/LightManager",
+          "method": "shouldUpdateDynamicLight",
+          "desc": "()Z",
+          "note": "HexConfig.DYNAMIC_LIGHT_TOGGLE.get(): Hexerei's own on / off for its dynamic lights",
+          "sha256": "fc47ff236be8cc11d890b39ae8aef8774b67782213a8a0aaab82db0e6bbabc9d"
+        },
+        {
+          "class": "net/joefoxe/hexerei/light/LightManager",
+          "method": "addLightSource",
+          "desc": "(Lnet/joefoxe/hexerei/light/LambHexereiDynamicLight;)V",
+          "note": "asks shouldUpdateDynamicLight before it adds anything",
+          "sha256": "e51e5849ac1afb9912a7d22ee1f85e8aa7f957b4c8d877d6745d5a8c133d52a9"
+        },
+        {
+          "class": "net/joefoxe/hexerei/mixin/light/HexereiLevelRendererMixin",
+          "method": "onGetLightmapCoordinates",
+          "desc": "(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "getLightColor TAIL handler: returns at once (vanilla value, no cancel) when shouldUpdateDynamicLight is false",
+          "sha256": "6dc837b57df986fe4bd937358dd8452c75d7ba24db73605fcb5a21fd9b8f692d"
+        },
+        {
+          "class": "net/joefoxe/hexerei/mixin/light/HexereiEntityRendererMixin",
+          "method": "onGetBlockLight",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/core/BlockPos;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "EntityRenderer.getBlockLightLevel RETURN handler: returns at once when shouldUpdateDynamicLight is false",
+          "sha256": "9f34886007744fe027ea0b731a5f0d3bf3cf1ec4eb9a8717befe24c326ab498d"
+        },
+        {
+          "class": "net/joefoxe/hexerei/mixin/light/HexereiLightEntityMixin",
+          "method": "onTick",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "Entity.tick HEAD handler: luminance 0 on the client and no tracking when shouldUpdateDynamicLight is false",
+          "sha256": "466f5961d13ccc5f2ffa1da354fbc4c64525d6bdd390c18bf8d38fbf47b652fb"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyReturnValue on LightManager.shouldUpdateDynamicLight: false while the switch is on (Hexerei's own toggle off), otherwise Hexerei's answer (helper bons.furious.patch.hexerei_coo49.HexLights)",
+      "license": "Hexerei (MIT): no code carried, the wrapper carries only our own logic"
+    }
+  }
+}

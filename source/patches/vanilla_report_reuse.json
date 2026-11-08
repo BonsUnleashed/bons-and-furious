@@ -1,0 +1,61 @@
+{
+  "group": "vanilla_report_reuse",
+  "keys": {
+    "vanilla_system_report_hardware_reuse": {
+      "mod": "minecraft",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_report_reuse.SystemReportHardwareMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/SystemReport",
+          "method": "putHardware",
+          "desc": "(Loshi/SystemInfo;)V",
+          "note": "getHardware(), then ignoreErrors groups processor (putProcessor), graphics (putGraphics), memory (putMemory) and storage (putStorage), each body a lambda",
+          "sha256": "1ee2d56ff3f958db3deeaf3c37424b19ade01a6ef31304f662aad97ae0e85033"
+        },
+        {
+          "class": "net/minecraft/SystemReport",
+          "method": "putMemory",
+          "desc": "(Loshi/hardware/GlobalMemory;)V",
+          "note": "ignoreErrors groups physical memory (putPhysicalMemory: the memory slot lines) and virtual memory (putVirtualMemory)",
+          "sha256": "dc5df7b00510c89658d4337c8f01f273eee6e4d25663245f26b998dc3e8394c2"
+        },
+        {
+          "class": "net/minecraft/SystemReport",
+          "method": "ignoreErrors",
+          "desc": "(Ljava/lang/String;Ljava/lang/Runnable;)V",
+          "note": "body.run() inside a catch of Throwable that only logs a WARN line",
+          "sha256": "78e63dbcdf9eb65d48e59de430a99e8a26b9d3c7cf5e72c8972ad80846a4616e"
+        },
+        {
+          "class": "net/minecraft/SystemReport",
+          "method": "setDetail",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)V",
+          "note": "entries.put(key, value): the write the kept lines are replayed through",
+          "sha256": "5c3f2bd1f5572315d7a9660ca48f404355c39908c6d5cc92b2d7ed3dee87c46d"
+        },
+        {
+          "class": "net/minecraft/SystemReport",
+          "method": "setDetail",
+          "desc": "(Ljava/lang/String;Ljava/util/function/Supplier;)V",
+          "note": "setDetail(key, supplier.get()); an Exception logs a WARN and writes \"ERR\"",
+          "sha256": "8c96ff2028aa0e8f95d72ef07d9536905df41185a03d0548de5e1027dfe11245"
+        },
+        {
+          "class": "net/minecraft/SystemReport",
+          "method": "*",
+          "desc": "",
+          "note": "the class's declared methods: a method a newer build adds next to the groups",
+          "sha256": "54d9fd4fe16f7caf4b161b2af0df26a4e59604664482c163db09f04688ad4002"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the ignoreErrors calls of putHardware (four groups) and putMemory (two groups): the first successful processor / graphics / physical memory group's detail lines are kept and written again (setDetail, same order) by later reports instead of querying OSHI; every other group (memory, storage, virtual memory) runs as before",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_report_reuse.HardwareLines)"
+    }
+  }
+}

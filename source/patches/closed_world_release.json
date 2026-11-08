@@ -1,0 +1,47 @@
+{
+  "group": "closed_world_release",
+  "keys": {
+    "closed_world_reference_release": {
+      "mod": "citadel",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.closed_world_release.ClientLevelClosingReleaseMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/Minecraft",
+          "method": "disconnect",
+          "desc": "(Lnet/minecraft/client/gui/screens/Screen;Z)V",
+          "note": "leaving the world: LevelEvent.Unload, the wait for the integrated server, gui.onDisconnected, then the one PUTFIELD level = null (our inject runs right before it)",
+          "sha256": "0b295a19547c8697083a9798f9a159687ddc305fdd30f6a4b6e10ed1906ccb17"
+        },
+        {
+          "class": "net/minecraft/client/Minecraft",
+          "method": "clearClientLevel",
+          "desc": "(Lnet/minecraft/client/gui/screens/Screen;)V",
+          "note": "back to configuration: LevelEvent.Unload, the forced tick, gui.onDisconnected, then the one PUTFIELD level = null (our inject runs right before it)",
+          "sha256": "08f0d4dab38c1a49398c239d8b7642085c9e13826e5ff1b4c64e57d85fb5e83f"
+        },
+        {
+          "class": "com/github/alexthe666/citadel/client/gui/EntityLinkButton",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "renderedEntities = new HashMap (and the constant ENTITY_ROTATION): a pure static initialiser",
+          "sha256": "cf7916b92e7728cb7ea9ae02939e12d0867d5cdb70e98a7d5299cbfd0237e870"
+        },
+        {
+          "class": "com/github/alexthe666/citadel/client/gui/EntityLinkButton",
+          "method": "renderWidget",
+          "desc": "(Lnet/minecraft/client/gui/GuiGraphics;IIF)V",
+          "note": "the only writer: get(type), when absent type.create(Minecraft.getInstance().level) and put, never removed",
+          "sha256": "e2596caf50abdbb2ed35c83321d2e8a2f5feb6abf9cee120d2fb6c961018f998"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors only: @Inject right before the PUTFIELD Minecraft.level of Minecraft.disconnect(Screen, boolean) and of Minecraft.clearClientLevel(Screen) (client, only while a level is open); helper bons.furious.patch.closed_world_release.ClosedWorldRelease (reflection on the already-loaded Citadel class only; applies only when its field is a static Map)",
+      "license": "Minecraft (Mojang) and NeoForge: no code carried. Citadel (GNU LGPL per its 2.7.1 mods.toml; LGPL-3.0 in the Forge line): none of its code is carried; the helper clears its field by reflection; our logic only"
+    }
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "group": "alltheleaks_c49",
+  "keys": {
+    "alltheleaks_dead_ref_hash_spread": {
+      "mod": "alltheleaks",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.alltheleaks_c49.TrackableStrategyMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/uncandango/alltheleaks/mixin/Trackable$1",
+          "method": "hashCode",
+          "desc": "(Ljava/lang/ref/WeakReference;)I",
+          "note": "AllTheLeaks 1.1.14: Objects.hashCode(ref.get()): 0 for every dead reference (as in 1.1.3)",
+          "sha256": "cd9cde86c04dd293b67c58695b174c051e72c2207eac09b2295f80a2e4ec5f6c"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/mixin/Trackable$1",
+          "method": "equals",
+          "desc": "(Ljava/lang/ref/WeakReference;Ljava/lang/ref/WeakReference;)Z",
+          "note": "k1 != null && k1.get() == o.get(): unchanged; dead == dead, dead != live",
+          "sha256": "b59d73d343809d04676019690db85f2ce0aa918458c4aa682205b565d1010d6c"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/mixin/Trackable$2",
+          "method": "trim",
+          "desc": "()Z",
+          "note": "removeIf(dead) then the set's own trim (rehash)",
+          "sha256": "0bcec8cfbf7260c97d01c781f6769d568c3fcf416a6f696a907969cbfe859c04"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/mixin/Trackable",
+          "method": "startTracking",
+          "desc": "()V",
+          "note": "the only insert: a reference to a live object, under LOCK",
+          "sha256": "6ee793b358b770fe78526a951e95fe0b882f9793d7b298097535b56d499de0fe"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/mixin/Trackable",
+          "method": "getSummary",
+          "desc": "()Ljava/util/Map;",
+          "note": "counts live referents per class (order of the inner map follows the set's order)",
+          "sha256": "7a126d9281a567267f2f750b4c6c38b72aa5a80954ff508863b54200e0e4eb1d"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/mixin/Trackable",
+          "method": "createWeakRefBasedSet",
+          "desc": "()Lit/unimi/dsi/fastutil/objects/ObjectOpenCustomHashSet;",
+          "note": "new Trackable$2(WEAK_REFERENCE_STRATEGY): every tracker set uses the wrapped strategy",
+          "sha256": "44ea6feea8dddb79bf232c2c491a7cd73a92f521e4050e5991975bdf13b8f136"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/mixin/Trackable",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "WEAK_REFERENCE_STRATEGY = new Trackable$1()",
+          "sha256": "9488819923a153fbc4dd1c37885c4e3ba3aeacd6cbd205b99f5e58822770f4a0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyReturnValue (+ @Local argsOnly) on Trackable$1.hashCode(WeakReference): 0 from a dead reference -> System.identityHashCode(reference) (helper bons.furious.patch.alltheleaks_c49.AtlLean)",
+      "license": "MIT (AllTheLeaks): no AllTheLeaks code is carried"
+    },
+    "alltheleaks_crash_report_gc_skip": {
+      "mod": "alltheleaks",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.alltheleaks_c49.CrashReportGcMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/uncandango/alltheleaks/events/CommonEvents",
+          "method": "generateReportForCrashReport",
+          "desc": "()Ljava/lang/String;",
+          "note": "AllTheLeaks 1.1.14 (was events.common.ModEvent in 1.1.3): ++reports % 2 == 1 -> runExplicitGc (result discarded), then clearNullReferences and the section text",
+          "sha256": "8b35581ee16b7b34379ad9387f99d08ab9822be495f8cdb5a0f5ee923bdb159e"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/feature/common/mods/minecraft/MemoryMonitor",
+          "method": "runExplicitGc",
+          "desc": "()Z",
+          "note": "System.gc() (or the diagnostic gcRun), the working-set trim when MemoryStats is enabled, LAST_RUN_GC = now",
+          "sha256": "cb46c2a2b26e0cc040229195351c7469431759326cd28d97e4409f8fcf8f1f7a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Trade-off (off by default): MixinExtras @WrapOperation on MemoryMonitor.runExplicitGc() in CommonEvents.generateReportForCrashReport: not called (helper bons.furious.patch.alltheleaks_c49.AtlLean). Client mixin: CommonEvents also names client classes (Minecraft, LocalPlayer), so a dedicated server keeps the collection",
+      "license": "MIT (AllTheLeaks): no AllTheLeaks code is carried"
+    },
+    "alltheleaks_world_close_gc_background": {
+      "mod": "alltheleaks",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.alltheleaks_c49.WorldCloseGcMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/uncandango/alltheleaks/events/CommonEvents",
+          "method": "onClosedServer",
+          "desc": "(Lnet/neoforged/neoforge/event/server/ServerStoppedEvent;)V",
+          "note": "AllTheLeaks 1.1.14 (was events.common.GameBusEvent in 1.1.3): runExplicitGc, clearNullReferences, SERVER_STOP.increment",
+          "sha256": "d7fe2044ac63d6294892f7a73634fcc59c30ba848225dd83638cde59a4e3b3d0"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/feature/common/mods/minecraft/MemoryMonitor",
+          "method": "runExplicitGc",
+          "desc": "()Z",
+          "note": "System.gc() (or the diagnostic gcRun), the working-set trim when MemoryStats is enabled, LAST_RUN_GC = now: no thread-bound state",
+          "sha256": "cb46c2a2b26e0cc040229195351c7469431759326cd28d97e4409f8fcf8f1f7a"
+        },
+        {
+          "class": "dev/uncandango/alltheleaks/mixin/Trackable",
+          "method": "clearNullReferences",
+          "desc": "()V",
+          "note": "under AllTheLeaks' LOCK: safe from another thread",
+          "sha256": "66a721f8b18a9c015fe3e67203a1493e1568c34c86fa184539d64f57f0c014c6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Trade-off (off by default): MixinExtras @WrapOperation on both calls of CommonEvents.onClosedServer: runExplicitGc + clearNullReferences run on one daemon thread (helper bons.furious.patch.alltheleaks_c49.AtlLean). Client mixin (the client and the single-player integrated server): CommonEvents also names client classes, so a dedicated server keeps both calls on its stopping thread",
+      "license": "MIT (AllTheLeaks): no AllTheLeaks code is carried"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.goety_boss_music_gates",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "bons.pure.config.PureMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "GoetyBossMusicGateMixin",
+    "GoetyHostilityBossMusicGateMixin"
+  ]
+}

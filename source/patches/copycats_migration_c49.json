@@ -1,0 +1,46 @@
+{
+  "group": "copycats_migration_c49",
+  "keys": {
+    "copycats_migration_fast_path": {
+      "mod": "copycats",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.copycats_migration_c49.MigrationManagerFastMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/copycatsplus/copycats/foundation/copycat/MigrationManager",
+          "method": "migrateBlockEntity",
+          "desc": "(Lnet/minecraft/world/level/chunk/LevelChunk;Lnet/minecraft/world/level/block/entity/BlockEntity;)Lnet/minecraft/world/level/block/entity/BlockEntity;",
+          "note": "migrationDisabled() -> return; chunk.getBlockState(pos); isCopycatAndNeedingConversion -> the multi-state or CC copycat block entity; else return the block entity (Copycats+ LevelChunkMixin calls it per block entity a chunk sets)",
+          "sha256": "adc30ecc0f47cbe6cb246151da4dc134ca0b26e69e8f46631382ee7b328a45dd"
+        },
+        {
+          "class": "com/copycatsplus/copycats/foundation/copycat/MigrationManager",
+          "method": "isCopycatAndNeedingConversion",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/BlockEntity;)Z",
+          "note": "BLOCK_ENTITY_TYPE.getKey(type) null -> false; builtInRegistryHolder().key(); id.toString().equalsIgnoreCase(\"create:copycat\") && block namespace copycats",
+          "sha256": "2d34263274f670d213c2b013d9c9d4a5108c990de940401da20a95d57f840cd3"
+        },
+        {
+          "class": "com/copycatsplus/copycats/foundation/copycat/MigrationManager",
+          "method": "migrateStructure",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;)Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;",
+          "note": "both conversions need a MultiStateCopycatBlock or a CCCopycatBlock; else the same info (StructureTemplateMixin, ContraptionMixin)",
+          "sha256": "b6240a662d7df8be76fc96591a3e397b4a743573c4d3396dacef248fb6e370e3"
+        },
+        {
+          "class": "com/copycatsplus/copycats/foundation/copycat/MigrationManager",
+          "method": "migrationDisabled",
+          "desc": "()Z",
+          "note": "CCConfigs.safeGetter around the disableMigration read; no other effect",
+          "sha256": "e93f455d07415d77ceb705b57b2d96ee4b18a9365cd4b3b3c579338e3913ec24"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on MigrationManager.migrateBlockEntity (type is not create:copycat -> the block entity) and migrateStructure (block neither MultiStateCopycatBlock nor CCCopycatBlock -> the info) (helper bons.furious.patch.copycats_migration_c49.MigrationFastPath; the copycat id is ResourceLocation.fromNamespaceAndPath(\"create\", \"copycat\"))",
+      "license": "All Rights Reserved (Copycats+): no Copycats+ code is carried; the injectors and checks are ours"
+    }
+  }
+}

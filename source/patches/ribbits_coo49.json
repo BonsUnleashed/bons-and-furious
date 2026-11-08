@@ -1,0 +1,40 @@
+{
+  "group": "ribbits_coo49",
+  "keys": {
+    "ribbits_band_scan_interval": {
+      "mod": "ribbits",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.ribbits_coo49.RibbitBandScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/yungnickyoung/minecraft/ribbits/entity/goal/RibbitPlayMusicGoal",
+          "method": "canUse",
+          "desc": "()Z",
+          "note": "canUse: night -> false; level.getEntitiesOfClass(RibbitEntity, bb.inflate(64, 16, 64)) (the wrapped search) -> stream, playing ones: take their master; band full -> drop it; alive and not falling",
+          "sha256": "fbd68413cc925d93711b563ec0ebffe54ebdb454b21e7e747198f4dab8f2dd0a"
+        },
+        {
+          "class": "com/yungnickyoung/minecraft/ribbits/entity/goal/RibbitPlayMusicGoal",
+          "method": "tick",
+          "desc": "()V",
+          "note": "tick: without a playing master the same search and adoption, then path / look / play; the list is only streamed, never kept; the player search (getEntitiesOfClass with a predicate) is another overload and not wrapped",
+          "sha256": "591d7f04b514eccad1999ada6d9d426bb6b2e4c8cd9a3f04a310c639e2527675"
+        },
+        {
+          "class": "net/minecraft/world/level/EntityGetter",
+          "method": "getEntitiesOfClass",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;)Ljava/util/List;",
+          "note": "the wrapped overload: getEntitiesOfClass(class, box, EntitySelector.NO_SPECTATORS), the entities whose bounding box intersects the box",
+          "sha256": "e16e4930f257d382c7a5e263a7ba942adcf3253dbbe2e54ee34b39a48dd6a26f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass(RibbitEntity, box) call in RibbitPlayMusicGoal.canUse and tick (Ribbits 1.21.1-NeoForge-4.1.6, the same shape as 3.0.2): the goal keeps its last search's list (@Unique fields) and for the next N - 1 calls answers it filtered by the current box (the search's own intersects test); a removed ribbit in it or a level change searches again at once. Trade-off, off by default; N = PureConfig.intValue(\"ribbits_band_scan_interval\", 10, 1, 200). Runtime flag ribbitsBandScanInterval. Helper bons.furious.patch.ribbits_coo49.BandScan.",
+      "license": "Ribbits (LGPLv3 per its 1.21.1 mods.toml): no code carried; the hook decides when its own search runs"
+    }
+  }
+}

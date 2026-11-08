@@ -1,0 +1,60 @@
+{
+  "group": "cucumber_coo49",
+  "keys": {
+    "cucumber_tag_file_failure_memo": {
+      "mod": "cucumber",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cucumber_coo49.CucumberTagFileMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/blakebr0/cucumber/crafting/TagMapper",
+          "method": "getItemForTag",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/world/item/Item;",
+          "note": "Almost Unified, then TAG_TO_ITEM_MAP; else (the only FMLPaths.CONFIGDIR read) open + parse config/cucumber-tags.json: a failed parse logs the error with its stack trace (the only slf4j Logger.error(String, Throwable)) and answers AIR, nothing remembered",
+          "sha256": "c7f7a873a1b79e08cc4b08088592f7e02196cdf4d319919a13223c9e32478cf1"
+        },
+        {
+          "class": "com/blakebr0/cucumber/crafting/TagMapper",
+          "method": "reloadTagMappings",
+          "desc": "()V",
+          "note": "clears TAG_TO_ITEM_MAP and rereads the file (TagsUpdatedEvent)",
+          "sha256": "a55f741370688f4ea7956c0a4c917777a5374fa4b5527628e6a59801e09b5b18"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject before getItemForTag's FMLPaths.CONFIGDIR read (cancellable): AIR at once while config/cucumber-tags.json has exactly the state (exists, file, last modified, length) it had before a read that failed; @WrapOperation of its error log call remembers that state; @Inject HEAD of reloadTagMappings forgets it. Fix: one error line per broken file state instead of one per unmapped tag and call; same answers. Runtime flag cucumberTagFileFailureMemo. Helper bons.furious.patch.cucumber_coo49.CucumberTagFiles.",
+      "license": "Cucumber (MIT): no code carried; the hooks decide whether the file is read again"
+    },
+    "cucumber_tag_tooltip_presence_first": {
+      "mod": "cucumber",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cucumber_coo49.CucumberTagTooltipMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/blakebr0/cucumber/client/handler/TagTooltipHandler",
+          "method": "onItemTooltip",
+          "desc": "(Lnet/neoforged/neoforge/event/entity/player/ItemTooltipEvent;)V",
+          "note": "tag tooltips + advanced tooltips: block / item / fluid tag lists; CTRL -> the lists, else HOLD_CTRL_FOR_TAGS when any list is not empty",
+          "sha256": "8188f48c41911a55e053676abd798105718ca1a0bc4b78c669c1ed94be7f400c"
+        },
+        {
+          "class": "com/blakebr0/cucumber/helper/FluidHelper",
+          "method": "getFluidTags",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Ljava/util/Map;",
+          "note": "Capabilities.FluidHandler.ITEM: per non-empty tank fluid its sorted tag list (called once by both paths)",
+          "sha256": "d07a503515f58b8026c186f6dc8d63306c5deb60682f6ab06dde094c112dbebb"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of TagTooltipHandler.onItemTooltip: with tag tooltips and advanced tooltips on and CTRL not held, add HOLD_CTRL_FOR_TAGS iff the block (not air) has a tag, the item has a tag, or a fluid of FluidHelper.getFluidTags (called once, as the original) has a tag; otherwise the original. Runtime flag cucumberTagTooltipPresenceFirst. Helper bons.furious.patch.cucumber_coo49.CucumberTagTooltips.",
+      "license": "Cucumber (MIT): no code carried"
+    }
+  }
+}

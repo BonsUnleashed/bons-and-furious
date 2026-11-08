@@ -121,7 +121,7 @@
           "class": "com/mojang/blaze3d/vertex/VertexBuffer",
           "method": "upload",
           "desc": "(Lcom/mojang/blaze3d/vertex/MeshData;)V",
-          "note": "closes the mesh on the normal path (try-with-resources)",
+          "note": "closes the mesh on the normal path (try-with-resources) NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ.",
           "sha256": "ab6fa4e1299895dc79f55244dff7c1152cd69d8faf3dc4f500e14112a9b32789",
           "sha256_variants": [
             "7f424957c21dc535e5938a55209cb349c0f39c39f0b7fef4831898cfcd627373"

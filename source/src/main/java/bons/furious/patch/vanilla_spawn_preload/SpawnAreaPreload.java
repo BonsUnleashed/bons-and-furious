@@ -1,6 +1,8 @@
 package bons.furious.patch.vanilla_spawn_preload;
 
+import java.lang.reflect.Field;
 import java.util.Comparator;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -22,12 +24,76 @@ import org.apache.logging.log4j.Logger;
  * The retained vanilla spawn area depends on spawnChunkRadius; the switch also covers servers that
  * remove them (ModernFix's mixin.perf.remove_spawn_chunks), where otherwise the first login after a start waits for spawn
  * terrain to generate. Formerly the separate mod Bons Welcome Mat (ac_spawn_preparation 1.0.3).
+ * <p>
+ * Since 1.0.49 the wait keeps the dedicated server's watchdog informed, as vanilla's own spawn preparation does
+ * (MinecraftServer.prepareLevels sets nextTickTimeNanos to the clock plus 10 ms while it waits). DedicatedServer.initServer
+ * starts the ServerWatchdog before handleServerStarting, and the watchdog (getNextTickTime against Util.getNanos) stops the
+ * server when the clock passes nextTickTimeNanos by more than max-tick-time (60 s by default): a spawn area that took
+ * longer to generate (a big pack, a slow host, spawn chunks removed) stopped the server at its first start, before those
+ * chunks were saved. The chunk waits stay as they were; while they run, a helper thread sets nextTickTimeNanos to the
+ * clock (Util.getNanos) once a second (for at most 15 minutes, so a preparation that really hangs still ends with the
+ * watchdog's crash report). runServer sets nextTickTimeNanos again right after initServer returns (after
+ * handleServerStarted), so the tick schedule is unchanged; a single player world has no watchdog and nothing changes.
  */
 public final class SpawnAreaPreload {
     private static final Logger LOGGER = LogManager.getLogger("Bons and Furious");
     private static final int MAX_RADIUS = 64;
     /** Radius zero = ticket level 33: FULL, without block or entity ticking. */
     private static final TicketType<ChunkPos> SPAWN = TicketType.create("bons_and_furious_spawn", Comparator.comparingLong(ChunkPos::toLong));
+    /** Since 1.0.49: MinecraftServer.nextTickTimeNanos (read by ServerWatchdog through getNextTickTime); null when unreadable. */
+    private static final Field NEXT_TICK_TIME = nextTickTime();
+
+    private static Field nextTickTime() {
+        try {
+            Field f = MinecraftServer.class.getDeclaredField("nextTickTimeNanos");
+            f.setAccessible(true);
+            return f;
+        } catch (Throwable t) {
+            LOGGER.warn("Bons and Furious: spawn preparation cannot reach the server's next tick time ({}); a long preparation may trip the watchdog", t.toString());
+            return null;
+        }
+    }
+
+    /** What vanilla's prepareLevels does while it waits for spawn chunks: tell the watchdog the server is not stuck. */
+    private static void keepWatchdogInformed(MinecraftServer server) {
+        if (NEXT_TICK_TIME == null) return;
+        try {
+            NEXT_TICK_TIME.setLong(server, Util.getNanos());
+        } catch (Throwable t) {
+            // a failed write leaves the watchdog as it was: the behaviour before 1.0.49
+        }
+    }
+
+    private static final long KEEPER_LIMIT_NANOS = 15L * 60L * 1_000_000_000L;
+
+    /** Since 1.0.49: informs the watchdog once a second until interrupted (the preparation ended) or 15 minutes passed. */
+    private static Thread startKeeper(MinecraftServer server) {
+        if (NEXT_TICK_TIME == null) return null;
+        Thread keeper = new Thread(() -> {
+            long end = System.nanoTime() + KEEPER_LIMIT_NANOS;
+            while (System.nanoTime() < end) {
+                keepWatchdogInformed(server);
+                try {
+                    Thread.sleep(1000L);
+                } catch (InterruptedException e) {
+                    return;
+                }
+            }
+        }, "Bons and Furious spawn preparation");
+        keeper.setDaemon(true);
+        keeper.start();
+        return keeper;
+    }
+
+    private static void stopKeeper(Thread keeper) {
+        if (keeper == null) return;
+        keeper.interrupt();
+        try {
+            keeper.join(2000L);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
 
     private SpawnAreaPreload() {
     }
@@ -65,10 +131,16 @@ public final class SpawnAreaPreload {
                 level.getChunkSource().addRegionTicket(SPAWN, pos, 0, pos);
             }
         }
-        for (int x = minX; x <= maxX; x++) {
-            for (int z = minZ; z <= maxZ; z++) {
-                level.getChunk(x, z);
+        Thread keeper = startKeeper(server);
+        try {
+            for (int x = minX; x <= maxX; x++) {
+                for (int z = minZ; z <= maxZ; z++) {
+                    level.getChunk(x, z);
+                }
             }
+        } finally {
+            stopKeeper(keeper);
+            keepWatchdogInformed(server);
         }
         LOGGER.info("Bons and Furious: spawn preparation complete: {} chunks retained without ticking in {} ms; startup may now finish",
                 count, (System.nanoTime() - start) / 1_000_000L);

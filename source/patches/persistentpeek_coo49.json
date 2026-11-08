@@ -1,0 +1,105 @@
+{
+  "group": "persistentpeek_coo49",
+  "keys": {
+    "industrialforegoing_stasis_filter_peek": {
+      "mod": "industrialforegoing",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.persistentpeek_coo49.PpStasisEntityMixin",
+        "bons.furious.mixin.persistentpeek_coo49.PpStasisFilterMixin"
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of Entity.getPersistentData() in ModuleMisc.lambda$generateFeatures$21 (the Stasis Chamber's EntityTickEvent.Pre filter, whose compound is only asked contains(\"StasisChamberTime\")): the entity's own compound, else null, and @Redirect of that contains(key) (CompoundTag.contains ordinal 0), false for null; an entity class that declares its own getPersistentData() is asked through it (class state kept per entity: @Shadow of NeoForge's persistentData field + one @Unique byte on Entity). Helper bons.furious.patch.persistentpeek_coo49.StasisPeek (this key's own helper; the chicken key of the group keeps its own).",
+      "license": "Industrial Foregoing (MIT): no code carried, the redirect carries only our own logic; NeoForge: its field is read",
+      "guard": [
+        {
+          "class": "com/buuz135/industrial/module/ModuleMisc",
+          "method": "lambda$generateFeatures$21",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)Z",
+          "note": "getEntity() instanceof Mob && getEntity().getPersistentData().contains(\"StasisChamberTime\"): the compound is only read",
+          "sha256": "2aba2c3c3cf19a7d2bfe05d4116f7e3faf67f06b23bbf311f8a795bcf599f019"
+        },
+        {
+          "class": "com/buuz135/industrial/module/ModuleMisc",
+          "method": "lambda$generateFeatures$22",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "note": "the processor, run only when the filter passed (the compound exists then): getLong(\"StasisChamberTime\"), setNoAi(false) after 50 ticks",
+          "sha256": "a12b7ea8ed7a9e9d1b9e828df41556b1aba2f41272b92c844df042faea3e1591"
+        },
+        {
+          "class": "com/buuz135/industrial/module/ModuleMisc",
+          "method": "generateFeatures",
+          "desc": "(Lcom/hrznstudio/titanium/module/DeferredRegistryHelper;)V",
+          "note": "EventManager.forge(EntityTickEvent.Pre).filter(lambda 21).process(lambda 22).subscribe()",
+          "sha256": "05e146c47badeaab4ebf02a70fa2b843a58affd8ee73ad86af83fc1f26c98430"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "getPersistentData",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "NeoForge: persistentData == null -> new CompoundTag(); return persistentData",
+          "sha256": "1355a99782fa41f3f4e5ab09b04e4a97f6beee3ef09f2d211b96ccc318e77ba1"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "saveWithoutId",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "saveWithoutId: NeoForgeData written only when persistentData != null",
+          "sha256": "fedbac9b1f32c77a14fe43fbe26b1af57904ba9338ea2de396502f45c26de0e9"
+        }
+      ]
+    },
+    "mobgrindingutils_chicken_tag_peek": {
+      "mod": "mob_grinding_utils",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.persistentpeek_coo49.PpChickenEntityMixin",
+        "bons.furious.mixin.persistentpeek_coo49.PpChickenFuseMixin",
+        "bons.furious.mixin.persistentpeek_coo49.PpChickenSwellMixin"
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the first Entity.getPersistentData() call in ChickenFuseEvent.startChickenFuse (server, EntityTickEvent.Post) and of the first LivingEntity.getPersistentData() call in RenderChickenSwell.renderChickenSwell (client), whose compound is asked contains(\"shouldExplode\") before the method returns when false (every later read or write sits behind that test): the entity's own compound, else a shared empty compound that nothing writes (the fuse, which keeps it in a local) or null with a @Redirect of that first contains(key) (CompoundTag.contains ordinal 0), false for null (the renderer); an entity class that declares its own getPersistentData() is asked through it (class state kept per entity: @Shadow of NeoForge's persistentData field + one @Unique byte on Entity). Helper bons.furious.patch.persistentpeek_coo49.PpChickenPeek.",
+      "license": "Mob Grinding Utils (All Rights Reserved): no code carried, the redirects carry only our own logic; NeoForge: its field is read",
+      "guard": [
+        {
+          "class": "mob_grinding_utils/events/ChickenFuseEvent",
+          "method": "startChickenFuse",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Post;)V",
+          "note": "Mob Grinding Utils 1.1.10+mc1.21.1: a Chicken on a server level: nbt = entity.getPersistentData(); if !nbt.contains(\"shouldExplode\") return; every other use behind that test",
+          "sha256": "5f1c9b04260dcd71e31e8b755f5fb7cdfe73c46a1b9b2a73985e72ffb456555d"
+        },
+        {
+          "class": "mob_grinding_utils/events/RenderChickenSwell",
+          "method": "renderChickenSwell",
+          "desc": "(Lnet/neoforged/neoforge/client/event/RenderLivingEvent$Post;)V",
+          "note": "a Chicken: if getPersistentData().contains(\"shouldExplode\") && the renderer's model is a ChickenModel ...; the second read only inside. @OnlyIn(CLIENT): the build records the dedicated-server variant of this line (method absent when the dist cleaner strips it), as the Forge guard did",
+          "sha256": "1f17c667a6c2331b50753ef121c68e9e0b87cc8f27b8838c4f1ae1ade0b1142a",
+          "sha256_also": [
+            {
+              "build": "dedicated server",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "getPersistentData",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "persistentData == null -> new CompoundTag(); return persistentData",
+          "sha256": "1355a99782fa41f3f4e5ab09b04e4a97f6beee3ef09f2d211b96ccc318e77ba1"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "saveWithoutId",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "saveWithoutId: NeoForgeData written only when persistentData != null",
+          "sha256": "fedbac9b1f32c77a14fe43fbe26b1af57904ba9338ea2de396502f45c26de0e9"
+        }
+      ]
+    }
+  }
+}

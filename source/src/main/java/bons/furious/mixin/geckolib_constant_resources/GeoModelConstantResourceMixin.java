@@ -10,15 +10,16 @@ import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.model.GeoModel;
 
 /**
- * geckolib_constant_resource_reuse (GeckoLib 4.8.4, MIT; client).
+ * geckolib_constant_resource_reuse (GeckoLib 4.9.3 for NeoForge 1.21.1, MIT; client).
  *
  * GeoModel's 2-argument entry points, which GeckoLib's renderers call (getModelResource(animatable, renderer) and
  * getTextureResource(animatable, renderer) every frame, getAnimation(animatable, name) when an animation is looked up), each
  * make one virtual call of the model's own 1-argument getter. Each of those three calls is wrapped (MixinExtras
  * @WrapOperation; another mod's wrapper on the same call still chains): when ConstantResources has proven, from the getter's
- * bytecode, that the model class answers a constant new ResourceLocation("ns", "path"), the location from the first call is
- * handed out again; otherwise, and for an argument of another type than the model's (so the bridge's ClassCastException is
- * unchanged), the original call is made. See ConstantResources. No GeckoLib code is carried.
+ * bytecode, that the model class answers a constant location (ResourceLocation.fromNamespaceAndPath("ns", "path") or
+ * ResourceLocation.parse("ns:path")), the location from the first call is handed out again; otherwise, and for an argument of
+ * another type than the model's (so the bridge's ClassCastException is unchanged), the original call is made. See
+ * ConstantResources. No GeckoLib code is carried.
  */
 @Mixin(value = GeoModel.class, remap = false)
 public abstract class GeoModelConstantResourceMixin {

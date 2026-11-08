@@ -1,0 +1,101 @@
+{
+  "group": "goety_boss_music_gates",
+  "keys": {
+    "goety_boss_music_class_gate": {
+      "mod": "goety",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goety_boss_music_gates.GoetyBossMusicGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/Polarice3/Goety/client/events/ClientEvents",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Post;)V",
+          "note": "returns unless entity.level() is a ClientLevel; every effect (novelty / attack sounds, pre-boss and boss music) sits behind an instanceof test of one of the 14 listed classes; the rest reads the boss-music option, MiscCapHelper.getMobTarget twice (the misc attachment, created on first ask), the target's owner and a tag",
+          "sha256": "71fecadf9ad8fb357946aea63d6ec57b5ae8c1f30f9a9e610689a94efb747a91"
+        },
+        {
+          "class": "com/Polarice3/Goety/utils/MiscCapHelper",
+          "method": "getMobTarget",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/entity/Entity;",
+          "note": "level().getEntity(getMobTargetID(entity)): a read apart from getCapability's creation of the attachment",
+          "sha256": "3dc3ed460dc361215bd932f5994b71508c660851dc79fa3f58c3c1a529e2780c"
+        },
+        {
+          "class": "com/Polarice3/Goety/utils/MiscCapHelper",
+          "method": "getMobTargetID",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)I",
+          "note": "getCapability(entity).getMobTargetID()",
+          "sha256": "1ee326a65501a3aad63e497c40d07d2aec1679882aca21dd2ca8a9ff1327183e"
+        },
+        {
+          "class": "com/Polarice3/Goety/utils/MiscCapHelper",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lcom/Polarice3/Goety/common/capabilities/misc/IMisc;",
+          "note": "entity.getData(MiscProvider.CAPABILITY): the attachment with its default value is created on the first ask; the gate asks it once where the check would have",
+          "sha256": "0710d86a9114da6825cc0eee1190d83f1dcdd7913dc2c4b86705e56c99ed6bab"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/capabilities/misc/MiscCapUpdatePacket",
+          "method": "lambda$consume$2",
+          "desc": "(Ljava/util/function/Supplier;Lcom/Polarice3/Goety/common/capabilities/misc/MiscCapUpdatePacket;)V",
+          "note": "client: loads the update only into an attachment that exists (getExistingData ifPresent): why the gate keeps the creation",
+          "sha256": "796d9c3f8cd9c6a6473460caaa8add61ece28877a52e5d3ba1ef32f865ba1b70"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Mixin @Inject at the head of ClientEvents.onEntityTick(EntityTickEvent.Post) (cancellable): returns at once when the ticked entity's class is none of the 14 classes the handler acts on (decided once per class by name through its superclasses), after asking MiscCapHelper.getCapability once for a living entity of a client level while MainConfig.BossMusic is on (the attachment creation the check made); otherwise the handler runs unchanged (helper bons.furious.patch.goety_boss_music_gates.GoetyMusicGates)",
+      "license": "Goety (MIT): no code carried, the injector carries only our own logic"
+    },
+    "goetyhostility_boss_music_class_gate": {
+      "mod": "goetyhostility",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goety_boss_music_gates.GoetyHostilityBossMusicGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/ratrod/goetyhostility/client/event/GHClientForgeEvents",
+          "method": "onEntityTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Post;)V",
+          "note": "returns unless entity.level().isClientSide; the only effect (the Wildfire theme) sits behind an instanceof HostileWildfire test; the rest reads the option, MiscCapHelper.getMobTarget twice (the misc attachment, created on first ask), the owner and a tag",
+          "sha256": "1fd6ea7e7e29a1043023872336e891022e1ccbd2b102feb863266768ea1e44e9"
+        },
+        {
+          "class": "com/Polarice3/Goety/utils/MiscCapHelper",
+          "method": "getMobTarget",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/entity/Entity;",
+          "note": "level().getEntity(getMobTargetID(entity)): a read apart from getCapability's creation of the attachment",
+          "sha256": "3dc3ed460dc361215bd932f5994b71508c660851dc79fa3f58c3c1a529e2780c"
+        },
+        {
+          "class": "com/Polarice3/Goety/utils/MiscCapHelper",
+          "method": "getMobTargetID",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)I",
+          "note": "getCapability(entity).getMobTargetID()",
+          "sha256": "1ee326a65501a3aad63e497c40d07d2aec1679882aca21dd2ca8a9ff1327183e"
+        },
+        {
+          "class": "com/Polarice3/Goety/utils/MiscCapHelper",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lcom/Polarice3/Goety/common/capabilities/misc/IMisc;",
+          "note": "entity.getData(MiscProvider.CAPABILITY): the attachment with its default value is created on the first ask; the gate asks it once where the check would have",
+          "sha256": "0710d86a9114da6825cc0eee1190d83f1dcdd7913dc2c4b86705e56c99ed6bab"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/capabilities/misc/MiscCapUpdatePacket",
+          "method": "lambda$consume$2",
+          "desc": "(Ljava/util/function/Supplier;Lcom/Polarice3/Goety/common/capabilities/misc/MiscCapUpdatePacket;)V",
+          "note": "client: loads the update only into an attachment that exists (getExistingData ifPresent): why the gate keeps the creation",
+          "sha256": "796d9c3f8cd9c6a6473460caaa8add61ece28877a52e5d3ba1ef32f865ba1b70"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Mixin @Inject at the head of GHClientForgeEvents.onEntityTick(EntityTickEvent.Post) (cancellable): returns at once unless the ticked entity is a HostileWildfire (decided once per class by name), after asking MiscCapHelper.getCapability once for a living entity of a client level while Goety's MainConfig.BossMusic is on (the attachment creation the check made); otherwise the handler runs unchanged (helper bons.furious.patch.goety_boss_music_gates.GoetyMusicGates)",
+      "license": "Goety Hostility (All Rights Reserved): no code carried, the injector carries only our own logic"
+    }
+  }
+}

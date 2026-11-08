@@ -1,0 +1,209 @@
+{
+  "group": "geckolib_lean",
+  "keys": {
+    "geckolib_bone_lookup_memo": {
+      "mod": "geckolib",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.geckolib_lean.BakedGeoModelBoneMemoMixin",
+        "bons.furious.mixin.geckolib_lean.GeoBoneCountingChildrenMixin",
+        "bons.furious.mixin.geckolib_lean.BuiltinTopLevelListMixin"
+      ],
+      "guard": [
+        {
+          "class": "software/bernie/geckolib/cache/object/BakedGeoModel",
+          "method": "getBone",
+          "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+          "note": "GeckoLib 4.9.3: for each top-level bone: searchForChildBone(bone, name); first hit -> Optional.of, else Optional.empty()",
+          "sha256": "b81ffac0f01d7c06236579066a1a340595a32084cb949bbd1f1d1480f5b682fe"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/BakedGeoModel",
+          "method": "topLevelBones",
+          "desc": "()Ljava/util/List;",
+          "note": "the record's component accessor",
+          "sha256": "5616b8bbe1eca4805ffc2523fb2a912a3d50febb73b87a0270174297c5834711"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/BakedGeoModel",
+          "method": "searchForChildBone",
+          "desc": "(Lsoftware/bernie/geckolib/cache/object/GeoBone;Ljava/lang/String;)Lsoftware/bernie/geckolib/cache/object/GeoBone;",
+          "note": "pre-order: the bone, then each child's name, then that child's subtree (4.9.3 keeps it on the record; 4.8.4 had it in CoreBakedGeoModel)",
+          "sha256": "911b71a1783a8df295277927907983a2159c74346dd60650db147497a93a9471"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "<init>",
+          "desc": "(Lsoftware/bernie/geckolib/cache/object/GeoBone;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Double;Ljava/lang/Boolean;Ljava/lang/Boolean;)V",
+          "note": "children = new ObjectArrayList() (first NEW), cubes = new ObjectArrayList() (second)",
+          "sha256": "d2323f61b1682c95b620326e8f552ebb0017ce42584bdaf05564576807374133"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "getChildBones",
+          "desc": "()Ljava/util/List;",
+          "note": "returns the children field",
+          "sha256": "fa088ba4bc29e96bee5078cff7261d3657c6fc9db5fa6c6efb3175b13697e40b"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "getName",
+          "desc": "()Ljava/lang/String;",
+          "note": "returns the final name field",
+          "sha256": "27bca21cb747ed700dec2df06c342c2646caf6520adcd918e150227a3e5d73cc"
+        },
+        {
+          "class": "software/bernie/geckolib/loading/object/BakedModelFactory$Builtin",
+          "method": "constructGeoModel",
+          "desc": "(Lsoftware/bernie/geckolib/loading/object/GeometryTree;)Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;",
+          "note": "bones = new ObjectArrayList(); one constructBone per top-level bone; new BakedGeoModel(bones, properties)",
+          "sha256": "1bd30cb222382f35291cf4d60d03825bcf3bf789328916a5631435b71ab4180e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod around BakedGeoModel.getBone (per-model memo in a new field, rebuilt when the bone-tree version moved); @Redirect of the first NEW ObjectArrayList in GeoBone.<init> (children) and of the NEW ObjectArrayList in BakedModelFactory$Builtin.constructGeoModel (top level) to CountingBoneList (fastutil 8.5.12: the same mutation paths as 8.5.9); helpers bons.furious.patch.geckolib_lean.GeckoBoneMemo, CountingBoneList",
+      "license": "MIT (GeckoLib): no GeckoLib code is carried; our wrapper answers from an index of its own tree"
+    },
+    "geckolib_distant_pose_hold": {
+      "mod": "geckolib",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.geckolib_lean.GeoModelPoseHoldMixin",
+        "bons.furious.mixin.geckolib_lean.AnimationProcessorEpochMixin",
+        "bons.furious.mixin.geckolib_lean.AnimationControllerTickOffsetAccessor"
+      ],
+      "guard": [
+        {
+          "class": "software/bernie/geckolib/model/GeoModel",
+          "method": "handleAnimations",
+          "desc": "(Lsoftware/bernie/geckolib/animatable/GeoAnimatable;JLsoftware/bernie/geckolib/animation/AnimationState;F)V",
+          "note": "GeckoLib 4.9.3: time bookkeeping (tick + partialTick for entities), the re-render check, molang setup, tickAnimation (wrapped) when bones are registered, setCustomAnimations",
+          "sha256": "388f702e84c894b247fb9e951e972d9ea20953da0f3595b2348338e92f003e7b"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/AnimationProcessor",
+          "method": "tickAnimation",
+          "desc": "(Lsoftware/bernie/geckolib/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/model/GeoModel;Lsoftware/bernie/geckolib/animation/AnimatableManager;DLsoftware/bernie/geckolib/animation/AnimationState;Z)V",
+          "note": "processes every controller, poses the shared bones, resets their changed flags, finishFirstTick",
+          "sha256": "b24a3e83f51b67957da66a6606c59f56c764c40153134b50e0a9a0a1c0b6b308"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/AnimationProcessor",
+          "method": "setActiveModel",
+          "desc": "(Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;)V",
+          "note": "clears and re-registers the bones of the new model",
+          "sha256": "96e38470ca75d1bb42824ca8a5d7d9ae72cbf161ffb4c244bbb3d4207521b905"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/AnimationProcessor",
+          "method": "getRegisteredBones",
+          "desc": "()Ljava/util/Collection;",
+          "note": "the bone map's values: the bones a capture saves and restores",
+          "sha256": "afdcaa5190f3327bf56a72440259f579411be82585287259bc1a5c28273c1b0d"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/AnimationProcessor",
+          "method": "resetBoneTransformationMarkers",
+          "desc": "()V",
+          "note": "resetStateChanges on every registered bone at the end of tickAnimation",
+          "sha256": "7c17a1e37ee0eed4945d9d2a3edad067c66751b1edc33a745a7600ddf27704a7"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/AnimationController",
+          "method": "process",
+          "desc": "(Lsoftware/bernie/geckolib/model/GeoModel;Lsoftware/bernie/geckolib/animation/AnimationState;Ljava/util/Map;Ljava/util/Map;DZ)V",
+          "note": "state machine: transitions, triggered animations, stage ends, keyframe events",
+          "sha256": "2ecc3c202a81bb015fbf5f03f51d5c84c2bfa7fe280759798eafc57668e33e82"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/AnimationController",
+          "method": "processCurrentAnimation",
+          "desc": "(DDZ)V",
+          "note": "stage end when adjustedTick >= length; sound/particle/custom keyframe events",
+          "sha256": "bd052c4578e6932ea1e24fb4081878b90aa0def705df4b1414d0e8f1cac05420"
+        },
+        {
+          "class": "software/bernie/geckolib/animation/AnimationController",
+          "method": "adjustTick",
+          "desc": "(D)D",
+          "note": "animationSpeedModifier * max(seekTime - tickOffset, 0) (getAnimationSpeed reads the same modifier)",
+          "sha256": "a560c70d291c954b0274a2bb9e76023a31452bad024608228f193f05867813b4"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "setRotX",
+          "desc": "(F)V",
+          "sha256": "64f8abbc2a5cac9cbe7a71a33fa6af2fbd63ef603e8e7997f1a4c540a1d770fb"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "setRotY",
+          "desc": "(F)V",
+          "sha256": "9ec1897ddc74f4170408dfcc6ab219a4a9873b7e5199ce391c6d5ba0d62d0242"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "setRotZ",
+          "desc": "(F)V",
+          "sha256": "a22d8055f5aa41b4820348d5e6627ee0be736a3b7518c39ce830a9fcd61471ba"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "setPosX",
+          "desc": "(F)V",
+          "sha256": "7c4760480bbdb9c8b07a23363ee9d930b18b168943fd267a91af344a68d391d0"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "setPosY",
+          "desc": "(F)V",
+          "sha256": "5c85c9c6b4ab9e2e88ccfd329cd8c42da4b3ed0fea1dc1fb8c2f358b4b24ee36"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "setPosZ",
+          "desc": "(F)V",
+          "sha256": "ac1348c9d396bc5ec023e6317ffb54b1c5420b150069269b77ed9c6ef5522fd4"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "setScaleX",
+          "desc": "(F)V",
+          "sha256": "e8944161d89694d73693c65e29a8b6b9be5c48e22fe880e89d06548abad5487b"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "setScaleY",
+          "desc": "(F)V",
+          "sha256": "914ea87e3804c4de5580def3c96194026602b3bff4371ec27e1671a14d2ef5bb"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "setScaleZ",
+          "desc": "(F)V",
+          "sha256": "4af072cf45987cfef7d1c68d289777c9d26d3f487e33ca41d6a63dbea0a8a4d0"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "resetStateChanges",
+          "desc": "()V",
+          "sha256": "f1537c9e63948ab337303b9d3b0c75064cc6c82e0089848a666ee2b8d8b329cb"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "canUsePortal",
+          "desc": "(Z)Z",
+          "note": "1.21.1: (allowPassengers || !isPassenger()) && isAlive(); WitherBoss and EnderDragon answer false (the boss test that replaces 1.20.1's canChangeDimensions())",
+          "sha256": "35fed664bb9916b03753eade5e8c3b2d156ff2fc885c9d44ded0c4f949309cc0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation of AnimationProcessor.tickAnimation in GeoModel.handleAnimations (@Local instanceId); saved poses in a new GeoModel field; @Inject HEAD of AnimationProcessor.setActiveModel counts model switches (PoseHoldEpoch); @Accessor AnimationController.tickOffset; helper bons.furious.patch.geckolib_lean.PoseHold; the wrapping mixin has priority 1100 and the wrap require = 0 (as in Forge 1.0.49): next to a mod that @Overwrites handleAnimations without the call, the method is left to it with one log line (Guards.STAND_DOWN_EACH)",
+      "license": "MIT (GeckoLib): no GeckoLib code is carried; our wrapper decides whether the unchanged tickAnimation runs"
+    }
+  }
+}

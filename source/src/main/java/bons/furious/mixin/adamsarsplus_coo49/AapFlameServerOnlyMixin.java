@@ -1,0 +1,21 @@
+package bons.furious.mixin.adamsarsplus_coo49;
+
+import bons.furious.patch.adamsarsplus_coo49.AapEffects;
+import net.minecraft.world.entity.LivingEntity;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+/**
+ * adamsarsplus_flame_aura_server_only (Adam's Ars Plus 1.21.1-6.0.5, LGPL-3.0: no code carried; client mixin; trade-off,
+ * off by default). FlameDeityAuraEffect.applyEffectTick answers true at once on a client level (AapEffects.skipClientAura);
+ * the integrated server's own searches are untouched.
+ */
+@Mixin(targets = "adamsmods.adamsarsplus.common.mob_effects.FlameDeityAuraEffect", remap = false)
+public abstract class AapFlameServerOnlyMixin {
+    @Inject(method = "applyEffectTick(Lnet/minecraft/world/entity/LivingEntity;I)Z", at = @At("HEAD"), cancellable = true)
+    private void bons$adamsarsplusAuraServerOnly(LivingEntity holder, int amplifier, CallbackInfoReturnable<Boolean> cir) {
+        if (AapEffects.skipClientAura(holder)) cir.setReturnValue(true);
+    }
+}

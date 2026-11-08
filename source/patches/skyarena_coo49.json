@@ -1,0 +1,179 @@
+{
+  "group": "skyarena_coo49",
+  "keys": {
+    "skyarena_spawn_scan_lean": {
+      "mod": "skyarena",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.skyarena_coo49.AltarSpawnScanLeanMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/jrdemiurge/skyarena/block/entity/AltarBlockEntity",
+          "method": "findValidSpawnPositions",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;)Ljava/util/List;",
+          "note": "the sweep our handler reproduces: for x, z in -mobSpawnRadius..mobSpawnRadius (fields re-read per test): center.offset(x, 0, z); x*x + z*z <= r*r; then isEmptyBlock of the column, above, above(2), north, south, east, west and NOT of below (allowWaterAndAirSpawn false) or getBlockState(p).getCollisionShape(level, p).isEmpty() of the first seven (true); then player.blockPosition().distSqr(column) > spawnDistanceFromPlayer squared (int, widened); add the column",
+          "sha256": "ac356254822cf766b60af558ee0e049ad8c136a2bf8271db8507ceec0db28fe4"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: @Inject at HEAD (cancellable) of AltarBlockEntity.findValidSpawnPositions runs the same sweep with one BlockPos.MutableBlockPos (same squares, tests, order, level calls and field reads; valid columns added as immutable copies) and returns its list; @Inject at RETURN compares in shadow mode only. Runtime flag skyarenaSpawnScanLean, shadow skyarenaSpawnScanLean.shadow. Helper bons.furious.patch.skyarena_coo49.SkyarenaSpawnScan.",
+      "license": "MIT (Sky Arena): no Sky Arena code is carried; the sweep is ours, built on the vanilla level methods the original calls"
+    },
+    "skyarena_spawn_scan_cache_ticks": {
+      "mod": "skyarena",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.skyarena_coo49.AltarSpawnScanCacheMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/jrdemiurge/skyarena/block/entity/AltarBlockEntity",
+          "method": "updateSummonedMobs",
+          "desc": "()V",
+          "note": "the wrapped call: per summoned mob farther than mobTeleportDistance, findValidSpawnPositions(level, worldPosition, activatingPlayer); the list is only asked isEmpty, size and get(level.random.nextInt(size)) for the teleport target",
+          "sha256": "d67f184e2fbe7444524e313e059af28b822a5e20058c9ff720cd138b8ca22f73"
+        },
+        {
+          "class": "net/jrdemiurge/skyarena/block/entity/AltarBlockEntity",
+          "method": "findValidSpawnPositions",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;)Ljava/util/List;",
+          "note": "the column tests the kept sweep reproduces (same squares, order and block lookups); the player test is the last test of every column",
+          "sha256": "ac356254822cf766b60af558ee0e049ad8c136a2bf8271db8507ceec0db28fe4"
+        },
+        {
+          "class": "net/jrdemiurge/skyarena/block/entity/AltarBlockEntity",
+          "method": "getMobSpawnRadius",
+          "desc": "()I",
+          "note": "returns the mobSpawnRadius field",
+          "sha256": "5a0a8bfe2c2f021f445f41a157361d403c229ef179541793f20c924132d0aea5"
+        },
+        {
+          "class": "net/jrdemiurge/skyarena/block/entity/AltarBlockEntity",
+          "method": "isAllowWaterAndAirSpawn",
+          "desc": "()Z",
+          "note": "returns the allowWaterAndAirSpawn field",
+          "sha256": "7d39702037c0ac7edf7d12d1dfecfd9c7a9d5d696a84f349096bd172b25709d4"
+        },
+        {
+          "class": "net/jrdemiurge/skyarena/block/entity/AltarBlockEntity",
+          "method": "getSpawnDistanceFromPlayer",
+          "desc": "()I",
+          "note": "returns the spawnDistanceFromPlayer field",
+          "sha256": "e8e3b994035411cacacb675af32aa1b79a8f5bd4fb97443960e036fd5a4e60ed"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Trade-off, off by default: MixinExtras @WrapOperation on the findValidSpawnPositions call in AltarBlockEntity.updateSummonedMobs; the altar keeps the columns that passed the block tests (a @Unique field of the block entity) for N ticks and answers each call by applying the original's player test to the current player position; another level, altar position, radius or water flag sweeps again. N = PureConfig.intValue(\"skyarena_spawn_scan_cache_ticks\", 20, 0, 1200) (0 and 1 = the tick of the sweep only). Runtime flag skyarenaSpawnScanCacheTicks, shadow skyarenaSpawnScanCacheTicks.shadow. Helper bons.furious.patch.skyarena_coo49.SkyarenaSpawnCache.",
+      "license": "MIT (Sky Arena): no Sky Arena code is carried; the kept sweep and its test order are ours, built on the vanilla level methods the original calls"
+    },
+    "stale_player_map_purge_skyarena": {
+      "mod": "skyarena",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.skyarena_coo49.AltarPlayerMapsMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/jrdemiurge/skyarena/block/entity/AltarBlockEntity",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "activeAltarBlocks = new HashMap<>(); playerMessageTimestamps = new HashMap<>() (both private static final Map keyed by Player)",
+          "sha256": "7ff41233da6b28fcc98a2ed3d321a1d153f1ffd718663990f09957b7f8c5260e"
+        },
+        {
+          "class": "net/jrdemiurge/skyarena/block/entity/AltarBlockEntity",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: the two private maps are touched only by recordAltarActivation, getAltarPosForPlayer, removeAltarActivationForPlayer, putPlayerMessageTimestamps and updateDifficultyMessages (put / get / getOrDefault / remove; nothing iterates them)",
+          "sha256": "d3f34c2ffe0f6f5ef435cf0ec47f171e0a68a24482eb6946589026f87314d2b9"
+        },
+        {
+          "class": "net/jrdemiurge/skyarena/block/entity/AltarBlockEntity",
+          "method": "recordAltarActivation",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;)V",
+          "note": "activeAltarBlocks.put(player, pos); activatingPlayer = player",
+          "sha256": "86da556469bb7626a741921cd3b8f12effba04f7b3970a5298e7ef2e53716a32"
+        },
+        {
+          "class": "net/jrdemiurge/skyarena/block/entity/AltarBlockEntity",
+          "method": "getAltarPosForPlayer",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Lnet/minecraft/core/BlockPos;",
+          "note": "activeAltarBlocks.get(player)",
+          "sha256": "8d21a76574337b7c5f30629ae791758be7c4cd218e769cf9df8a209be5dbfcee"
+        },
+        {
+          "class": "net/jrdemiurge/skyarena/block/entity/AltarBlockEntity",
+          "method": "removeAltarActivationForPlayer",
+          "desc": "()V",
+          "note": "activeAltarBlocks.remove(activatingPlayer)",
+          "sha256": "2309837b7a634071b3be52fa6ec7cf851cc79dd66448619a2ae49ba0ce9e5aca"
+        },
+        {
+          "class": "net/jrdemiurge/skyarena/block/entity/AltarBlockEntity",
+          "method": "putPlayerMessageTimestamps",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "note": "playerMessageTimestamps.put(player, level.getGameTime())",
+          "sha256": "3533bf7f49346d7a0ddd710fe6a5fc119046ce39258637fa5bd5575b66493a0b"
+        },
+        {
+          "class": "net/jrdemiurge/skyarena/block/entity/AltarBlockEntity",
+          "method": "updateDifficultyMessages",
+          "desc": "()V",
+          "note": "playerMessageTimestamps.getOrDefault(player, -40) / put(player, gameTime - 20) for nearby players",
+          "sha256": "a5f1dff054d73f9c8d778cc32375d11c8514b7c20279286e09da1929b591f6d9"
+        },
+        {
+          "class": "net/jrdemiurge/skyarena/event/PlayerLogoutHandler",
+          "method": "onPlayerLogout",
+          "desc": "(Lnet/neoforged/neoforge/event/entity/player/PlayerEvent$PlayerLoggedOutEvent;)V",
+          "note": "getAltarPosForPlayer(player) on PlayerLoggedOutEvent (posted before the player leaves its level, so before the purge); then the altar's own activatingPlayer == player identity test",
+          "sha256": "cab2ab30b21d226dba1c1c97d1943a50b95b175d084e1830cf75101c261f6a81"
+        },
+        {
+          "class": "net/jrdemiurge/skyarena/event/PlayerDeathHandler",
+          "method": "onPlayerDeath",
+          "desc": "(Lnet/neoforged/neoforge/event/entity/living/LivingDeathEvent;)V",
+          "note": "getAltarPosForPlayer(player) for a dying player (still in its level), then the activatingPlayer == player identity test",
+          "sha256": "8b4da6f443aaa04b95f33dbe159016503d74984ff15ffdfd00186846625771ad"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "note": "equal = same entity id: a respawned player equals its predecessor",
+          "sha256": "dcd4eab34d6347ed8288a5fb8224c9d683d497bad0a0e8fffae926cd24971deb"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "hashCode",
+          "desc": "()I",
+          "note": "the entity id",
+          "sha256": "45f42d1db77741534e550ab77c573466c57f830c021cd4d0c8e63374bbdb454e"
+        },
+        {
+          "class": "net/minecraft/server/players/PlayerList",
+          "method": "remove",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "note": "remove (logout, server stop): EventHooks.firePlayerLoggedOut first, then removePlayerImmediately with UNLOADED_WITH_PLAYER",
+          "sha256": "95a0ed959bbceaa2a558a7a1efb29a3da9809186920412f74394e97dd445db2d"
+        },
+        {
+          "class": "net/minecraft/server/players/PlayerList",
+          "method": "respawn",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;ZLnet/minecraft/world/entity/Entity$RemovalReason;)Lnet/minecraft/server/level/ServerPlayer;",
+          "note": "respawn: the old player removed with the caller's reason (not UNLOADED_WITH_PLAYER), the new one gets its id (setId)",
+          "sha256": "4d3a716b38995a9826b71cf5d983b47e08974d24de7da56ee326945f013d3135"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix: @Inject at RETURN of AltarBlockEntity.<clinit> (@Shadow of its two private static maps) hands both maps to the shared stale-player-map layer bons.furious.patch.stale_player_maps.StalePlayerKeys as server ID maps (helper bons.furious.patch.skyarena_coo49.SkyarenaAltarMaps calls it directly on NeoForge; Forge reached it by name); the layer's listeners swap a respawned player's key and purge at logout",
+      "license": "MIT (Sky Arena): no Sky Arena code is carried; the mixin hands over two map references"
+    }
+  }
+}

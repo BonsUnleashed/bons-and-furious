@@ -122,7 +122,8 @@
           "sha256_variants": [
             "ec242433120a78f80445faaf38f999c044ac570aede952648b7281cd602d0f22"
           ],
-          "variant_reason": "Reviewed Mojang production bytecode (server and client srg jars): the duplicate-UUID branch returns directly where the NeoForm recompilation jumps to a shared return; same instructions otherwise. See work/lanes/entity/evidence/EntityLookup.add-bytecode-diff.txt."
+          "variant_reason": "Reviewed Mojang production bytecode (server and client srg jars): the duplicate-UUID branch returns directly where the NeoForm recompilation jumps to a shared return; same instructions otherwise. See work/lanes/entity/evidence/EntityLookup.add-bytecode-diff.txt.",
+          "note": "NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ."
         },
         {
           "class": "net/minecraft/world/level/entity/EntityLookup",
@@ -363,7 +364,8 @@
           "sha256_variants": [
             "ec242433120a78f80445faaf38f999c044ac570aede952648b7281cd602d0f22"
           ],
-          "variant_reason": "Reviewed Mojang production bytecode (server and client srg jars): the duplicate-UUID branch returns directly where the NeoForm recompilation jumps to a shared return; same instructions otherwise. See work/lanes/entity/evidence/EntityLookup.add-bytecode-diff.txt and work/lanes/S6/evidence/prod-variants-bytecode-diff.txt."
+          "variant_reason": "Reviewed Mojang production bytecode (server and client srg jars): the duplicate-UUID branch returns directly where the NeoForm recompilation jumps to a shared return; same instructions otherwise. See work/lanes/entity/evidence/EntityLookup.add-bytecode-diff.txt and work/lanes/S6/evidence/prod-variants-bytecode-diff.txt.",
+          "note": "NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ."
         },
         {
           "class": "net/minecraft/world/level/entity/EntityLookup",

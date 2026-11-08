@@ -7,10 +7,12 @@
   "injectors": {
     "defaultRequire": 1
   },
+  "mixins": [
+    "LevelWalkSkipMixin"
+  ],
   "client": [
     "CataclysmShakeGateMixin",
     "LegendaryMonstersShakeGateMixin",
-    "LevelWalkSkipMixin",
     "MowziesShakeGateMixin"
   ]
 }

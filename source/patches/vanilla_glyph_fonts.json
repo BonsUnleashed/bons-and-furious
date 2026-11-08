@@ -1,0 +1,89 @@
+{
+  "group": "vanilla_glyph_fonts",
+  "keys": {
+    "vanilla_glyph_font_set_memo": {
+      "mod": "minecraft",
+      "kind": "opt",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_glyph_fonts.StringRenderOutputFontSetMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/gui/Font$StringRenderOutput",
+          "method": "accept",
+          "desc": "(ILnet/minecraft/network/chat/Style;I)Z",
+          "note": "accept: the first call is Font.getFontSet(style.getFont()); the rest of the glyph's work uses that FontSet",
+          "sha256": "3e8b62e69dce9906834b7be6ed9afab7c322908b0230ddc75a332a5418137d25"
+        },
+        {
+          "class": "net/minecraft/client/gui/Font",
+          "method": "getFontSet",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/gui/font/FontSet;",
+          "note": "getFontSet = this.fonts.apply(id)",
+          "sha256": "7b86f1ae2d8b8dbd16637503cb85a2fc8d7b3bb6f96db2ab53b58877019f5a0a"
+        },
+        {
+          "class": "net/minecraft/client/gui/Font",
+          "method": "<init>",
+          "desc": "(Ljava/util/function/Function;Z)V",
+          "note": "the fonts function is a final field",
+          "sha256": "5997757dde95d8d1cd36f9fca8e9275992cb1c8c91ac4f5287cbf562ba4a8e55"
+        },
+        {
+          "class": "net/minecraft/client/gui/font/FontManager",
+          "method": "createFont",
+          "desc": "()Lnet/minecraft/client/gui/Font;",
+          "note": "createFont: new Font(this::getFontSetCached, false)",
+          "sha256": "be0d687b5c7f6e8bb5dc26e8f16bf81aad7d9bee5555cafcad9d911ec95bb40a"
+        },
+        {
+          "class": "net/minecraft/client/gui/font/FontManager",
+          "method": "createFontFilterFishy",
+          "desc": "()Lnet/minecraft/client/gui/Font;",
+          "note": "createFontFilterFishy: the same lookup",
+          "sha256": "d35fc61979da99583318b27bb02e0363bccf7ed3e13e268fdfd431126daa344f"
+        },
+        {
+          "class": "net/minecraft/client/gui/font/FontManager",
+          "method": "getFontSetCached",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/gui/font/FontSet;",
+          "note": "getFontSetCached: the kept last font set when its name equals the id, else getFontSetRaw, which it keeps",
+          "sha256": "e7eff553c4a20efcb38721c9d64fce5b264b0f55be43780d881b35eb9acedb87"
+        },
+        {
+          "class": "net/minecraft/client/gui/font/FontManager",
+          "method": "getFontSetRaw",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/gui/font/FontSet;",
+          "note": "getFontSetRaw: fontSets.getOrDefault(id, missingFontSet)",
+          "sha256": "dd543d73a7264946fe767651dfff220657bc4251e597b866376cd5d55315fe35"
+        },
+        {
+          "class": "net/minecraft/client/gui/font/FontManager",
+          "method": "apply",
+          "desc": "(Lnet/minecraft/client/gui/font/FontManager$Preparation;Lnet/minecraft/util/profiling/ProfilerFiller;)V",
+          "note": "apply: the only place fontSets is rewritten (a resource reload: lastFontSetCache = null, clear, put)",
+          "sha256": "c779697e6461dac5426c31796c48017cec8e1518b605ada1467b04ec0ac7cf8a"
+        },
+        {
+          "class": "net/minecraft/client/gui/font/FontManager",
+          "method": "lambda$apply$16",
+          "desc": "(Ljava/util/Set;Lnet/minecraft/resources/ResourceLocation;Ljava/util/List;)V",
+          "note": "the put: a new FontSet per font id",
+          "sha256": "7824c71f97146db208a89d22c0988920876321c38d064825fd780b5b7fd56f87"
+        },
+        {
+          "class": "net/minecraft/client/gui/font/FontManager",
+          "method": "updateOptions",
+          "desc": "(Lnet/minecraft/client/Options;)V",
+          "note": "updateOptions (unicode and Japanese glyph options): reloads the existing FontSet objects in place",
+          "sha256": "ec0f4b57bfafb725bb9b092559352c0c1ea001fc0e6b470cdca1c4bd349631a8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation of the Font.getFontSet call (getFontSet) in Font$StringRenderOutput.accept (accept), require = 0: the output object remembers the last font id (identity) and FontSet; stands aside at run time while ImmediatelyFast's fast_text_lookup redirect is in the class (field immediatelyFast$lastFontStorage, ImmediatelyFast 1.6.14); helper bons.furious.patch.vanilla_glyph_fonts.GlyphFontSets. Other mods' getFontSet / accept hooks checked by hand on their 1.21.1 builds and carried without audit lines, as in Forge: Supplementaries 4.0.2 FontRendererMixin.supp$setAntiqueFont (getFontSet HEAD, cancellable; the Font's antique flag is set only by BlockEntityRendererDispatcherMixin around BlockEntityRenderDispatcher.setupAndRender), ImmediatelyFast 1.6.14 MixinTextRenderer_Drawer (the same memo, stand-aside)",
+      "license": "Minecraft (Mojang): no-copy, the injector carries only our logic"
+    }
+  }
+}

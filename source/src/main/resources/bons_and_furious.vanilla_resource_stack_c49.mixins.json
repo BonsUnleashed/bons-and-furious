@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.vanilla_resource_stack_c49",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "bons.pure.config.PureMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "CompositePackViewMixin",
+    "FallbackResourceManagerViewMixin",
+    "FolderPackViewMixin",
+    "MultiPackResourceStackMixin",
+    "PackEntryViewMixin",
+    "VanillaPackViewMixin"
+  ]
+}

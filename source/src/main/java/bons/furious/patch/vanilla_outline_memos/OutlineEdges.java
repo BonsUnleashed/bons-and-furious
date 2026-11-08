@@ -70,7 +70,10 @@ public final class OutlineEdges {
             "team.creative.creativecore.mixin.VoxelShapeAccessor", "bons.furious.mixin.create_contraptions.VoxelShapeAccessor",
             "me.jellysquid.mods.lithium.mixin.block.moving_block_shapes.VoxelShapeMixin",
             "me.jellysquid.mods.lithium.mixin.shapes.precompute_shape_arrays.SimpleVoxelShapeMixin",
-            "me.jellysquid.mods.lithium.mixin.shapes.specialized_shapes.VoxelShapeMixin");
+            "me.jellysquid.mods.lithium.mixin.shapes.specialized_shapes.VoxelShapeMixin",
+            // vanilla_clip_shape_box_memo (1.0.49): a redirect of toAabbs inside VoxelShape.clip into a per-shape list of the
+            // same boxes (an @Unique field); it changes no shape and runs only inside clip
+            "bons.furious.mixin.vanilla_lookup_loops.VoxelShapeClipBoxesMixin");
 
     private record Kept(VoxelShape shape, double[] edges) {
     }

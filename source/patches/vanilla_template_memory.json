@@ -1,0 +1,84 @@
+{
+  "group": "vanilla_template_memory",
+  "keys": {
+    "vanilla_template_position_share": {
+      "mod": "minecraft",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_template_memory.StructureTemplatePositionsMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate",
+          "method": "loadPalette",
+          "desc": "(Lnet/minecraft/core/HolderGetter;Lnet/minecraft/nbt/ListTag;Lnet/minecraft/nbt/ListTag;)V",
+          "note": "loadPalette: one new BlockPos(III) per block entry (pos list ints 0, 1, 2), stored in its StructureBlockInfo (redirected, allow 1)",
+          "sha256": "0a9058129d6fe37e3017c0bdb67992f42acba5ae50a5c2448666e19b3891d847"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate",
+          "method": "load",
+          "desc": "(Lnet/minecraft/core/HolderGetter;Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "load: one new BlockPos(III) per entity entry (blockPos list), stored in its StructureEntityInfo (redirected, allow 1); the size is a Vec3i",
+          "sha256": "3d4cfb67eb2e6382f2ffedfbf5ca066112c094316d3c9a8f9ac37f2c7b5f0a93"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the new BlockPos(III) in StructureTemplate.loadPalette(HolderGetter, ListTag, ListTag) and in load(HolderGetter, CompoundTag) (entity block positions): a shared position from a table of every position 0..63, made in one go on first use in the order saved templates list their blocks (y, x, z), a new one otherwise",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_template_memory.TemplatePositions)"
+    },
+    "vanilla_template_top_air_trim": {
+      "mod": "minecraft",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_template_memory.StructureTemplateTopAirMixin",
+        "bons.furious.mixin.vanilla_template_memory.StructureTemplateManagerResourceMixin",
+        "bons.furious.mixin.vanilla_template_memory.PaletteBlocksAccess"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate",
+          "method": "load",
+          "desc": "(Lnet/minecraft/core/HolderGetter;Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "load: clears palettes and entityInfoList, one loadPalette per palette (palettes list) or one for palette, then the entity entries; RETURN injected",
+          "sha256": "3d4cfb67eb2e6382f2ffedfbf5ca066112c094316d3c9a8f9ac37f2c7b5f0a93"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate",
+          "method": "loadPalette",
+          "desc": "(Lnet/minecraft/core/HolderGetter;Lnet/minecraft/nbt/ListTag;Lnet/minecraft/nbt/ListTag;)V",
+          "note": "loadPalette: every block entry with its state from the palette, then palettes.add(new Palette(buildInfoList(...)))",
+          "sha256": "0a9058129d6fe37e3017c0bdb67992f42acba5ae50a5c2448666e19b3891d847"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate",
+          "method": "buildInfoList",
+          "desc": "(Ljava/util/List;Ljava/util/List;Ljava/util/List;)Ljava/util/List;",
+          "note": "buildInfoList: a new Lists.newArrayList() with the three sorted lists, the mutable list the trim removes from",
+          "sha256": "fcf42df78e64ca322efe2855810d3c5acdba9fd17ba7ab6c9475dcb9ae59901e"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$Palette",
+          "method": "*",
+          "desc": "",
+          "note": "Palette: final List blocks (accessor) and NeoForge's concurrent per-block cache filled lazily by blocks(Block), empty at load RETURN",
+          "sha256": "3bccb845335634f5ef79331a52834d7fa989ad4539f407da9de8e13a094fc2e6"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager",
+          "method": "loadFromResource",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Ljava/util/Optional;",
+          "note": "loadFromResource: RESOURCE_LISTER.idToFile, then load(() -> resourceManager.open(file), error logger) -> readStructure -> StructureTemplate.load; HEAD / RETURN injected",
+          "sha256": "c9ba5df661dd3d5d49398bfbdce9b92350b679063fcd5b5c058c7534161955c0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD/RETURN on StructureTemplateManager.loadFromResource(ResourceLocation) (ModernFix 5.27.24 does not replace it on 1.21.1) marks the thread; @Inject RETURN on StructureTemplate.load(HolderGetter, CompoundTag) removes, per palette, the air entries above the highest non-air block (room kept above the highest entity) from the palette's block list (accessor on blocks)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helper bons.furious.patch.vanilla_template_memory.TopAirTrim)"
+    }
+  }
+}

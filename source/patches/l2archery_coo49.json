@@ -1,0 +1,39 @@
+{
+  "group": "l2archery_coo49",
+  "keys": {
+    "l2archery_arrow_texture_memo": {
+      "mod": "l2archery",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.l2archery_coo49.ArrowTextureMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/xkmc/l2archery/content/entity/GenericArrowRenderer",
+          "method": "getTextureLocation",
+          "desc": "(Ldev/xkmc/l2archery/content/entity/GenericArrowEntity;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "the data's arrow item, or the starter arrow when it is no GenericArrowItem; BuiltInRegistries.ITEM.getKey; withPath(\"textures/entity/arrow/arrow.png\"); one return",
+          "sha256": "4426790658027751664603cd80e09a39dc0d1108c4e36e1b20ad12d12d3a79db"
+        },
+        {
+          "class": "dev/xkmc/l2archery/content/entity/GenericArrowEntity$ArrowEntityData",
+          "method": "arrow",
+          "desc": "()Ldev/xkmc/l2archery/content/item/ArrowData;",
+          "note": "record accessor",
+          "sha256": "c99ba5cc41cf7907fb19e86dd9e6b81a8b71e8cd89f0d08e0bf96a46e2af182a"
+        },
+        {
+          "class": "dev/xkmc/l2archery/content/item/ArrowData",
+          "method": "item",
+          "desc": "()Lnet/minecraft/world/item/Item;",
+          "note": "record accessor: the key the memo keeps per",
+          "sha256": "87e734995ba7158fa371fb5279c8ef7d1ad17c136c2eb3df258b7275c20d261f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) + MixinExtras @ModifyReturnValue at RETURN of GenericArrowRenderer.getTextureLocation(GenericArrowEntity): one kept location per arrow item (helper bons.furious.patch.l2archery_coo49.ArrowTextures)",
+      "license": "LGPL-2.1 (L2 Archery): no L2 Archery code is carried"
+    }
+  }
+}

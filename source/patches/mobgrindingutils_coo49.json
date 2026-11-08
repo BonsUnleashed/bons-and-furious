@@ -1,0 +1,289 @@
+{
+  "group": "mobgrindingutils_coo49",
+  "keys": {
+    "mobgrindingutils_inhibitor_scan_sections": {
+      "mod": "mob_grinding_utils",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mobgrindingutils_coo49.InhibitorScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "mob_grinding_utils/events/MGUEndermanInhibitEvent",
+          "method": "getIsInhibited",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "Mob Grinding Utils 1.1.10+mc1.21.1: box = getBoundingBox().inflate(8); x [floor(minX), floor(maxX)) outer, y, z inner; getCommandSenderWorld().getBlockState(pos); true at the first BlockEnderInhibitorOn that is not a BlockEnderInhibitorOff",
+          "sha256": "e76919fd908eb1efbbcff052f07394eb9b035f6bd7939801e5d3da3bbb2a98c5"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "getCommandSenderWorld",
+          "desc": "()Lnet/minecraft/world/level/Level;",
+          "note": "getCommandSenderWorld: return this.level() (asked once instead of per position)",
+          "sha256": "ff1887257743925642425604d9192e20f5840cffd5d6d3e72c9f7c1a3d98c6a4"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "getBlockState",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "outside the build height: void air, no lookup; else getChunk(x >> 4, z >> 4).getBlockState(pos)",
+          "sha256": "4ff4f96e5ead04e8279a0bd18788c2cd0e8c69ea472aeed667af2ea7c8b52827"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "getChunk",
+          "desc": "(II)Lnet/minecraft/world/level/chunk/LevelChunk;",
+          "note": "the chunk lookup the walk replays",
+          "sha256": "2104628e4674e822311ea2c00d0a002b0b17fd5070466b081b88382846bd9608"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunk",
+          "method": "getBlockState",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "debug world aside: section (y >> 4) - minSection, hasOnlyAir or out of range -> air, else the section's state",
+          "sha256": "4e64da0e5a1c25f05dde0b588e80ce58043c21860b356d75b55136d7f6fe9ba7"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LevelChunkSection",
+          "method": "getBlockState",
+          "desc": "(III)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "the section's paletted container get",
+          "sha256": "c6e3b48d9fd13c1c77238202b5aba3989d6d863eee95836933f6d9f6aee32069"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LinearPalette",
+          "method": "maybeHas",
+          "desc": "(Ljava/util/function/Predicate;)Z",
+          "note": "maybeHas over every entry",
+          "sha256": "a9a7603a38286d0a69c6c0a6761fd2ef972101bbfe0ddc72333ca27fa015d224"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/LinearPalette",
+          "method": "idFor",
+          "desc": "(Ljava/lang/Object;)I",
+          "note": "idFor: entries are only appended",
+          "sha256": "447fe4723af617e79e07698e5e715913c422254f9ddbda13f5d0a8b95fc4f086"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/HashMapPalette",
+          "method": "maybeHas",
+          "desc": "(Ljava/util/function/Predicate;)Z",
+          "note": "maybeHas over every entry",
+          "sha256": "fb3d0b6c092424840f12eff32b59bd5740aeb88fa019c79f205829042881c869"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/HashMapPalette",
+          "method": "idFor",
+          "desc": "(Ljava/lang/Object;)I",
+          "note": "idFor: entries are only appended",
+          "sha256": "563d7c5fba619fe5d0bf5c4f0de2d19ab8059786f1837d213168bb1ee2bb8961"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/SingleValuePalette",
+          "method": "maybeHas",
+          "desc": "(Ljava/util/function/Predicate;)Z",
+          "note": "maybeHas of the one value",
+          "sha256": "c0b49d1064d48e28b9c52f9e7b9cdaf8a1b5339a6d2747c2ce4e6c63f96c3688"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/SingleValuePalette",
+          "method": "idFor",
+          "desc": "(Ljava/lang/Object;)I",
+          "note": "a second value makes the container resize to a new palette object NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ.",
+          "sha256": "c84a7be6f9705b7e3030aa7e884340f8a26f419f2be47576f993b5bb2fc5acf0",
+          "sha256_variants": [
+            "82a6b1e40ba9cb1ddd4608c92f2322129ac6eaf7bf3f3a99b75635d40ef5ce21"
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on MGUEndermanInhibitEvent.getIsInhibited: the same x/y/z walk with the same Level.getChunk(x, z) lookups (an immediate repeat is dropped: it can only hit the chunk cache), z-runs of chunk sections whose palette holds no active Ender Inhibitor skipped (maybeHas over every palette entry), other positions read from the looked-up chunk as Level.getBlockState reads them; the original runs for boxes outside the build height, debug worlds and level or entity classes that override the lookups. Same answer, same chunk accesses. Runtime flag mobgrindingutilsInhibitorScanSections, shadow mode mobgrindingutilsInhibitorScanSections.shadow. Helper bons.furious.patch.mobgrindingutils_coo49.InhibitorScan.",
+      "license": "All Rights Reserved (Mob Grinding Utils): wrapper only, no Mob Grinding Utils code is carried; Minecraft (Mojang): no code carried"
+    },
+    "mobgrindingutils_fan_sync_dedup": {
+      "mod": "mob_grinding_utils",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mobgrindingutils_coo49.FanSyncDedupMixin"
+      ],
+      "guard": [
+        {
+          "class": "mob_grinding_utils/tile/TileEntityFan",
+          "method": "getUpdatePacket",
+          "desc": "()Lnet/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket;",
+          "note": "Mob Grinding Utils 1.1.10+mc1.21.1: saveAdditional(new tag, level.registryAccess()) into a tag that is dropped (pure), then ClientboundBlockEntityDataPacket.create(this) (= getUpdateTag)",
+          "sha256": "c703ec27891b96a87271f07d9d86388b83d7206839c419c3991404da8ca43c79"
+        },
+        {
+          "class": "mob_grinding_utils/tile/TileEntityFan",
+          "method": "getUpdateTag",
+          "desc": "(Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "getUpdateTag: a new tag with saveAdditional (inventory, showRenderBox, the six distances)",
+          "sha256": "c482e4c3b116b07eb42c790ef5554b385b3b0d3c8c6e61cd40af239aa7d30b4c"
+        },
+        {
+          "class": "mob_grinding_utils/tile/TileEntityFan",
+          "method": "saveAdditional",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
+          "note": "saveAdditional: super (inventory helper), then showRenderBox and the six distances (floats); nothing else (the values the snapshot keeps)",
+          "sha256": "9c1da993d3c554048a5b5e30774fc914489996e00abe2e554a26bd8ccf22d979"
+        },
+        {
+          "class": "mob_grinding_utils/tile/TileEntityInventoryHelper",
+          "method": "saveAdditional",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
+          "note": "super (BlockEntity), then ContainerHelper.saveAllItems(tag, inventory, false, registries)",
+          "sha256": "437a6bb620d5a4f1a2b26f1d9ca1d2fc7f1bea7eaa6c9afdf81f130785e51220"
+        },
+        {
+          "class": "mob_grinding_utils/tile/TileEntityInventoryHelper",
+          "method": "getContainerSize",
+          "desc": "()I",
+          "note": "getContainerSize = inventory.size() (the slots the snapshot walks)",
+          "sha256": "9f70d64aa370a9235303bde17cd79ef9f2ba9a258c8a697328481ea13f1d1594"
+        },
+        {
+          "class": "mob_grinding_utils/tile/TileEntityInventoryHelper",
+          "method": "getItem",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "note": "getItem(i) = inventory.get(i) (the stacks saveAllItems writes)",
+          "sha256": "163f2b531d05ec9f1fc3c349aed8ee2851094d6c28a4625dec01760ec84090e9"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/BlockEntity",
+          "method": "saveAdditional",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
+          "note": "NeoForge: NeoForgeData when customPersistentData is set, neoforge:attachments when serializeAttachments is not null; nothing else (both make a fan ineligible: persistent data or hasAttachments)",
+          "sha256": "47e651dc8e5227b54a14919fdc0fbf49b4d5dd3b9797143da98fdeea6d9f4380"
+        },
+        {
+          "class": "net/minecraft/world/ContainerHelper",
+          "method": "saveAllItems",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/NonNullList;ZLnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "every non-empty slot: Slot byte + ItemStack.save; Items only when a slot is non-empty (alwaysPutTag false)",
+          "sha256": "ae5a2f97172cf7949712dbd1cb23b8806d35d92d10257f39bc55bc3982c999e4"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "save",
+          "desc": "(Lnet/minecraft/core/HolderLookup$Provider;Lnet/minecraft/nbt/Tag;)Lnet/minecraft/nbt/Tag;",
+          "note": "save: CODEC encode of the item, the count and the data component patch (an empty stack throws; saveAllItems skips them)",
+          "sha256": "229f39d75120d1db7d839c6c040b6b8aa4f2b6754f5f85428eebf0ab14329b98"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "getComponentsPatch",
+          "desc": "()Lnet/minecraft/core/component/DataComponentPatch;",
+          "note": "components.asPatch() (EMPTY for an empty stack)",
+          "sha256": "d129bf6665a9e29a5a0096bcbfd2e44412f1e1d0058849028bd7c7187285f5d0"
+        },
+        {
+          "class": "net/minecraft/core/component/PatchedDataComponentMap",
+          "method": "asPatch",
+          "desc": "()Lnet/minecraft/core/component/DataComponentPatch;",
+          "note": "EMPTY without a patch, else copyOnWrite = true and a DataComponentPatch over the current patch map (a later write to the stack copies the map first)",
+          "sha256": "0e7a1d6adc2355d8b55e6dba0d29fd5dfa8035de1ebc307f33f212cc2e743b45"
+        },
+        {
+          "class": "net/minecraft/core/component/DataComponentPatch",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "note": "equal = equal patch maps (component values by equals)",
+          "sha256": "8a648ce755832a35dfe54bd943f3950ec33906013932ea9920db16d620dde550"
+        },
+        {
+          "class": "mob_grinding_utils/tile/TileEntityFan",
+          "method": "onDataPacket",
+          "desc": "(Lnet/minecraft/network/Connection;Lnet/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket;Lnet/minecraft/core/HolderLookup$Provider;)V",
+          "note": "client: loadAdditional(packet tag) + onContentsChanged",
+          "sha256": "66d09c658402c671d23f0275b7ef6a6741d5667f961d58092ff1259996dc806f"
+        },
+        {
+          "class": "mob_grinding_utils/tile/TileEntityFan",
+          "method": "onContentsChanged",
+          "desc": "()V",
+          "note": "does nothing on a client level",
+          "sha256": "775fd6dd50af5d4feebbd1332d2180fab904ce6de25f496fe238e66b0fd38f26"
+        },
+        {
+          "class": "mob_grinding_utils/tile/TileEntityFan",
+          "method": "loadAdditional",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
+          "note": "loadAdditional: inventory and the fields saveAdditional writes, nothing else",
+          "sha256": "f51b37536de01fa0f26a52b910043c7bdc41e8a39f68f9e110a1486db8257340"
+        },
+        {
+          "class": "net/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket",
+          "method": "create",
+          "desc": "(Lnet/minecraft/world/level/block/entity/BlockEntity;)Lnet/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket;",
+          "note": "create(be) = create(be, BlockEntity::getUpdateTag) with the level's registry access",
+          "sha256": "7b1ff491c0836e5dcd9fd5053d14964d9c4291baf13119a4983c314a9f8dd4ac"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on TileEntityFan.getUpdatePacket and @ModifyReturnValue on TileEntityFan.getUpdateTag(Provider). For a fan without NeoForge persistent data or data attachments, the update tag is a function of showRenderBox, the six distances and every slot's item, count and data component patch; the switch keeps those values (floats by their bits, patches as ItemStack.getComponentsPatch() copy-on-write snapshots compared with equals) from the last packet the fan sent. getUpdatePacket returns null without building any tag when the values are unchanged and no different state was handed out since (getUpdateTag watched: the chunk data of a player who starts tracking the fan); otherwise it returns ClientboundBlockEntityDataPacket.create(this), the packet the mod returns, without the tag the mod builds first and drops, and keeps the values anew. Any other fan runs the mod's own method and is never left out. Exact variant: identical packets are not sent (clients keep their fan's objects); every client's fan state after each broadcast is the original's. Runtime flag mobgrindingutilsFanSyncDedup, shadow mode mobgrindingutilsFanSyncDedup.shadow. Helper bons.furious.patch.mobgrindingutils_coo49.FanSync.",
+      "license": "All Rights Reserved (Mob Grinding Utils): method wrapper and return-value hook only, no Mob Grinding Utils code is carried"
+    },
+    "mobgrindingutils_chicken_swell_model_reuse": {
+      "mod": "mob_grinding_utils",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mobgrindingutils_coo49.ChickenSwellModelMixin"
+      ],
+      "guard": [
+        {
+          "class": "mob_grinding_utils/events/RenderChickenSwell",
+          "method": "renderChickenSwell",
+          "desc": "(Lnet/neoforged/neoforge/client/event/RenderLivingEvent$Post;)V",
+          "note": "Mob Grinding Utils 1.1.10+mc1.21.1, per fed chicken per frame: createBodyLayer().bakeRoot(), new ChickenBodyModel, RL.mc(chicken texture) for RenderType.entitySolid, pose, renderToBuffer",
+          "sha256": "1f17c667a6c2331b50753ef121c68e9e0b87cc8f27b8838c4f1ae1ade0b1142a"
+        },
+        {
+          "class": "mob_grinding_utils/models/ChickenBodyModel",
+          "method": "createBodyLayer",
+          "desc": "()Lnet/minecraft/client/model/geom/builders/LayerDefinition;",
+          "note": "constants only",
+          "sha256": "6d24ffed07c5493dace83b15d68ffeedce9c308ad386e83f4de860d034b647e1"
+        },
+        {
+          "class": "mob_grinding_utils/models/ChickenBodyModel",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/client/model/geom/ModelPart;)V",
+          "note": "super(RenderType::entitySolid), keeps root.getChild(body); nothing else",
+          "sha256": "66ca7f219b69b517a683d000223578cedad0e30301341cf2599f6ef3f0764588"
+        },
+        {
+          "class": "mob_grinding_utils/models/ChickenBodyModel",
+          "method": "renderToBuffer",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V",
+          "note": "renderToBuffer: body.render(...), reads the part only",
+          "sha256": "7709af93ff002d924993b1215b5abb2a4ab85eda9069ff1d6accad0f207fb492"
+        },
+        {
+          "class": "mob_grinding_utils/util/RL",
+          "method": "mc",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "ResourceLocation.fromNamespaceAndPath(\"minecraft\", path): a new location of the same value",
+          "sha256": "3047c2c2c4308084335282102144af5a580fdbcebf7876b34c6667ea6fd52a40"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/ModelPart",
+          "method": "render",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V",
+          "note": "render: reads the pose, cubes and children only NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ.",
+          "sha256": "e7239d8308d9224ba7d3843dc0d9f0cf2abb868fe23079eca33bc03adb5b0752",
+          "sha256_variants": [
+            "70a2e7d727f275e95b19b1298ab3921e88c455878641ffbe692be3f47aa1b298"
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on four calls of RenderChickenSwell.renderChickenSwell (ChickenBodyModel.createBodyLayer, LayerDefinition.bakeRoot, new ChickenBodyModel, RL.mc): the values made on the first such frame are handed back on later frames, each only for exactly the input it was made from. Nothing moves a part of that model, so the same vertices are written. Runtime flag mobgrindingutilsChickenSwellModelReuse. Helper bons.furious.patch.mobgrindingutils_coo49.ChickenSwellModels.",
+      "license": "All Rights Reserved (Mob Grinding Utils): call wrappers only, no Mob Grinding Utils code is carried; Minecraft (Mojang): no code carried"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "group": "mcreator_pv_c49",
+  "keys": {
+    "mcreator_shared_default_player_variables": {
+      "mod": "mcreator",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mcreator_pv_c49.GoblinsTyrannyPvCarrier"
+      ],
+      "target_mods": [
+        "goblins_tyranny"
+      ],
+      "guard": [
+        {
+          "class": "goblinstyranny/network/GoblinsTyrannyModVariables",
+          "method": "get",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lgoblinstyranny/network/GoblinsTyrannyModVariables$PlayerVariables;",
+          "note": "Goblin's Tyranny 1.2.4: entity.getData(PLAYER_VARIABLES), the player_variables data attachment (created with its default on the first read): never null, so Optional.of(get(entity)).orElse(new PlayerVariables()) never returns its argument",
+          "sha256": "f698d8e7f4e2a8767117043f45ddd351e068aad5bcea45cc4aaaeec35bbdbf74"
+        },
+        {
+          "class": "goblinstyranny/network/GoblinsTyrannyModVariables$PlayerVariables",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "super(), Charge = -1.0, MusicPlay = \"\"; every other field keeps its default; no other effect (the constructor shape PvRewrite.analyse accepts)",
+          "sha256": "e40c151338e9dd9a525acb02c3c44560acd1100a576879ef46879e950e8413bb"
+        }
+      ],
+      "cancel": [],
+      "conversion": "config plugin (bons.furious.patch.mcreator_pv_c49.SharedDefaultsPlugin): one empty carrier mixin per MCreator mod (on 1.21.1 only Goblin's Tyranny 1.2.4: the 13 classes of its 19 accepted read sites, census of the 1.21.1 jar); preApply re-checks every NEW PlayerVariables site of the class and turns each accepted one (NEW; DUP; INVOKESPECIAL <init>; INVOKEVIRTUAL java.util.Optional.orElse; CHECKCAST; GETFIELD of a constant-initialised field) into an invokedynamic linked to one shared default per PlayerVariables class (bons.furious.patch.mcreator_pv_c49.SharedDefaults, PvRewrite); every other site keeps allocating. Per-mod check besides the fingerprints: the PlayerVariables constructor's shape and each site's shape are proven at apply time",
+      "license": "MCreator-generated code of Goblin's Tyranny (All Rights Reserved): no mod code is carried; the rewrite only replaces the default's construction at proven read sites with our own call (Idea: Collections Of Optimizations mcreator.shareDefaultPlayerVariables, idea text only)"
+    }
+  }
+}

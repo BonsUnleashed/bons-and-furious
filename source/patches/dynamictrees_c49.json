@@ -1,0 +1,48 @@
+{
+  "group": "dynamictrees_c49",
+  "keys": {
+    "dynamictrees_leaf_site_single_read": {
+      "mod": "dynamictrees",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.dynamictrees_c49.LeafSiteReadsMixin",
+        "bons.furious.mixin.dynamictrees_c49.LeavesPropertiesWaterAccessor"
+      ],
+      "guard": [
+        {
+          "class": "com/dtteam/dynamictrees/block/leaves/DynamicLeavesBlock",
+          "method": "isLocationSuitableForNewLeaves",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lcom/dtteam/dynamictrees/block/leaves/LeavesProperties;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "the body site() copies with single reads: target (leaves test, then fluid vs this.properties.waterResistant), below, below again; writes only in the tall grass (-> SHORT_GRASS) / large fern branch; then isEmptyBlock(target) || getBlockState(target).canBeReplaced(), then hasAdequateLight(first target read)",
+          "sha256": "273ac5c65e0b6284e916f4cd7c9a4b0ef21094a9afd3a257026de7fac03b5076"
+        },
+        {
+          "class": "com/dtteam/dynamictrees/block/leaves/DynamicLeavesBlock",
+          "method": "hasAdequateLight",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/LevelAccessor;Lcom/dtteam/dynamictrees/block/leaves/LeavesProperties;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "the body light() copies: canSeeSkyFromBelowWater, smother count over the positions above compared once with the limit after the loop, sky light",
+          "sha256": "50892fcce32c10390fb420b31b048febc75f258ce9bb0107f0f3415ce7e8bb5d"
+        },
+        {
+          "class": "com/dtteam/dynamictrees/block/leaves/DynamicLeavesBlock",
+          "method": "isBottom",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "called by both bodies as shipped (static)",
+          "sha256": "7c67770e5bb98c6c4a1d95fea176985f9b91e689682c98558da965f6632d1aed"
+        },
+        {
+          "class": "net/minecraft/world/level/LevelReader",
+          "method": "isEmptyBlock",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Z",
+          "note": "isEmptyBlock default: getBlockState(pos).isAir() (used only for level classes that keep this default)",
+          "sha256": "24d6559c4d6f947ef0d9e667c1f064c522ddcbf07841c81a71278c676cdd17ab"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on DynamicLeavesBlock.isLocationSuitableForNewLeaves and on hasAdequateLight (Dynamic Trees 1.7.2, package com.dtteam.dynamictrees): modified copies of the shipped bodies that read each block once (the second read of the block below and the final target reads answered from the first reads unless the tall-plant branch wrote; the smother count stops at the first position that is not a tree part); 1.7.2's waterlogging test kept in place through @Accessor LeavesPropertiesWaterAccessor (LeavesProperties.waterResistant, protected, no getter); hasAdequateLight still called virtually (helper bons.furious.patch.dynamictrees_c49.DtLean)",
+      "license": "MIT (Dynamic Trees): the two bodies are modified copies of Dynamic Trees' own; Minecraft (Mojang): no-copy",
+      "kind": "variant"
+    }
+  }
+}

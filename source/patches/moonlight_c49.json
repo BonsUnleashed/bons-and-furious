@@ -1,0 +1,39 @@
+{
+  "group": "moonlight_c49",
+  "keys": {
+    "moonlight_empty_marker_refresh_skip": {
+      "mod": "moonlight",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.moonlight_c49.MoonlightEmptyMarkerMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mehvahdjukaar/moonlight/core/mixins/MapDataMixin",
+          "method": "checkCustomDeco",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;IILorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "Moonlight Lib 1.21.1-3.8.1: on a LevelAccessor, two ArrayLists, a loop over moonlight$customMapMarkers.entrySet(), two forEach with bound method references; nothing else",
+          "sha256": "35dedcaec2628f849ddfbfa3496d8ae19a02075be85671a002c5aa8b45b656ca"
+        },
+        {
+          "class": "net/mehvahdjukaar/moonlight/core/mixins/MapDataMixin",
+          "method": "ml$getCustomMarkers",
+          "desc": "()Ljava/util/Map;",
+          "note": "returns the final field moonlight$customMapMarkers the handler walks (ExpandedMapData.ml$getCustomMarkers)",
+          "sha256": "16f6436af21a2201a7c6cb0ba6d3e19a122c3835391f412f56ab1d648481a890"
+        },
+        {
+          "class": "net/minecraft/world/level/saveddata/maps/MapItemSavedData",
+          "method": "checkBanners",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;II)V",
+          "note": "checkBanners: Moonlight's handler runs at its TAIL",
+          "sha256": "6af8c950b7f99b28a16e8cb42a1588391568fb71c0bd360b59b937336362810f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "targethandler (MixinSquared @Inject HEAD cancellable on Moonlight's MapDataMixin.checkCustomDeco: returns at once while ExpandedMapData.ml$getCustomMarkers() is empty; helper bons.furious.patch.moonlight_c49.EmptyMarkers)",
+      "license": "Supplementaries Team License v.1.5 (Moonlight Lib 1.21.1-3.8.1): no Moonlight code is carried, only an early return in front of its handler"
+    }
+  }
+}

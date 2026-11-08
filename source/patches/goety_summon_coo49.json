@@ -1,0 +1,60 @@
+{
+  "group": "goety_summon_coo49",
+  "keys": {
+    "goety_cataclysm_summon_goal_scan_after_check": {
+      "mod": "goety_cataclysm",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goety_summon_coo49.GcDraugrSummonScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/Polarice3/goety_cataclysm/common/entities/neutral/AbstractDraugrNecromancer$SummonServantSpell",
+          "method": "*",
+          "desc": "",
+          "note": "canUse: count of owned living entities in the box grown by 64 / 16 / 64 (predicate lambda$canUse$0: isAlive && IOwned && getTrueOwner() == necromancer), then super.canUse() && i < 6",
+          "sha256": "ab6e0d546d5e05328763ec4fcf7b0896be7840a5d0bc91ced93ba9d37d3c1c76"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/entities/neutral/AbstractNecromancer$SummoningSpellGoal",
+          "method": "canUse",
+          "desc": "()Z",
+          "note": "the parent test (Goety 3.2.2): target alive within 12 blocks, not casting, no cooldown; reads only",
+          "sha256": "ef05b59afc816ed527839b56f5b6ae361babaea87a2dce7f9f702bc1e9697f57"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/entities/neutral/AbstractNecromancer",
+          "method": "isSpellCasting",
+          "desc": "()Z",
+          "note": "getNecromancerFlags(1): a read",
+          "sha256": "a9efd727ced339e3286c199dcb82574cb8cd5273009e937cbef5b5b650df75c2"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/entities/neutral/AbstractNecromancer",
+          "method": "getNecromancerFlags",
+          "desc": "(I)Z",
+          "note": "a read of the synched FLAGS byte",
+          "sha256": "f1b69cd28366c7ec933920f0ef0976849a29d17134967acccdb788c3837617df"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/entities/neutral/AbstractNecromancer",
+          "method": "getSpellCooldown",
+          "desc": "()I",
+          "note": "a field read",
+          "sha256": "36895646071e8a398dee45b64e61f59433e5b8a7a79ec8530a115e1b026495fd"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/entities/neutral/Owned",
+          "method": "getTrueOwner",
+          "desc": "()Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "the predicate's owner lookup for Goety's owned entities: effect test, owner UUID, EntityFinder lookup (server) or level.getEntity (client); reads only",
+          "sha256": "aef0bc823e19cc5f551e4f5df3680fbc69d97ffc30bc960c7636f80a51939c73"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass (getEntitiesOfClass) call of AbstractDraugrNecromancer$SummonServantSpell.canUse (a mixin extending AbstractNecromancer$SummoningSpellGoal): while the flag is on the parent test is asked first; when it answers false the call is marked UNUSED so that vanilla_entity_walk_skip leaves out its walk; the call itself runs; a second @WrapOperation answers the goal's own super.canUse() with the answer asked first (helper bons.furious.patch.goety_summon_coo49.GoetySummonScans)",
+      "license": "Goety Cataclysm (all rights reserved) and Goety (MIT): no code carried, the wrapper carries only our own logic"
+    }
+  }
+}

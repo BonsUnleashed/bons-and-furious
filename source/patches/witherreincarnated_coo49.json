@@ -1,0 +1,74 @@
+{
+  "group": "witherreincarnated_coo49",
+  "keys": {
+    "witherreincarnated_wither_scan_presence_gate": {
+      "mod": "witherreincarnated",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.witherreincarnated_coo49.AvoidWitherScanMixin",
+        "bons.furious.mixin.witherreincarnated_coo49.WitherMusicScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/alexander/witherreincarnated/events/ModifyAIEvent$5",
+          "method": "canUse",
+          "desc": "()Z",
+          "note": "canUse: POSSESSED test, then level.getEntitiesOfClass(avoidClass, box inflated by maxDist, always-true) (the wrapped call), getNearestEntity of that list; an empty list ends with toAvoid null and false",
+          "sha256": "458a0aa2dbcb0e9d5a897d5587c51383fccd4ca8901d156795ceb364d100afc2"
+        },
+        {
+          "class": "com/alexander/witherreincarnated/events/HandleWitherMusicEvent",
+          "method": "tickMusic",
+          "desc": "(Lnet/neoforged/neoforge/client/event/ClientTickEvent$Pre;)V",
+          "note": "music volume above 0, a client level: musicForWithers.clear(), then the loop over entitiesForRendering() (the wrapped call) acts on WitherBoss instances only",
+          "sha256": "5df1d28562ca4dd57c68c54efeebba94fe577a5975ca89bbc2906d881985ccfd"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientLevel",
+          "method": "entitiesForRendering",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "entitiesForRendering = getEntities().getAll() (both sides key: a dedicated server has no ClientLevel, so that build accepts the class absent)",
+          "sha256_also": [
+            {
+              "build": "dedicated server",
+              "sha256": null
+            }
+          ],
+          "sha256": "430a7dcf5460be764c3fad822f98fba57b7db4d15dd084a0c553ca9002a13d91"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/LevelEntityGetterAdapter",
+          "method": "getAll",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "getAll = the entity lookup's getAllEntities",
+          "sha256": "36239c3a9c55b33bea271e20dc201a6d5721cb7420f9b6f3dbabb3ad2c33728a"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/TransientEntitySectionManager",
+          "method": "addEntity",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)V",
+          "note": "addEntity: lookup and section",
+          "sha256": "2e80a586e6440e5df6d72bf75e59ff892dc99e399b07001c8e7d7c5f48472c29"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/TransientEntitySectionManager$Callback",
+          "method": "onMove",
+          "desc": "()V",
+          "note": "onMove: re-added to the new section",
+          "sha256": "a3e8da11c4e01233e8854a98020e0bcceb4a830cfb27f7d968800bfbbc7f166f"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/TransientEntitySectionManager$Callback",
+          "method": "onRemove",
+          "desc": "(Lnet/minecraft/world/entity/Entity$RemovalReason;)V",
+          "note": "onRemove: section, then lookup",
+          "sha256": "fcd6b852d1f62915657fc0421f4fd6fac501a278d1aa1f8cadf4e18f7fc31e83"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Server: MixinExtras @WrapOperation on the Level.getEntitiesOfClass call in ModifyAIEvent$5.canUse (the avoid-wither goal): while vanilla_entity_class_count_layer says the level holds no WitherBoss (registration bons_and_furious.witherreincarnated_coo49.entity_classes.json, counted while Wither Reincarnated is installed and this switch is on) a search for exactly WitherBoss.class is marked EMPTY, so vanilla_entity_walk_skip leaves out its section walk; the call and the rest of canUse run unchanged. Client: MixinExtras @WrapOperation on the ClientLevel.entitiesForRendering call in HandleWitherMusicEvent.tickMusic(ClientTickEvent.Pre): while the layer says the client level holds no WitherBoss the loop gets an empty list (the level's entity list holds only entities that are in its sections). Runtime flag witherreincarnatedWitherScanPresenceGate, shadow witherreincarnatedWitherScanPresenceGate.shadow. Helper bons.furious.patch.witherreincarnated_coo49.WrWitherScans.",
+      "license": "Wither Reincarnated (All Rights Reserved): no code carried, the wrappers carry only our own logic"
+    }
+  }
+}

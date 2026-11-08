@@ -56,7 +56,12 @@ import org.spongepowered.asm.mixin.transformer.Config;
  * already is found through the names Mixin registered for the environment (MixinEnvironment.getMixinConfigs()) and
  * Config.create(name, environment), which returns Mixin's own handle of a registered config. Every config is selected,
  * and its plugin loaded, before Mixin prepares any config's mixins, which is where our switches decide.
-
+ *
+ * Since 1.0.48 a row may name a "conflict": the method both patches change in ways that cannot run together (one of them
+ * replaces it with an @Overwrite, the other injects into it at a call: Mixin refuses that injector whatever its require
+ * says, and the game stops when the class loads). The decision is the same as for a patch that makes the same change;
+ * only the log lines say what really happens (on Forge: Collections Of Optimizations 5.6 TickingTracker.setLevel, Lithoform
+ * 2.0.0 NamespacedRule.tryApply).
  */
 final class ForeignPatches {
     private static final Logger LOGGER = LogManager.getLogger("Bons and Furious");
@@ -71,20 +76,95 @@ final class ForeignPatches {
 
     record Asked(Verdict verdict, String detail) {}
 
-    /** One patch of another mod that does what our switch {@code key} does. */
+    /**
+     * One patch of another mod that does what our switch {@code key} does, or (conflict, since 1.0.48: the method, e.g.
+     * "TickingTracker.setLevel") changes the same method in a way that cannot run together with it; null otherwise.
+     */
     record Yield(String key, String mod, String name, String mixin, String config, String master, String option,
-                 boolean byDefault, List<String> unlessMods) {
+                 boolean byDefault, List<String> unlessMods, String conflict) {
         String shortMixin() {
             return mixin.substring(mixin.lastIndexOf('.') + 1);
         }
     }
 
+    /**
+     * Since 1.0.49 (compat.json "orphan_of"): another mod's mixin that only works together with a companion mixin of the same
+     * mod (it reads state the companion keeps). Collections Of Optimizations 5.8 leaves its Bosses of Mass Destruction tracker
+     * (MixinBmdChunkBlockCacheTracker) out next to Bons and Furious but keeps the ward and monolith gates that read it: mob
+     * wards then block no spawn and monoliths change no explosion. Such a mixin is left out whenever the other mod's own
+     * mixin plugin leaves its companion out; {@code key} is the switch of ours that makes the same change.
+     */
+    record Orphan(String mixin, String companion, String key, String mod, String name) {
+        String shortMixin() {
+            return mixin.substring(mixin.lastIndexOf('.') + 1);
+        }
+
+        String shortCompanion() {
+            return companion.substring(companion.lastIndexOf('.') + 1);
+        }
+    }
+
+    private static final Map<String, Boolean> ORPHANED = new HashMap<>();             // orphan mixin -> left out (since 1.0.49)
+
     private ForeignPatches() {}
 
-    /** guard-table line: yield key mod name mixin config master option default unless ("-" = none). */
+    /** Since 1.0.49, guard-table line: orphan mixin companion key mod name. */
+    static Orphan parseOrphan(String[] f) {
+        return new Orphan(f[1], f[2], f[3], f[4], f[5]);
+    }
+
+    /**
+     * Since 1.0.49: true when the orphan mixin must be left out: the other mod lists it for this side but not its companion,
+     * or its own mixin plugin leaves the companion out of every target (the same answer twice, asked as Mixin asks it), or
+     * the plugin cannot be asked (then it is left out to be safe: the switch named in the row makes the same change, and
+     * without the companion the orphan would work on state nothing keeps). Decided once per mixin; one INFO (or WARN) line.
+     */
+    static synchronized boolean orphaned(Orphan o) {
+        Boolean known = ORPHANED.get(o.mixin());
+        if (known != null) return known;
+        boolean out = false;
+        String why = null, version = null;
+        try {
+            version = modVersion(o.mod());
+            if (version != null && listed(o.mod()).contains(o.mixin())) {
+                if (!listed(o.mod()).contains(o.companion())) {
+                    out = true;
+                    why = "it does not list " + o.shortCompanion() + " for this side";
+                } else {
+                    Asked a;
+                    try {
+                        a = ask(new Yield(o.key(), o.mod(), o.name(), o.companion(), null, null, null, true, List.of(), null));
+                    } catch (Throwable t) {
+                        a = new Asked(Verdict.UNKNOWN, "its mixin plugin threw " + t);
+                    }
+                    if (a.verdict() == Verdict.LEFT_OUT) {
+                        out = true;
+                        why = "its own mixin plugin leaves " + o.shortCompanion() + " out (" + a.detail() + ")";
+                    } else if (a.verdict() == Verdict.UNKNOWN) {
+                        out = true;
+                        why = "its mixin plugin could not be asked about " + o.shortCompanion() + " (" + a.detail() + "), so it is left out to be safe";
+                    }
+                }
+            }
+        } catch (Throwable t) {
+            out = true;
+            why = "its mixin configs could not be read (" + t + "), so it is left out to be safe";
+        }
+        ORPHANED.put(o.mixin(), out);
+        if (out) {
+            String text = "Bons and Furious: {} {}'s {} is left out: it relies on {}, and {}; {} makes the same change";
+            if (why.endsWith("left out to be safe"))
+                LOGGER.warn(text, o.name(), version, o.shortMixin(), o.shortCompanion(), why, o.key());
+            else
+                LOGGER.info(text, o.name(), version, o.shortMixin(), o.shortCompanion(), why, o.key());
+        }
+        return out;
+    }
+
+    /** guard-table line: yield key mod name mixin config master option default unless [conflict] ("-" = none). */
     static Yield parse(String[] f) {
         return new Yield(f[1], f[2], f[3], f[4], dash(f[5]), dash(f[6]), dash(f[7]), Boolean.parseBoolean(f[8]),
-                f[9].equals("-") ? List.of() : List.of(f[9].split(",")));
+                f[9].equals("-") ? List.of() : List.of(f[9].split(",")), f.length > 10 ? dash(f[10]) : null);
     }
 
     private static String dash(String s) {
@@ -117,11 +197,18 @@ final class ForeignPatches {
             // since 1.0.45: and the other mod's own mixin plugin really applies it (asked once per mixin; see the class comment)
             Asked a = asked(y);
             if (a.verdict() == Verdict.LEFT_OUT) {
-                if (LOGGED.add("left|" + y.key() + "|" + y.mixin()))
-                    LOGGER.info("Bons and Furious: {} applies: {} {}'s own copy ({}) is left out by its mixin plugin ({}), so only this switch's copy runs",
-                            y.key(), y.name(), version, y.shortMixin(), a.detail());
+                if (LOGGED.add("left|" + y.key() + "|" + y.mixin())) {
+                    if (y.conflict() != null)
+                        LOGGER.info("Bons and Furious: {} applies: {} {}'s change to {} ({}) is left out by its mixin plugin ({}), so the two never meet",
+                                y.key(), y.name(), version, y.conflict(), y.shortMixin(), a.detail());
+                    else
+                        LOGGER.info("Bons and Furious: {} applies: {} {}'s own copy ({}) is left out by its mixin plugin ({}), so only this switch's copy runs",
+                                y.key(), y.name(), version, y.shortMixin(), a.detail());
+                }
                 return null;
             }
+            if (y.conflict() != null)
+                return y.name() + " " + version + " also changes " + y.conflict() + " and the two changes cannot run together (" + y.shortMixin() + setting + ")";
             return y.name() + " " + version + " makes the same change (" + y.shortMixin() + setting + ")";
         } catch (Throwable t) {
             // Since 1.0.38+mc1.21.1: a mod that cannot be checked is left as it ships and this switch steps aside. Applying

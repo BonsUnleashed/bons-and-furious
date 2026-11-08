@@ -1,0 +1,62 @@
+{
+  "group": "create_coo49",
+  "keys": {
+    "create_idle_behaviour_tick_skip": {
+      "mod": "create",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.create_coo49.SmartBlockEntityIdleTickMixin",
+        "bons.furious.mixin.create_coo49.BehaviourIdleStateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/simibubi/create/foundation/blockEntity/SmartBlockEntity",
+          "method": "tick",
+          "desc": "()V",
+          "note": "initialize once, own lazy tick, then forEachBehaviour(BlockEntityBehaviour::tick): the wrapped call (the only one in tick)",
+          "sha256": "c88817a2d6ecb8b42182260288fadfb5519b960bea820b5deb02382d881479e6"
+        },
+        {
+          "class": "com/simibubi/create/foundation/blockEntity/SmartBlockEntity",
+          "method": "forEachBehaviour",
+          "desc": "(Ljava/util/function/Consumer;)V",
+          "note": "getAllBehaviours().forEach(action)",
+          "sha256": "a6b354d718fd5d3074e54d54fee391c595fd2476ecfdadc7d5b155b102f95725"
+        },
+        {
+          "class": "com/simibubi/create/foundation/blockEntity/SmartBlockEntity",
+          "method": "getAllBehaviours",
+          "desc": "()Ljava/util/Collection;",
+          "note": "behaviours.values() (a Reference2ObjectArrayMap)",
+          "sha256": "9bbf9349ea1229c3745c38f1702749f6c54eca4ec69dc7c80ad16b3646e93841"
+        },
+        {
+          "class": "com/simibubi/create/foundation/blockEntity/behaviour/BlockEntityBehaviour",
+          "method": "*",
+          "desc": "",
+          "note": "the declared methods: only tick and setLazyTickRate touch the private lazyTickCounter",
+          "sha256": "6198841c9aa2651244e0f269a629cc446d62b093a2702c194f67da79ca32c75c"
+        },
+        {
+          "class": "com/simibubi/create/foundation/blockEntity/behaviour/BlockEntityBehaviour",
+          "method": "tick",
+          "desc": "()V",
+          "note": "if (lazyTickCounter-- <= 0) { lazyTickCounter = lazyTickRate; lazyTick(); }",
+          "sha256": "aaa8b7128731204935e403b9b22b5fee0564030e08256bf0a7e793ac0c436ba2"
+        },
+        {
+          "class": "com/simibubi/create/foundation/blockEntity/behaviour/BlockEntityBehaviour",
+          "method": "lazyTick",
+          "desc": "()V",
+          "note": "empty",
+          "sha256": "e7a8b6dd24a039e9df717802271ddf7053d3aac12b0bad8f9902c1c5dc5d046d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the forEachBehaviour(BlockEntityBehaviour::tick) call in SmartBlockEntity.tick: getAllBehaviours().forEach with a consumer that calls tick() only on behaviours whose runtime class overrides tick or lazyTick below BlockEntityBehaviour (a byte cached on each behaviour, BehaviourIdleStateMixin + ClassValue), unless the block entity's class declares its own forEachBehaviour / getAllBehaviours (a byte cached on SmartBlockEntity); exact variant: an idle behaviour's private lazy-tick countdown no longer moves (its lazyTick is empty). Runtime flag createIdleBehaviourTickSkip. Helpers bons.furious.patch.create_coo49.IdleBehaviours, IdleBehaviourState.",
+      "license": "Create (MIT): no Create code is carried; the walk is our own consumer over Create's collection"
+    }
+  }
+}

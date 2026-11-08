@@ -33,13 +33,111 @@
           "class": "software/bernie/geckolib/model/GeoModel",
           "method": "*",
           "desc": "",
-          "note": "the declared methods of GeoModel 4.8.4 (the abstract 1-argument getters among them)",
+          "note": "the declared methods of GeoModel 4.9.3 (the abstract 1-argument getters among them)",
           "sha256": "b57f1826a9cc6da1281fc895e3e65cf95976c99698d668efc9e2f609f7e5b0c3"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "fromNamespaceAndPath",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "since 1.0.49 (getter shape B): 1.21.1's return createUntrusted(namespace, path)",
+          "sha256": "f1523df602437dde203f673d3e473043901c216f94610de2ebbc3f7850c5532c"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "parse",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "NeoForge port (getter shape P, MCreator for 1.21.1): return bySeparator(location, ':')",
+          "sha256": "4ffa76c9eb65acbeb60efddb93ce6e8022d6ebfc66b17fe41249fa6489a23816"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "bySeparator",
+          "desc": "(Ljava/lang/String;C)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "the split at the first separator, then createUntrusted (withDefaultNamespace without one): a pure function of the string",
+          "sha256": "aaecedc1d1bccc6a89015d06c39c2981b75a4b337cbff2c395e16470514ce77b"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "createUntrusted",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "new ResourceLocation(assertValidNamespace(ns, path), assertValidPath(ns, path)): the strings are kept as given, invalid ones throw",
+          "sha256": "0065fedcb709111594b9fe45081e9543c2e5a964f8c51755bde31f73ebe8eb54"
         }
       ],
       "cancel": [],
-      "conversion": "MixinExtras @WrapOperation on the 1-argument getter call inside GeoModel.getModelResource(T, GeoRenderer), getTextureResource(T, GeoRenderer) and getAnimation(T, String): for a model class whose dispatched getter is proven from its bytecode (javac bridge with checkcast + typed getter returning new ResourceLocation of two string constants, no mixin merged into either class) the first result is handed out again when the argument is null or of the bridge's type; every other call runs the original (helper bons.furious.patch.geckolib_constant_resources.ConstantResources: runtime flag, SHADOW mode)",
+      "conversion": "MixinExtras @WrapOperation on the 1-argument getter call inside GeoModel.getModelResource(T, GeoRenderer), getTextureResource(T, GeoRenderer) and getAnimation(T, String): for a model class whose dispatched getter is proven from its bytecode (javac bridge with checkcast + typed getter returning ResourceLocation.fromNamespaceAndPath of two string constants, or, on 1.21.1, MCreator's ResourceLocation.parse of one string constant, each only while that factory is a static method no mixin replaces; the 1.20.1 new ResourceLocation of two constants is still recognised; no mixin merged into either class) the first result is handed out again when the argument is null or of the bridge's type; every other call runs the original (helper bons.furious.patch.geckolib_constant_resources.ConstantResources: runtime flag, SHADOW mode)",
       "license": "GeckoLib (MIT): no code carried; the model classes of the mods (some All Rights Reserved) are only read as bytecode and called as before, nothing of theirs is copied"
+    },
+    "geckolib_texture_template_memo": {
+      "mod": "geckolib",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.geckolib_constant_resources.GeoModelTextureTemplateMixin"
+      ],
+      "guard": [
+        {
+          "class": "software/bernie/geckolib/model/GeoModel",
+          "method": "getTextureResource",
+          "desc": "(Lsoftware/bernie/geckolib/animatable/GeoAnimatable;Lsoftware/bernie/geckolib/renderer/GeoRenderer;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "the renderers' texture entry point: one virtual call of the model's 1-argument texture getter (the call wrapped)",
+          "sha256": "197fdecf955d05fb6885e5855897c4d9f5bb92a195bfbf4c49fd3691261acd76"
+        },
+        {
+          "class": "software/bernie/geckolib/model/GeoModel",
+          "method": "*",
+          "desc": "",
+          "note": "the declared methods of GeoModel 4.9.3",
+          "sha256": "b57f1826a9cc6da1281fc895e3e65cf95976c99698d668efc9e2f609f7e5b0c3"
+        },
+        {
+          "class": "net/minecraft/network/syncher/SynchedEntityData",
+          "method": "get",
+          "desc": "(Lnet/minecraft/network/syncher/EntityDataAccessor;)Ljava/lang/Object;",
+          "note": "get: getItem(accessor).getValue(), the read a proven getTexture() makes (and the switch makes once on a kept answer, as the original does)",
+          "sha256": "c11df7904493079ba627b7801de981975cb26eb78fc06bdd7543a76e708d5993"
+        },
+        {
+          "class": "net/minecraft/network/syncher/SynchedEntityData$DataItem",
+          "method": "getValue",
+          "desc": "()Ljava/lang/Object;",
+          "note": "DataItem.getValue: a field read",
+          "sha256": "719e4070e64b622f1eefe9a7982daca878f03e5ed5274f263e135592e14a806a"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "parse",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "template shape TP (MCreator for 1.21.1): return bySeparator(location, ':')",
+          "sha256": "4ffa76c9eb65acbeb60efddb93ce6e8022d6ebfc66b17fe41249fa6489a23816"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "bySeparator",
+          "desc": "(Ljava/lang/String;C)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "the split at the first ':' (inside the template's constant text, before the texture name), then createUntrusted",
+          "sha256": "aaecedc1d1bccc6a89015d06c39c2981b75a4b337cbff2c395e16470514ce77b"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "fromNamespaceAndPath",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "template shape TB: return createUntrusted(namespace, path)",
+          "sha256": "f1523df602437dde203f673d3e473043901c216f94610de2ebbc3f7850c5532c"
+        },
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "createUntrusted",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "new ResourceLocation(assertValidNamespace(ns, path), assertValidPath(ns, path))",
+          "sha256": "0065fedcb709111594b9fe45081e9543c2e5a964f8c51755bde31f73ebe8eb54"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the 1-argument texture getter call inside GeoModel.getTextureResource(T, GeoRenderer): for a model class whose typed texture getter is proven from its bytecode to be MCreator's 1.21.1 template ResourceLocation.parse(\"ns:\" + prefix + arg.getTexture() + suffix) or ResourceLocation.fromNamespaceAndPath(ns, prefix + arg.getTexture() + suffix) (one string concatenation, behind the javac bridge, no mixin merged into the model classes, the factory not replaced by a mixin) and an argument whose dispatched getTexture() is the plain synched-data read (proven per class from its bytecode), the location kept for an equal texture string is handed out again (at most 64 strings per model class); a first string runs the original and keeps its result only when it is exactly that string's location; every other call runs the original (helper bons.furious.patch.geckolib_constant_resources.ConstantResources: runtime flag, SHADOW mode)",
+      "license": "GeckoLib (MIT): no code carried; the model and entity classes of the mods (several All Rights Reserved) are only read as bytecode and called as before, nothing of theirs is copied"
     }
   }
 }

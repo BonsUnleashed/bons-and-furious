@@ -1,0 +1,166 @@
+{
+  "group": "supplementaries_lean",
+  "keys": {
+    "supplementaries_map_tint_memo": {
+      "mod": "supplementaries",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.supplementaries_lean.ColorDataTintMemoMixin",
+        "bons.furious.mixin.supplementaries_lean.BlockMapTintSlotMixin",
+        "bons.furious.mixin.supplementaries_lean.HolderReferenceTagsAccessor"
+      ],
+      "guard": [
+        {
+          "class": "net/mehvahdjukaar/supplementaries/common/misc/map_data/MapTintColorsHandler$ColorData",
+          "method": "markColored",
+          "desc": "(IILnet/minecraft/world/level/block/Block;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;)V",
+          "note": "one MapTintColorsHandler.getSimilarColoredBlock(block) call per updated map pixel (Forge 3.1.41: ColoredMapHandler$ColorData / getCustomColor)",
+          "sha256": "36d4a8651779748bf1861fec46315d0ea94f358e923a99406b2d678f18a12e36"
+        },
+        {
+          "class": "net/mehvahdjukaar/supplementaries/common/misc/map_data/MapTintColorsHandler",
+          "method": "getSimilarColoredBlock",
+          "desc": "(Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/world/level/block/Block;",
+          "note": "reads only the block holder's tags (five ModTags constants through Holder.Reference.is), BushBlock / LeavesBlock instanceof and constant Blocks",
+          "sha256": "2d832da3d48f8d452be982791af60cc12f0891705ce583a861fbf03727485be1"
+        },
+        {
+          "class": "net/minecraft/core/Holder$Reference",
+          "method": "bindTags",
+          "desc": "(Ljava/util/Collection;)V",
+          "note": "bindTags: tags = Set.copyOf(...), an immutable set; the field starts as Set.of() (never null on 1.21.1)",
+          "sha256": "5b52259281cc5a77063cd859a9c357e868f2a731c8a4eea68ad2257f921ae45b"
+        },
+        {
+          "class": "net/minecraft/core/Holder$Reference",
+          "method": "is",
+          "desc": "(Lnet/minecraft/tags/TagKey;)Z",
+          "note": "is(TagKey): tags.contains(key), the only read of the holder getSimilarColoredBlock makes besides its class",
+          "sha256": "3c327c34d4713b5770d6a5ab4d15689f608bc00b2f767ca05f4d77d29ae8ae79"
+        },
+        {
+          "class": "net/minecraft/world/level/block/Block",
+          "method": "builtInRegistryHolder",
+          "desc": "()Lnet/minecraft/core/Holder$Reference;",
+          "note": "builtInRegistryHolder: the block's own final intrusive holder",
+          "sha256": "4da31b0b8ac8d65112e62422dde7073fa1b51ba4c7752c0d813a83d3bba028f4"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the MapTintColorsHandler.getSimilarColoredBlock(Block) call in Supplementaries' MapTintColorsHandler$ColorData.markColored to a per-Block memo (an @Unique field on Block, bons.furious.mixin.supplementaries_lean.BlockMapTintSlotMixin) keyed by the holder's tag set object (@Accessor on Holder$Reference.tags); helper bons.furious.patch.supplementaries_lean.MapTints. Forge 3.1.41 named the same lookup ColoredMapHandler.getCustomColor",
+      "license": "Supplementaries Team License v.1.5: no Supplementaries code is carried; the redirect calls Supplementaries' own getSimilarColoredBlock and only remembers its answer; Minecraft (Mojang): no code"
+    },
+    "supplementaries_sign_ink_sync_filter": {
+      "mod": "supplementaries",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.supplementaries_lean.SignInkSyncFilterMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mehvahdjukaar/supplementaries/mixins/neoforge/ChunkHolderMixin",
+          "method": "sendBlockEntityCaps",
+          "desc": "(Lnet/minecraft/world/level/block/entity/BlockEntity;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "HEAD of BlockEntityInfo.create: te in a ServerLevel -> server.tell(new TickTask(tickCount, lambda$sendBlockEntityCaps$1))",
+          "sha256": "954b080c10336048955ab8f32049cad933b7c7e66c929ecc9bcec8bba99c2bb1"
+        },
+        {
+          "class": "net/mehvahdjukaar/supplementaries/mixins/neoforge/ChunkHolderMixin",
+          "method": "lambda$sendBlockEntityCaps$1",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/entity/BlockEntity;)V",
+          "note": "the task: serverLevel.getCapability(ANTIQUE_TEXT_CAP, pos, te.getBlockState(), te, null); only when non-null a ClientBoundSyncAntiqueInk to the chunk's players",
+          "sha256": "1971b9b5a10d23a53c0f054c64dfc4acb0134709cf857007457c99a174d3045b"
+        },
+        {
+          "class": "net/mehvahdjukaar/supplementaries/platform/CapabilityHandler",
+          "method": "register",
+          "desc": "(Lnet/neoforged/neoforge/capabilities/RegisterCapabilitiesEvent;)V",
+          "note": "registers ANTIQUE_TEXT_CAP for the SignBlock blocks only",
+          "sha256": "30b0752e5b35530f347c089080af1e9273962368a64b0ebf0c90a9759778066d"
+        },
+        {
+          "class": "net/mehvahdjukaar/supplementaries/platform/CapabilityHandler",
+          "method": "lambda$register$3",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/BlockEntity;Ljava/lang/Void;)Lnet/mehvahdjukaar/supplementaries/common/block/IAntiquable;",
+          "note": "the sign provider: be instanceof SignBlockEntity ? its antique-ink attachment : null",
+          "sha256": "a0904329abbd7ca57342db4f6f6615af6671957c21e91e585064ff098c349cdc"
+        },
+        {
+          "class": "net/minecraft/network/protocol/game/ClientboundLevelChunkPacketData$BlockEntityInfo",
+          "method": "create",
+          "desc": "(Lnet/minecraft/world/level/block/entity/BlockEntity;)Lnet/minecraft/network/protocol/game/ClientboundLevelChunkPacketData$BlockEntityInfo;",
+          "note": "the merged target: one call per block entity of every chunk packet built",
+          "sha256": "02c4b0a1b3ad7f2a4a4e65f6ca787fba0088621e719eba2d2ccd55129a5fcb29"
+        },
+        {
+          "class": "net/neoforged/neoforge/capabilities/BlockCapability",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/BlockEntity;Ljava/lang/Object;)Ljava/lang/Object;",
+          "note": "with the state and block entity given: no level read; asks the providers registered for state.getBlock() (fixed after RegisterCapabilitiesEvent), null when there are none or all answer null",
+          "sha256": "e32118aae8e6d9468e070079986c70d360ca35adf866004d24f5a1dadc237b90"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinSquared @TargetHandler @Inject at the HEAD of Supplementaries' neoforge ChunkHolderMixin.sendBlockEntityCaps handler (merged into ClientboundLevelChunkPacketData$BlockEntityInfo.create), cancellable, priority 1500, require = 0, expect = 0; cancelled when the block entity is not a SignBlockEntity and the level's ANTIQUE_TEXT_CAP lookup (the task's own call, made at once on the server thread) answers null; helper bons.furious.patch.supplementaries_lean.SignInkSync. Forge 3.1.41 asked the Forge capability (LazyOptional) and checked CapabilityProvider.valid; NeoForge 1.21.1 has block capability lookups instead, so that accessor is gone",
+      "license": "Supplementaries Team License v.1.5: no Supplementaries code is carried; our injection only decides whether its unchanged handler runs; NeoForge (LGPL-2.1) / Minecraft: no code"
+    },
+    "supplementaries_skull_watch_precheck": {
+      "mod": "supplementaries",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.supplementaries_lean.EndermanSkullWatchMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mehvahdjukaar/supplementaries/common/block/tiles/EndermanSkullBlockTile",
+          "method": "isBeingWatched",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z",
+          "note": "players in +-20; per player lookAt, mask test, then player.pick(64, 1, false): watched only when the block hit is at the skull's position",
+          "sha256": "82c53886f2d9f9ffb897736064a232bcdd754266518bc80307e6ed662200df51"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "pick",
+          "desc": "(DFZ)Lnet/minecraft/world/phys/HitResult;",
+          "note": "pick: eye = getEyePosition(pt), end = eye.add(view.x * d, view.y * d, view.z * d), level().clip(ClipContext(eye, end, OUTLINE, NONE, this))",
+          "sha256": "60e08f20cb006f0b125194af49031a602fd8254c2ac6c4fbf902b57fe01fac9c"
+        },
+        {
+          "class": "net/minecraft/world/level/BlockGetter",
+          "method": "clip",
+          "desc": "(Lnet/minecraft/world/level/ClipContext;)Lnet/minecraft/world/phys/BlockHitResult;",
+          "note": "clip: traverseBlocks(from, to, ...): a block hit reports the visited cell's position; a miss reports BlockPos.containing(to)",
+          "sha256": "816a82ae3a0842865a5068ceb3daf2809b8a3cfe76e14a1b8a4b38b99526a86c"
+        },
+        {
+          "class": "net/minecraft/world/level/BlockGetter",
+          "method": "traverseBlocks",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Ljava/lang/Object;Ljava/util/function/BiFunction;Ljava/util/function/Function;)Ljava/lang/Object;",
+          "note": "traverseBlocks: ends extended by 1e-7 of the length, then a cell walk along the segment",
+          "sha256": "9d06935ff9441d39203cab90a9174d7a2d185cd6e71882e238cc3095e6d6ca3f"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "getBlockState",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "getBlockState: outside build height VOID_AIR, else the chunk of that column (getChunk)",
+          "sha256": "4ff4f96e5ead04e8279a0bd18788c2cd0e8c69ea472aeed667af2ea7c8b52827"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerChunkCache",
+          "method": "getChunkNow",
+          "desc": "(II)Lnet/minecraft/world/level/chunk/LevelChunk;",
+          "note": "getChunkNow: the loaded FULL chunk (or NeoForge's currentlyLoading chunk) or null on the server thread, never loads",
+          "sha256": "06979de3f1da2c1cd3509b2b8225f571407a0d693678627554dd72551f14625b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation of player.pick(64, 1, false) (Player.pick in the bytecode) in Supplementaries' EndermanSkullBlockTile.isBeingWatched, with @Local(argsOnly) level and pos; helper bons.furious.patch.supplementaries_lean.SkullWatch. Forge asked Valkyrien Skies about shipyards per skull; NeoForge 1.21.1 stands aside whenever Valkyrien Skies or Sable is installed (their 1.21.1 ray casts were not inspected)",
+      "license": "Supplementaries Team License v.1.5: no Supplementaries code is carried; the wrapper only decides whether the mod's unchanged pick call runs; Minecraft (Mojang): no code"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.xaerolib_c49",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "bons.pure.config.PureMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "XlClientRedirectorTrackMixin",
+    "XlConfigTrackMixin",
+    "XlCurrentProfileMemoMixin",
+    "XlEnforcementMemoMixin",
+    "XlManagersTrackMixin",
+    "XlProfilesTrackMixin",
+    "XlRedirectorTrackMixin"
+  ]
+}

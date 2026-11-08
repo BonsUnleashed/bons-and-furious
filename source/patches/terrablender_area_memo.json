@@ -1,0 +1,102 @@
+{
+  "group": "terrablender_area_memo",
+  "keys": {
+    "terrablender_area_thread_memo": {
+      "mod": "terrablender",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.terrablender_area_memo.AreaThreadMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "terrablender/worldgen/noise/Area",
+          "method": "get",
+          "desc": "(II)I",
+          "note": "TerraBlender 4.1.0.8 for NeoForge: key = ChunkPos.asLong(x, z), slot = HashCommon.mix(key) & mask; read lock: a hit answers; else the write lock, operator.apply(x, z), stored, answered (the same code as 3.0.1.10)",
+          "sha256": "520bfeb15579b2d1121c330a67b6d4df8121271bcb715e313c6124dd2b3eb07d"
+        },
+        {
+          "class": "terrablender/worldgen/noise/Area",
+          "method": "<init>",
+          "desc": "(Lterrablender/worldgen/noise/PixelTransformer;I)V",
+          "note": "the operator and the table (smallest power of two, keys filled with Long.MIN_VALUE)",
+          "sha256": "e0a60b4afbffaa1859bfa900360e42ac4acfc0a48dc28120564f866da5536bde"
+        },
+        {
+          "class": "terrablender/worldgen/noise/Area",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: get, hash, key, getMaxCache; nothing else reads or writes the table",
+          "sha256": "664e3ad0246c4f1ac8d5ad8008f7540fa140f33b1a0f53ec88eb2cf45f681c8f"
+        },
+        {
+          "class": "terrablender/worldgen/noise/AreaContext",
+          "method": "initRandom",
+          "desc": "(JJ)V",
+          "note": "rval from the mixed world seed and (x, z) alone",
+          "sha256": "d0e55b4024039580ebff85df61d8ce7482264a59c8056c7398d057d579b2a283"
+        },
+        {
+          "class": "terrablender/worldgen/noise/AreaContext",
+          "method": "nextRandom",
+          "desc": "(I)I",
+          "note": "floorMod(rval >> 24, bound), then rval advances with the seed",
+          "sha256": "15cd8d137de089722acac235a28096ea39cde365bcb2bbdee9a62b8684696d5f"
+        },
+        {
+          "class": "terrablender/worldgen/noise/AreaContext",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: the seed is final, rval is only re-seeded by initRandom and advanced by nextRandom",
+          "sha256": "2254299d919e53a7cb412a7f8618fea4df6d0e3ea7a56d53f06e5f74df182d16"
+        },
+        {
+          "class": "terrablender/worldgen/noise/AreaTransformer0",
+          "method": "lambda$run$0",
+          "desc": "(Lterrablender/worldgen/noise/AreaContext;II)I",
+          "note": "the initial layer's pixel: context.initRandom(x, y), then apply(context, x, y)",
+          "sha256": "ce1b1fb865b861a40c4d6234bcfba232bd22b86ef5bdfeb5c0c64754502f0fde"
+        },
+        {
+          "class": "terrablender/worldgen/noise/AreaTransformer1",
+          "method": "lambda$run$0",
+          "desc": "(Lterrablender/worldgen/noise/AreaContext;Lterrablender/worldgen/noise/Area;II)I",
+          "note": "a zoom layer's pixel: context.initRandom(x, y), then apply(context, parent, x, y)",
+          "sha256": "8109ce3a1e5872460d176b34f7584047600fdbee0fe538293d1c95204e631957"
+        },
+        {
+          "class": "terrablender/worldgen/noise/ZoomLayer",
+          "method": "apply",
+          "desc": "(Lterrablender/worldgen/noise/AreaContext;Lterrablender/worldgen/noise/Area;II)I",
+          "note": "parent.get of up to four parent pixels and the context re-seeded from the pixel pair: a function of (x, y) and the seed",
+          "sha256": "7c0be93fedd8710de805da0ebb14ff2387871560921ec170db973e7060515f7b"
+        },
+        {
+          "class": "terrablender/worldgen/noise/WeightedRandomLayer",
+          "method": "apply",
+          "desc": "(Lterrablender/worldgen/noise/AreaContext;II)I",
+          "note": "weightedEntries.getRandom(context) mapped to the entry index, or the default index",
+          "sha256": "282d42f7da472c4b6efaf336d6346b3bb1388bb5f43231e67df6f9bfb72cb58b"
+        },
+        {
+          "class": "terrablender/util/WeightedRandomList",
+          "method": "getRandom",
+          "desc": "(Lterrablender/worldgen/noise/AreaContext;)Ljava/util/Optional;",
+          "note": "context.nextRandom(totalWeight) into WeightedRandom.getWeightedItem over the ImmutableList built once",
+          "sha256": "69bf8208523d6e53dc0c12b0c220168bf647d8d7a7e4c1edb710ebc9ae00945b"
+        },
+        {
+          "class": "terrablender/worldgen/noise/LayeredNoiseUtil",
+          "method": "createZoomedArea",
+          "desc": "(JILterrablender/worldgen/noise/AreaTransformer0;)Lterrablender/worldgen/noise/Area;",
+          "note": "one new AreaContext(25, seed, modifier) per layer; the stack is made once (factory.make())",
+          "sha256": "d65bc650a93f6af73891a42492b04d5743c5809cee01a5f6234bf6623799ac40"
+        }
+      ],
+      "cancel": [],
+      "conversion": "cancellable @Inject(HEAD) on Area.get(II)I answers from a per-thread direct-mapped table (area id, x, z) without the StampedLock; MixinExtras @ModifyReturnValue keeps get's own answer; TerraBlender's get runs unchanged on every miss",
+      "license": "LGPL-3.0 (TerraBlender): no TerraBlender code carried; injectors with our own logic (helper bons.furious.patch.terrablender_area_memo.AreaMemo)"
+    }
+  }
+}

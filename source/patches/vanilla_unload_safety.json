@@ -1,0 +1,47 @@
+{
+  "group": "vanilla_unload_safety",
+  "keys": {
+    "vanilla_entity_unload_snapshot": {
+      "mod": "minecraft",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_unload_safety.EntityUnloadDeferralMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "processUnloads",
+          "desc": "()V",
+          "note": "processUnloads: chunksToUnload.removeIf(lambda$processUnloads$10), the one walk of the set (wrapped, require = 0: a mod that replaces the method without that call keeps its own loop)",
+          "sha256": "f2d9e8172a2f453aad6ea2d50aece79b781af1af97c95dd0a5c5545337dabe49"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "lambda$processUnloads$10",
+          "desc": "(J)Z",
+          "note": "the walk's predicate: chunkVisibility.get(key) != HIDDEN -> true (drop the key), else processChunkUnload(key)",
+          "sha256": "1370774d5be299715a2b309bfd803159d04dceda8ee79c1a7ebcc8aa40171791"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "updateChunkStatus",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/level/entity/Visibility;)V",
+          "note": "updateChunkStatus: HIDDEN -> chunkVisibility.remove + chunksToUnload.add, else chunkVisibility.put + chunksToUnload.remove + ensureChunkQueuedForLoad; then the section status pass (the add / remove wrapped)",
+          "sha256": "6fd076417d717e376efd5a4aa1e9591454a6e3be034fe04db68c4fce1b32e397"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "processChunkUnload",
+          "desc": "(J)Z",
+          "note": "processChunkUnload: storeChunkSections(key, unloadEntity of every passenger and self) -> chunkLoadStatuses.remove; the entity unloads that run listener code during the walk",
+          "sha256": "5e688a689945490ccfcd70f07befc08e492c20c7eb39e47c3bd4aecda274f963"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on chunksToUnload.removeIf in processUnloads (processUnloads()V: the stock call inside a deferral scope; require = 0) and on chunksToUnload.add / remove in updateChunkStatus(ChunkPos, Visibility) (queued while the scope is open, applied in order when it closes); priority 1500 so the wrap is let into a replacement of processUnloads (C2ME 0.4.0-alpha.0.122's chunk system replaces it at priority 1100 with a loop that pops keys off a LongLinkedOpenHashSet and has no removeIf: the wrap finds nothing there and the switch leaves that loop to C2ME)",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helpers bons.furious.patch.vanilla_unload_safety.UnloadSnapshot, UnloadDeferral)"
+    }
+  }
+}

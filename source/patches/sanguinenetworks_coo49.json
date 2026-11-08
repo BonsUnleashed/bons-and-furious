@@ -1,0 +1,215 @@
+{
+  "group": "sanguinenetworks_coo49",
+  "keys": {
+    "sanguinenetworks_client_sync_no_remesh": {
+      "mod": "sanguine_networks",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.sanguinenetworks_coo49.SacrificerClientSyncMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "sync",
+          "desc": "()V",
+          "note": "setChanged(), then level.sendBlockUpdated(pos, state, state, 3) with the block's own state",
+          "sha256": "6caf4c286d223750eeae90356a739793403147e1e41aefc422f1f166db62688f"
+        },
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: no getModelData override (the block's chunk mesh does not depend on the block entity; the client's sendBlockUpdated is ClientLevel -> LevelRenderer.blockChanged -> setBlockDirty of the 3 x 3 x 3 sections, client classes left out of this common guard)",
+          "sha256": "626b08c52570b776178852b93e7e95e49852ceb5e532c74dd2929d38d324d797"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapWithCondition on the sendBlockUpdated call in VSBlockEntity.sync (Sanguine Neural Networks 1.21.1-2.0.1, the same sync() as 2.0.1 on Forge): left out on a client level (setChanged kept). Exact variant: identical chunk sections are not meshed again. Runtime flag sanguinenetworksClientSyncNoRemesh. Helper bons.furious.patch.sanguinenetworks_coo49.SacrificerClientSync.",
+      "license": "Sanguine Neural Networks (MIT): no code carried; the hooks hold only our own logic"
+    },
+    "sanguinenetworks_sync_dedup": {
+      "mod": "sanguine_networks",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.sanguinenetworks_coo49.SacrificerSyncDedupMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "getUpdatePacket",
+          "desc": "()Lnet/minecraft/network/protocol/Packet;",
+          "note": "ClientboundBlockEntityDataPacket.create(this)",
+          "sha256": "66b50df225e21136262fba6e1ada2706a136d4cbde21267a4dda6c44cc6ac492"
+        },
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "getUpdateTag",
+          "desc": "(Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "saveWithoutMetadata(registries)",
+          "sha256": "6867a7c967ab55739b3f5c4cb3f8e7f90391429bc2c49528e4d2b5393eb4c84d"
+        },
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "saveAdditional",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
+          "note": "the NeoForge part, inventory, energy, catalystUses, maxCatalystUses, catalystMult, toProduce, progress, maxProgress, altarPos when set",
+          "sha256": "dc653a61a0f18dcfbe61369e57ed57b8e24ee355777fdd6c352619a9d23d233c"
+        },
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "loadAdditional",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
+          "note": "the client's load of a packet (NeoForge's default onDataPacket: loadWithComponents): reads the same keys, rebuilds the slots",
+          "sha256": "652cd53504f51a0210682485f1f8363e0f860c7374ffd43050670522eb46c987"
+        },
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: the compared fields (energyStorage final, catalystUses, maxCatalystUses, catalystMult, toProduce, progress, maxProgress, altarPos) are the ones saveAdditional writes",
+          "sha256": "626b08c52570b776178852b93e7e95e49852ceb5e532c74dd2929d38d324d797"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/BlockEntity",
+          "method": "saveAdditional",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
+          "note": "NeoForge 21.1: NeoForgeData when customPersistentData is set, neoforge:attachments when serializeAttachments has any",
+          "sha256": "47e651dc8e5227b54a14919fdc0fbf49b4d5dd3b9797143da98fdeea6d9f4380"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/BlockEntity",
+          "method": "saveWithoutMetadata",
+          "desc": "(Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "saveAdditional, then the block entity's own components merged in (omitted when empty)",
+          "sha256": "d16c8701ad4bd89202ab3a246c46f38072a727e97406357bffe79ef318a35f0d"
+        },
+        {
+          "class": "net/neoforged/neoforge/items/ItemStackHandler",
+          "method": "serializeNBT",
+          "desc": "(Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "Items: Slot + ItemStack.save(provider, tag) per non-empty slot; Size",
+          "sha256": "0c7eb06aa27fc3995b6cf52bf2c24489988ca5acdc143552c389afd40d4cd214"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "save",
+          "desc": "(Lnet/minecraft/core/HolderLookup$Provider;Lnet/minecraft/nbt/Tag;)Lnet/minecraft/nbt/Tag;",
+          "note": "ItemStack.CODEC: the item id, the count and the data component patch",
+          "sha256": "229f39d75120d1db7d839c6c040b6b8aa4f2b6754f5f85428eebf0ab14329b98"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "matches",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+          "note": "the slot comparison: same count and isSameItemSameComponents (vanilla's menus decide a client slot is current with it)",
+          "sha256": "15c9d782e6e3da631ab29d52f95c1800166d07f80c2047c66fb1f91054de5c41"
+        },
+        {
+          "class": "net/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket",
+          "method": "create",
+          "desc": "(Lnet/minecraft/world/level/block/entity/BlockEntity;)Lnet/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket;",
+          "note": "create(be, BlockEntity::getUpdateTag): the position, the type and the update tag",
+          "sha256": "7b1ff491c0836e5dcd9fd5053d14964d9c4291baf13119a4983c314a9f8dd4ac"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Mixin @Redirect of the ClientboundBlockEntityDataPacket.create(this) call in VSBlockEntity.getUpdatePacket + MixinExtras @ModifyReturnValue on getUpdateTag(Provider) (Sanguine Neural Networks 1.21.1-2.0.1): null while the values of the update tag equal those of the last packet sent (numbers, altar, ItemStack.matches against copies of the sent slots, the same component map) and no different state was handed out since; NeoForge persistent data, data attachments and subclasses run the mod's method; every client holds the same state as without it. Trade-off (off by default): packets identical to the previous one are not sent, but each packet that does go out costs the server a few comparisons and two stack copies more than with the mod's own class. Runtime flag sanguinenetworksSyncDedup, shadow sanguinenetworksSyncDedup.shadow. Helper bons.furious.patch.sanguinenetworks_coo49.SacrificerSync.",
+      "license": "Sanguine Neural Networks (MIT): no code carried; the hooks hold only our own logic"
+    },
+    "sanguinenetworks_sync_relevant_only": {
+      "mod": "sanguine_networks",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.sanguinenetworks_coo49.SacrificerSyncRelevantMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "getUpdatePacket",
+          "desc": "()Lnet/minecraft/network/protocol/Packet;",
+          "note": "ClientboundBlockEntityDataPacket.create(this)",
+          "sha256": "66b50df225e21136262fba6e1ada2706a136d4cbde21267a4dda6c44cc6ac492"
+        },
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "getUpdateTag",
+          "desc": "(Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "saveWithoutMetadata(registries)",
+          "sha256": "6867a7c967ab55739b3f5c4cb3f8e7f90391429bc2c49528e4d2b5393eb4c84d"
+        },
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "saveAdditional",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
+          "note": "the NeoForge part, inventory, energy, catalystUses, maxCatalystUses, catalystMult, toProduce, progress, maxProgress, altarPos when set",
+          "sha256": "dc653a61a0f18dcfbe61369e57ed57b8e24ee355777fdd6c352619a9d23d233c"
+        },
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "loadAdditional",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
+          "note": "the client's load of a packet: reads the same keys, rebuilds the slots",
+          "sha256": "652cd53504f51a0210682485f1f8363e0f860c7374ffd43050670522eb46c987"
+        },
+        {
+          "class": "com/luna/sanguine_networks/block/entity/VSBlockEntity",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: the compared fields are the ones saveAdditional writes; the menu reads energy and progress through its own ContainerData",
+          "sha256": "626b08c52570b776178852b93e7e95e49852ceb5e532c74dd2929d38d324d797"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/BlockEntity",
+          "method": "saveAdditional",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
+          "note": "NeoForge 21.1: NeoForgeData when customPersistentData is set, neoforge:attachments when serializeAttachments has any",
+          "sha256": "47e651dc8e5227b54a14919fdc0fbf49b4d5dd3b9797143da98fdeea6d9f4380"
+        },
+        {
+          "class": "net/minecraft/world/level/block/entity/BlockEntity",
+          "method": "saveWithoutMetadata",
+          "desc": "(Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "saveAdditional, then the block entity's own components merged in (omitted when empty)",
+          "sha256": "d16c8701ad4bd89202ab3a246c46f38072a727e97406357bffe79ef318a35f0d"
+        },
+        {
+          "class": "net/neoforged/neoforge/items/ItemStackHandler",
+          "method": "serializeNBT",
+          "desc": "(Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "Items: Slot + ItemStack.save(provider, tag) per non-empty slot; Size",
+          "sha256": "0c7eb06aa27fc3995b6cf52bf2c24489988ca5acdc143552c389afd40d4cd214"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "save",
+          "desc": "(Lnet/minecraft/core/HolderLookup$Provider;Lnet/minecraft/nbt/Tag;)Lnet/minecraft/nbt/Tag;",
+          "note": "ItemStack.CODEC: the item id, the count and the data component patch",
+          "sha256": "229f39d75120d1db7d839c6c040b6b8aa4f2b6754f5f85428eebf0ab14329b98"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "matches",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemStack;)Z",
+          "note": "the slot comparison: same count and isSameItemSameComponents",
+          "sha256": "15c9d782e6e3da631ab29d52f95c1800166d07f80c2047c66fb1f91054de5c41"
+        },
+        {
+          "class": "net/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket",
+          "method": "create",
+          "desc": "(Lnet/minecraft/world/level/block/entity/BlockEntity;)Lnet/minecraft/network/protocol/game/ClientboundBlockEntityDataPacket;",
+          "note": "create(be, BlockEntity::getUpdateTag): the position, the type and the update tag",
+          "sha256": "7b1ff491c0836e5dcd9fd5053d14964d9c4291baf13119a4983c314a9f8dd4ac"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Mixin @Inject (cancellable) at the head of VSBlockEntity.getUpdatePacket + MixinExtras @ModifyReturnValue on its return and on getUpdateTag(Provider) (Sanguine Neural Networks 1.21.1-2.0.1): as sanguinenetworks_sync_dedup, the comparison without the energy buffer and with the progress only by whether it is zero. Trade-off (off by default): the client copy of the progress and energy is refreshed only when a cycle starts or ends or something else changes. Runtime flag sanguinenetworksSyncRelevantOnly (emergency off). Helper bons.furious.patch.sanguinenetworks_coo49.SacrificerSync.",
+      "license": "Sanguine Neural Networks (MIT): no code carried; the hooks hold only our own logic"
+    }
+  }
+}

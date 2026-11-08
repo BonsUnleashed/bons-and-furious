@@ -1,0 +1,79 @@
+{
+  "group": "mutantmonsters_c49",
+  "keys": {
+    "mutantmonsters_spawn_limit_index": {
+      "mod": "mutantmonsters",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mutantmonsters_c49.EntityLookupTypeCountMixin",
+        "bons.furious.mixin.mutantmonsters_c49.LevelEntityGetterAdapterAccessor",
+        "bons.furious.mixin.mutantmonsters_c49.SpawnLimitMixin"
+      ],
+      "guard": [
+        {
+          "class": "fuzs/mutantmonsters/handler/SpawningPreventionHandler",
+          "method": "onEntitySpawn",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/MobSpawnType;)Lfuzs/puzzleslib/api/event/v1/core/EventResult;",
+          "note": "Mutant Monsters v21.1.1: the spawning type's limit (-1 = none), then StreamSupport.stream(level.getAllEntities()) filtered by type and counted; INTERRUPT at the limit",
+          "sha256": "a816c407e1666c92c9c404a2db4eea45fd47e09b86b180c93317c99625a159e1"
+        },
+        {
+          "class": "fuzs/mutantmonsters/handler/SpawningPreventionHandler",
+          "method": "lambda$onEntitySpawn$0",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "the filter: currentEntity.getType() == entity.getType()",
+          "sha256": "a2eb66eb4a061b055f4c4c3bb5a0d3945637a8a6a10327e56e573785e7aeba68"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "getAllEntities",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "getEntities().getAll()",
+          "sha256": "d189f3aea134b779e60e2ec3066f648e4a3e9a233955256352209f9533ff953e"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/LevelEntityGetterAdapter",
+          "method": "getAll",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "visibleEntities.getAllEntities()",
+          "sha256": "36239c3a9c55b33bea271e20dc201a6d5721cb7420f9b6f3dbabb3ad2c33728a"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntityLookup",
+          "method": "getAllEntities",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "an unmodifiable view of byId's values",
+          "sha256": "c11dbb23b82c94fd7c067b8e5da7df64daa622905b584630017311aead74d6a1"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntityLookup",
+          "method": "add",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)V",
+          "note": "a duplicate UUID is only logged; otherwise byUuid and byId (by getId) are put NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ.",
+          "sha256": "0dc62738e37efa17c8f56562fae43037244f4d690897c4aafa2845684acd397b",
+          "sha256_variants": [
+            "ec242433120a78f80445faaf38f999c044ac570aede952648b7281cd602d0f22"
+          ]
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntityLookup",
+          "method": "remove",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityAccess;)V",
+          "note": "byUuid and byId (by getId) entries removed",
+          "sha256": "d95efea6ee46b2729b1c068ad8cbbdea3ef981d3445733b78dff16e41da87c8d"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntityLookup",
+          "method": "*",
+          "desc": "",
+          "note": "class shape: byId is changed only by add and remove",
+          "sha256": "cac945f8e7e66dc9120ecb253fb6cb66fac5a8de4ad45b4277e1c5b371f32700"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the ServerLevel.getAllEntities() call of SpawningPreventionHandler.onEntitySpawn (answers the spawning type's entities + own-getType entities from a per-level TypeCount), @WrapMethod on EntityLookup.add / remove keeping an existing TypeCount in step (byId read before and after), accessor on LevelEntityGetterAdapter.visibleEntities; helpers bons.furious.patch.mutantmonsters_c49.SpawnLimitIndex, TypeCount",
+      "license": "AGPL-3.0-or-later (Mutant Monsters): no code is carried; the wrapper supplies the entities its own filter counts (Idea: Collections Of Optimizations mutantmonsters.leanSpawnLimitScan, idea text only); Minecraft: no-copy, our own logic only"
+    }
+  }
+}

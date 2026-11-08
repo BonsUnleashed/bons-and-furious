@@ -1,0 +1,46 @@
+{
+  "group": "companions_owner_coo49",
+  "keys": {
+    "companions_owner_walk": {
+      "mod": "companions",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.companions_owner_coo49.CompanionsOwnerWalkMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/xylonity/companions/common/util/Util",
+          "method": "computePlayer",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/world/entity/player/Player;",
+          "note": "computePlayer(entity, new HashSet()) (the wrapped method; called by areTeammates)",
+          "sha256": "8bafd50c9dff7291fe7cf380b2bc5c805c5a807e89fc0ac9f08ea1c449bebcdb"
+        },
+        {
+          "class": "dev/xylonity/companions/common/util/Util",
+          "method": "computePlayer",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Ljava/util/Set;)Lnet/minecraft/world/entity/player/Player;",
+          "note": "null or visited.add(getUUID()) false -> null; Player -> it; Projectile -> recurse on getOwner(); OwnableEntity -> recurse on getOwner(); else null (a tail call: the switch's loop)",
+          "sha256": "bb43946e89ab540029a513de1c6d45edb5f59c883c2b8b0e3c4a17f18328e867"
+        },
+        {
+          "class": "dev/xylonity/companions/common/util/Util",
+          "method": "collectOwners",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Ljava/util/Set;Ljava/util/Set;)Ljava/util/Set;",
+          "note": "null or visited.add(getUUID()) false -> stop; owners.add(getUUID()); TamableAnimal: getOwnerUUID, a summon's getSecondOwnerUUID, recurse on getOwner(); Projectile: recurse on getOwner(); OwnableEntity: getOwnerUUID, level().getPlayerByUUID, else the LevelAccessor entity getter, recurse (the switch's walk, call for call)",
+          "sha256": "f67bd73709adceeb5eeff64f583577fa2f8a7c152180b75436b94466b7ba5350"
+        },
+        {
+          "class": "dev/xylonity/companions/common/util/Util",
+          "method": "areEntitiesLinked",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "null -> false; same entity -> true; areTeammates -> true; collectOwners(a) retainAll collectOwners(b), not empty (the wrapped method)",
+          "sha256": "1f94446901910860bec7fd72c139b4f3b4470609f433d2791155f0d1cb872097"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on Util.computePlayer(Entity) and Util.areEntitiesLinked: the same owner walks with the same calls in the same order (computePlayer's tail recursion as a loop with eight UUID locals, collectOwners' recursion over one small object per check: visited and the first side's owners as eight-entry arrays spilling into open-addressing UUID tables, the second side matched against the first), no new HashSets; areTeammates is called as before. Runtime flag companionsOwnerWalk. Helper bons.furious.patch.companions_owner_coo49.OwnerWalk.",
+      "license": "Companions (GPL-3.0): the walk in our GPL-3.0 source is our own code; the wrapped methods' bodies run unchanged with the flag off"
+    }
+  }
+}

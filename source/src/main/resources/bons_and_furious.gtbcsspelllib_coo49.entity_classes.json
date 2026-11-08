@@ -1,0 +1,13 @@
+{
+  "layer": "vanilla_entity_class_count_layer",
+  "entries": [
+    {"class": "com.gametechbc.spelllib.entity.GSLScreenShakeEntity", "key": "gtbcs_spell_lib_shake_scan_presence_gate", "mod": "gtbcs_spell_lib",
+     "why": "GTBC's SpellLib 2.2.0-1.21.1 ClientEvents.onCameraSetup searches it +-50 blocks around the local player every frame"},
+    {"class": "com.gametechbc.spelllib.entity.GSLFollowingScreenShakeEntity", "key": "gtbcs_spell_lib_shake_scan_presence_gate", "mod": "gtbcs_spell_lib",
+     "why": "GTBC's SpellLib 2.2.0-1.21.1 ClientEvents.onCameraSetup searches it +-50 blocks around the local player every frame"},
+    {"class": "com.gametechbc.spelllib.entity.GSLScreenFlashEntity", "key": "gtbcs_spell_lib_shake_scan_presence_gate", "mod": "gtbcs_spell_lib",
+     "why": "GTBC's SpellLib 2.2.0-1.21.1 ClientEvents.processScreenFlashEffects searches it +-50 blocks around the local player every GUI frame"},
+    {"class": "com.gametechbc.spelllib.entity.GSLPowerInversionEntity", "key": "gtbcs_spell_lib_shake_scan_presence_gate", "mod": "gtbcs_spell_lib",
+     "why": "GTBC's SpellLib 2.2.0-1.21.1 ClientEvents.processPowerInversionEffects searches it +-50 blocks around the local player every GUI frame"}
+  ]
+}

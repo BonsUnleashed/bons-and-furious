@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.vanilla_frame_budget",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "bons.pure.config.PureMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "ClientLevelLightPollBudgetMixin",
+    "MinecraftAmbientParticleDeferMixin",
+    "MinecraftFrameTaskBudgetMixin",
+    "ReentrantLoopRunningTaskInvoker"
+  ]
+}

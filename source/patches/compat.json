@@ -594,6 +594,84 @@
       "name": "Bons Sharks Fix",
       "mixin": "bons.sharksfix.mixin.GoalMergeMixin",
       "why": "Bons Sharks Fix 1.0.0 merges the same prey searches; 1.1.0 no longer lists this mixin."
+    },
+    {
+      "key": "vanilla_game_event_registry_lookup",
+      "mod": "superchunk",
+      "name": "SuperChunk",
+      "mixin": "dev.superchunk.net.caffeinemc.mods.lithium.mixin.world.game_events.dispatch.GameEventDispatcherMixin",
+      "conflict": "GameEventDispatcher.post",
+      "why": "SuperChunk's bundled Lithium @Redirects ChunkAccess.getListenerRegistry in GameEventDispatcher.post at the same priority, with require = 1. Ours has require = 0 but applies first, so Mixin skips theirs and its require stops the game ('Critical injection failure: Redirector getNull ... (0/1)'): every world start with SuperChunk 0.5.0-0.6.1 and Forge 1.0.49 (reproduced there 2026-11-08; the same mixin classes are in SuperChunk for NeoForge)."
+    },
+    {
+      "key": "vanilla_biome_fiddle_mask",
+      "mod": "superchunk",
+      "name": "SuperChunk",
+      "mixin": "dev.superchunk.mixin.MixinBiomeManagerFiddle",
+      "conflict": "BiomeManager.getFiddle",
+      "why": "SuperChunk @Redirects the same Math.floorMod call in BiomeManager.getFiddle at the same priority. Mixin lets only one redirect hold a call and both have require = 1, so whichever applies second stops the game. SuperChunk's replacement does the same arithmetic."
+    },
+    {
+      "key": "vanilla_poi_chunk_sections",
+      "mod": "superchunk",
+      "name": "SuperChunk",
+      "mixin": "dev.superchunk.net.caffeinemc.mods.lithium.mixin.ai.poi.PoiManagerMixin",
+      "conflict": "PoiManager.getInChunk",
+      "why": "SuperChunk's bundled Lithium @Overwrites PoiManager.getInChunk at the same priority as ours. Not a crash ('Method overwrite conflict ... Skipping method'), but one of the two replacements silently disappears, and SuperChunk's other POI mixins are written against its own copy, so the method is left to SuperChunk."
+    },
+    {
+      "key": "vanilla_beardifier_influence_bounds",
+      "mod": "superchunk",
+      "name": "SuperChunk",
+      "mixin": "dev.superchunk.com.ishland.c2me.opts.worldgen.vanilla.mixin.structure_weight_sampler.MixinStructureWeightSampler",
+      "conflict": "Beardifier.compute",
+      "why": "SuperChunk 0.5.0's C2ME @Overwrites Beardifier.compute at priority 1100 (mixinPriority inherited from c2me.mixins.json); Mixin refuses our injector into it whatever require says. SuperChunk 0.6.0 and later no longer list this @Overwrite (the row is inert there)."
+    },
+    {
+      "key": "vanilla_entity_unload_snapshot",
+      "mod": "superchunk",
+      "name": "SuperChunk",
+      "mixin": "dev.superchunk.com.ishland.c2me.rewrites.chunksystem.mixin.fixes.MixinServerEntityManager",
+      "conflict": "PersistentEntitySectionManager.processUnloads",
+      "why": "SuperChunk 0.5.0's C2ME @Overwrites processUnloads at priority 1100; our @WrapOperation (priority 1001) 'cannot inject into ... merged by ... with priority 1100' and the game stops (reproduced on Forge 2026-11-08). SuperChunk 0.6.0 and later no longer list it there."
+    },
+    {
+      "key": "distanthorizons_lod_biome_memo",
+      "mod": "superchunk",
+      "name": "SuperChunk",
+      "mixin": "dev.superchunk.mixin.compat.MixinDhLodBuilderBiome",
+      "conflict": "LodDataBuilder.createFromChunk",
+      "why": "SuperChunk 0.6.0 and later @Redirect the same IChunkWrapper.getBiome calls in Distant Horizons' LodDataBuilder.createFromChunk at the same priority; Mixin lets only one redirect hold a call, and ours has require = 1 (static sweep on both loaders, 2026-11-08)."
+    },
+    {
+      "key": "vanilla_noise_column_cell_fill",
+      "mod": "superchunk",
+      "name": "SuperChunk",
+      "mixin": "dev.superchunk.com.ishland.c2me.opts.dfc.mixin.MixinChunkNoiseSampler",
+      "why": "SuperChunk bundles C2ME's density function compiler under dev.superchunk, and its MixinSquared bridge passes our cancel lines on to its relocated copies. As with C2ME's own opts-dfc module this switch steps aside whenever that mixin is listed: otherwise the mixin is cancelled while SuperChunk's compiled density functions stay in the noise router, and every world start stops with 'Unsupported transformation on Wrapping node' (found on NeoForge 2026-11-08)."
+    },
+    {
+      "key": "vanilla_noise_corner_share",
+      "mod": "superchunk",
+      "name": "SuperChunk",
+      "mixin": "dev.superchunk.com.ishland.c2me.opts.dfc.mixin.MixinChunkNoiseSamplerDensityInterpolator",
+      "why": "SuperChunk bundles C2ME's density function compiler under dev.superchunk, and its MixinSquared bridge passes our cancel lines on to its relocated copies. As with C2ME's own opts-dfc module this switch steps aside whenever that mixin is listed: otherwise the mixin is cancelled while SuperChunk's compiled density functions stay in the noise router, and every world start stops with 'Unsupported transformation on Wrapping node' (found on NeoForge 2026-11-08)."
+    },
+    {
+      "key": "vanilla_single_value_section_get",
+      "mod": "lomka",
+      "name": "Lomka",
+      "mixin": "lomka.starl.mixins.net.minecraft.world.level.chunk.MixinPalettedContainer",
+      "conflict": "PalettedContainer.get",
+      "why": "Lomka @Overwrites PalettedContainer.get at the same priority; Mixin refuses our @Redirect inside it whatever require says (found on Forge 2026-11-08, stops every world start there; the same mixin class is in Lomka for NeoForge)."
+    },
+    {
+      "key": "vanilla_single_value_section_get",
+      "mod": "generator_accelerator",
+      "name": "Generator Accelerator",
+      "mixin": "dev.sixik.generator_accelerator.common.paletted_container.mixin.patch.MixinPalettedContainer",
+      "conflict": "PalettedContainer.get",
+      "why": "Generator Accelerator (tested 1.21.1-1.6.2) @Overwrites PalettedContainer.get at the same priority as our @Redirect inside it; Mixin refuses the redirect and the class fails to load (static sweep, 2026-11-08), so this switch steps aside."
     }
   ]
 }

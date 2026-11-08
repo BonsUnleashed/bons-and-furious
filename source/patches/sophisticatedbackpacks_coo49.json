@@ -1,0 +1,102 @@
+{
+  "group": "sophisticatedbackpacks_coo49",
+  "keys": {
+    "sophisticatedbackpacks_living_tick_fast_exit": {
+      "mod": "sophisticatedbackpacks",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.sophisticatedbackpacks_coo49.SbLivingTickMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/p3pp3rf1y/sophisticatedbackpacks/common/EntityBackpackAdditionHandler",
+          "method": "onLivingUpdate",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Post;)V",
+          "note": "client side, a player or not a LivingEntity -> nothing; monster and hasPendingBackpackAddition -> clear it, add a backpack to an empty chest slot; hasSpawnedJukeboxUpgrade -> the jukebox upgrade tick or play",
+          "sha256": "0aabc80799708296a4bae07c00446b317cbf64c5493004bef9e7433025f96d7c"
+        },
+        {
+          "class": "net/p3pp3rf1y/sophisticatedbackpacks/common/EntityBackpackAdditionHandler",
+          "method": "removeBackpackUuid",
+          "desc": "(Lnet/minecraft/world/entity/monster/Monster;Lnet/minecraft/world/level/Level;)V",
+          "note": "client side or !hasSpawnedBackpack -> return; else (not converting) clears the spawned backpack's data",
+          "sha256": "8380ea85ecfa19101ba0393557d5b130291c3c4b5c850218963b17279bee7c94"
+        },
+        {
+          "class": "net/p3pp3rf1y/sophisticatedbackpacks/common/EntityBackpackAdditionHandler",
+          "method": "hasPendingBackpackAddition",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "getBackpackEntityData(entity).getBoolean(\"pendingBackpackAddition\")",
+          "sha256": "9092f2557c716d4d28f880984973222e70ad6fb8ab814bd7b8c3e44253351992"
+        },
+        {
+          "class": "net/p3pp3rf1y/sophisticatedbackpacks/common/EntityBackpackAdditionHandler",
+          "method": "hasSpawnedJukeboxUpgrade",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "getBackpackEntityData(entity).getBoolean(\"spawnedWithJukeboxUpgrade\")",
+          "sha256": "9a3b57acd7533e09ea336174ad528e030628a1f978c0ac66f0bc56c5e46748f5"
+        },
+        {
+          "class": "net/p3pp3rf1y/sophisticatedbackpacks/common/EntityBackpackAdditionHandler",
+          "method": "hasSpawnedBackpack",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "getBackpackEntityData(entity).getBoolean(\"spawnedWithBackpack\")",
+          "sha256": "2785891c10c210f371ca38477e4d65c0184b66232ff174504e7586b22fb26036"
+        },
+        {
+          "class": "net/p3pp3rf1y/sophisticatedbackpacks/common/EntityBackpackAdditionHandler",
+          "method": "getBackpackEntityData",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "entity.getPersistentData().getCompound(\"sophisticatedbackpacks\")",
+          "sha256": "d1de93876fd47c4b3c9ebc9b72c65c2017b12b39753d110c7a2ec430f98a9ff8"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "getPersistentData",
+          "desc": "()Lnet/minecraft/nbt/CompoundTag;",
+          "note": "NeoForge: the persistentData field, a new compound stored there on the first call (asked as many times as before, so it is created on the same call)",
+          "sha256": "1355a99782fa41f3f4e5ab09b04e4a97f6beee3ef09f2d211b96ccc318e77ba1"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "getCompound",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "getCompound: the held compound when contains(key, 10) (the key's tag, its type id 10), else a new empty one (nothing stored)",
+          "sha256": "62609faeb5de4bed16d2d39b00e36b3c2b8bfa87d3104fa23dceb9eb2a7678b4"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "get",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/nbt/Tag;",
+          "note": "get: the tag held under the key (the read getCompound makes), nothing stored",
+          "sha256": "fa3366f656233f31c294e8e63d73bb463e224128a00a3e8852c6e56d937a6895"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "contains",
+          "desc": "(Ljava/lang/String;I)Z",
+          "note": "contains(key, type): getTagType(key) equals type (10 here; 99 not used); the switch asks the same id",
+          "sha256": "d07aac6d7358dcabe8abbe9bfbe12103eb2f8e9788b0f8e9b426c8393ae9f9bb"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "getTagType",
+          "desc": "(Ljava/lang/String;)B",
+          "note": "getTagType: the held tag's getId(), 0 when absent",
+          "sha256": "8ec3c6d85b85ddba1dfaf76e437f88fba66f1d1d4d1441c0b331228ac9951cd4"
+        },
+        {
+          "class": "net/minecraft/nbt/CompoundTag",
+          "method": "getBoolean",
+          "desc": "(Ljava/lang/String;)Z",
+          "note": "getBoolean: false on an empty compound; on the held compound asked exactly as the mod asks it",
+          "sha256": "5f4210d4396a97c984a19b106ebf20da59fc279ec88350d0a58902b2212ecae5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the hasPendingBackpackAddition and hasSpawnedJukeboxUpgrade calls of EntityBackpackAdditionHandler.onLivingUpdate (an EntityTickEvent.Post listener on NeoForge 1.21.1; Forge: LivingTickEvent) and the hasSpawnedBackpack call of removeBackpackUuid: the same getPersistentData().getCompound(\"sophisticatedbackpacks\").getBoolean(flag) with one read of the key: getPersistentData() once per question as the mod asks it, nothing under the key or a type id other than 10 -> false (what the new empty compound answered), a compound -> its getBoolean(flag); persistent data of a CompoundTag subclass, or a type id 10 that is no compound -> the mod's own expression. Runtime flag sophisticatedbackpacksLivingTickFastExit (off: the mod's methods). Helper bons.furious.patch.sophisticatedbackpacks_coo49.SbEntityData.",
+      "license": "Sophisticated Backpacks (All Rights Reserved): no code carried, the hooks carry only our own logic"
+    }
+  }
+}

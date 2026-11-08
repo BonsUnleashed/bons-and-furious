@@ -31,6 +31,41 @@
       "cancel": [],
       "conversion": "@Redirect of the first BlockState.getValue call (WATERLOGGED) in SeaLifeDecoBlockEntity.tick(SeaLifeDecoBlockEntity)V: answered from StateValueMemo, a 1,024-slot identity-keyed open-addressing table of immutable (state, value) entries (8-slot probe window; a full window starts an empty table), else asked as before and remembered; spawn_sealife_tick's five redirects in the same method target other calls",
       "license": "Spawn is All Rights Reserved: nothing of Spawn's or Minecraft's code is carried; the redirect and the helpers bons.furious.patch.state_memo.SeaLifeWaterlogged / StateValueMemo hold only our own logic"
+    },
+    "particular_chest_waterlogged_memo": {
+      "mod": "particular",
+      "scripts": [],
+      "since": "1.0.30",
+      "mixins": [
+        "bons.furious.mixin.state_memo.ChestBubbleWaterloggedMixin",
+        "bons.furious.mixin.state_memo.EnderChestBubbleWaterloggedMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/leclowndu93150/particular/mixin/InjectChestBlockEntity",
+          "method": "randomlyOpen",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/ChestBlockEntity;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "TAIL of ChestBlockEntity.lidAnimateTick: ParticularConfig.soulSandBubbles(), then state.getValue(WATERLOGGED) (the first getValue, the redirected call), CHEST_TYPE and the soul sand below",
+          "sha256": "9b7578073d35a6736a2b9697fb2e0ac16c16e9af95f4948c2389fc25b0219c01"
+        },
+        {
+          "class": "com/leclowndu93150/particular/mixin/InjectEnderChestBlockEntity",
+          "method": "randomlyOpen",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/EnderChestBlockEntity;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "TAIL of EnderChestBlockEntity.lidAnimateTick: ParticularConfig.soulSandBubbles(), then state.getValue(WATERLOGGED) (the first getValue, the redirected call)",
+          "sha256": "2750591bb8b28e6767977597e45a01a6c684e8debe7dc734b676c2f8c80d8695"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/StateHolder",
+          "method": "getValue",
+          "desc": "(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;",
+          "note": "values.get(property), an IllegalArgumentException for a missing property, cast to the value class: the same object for a state's lifetime",
+          "sha256": "21db77f153599a1f544957df6ce118556c01e1a414869f5c7840dc9936c86805"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinSquared @TargetHandler + @Redirect (priority 1500, after Particular's mixins) of the first BlockState.getValue call (WATERLOGGED) in Particular Reforged's InjectChestBlockEntity.randomlyOpen and InjectEnderChestBlockEntity.randomlyOpen handlers: answered from StateValueMemo, a 1,024-slot identity-keyed open-addressing table of immutable (state, value) entries (8-slot probe window; a full window starts an empty table), else asked as before and remembered",
+      "license": "Particular Reforged is LGPL-3.0; nothing of Particular's or Minecraft's code is carried: the redirects and the helpers bons.furious.patch.state_memo.ParticularWaterlogged / StateValueMemo hold only our own logic"
     }
   }
 }

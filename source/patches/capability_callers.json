@@ -1,0 +1,108 @@
+{
+  "group": "capability_callers",
+  "keys": {
+    "goety_capability_handles": {
+      "mod": "goety",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.capability_callers.SEHelperHandlesMixin"
+      ],
+      "cancel": [],
+      "conversion": "injector: MixinExtras @WrapMethod on SEHelper.isAlly(Player, LivingEntity): false at once when the soul energy data's ally sets (allyList, allyTypeList) are both empty; otherwise, and for a null owner or target, the original runs (helper bons.furious.patch.capability_callers.GoetyHandles). Narrowed for NeoForge 1.21.1: Goety 3.2.2's three getCapability helpers are data attachment reads (entity.getData), so the Forge build's kept capability values (forge_capability_handle_layer) are not carried",
+      "license": "Goety (MIT): no Goety code is carried, the mixin only wraps the helper with our own test",
+      "guard": [
+        {
+          "class": "com/Polarice3/Goety/utils/SEHelper",
+          "method": "isAlly",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "getAllyEntities(p).contains(e) || getAllyEntityTypes(p).contains(e.getType())",
+          "sha256": "a50794db40869f78e3e45a0a92c24a5bd0acdea5946ac8b14e831a965227c337"
+        },
+        {
+          "class": "com/Polarice3/Goety/utils/SEHelper",
+          "method": "getAllyEntities",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Ljava/util/List;",
+          "note": "a new list; empty when getCapability(p).allyList() is empty",
+          "sha256": "849e348c42ef258417ad8bb0eebaf89a9a1ac3b3a33ce28a63e99c7bab3d732a"
+        },
+        {
+          "class": "com/Polarice3/Goety/utils/SEHelper",
+          "method": "getAllyEntityTypes",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Ljava/util/List;",
+          "note": "a new list; empty when getCapability(p).allyTypeList() is empty",
+          "sha256": "928b42f761910c4b34944e727f2dd060955db7c9ecf53bd7d3e18c8c92f22b6b"
+        },
+        {
+          "class": "com/Polarice3/Goety/utils/SEHelper",
+          "method": "getCapability",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Lcom/Polarice3/Goety/common/capabilities/soulenergy/ISoulEnergy;",
+          "note": "player.getData(SEProvider.CAPABILITY): the same attachment read the helpers make",
+          "sha256": "32e41986f42b439870977ddd0eedeb6c753381ea136459d832adf9ddfa44322a"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/capabilities/soulenergy/SEImp",
+          "method": "allyList",
+          "desc": "()Ljava/util/Set;",
+          "note": "the ally UUID set",
+          "sha256": "595c28c4fea140f042b9ebe33a4053c4f827584c5cfc591954aa627e8feabf55"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/capabilities/soulenergy/SEImp",
+          "method": "allyTypeList",
+          "desc": "()Ljava/util/List;",
+          "note": "the ally type list",
+          "sha256": "73b9105dbfe4eeed0153e91271cf4b07c0e24d52e347292a04c285185e3d6e2f"
+        }
+      ]
+    },
+    "witherreincarnated_possession_handles": {
+      "mod": "witherreincarnated",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.capability_callers.WitherPossessedHandlesMixin"
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on HandlePossessedMobsEvent.possessedTick(EntityTickEvent.Pre): returns at once for a Mob that already has its WRAttachments.POSSESSED attachment (IAttachmentHolder.getExistingDataOrNull, which creates nothing) in an idle state (its handler changes nothing then); a mob without the attachment and every other state run the handler as shipped (helper bons.furious.patch.capability_callers.WitherHandles). Narrowed for NeoForge 1.21.1: the POSSESSED predicate is two NeoForge data attachment reads (hasData, getData), so the Forge build's kept capability handles (forge_capability_handle_layer) are not carried. Runtime flag witherreincarnatedPossessionHandles (and .idle, as on Forge), shadow .shadow.",
+      "license": "Wither Reincarnated (All Rights Reserved): no Wither Reincarnated code is carried, the injection only calls our own logic",
+      "guard": [
+        {
+          "class": "com/alexander/witherreincarnated/events/HandlePossessedMobsEvent",
+          "method": "possessedTick",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/EntityTickEvent$Pre;)V",
+          "note": "entity instanceof Mob -> getData(POSSESSED); idle state: no UUID lookup, tick() rewrites the same values, not possessed, not wasPossessed, Level.isLoaded is only read, no packet without worldLoaded",
+          "sha256": "75a9c47c957daa9fa95e2697171f44161ee324d825a82f1ec4cc2b42beda245a"
+        },
+        {
+          "class": "com/alexander/witherreincarnated/capabilities/possessed/PossessedCapability",
+          "method": "tick",
+          "desc": "()V",
+          "note": "idle state: writes back the values it read",
+          "sha256": "bbee16c315dcc2925ce2072ecbf6742952c60fbcffd2da7aaf9a1e09440a4082"
+        },
+        {
+          "class": "com/alexander/witherreincarnated/capabilities/possessed/PossessedCapability",
+          "method": "isPossessed",
+          "desc": "()Z",
+          "note": "possessionTime > 0",
+          "sha256": "99baa42e1fa932964039754e4b27d9a141e3f8947c5ceacb6e34e30fd5a8c709"
+        },
+        {
+          "class": "net/neoforged/neoforge/attachment/IAttachmentHolder",
+          "method": "getExistingDataOrNull",
+          "desc": "(Ljava/util/function/Supplier;)Ljava/lang/Object;",
+          "note": "getExistingDataOrNull(type.get()): the wrapper's read",
+          "sha256": "bdded2ee994b4d9f0d80b81ddfe7ebf1105685ec192da0c8ee1fba53d8e2686e"
+        },
+        {
+          "class": "net/neoforged/neoforge/attachment/AttachmentHolder",
+          "method": "getExistingDataOrNull",
+          "desc": "(Lnet/neoforged/neoforge/attachment/AttachmentType;)Ljava/lang/Object;",
+          "note": "the map's value or null; creates nothing (getData creates the attachment; a mob without it runs the handler)",
+          "sha256": "924070b8631c8a59374e1a1efca9407a070b6dea31d39a03ad9c716273852e35"
+        }
+      ]
+    }
+  }
+}

@@ -13,7 +13,7 @@
           "class": "net/minecraft/world/level/Level",
           "method": "getEntities",
           "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;Ljava/util/List;I)V",
-          "note": "getEntities(test, box, predicate, list, limit): profiler count, the walk (LevelEntityGetter.get, the one call wrapped), Forge's part-entity pass",
+          "note": "getEntities(test, box, predicate, list, limit): profiler count, the walk (LevelEntityGetter.get, the one call wrapped; the only getEntities overload of 1.21.1 that calls it), NeoForge's part-entity pass",
           "sha256": "0e1edeb19cd7d9d17a2bb5e39404c65424f29753ed481d31c948c295a8639251"
         },
         {
@@ -67,18 +67,46 @@
           "class": "net/minecraft/client/multiplayer/ClientLevel",
           "method": "getEntities",
           "desc": "()Lnet/minecraft/world/level/entity/LevelEntityGetter;",
-          "sha256": "1c26b8724cc485919080f0c08e19faee69161a5ef1770575a0f830165b16aaa8"
+          "sha256": "1c26b8724cc485919080f0c08e19faee69161a5ef1770575a0f830165b16aaa8",
+          "note": "since 1.0.49 (both sides): a dedicated server has no ClientLevel, so that build accepts the class absent",
+          "sha256_also": [
+            {
+              "build": "dedicated server",
+              "sha256": null
+            }
+          ]
         },
         {
           "class": "net/minecraft/client/multiplayer/ClientLevel",
           "method": "getPartEntities",
           "desc": "()Ljava/util/Collection;",
-          "sha256": "978342bb04aa8aef0dd28e532d680b9cd48ef5dfd6f7e3a3815673aba0da8348"
+          "sha256": "978342bb04aa8aef0dd28e532d680b9cd48ef5dfd6f7e3a3815673aba0da8348",
+          "note": "since 1.0.49 (both sides): a dedicated server has no ClientLevel, so that build accepts the class absent",
+          "sha256_also": [
+            {
+              "build": "dedicated server",
+              "sha256": null
+            }
+          ]
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "getEntities",
+          "desc": "()Lnet/minecraft/world/level/entity/LevelEntityGetter;",
+          "note": "since 1.0.49: the server level's entity getter (PersistentEntitySectionManager.getEntityGetter), the walk a mark leaves out",
+          "sha256": "a309214c1b250595d4d3ae3d760ac9dd6426f15555035ef70bbaeca8b1b70341"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "getPartEntities",
+          "desc": "()Ljava/util/Collection;",
+          "note": "since 1.0.49: NeoForge's part-entity pass, which runs whether or not the walk is left out",
+          "sha256": "36d41c9508a9f468e5ed11c575fe55a5c22c7131bbeaf001e464b2109d617422"
         }
       ],
       "cancel": [],
-      "conversion": "MixinExtras @WrapOperation on the LevelEntityGetter.get (get) call inside Level.getEntities (getEntities): the walk is left out only for the one search a camera-shake presence gate marked on this thread, in this level, for this base class, while vanilla_entity_class_count_layer still says no entity section holds a match; every other call walks as before (helper bons.furious.patch.client_shake_gate.ShakeGate, runtime flag entityWalkSkip)",
-      "license": "Minecraft (Mojang) and Forge: no code of either is carried; the handler calls the original walk"
+      "conversion": "MixinExtras @WrapWithCondition (the v1 injector.WrapWithCondition; a @WrapOperation until 1.0.48) on the LevelEntityGetter.get call inside Level.getEntities(EntityTypeTest, AABB, Predicate, List, int): the walk is left out only for the one search a camera-shake presence gate marked on this thread, in this level, for this base class, while vanilla_entity_class_count_layer still says no entity section holds a match; since 1.0.49 also for another group's EMPTY mark (same layer re-check) or UNUSED mark (the caller proves the result unused and its predicate pure), through bons.furious.patch.client_shake_gate.EntityWalks, and on both sides (the mixin moved from the client list to the common one); every other call walks as before (helpers ShakeGate, EntityWalks, runtime flag entityWalkSkip)",
+      "license": "Minecraft (Mojang) and NeoForge: no code of either is carried; the handler calls the original walk"
     },
     "cataclysm_shake_scan_presence_gate": {
       "mod": "cataclysm",

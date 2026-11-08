@@ -1,0 +1,48 @@
+{
+  "group": "vanilla_bone_memo_c49",
+  "keys": {
+    "vanilla_model_bone_lookup_memo": {
+      "mod": "minecraft",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_bone_memo_c49.BoneMemoMixin",
+        "bons.furious.mixin.vanilla_bone_memo_c49.ModelPartChildrenMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/model/HierarchicalModel",
+          "method": "getAnyDescendantWithName",
+          "desc": "(Ljava/lang/String;)Ljava/util/Optional;",
+          "note": "getAnyDescendantWithName: \"root\" -> Optional.of(root()); else the first part in getAllParts order with hasChild(name), mapped to getChild(name)",
+          "sha256": "6e46e52d6aeafebf133c561e4f4246a1d48d428084777edf29a2f063ae70ee86"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/ModelPart",
+          "method": "getAllParts",
+          "desc": "()Ljava/util/stream/Stream;",
+          "note": "getAllParts: this, then each child's parts in children.values() order (pre-order)",
+          "sha256": "f16cd99637b15f2e778634bb7541d512c170ee58cafee3aefa2686fd8cffc92e"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/ModelPart",
+          "method": "hasChild",
+          "desc": "(Ljava/lang/String;)Z",
+          "note": "hasChild: children.containsKey",
+          "sha256": "8f6f941f1316e6aa005cf3fd00bf4cf398edb9c4bbfa7810c95c2b1feefb8f56"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/ModelPart",
+          "method": "getChild",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/client/model/geom/ModelPart;",
+          "note": "getChild: children.get, throws for a missing name",
+          "sha256": "9ae82362bc1332f5a21e6418269788eac9b6d9dccac5ed20b6fa52693a01ea1c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapMethod on HierarchicalModel.getAnyDescendantWithName (priority 1002, around vanilla's body with vanilla_model_bone_lookup's redirect, or around an @Overwrite at 1000) with a per-model @Unique memo checked on every hit against the parent's child map (@Accessor on ModelPart.children); helper bons.furious.patch.vanilla_bone_memo_c49.BoneMemo. Embeddium 1.0.15 (remove_streams: HierarchicalModelMixin overwrites the method with a lookup in a per-root name index built once by ModelPartMixin) already answers without a walk; the switch is meant to stand aside while Embeddium is installed, as vanilla_model_bone_lookup does (Guards rule)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic"
+    }
+  }
+}

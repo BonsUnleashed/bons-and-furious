@@ -1,0 +1,113 @@
+{
+  "group": "chimes_coo49",
+  "keys": {
+    "chimes_phantom_scan_presence_gate": {
+      "mod": "chimes",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.chimes_coo49.WindChimePresenceGateMixin",
+        "bons.furious.mixin.chimes_coo49.WindBellPresenceGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/cicada/chimes/block/entity/WindChimeBE",
+          "method": "tick",
+          "desc": "()V",
+          "note": "getEntitiesOfClass(Phantom, the block grown by 25 on every axis) first; the loop acts only on listed phantoms with a target",
+          "sha256": "e14cf74b48e25fb0d9ac6be4bfd411f93ca331f9b14cd21426faf87a004dbd1e"
+        },
+        {
+          "class": "com/cicada/chimes/block/entity/WindBellBE",
+          "method": "tick",
+          "desc": "()V",
+          "note": "getEntitiesOfClass(Phantom, the block grown by 4) first; the loop clears listed phantoms' targets",
+          "sha256": "5a78600969d7f4395821cb79dc9cb3cf7f3c90dba756635a979ab5ee6da4fbc3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass call of WindChimeBE.tick and WindBellBE.tick (Chimes 2.1.1, package com.cicada.chimes): while vanilla_entity_class_count_layer says the level holds no Phantom (registration bons_and_furious.chimes_coo49.entity_classes.json, counted while Chimes is installed and this switch is on) the search is marked EMPTY, so vanilla_entity_walk_skip leaves out its section walk; the call and the rest of the tick run unchanged. Runtime flag chimesPhantomScanPresenceGate, shadow chimesPhantomScanPresenceGate.shadow. Helpers bons.furious.patch.chimes_coo49.ChimesScans, EntityPresenceLink (the layers bound by name, each on its own).",
+      "license": "Chimes (All Rights Reserved): no code carried, the wrappers carry only our own logic"
+    },
+    "chimes_client_phantom_scan_skip": {
+      "mod": "chimes",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.chimes_coo49.WindChimeClientSkipMixin",
+        "bons.furious.mixin.chimes_coo49.WindBellClientSkipMixin",
+        "bons.furious.mixin.chimes_coo49.MobClientTargetWatchMixin",
+        "bons.furious.mixin.chimes_coo49.PhantomClassWatchMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/cicada/chimes/block/entity/WindChimeBE",
+          "method": "tick",
+          "desc": "()V",
+          "note": "the loop over the Phantom list acts only on phantoms whose getTarget() is not null (hurt sound + setTarget(null))",
+          "sha256": "e14cf74b48e25fb0d9ac6be4bfd411f93ca331f9b14cd21426faf87a004dbd1e"
+        },
+        {
+          "class": "com/cicada/chimes/block/entity/WindBellBE",
+          "method": "tick",
+          "desc": "()V",
+          "note": "the loop over the Phantom list acts only on phantoms whose getTarget() is not null (setTarget(null))",
+          "sha256": "5a78600969d7f4395821cb79dc9cb3cf7f3c90dba756635a979ab5ee6da4fbc3"
+        },
+        {
+          "class": "net/minecraft/world/entity/Mob",
+          "method": "setTarget",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)V",
+          "note": "setTarget: NeoForge's LivingChangeTargetEvent (CommonHooks.onLivingChangeTarget), then the only write of the target field; the watch reads it at every return",
+          "sha256": "3807274d05b1759b0d951eaba0989a16cddb81df0f48a0367ca564281a48ae27"
+        },
+        {
+          "class": "net/minecraft/world/entity/Mob",
+          "method": "getTarget",
+          "desc": "()Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "getTarget: the plain read of the target field",
+          "sha256": "26a3aac164baabdb24f02616c25900de8a4a99c3cb5168a45e2a9eedcd4e6c5b"
+        },
+        {
+          "class": "net/minecraft/world/entity/monster/Phantom",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+          "note": "the constructor the class watch hooks at its return",
+          "sha256": "44851b902aafbf9792f1ae1e657ec03cef501c50d7f1763d357e0f2d650524a7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass call of WindChimeBE.tick and WindBellBE.tick (Chimes 2.1.1): on a client level, while no client-side Phantom can have a target, the search is marked UNUSED (vanilla_entity_walk_skip leaves out its walk; the loop finds nothing to act on, as with the full list). @Inject RETURN (priority 2000) of Mob.setTarget reads the target field: a client-side Phantom with a target ends the skip for the session. @Inject RETURN of Phantom.<init>: a phantom class that overrides getTarget ends it. The group's mixin plugin (ChimesPlugin) checks the merged Mob class: getTarget is the plain field read and only setTarget (or handlers only setTarget calls) writes the field; at run time the field must still be private and no other mod's mixin of priority 2000 or more may have been applied to Mob after that check. Runtime flag chimesClientPhantomScanSkip, shadow chimesClientPhantomScanSkip.shadow. Helpers bons.furious.patch.chimes_coo49.ChimesScans, ChimesPlugin, EntityPresenceLink.",
+      "license": "Chimes (All Rights Reserved): no code carried, the wrappers carry only our own logic; Minecraft: the hooks only read"
+    },
+    "chimes_phantom_scan_interval": {
+      "mod": "chimes",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.chimes_coo49.WindChimeScanIntervalMixin",
+        "bons.furious.mixin.chimes_coo49.WindBellScanIntervalMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/cicada/chimes/block/entity/WindChimeBE",
+          "method": "tick",
+          "desc": "()V",
+          "note": "getEntitiesOfClass(Phantom, box) first; the loop's only effect is on listed phantoms with a target",
+          "sha256": "e14cf74b48e25fb0d9ac6be4bfd411f93ca331f9b14cd21426faf87a004dbd1e"
+        },
+        {
+          "class": "com/cicada/chimes/block/entity/WindBellBE",
+          "method": "tick",
+          "desc": "()V",
+          "note": "getEntitiesOfClass(Phantom, box) first; the loop's only effect is on listed phantoms with a target",
+          "sha256": "5a78600969d7f4395821cb79dc9cb3cf7f3c90dba756635a979ab5ee6da4fbc3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass call of WindChimeBE.tick and WindBellBE.tick (Chimes 2.1.1): on a server level the search runs only when (game time + an offset from the block position) is a multiple of N (value line, default 4, range 1-100; 1 = every tick); on other ticks it is marked UNUSED and comes back empty. Trade-off, off by default: a phantom that picked a target inside a chime's or bell's box keeps it up to N-1 ticks longer. Value: PureConfig.intValue(\"chimes_phantom_scan_interval\", 4, 1, 100). Runtime flag chimesPhantomScanInterval, shadow counter chimesPhantomScanInterval.shadow. Helper bons.furious.patch.chimes_coo49.ChimesScans.",
+      "license": "Chimes (All Rights Reserved): no code carried, the wrappers carry only our own logic"
+    }
+  }
+}

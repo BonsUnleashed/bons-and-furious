@@ -1,0 +1,265 @@
+{
+  "group": "mysticalagriculture_coo49",
+  "keys": {
+    "mysticalagriculture_ability_cache_lean": {
+      "mod": "mysticalagriculture",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mysticalagriculture_coo49.AbilityCacheLeanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/blakebr0/mysticalagriculture/api/lib/AbilityCache",
+          "method": "getCachedAbilities",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Ljava/util/Set;",
+          "note": "Mystical Agriculture 1.21.1-8.0.29: getPlayerKey, then cache.entrySet().stream().filter(the entry's map holds the key).map(getKey).collect(Collectors.toSet())",
+          "sha256": "38fd7476fdd8e0a0202946afe237c1e9af8c613800da0d8f1d19abfe24aaddea"
+        },
+        {
+          "class": "com/blakebr0/mysticalagriculture/api/lib/AbilityCache",
+          "method": "getPlayerKey",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)Ljava/lang/String;",
+          "note": "profile name + ':' + level().isClientSide(), called by the switch as the original calls it",
+          "sha256": "e2be4274962fd7605fbd8013a2f40ae19936b6a77a7b734bda2cc17d754db727"
+        },
+        {
+          "class": "com/blakebr0/mysticalagriculture/api/lib/AbilityCache",
+          "method": "lambda$getCachedAbilities$1",
+          "desc": "(Ljava/lang/String;Ljava/util/Map$Entry;)Z",
+          "note": "the filter: ((Map) entry.getValue()).containsKey(key)",
+          "sha256": "cd7e4d443f47d634128502e539cb8731f95ffc024e335b588eb3e6a9f91816be"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of AbilityCache.getCachedAbilities: the mod's own getPlayerKey (@Shadow), then one loop over the same entry set adding the ids whose player map holds the key to a new HashSet (same insertions in the same order as the stream's Collectors.toSet()). Runtime flag mysticalagricultureAbilityCacheLean. Helper bons.furious.patch.mysticalagriculture_coo49.AbilityCacheLean.",
+      "license": "Mystical Agriculture (MIT): the method's logic is restated in our helper; no code copied verbatim"
+    },
+    "mysticalagriculture_crop_name_key_memo": {
+      "mod": "mysticalagriculture",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mysticalagriculture_coo49.CropNameKeyMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/blakebr0/mysticalagriculture/api/crop/Crop",
+          "method": "getDisplayName",
+          "desc": "()Lnet/minecraft/network/chat/Component;",
+          "note": "Mystical Agriculture 1.21.1-8.0.29: the display name if set, else Component.translatable(String.format(\"crop.%s.%s\", getModId(), getName()))",
+          "sha256": "04f4d493980982508b36c200a39a217b157e25589d053840fc326b2707c7c08b"
+        },
+        {
+          "class": "com/blakebr0/mysticalagriculture/api/crop/Crop",
+          "method": "getId",
+          "desc": "()Lnet/minecraft/resources/ResourceLocation;",
+          "note": "the final id field",
+          "sha256": "a6b1107916ded87c773beb8b738861dc76b4633cc173dff4963c6e7a6a8aa2c7"
+        },
+        {
+          "class": "com/blakebr0/mysticalagriculture/api/crop/Crop",
+          "method": "getName",
+          "desc": "()Ljava/lang/String;",
+          "note": "getId().getPath()",
+          "sha256": "6f7d069f00b41d1cd5ca865d5587b52cedb4520c14056fd0f91e50304ad1a49e"
+        },
+        {
+          "class": "com/blakebr0/mysticalagriculture/api/crop/Crop",
+          "method": "getModId",
+          "desc": "()Ljava/lang/String;",
+          "note": "getId().getNamespace()",
+          "sha256": "036e2fcdd9b892542aa8afcbe56b8b573b9acdcc7d08ca320262e03e94d8ae3e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect (require 0, allow 1) of the String.format call in Crop.getDisplayName (reached only without a display name; format \"crop.%s.%s\", arguments getModId() and getName() as the mod computes them): a crop whose class keeps Crop's getId / getName / getModId (checked once per class, ClassValue) answers the key it made the first time (kept in a @Unique field); a crop of another class keeps a marker and gets the key made again each time. The key is made by CropNameKeys.format: for exactly that format and two String (or null) arguments the same characters by concatenation (a %s without flags, width or precision appends String.valueOf of a non-Formattable argument; no locale applies), anything else by String.format itself. The component around the key is still made new per call. When another mod already changed that call, Mixin leaves the redirect out and MysticalAgriculturePlugin logs one INFO line. Runtime flag mysticalagricultureCropNameKeyMemo. Helper bons.furious.patch.mysticalagriculture_coo49.CropNameKeys.",
+      "license": "Mystical Agriculture (MIT): no code carried"
+    },
+    "mysticalagriculture_soul_extractor_idle_skip": {
+      "mod": "mysticalagriculture",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mysticalagriculture_coo49.SoulRecipeScanMixin",
+        "bons.furious.mixin.mysticalagriculture_coo49.RecipeManagerProbeMixin",
+        "bons.furious.mixin.mysticalagriculture_coo49.IngredientProbeMixin",
+        "bons.furious.mixin.mysticalagriculture_coo49.SoulRecipeProbeMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/blakebr0/cucumber/inventory/CachedRecipe",
+          "method": "check",
+          "desc": "(Lnet/minecraft/world/item/crafting/RecipeInput;Lnet/minecraft/world/level/Level;)Z",
+          "note": "Cucumber 1.21.1-8.0.16: the remembered recipe if it still matches, else recipe = level.getRecipeManager().getRecipeFor(type, input, level).map(RecipeHolder::value).orElse(null)",
+          "sha256": "b8d9344ccb94e242e520c53e25ec4f2e492d2ec3e9a3fec7d9f201dbe5b7580e"
+        },
+        {
+          "class": "com/blakebr0/cucumber/inventory/CachedRecipe",
+          "method": "checkAndGet",
+          "desc": "(Lnet/minecraft/world/item/crafting/RecipeInput;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/item/crafting/Recipe;",
+          "note": "check, then the remembered recipe or null",
+          "sha256": "23df479165bc3b8f025134e9ea487be1cd73ea5189d8179981dc166d7eb8ce6b"
+        },
+        {
+          "class": "com/blakebr0/mysticalagriculture/tileentity/SoulExtractorTileEntity",
+          "method": "getActiveRecipe",
+          "desc": "()Lcom/blakebr0/mysticalagriculture/api/crafting/ISoulExtractionRecipe;",
+          "note": "Mystical Agriculture 1.21.1-8.0.29: null without a level, else recipe.checkAndGet(toCraftingInput(), level); called every tick",
+          "sha256": "11807103073188547fde8e91f9f58e575b608366bbc98c2d8a157d8eafa6dfa5"
+        },
+        {
+          "class": "com/blakebr0/mysticalagriculture/tileentity/SoulExtractorTileEntity",
+          "method": "toCraftingInput",
+          "desc": "()Lnet/minecraft/world/item/crafting/CraftingInput;",
+          "note": "inventory.toShapelessCraftingInput(): input, fuel and jar slots in slot order",
+          "sha256": "29f0cecffdd19170a00e18ae02df6f83dc72689ea6ea06f5938aca5d465b6711"
+        },
+        {
+          "class": "com/blakebr0/cucumber/inventory/BaseItemStackHandler",
+          "method": "toShapelessCraftingInput",
+          "desc": "()Lnet/minecraft/world/item/crafting/CraftingInput;",
+          "note": "new ShapelessCraftingInput(stacks): width = slot count, height 1, the handler's own stacks",
+          "sha256": "9ad52cd65c903a8fdff1c86331771bacefb311d446e386d4c13e9d44789de8ba"
+        },
+        {
+          "class": "com/blakebr0/mysticalagriculture/crafting/recipe/SoulExtractionRecipe",
+          "method": "matches",
+          "desc": "(Lnet/minecraft/world/item/crafting/CraftingInput;Lnet/minecraft/world/level/Level;)Z",
+          "note": "false below three slots; then inputs.getFirst().test(slot 0) first: false answers false; then the jar in slot 2",
+          "sha256": "570469e3b6ad56ed41c1ec9aca30bbb950a3d5b55c17a36fa1a7e18c9e22805a"
+        },
+        {
+          "class": "com/blakebr0/mysticalagriculture/crafting/recipe/SoulExtractionRecipe",
+          "method": "matches",
+          "desc": "(Lnet/minecraft/world/item/crafting/RecipeInput;Lnet/minecraft/world/level/Level;)Z",
+          "note": "the bridge the look-up calls: a cast to CraftingInput, then matches(CraftingInput, Level)",
+          "sha256": "2f113a18be4b31e6a06a1090d8deaf56d8425bbaa0672d0f51d44e1b5a10a79c"
+        },
+        {
+          "class": "com/blakebr0/mysticalagriculture/crafting/recipe/SoulExtractionRecipe",
+          "method": "getIngredients",
+          "desc": "()Lnet/minecraft/core/NonNullList;",
+          "note": "the inputs list matches reads",
+          "sha256": "930c831fa3b14ea6dcace6c31e4b7417b7f05fd7ac4872cb56dc71fae4128ceb"
+        },
+        {
+          "class": "net/minecraft/world/item/crafting/RecipeManager",
+          "method": "getRecipeFor",
+          "desc": "(Lnet/minecraft/world/item/crafting/RecipeType;Lnet/minecraft/world/item/crafting/RecipeInput;Lnet/minecraft/world/level/Level;)Ljava/util/Optional;",
+          "note": "getRecipeFor(type, input, level, (RecipeHolder) null); the probe also requires it unchanged by any other mod's mixin",
+          "sha256": "c04951213c6b586949c3c8a0b836f85a3457a94508f7e8ba2bc70d21b432f13d"
+        },
+        {
+          "class": "net/minecraft/world/item/crafting/RecipeManager",
+          "method": "getRecipeFor",
+          "desc": "(Lnet/minecraft/world/item/crafting/RecipeType;Lnet/minecraft/world/item/crafting/RecipeInput;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/crafting/RecipeHolder;)Ljava/util/Optional;",
+          "note": "empty for an empty input; the given holder if it matches; else byType(type).stream().filter(h -> h.value().matches(input, level)).findFirst()",
+          "sha256": "3cd73aad410df4d404e10729f2b40699bac14c77f51dcd8bd6dc14d4fb050570"
+        },
+        {
+          "class": "net/minecraft/world/item/crafting/RecipeManager",
+          "method": "lambda$getRecipeFor$2",
+          "desc": "(Lnet/minecraft/world/item/crafting/RecipeInput;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/crafting/RecipeHolder;)Z",
+          "note": "the filter: holder.value().matches(input, level)",
+          "sha256": "fec6ed15d63ce64dc22d91393a5ac4778e3a24edaad8a835e9c082f00192498a"
+        },
+        {
+          "class": "net/minecraft/world/item/crafting/RecipeManager",
+          "method": "byType",
+          "desc": "(Lnet/minecraft/world/item/crafting/RecipeType;)Ljava/util/Collection;",
+          "note": "byType.get(type) of the immutable multimap the proof reads",
+          "sha256": "4962757743b7409cbc4c9b3edd602ad03582230f9ae3e8269973e8e04cb3888d"
+        },
+        {
+          "class": "net/minecraft/world/item/crafting/Ingredient",
+          "method": "test",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Z",
+          "note": "NeoForge 21.1: null -> false; custom -> the custom ingredient; no values -> input empty; else an item of getItems() is the input's item (AIR for every empty stack)",
+          "sha256": "abf37d02d82426ab4475c00125a6c642859286bfdd06c6fae2c773ea11b2763f"
+        },
+        {
+          "class": "net/minecraft/world/item/crafting/Ingredient",
+          "method": "getItems",
+          "desc": "()[Lnet/minecraft/world/item/ItemStack;",
+          "note": "resolved once and kept (no invalidation in NeoForge 21.1)",
+          "sha256": "df285b6ca97e34db87a335522a385639bc1f6325e2433d9f9f784941457db70d"
+        },
+        {
+          "class": "net/minecraft/world/item/crafting/Ingredient",
+          "method": "isEmpty",
+          "desc": "()Z",
+          "note": "no values and not custom",
+          "sha256": "21e926d0b44b5fc453f373ff7d04510d150a28621db16f6ce0f331401dc3f580"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "getItem",
+          "desc": "()Lnet/minecraft/world/item/Item;",
+          "note": "AIR for every empty stack",
+          "sha256": "3a6fb84c9fb8b13d8a893bf8ef0510480605b691247ef1d9962c46088e2e7612"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "isEmpty",
+          "desc": "()Z",
+          "note": "EMPTY, count <= 0 or AIR",
+          "sha256": "721230359957c26dc8a8a9445b94644ecb03bd3dd37333dfc0f0a7dbf608579f"
+        },
+        {
+          "class": "net/minecraft/world/item/crafting/CraftingInput",
+          "method": "getItem",
+          "desc": "(I)Lnet/minecraft/world/item/ItemStack;",
+          "note": "items.get(slot): what each recipe reads",
+          "sha256": "659e0d71cd5af9acd7aaa92e7ad295635c318ba45ac4a86ddd3491531e073711"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject (cancellable; require 0, allow 1) in Cucumber's CachedRecipe.check(RecipeInput, Level) at its Level.getRecipeManager call, i.e. right before the look-up getRecipeManager().getRecipeFor(type, input, level) that follows a remembered recipe that did not match: when SoulExtractorIdle.none says the look-up finds nothing (soul extraction type, probe bits all set, a CraftingInput whose slot 0 is empty, RecipeManager itself, the current recipe set proven: every recipe exactly SoulExtractionRecipe with an input ingredient of class Ingredient, not custom, that rejects an empty stack) the check sets the remembered recipe to null and answers false, which is what the look-up's empty answer makes it do; otherwise the mod's own getRecipeManager and getRecipeFor calls run as shipped. When another mod already changed that call, Mixin leaves the hook out and MysticalAgriculturePlugin logs one INFO line. Three probe mixins of priority 3000 (RecipeManager also gets the byType multimap accessor; Ingredient and SoulExtractionRecipe only a @Unique probe method) let MysticalAgriculturePlugin.postApply record (MaProbe) whether both getRecipeFor overloads, the filter, byType, Ingredient.test / getItems / isEmpty and SoulExtractionRecipe's matches, its bridge and getIngredients are still as shipped after every other mod's mixins; any change keeps the scan (one INFO line). Recipe set: the manager's byType multimap identity (a new immutable multimap on every load and sync; held weakly). Runtime flag mysticalagricultureSoulExtractorIdleSkip; shadow mode .shadow (SoulExtractorIdle.SHADOW_CHECKS / SHADOW_MISMATCHES).",
+      "license": "Mystical Agriculture (MIT), Cucumber (MIT), Minecraft / NeoForge: no code carried; the switch only decides whether the scan runs"
+    },
+    "mysticalagriculture_soul_extractor_empty_skip": {
+      "mod": "mysticalagriculture",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mysticalagriculture_coo49.SoulExtractorEmptyMixin",
+        "bons.furious.mixin.mysticalagriculture_coo49.CachedRecipeAccessor"
+      ],
+      "guard": [
+        {
+          "class": "com/blakebr0/mysticalagriculture/tileentity/SoulExtractorTileEntity",
+          "method": "getActiveRecipe",
+          "desc": "()Lcom/blakebr0/mysticalagriculture/api/crafting/ISoulExtractionRecipe;",
+          "note": "Mystical Agriculture 1.21.1-8.0.29: null without a level, else recipe.checkAndGet(toCraftingInput(), level)",
+          "sha256": "11807103073188547fde8e91f9f58e575b608366bbc98c2d8a157d8eafa6dfa5"
+        },
+        {
+          "class": "com/blakebr0/mysticalagriculture/tileentity/SoulExtractorTileEntity",
+          "method": "toCraftingInput",
+          "desc": "()Lnet/minecraft/world/item/crafting/CraftingInput;",
+          "note": "inventory.toShapelessCraftingInput(): slot 0 of the input is the extractor's input slot",
+          "sha256": "29f0cecffdd19170a00e18ae02df6f83dc72689ea6ea06f5938aca5d465b6711"
+        },
+        {
+          "class": "com/blakebr0/cucumber/inventory/CachedRecipe",
+          "method": "checkAndGet",
+          "desc": "(Lnet/minecraft/world/item/crafting/RecipeInput;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/item/crafting/Recipe;",
+          "note": "Cucumber 1.21.1-8.0.16: check, then the remembered recipe or null",
+          "sha256": "23df479165bc3b8f025134e9ea487be1cd73ea5189d8179981dc166d7eb8ce6b"
+        },
+        {
+          "class": "com/blakebr0/cucumber/inventory/CachedRecipe",
+          "method": "check",
+          "desc": "(Lnet/minecraft/world/item/crafting/RecipeInput;Lnet/minecraft/world/level/Level;)Z",
+          "note": "a failed look-up stores null in the remembered recipe",
+          "sha256": "b8d9344ccb94e242e520c53e25ec4f2e492d2ec3e9a3fec7d9f201dbe5b7580e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the CachedRecipe.checkAndGet call in SoulExtractorTileEntity.getActiveRecipe: with an empty slot 0 of the recipe input the remembered recipe is set to null (@Accessor CachedRecipeAccessor) and null answered without the look-up, else the call. Trade-off (off by default): a recipe whose input ingredient accepts an empty slot no longer runs from an empty input. Runtime flag mysticalagricultureSoulExtractorEmptySkip. Helper bons.furious.patch.mysticalagriculture_coo49.SoulExtractorEmpty.",
+      "license": "Mystical Agriculture (MIT), Cucumber (MIT): no code carried"
+    }
+  }
+}

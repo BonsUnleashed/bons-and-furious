@@ -1,0 +1,61 @@
+{
+  "group": "photon_c49",
+  "keys": {
+    "photon_particle_light_pos_reuse": {
+      "mod": "photon",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.photon_c49.TileParticleLightPosMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/lowdragmc/photon/client/gameobject/particle/TileParticle",
+          "method": "updateLight",
+          "desc": "()V",
+          "note": "without a lights module: getWorldPos, new BlockPos((int) x, (int) y, (int) z) (the NEW we wrap), light = emitter.getLightColor(pos, max(light, 0))",
+          "sha256": "255d08c17c62782b0fddb9b0ca00457466a0fd2052a5948f4c98a6fec0a19b88"
+        },
+        {
+          "class": "com/lowdragmc/photon/client/gameobject/particle/TileParticle",
+          "method": "updateChanges",
+          "desc": "(F)V",
+          "note": "calls updateLight every tick outside PhotonParticleManager's fast simulation",
+          "sha256": "b59f67a0013288ac9da5244e91f06c6ad3ef9b34f4956776692f4f35eab99cdf"
+        },
+        {
+          "class": "com/lowdragmc/photon/client/gameobject/emitter/Emitter",
+          "method": "getLightColor",
+          "desc": "(Lnet/minecraft/core/BlockPos;I)I",
+          "note": "the only implementation in Photon: in a parallel light phase lightQueryQueue.add(pos) and lightCache.get(pos) (else the last light), otherwise lightCache.computeIfAbsent(pos, computeLightColor) (pos = key only)",
+          "sha256": "5dd253c163e5149a0e16575a12c47232e44d55a7ada8f7c17089c27a0d03526a"
+        },
+        {
+          "class": "com/lowdragmc/photon/client/gameobject/emitter/Emitter",
+          "method": "computeLightColor",
+          "desc": "(Lnet/minecraft/core/BlockPos;)I",
+          "note": "reads only: level.isLoaded(pos) / DummyWorld, LevelRenderer.getLightColor(level, pos)",
+          "sha256": "7d1665dc5a1142e5c5a468ea5a8dfc306c1860dd2d1087f4d0b0dc308022fa68"
+        },
+        {
+          "class": "com/lowdragmc/photon/client/gameobject/emitter/Emitter",
+          "method": "rebuildLightCache",
+          "desc": "()V",
+          "note": "clears the cache, puts every queued position (as a key) with its computed light, clears the queue",
+          "sha256": "530b063b7c49cb693b3502c1174da02162093f86394c168d3394fb0dddbbe5e2"
+        },
+        {
+          "class": "com/lowdragmc/photon/client/gameobject/emitter/IParticleEmitter",
+          "method": "getLightColor",
+          "desc": "(Lnet/minecraft/core/BlockPos;I)I",
+          "note": "default: getLightColor(pos)",
+          "sha256": "d333258b901204c4c27d0b59bc82b254e5847941b9dd45569ede5bd9fb70d4b2"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of new BlockPos(III) in TileParticle.updateLight() (Photon 2.x's per-tick light lookup; on 1.1.17 the same NEW was in getLightColor(), which 2.2.10 no longer calls): the particle's last BlockPos is returned again while the three truncated coordinates equal it, else a new BlockPos(x, y, z) is built and kept in a @Unique field (helper bons.furious.patch.photon_c49.PhotonLightPos)",
+      "license": "Photon (mods.toml: GPL-3.0 license): none of its code is carried; the wrapper compares the coordinates Photon computed and returns an equal immutable BlockPos"
+    }
+  }
+}

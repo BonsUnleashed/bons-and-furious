@@ -1,0 +1,124 @@
+{
+  "group": "undergarden_coo49",
+  "keys": {
+    "undergarden_scintling_goo_server_only": {
+      "mod": "undergarden",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.undergarden_coo49.ScintlingGooServerOnlyMixin"
+      ],
+      "guard": [
+        {
+          "class": "quek/undergarden/entity/animal/Scintling",
+          "method": "aiStep",
+          "desc": "()V",
+          "note": "aiStep: super.aiStep(); goes on only when EventHooks.canEntityGrief(level, this) (the wrapped call) and not a baby; then goo into the up to four air positions under it (isEmptyBlock, canSurvive, setBlockAndUpdate), no side check",
+          "sha256": "a0e2cde19b144e3da9a4230967648a9b864eb2210046a06b5fa333b847956735"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the EventHooks.canEntityGrief call in Scintling.aiStep: false on a client level without posting the event (the aiStep then ends before its goo loop); the original call on a server level. Fix, on by default. Runtime flag undergardenScintlingGooServerOnly. Helper bons.furious.patch.undergarden_coo49.UndergardenScans.",
+      "license": "The Undergarden (MIT): no code carried; the hook answers the mod's own event call"
+    },
+    "undergarden_scintling_idle_goo_interval": {
+      "mod": "undergarden",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.undergarden_coo49.ScintlingIdleGooMixin"
+      ],
+      "guard": [
+        {
+          "class": "quek/undergarden/entity/animal/Scintling",
+          "method": "aiStep",
+          "desc": "()V",
+          "note": "aiStep: the goo attempt (mob griefing event, then four positions) runs every tick, also for a scintling that has not moved",
+          "sha256": "a0e2cde19b144e3da9a4230967648a9b864eb2210046a06b5fa333b847956735"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the EventHooks.canEntityGrief call in Scintling.aiStep: while the scintling stands exactly where its last attempt was and fewer than N ticks have passed since, false without the event; else the attempt is recorded (@Unique fields behind the duck interface ScintlingGooState) and the original call runs. Trade-off, off by default; N = PureConfig.intValue(\"undergarden_scintling_idle_goo_interval\", 10, 1, 200). Runtime flag undergardenScintlingIdleGooInterval. Helper bons.furious.patch.undergarden_coo49.UndergardenScans.",
+      "license": "The Undergarden (MIT): no code carried; the hook decides when the mod's own attempt runs"
+    },
+    "undergarden_muncher_mob_griefing": {
+      "mod": "undergarden",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.undergarden_coo49.MuncherGriefingMixin"
+      ],
+      "guard": [
+        {
+          "class": "quek/undergarden/entity/monster/cavern/Muncher",
+          "method": "aiStep",
+          "desc": "()V",
+          "note": "aiStep: isAggressive() && (horizontalCollision || verticalCollision && EventHooks.canEntityGrief(level, this)) opens the block eating over its bounding box (MUNCHER_BREAKABLES: destroyBlock, heal, chew sound)",
+          "sha256": "64f03a2886939e117279a3a8cf671289e32298ad02ab483d064173f07bd604a6"
+        },
+        {
+          "class": "net/neoforged/neoforge/event/EventHooks",
+          "method": "canEntityGrief",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "the mob griefing question the wall case now asks too: posts EntityMobGriefingEvent, canGrief() (the game rule for a null entity)",
+          "sha256": "70ba599fb1072641793cd5c291f5b447fd65b5b3b778b92bfe401d9dccc2b602"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on the isAggressive() result in Muncher.aiStep: aggressive and against a wall -> EventHooks.canEntityGrief decides (one post); otherwise the original value, so the floor and ceiling case posts as before. Gameplay fix, off by default. Runtime flag undergardenMuncherMobGriefing. Helper bons.furious.patch.undergarden_coo49.UndergardenScans.",
+      "license": "The Undergarden (MIT): no code carried; the hook asks NeoForge's mob griefing event"
+    },
+    "undergarden_rotspawn_repel_player_radius": {
+      "mod": "undergarden",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.undergarden_coo49.RotspawnRepelRadiusMixin"
+      ],
+      "guard": [
+        {
+          "class": "quek/undergarden/entity/monster/rotspawn/RotspawnMonster",
+          "method": "aiStep",
+          "desc": "()V",
+          "note": "aiStep: every 40 ticks without fleeTime: BlockPos.findClosestMatch(blockPosition(), 16, 4, the repellent test) (the wrapped call), then flee the hit",
+          "sha256": "1f3cb90870226d86c4a7216fc5941b659b858a46d22bcc8a95b7219f87386905"
+        },
+        {
+          "class": "quek/undergarden/entity/monster/rotspawn/RotspawnMonster",
+          "method": "lambda$aiStep$1",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Z",
+          "note": "the search's test only reads the block state and its hoglin_repellents tag (leaving the search out changes nothing else)",
+          "sha256": "724f9acd015870f28ef8c300479a5633e9d1051b1de977b7226de8c50805c08b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the BlockPos.findClosestMatch call in RotspawnMonster.aiStep: Optional.empty() without the search while no player of the level is within R blocks; else the original. Trade-off, off by default; R = PureConfig.intValue(\"undergarden_rotspawn_repel_player_radius\", 48, 1, 256). Runtime flag undergardenRotspawnRepelPlayerRadius. Helper bons.furious.patch.undergarden_coo49.UndergardenScans.",
+      "license": "The Undergarden (MIT): no code carried; the hook decides when the mod's own search runs"
+    },
+    "undergarden_rotspawn_repel_stagger": {
+      "mod": "undergarden",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.undergarden_coo49.RotspawnRepelStaggerMixin"
+      ],
+      "guard": [
+        {
+          "class": "quek/undergarden/entity/monster/rotspawn/RotspawnMonster",
+          "method": "aiStep",
+          "desc": "()V",
+          "note": "aiStep: the repellent search runs when tickCount % 40 == 0 and fleeTime == 0 (the one tickCount read is shifted)",
+          "sha256": "1f3cb90870226d86c4a7216fc5941b659b858a46d22bcc8a95b7219f87386905"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on the tickCount read in RotspawnMonster.aiStep: tickCount + floorMod(getId() * 31, 40), a fixed per-mob offset (same number of searches per 40 ticks). Trade-off, off by default. Runtime flag undergardenRotspawnRepelStagger. Helper bons.furious.patch.undergarden_coo49.UndergardenScans.",
+      "license": "The Undergarden (MIT): no code carried; the hook shifts when the mod's own search runs"
+    }
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "group": "mod_scan_presence_gates",
+  "keys": {
+    "borninchaos_minion_scan_presence_gate": {
+      "mod": "born_in_chaos_v1",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mod_scan_presence_gates.BicBonescallerStaffScanMixin",
+        "bons.furious.mixin.mod_scan_presence_gates.BicMissionaryHatScanMixin",
+        "bons.furious.mixin.mod_scan_presence_gates.BicPumpkinStaffScanMixin",
+        "bons.furious.mixin.mod_scan_presence_gates.BicSpiderBiteScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mcreator/borninchaosv/procedures/BonescallerStaffKazhdyiTikVInvientarieProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "getEntitiesOfClass(Entity, box +-5, always true), sorted by distance; the loop acts only on ControlledBabySkeletonEntity / ControlledSpiritualAssistantEntity",
+          "sha256": "01cfc6f789f84fa731db1908895ce0926fa2ed07a3feb219f866c4ba001c5446"
+        },
+        {
+          "class": "net/mcreator/borninchaosv/procedures/MissionaryHatKazhdyiTikDliaShliemaProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "getEntitiesOfClass(Entity, box +-2.5, always true), sorted by distance; the loop acts only on ControlledBabySkeletonEntity",
+          "sha256": "eef668b725ed82010b8812c4af52a988818f274c77e67fbaa9f24492956c054c"
+        },
+        {
+          "class": "net/mcreator/borninchaosv/procedures/PumpkinstaffaKazhdyiTikVInvientarieProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "getEntitiesOfClass(Entity, box +-6.5, always true), sorted by distance; the loop acts only on MrPumpkinControlledEntity",
+          "sha256": "704d02c3affb7e5ddde9d6893d79841b218677cdc5600b290ceba8706a883d14"
+        },
+        {
+          "class": "net/mcreator/borninchaosv/procedures/SpiderBiteKazhdyiTikVInvientarieProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "getEntitiesOfClass(Entity, box +-3, always true), sorted by distance; the loop acts only on BabySpiderControlledEntity",
+          "sha256": "e1d00b50bdf776cc2df92d11a4681ef5d56b7396b919ff1cf4e6608946beaa43"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the LevelAccessor.getEntitiesOfClass call of each procedure's execute: while vanilla_entity_class_count_layer says the level holds none of the minion classes that procedure's loop acts on, the call is marked UNUSED so that vanilla_entity_walk_skip leaves out its section walk; the call itself and the loop run unchanged (helper bons.furious.patch.mod_scan_presence_gates.ModScanGates; layers reached by name through EntityPresenceLink; registration bons_and_furious.mod_scan_presence_gates.entity_classes.json)",
+      "license": "Born in Chaos (All Rights Reserved): no code carried, the wrappers carry only our own logic"
+    },
+    "cataclysm_deepling_ride_presence_gate": {
+      "mod": "cataclysm",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mod_scan_presence_gates.CataclysmDeeplingRideGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/Deepling/AbstractDeepling$RidingCoralssus",
+          "method": "canUse",
+          "desc": "()Z",
+          "note": "canUse: c = getClosestCoralssus_Entity(); false when passenger, c == null, moistness <= 300, c dead or ridden",
+          "sha256": "b99d231615104d0a1a23255d795a4be4d2072989863d5881750f30e98d51ff03"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/Deepling/AbstractDeepling$RidingCoralssus",
+          "method": "getClosestCoralssus_Entity",
+          "desc": "()Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/Coralssus_Entity;",
+          "note": "getEntitiesOfClass(Coralssus_Entity, box +-15) and a loop over the list (distance reads only)",
+          "sha256": "229232abb2e4e6fb0d60fa58ffa8d42b84e9b523ca9b41a05f88d5f05cfefead"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/Deepling/AbstractDeepling",
+          "method": "getMoistness",
+          "desc": "()I",
+          "note": "a plain read of the synced MOISTNESS value (the wrapper reads it before the search)",
+          "sha256": "5642842bc48ddf6e5b7a16139ae42f1d6df2c7ffea084bf5c73c27a80b713cc1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on RidingCoralssus.canUse: while the Deepling is a passenger or its moistness is 300 or less the Coralssus search is marked UNUSED (canUse is false either way); @WrapOperation on the Level.getEntitiesOfClass call of getClosestCoralssus_Entity: while vanilla_entity_class_count_layer says the level holds no Coralssus_Entity the call is marked EMPTY; vanilla_entity_walk_skip leaves out the marked walks, every call runs (helper bons.furious.patch.mod_scan_presence_gates.ModScanGates; layers reached by name through EntityPresenceLink; registration bons_and_furious.mod_scan_presence_gates.entity_classes.json)",
+      "license": "CC-BY-NC-ND-4.0 (L_Ender's Cataclysm): no Cataclysm code is carried; the wrappers carry only our own logic and call the original methods"
+    },
+    "cnc_caribou_dash_presence_gate": {
+      "mod": "cnc",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mod_scan_presence_gates.CncCaribouDashGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/imasillylittleguy/cnc/procedures/CaribouDashDamageProcedure",
+          "method": "execute",
+          "desc": "(Lnet/neoforged/bus/api/Event;Lnet/minecraft/world/level/LevelAccessor;DDDLnet/minecraft/world/entity/Entity;)V",
+          "note": "EntityTickEvent.Pre handler: getEntitiesOfClass(CaribouEntity, a 0.5 block box, always true), the nearest one, hurt + push only by a dashing caribou",
+          "sha256": "69d1c0dcd66c4b9e93394fd48bf7bf10bad1ab2e55a6ea020d1a0269f0dd346e"
+        },
+        {
+          "class": "net/minecraft/world/level/EntityGetter",
+          "method": "getEntitiesOfClass",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+          "note": "getEntities(EntityTypeTest.forClass(class), box, predicate)",
+          "sha256": "45d34338c3479c10eb7733f6281ae56514da55a6533d45e3ae1bc4ffb9a5d5fa"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "getEntities",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+          "note": "a new ArrayList filled by the four-argument getEntities, then returned",
+          "sha256": "33301a576eb95b679bb5a2ab266d346fd20e608217681faf9d39a5e557c902af"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "getEntities",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;Ljava/util/List;)V",
+          "note": "the five-argument getEntities with Integer.MAX_VALUE",
+          "sha256": "52b1e498d7f1bf76d231b4ce9f9d82a33057076c40645e357dcdfff98ae70126"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "getEntities",
+          "desc": "(Lnet/minecraft/world/level/entity/EntityTypeTest;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;Ljava/util/List;I)V",
+          "note": "the profiler's getEntities count, the section walk, NeoForge's part pass (a part entity is never a CaribouEntity)",
+          "sha256": "0e1edeb19cd7d9d17a2bb5e39404c65424f29753ed481d31c948c295a8639251"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the LevelAccessor.getEntitiesOfClass call in CaribouDashDamageProcedure.execute: while vanilla_entity_class_count_layer says the level holds no CaribouEntity, the call is answered as it ends when it finds nothing (the profiler's getEntities count and a new empty ArrayList; a part entity is never a CaribouEntity), else the call runs (helper bons.furious.patch.mod_scan_presence_gates.CncCaribouDashGate, the count layer bound by name; registration bons_and_furious.mod_scan_presence_gates.entity_classes.json)",
+      "license": "Critters n' Crawlers (All Rights Reserved): no code carried, the wrapper carries only our own logic"
+    }
+  }
+}

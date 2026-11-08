@@ -1,0 +1,88 @@
+{
+  "group": "immersiveoptimization_c49",
+  "keys": {
+    "immersiveoptimization_be_priority_front_cache": {
+      "mod": "immersive_optimization",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.immersiveoptimization_c49.TickSchedulerFrontCacheMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/conczin/immersive_optimization/TickScheduler",
+          "method": "shouldTick",
+          "desc": "(Lnet/minecraft/world/level/Level;J)Z",
+          "note": "config check, getLevelData, forced chunks, blockEntityPriorities.computeIfAbsent(chunk, lambda$shouldTick$1), priority < 1 or (gameTime + chunk) % priority == 0",
+          "sha256": "d8be89a50be69a5fd5a6b7a15e0f5507a2ddf8f440b07124dae4b521876c2c53"
+        },
+        {
+          "class": "net/conczin/immersive_optimization/TickScheduler",
+          "method": "getLevelData",
+          "desc": "(Lnet/minecraft/world/level/Level;)Lnet/conczin/immersive_optimization/TickScheduler$LevelData;",
+          "note": "levelData.get(level.dimension().location())",
+          "sha256": "7bda56dde12cae838f4902a10f099760fa47483b659ff28f1dfe4810734dfecf"
+        },
+        {
+          "class": "net/conczin/immersive_optimization/TickScheduler",
+          "method": "lambda$shouldTick$1",
+          "desc": "(Lnet/minecraft/world/level/Level;Ljava/lang/Long;)Ljava/lang/Integer;",
+          "note": "getBlockEntityPriority: player distance, reads only",
+          "sha256": "caa4573eea2199fb90b088c59a7b281dbf37b918ff3ef17698bdf9fb458a5f2b"
+        },
+        {
+          "class": "net/conczin/immersive_optimization/TickScheduler",
+          "method": "getBlockEntityPriority",
+          "desc": "(Lnet/minecraft/world/level/Level;J)I",
+          "note": "reads the players' positions and the config; no write",
+          "sha256": "86f0fe7e6ac52bf0d3f2bd2bb4c52263d0bcf309bf6f260b820c8c87d7e2ef54"
+        },
+        {
+          "class": "net/conczin/immersive_optimization/TickScheduler",
+          "method": "tickLevel",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;)V",
+          "note": "levelData.computeIfAbsent(dimension, LevelData::new); blockEntityPriorities.clear() when gameTime % 207 == 0 (one Map.clear, one Map.computeIfAbsent)",
+          "sha256": "98e99140e95d8b4c8fb447e1cc7328f36d2ab428bae5e67b9917c2be35aa2e47"
+        },
+        {
+          "class": "net/conczin/immersive_optimization/TickScheduler",
+          "method": "reset",
+          "desc": "()V",
+          "note": "levelData.clear()",
+          "sha256": "c3befb601ab7e050a81aa63c1d627a2f250f3f810af8076e2bcefdfd4e442701"
+        },
+        {
+          "class": "net/conczin/immersive_optimization/TickScheduler",
+          "method": "startLevelTick",
+          "desc": "(Lnet/minecraft/server/level/ServerLevel;)V",
+          "note": "reads getLevelData (server thread); changes neither map",
+          "sha256": "da3295debb07bca1bea85e514517e408799f6aca3e89714bcec36e757374b877"
+        },
+        {
+          "class": "net/conczin/immersive_optimization/TickScheduler",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: the two maps change only in tickLevel, reset and shouldTick's computeIfAbsent",
+          "sha256": "b92b63342893b21c7c6944b3f1d0e40b87aaae384f456426a4a5fa0336aeb0e4"
+        },
+        {
+          "class": "net/conczin/immersive_optimization/TickScheduler$LevelData",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)V",
+          "note": "blockEntityPriorities is assigned once, a ConcurrentHashMap",
+          "sha256": "eef94ed5dd1c5311980eb64f457c7b6cf52eaeef4d3d8a651aa3fa04c990b39f"
+        },
+        {
+          "class": "net/conczin/immersive_optimization/mixin/LevelMixin",
+          "method": "immersiveOptimization$shouldTickBlocksAt",
+          "desc": "(JLorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "the only caller: Level.shouldTickBlocksAt(long) HEAD -> TickScheduler.INSTANCE.shouldTick(level, pos); ServerLevel overrides shouldTickBlocksAt without super, so only the client level reaches it",
+          "sha256": "bbf0aa15f80bc51ced1dee2e364783103ffe6f23e0cc68c669634f31d2e331aa"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on TickScheduler.shouldTick(Level, long)'s getLevelData and computeIfAbsent calls (front caches on the scheduler, client thread) and on the map clears / LevelData creation in tickLevel and reset (generation counter) (helper bons.furious.patch.immersiveoptimization_c49.IoFrontCache)",
+      "license": "GPL-3.0 (Immersive Optimization): no mod code is carried; the wrappers and the caches are ours"
+    }
+  }
+}

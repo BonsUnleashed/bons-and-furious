@@ -1,0 +1,221 @@
+{
+  "group": "powah_coo49",
+  "keys": {
+    "powah_container_charge_streamless": {
+      "mod": "powah",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.powah_coo49.PowahContainerChargeMixin"
+      ],
+      "guard": [
+        {
+          "class": "owmii/powah/util/ChargeUtil",
+          "method": "chargeItemsInContainer",
+          "desc": "(Lnet/minecraft/world/Container;JJ)J",
+          "note": "IntStream.range(0, getContainerSize()).mapToObj(container::getItem).toList() (every getItem before any offer), transferSlotList(IEnergyStorage::receiveEnergy), then setChanged and the total",
+          "sha256": "0cc926cfb5db6da6846ff1f209e558e783b25c3075a9ed44e98980c4068e7f41"
+        },
+        {
+          "class": "owmii/powah/util/ChargeUtil",
+          "method": "transferSlotList",
+          "desc": "(Lowmii/powah/util/ChargeUtil$EnergyTransferOperation;Ljava/lang/Iterable;JJ)J",
+          "note": "per non-empty stack: getCapability(Capabilities.EnergyStorage.ITEM), skipped when null, else op(cap, saturatedCast(min(maxPerStack, maxTotal - charged)), false), summed",
+          "sha256": "428c82c4259a4520ceedc988f8c6b9faa70f99c97cb47eff5a6ed62bb99504f7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of the static ChargeUtil.chargeItemsInContainer (Powah 6.2.10; ForgeEnvHandler's method on Forge): the same getContainerSize / getItem calls in slot order into an array, then the same item capability lookups (null skipped), offers, setChanged and total as Powah's stream-built list (PowahContainerCharge.charge); steps aside while powah_container_charge_idle_skip's mixin is in the game and on. Runtime flag powahContainerChargeStreamless. Helper bons.furious.patch.powah_coo49.PowahContainerCharge.",
+      "license": "Powah (LGPLv3): no code carried; our loop makes the same calls"
+    },
+    "powah_container_charge_idle_skip": {
+      "mod": "powah",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.powah_coo49.PowahContainerIdleMixin"
+      ],
+      "guard": [
+        {
+          "class": "owmii/powah/util/ChargeUtil",
+          "method": "chargeItemsInContainer",
+          "desc": "(Lnet/minecraft/world/Container;JJ)J",
+          "note": "walks every slot and calls setChanged on every call, also with nothing to give",
+          "sha256": "0cc926cfb5db6da6846ff1f209e558e783b25c3075a9ed44e98980c4068e7f41"
+        },
+        {
+          "class": "owmii/powah/util/ChargeUtil",
+          "method": "transferSlotList",
+          "desc": "(Lowmii/powah/util/ChargeUtil$EnergyTransferOperation;Ljava/lang/Iterable;JJ)J",
+          "note": "per non-empty stack the item energy capability and one offer (0 when the budget is 0)",
+          "sha256": "428c82c4259a4520ceedc988f8c6b9faa70f99c97cb47eff5a6ed62bb99504f7"
+        },
+        {
+          "class": "owmii/powah/block/hopper/EnergyHopperTile",
+          "method": "postTick",
+          "desc": "(Lnet/minecraft/world/level/Level;)I",
+          "note": "the only caller: chargeItemsInContainer(the container in front, charging rate of the tier, stored energy), then consume(charged)",
+          "sha256": "138639e4af7bf3a8775dfd145bc96bb8fd50997a142ab068ac2e634ffc19e65a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of the static ChargeUtil.chargeItemsInContainer (Powah 6.2.10): maxPerSlot <= 0 or maxTotal <= 0 -> 0 without touching the container; else PowahContainerCharge.charge with setChanged only when something was charged. Trade-off (off by default): an empty Energy Hopper no longer offers its container's items 0 energy and no longer marks the container changed when nothing moved. A @Unique marker method in ChargeUtil tells powah_container_charge_streamless's mixin to step aside. Runtime flag powahContainerChargeIdleSkip. Helpers bons.furious.patch.powah_coo49.PowahContainerIdle, PowahContainerCharge.",
+      "license": "Powah (LGPLv3): no code carried"
+    },
+    "powah_idle_player_charge_skip": {
+      "mod": "powah",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.powah_coo49.PowahPlayerChargeMixin"
+      ],
+      "guard": [
+        {
+          "class": "owmii/powah/util/ChargeUtil",
+          "method": "chargeItemsInPlayerInv",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;JJLjava/util/function/Predicate;)J",
+          "note": "inventory stacks into a list, ChargeableItemsEvent posted on NeoForge.EVENT_BUS, removeIf(filter negated), transferSlotList(receiveEnergy): every offer 0 when maxPerSlot or maxTotal is 0",
+          "sha256": "1be330db0ed8dd68fa0e0a8ed59ec6b683fc48dd8a5a7873d0826d14676a8d2e"
+        },
+        {
+          "class": "owmii/powah/util/ChargeUtil",
+          "method": "chargeItemsInPlayerInv",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;JJ)J",
+          "note": "the three-argument form: the four-argument one with an accept-all filter",
+          "sha256": "08fba1e703f4c8a9db8e26caa6788a7e7021476e36070bf3559390164a0048d3"
+        },
+        {
+          "class": "owmii/powah/util/ChargeUtil",
+          "method": "transferSlotList",
+          "desc": "(Lowmii/powah/util/ChargeUtil$EnergyTransferOperation;Ljava/lang/Iterable;JJ)J",
+          "note": "per non-empty stack the item energy capability and one offer",
+          "sha256": "428c82c4259a4520ceedc988f8c6b9faa70f99c97cb47eff5a6ed62bb99504f7"
+        },
+        {
+          "class": "owmii/powah/block/transmitter/PlayerTransmitterTile",
+          "method": "postTick",
+          "desc": "(Lnet/minecraft/world/level/Level;)I",
+          "note": "caller: chargeItemsInPlayerInv(bound player, charging speed of the tier, stored energy), then consume(charged)",
+          "sha256": "f1fd7296fd17748c8367585a98e6109715d32a4e2d52550869ad67f3dcb171ab"
+        },
+        {
+          "class": "owmii/powah/item/BatteryItem",
+          "method": "lambda$inventoryTick$1",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lowmii/powah/lib/logistics/energy/Energy$Item;)V",
+          "note": "caller (a charging Battery each inventory tick): chargeItemsInPlayerInv(player, maxExtract, stored, not a battery), then consume(charged)",
+          "sha256": "3fa1677395c460c58778e2ada6ef5b09358f57a18c1cff0e98d35a0568a18950"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of the static ChargeUtil.chargeItemsInPlayerInv(Player, long, long, Predicate) (Powah 6.2.10; the three-argument form delegates to it): maxPerSlot <= 0 or maxTotal <= 0 -> 0 at once. Trade-off (off by default): an empty Player Transmitter or Battery no longer posts ChargeableItemsEvent and no longer offers the player's items 0 energy. Runtime flag powahIdlePlayerChargeSkip. Helper bons.furious.patch.powah_coo49.PowahPlayerCharge.",
+      "license": "Powah (LGPLv3): no code carried"
+    },
+    "powah_zero_energy_push_skip": {
+      "mod": "powah",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.powah_coo49.PowahEnergyPushMixin",
+        "bons.furious.mixin.powah_coo49.PowahStoragePushMixin"
+      ],
+      "guard": [
+        {
+          "class": "owmii/powah/util/EnergyUtil",
+          "method": "pushEnergy",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;J)J",
+          "note": "level.getCapability(Capabilities.EnergyStorage.BLOCK, pos, side) on every call, then receiveEnergy(saturatedCast(howMuch), false) when present, also for 0",
+          "sha256": "f4939a4b6da733946e442a527ec548eee89f9f862470e5d54ce9e3610f448363"
+        },
+        {
+          "class": "owmii/powah/block/reactor/ReactorTile",
+          "method": "postTick",
+          "desc": "(Lnet/minecraft/world/level/Level;)I",
+          "note": "caller: per extracting face pushEnergy(level, the face's neighbour 1, 2 or 4 blocks out, opposite face, min(transfer, stored)), then extractEnergy(the answer)",
+          "sha256": "a2e9d4bc60897b0bcc8aa62f20f36dd5b4b70ef89fe2dc906bd3e4052100c881"
+        },
+        {
+          "class": "owmii/powah/lib/block/AbstractEnergyStorage",
+          "method": "extractFromSides",
+          "desc": "(Lnet/minecraft/world/level/Level;)J",
+          "note": "per extracting face: the face's BlockCapabilityCache (created once), amount = min(transfer, stored), cap == null ? 0 : cap.receiveEnergy(saturatedCast(amount), false) (the wrapped call, also for 0), then extractEnergy(safeInt(answer))",
+          "sha256": "bbd756a992c1f74aca82de16c0b77bef89a38ce779efb33d50a297cf1dc28cdd"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of the static EnergyUtil.pushEnergy (the reactor's push; ForgeEnvHandler.pushEnergy on Forge): howMuch <= 0 -> 0 at once; MixinExtras @WrapOperation of the IEnergyStorage.receiveEnergy call in AbstractEnergyStorage.extractFromSides (every other Powah block, which on 1.21.1 keeps a NeoForge BlockCapabilityCache per face instead of calling pushEnergy): an offer <= 0 -> 0 without calling the neighbour. Trade-off (off by default): a Powah block with nothing to give no longer hands its neighbours receiveEnergy(0, false), and the reactor no longer looks them up for it. Runtime flag powahZeroEnergyPushSkip. Helper bons.furious.patch.powah_coo49.PowahEnergyPush.",
+      "license": "Powah (LGPLv3): no code carried"
+    },
+    "powah_item_energy_same_value_write_skip": {
+      "mod": "powah",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.powah_coo49.PowahItemEnergyWriteMixin"
+      ],
+      "guard": [
+        {
+          "class": "owmii/powah/lib/logistics/energy/Energy$Item",
+          "method": "write",
+          "desc": "()V",
+          "note": "stack.set(PowahComponents.ENERGY_STORED, Long.valueOf(getStored())): the only write of the energy component",
+          "sha256": "27f00c69cf93ae65ae53e60106b821f29e91cad284d67fcbd52a8b150188110d"
+        },
+        {
+          "class": "owmii/powah/lib/logistics/energy/Energy$Item",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: receiveEnergy / extractEnergy (when not simulating), consume and setStoredAndWrite call write(); no getStored override; the stack field is final",
+          "sha256": "11963709df1a9f46e46d20a9132492031ea43ae79cda4fe2fc0ad9d3e37cda18"
+        },
+        {
+          "class": "owmii/powah/lib/logistics/energy/Energy",
+          "method": "getStored",
+          "desc": "()J",
+          "note": "min(stored, capacity): pure, the value write() sets",
+          "sha256": "1704056953233a9a04416467654957dd1fab469811c64c0168fc4bf010b7ec30"
+        },
+        {
+          "class": "owmii/powah/components/PowahComponents",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "ENERGY_STORED is a DataComponentType<Long> (Codec.LONG / VAR_LONG), the type whose value the skip test compares",
+          "sha256": "90d074210b4d4e3740458651e443441f9e5f8427069f63e9f7e35f2a25067821"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "set",
+          "desc": "(Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)Ljava/lang/Object;",
+          "note": "components.set(type, value), nothing else",
+          "sha256": "18a1a72562bea6af1d76bdea11a35dedef0e75cc0d844fced71981b60964c938"
+        },
+        {
+          "class": "net/minecraft/core/component/PatchedDataComponentMap",
+          "method": "set",
+          "desc": "(Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)Ljava/lang/Object;",
+          "note": "CommonHooks.validateComponent (development only), ensureMapOwnership, then remove when the value equals the prototype's, else put(type, Optional.ofNullable(value))",
+          "sha256": "0c1fc2efaec5dbbf1f65b0d3518a40021a10de757fff9a84f9b160c4315a2b07"
+        },
+        {
+          "class": "net/minecraft/core/component/PatchedDataComponentMap",
+          "method": "get",
+          "desc": "(Lnet/minecraft/core/component/DataComponentType;)Ljava/lang/Object;",
+          "note": "the patch entry when there is one, else the prototype's value: the read the skip test makes",
+          "sha256": "adf25357beb215c5bf941c861fee7e7b51a80d2e52e3f6ca820955be340d8b65"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "getPrototype",
+          "desc": "()Lnet/minecraft/core/component/DataComponentMap;",
+          "note": "the item's default components (EMPTY for an empty stack)",
+          "sha256": "c6f18ef4cffb2f671f4f601e420add21bb270194cc85e9750eb6470a6847328f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of Energy$Item's private write() (Powah 6.2.10; the item's energy is the powah:energy_stored data component on 1.21.1, not an NBT tag), with @Shadow of its final stack field, for an Energy$Item of exactly that class: the item's default components have no energy component and the stack's component already holds getStored() -> the set is left out (Powah's set would put an equal Optional in place of an equal one); any other case -> Powah's write. Item data, saved bytes, hash and stacking as Powah's after every call. Runtime flag powahItemEnergySameValueWriteSkip. Helper bons.furious.patch.powah_coo49.PowahItemWrites.",
+      "license": "Powah (LGPLv3): no code carried"
+    }
+  }
+}

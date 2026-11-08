@@ -1,0 +1,132 @@
+{
+  "group": "adamsarsplus_coo49",
+  "keys": {
+    "adamsarsplus_disruption_lean_walk": {
+      "mod": "adamsarsplus",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.adamsarsplus_coo49.AapDisruptionLeanWalkMixin"
+      ],
+      "guard": [
+        {
+          "class": "adamsmods/adamsarsplus/common/mob_effects/DisruptionEffect",
+          "method": "applyEffectTick",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;I)Z",
+          "note": "Adam's Ars Plus 1.21.1-6.0.5: for i < getActiveEffects().size(): getActiveEffects().stream().toList().get(i), when its getEffect().value() isBeneficial removeEffect(that list's i-th getEffect()); returns true; nothing else",
+          "sha256": "8d3eb986568318310748e8415bebcc612f44ee828d0b54f568c7e36d732a837b"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "getActiveEffects",
+          "desc": "()Ljava/util/Collection;",
+          "note": "activeEffects.values(): the live HashMap view the walk iterates (entity classes that replace it run the original)",
+          "sha256": "126e0d7c2a413a8f1e246d7fbbbfbd35a64ff9c34979e49f3cd326afe4b0bc22"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at HEAD (cancellable) of DisruptionEffect.applyEffectTick(LivingEntity, int)Z: the same index walk, size re-read before every step, the i-th effect taken by a fresh iterator over the same getActiveEffects() view instead of two stream().toList() copies, the same removeEffect(Holder) calls, then setReturnValue(true) (the original's answer); entity classes that replace getActiveEffects run the original (helper bons.furious.patch.adamsarsplus_coo49.AapEffects.leanDisruption)",
+      "license": "Adam's Ars Plus (LGPL-3.0, mods.toml \"GNU Lesser General Public License v3.0\"): no code carried, the injector carries only our own logic"
+    },
+    "adamsarsplus_disruption_clean_purge": {
+      "mod": "adamsarsplus",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.adamsarsplus_coo49.AapDisruptionPurgeMixin",
+        "bons.furious.mixin.adamsarsplus_coo49.AapPurgeTailMixin"
+      ],
+      "guard": [
+        {
+          "class": "adamsmods/adamsarsplus/common/mob_effects/DisruptionEffect",
+          "method": "applyEffectTick",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;I)Z",
+          "note": "removes the victim's beneficial effects by index from inside tickEffects' loop over the same map; returns true",
+          "sha256": "8d3eb986568318310748e8415bebcc612f44ee828d0b54f568c7e36d732a837b"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "tickEffects",
+          "desc": "()V",
+          "note": "keySet iterator loop (MobEffectInstance.tick(this, Runnable), MobEffectEvent.Expired, iterator.remove, onEffectRemoved), ConcurrentModificationException swallowed, then the first read of effectsDirty (the purge's point): the visibility / glowing update",
+          "sha256": "0f1c4ad54584bfbe6d578c5ed585d203936df4b81fc1720934de1b493feb18b9"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "removeEffect",
+          "desc": "(Lnet/minecraft/core/Holder;)Z",
+          "note": "the purge's removal: EventHooks.onEffectRemoved (MobEffectEvent.Remove, cancellable), removeEffectNoUpdate, onEffectRemoved (effectsDirty)",
+          "sha256": "d5300e606936ed453ef82590b9e4000d2fa1e71811dc0b3d22b50a9d8193ae69"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at HEAD (cancellable, priority 900: before the lean walk) of DisruptionEffect.applyEffectTick(LivingEntity, int)Z: on the server the victim is marked (a @Unique boolean on LivingEntity) and the original skipped with setReturnValue(true), on the client it is skipped the same way; @Inject in LivingEntity.tickEffects at the first read of effectsDirty (after the loop): a marked victim loses every beneficial effect through removeEffect; entity classes that replace tickEffects run the original (helper bons.furious.patch.adamsarsplus_coo49.AapEffects.purgeLater / purgeNow)",
+      "license": "Adam's Ars Plus (LGPL-3.0) and Minecraft: no code carried, the injectors carry only our own logic"
+    },
+    "adamsarsplus_flame_aura_interval": {
+      "mod": "adamsarsplus",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.adamsarsplus_coo49.AapFlameIntervalMixin",
+        "bons.furious.mixin.adamsarsplus_coo49.AapAuraClockMixin"
+      ],
+      "guard": [
+        {
+          "class": "adamsmods/adamsarsplus/common/mob_effects/FlameDeityAuraEffect",
+          "method": "applyEffectTick",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;I)Z",
+          "note": "on each of its effect ticks: getEntitiesOfClass(LivingEntity, cube of 18 * (1 + amplifier) around blockPosition's centre); each other entity without Marked For Cremation gets it through forceAddEffect (80 ticks, amplifier 0, not ambient, no particles), source the holder; returns true",
+          "sha256": "4080ddb634fbdc9173c4d58014463041ba05ae69f3a1a596f4405317b9f0f62b"
+        },
+        {
+          "class": "adamsmods/adamsarsplus/common/mob_effects/FlameDeityAuraEffect",
+          "method": "shouldApplyEffectTickThisTick",
+          "desc": "(II)Z",
+          "note": "2 >> amplifier > 0 ? duration % (2 >> amplifier) == 0 : true: every second tick at amplifier 0 (the Ryan armour's), every tick above; the reason the interval keeps a per-holder clock instead of a tick-count phase",
+          "sha256": "32e202f862f17d78d093456375aaeb985b557dc60350fda33224afe421eccf2f"
+        },
+        {
+          "class": "net/minecraft/world/effect/MobEffectInstance",
+          "method": "tick",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Ljava/lang/Runnable;)Z",
+          "note": "shouldApplyEffectTickThisTick(duration, or tickCount for an infinite effect) && !applyEffectTick -> removeEffect; then the duration counts down",
+          "sha256": "aca3606e75e5e75b16adcf4cfc31bee6bd48468a7581970e285b6cd8dcaa310f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at HEAD (cancellable) of FlameDeityAuraEffect.applyEffectTick(LivingEntity, int)Z: the search runs when the holder's tickCount has reached its next-search tick (a @Unique int on LivingEntity, AapAuraClockMixin), which is then set N ticks ahead (PureConfig value, default 10); every other call answers true at once (helper bons.furious.patch.adamsarsplus_coo49.AapEffects.skipAura). Forge 1.0.49 used the stateless phase (tickCount + id) mod N == 0, which on 1.21.1 can coincide only with ticks the effect itself skips (it ticks every second tick at amplifier 0)",
+      "license": "Adam's Ars Plus (LGPL-3.0) and Minecraft: no code carried, the injectors carry only our own logic"
+    },
+    "adamsarsplus_flame_aura_server_only": {
+      "mod": "adamsarsplus",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.adamsarsplus_coo49.AapFlameServerOnlyMixin"
+      ],
+      "guard": [
+        {
+          "class": "adamsmods/adamsarsplus/common/mob_effects/FlameDeityAuraEffect",
+          "method": "applyEffectTick",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;I)Z",
+          "note": "runs on both sides; on the client it gives client-only marks to the entities around the holder's client copy",
+          "sha256": "4080ddb634fbdc9173c4d58014463041ba05ae69f3a1a596f4405317b9f0f62b"
+        },
+        {
+          "class": "adamsmods/adamsarsplus/mixin/MixinEntity",
+          "method": "fireImmune0",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "the mark's client-side effect (the trade-off): Entity.fireImmune() answers false while the entity has Marked For Cremation",
+          "sha256": "8845d9436351e9c00acc67a7a07e54bc8320195b85ccbd488b9d4f83999b87f6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject at HEAD (cancellable) of FlameDeityAuraEffect.applyEffectTick(LivingEntity, int)Z, client mixin: answers true at once when the holder's level is a client level (helper bons.furious.patch.adamsarsplus_coo49.AapEffects.skipClientAura)",
+      "license": "Adam's Ars Plus (LGPL-3.0): no code carried, the injector carries only our own logic"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "group": "animus_coo49",
+  "keys": {
+    "animus_equivalency_preview_memo": {
+      "mod": "animusnv",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.animus_coo49.EquivalencyPreviewMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/breakinblocks/animusnv/client/SigilEquivalencyRenderer",
+          "method": "findMatchingBlocksInRadius",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/Block;ILnet/minecraft/core/Direction;)Ljava/util/List;",
+          "note": "Animus: NeoVitae 5.2.25 (the 1.21.1 build of Animus, client class): BFS over the clicked face's plane within radius: HashSet + LinkedList FIFO; per polled position getBlockState(pos).getBlock() == target; matches add current.immutable() and queue unseen plane neighbours in face order (UP/DOWN +x -x +z -z, NORTH/SOUTH +x -x +y -y, else +z -z +y -y); stops at (2r+1)^2 matches",
+          "sha256": "721a6674b8f9a8bda37f026b87e1b3ef18f0ddbbc2a536705af5998e42c7c689"
+        },
+        {
+          "class": "com/breakinblocks/animusnv/client/SigilEquivalencyRenderer",
+          "method": "isOnSamePlaneAndInRadius",
+          "desc": "(Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;ILnet/minecraft/core/Direction;)Z",
+          "note": "the plane and radius test the search repeats",
+          "sha256": "11b14a348d9b51d2edb9c2547ada44d50976f3b9fa9f46d8dfae9c986ce3e2dc"
+        },
+        {
+          "class": "com/breakinblocks/animusnv/client/SigilEquivalencyRenderer",
+          "method": "onRenderLevelStage",
+          "desc": "(Lnet/neoforged/neoforge/client/event/RenderLevelStageEvent;)V",
+          "note": "the only caller (AFTER_TRANSLUCENT_BLOCKS): iterates the result (isEmpty, for each position a translated outline)",
+          "sha256": "cceb0563b4a65380aab61400c4c45283241616fae7a1ce6da298428a0c277574"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on SigilEquivalencyRenderer.findMatchingBlocksInRadius: the last search's polled positions and outcomes are kept (key: level, aimed position, target block, radius, face); the next frame with the same key re-reads them in order and returns the kept matches in a new list while every outcome is unchanged, else continues the search from the first change (queue and seen set rebuilt from the kept outcomes, each position read once, in the original's order). Same reads, same result. Runtime flag animusEquivalencyPreviewMemo, shadow mode animusEquivalencyPreviewMemo.shadow. Helper bons.furious.patch.animus_coo49.EquivalencyPreviews. Target class on 1.21.1: com.breakinblocks.animusnv.client.SigilEquivalencyRenderer (was com.teamdman.animus.client)",
+      "license": "MIT (Animus: NeoVitae, mods.toml): the search order is reimplemented from its bytecode, no Animus code is carried"
+    }
+  }
+}

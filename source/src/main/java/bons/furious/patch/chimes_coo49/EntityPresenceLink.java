@@ -1,0 +1,59 @@
+package bons.furious.patch.chimes_coo49;
+
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
+import net.minecraft.world.level.Level;
+import org.apache.logging.log4j.LogManager;
+
+/** Link to the shared entity layers vanilla_entity_class_count_layer (EntityClassCounts) and vanilla_entity_walk_skip
+ * (EntityWalks), bound by name so this group compiles on its own; answers "unknown" / does nothing when a layer class or
+ * method is absent (each layer is bound on its own). Used by the chimes_coo49 switches (ChimesScans). */
+final class EntityPresenceLink {
+    private static final MethodHandle TRACKED_INDEX, NONE, MARK_EMPTY, MARK_UNUSED, UNMARK;
+
+    static {
+        MethodHandle ti = null, none = null, me = null, mu = null, um = null;
+        MethodHandles.Lookup l = MethodHandles.lookup();
+        ClassLoader loader = EntityPresenceLink.class.getClassLoader();
+        try {
+            Class<?> c = Class.forName("bons.furious.patch.crittersandcompanions_c2.EntityClassCounts", false, loader);
+            ti = l.findStatic(c, "trackedIndex", MethodType.methodType(int.class, String.class));
+            none = l.findStatic(c, "none", MethodType.methodType(boolean.class, Level.class, int.class));
+        } catch (Throwable t) {
+            ti = null;
+            none = null;
+            LogManager.getLogger("Bons and Furious").warn("Bons and Furious: cannot reach vanilla_entity_class_count_layer ({}); the Chimes phantom presence gate runs the stock search", t.toString());
+        }
+        try {
+            Class<?> w = Class.forName("bons.furious.patch.client_shake_gate.EntityWalks", false, loader);
+            me = l.findStatic(w, "markEmpty", MethodType.methodType(boolean.class, String.class, Object.class, Class.class, int.class));
+            mu = l.findStatic(w, "markUnused", MethodType.methodType(boolean.class, String.class, Object.class, Class.class));
+            um = l.findStatic(w, "unmark", MethodType.methodType(void.class));
+        } catch (Throwable t) {
+            me = null;
+            mu = null;
+            um = null;
+            LogManager.getLogger("Bons and Furious").warn("Bons and Furious: cannot reach vanilla_entity_walk_skip ({}); the Chimes phantom search switches run the stock search", t.toString());
+        }
+        TRACKED_INDEX = ti; NONE = none; MARK_EMPTY = me; MARK_UNUSED = mu; UNMARK = um;
+    }
+
+    private EntityPresenceLink() {}
+
+    static int trackedIndex(String name) {
+        try { return TRACKED_INDEX == null ? -1 : (int) TRACKED_INDEX.invokeExact(name); } catch (Throwable t) { return -1; }
+    }
+    static boolean none(Level level, int index) {
+        try { return NONE != null && index >= 0 && (boolean) NONE.invokeExact(level, index); } catch (Throwable t) { return false; }
+    }
+    static boolean markEmpty(String key, Object level, Class<?> base, int index) {
+        try { return MARK_EMPTY != null && UNMARK != null && index >= 0 && (boolean) MARK_EMPTY.invokeExact(key, level, base, index); } catch (Throwable t) { return false; }
+    }
+    static boolean markUnused(String key, Object level, Class<?> base) {
+        try { return MARK_UNUSED != null && UNMARK != null && (boolean) MARK_UNUSED.invokeExact(key, level, base); } catch (Throwable t) { return false; }
+    }
+    static void unmark() {
+        try { if (UNMARK != null) UNMARK.invokeExact(); } catch (Throwable t) { /* nothing marked */ }
+    }
+}

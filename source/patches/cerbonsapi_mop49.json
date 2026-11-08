@@ -1,0 +1,56 @@
+{
+  "group": "cerbonsapi_mop49",
+  "keys": {
+    "cerbonsapi_multipart_hooks_lean": {
+      "mod": "cerbons_api",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cerbonsapi_mop49.EntityMultipartHooksMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/cerbon/cerbons_api/mixin/multipart_entities/EntityMixin",
+          "method": "getBoundingBox",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "the left-out handler: this instanceof MultipartEntity -> setReturnValue(getCompoundBoundingBox(return value))",
+          "sha256": "adb6dfe4ba58a34cb22acfb8e912c273c678417defa62e389a861d69521ce2f2"
+        },
+        {
+          "class": "com/cerbon/cerbons_api/mixin/multipart_entities/EntityMixin",
+          "method": "setPos",
+          "desc": "(DDDLorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "the left-out handler: this instanceof MultipartAwareEntity -> onSetPos(x, y, z)",
+          "sha256": "17a987265dfacccfe9f209eba3a33c3949167f03cb269844345886ef8aef79dd"
+        },
+        {
+          "class": "com/cerbon/cerbons_api/mixin/multipart_entities/EntityMixin",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: those two handlers only",
+          "sha256": "dd05f89fa669df735a43fc19a49267f8487bd3fd939deb2bcb042fa646f01a7e"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "getBoundingBox",
+          "desc": "()Lnet/minecraft/world/phys/AABB;",
+          "note": "getBoundingBox: return this.bb (one return)",
+          "sha256": "e145df4723309eb7c79965c9f591e875e25ba6808c4ff23c6bcb099061a6bf15"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "setPosRaw",
+          "desc": "(DDD)V",
+          "note": "setPosRaw: one return at its end (TAIL)",
+          "sha256": "e175e597d8aec920da5a7f1e2178db3e34cdcae34089a4cfe95ed3f0a823b1c8"
+        }
+      ],
+      "cancel": [
+        "com.cerbon.cerbons_api.mixin.multipart_entities.EntityMixin"
+      ],
+      "conversion": "canceller + replacement handlers: MixinExtras @ModifyReturnValue on Entity.getBoundingBox and an @Inject at TAIL of Entity.setPosRaw make Cerbon's EntityMixin's two calls, deciding from the entity's kind kept in an @Unique byte (helper bons.furious.patch.cerbonsapi_mop49.MultipartHooks)",
+      "license": "Cerbon's API (LGPL-3.0): the two handlers' logic is carried (a type test and one call each); Minecraft: injections only"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "group": "flywheel_workers",
+  "keys": {
+    "flywheel_worker_parking": {
+      "mod": "flywheel",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.flywheel_workers.ParallelTaskExecutorParkingMixin",
+        "bons.furious.mixin.flywheel_workers.WorkerThreadParkingMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/engine_room/flywheel/impl/task/ParallelTaskExecutor",
+          "method": "execute",
+          "desc": "(Ljava/lang/Runnable;)V",
+          "note": "Flywheel 1.0.6 (in Create 6.0.10): running check, waitGroup.add, taskQueue.add, taskNotifier.postNotification()",
+          "sha256": "a070c05927bbbe8d5bcf1a453e08991977ad8e0d896a6ced3a6899515ca4219f"
+        },
+        {
+          "class": "dev/engine_room/flywheel/impl/task/ParallelTaskExecutor",
+          "method": "stopWorkers",
+          "desc": "()V",
+          "note": "running.getAndSet(false), synchronized (taskNotifier) notifyAll, join every worker, clear threads/queue, waitGroup._reset",
+          "sha256": "df37ebfb887f286376987ed12d3117050b6918c855168443c0a37680a59fc1ed"
+        },
+        {
+          "class": "dev/engine_room/flywheel/impl/task/ParallelTaskExecutor",
+          "method": "startWorkers",
+          "desc": "()V",
+          "note": "threadCount workers at priority 3",
+          "sha256": "ec68097228414bd0d1ed809d46d87fe45a94864c06cc797108b84b056acd44b1"
+        },
+        {
+          "class": "dev/engine_room/flywheel/impl/task/ParallelTaskExecutor",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;I)V",
+          "note": "taskQueue = ConcurrentLinkedDeque, taskNotifier, running = false, threadCount final (field initialisers)",
+          "sha256": "40c52799b9efa6c2ee16f41b71137ff4f42c83b560f59823716522ec8a89a527"
+        },
+        {
+          "class": "dev/engine_room/flywheel/impl/task/ParallelTaskExecutor",
+          "method": "syncOneTask",
+          "desc": "()Z",
+          "note": "the main thread runs queued tasks itself (pollLast) before it waits on the WaitGroup",
+          "sha256": "6e5b1644ebce75f8680dfb3fd9031b91dd4cfd6a78b9ef88da44632665939d58"
+        },
+        {
+          "class": "dev/engine_room/flywheel/impl/task/ParallelTaskExecutor$WorkerThread",
+          "method": "spinThenWait",
+          "desc": "()V",
+          "note": "10 us spin on taskQueue.isEmpty(), then taskNotifier.awaitNotification()",
+          "sha256": "6c17fa37d4264f84ad8c3f12224a249f89786bb0b959a6ec2a1f4f812580e4a7"
+        },
+        {
+          "class": "dev/engine_room/flywheel/impl/task/ParallelTaskExecutor$WorkerThread",
+          "method": "run",
+          "desc": "()V",
+          "note": "while running: pollFirst, processTask, else spinThenWait",
+          "sha256": "8f5401098642000efa012866129d97810fd041e391c231a58e43a2b087b108f9"
+        },
+        {
+          "class": "dev/engine_room/flywheel/impl/task/ThreadGroupNotifier",
+          "method": "awaitNotification",
+          "desc": "()V",
+          "note": "synchronized wait(), InterruptedException dropped",
+          "sha256": "a4886cf401c8fde457dff932c5abc16eace0f45bf3f6d0998c2ec86430dcc9a9"
+        },
+        {
+          "class": "dev/engine_room/flywheel/impl/task/ThreadGroupNotifier",
+          "method": "postNotification",
+          "desc": "()V",
+          "note": "synchronized notifyAll()",
+          "sha256": "3ef683f604543ff6d66b6d2bafe4c20bbc5544b5b73735a9a01bc91ba7341825"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on ParallelTaskExecutor.execute's taskNotifier.postNotification() (unpark one armed worker; the stock call only while workers wait on the monitor) and on WorkerThread.spinThenWait's taskNotifier.awaitNotification() (arm the worker's slot, re-check queue and running, LockSupport.parkNanos 100 ms, disarm, clear interrupt); @WrapOperation on stopWorkers' notifyAll() (+ unpark every armed worker) and @Inject RETURN (slots freed); @Unique per-executor slots; helper bons.furious.patch.flywheel_workers.FlywheelParking; require = 0",
+      "license": "Flywheel is MIT: no Flywheel code is carried; our wrappers only change how its idle workers sleep and are woken"
+    }
+  }
+}

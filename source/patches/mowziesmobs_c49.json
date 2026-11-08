@@ -1,0 +1,91 @@
+{
+  "group": "mowziesmobs_c49",
+  "keys": {
+    "mowziesmobs_chamber_column_memo": {
+      "mod": "mowziesmobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mowziesmobs_c49.ChamberColumnsMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/world/feature/structure/WroughtnautChamberStructure",
+          "method": "tryWroughtChamber",
+          "desc": "(Lnet/minecraft/world/level/chunk/ChunkGenerator;Lnet/minecraft/world/level/LevelHeightAccessor;IIILnet/minecraft/world/level/levelgen/RandomState;)Lorg/apache/commons/lang3/tuple/Pair;",
+          "note": "Mowzie's Mobs 1.21.1-1.8.2: the 8 x 8 grid of getBaseColumn calls (step 2) and one getBaseColumn per step of four 8-block walks; the columns are only read (getBlock)",
+          "sha256": "e246bc36114b1ece1c5ab742fd9849320594ed69e2fbb4103cfa9ed6ebc15c2b"
+        },
+        {
+          "class": "net/minecraft/world/level/NoiseColumn",
+          "method": "getBlock",
+          "desc": "(I)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "a read of the column array (air outside it): sharing one column between requests is invisible NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ.",
+          "sha256": "eff5b65ece10c20de4e77e28e0dbb5c891bf8eac09f0b18199996e07bae78b76",
+          "sha256_variants": [
+            "094cdc5707428acea55ef5a5ad0bd185a49d51934eb65a6d4f59627554033560"
+          ]
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on both ChunkGenerator.getBaseColumn (getBaseColumn) calls of WroughtnautChamberStructure.tryWroughtChamber (@Share per call): one column per (x, z) for the call's own generator, height accessor and random state (helper bons.furious.patch.mowziesmobs_c49.ChamberColumns)",
+      "license": "Mowzie's Mobs (custom licence): no-copy; the wrapper carries only our own logic (Idea: Collections Of Optimizations mowziesmobsWorldgen.shareChamberColumns, idea text only)"
+    },
+    "mowziesmobs_umvuthana_leader_cache": {
+      "mod": "mowziesmobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.mowziesmobs_c49.UmvuthanaFollowerLeaderMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/entity/umvuthana/EntityUmvuthanaFollower",
+          "method": "getLeader",
+          "desc": "()Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "Mowzie's Mobs 1.21.1-1.8.2: getEntitiesOfClass(leaderClass, box inflated by 32), the first entity whose UUID is the leader id",
+          "sha256": "acf209a3cd2e728043589bbbf5350cb751f7c5dd2630c6972792176516c52d03"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/entity/umvuthana/EntityUmvuthanaFollower",
+          "method": "getLeaderUUID",
+          "desc": "()Ljava/util/Optional;",
+          "note": "the synced LEADER entry",
+          "sha256": "7a2d61a1f2f56a94921c8b85f01fcb0c75026dd7e763fe7961ce523bc2039b1f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on EntityUmvuthanaFollower.getLeader: the leader the last search found is answered again while it is not removed, in the follower's level, not a spectator, carries the leader id and its box meets the follower's box inflated by 32; otherwise the original search runs and its answer is kept (one @Unique field; helper bons.furious.patch.mowziesmobs_c49.LeaderCache)",
+      "license": "Mowzie's Mobs (custom licence): no-copy; the wrapper carries only our own logic (Idea: Collections Of Optimizations mowziesmobs.cacheUmvuthanaLeader, idea text only)"
+    },
+    "mowziesmobs_elokosa_leader_reuse": {
+      "mod": "mowziesmobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.mowziesmobs_c49.ElokosaFollowerLeaderMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/entity/elokosa/EntityElokosaFollower",
+          "method": "getLeader",
+          "desc": "()Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "Mowzie's Mobs 1.21.1-1.8.2: getEntitiesOfClass(leaderClass, box inflated by 32), the first entity whose UUID is the leader id; hasRestriction and getRestrictCenter call it",
+          "sha256": "c92598a606bb789d26dab2b8eb512c0aab3f1166d76337b9f16beaafdb3d1c6f"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/server/entity/elokosa/EntityElokosaFollower",
+          "method": "getLeaderUUID",
+          "desc": "()Ljava/util/Optional;",
+          "note": "the synced LEADER entry",
+          "sha256": "7596f9d7038a8706285ff72ca96b03197146250668c7d1e43378c60fb65db738"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on EntityElokosaFollower.getLeader: the leader the last search found is answered again while it is not removed, in the follower's level, not a spectator, carries the leader id and its box meets the follower's box inflated by 32; otherwise the original search runs and its answer is kept (one @Unique field; helper bons.furious.patch.mowziesmobs_c49.LeaderCache)",
+      "license": "Mowzie's Mobs (custom licence): no-copy; the wrapper carries only our own logic (Idea: Collections Of Optimizations mowziesmobs.reuseKnownLeader, idea text only)"
+    }
+  }
+}

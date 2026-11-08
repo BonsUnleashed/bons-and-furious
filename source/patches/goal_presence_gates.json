@@ -1,0 +1,101 @@
+{
+  "group": "goal_presence_gates",
+  "keys": {
+    "vanilla_goal_class_presence_gate": {
+      "mod": "minecraft",
+      "kind": "opt",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goal_presence_gates.AvoidEntityGoalPresenceMixin",
+        "bons.furious.mixin.goal_presence_gates.TargetGoalPresenceMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/ai/goal/AvoidEntityGoal",
+          "method": "canUse",
+          "desc": "()Z",
+          "note": "canUse: getEntitiesOfClass(avoidClass, mob box inflated by maxDist, 3, maxDist, lambda$canUse$2) -> getNearestEntity -> toAvoid; null -> false (wrapped whole, the search marked EMPTY for vouched goals)",
+          "sha256": "3e9b7c21cc4daa1f0d5c5e8c5c1c59f3e4dc39d9418c89e5fa9b0dcd16d4fdb7"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal",
+          "method": "findTarget",
+          "desc": "()V",
+          "note": "findTarget: target types other than Player / ServerPlayer search getEntitiesOfClass(targetType, getTargetSearchArea(getFollowDistance()), lambda$findTarget$0) -> getNearestEntity -> target (wrapped whole) NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ.",
+          "sha256": "cd4aaa7b2137fb39fd91893fbe47cde7b4f5eb84debdfffea904a3ce9f654315",
+          "sha256_variants": [
+            "47d23d8344ceadbdc7b85280b3bb75d424a588128b55e1924ea936c0c439d200"
+          ]
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/goal/target/NearestAttackableTargetGoal",
+          "method": "canUse",
+          "desc": "()Z",
+          "note": "canUse: the randomInterval draw happens before findTarget, untouched",
+          "sha256": "40e4675730608cef9265babc766b69bdb9159ddaff150f1adc4a6db89b9c6ce7"
+        },
+        {
+          "class": "net/minecraft/world/level/EntityGetter",
+          "method": "getNearestEntity",
+          "desc": "(Ljava/util/List;Lnet/minecraft/world/entity/ai/targeting/TargetingConditions;Lnet/minecraft/world/entity/LivingEntity;DDD)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "getNearestEntity (not overridden by Level): an empty list gives null without testing the conditions NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ.",
+          "sha256": "3ebf53f2574adb3a80499864019996349b88df8e5cf577ab36914935662f185f",
+          "sha256_variants": [
+            "a8058c2f66093837fcb221a15970af22e80d4acdebd4e0cd027a75b76f159dae"
+          ]
+        },
+        {
+          "class": "net/minecraft/world/level/EntityGetter",
+          "method": "getEntitiesOfClass",
+          "desc": "(Ljava/lang/Class;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;",
+          "note": "getEntitiesOfClass (not overridden by Level): getEntities(EntityTypeTest.forClass(class), box, predicate), so the search's base class is the goal's own class, the one the EMPTY mark names",
+          "sha256": "45d34338c3479c10eb7733f6281ae56514da55a6533d45e3ae1bc4ffb9a5d5fa"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on AvoidEntityGoal.canUse()Z and NearestAttackableTargetGoal.findTarget()V plus one @Unique int per goal (the vouch): for a goal a caller key vouched for whose level holds none of its class (vanilla_entity_class_count_layer), the original runs with its search marked EMPTY so vanilla_entity_walk_skip leaves out the empty section walk; unvouched goals run the original directly (helper bons.furious.patch.goal_presence_gates.GoalPresenceGates)",
+      "license": "Minecraft (Mojang): no-copy; the wrappers carry only our own logic and call the original methods"
+    },
+    "crittersandcompanions271_koi_luck_presence_gate": {
+      "mod": "crittersandcompanions",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goal_presence_gates.CacKoiLuck271GateMixin"
+      ],
+      "guard": [
+        {
+          "class": "io/github/bonsaistudi0s/crittersandcompanions/common/handler/PlayerHandler",
+          "method": "onPlayerTick",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;)V",
+          "note": "Critters and Companions 2.7.0 (package io.github.bonsaistudi0s): client -> bubble particles; server -> Level.getEntitiesOfClass(KoiFishEntity, player box +-10, ENTITY_STILL_ALIVE) (the wrapped call) and Luck at three",
+          "sha256": "b196eef1f7096803cbd14858e254dcc98f00b18f770ee0e4ada5ce8392a547f9"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass call in the 2.7.0 PlayerHandler.onPlayerTick: while vanilla_entity_class_count_layer says the level holds no io.github.bonsaistudi0s KoiFishEntity, the call is marked EMPTY so that vanilla_entity_walk_skip leaves out its empty section walk; the call itself runs (helper bons.furious.patch.goal_presence_gates.GoalPresenceGates)",
+      "license": "Critters and Companions 2.7.0 (all rights reserved): no code carried, the wrapper carries only our own logic"
+    },
+    "dummmmmmy_scarecrow_presence_gate": {
+      "mod": "dummmmmmy",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goal_presence_gates.DummmmmmyScarecrowVouchMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mehvahdjukaar/dummmmmmy/common/ModEvents",
+          "method": "onEntityJoinWorld",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)V",
+          "note": "server only: new AvoidEntityGoal(PathfinderMob, Class, F, D, D, Predicate) for scareable animals and, with the decoy option, new NearestAttackableTargetGoal(Mob, Class, I, Z, Z, Predicate) for monsters, both for TargetDummyEntity",
+          "sha256": "8612e3fd200d83f9ec134ef7cc360347be24049a9b6589bc21058312b922d140"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the NEW AvoidEntityGoal (scarecrow) and NEW NearestAttackableTargetGoal (decoy) in ModEvents.onEntityJoinWorld (MmmMmmMmmMmm 1.21-2.1.2): both TargetDummyEntity goals are vouched for (vanilla_goal_class_presence_gate); the goals themselves are unchanged (helper bons.furious.patch.goal_presence_gates.GoalPresenceGates)",
+      "license": "dummmmmmy (Supplementaries Team License v1.5): no code carried, the wrappers carry only our own logic"
+    }
+  }
+}

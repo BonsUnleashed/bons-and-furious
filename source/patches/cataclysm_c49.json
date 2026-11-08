@@ -1,0 +1,114 @@
+{
+  "group": "cataclysm_c49",
+  "keys": {
+    "cataclysm_deepling_swim_refresh_skip": {
+      "mod": "cataclysm",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cataclysm_c49.DeeplingSwimRefreshMixin",
+        "bons.furious.mixin.cataclysm_c49.CataclysmEntityDimensionsAccessor"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/Deepling/AbstractDeepling",
+          "method": "tick",
+          "desc": "()V",
+          "note": "client branch: noCollision(swimming box) #0 in water -> set swim true, refreshDimensions; else noCollision(normal box) #1 -> set swim false, refreshDimensions",
+          "sha256": "277a977d17167c301dadb621e6ac0d06f7d20a01d8b4d89ae0d2db46dac9c591"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/Deepling/AbstractDeepling",
+          "method": "getDefaultDimensions",
+          "desc": "(Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;",
+          "note": "the size the pose gives (both branches: the type's size scaled by getScale())",
+          "sha256": "5323fb0fa751ba0d017cd92aec4b6daccd38fe1663396a67f14406a661c585f4"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/Deepling/AbstractDeepling",
+          "method": "getDeeplingSwim",
+          "desc": "()Z",
+          "sha256": "14d8a6506b4566be1ccfe5bbb432fc417f6ff4d76cb0c998a928be1ceece9e4b"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/Deepling/AbstractDeepling",
+          "method": "setDeeplingSwim",
+          "desc": "(Z)V",
+          "sha256": "af30d237832d9504e62a77d92a100fc50137c73b23cfecfb480347d1aa8eb00c"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "getDimensions",
+          "desc": "(Lnet/minecraft/world/entity/Pose;)Lnet/minecraft/world/entity/EntityDimensions;",
+          "note": "getDimensions(pose): the sleeping size or getDefaultDimensions(pose) scaled by the age scale (final)",
+          "sha256": "7c9bb83af71f979c1289865e49b6406ff1cfee446d7170245b4457ae812b0061"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "refreshDimensions",
+          "desc": "()V",
+          "note": "refreshDimensions: EntityEvent.Size, dimensions and eyeHeight from it, reapplyPosition (what a skipped tick leaves out)",
+          "sha256": "35ff3b7c78fa7f56cb7751202f36bd82b1883357e8477bb41c4cd7b0afdaeff6"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the two Level.noCollision calls of AbstractDeepling.tick (ordinal 0 in water, 1 out of water; 1.21.1: inside its client branch): \"not free\" when the swim flag and the size (the whole EntityDimensions record) are already what that branch would set, else the original (helper bons.furious.patch.cataclysm_c49.DeeplingSwim; Entity size accessor CataclysmEntityDimensionsAccessor; client mixins)",
+      "license": "L_Ender's Cataclysm (CC-BY-NC-ND-4.0): no Cataclysm code is carried; the injectors carry only our own logic (Idea: Collections Of Optimizations cataclysm.leanDeeplingSwimRefresh, idea text only)"
+    },
+    "cataclysm_missile_fuse_unsynced": {
+      "mod": "cataclysm",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cataclysm_c49.MissileFuseMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Wither_Homing_Missile_Entity",
+          "method": "tick",
+          "desc": "()V",
+          "note": "f = getFuse() - 1; setFuse(f); on the server explode and discard when f <= 0",
+          "sha256": "3003ceed5a0248f98c06299f97887325f7d8e12f683933bcf57b942f4731266d"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Wither_Homing_Missile_Entity",
+          "method": "getFuse",
+          "desc": "()I",
+          "sha256": "24c07f9aab0de34347369cb8ff47d1540536b8e309b32abcb1a707439b099c10"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Wither_Homing_Missile_Entity",
+          "method": "setFuse",
+          "desc": "(I)V",
+          "sha256": "b206e451d8a3d503a82a6f542f5fbe72eeb50e113698ab1b41b5cf3b0f360c62"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Wither_Homing_Missile_Entity",
+          "method": "addAdditionalSaveData",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "the save: its getFuse is wrapped",
+          "sha256": "00aca2a66502b697ec1081a8da196da2b4dae2199d89584d1d3276c0638c7837"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Wither_Homing_Missile_Entity",
+          "method": "readAdditionalSaveData",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "the load writes the synced fuse (the countdown restarts from it)",
+          "sha256": "cd50b5bdccff9c4e8ceec33b659aaefe0a05a1a25cb53694015406662ff0f48f"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/entity/projectile/Wither_Homing_Missile_Entity",
+          "method": "*",
+          "desc": "",
+          "note": "no other method reads the fuse",
+          "sha256": "117eff82d275f2b15193a99ddca1792dbea57e5bddd93a6cc3d291c7932c46d8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on getFuse in tick and in addAdditionalSaveData and on setFuse in tick: on server levels a countdown of the missile's own (@Unique), taken from the synced fuse at the start and whenever that changes from outside; the synced fuse is not written by the countdown (helper bons.furious.patch.cataclysm_c49.MissileFuse)",
+      "license": "L_Ender's Cataclysm (CC-BY-NC-ND-4.0): no Cataclysm code is carried; the injectors carry only our own logic (Idea: Collections Of Optimizations cataclysm.unsyncedMissileFuse, idea text only)"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "group": "mowziesmobs_client_c49",
+  "keys": {
+    "mowziesmobs_effect_render_state_memo": {
+      "mod": "mowziesmobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.mowziesmobs_client_c49.MMRenderTypeStateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/render/MMRenderType",
+          "method": "getGlowingEffect",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/renderer/RenderType;",
+          "note": "Mowzie's Mobs 1.21.1-1.8.2: a new TextureStateShard and CompositeState (beacon beam shader, translucent, no cull, overlay, colour write), then create(\"glow_effect\", NEW_ENTITY, QUADS, 256, true, true, state)",
+          "sha256": "037275e4ff7324e778034e39da00c8194c0dac2ee7610a5772106f75a4ae019f"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/render/MMRenderType",
+          "method": "getSolarFlare",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/client/renderer/RenderType;",
+          "note": "the same with no depth test and no overlay, then create(\"solar_flare\", NEW_ENTITY, QUADS, 256, true, false, state)",
+          "sha256": "e3834058837d2f5457c02a36c4634a2313606e3ed2ffd40fa7356dc3727cf8f1"
+        },
+        {
+          "class": "net/minecraft/client/renderer/RenderType",
+          "method": "create",
+          "desc": "(Ljava/lang/String;Lcom/mojang/blaze3d/vertex/VertexFormat;Lcom/mojang/blaze3d/vertex/VertexFormat$Mode;IZZLnet/minecraft/client/renderer/RenderType$CompositeState;)Lnet/minecraft/client/renderer/RenderType$CompositeRenderType;",
+          "note": "a new CompositeRenderType from its arguments (the factory both the original and the switch call)",
+          "sha256": "bef95243c4d27b0287482ec9d283b3445c6c6927184132031fe9d181b94987d7"
+        },
+        {
+          "class": "net/minecraft/client/renderer/RenderType$CompositeRenderType",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;Lcom/mojang/blaze3d/vertex/VertexFormat;Lcom/mojang/blaze3d/vertex/VertexFormat$Mode;IZZLnet/minecraft/client/renderer/RenderType$CompositeState;)V",
+          "note": "keeps the state; the outline is worked out from the state alone (a shared state gives the same outline)",
+          "sha256": "0fdacddeecfba65a8fbf41af56b048bedab9ecbb715d24e8c93176b110c2b7cd"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on MMRenderType.getGlowingEffect and getSolarFlare: the first call per texture runs the original and keeps its render type's parameters and render state; later calls make a new render type from them through RenderType.create (the factory the original calls; reflection, once), so every call still returns a new object (helper bons.furious.patch.mowziesmobs_client_c49.EffectStates; shadow mode compares every call)",
+      "license": "Mowzie's Mobs (custom licence): no Mowzie's Mobs code is carried; the wrappers carry only our own logic (Idea: Collections Of Optimizations mowziesmobs.cacheEffectRenderTypes, idea text only)"
+    },
+    "mowziesmobs_umvuthana_layer_bone_test": {
+      "mod": "mowziesmobs",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mowziesmobs_client_c49.UmvuthiSunLayerScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/render/entity/layer/UmvuthiSunLayer",
+          "method": "renderForBone",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/bobmowzie/mowziesmobs/server/entity/umvuthana/EntityUmvuthi;Lsoftware/bernie/geckolib/cache/object/GeoBone;Lnet/minecraft/client/renderer/RenderType;Lnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/VertexConsumer;FII)V",
+          "note": "Mowzie's Mobs 1.21.1-1.8.2: super call, shouldRenderSun, isHidden return, then one pushPose, one translateToPivotPoint, the \"sun_render\" name test (the drawing), getBuffer(renderType) and one popPose",
+          "sha256": "235b72831a6519eecb9834255cc0454e611ec059ff0ab5b9dcf050a6282b7306"
+        },
+        {
+          "class": "software/bernie/geckolib/util/RenderUtil",
+          "method": "translateToPivotPoint",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lsoftware/bernie/geckolib/cache/object/GeoBone;)V",
+          "note": "GeckoLib 4.9.3: one PoseStack.translate by the bone's pivot",
+          "audit": true,
+          "sha256": "b5094ba671686cfa6b867813d7dffb66feb41fb9893491fd806e1b20abdb4035"
+        },
+        {
+          "class": "software/bernie/geckolib/cache/object/GeoBone",
+          "method": "getName",
+          "desc": "()Ljava/lang/String;",
+          "note": "GeckoLib 4.9.3: the name field",
+          "audit": true,
+          "sha256": "27bca21cb747ed700dec2df06c342c2646caf6520adcd918e150227a3e5d73cc"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the PoseStack.pushPose, RenderUtil.translateToPivotPoint and PoseStack.popPose calls of UmvuthiSunLayer.renderForBone (@Share per call): for a bone whose name is not the layer's sun bone the three calls are left out; the super call, conditions, name test and getBuffer call stay (helper bons.furious.patch.mowziesmobs_client_c49.LayerBoneScan). Mowzie's Mobs 1.21.1-1.8.2's UmvuthanaArmorLayer and UmvuthanaSunLayer have no renderForBone (they draw once per frame from the bone's tracked pose), so the Forge build's two other wrappers have no target here",
+      "license": "Mowzie's Mobs (custom licence): no Mowzie's Mobs code is carried; the wrappers carry only our own logic and the layer's bone name (Idea: Collections Of Optimizations mowziesmobs.leanLayerBoneScan, idea text only)"
+    }
+  }
+}

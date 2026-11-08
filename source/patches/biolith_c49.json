@@ -1,0 +1,74 @@
+{
+  "group": "biolith_c49",
+  "keys": {
+    "biolith_biome_entries_lock_free": {
+      "mod": "biolith",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.biolith_c49.BiolithEntriesLockFreeMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/terraformersmc/biolith/impl/mixin/MixinMultiNoiseBiomeSource",
+          "method": "biolith$injectEntries",
+          "desc": "(Lcom/mojang/datafixers/util/Either;Ljava/util/function/Function;Ljava/util/function/Function;Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;)Ljava/lang/Object;",
+          "note": "synchronized(this): build biolith$biomeEntries while it is null (overworld / nether: + Biolith's entries; else the original list), return the field",
+          "sha256": "c054ef696597eb50402bfe05ba7b95175efc9804300489c4a15db8fc5be54e87"
+        },
+        {
+          "class": "com/terraformersmc/biolith/impl/mixin/MixinMultiNoiseBiomeSource",
+          "method": "biolith$getBiomeEntries",
+          "desc": "()Lnet/minecraft/world/level/biome/Climate$ParameterList;",
+          "note": "returns the field (the wrapper's lock-free read)",
+          "sha256": "1bcc9675d1d3da0ab3fa4d1aa032ea725d11c0850ce88d0f5b0a8d2d3fbb178e"
+        },
+        {
+          "class": "com/terraformersmc/biolith/impl/mixin/MixinMultiNoiseBiomeSource",
+          "method": "biolith$refreshBiomeEntries",
+          "desc": "()V",
+          "note": "clears the field; the next parameters() call rebuilds it in the handler",
+          "sha256": "94cf893fbd641071d083ef577b159ee0ecfd295633f1b814245234ca35a5bba6"
+        },
+        {
+          "class": "com/terraformersmc/biolith/impl/mixin/MixinMultiNoiseBiomeSource",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: the field is written only by the handler (built while null) and by the refresh (cleared)",
+          "sha256": "75642c67c8b65cce95567fdfc5993653227aa545a6116c8dd8979247d9229752"
+        },
+        {
+          "class": "com/terraformersmc/biolith/impl/mixin/MixinNeoChunkGenerator",
+          "method": "biolith$refreshFeatureCacheForNeo",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "the refresh's caller: HEAD of ChunkGenerator.refreshFeaturesPerStep, getBiomeSource().biolith$refreshBiomeEntries()",
+          "sha256": "ca2ca5d39e2d6307805c67067f9d130f4e2f077b2460b8688dada206fdaa808c"
+        },
+        {
+          "class": "com/terraformersmc/biolith/impl/biome/InterfaceBiomeSource",
+          "method": "biolith$getBiomeEntries",
+          "desc": "()Lnet/minecraft/world/level/biome/Climate$ParameterList;",
+          "note": "default null for sources without Biolith's list (the wrapper then runs the handler)",
+          "sha256": "fe201cf62cc60a7ae4200d6072b7e9c88752c4164348397e3cff4d4058effd8a"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/MultiNoiseBiomeSource",
+          "method": "parameters",
+          "desc": "()Lnet/minecraft/world/level/biome/Climate$ParameterList;",
+          "note": "parameters = this.parameters.map(...): the call both wrappers sit on",
+          "sha256": "a8bc37a364f31563c0dccd5b0f19b7908b32cde71d3b50f188744a53e50dc372"
+        },
+        {
+          "class": "net/minecraft/world/level/biome/Climate$ParameterList",
+          "method": "<init>",
+          "desc": "(Ljava/util/List;)V",
+          "note": "final fields values and index: safe publication without the lock",
+          "sha256": "e105841e037a543cf950d1238dd8fef8d9d3c58262b1535008e445eaa3e7c573"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Either.map call in MultiNoiseBiomeSource.parameters(), priority 1500 = outside Biolith's own wrapper there (priority 900): while Biolith's list field (read through its biolith$getBiomeEntries) holds a list, that list is returned without Biolith's monitor; while it is null (not built, or cleared by Biolith 3.0.14's refresh) Biolith's handler runs (helper bons.furious.patch.biolith_c49.BiolithLean)",
+      "license": "LGPL-3.0 (Biolith): no Biolith code is carried, its public interface is called; Minecraft (Mojang): no-copy"
+    }
+  }
+}

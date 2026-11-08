@@ -1,0 +1,15 @@
+{
+  "layer": "vanilla_entity_class_count_layer",
+  "entries": [
+    {"class": "net.mcreator.borninchaosv.entity.ControlledBabySkeletonEntity", "key": "borninchaos_minion_scan_presence_gate",
+     "why": "Born in Chaos 1.7.6 (NeoForge 1.21.1): the Bonescaller Staff and Missionary Hat procedures tame these, every tick per carrier"},
+    {"class": "net.mcreator.borninchaosv.entity.ControlledSpiritualAssistantEntity", "key": "borninchaos_minion_scan_presence_gate",
+     "why": "Born in Chaos 1.7.6 (NeoForge 1.21.1): the Bonescaller Staff procedure tames these"},
+    {"class": "net.mcreator.borninchaosv.entity.MrPumpkinControlledEntity", "key": "borninchaos_minion_scan_presence_gate",
+     "why": "Born in Chaos 1.7.6 (NeoForge 1.21.1): the Pumpkin Staff procedure tames these"},
+    {"class": "net.mcreator.borninchaosv.entity.BabySpiderControlledEntity", "key": "borninchaos_minion_scan_presence_gate",
+     "why": "Born in Chaos 1.7.6 (NeoForge 1.21.1): the Spider Bite procedure tames these"},
+    {"class": "com.github.L_Ender.cataclysm.entity.InternalAnimationMonster.Coralssus_Entity", "key": "cataclysm_deepling_ride_presence_gate",
+     "why": "L_Ender's Cataclysm 1.21.1-3.33: every Deepling's RidingCoralssus goal searches it +-15 blocks every other tick"}
+  ]
+}

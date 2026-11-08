@@ -1,0 +1,49 @@
+{
+  "group": "client_class_warmup",
+  "keys": {
+    "client_class_warmup": {
+      "mod": "minecraft",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.client_class_warmup.TitleScreenWarmupMixin",
+        "bons.furious.mixin.client_class_warmup.ClientPacketListenerWarmupMixin",
+        "bons.furious.mixin.client_class_warmup.MinecraftWarmupLeaveMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/client/gui/screens/TitleScreen",
+          "method": "init",
+          "desc": "()V",
+          "note": "init: the title screen is shown (first time = the warm-up starts)",
+          "sha256": "d91ef3da14c4d9bed1aae98835d3249bef9452db5a81622d62fc00bfa3cf763f"
+        },
+        {
+          "class": "net/minecraft/client/multiplayer/ClientPacketListener",
+          "method": "handleLogin",
+          "desc": "(Lnet/minecraft/network/protocol/game/ClientboundLoginPacket;)V",
+          "note": "handleLogin: PacketUtils.ensureRunningOnSameThread first, then the client level is created (the join)",
+          "sha256": "e789dbc1d95e159b49cd7363a1009fecb0f2c87a9f199b34914019f77cffd0d4"
+        },
+        {
+          "class": "net/minecraft/client/Minecraft",
+          "method": "disconnect",
+          "desc": "(Lnet/minecraft/client/gui/screens/Screen;Z)V",
+          "note": "disconnect(Screen, boolean): leaving the world (disconnect() and disconnect(Screen) call it)",
+          "sha256": "0b295a19547c8697083a9798f9a159687ddc305fdd30f6a4b6e10ed1906ccb17"
+        },
+        {
+          "class": "net/minecraft/client/Minecraft",
+          "method": "clearClientLevel",
+          "desc": "(Lnet/minecraft/client/gui/screens/Screen;)V",
+          "note": "clearClientLevel: the client level is dropped when the server sends the client back to configuration",
+          "sha256": "08f0d4dab38c1a49398c239d8b7642085c9e13826e5ff1b4c64e57d85fb5e83f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject RETURN of TitleScreen.init (warm-up thread once per launch + JFR class-define recorder), @Inject RETURN of ClientPacketListener.handleLogin (join: 3-minute recorded window, warm-up limit join + 10 s), @Inject HEAD of Minecraft.disconnect(Screen, boolean) and of Minecraft.clearClientLevel(Screen) (leave: window closes, warm-up stops); helpers bons.furious.patch.client_class_warmup.ClassWarmup (list file, fingerprint, warm-up: Class.forName(name, false, gameLoader) + getDeclaredConstructors) and ClassDefineRecorder (jdk.jfr RecordingStream, jdk.ClassDefine only); require = 0",
+      "license": "Minecraft (Mojang) and NeoForge: no code of either is carried; the helpers are our own and only load and link classes the game itself defined before (JDK Flight Recorder for the list)"
+    }
+  }
+}

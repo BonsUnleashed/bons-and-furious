@@ -1,0 +1,72 @@
+{
+  "group": "vanilla_drops_c49",
+  "keys": {
+    "vanilla_block_drops_centred": {
+      "mod": "minecraft",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_drops_c49.CentredBlockDropsMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/block/Block",
+          "method": "popResource",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemStack;)V",
+          "note": "popResource: centre + three Mth.nextDouble(level.random, -0.25, 0.25), the supplier lambda$popResource$4, then popResource(level, supplier, stack)",
+          "sha256": "8f340d4fade67d2f50118bc375912b9a40a5f4e0f691a872e2f1faa52bfab087"
+        },
+        {
+          "class": "net/minecraft/world/level/block/Block",
+          "method": "lambda$popResource$4",
+          "desc": "(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/entity/item/ItemEntity;",
+          "note": "the supplier: new ItemEntity(level, x, y, z, stack)",
+          "sha256": "cab5e3306f9820d30a14356947d32fa38247b4cfacf4713c25e2b60b34fbfffc"
+        },
+        {
+          "class": "net/minecraft/world/level/block/Block",
+          "method": "popResource",
+          "desc": "(Lnet/minecraft/world/level/Level;Ljava/util/function/Supplier;Lnet/minecraft/world/item/ItemStack;)V",
+          "note": "client / empty / doTileDrops / restoringBlockSnapshots checks, supplier.get, setDefaultPickUpDelay, then NeoForge's capturedDrops list when capturing, else addFreshEntity",
+          "sha256": "2772b1e988975d95764654b36e8765c9cac2e854e5069c8f70867bd672c4daf7"
+        },
+        {
+          "class": "net/minecraft/world/entity/item/ItemEntity",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;)V",
+          "note": "random horizontal motion level.random.nextDouble() * 0.2 - 0.1, upward 0.2, then the 8-argument constructor",
+          "sha256": "90f51dfa076a745571ebf8e593370b732fece9e1881751350f46031753395803"
+        },
+        {
+          "class": "net/minecraft/world/entity/item/ItemEntity",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;DDD)V",
+          "note": "position, motion, item, lifespan (ItemStack.getEntityLifespan)",
+          "sha256": "05dccb710fbd4fb2515d0a53a1bd66ea8e432b6e680e8bc49da69116a92722ef"
+        },
+        {
+          "class": "net/minecraft/util/Mth",
+          "method": "nextDouble",
+          "desc": "(Lnet/minecraft/util/RandomSource;DD)D",
+          "note": "nextDouble(random, min, max): min >= max -> min, else random.nextDouble() * (max - min) + min NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ.",
+          "sha256": "50458c0b30a1ec060fd5b2d8276fe3608522ff9c7608f0d1c712682db63ea175",
+          "sha256_variants": [
+            "bbe5dbfd596d34c9aea6809678131e63cd91b8b96f8a9cac095efbe5fa247a9e"
+          ]
+        },
+        {
+          "class": "com/simibubi/create/foundation/mixin/BlockMixin",
+          "method": "create$handlePopResource",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "audited: Create 6.0.10's @WrapWithCondition of addFreshEntity in the inner popResource files the item entity under DeployerHandler.CAPTURED_BLOCK_DROPS_VIEW by its blockPosition(); the centred position (x + 0.5, y + 0.375, z + 0.5) lies in the broken block as every scattered one does",
+          "audit": true,
+          "sha256": "decead8632ac24423beb94491e4b91975bd805d1f217b31c30bf777795bab16e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: @Redirect of the three Mth.nextDouble offsets in Block.popResource(Level, BlockPos, ItemStack) and of new ItemEntity(Level, DDD, ItemStack) in its supplier lambda$popResource$4 (helper bons.furious.patch.vanilla_drops_c49.CentredDrops)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic"
+    }
+  }
+}

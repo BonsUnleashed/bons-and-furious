@@ -1,0 +1,54 @@
+{
+  "group": "torchmaster_coo49",
+  "keys": {
+    "torchmaster_megatorch_range_first": {
+      "mod": "torchmaster",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.torchmaster_coo49.TorchmasterMegatorchRangeMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/xalcon/torchmaster/logic/entityblocking/megatorch/MegatorchEntityBlockingLight",
+          "method": "shouldBlockEntityType",
+          "desc": "(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/entity/MobSpawnType;)Z",
+          "note": "Torchmaster 21.1.13 for NeoForge: MegaTorchFilterRegistry.containsEntity(EntityType.getKey(type)) && IDistanceLogic.Cubic.isPositionInRange(pos.x, pos.y, pos.z, this.pos, Services.PLATFORM.getConfig().getMegaTorchRadius())",
+          "sha256": "ef3a7052d11b415cb7003e5c391cb42eb3df9e5034a7f70a31e17cc7cdf082ac"
+        },
+        {
+          "class": "net/xalcon/torchmaster/EntityFilterList",
+          "method": "containsEntity",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Z",
+          "note": "list.contains: a HashSet probe, pure",
+          "sha256": "e5f2a350c5e5a59d48c1ae3382d4275e49c8f3f5ece1275bbe90812a7673d4c7"
+        },
+        {
+          "class": "net/xalcon/torchmaster/logic/IDistanceLogic",
+          "method": "lambda$static$0",
+          "desc": "(DDDLnet/minecraft/core/BlockPos;I)Z",
+          "note": "the cubic test: arithmetic only",
+          "sha256": "5cd38126e70b7752859bade038185fdfb11e3be92d23f35f6252d3e434ea604d"
+        },
+        {
+          "class": "net/xalcon/torchmaster/logic/IDistanceLogic",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "Cubic = lambda$static$0, Cylinder = lambda$static$1",
+          "sha256": "45c524cea93aae5186edd08e769099f056630aa3888d1fd93faa7f4f82cff2f0"
+        },
+        {
+          "class": "net/xalcon/torchmaster/TorchmasterNeoforgeConfig$1",
+          "method": "getMegaTorchRadius",
+          "desc": "()I",
+          "note": "GENERAL.megaTorchRadius.get(): a read of the COMMON config value (cached by ModConfigSpec.ConfigValue)",
+          "sha256": "09606788fb2b0203b50f60c4ab78b9dc016d4fbaebaf15354ad19cb44279755c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of MegatorchEntityBlockingLight.shouldBlockEntityType (exact answers; kind change, off by default, because a torch in range of an unlisted entity type is slower: the distance test now runs before the block list instead of not at all): IDistanceLogic.Cubic.isPositionInRange(spawn, this.pos, megaTorchRadius) && MegaTorchFilterRegistry.containsEntity(EntityType.getKey(type)) (the same two pure tests in the other order, each asked at most once). Runtime flag torchmasterMegatorchRangeFirst. Helper bons.furious.patch.torchmaster_coo49.TorchmasterMegatorchRange.",
+      "license": "MIT (Torchmaster 21.1.13; the Forge 20.1.9 build said All Rights Reserved): no code carried, the hook carries only our own logic"
+    }
+  }
+}

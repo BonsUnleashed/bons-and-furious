@@ -1,0 +1,81 @@
+{
+  "group": "ftbchunks_c49",
+  "keys": {
+    "ftbchunks_region_write_direct": {
+      "mod": "ftbchunks",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.ftbchunks_c49.RegionWriteDirectMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/map/MapRegionData",
+          "method": "write",
+          "desc": "()V",
+          "note": "FTB Chunks 2101.1.23: modified-chunk list under the manager lock, an early return when empty, copies of the five arrays, then the map-thread task below through FTBChunksClient.MAP_EXECUTOR",
+          "sha256": "f354cbc5b2f70df26e6ca8d40a366df66ccce9c65cf96286aac2ad5827e50ba8"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/map/MapRegionData",
+          "method": "lambda$write$0",
+          "desc": "([S[S[I[I[ILjava/util/Collection;)V",
+          "note": "the map-thread task: five fresh 512 x 512 BufferedImages (type 2 = TYPE_INT_ARGB data, type 1 = TYPE_INT_RGB foliage / grass / water / blocks), one setRGB each per pixel in the order the redirect ordinals 0-4 name, then writeData of Map.of(name -> image)",
+          "sha256": "de172dbeac9f93fe5add4edd510f5ab00f7154bb394e51c8909e33e3c2306f45"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/map/MapRegionData",
+          "method": "writeData",
+          "desc": "(Ljava/util/Collection;Ljava/util/Map;)V",
+          "note": "the images are only PNG-encoded into the region zip (ImageIO.write), never drawn",
+          "sha256": "5538c17461c2a60c34c5bceff00134f8a59947639d0f17d14bba6b7b4fbfb542"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of each of the five BufferedImage.setRGB(III) calls in MapRegionData.write()'s map-thread task (lambda$write$0) to a handler per call site that stores the pixel into the image's DataBufferInt array (rgb for TYPE_INT_ARGB, rgb & 0xFFFFFF for TYPE_INT_RGB) after a once-per-image layout check (helper bons.furious.patch.ftbchunks_c49.RegionWriteDirect)",
+      "license": "FTB Chunks is All Rights Reserved: none of its code is carried; the redirects store into the JDK image's own array"
+    },
+    "ftbchunks_map_writing_off": {
+      "mod": "ftbchunks",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.ftbchunks_c49.MapWritingOffMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/FTBChunksClient",
+          "method": "queueOrExecute",
+          "desc": "(Ldev/ftb/mods/ftbchunks/client/map/MapTask;)V",
+          "note": "MAP_EXECUTOR.execute(task): hands the task to the map thread",
+          "sha256": "48db4faa1d0891e24a572c17485b5dcd1d93f13fb55cdfd4a2ec307055115c68"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/FTBChunksClient",
+          "method": "rerender",
+          "desc": "(Lnet/minecraft/core/BlockPos;)V",
+          "note": "collects changed block positions per chunk for the re-render tasks",
+          "sha256": "7ce874c995b420667de2f1fffb4f88949f43846fb47cbf1b8683a430387ff13c"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/FTBChunksClient",
+          "method": "runRerenderTasks",
+          "desc": "(Lnet/minecraft/world/level/Level;Ldev/ftb/mods/ftbchunks/client/map/MapManager;)V",
+          "note": "the collected positions become ChunkUpdateTasks through queueOrExecute",
+          "sha256": "8264fd74876f82f3cc0e4f21190b5464d96093575cc0ce8cd2a96a152bb91e88"
+        },
+        {
+          "class": "dev/ftb/mods/ftbchunks/client/FTBChunksClient",
+          "method": "handlePacket",
+          "desc": "(Lnet/minecraft/network/protocol/game/ClientboundLevelChunkWithLightPacket;)V",
+          "note": "every received chunk becomes a ChunkUpdateTask through queueOrExecute (claims do not pass here)",
+          "sha256": "f1cc115104835947b7e0509578a34ab67540868f82609e19f3a3aaecb9917f5a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "cancellable @Inject at the HEAD of FTBChunksClient.queueOrExecute(MapTask) and FTBChunksClient.rerender(BlockPos): with the switch on both return at once (helper bons.furious.patch.ftbchunks_c49.MapWritingOff)",
+      "license": "FTB Chunks is All Rights Reserved: none of its code is carried; the injects only return early"
+    }
+  }
+}

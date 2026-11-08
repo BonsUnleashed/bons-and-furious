@@ -1,0 +1,229 @@
+{
+  "group": "cataclysm_client_c49",
+  "keys": {
+    "cataclysm_tentacle_light_memo": {
+      "mod": "cataclysm",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cataclysm_client_c49.LeviathanTongueLightMixin",
+        "bons.furious.mixin.cataclysm_client_c49.TidalTentacleLightMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/entity/The_Leviathan_Renderer",
+          "method": "render",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/AnimationMonster/BossMonsters/The_Leviathan/The_Leviathan_Entity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+          "note": "up to 128 tongue segments: getLightColor(entity, segment position) #0 per segment, #1 for the tongue end",
+          "sha256": "8298d14d7f0f4dff8fb25149f75dddbffc072b684bdf0973f075465f929122a1"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/entity/The_Leviathan_Renderer",
+          "method": "getLightColor",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;)I",
+          "note": "BlockPos.containing(vec); hasChunkAt ? max of LevelRenderer.getLightColor at the block and above it : 0",
+          "sha256": "83c6020372ff02e633d36def4b5698d863a34f8e3b51eb09aca355fc12772f85"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/entity/Tidal_Tentacle_Renderer",
+          "method": "render",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/projectile/Tidal_Tentacle_Entity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+          "note": "up to 128 tentacle segments: getLightColor(entity, segment position) #0 per segment, #1 for the claw",
+          "sha256": "7b6eb1fbdbd4536597baf74dbbbe6152f10547b5a092ede5fcb03be10641c90d"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/render/entity/Tidal_Tentacle_Renderer",
+          "method": "getLightColor",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;)I",
+          "note": "BlockPos.containing(vec); hasChunkAt ? max of LevelRenderer.getLightColor at the block and above it : 0",
+          "sha256": "83c6020372ff02e633d36def4b5698d863a34f8e3b51eb09aca355fc12772f85"
+        },
+        {
+          "class": "net/minecraft/client/renderer/LevelRenderer",
+          "method": "getLightColor",
+          "desc": "(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;)I",
+          "note": "getLightColor(level, pos): the block state and its light at pos, reads only",
+          "sha256": "d5806933618c85324f4fcd0449b2a1a499335074adc79824f8fba8477b10891a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on both private getLightColor(Entity, Vec3) calls of The_Leviathan_Renderer.render and of Tidal_Tentacle_Renderer.render (@Share per render() call): each block position's answer is kept for the rest of that call (helper bons.furious.patch.cataclysm_client_c49.TentacleLight)",
+      "license": "L_Ender's Cataclysm: CC-BY-NC-ND-4.0: no-copy; the wrappers carry only our own logic (Idea: Collections Of Optimizations cataclysm.cacheTentacleLight, idea text only)"
+    },
+    "cataclysm_pose_reset_loop": {
+      "mod": "cataclysm",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.cataclysm_client_c49.ModelPoseResetMixin",
+        "bons.furious.mixin.cataclysm_client_c49.ModelPartChildrenAccessor"
+      ],
+      "guard": [
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ancient_Remnant_Rework_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/IABossMonsters/Ancient_Remnant/Ancient_Remnant_Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "bd490b3b85ef68223055d3e5e0f818a3fd0166f06d40d665069ef6f90d992a00"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Aptrgangr_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/Draugar/Aptrgangr_Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "b16aecaf426f19994fd0d42a4d75449a3c24ad99e3e32b28bc7c8a99924a540a"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ceraunus_Model",
+          "method": "setupAnim",
+          "desc": "(Lnet/minecraft/world/entity/Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "5d36fe1eb1a7ce83da3ef28560e06b62d02f052e168a5264c06aeb5783c2cb90"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Cindaria_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/AcropolisMonsters/Cindaria_Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "baebc0c7c4405b372cc1c772e31db7c7750b05d661d588052d24aead32658117"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Clawdian_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/AcropolisMonsters/Clawdian_Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "2db68f4494eda9b5cb390d03ecbbb64124588ed65b3ddd1cc40f8b8efac243d4"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Draugr_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/Draugar/Draugr_Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "2eeeab5b43f59939e8d1018056663e5fbefb3224ebe3b35834e14f2961e213ea"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Elemental_Spear_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/projectile/Elemental_Spear_Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "37607432cc1b26bab9efb30168ba45add2a70950acb364e53a4533a3b8e9c460"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Elite_Draugr_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/Draugar/Elite_Draugr_Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "ae0e9ae55a79a6ea698949274806e1878082f8a4f693aa29684a1b92c4e56477"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Hippocamtus_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/AcropolisMonsters/Hippocamtus_Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "31d9d3361cff7057371b4e326012fe6a72b60d512a3c19c2e1c2e057804677fa"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Ignited_Berserker_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/Ignited_Berserker_Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "4c115ff82fc5e75ffa0669f4db57565648d13cbbfac834974f368701c5f38f19"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Kobolediator_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/Kobolediator_Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "5401d6941f706dbf146e82b10be1d798a1c92a4b4424a0947382ee4c344ddc04"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Maledictus_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/IABossMonsters/Maledictus/Maledictus_Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "7be07465536c14e8f537c4cef2f891d6f2a690b5d6278ec82421f8d83e93b9b2"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Netherite_Ministrosity_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/Pet/Netherite_Ministrosity_Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "a5a115c3c47cf32f2e4dc42749eeca4a933d4c666ead7ce61edab118140af85b"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Netherite_Monstrosity_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/IABossMonsters/NewNetherite_Monstrosity/Netherite_Monstrosity_Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "58c4868e16383039b004453794f72f04ecacf04bac86b1c7ba42eeaddf044936"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Royal_Draugr_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/Draugar/Royal_Draugr_Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "d3ff7ad25d38f05e750a64bc6bd987b32d859dd39169a26fa489f9d7a0860da5"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Scylla_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/IABossMonsters/Scylla/Scylla_Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "a18c222797e050d5e2b5e383e1a87e99eaa216d840ac75748437282784502152"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Storm_Serpent_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/projectile/Storm_Serpent_Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "b8d7a10492c1d45f826f16400baad7eb87fb28821e47d3fcb280237816b9ed99"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Symbiocto_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/AcropolisMonsters/Symbiocto_Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "8e5314a1d80b83f388f1046a6516b44077f4479283483396418e9bbc8f6c04b9"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/The_Prowler_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/The_Prowler_Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "dc187a0468c915135430f242f449c80c5e072e815558c63caa0cf4dc9e6a4f7b"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Urchinkin_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/InternalAnimationMonster/AcropolisMonsters/Urchinkin_Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "14f40f11eb24506adb2db31fe98ca3d71e619786974142bb7530faca34408ed3"
+        },
+        {
+          "class": "com/github/L_Ender/cataclysm/client/model/entity/Wave_Model",
+          "method": "setupAnim",
+          "desc": "(Lcom/github/L_Ender/cataclysm/entity/effect/Wave_Entity;FFFFF)V",
+          "note": "opens with root().getAllParts().forEach(ModelPart::resetPose) (one getAllParts call)",
+          "sha256": "2813cee6000782083fdabd400c4feaa9e1c7c47f0865c1b0dbebef3e530376e1"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/ModelPart",
+          "method": "getAllParts",
+          "desc": "()Ljava/util/stream/Stream;",
+          "note": "Stream.concat(Stream.of(this), children.values().stream().flatMap(ModelPart::getAllParts)): pre-order, the children in their map order",
+          "sha256": "f16cd99637b15f2e778634bb7541d512c170ee58cafee3aefa2686fd8cffc92e"
+        },
+        {
+          "class": "net/minecraft/client/model/geom/ModelPart",
+          "method": "resetPose",
+          "desc": "()V",
+          "note": "loadPose(initialPose): writes this part's own pose fields only",
+          "sha256": "81beaa4542c24e1f6e89f51aaa68bb21246811c3c26a96a6a13c7974356ae8d8"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on root().getAllParts() and on Stream.forEach in the typed setupAnim of 21 models (exact descriptors, @Share): a tree whose parts are all plain ModelParts is reset by a pre-order walk calling resetPose, anything else takes the original stream; accessor on ModelPart.children (helper bons.furious.patch.cataclysm_client_c49.PoseReset); with Embeddium's ModelPart mixin in (ModelPart implements org.embeddedt.embeddium.render.entity.ModelPartExtended, as in Embeddium 1.0.15 for 1.21.1, checked once) the helper stands aside and the original stream runs: Embeddium's part list already makes it cheap",
+      "license": "L_Ender's Cataclysm: CC-BY-NC-ND-4.0: no-copy; the wrappers carry only our own logic (Idea: Collections Of Optimizations cataclysm.leanPoseReset, idea text only); Minecraft: no-copy"
+    }
+  }
+}

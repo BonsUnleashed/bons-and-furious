@@ -1,0 +1,74 @@
+{
+  "group": "netherexp_coo49",
+  "keys": {
+    "netherexp_candle_effect_refresh_half": {
+      "mod": "netherexp",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.netherexp_coo49.TreacherousCandleRefreshMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/jadenxgamer/netherexp/core/block/entity/CiergeOfTreacheryBlockEntity",
+          "method": "updateBossBarPlayers",
+          "desc": "(Lnet/jadenxgamer/netherexp/core/block/entity/CiergeOfTreacheryBlockEntity;Ljava/util/List;Lnet/minecraft/world/level/Level;)V",
+          "note": "Jaden's Nether Expansion 2.4.1 (2.3.5's TreacherousCandleBlockEntity): per living player of the list in this level addEffect(new MobEffectInstance(BETRAYED, 200, 0)) every tick (the wrapped call), boss bar add; boss bar players no longer listed: effect removed, boss bar removed",
+          "sha256": "b4d0067bc5e90ad7b422ff1136c11fb0f783aa2993f75e3e7e17d63ad5b80bd3"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "addEffect",
+          "desc": "(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)Z",
+          "note": "NeoForge 21.1: an existing effect is updated (MobEffectInstance.update: duration only when longer, visibility and icon copied) and answers false when nothing changed",
+          "sha256": "fba2e569233dcbea0866ee92dcc3810596aa41d195c27440c5e62ad991cad789"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the one ServerPlayer.addEffect(MobEffectInstance) call in CiergeOfTreacheryBlockEntity.updateBossBarPlayers: skipped (false) while the player's Betrayed is level I, not ambient, visible with its icon, with 100 or more ticks left; otherwise the original. Trade-off, off by default. Runtime flag netherexpCandleEffectRefreshHalf. Helper bons.furious.patch.netherexp_coo49.NetherExpFixes.",
+      "license": "Jaden's Nether Expansion (CC BY-NC-ND 4.0, neoforge.mods.toml of 2.4.1): no code carried; the wrapper decides whether Nether Expansion's own call runs"
+    },
+    "netherexp_candle_player_scan_lean": {
+      "mod": "netherexp",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.netherexp_coo49.TreacherousCandlePlayerScanMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/jadenxgamer/netherexp/core/block/entity/CiergeOfTreacheryBlockEntity",
+          "method": "getPlayersInRadius",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Ljava/util/List;",
+          "note": "Jaden's Nether Expansion 2.4.1: level.getEntitiesOfClass(ServerPlayer, new AABB(pos).inflate(16)) (the wrapped search; spectators excluded)",
+          "sha256": "e1fd2b3ac586e8ed29c9ec4c4b500023808696fbebb49e76ae6a2ecd09543be6"
+        },
+        {
+          "class": "net/jadenxgamer/netherexp/core/block/entity/CiergeOfTreacheryBlockEntity",
+          "method": "updateBossBarPlayers",
+          "desc": "(Lnet/jadenxgamer/netherexp/core/block/entity/CiergeOfTreacheryBlockEntity;Ljava/util/List;Lnet/minecraft/world/level/Level;)V",
+          "note": "the list's only consumer: per listed player effect + boss bar, per boss bar player not listed (List.contains) effect and boss bar removed: order-insensitive",
+          "sha256": "b4d0067bc5e90ad7b422ff1136c11fb0f783aa2993f75e3e7e17d63ad5b80bd3"
+        },
+        {
+          "class": "net/jadenxgamer/netherexp/core/block/entity/CiergeOfTreacheryBlockEntity",
+          "method": "tick",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/jadenxgamer/netherexp/core/block/entity/CiergeOfTreacheryBlockEntity;)V",
+          "note": "lit and not completed: getPlayersInRadius -> straight into updateBossBarPlayers (the list goes nowhere else)",
+          "sha256": "badc1af9a3a78fb76476af81a4081b6d314f78b6ebc11c5daa72435d709c268f"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/EntitySectionStorage",
+          "method": "forEachAccessibleNonEmptySection",
+          "desc": "(Lnet/minecraft/world/phys/AABB;Lnet/minecraft/util/AbortableIterationConsumer;)V",
+          "note": "the section range the switch reproduces: x and z 2 blocks wider, y 4 blocks lower, accessible non-empty sections",
+          "sha256": "d77cb4599577a2dc468e5eae54c49c27701e9cdfa7e8d3ee9ae1b9469662828c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass(ServerPlayer, box) call in CiergeOfTreacheryBlockEntity.getPlayersInRadius: the same players from ServerLevel.players() (not spectating, box intersecting, feet section inside vanilla's walk range), in player-list order; the list's only consumer is order-insensitive. Stands down when Valkyrien Skies is installed (it changes entity box searches near ships). Runtime flag netherexpCandlePlayerScanLean. Helper bons.furious.patch.netherexp_coo49.CandlePlayerScan.",
+      "license": "Jaden's Nether Expansion (CC BY-NC-ND 4.0, neoforge.mods.toml of 2.4.1): no code carried; the wrapper answers the same players from the player list"
+    }
+  }
+}

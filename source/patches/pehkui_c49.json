@@ -1,0 +1,117 @@
+{
+  "group": "pehkui_c49",
+  "keys": {
+    "pehkui_scale_cache_all_types": {
+      "mod": "pehkui",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.pehkui_c49.ScaleTypeIndexMixin",
+        "bons.furious.mixin.pehkui_c49.EntityScaleIndexMixin"
+      ],
+      "guard": [
+        {
+          "class": "virtuoel/pehkui/mixin/ThreadSafeScaledEntityMixin",
+          "method": "pehkui_getScaleData",
+          "desc": "(Lvirtuoel/pehkui/api/ScaleType;)Lvirtuoel/pehkui/api/ScaleData;",
+          "note": "nine-slot cache search first; else pehkui_getScales().get(type) (the call we wrap); a null answer constructs under the map's lock: put(type, null), construct, put(type, data), setCachedData; a present key answers map.get again",
+          "sha256": "84e4d8ff1fea4e2a3954dbb31cf0998d33a0ce864c573d4e4dde7de1f810cc30"
+        },
+        {
+          "class": "virtuoel/pehkui/mixin/ThreadSafeScaledEntityMixin",
+          "method": "pehkui_getScales",
+          "desc": "()Ljava/util/Map;",
+          "note": "the map is made once (field initialiser, or here when null, then every registered type is constructed through pehkui_getScaleData) and never replaced",
+          "sha256": "bb06b51396221922f6ef83b7bf85386c1ed64a371b79d7fd153ce0f5402321c6"
+        },
+        {
+          "class": "virtuoel/pehkui/mixin/ThreadUnsafeScaledEntityMixin",
+          "method": "pehkui_getScaleData",
+          "desc": "(Lvirtuoel/pehkui/api/ScaleType;)Lvirtuoel/pehkui/api/ScaleData;",
+          "note": "the -Dpehkui.disableThreadSafety twin: the same steps without locks",
+          "sha256": "2e4c463c351220f9886eeb6b2afbfacdda890c7f4bf205e289b240ede6dd0a9a"
+        },
+        {
+          "class": "virtuoel/pehkui/mixin/ThreadUnsafeScaledEntityMixin",
+          "method": "pehkui_getScales",
+          "desc": "()Ljava/util/Map;",
+          "note": "the map is made once and never replaced",
+          "sha256": "f51d29cd2446c7792e9cfd9753e78dc4a0d1e3aa0f7b262503da3a1391ad5297"
+        },
+        {
+          "class": "virtuoel/pehkui/util/ScaleCachingUtils",
+          "method": "getCachedData",
+          "desc": "([Lvirtuoel/pehkui/api/ScaleData;Lvirtuoel/pehkui/api/ScaleType;)Lvirtuoel/pehkui/api/ScaleData;",
+          "note": "linear search of the nine CACHED types; anything else answers null (and reaches the map lookup we wrap)",
+          "sha256": "37416372226f646d56dbce3dfb5877d2261a509c8b9d97705228cffafd842fd7"
+        },
+        {
+          "class": "virtuoel/pehkui/util/ScaleCachingUtils",
+          "method": "setCachedData",
+          "desc": "([Lvirtuoel/pehkui/api/ScaleData;Lvirtuoel/pehkui/api/ScaleType;Lvirtuoel/pehkui/api/ScaleData;)V",
+          "note": "writes Pehkui's own cache only, right after the map put",
+          "sha256": "9c53f1837f5f48d5572980717b30abf8cc1b114733ccc20226b7eca21d81eac7"
+        },
+        {
+          "class": "virtuoel/pehkui/mixin/EntityMixin",
+          "method": "pehkui_writeScaleNbt",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "a user of pehkui_getScales: reads its values only",
+          "sha256": "5c6d67586b786c39416d1bf545960d6e876ef93b975abddb6e4d9f8fea3dd195"
+        },
+        {
+          "class": "virtuoel/pehkui/util/ScaleUtils",
+          "method": "syncScales",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Ljava/util/function/Consumer;Ljava/util/function/Predicate;Z)V",
+          "note": "the other user of pehkui_getScales: reads its values only",
+          "sha256": "25e0f394bdec73cf20d7a7555e85bb04e70170c7d17bea4243eb976c420d0aa4"
+        },
+        {
+          "class": "virtuoel/pehkui/api/ScaleType",
+          "method": "<init>",
+          "desc": "(Lvirtuoel/pehkui/api/ScaleType$Builder;)V",
+          "note": "the one constructor; our index initialiser runs in it",
+          "sha256": "a645e896e9d057e652a6b7dcbafd9c824c401c1c5a94ea71ef952886247b6e9f"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation of the first Map.get in Pehkui's pehkui_getScaleData (merged into Entity; priority 1100, after Pehkui's mixins): answered from a per-entity slot array indexed by a dense ScaleType index (field initialiser on ScaleType), filled with the map's non-null answers (helper bons.furious.patch.pehkui_c49.ScaleIndexCache, duck bons.furious.patch.pehkui_c49.PehkuiTypeIndex)",
+      "license": "MIT (Pehkui): no Pehkui code is carried"
+    },
+    "pehkui_typed_modifier_memo": {
+      "mod": "pehkui",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.pehkui_c49.TypedModifierMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "virtuoel/pehkui/api/TypedScaleModifier",
+          "method": "*",
+          "desc": "",
+          "note": "type is a private final Supplier set by the constructors; getType() returns type.get() (the call we wrap)",
+          "sha256": "1f4955e47e0a4ba14d2c622e33d838e09452a66bfa9337ad7eaf02ec8c5fd657"
+        },
+        {
+          "class": "virtuoel/pehkui/api/ScaleModifiers",
+          "method": "*",
+          "desc": "",
+          "note": "its seven Supplier lambdas each return a static final ScaleTypes field",
+          "sha256": "acfcac50ab54159013c65a71075693f4654312430d01cbba0e1abdcbfd831e6e"
+        },
+        {
+          "class": "virtuoel/pehkui/api/ScaleTypes",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "the static final ScaleTypes fields are assigned once, here",
+          "sha256": "07ea48bea6768d10f21f7462c9c97e56900cd505d880f64733cddd8437b2e579"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation of the Supplier.get call in TypedScaleModifier.getType(): the first non-null answer of a Pehkui ScaleModifiers lambda is kept in a @Unique volatile field; other suppliers are marked and asked every time (helper bons.furious.patch.pehkui_c49.ModifierTypeMemo)",
+      "license": "MIT (Pehkui): no Pehkui code is carried"
+    }
+  }
+}

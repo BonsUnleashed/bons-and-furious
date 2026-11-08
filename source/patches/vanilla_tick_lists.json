@@ -1,0 +1,233 @@
+{
+  "group": "vanilla_tick_lists",
+  "keys": {
+    "vanilla_block_entity_ticker_compaction": {
+      "mod": "minecraft",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_tick_lists.LevelTickerCompactionMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "tickBlockEntities",
+          "desc": "()V",
+          "note": "freshBlockEntities onLoad pass (ArrayList.forEach), pending tickers appended, then one blockEntityTickers.iterator() walk: isRemoved -> the one Iterator.remove(), else runsNormally && shouldTickBlocksAt(pos) -> tick(); one RETURN after tickingBlockEntities = false",
+          "sha256": "7814ce19aae13eac216b435120cb4849b380bfb6db2f4cb1b51b1db5db83704e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect (require 0) of the walk's List.iterator() call in Level.tickBlockEntities: the list's own list iterator when the switch is on and the list is exactly an ArrayList; @Redirect (require 0) of its Iterator.remove() call keeps the position (ListIterator.previousIndex) and the ticker instead of removing; @Inject at RETURN cuts the kept positions out in one pass (each position checked to still hold its ticker, else removal by identity)",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_tick_lists.TickerCompaction)"
+    },
+    "vanilla_level_ticks_blocked_park": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_tick_lists.LevelTicksParkMixin",
+        "bons.furious.mixin.vanilla_tick_lists.ServerLevelTickParkMixin",
+        "bons.furious.mixin.vanilla_tick_lists.TickingTrackerParkMixin",
+        "bons.furious.mixin.vanilla_tick_lists.EntityManagerParkMixin",
+        "bons.furious.mixin.vanilla_tick_lists.ChunkMapParkMixin",
+        "bons.furious.mixin.vanilla_tick_lists.DistanceManagerParkMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/ticks/LevelTicks",
+          "method": "sortContainersToTick",
+          "desc": "(J)V",
+          "note": "fastIterator walk of nextTickForContainer: value > gameTime -> skip; no container or no head -> iterator.remove; head later -> entry.setValue; else tickCheck.test (the only LongPredicate.test) -> iterator.remove + containersToTick.add",
+          "sha256": "7c38641d85fd1fc1d2243ec768f4da43898a4e04db711d5a5932768df5802180"
+        },
+        {
+          "class": "net/minecraft/world/ticks/LevelTicks",
+          "method": "collectTicks",
+          "desc": "(JILnet/minecraft/util/profiling/ProfilerFiller;)V",
+          "note": "sortContainersToTick, drainContainers, rescheduleLeftoverContainers",
+          "sha256": "b38e09229d27e9708a02cf59efc3082b4401a80133a556c920e1923db1b2c5b0"
+        },
+        {
+          "class": "net/minecraft/world/ticks/LevelTicks",
+          "method": "addContainer",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;Lnet/minecraft/world/ticks/LevelChunkTicks;)V",
+          "note": "allContainers.put; nextTickForContainer.put only when the container has a head; setOnTickAdded(chunkScheduleUpdater)",
+          "sha256": "4cbf23c675af8804f709ffbdcd9b1a3dc89051af4924c9d9da7233a563900f3d"
+        },
+        {
+          "class": "net/minecraft/world/ticks/LevelTicks",
+          "method": "removeContainer",
+          "desc": "(Lnet/minecraft/world/level/ChunkPos;)V",
+          "note": "allContainers.remove, nextTickForContainer.remove, setOnTickAdded(null)",
+          "sha256": "10646d154af5ecff54eaa0b76db83571b3f84cb86b11a1798777c06813f130c1"
+        },
+        {
+          "class": "net/minecraft/world/ticks/LevelTicks",
+          "method": "updateContainerScheduling",
+          "desc": "(Lnet/minecraft/world/ticks/ScheduledTick;)V",
+          "note": "nextTickForContainer.put(chunk of the tick, triggerTick)",
+          "sha256": "918ce065c6f155015e6cc93bc132acc2d723c438d78b942828852cacbd9b9812"
+        },
+        {
+          "class": "net/minecraft/world/ticks/LevelTicks",
+          "method": "clearArea",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)V",
+          "note": "per container in the box lambda$clearArea$4, then the run lists",
+          "sha256": "de7a2bbf656f9d1b32fa0f65901085985aa85f1ef38a5ae07e86b1772ab3bd3f"
+        },
+        {
+          "class": "net/minecraft/world/ticks/LevelTicks",
+          "method": "lambda$clearArea$4",
+          "desc": "(Ljava/util/function/Predicate;JLnet/minecraft/world/ticks/LevelChunkTicks;)V",
+          "note": "removeIf; a changed head -> updateContainerScheduling(new head) or nextTickForContainer.remove(chunk)",
+          "sha256": "248c2be39cc678e624e251be36b6a4786ebebc3ee5989e351a83257a9690edab"
+        },
+        {
+          "class": "net/minecraft/world/ticks/LevelTicks",
+          "method": "lambda$new$2",
+          "desc": "(Lnet/minecraft/world/ticks/LevelChunkTicks;Lnet/minecraft/world/ticks/ScheduledTick;)V",
+          "note": "chunkScheduleUpdater: a new tick equal to the container's head -> updateContainerScheduling",
+          "sha256": "c887cd3d3a77a2ad32845c8a43051f1072f52df81b1d7b69e9b23b00d7fd5026"
+        },
+        {
+          "class": "net/minecraft/world/ticks/LevelTicks",
+          "method": "*",
+          "desc": "",
+          "note": "declared-method set: no other writer of nextTickForContainer",
+          "sha256": "3ec6d5b802d918369d42c428cefc1da2f817be60fd1e9e39db0f714c76290ed9"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "isPositionTickingWithEntitiesLoaded",
+          "desc": "(J)Z",
+          "note": "the tick check of both LevelTicks: areEntitiesLoaded(chunk) && chunkSource.isPositionTicking(chunk)",
+          "sha256": "c69add283e29311b62d89cdab9e657904931d9686bbe265006ab23287d4edaa6"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "areEntitiesLoaded",
+          "desc": "(J)Z",
+          "note": "entityManager.areEntitiesLoaded(chunk)",
+          "sha256": "40d7ed5dfe63a4dde11a97adf931b92fc52592ecb2d6eef5a166aa5d6c48701c"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "shouldTickBlocksAt",
+          "desc": "(J)Z",
+          "note": "chunkSource.chunkMap.getDistanceManager().inBlockTickingRange(chunk)",
+          "sha256": "46f1c7a45de28b2deffc76c778ce6042b240ee057c6a3847380ea2ec89c991fd"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "startTickingChunk",
+          "desc": "(Lnet/minecraft/world/level/chunk/LevelChunk;)V",
+          "note": "chunk.unpackTicks(game time); called from the ticking future's last stage",
+          "sha256": "695cf4075832c7ea1c4a32fa2e58f73de524abd6d346f46e8d6e9f2bb3b5a5c2"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerChunkCache",
+          "method": "isPositionTicking",
+          "desc": "(J)Z",
+          "note": "holder = getVisibleChunkIfPresent(chunk); holder != null && level.shouldTickBlocksAt(chunk) && holder.getTickingChunkFuture().getNow(UNLOADED_LEVEL_CHUNK).isSuccess()",
+          "sha256": "f17fb7041765d711527b5dac4ea47abbdfad9a127b32406a044b8aa1f9f55904"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap",
+          "method": "getVisibleChunkIfPresent",
+          "desc": "(J)Lnet/minecraft/server/level/ChunkHolder;",
+          "note": "visibleChunkMap.get(chunk)",
+          "sha256": "7257d8ac58f4f2b1d42c3dabecfe9cfe1a14afa2592fc5fc6674016be14dbdb3"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap",
+          "method": "promoteChunkMap",
+          "desc": "()Z",
+          "note": "modified -> visibleChunkMap = updatingChunkMap.clone(), true; the only writer of visibleChunkMap after construction",
+          "sha256": "9112f4f6aa69db75827f2af5893b9ac11e16c0754b28bcb8f21fd3ba22d9788b"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap",
+          "method": "prepareTickingChunk",
+          "desc": "(Lnet/minecraft/server/level/ChunkHolder;)Ljava/util/concurrent/CompletableFuture;",
+          "note": "the ticking future: chunk range future, thenApplyAsync on the mailbox, thenApplyAsync(lambda$prepareTickingChunk$28) on the main thread",
+          "sha256": "19a4dcc1cb7c474a16f483b3e1b1351d77829e8691db3ba54b3231ef782bc380"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap",
+          "method": "lambda$prepareTickingChunk$28",
+          "desc": "(Lnet/minecraft/server/level/ChunkHolder;Lnet/minecraft/server/level/ChunkResult;)Lnet/minecraft/server/level/ChunkResult;",
+          "note": "result.ifSuccess(lambda$prepareTickingChunk$27): the future completes with that result right after",
+          "sha256": "29c3fb8df36b46269cdd8fd5b4470ba72b6b6f47fbacc8a5e2fd5499dc29dfd0"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkMap",
+          "method": "lambda$prepareTickingChunk$27",
+          "desc": "(Lnet/minecraft/server/level/ChunkHolder;Lnet/minecraft/world/level/chunk/LevelChunk;)V",
+          "note": "postProcessGeneration, level.startTickingChunk(chunk), then the send-to-players step",
+          "sha256": "52a8be9ecdf42a1ccdf5f56b73941e8080dd1858f9aa03407043bf65cc3859a6"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkHolder",
+          "method": "getTickingChunkFuture",
+          "desc": "()Ljava/util/concurrent/CompletableFuture;",
+          "note": "returns tickingChunkFuture",
+          "sha256": "f26a4f8d8b88ddda686f42b82e4058bfa7afa67f5825ea6157cff49e171b1515"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkHolder",
+          "method": "updateFutures",
+          "desc": "(Lnet/minecraft/server/level/ChunkMap;Ljava/util/concurrent/Executor;)V",
+          "note": "becoming block-ticking: tickingChunkFuture = chunkMap.prepareTickingChunk(this); leaving it: complete(UNLOADED_LEVEL_CHUNK) and the shared unloaded future",
+          "sha256": "555dc4b7abf8c92d2c95cad7e9e08bdea63a3c4a6fc0a8e98df8a3f51b9b8145"
+        },
+        {
+          "class": "net/minecraft/server/level/DistanceManager",
+          "method": "inBlockTickingRange",
+          "desc": "(J)Z",
+          "note": "ChunkLevel.isBlockTicking(tickingTicketsTracker.getLevel(chunk))",
+          "sha256": "ea7b8cb19b976daf2d96cea85f8dc0e75269761e8e8f8aeb92fd8c97a871a50a"
+        },
+        {
+          "class": "net/minecraft/server/level/TickingTracker",
+          "method": "setLevel",
+          "desc": "(JI)V",
+          "note": "level >= 33 -> chunks.remove(chunk), else chunks.put(chunk, (byte) level)",
+          "sha256": "985fa67db57eae1a645c9299e9cbe9f95fc316560216b63965d1843493ef9f5d"
+        },
+        {
+          "class": "net/minecraft/server/level/TickingTracker",
+          "method": "getLevel",
+          "desc": "(J)I",
+          "note": "chunks.get(chunk) (default 33)",
+          "sha256": "68155541a7c79590208f44aaf45c3eec8df5cb606f8bc3632df175b1c865e485"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "areEntitiesLoaded",
+          "desc": "(J)Z",
+          "note": "chunkLoadStatuses.get(chunk) == LOADED",
+          "sha256": "33d8a21e8b3e221a1db3bb346ad792832f719da9c95479d6ca16fffe56d30f35"
+        },
+        {
+          "class": "net/minecraft/world/level/entity/PersistentEntitySectionManager",
+          "method": "processPendingLoads",
+          "desc": "()V",
+          "note": "per loaded ChunkEntities: addEntity + onAddedToLevel for each entity, then the one chunkLoadStatuses.put(chunk, LOADED)",
+          "sha256": "907c25482e0c9a202d5fd122e76556290f5f12e76f88fda7fbb3cb880378d7bd"
+        },
+        {
+          "class": "net/minecraft/server/level/ChunkLevel",
+          "method": "isBlockTicking",
+          "desc": "(I)Z",
+          "note": "level <= 32",
+          "sha256": "34dd4f7c7c495e83fafa5ec4f362af290f9958904db9bc92399835060645de1c"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: LevelTicks.sortContainersToTick HEAD (unpark) + @Redirect of its LongPredicate.test call (park in place: a put of a marker value on the walk's current, existing key; Long2LongOpenHashMap only); HEAD injects in addContainer / removeContainer / updateContainerScheduling; change hooks: TickingTracker.setLevel HEAD, ServerLevel.startTickingChunk HEAD, ChunkMap.promoteChunkMap RETURN, @WrapOperation (priority 1001) of the LOADED put in PersistentEntitySectionManager.processPendingLoads; wiring at the ServerLevel constructor RETURN (exact vanilla classes only, and no level parks while C2ME is installed)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic (helpers bons.furious.patch.vanilla_tick_lists.TickPark, TickParkAttach)"
+    }
+  }
+}

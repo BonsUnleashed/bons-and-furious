@@ -117,7 +117,8 @@
           "sha256_variants": [
             "6dd64527196a43d2afae002ce9870fac99a066d9038b0fb64a2951453098bba1"
           ],
-          "variant_reason": "Reviewed Mojang production bytecode: equivalent return/temporary-local layout differs from NeoForm recompilation. See evidence/*-bytecode-diff.txt."
+          "variant_reason": "Reviewed Mojang production bytecode: equivalent return/temporary-local layout differs from NeoForm recompilation. See evidence/*-bytecode-diff.txt.",
+          "note": "NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ."
         }
       ],
       "cancel": [],

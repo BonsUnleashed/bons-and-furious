@@ -1,0 +1,75 @@
+{
+  "group": "l2backpack_coo49",
+  "keys": {
+    "l2backpack_bag_count_from_nbt": {
+      "mod": "l2backpack",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.l2backpack_coo49.BagOccupiedMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/xkmc/l2backpack/content/bag/AbstractBag",
+          "method": "getOccupied",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "note": "getContent(stack), then the number of non-empty stacks",
+          "sha256": "92a99d2d1400c7a97b15ae32af65b279477b81c1265542e5e8f1e90341c36d0a"
+        },
+        {
+          "class": "dev/xkmc/l2backpack/content/bag/AbstractBag",
+          "method": "getContent",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/core/NonNullList;",
+          "note": "NonNullList.withSize(getInvSize(stack), EMPTY); stack.get(LBItems.BAG_CONTENT) (an ItemContainerContents) -> copyInto(list)",
+          "sha256": "b011b58c5ca6bb722c823356000eb65a3a856ef329a2a56fa88c814194941eb9"
+        },
+        {
+          "class": "dev/xkmc/l2backpack/content/bag/AbstractBag",
+          "method": "getInvSize",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "note": "64 * getSizeFactor(stack)",
+          "sha256": "7459814fa908b8a5adbda9cb18064401cde7480c368382611596bf8caa27fab6"
+        },
+        {
+          "class": "dev/xkmc/l2backpack/content/bag/AbstractBag",
+          "method": "getSizeFactor",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)I",
+          "note": "stack.getOrDefault(DC_DRAWER_STACKING, 1): a read only",
+          "sha256": "f1e563039d50d1a0ff126caa90cf8071321ef0a54380b22a3852ecd1df23efbf"
+        },
+        {
+          "class": "net/minecraft/world/item/component/ItemContainerContents",
+          "method": "copyInto",
+          "desc": "(Lnet/minecraft/core/NonNullList;)V",
+          "note": "slot i of the list = a copy of stored stack i, or a copy of EMPTY past the stored ones",
+          "sha256": "7b04030a7ffc23963d50f1d87049fdcb074676803e6466dfa0d467cc343bb731"
+        },
+        {
+          "class": "net/minecraft/world/item/component/ItemContainerContents",
+          "method": "nonEmptyItems",
+          "desc": "()Ljava/lang/Iterable;",
+          "note": "the stored stacks that are not empty, in order, not copied",
+          "sha256": "d7be7101452f5785333d3bff62ce33ac9e27bfd3e2b26227d3c82211c7cac8f8"
+        },
+        {
+          "class": "net/minecraft/world/item/component/ItemContainerContents",
+          "method": "getSlots",
+          "desc": "()I",
+          "note": "NeoForge: the number of stored slots (items.size())",
+          "sha256": "649dc3fef4fea8fc20600099dc1de97081bbc173c2930a8d6f7f0fe8f5ba9368"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "copy",
+          "desc": "()Lnet/minecraft/world/item/ItemStack;",
+          "note": "EMPTY for an empty stack, else a new stack of the same item and count (whose constructor runs verifyComponentsAfterLoad)",
+          "sha256": "6368b72382fb6d72045513735a6a385334d2a94aa21730e80c1f9667094d9be7"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on AbstractBag.getOccupied (with @Shadow getInvSize / getContent): the non-empty stacks of the stored bag_content component counted in place after the bag's own getInvSize (helper bons.furious.patch.l2backpack_coo49.BagCount); bag classes with their own getContent, stored contents with more slots than the bag and a negative size run the shipped method. 1.21.1: the contents are an ItemContainerContents data component, so the 1.20.1 NBT entry parse is gone.",
+      "license": "LGPL-2.1 (L2 Backpack): no L2 Backpack code is carried; Minecraft (Mojang): no-copy"
+    }
+  }
+}

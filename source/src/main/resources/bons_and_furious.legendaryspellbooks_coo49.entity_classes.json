@@ -1,0 +1,7 @@
+{
+  "layer": "vanilla_entity_class_count_layer",
+  "entries": [
+    {"class": "net.miauczel.legendary_monsters.entity.AnimatedMonster.Projectile.Tornado", "key": "legendary_spellbooks_tornado_presence_gate", "mod": "legendary_spellbooks",
+     "why": "Legendary Spellbooks 0.3.2 (NeoForge 1.21.1) TornadoEntityHandler.onLivingUpdate (EntityTickEvent.Pre) searches Legendary Monsters 2.2.3's Tornado around every entity every server tick; counted only while Legendary Spellbooks is installed"}
+  ]
+}

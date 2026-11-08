@@ -1,0 +1,61 @@
+{
+  "group": "mob_refresh_c49",
+  "keys": {
+    "mob_tick_dimension_refresh_always_skip": {
+      "mod": "minecraft",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mob_refresh_c49.RefreshSkipAlwaysMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "refreshDimensions",
+          "desc": "()V",
+          "note": "refreshDimensions: old = dimensions, pose, getDimensions(pose), EventHooks.getEntitySizeForge (once), store getNewSize and its eyeHeight, reapplyPosition (once), the grow-only fudgePositionAfterSizeChange",
+          "sha256": "35ff3b7c78fa7f56cb7751202f36bd82b1883357e8477bb41c4cd7b0afdaeff6"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "reapplyPosition",
+          "desc": "()V",
+          "note": "reapplyPosition: setPos(position.x, position.y, position.z)",
+          "sha256": "5fc268bb30ab0dffa29245b2c5122c80e98ac92c59868f779bacf94acf1c019a"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "setPos",
+          "desc": "(DDD)V",
+          "note": "setPos: setPosRaw, then setBoundingBox(makeBoundingBox())",
+          "sha256": "f5b098cea08f36e811dc64ef2b8d2a6021bcab09ab1afe02c51c1e3a95d45616"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "setPosRaw",
+          "desc": "(DDD)V",
+          "note": "final; an unchanged position writes no field; NeoForge's getChunk of the entity's own chunk for an added server entity",
+          "sha256": "e175e597d8aec920da5a7f1e2178db3e34cdcae34089a4cfe95ed3f0a823b1c8"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "makeBoundingBox",
+          "desc": "()Lnet/minecraft/world/phys/AABB;",
+          "note": "makeBoundingBox: dimensions.makeBoundingBox(position)",
+          "sha256": "bc25c0d80426d1346a59339d126cc614f307d4c243f6cb9c77670bee2aa0fcdf"
+        },
+        {
+          "class": "net/neoforged/neoforge/event/EventHooks",
+          "method": "getEntitySizeForge",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Pose;Lnet/minecraft/world/entity/EntityDimensions;Lnet/minecraft/world/entity/EntityDimensions;)Lnet/neoforged/neoforge/event/entity/EntityEvent$Size;",
+          "note": "new EntityEvent.Size(entity, pose, oldSize, newSize), posted on NeoForge.EVENT_BUS, returned",
+          "sha256": "96a2f06b6708bb6bf2531461fd7810c657351e95c190b11bc38f85ee13771692"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapOperation of EventHooks.getEntitySizeForge(Entity, Pose, EntityDimensions, EntityDimensions) and of reapplyPosition in Entity.refreshDimensions, sharing the decision through a @Share local; for Born in Chaos and Critters n' Crawlers mobs (class name scope, never players) the Size event is built as NeoForge builds it but not posted and the re-apply left out when the refresh changes nothing (same width, height, eye height, fixed flag and attachment points object; helper bons.furious.patch.mob_refresh_c49.RefreshSkip)",
+      "license": "Minecraft (Mojang), NeoForge: no-copy; no Born in Chaos or Critters n' Crawlers code is carried (their classes are matched by package name)"
+    }
+  }
+}

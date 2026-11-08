@@ -1,0 +1,101 @@
+{
+  "group": "simplyswords_coo49",
+  "keys": {
+    "simplyswords_incapacitated_lockfree": {
+      "mod": "simplyswords",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.simplyswords_coo49.IncapacitatedRegistryMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/sweenus/simplyswords/api/IncapacitatingStatusEffectRegistry",
+          "method": "*",
+          "desc": "",
+          "note": "declares <init>, register, isIncapacitated, its stream lambda, registeredEffects and <clinit>: register is the only writer of the private EFFECTS set",
+          "sha256": "c5acc62c70e96f97da0a8c7c7b74d7419b577379acdb3fe4c347d2cf9f5e1739"
+        },
+        {
+          "class": "net/sweenus/simplyswords/api/IncapacitatingStatusEffectRegistry",
+          "method": "register",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)V",
+          "note": "static synchronized: null -> IllegalArgumentException, else EFFECTS.add(id); our RETURN inject republishes the snapshot inside the monitor",
+          "sha256": "604ed94032dbd848a1617468ed0865cac8ee8d7cb92e2a933f37b3a7170f57bf"
+        },
+        {
+          "class": "net/sweenus/simplyswords/api/IncapacitatingStatusEffectRegistry",
+          "method": "isIncapacitated",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "static synchronized: entity == null || EFFECTS.isEmpty() -> false, else getActiveEffects().stream().map(lambda$isIncapacitated$0).anyMatch(EFFECTS::contains); replaced by a lock-free twin",
+          "sha256": "41cdbc657d5baec19f47044a6842f8c10ae56d36709af54b44e14174001cf213"
+        },
+        {
+          "class": "net/sweenus/simplyswords/api/IncapacitatingStatusEffectRegistry",
+          "method": "lambda$isIncapacitated$0",
+          "desc": "(Lnet/minecraft/world/effect/MobEffectInstance;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "BuiltInRegistries.MOB_EFFECT.getKey(instance.getEffect().value()): the key our loop asks the same way",
+          "sha256": "9429ce1edf852537c21dc269f95e095b065343712e023d25a2e2ee4980fafb53"
+        },
+        {
+          "class": "net/sweenus/simplyswords/api/IncapacitatingStatusEffectRegistry",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "EFFECTS = new LinkedHashSet<>() (starts empty, as the snapshot does)",
+          "sha256": "f3871ef8789ecbc966549f5b802fea08dd9e239349896e47650378790bc334bb"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "getActiveEffects",
+          "desc": "()Ljava/util/Collection;",
+          "note": "getActiveEffects: the values view of activeEffects, read in the same order",
+          "sha256": "126e0d7c2a413a8f1e246d7fbbbfbd35a64ff9c34979e49f3cd326afe4b0bc22"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Overwrite of IncapacitatingStatusEffectRegistry.isIncapacitated(LivingEntity) (the replacement is not synchronized; its body only calls our helper) + @Inject at RETURN of register(ResourceLocation) that republishes an immutable copy of the registry's set (volatile, written inside register's monitor). The check reads the copy without the class monitor: null entity or empty set -> false, else the entity's active effects in order, each registry key (MOB_EFFECT.getKey of the effect holder's value, Minecraft 1.21.1) tested with Set.contains, first hit wins. Runtime flag simplyswordsIncapacitatedLockfree (off: the same check under the class monitor against the registry's own set); shadow mode .shadow. Helper bons.furious.patch.simplyswords_coo49.IncapacitatedSnapshot.",
+      "license": "Simply Swords (Timefall Development License, treated as All Rights Reserved): no Simply Swords code is carried; the replacement method's body and the RETURN hook call only our own logic (IncapacitatedSnapshot)"
+    },
+    "simplyswords_pity_loot_deque_keep": {
+      "mod": "simplyswords",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.simplyswords_coo49.PityLootDequeKeepMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/sweenus/simplyswords/loot/PityLootContext",
+          "method": "*",
+          "desc": "",
+          "note": "declares capture, take (+ <init>, <clinit>): the thread's deque is reached only through CAPTURED_TABLES.get() in these two",
+          "sha256": "288b67f85a154315300154daa1f915b98c2a4a2f208a67dc2431c93be5423747"
+        },
+        {
+          "class": "net/sweenus/simplyswords/loot/PityLootContext",
+          "method": "take",
+          "desc": "()Lnet/minecraft/resources/ResourceKey;",
+          "note": "the two CAPTURED_TABLES.remove() calls this switch skips: on an empty deque, and after popping the last entry",
+          "sha256": "cba69bbe09f642e195616cbcfcf1bffac82f6a0c96a246e686bb8c1df41da22a"
+        },
+        {
+          "class": "net/sweenus/simplyswords/loot/PityLootContext",
+          "method": "capture",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;)V",
+          "note": "CAPTURED_TABLES.get().push(new CapturedTable(table))",
+          "sha256": "0472ad1d4fcf714f2b00f533af04bd07c41452616ccc198b585e86df3f28cabd"
+        },
+        {
+          "class": "net/sweenus/simplyswords/loot/PityLootContext",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "CAPTURED_TABLES = ThreadLocal.withInitial(ArrayDeque::new): the empty deque the kept one equals",
+          "sha256": "2933c11cf72c1e1d843e9aa4c871713686b690bac545b636dc4f999967fa2815"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on both ThreadLocal.remove() calls in PityLootContext.take(): skipped while the runtime flag simplyswordsPityLootDequeKeep is on (the thread keeps its empty deque, which is what withInitial builds next). Helper bons.furious.patch.simplyswords_coo49.PityLootDeque.",
+      "license": "Simply Swords (Timefall Development License, treated as All Rights Reserved): no Simply Swords code is carried; the wrapper only decides whether Simply Swords' own call runs"
+    }
+  }
+}

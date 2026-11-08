@@ -1,0 +1,68 @@
+{
+  "group": "chunksending_solo",
+  "keys": {
+    "chunksending_solo_no_packet_cache": {
+      "mod": "chunksending",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.chunksending_solo.ChunkSendingSoloMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/chunksending/mixin/cache/PlayerChunkSenderPacketCacheMixin",
+          "method": "chunksending$prioCached",
+          "desc": "(Lnet/minecraft/world/level/chunk/LevelChunk;Lnet/minecraft/world/level/lighting/LevelLightEngine;Ljava/util/BitSet;Ljava/util/BitSet;Lcom/llamalad7/mixinextras/injector/wrapoperation/Operation;Lnet/minecraft/server/network/ServerGamePacketListenerImpl;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/chunk/LevelChunk;)Lnet/minecraft/network/protocol/game/ClientboundLevelChunkWithLightPacket;",
+          "note": "the WrapOperation handler on the packet construction in sendChunk: shouldUseCache and a packet-cache chunk -> the cached packet, or original.call + setCachedPacket + EventHandler.addToClear; otherwise original.call with the same four arguments",
+          "sha256": "402e89f02d6d76c34274a2e8c5142e1f3186dd741fe2a72f71c17817b2ffaeee"
+        },
+        {
+          "class": "com/chunksending/mixin/cache/PlayerChunkSenderPacketCacheMixin",
+          "method": "chunksending$shouldUseCache",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/level/chunk/LevelChunk;)Z",
+          "note": "the server's isSameThread() and the cacheChunkPackets option",
+          "sha256": "b57d12730be40baeff716fe43a3ebc447e53484e8a1c5edcaf7cb943d74067bb"
+        },
+        {
+          "class": "com/chunksending/event/EventHandler",
+          "method": "addToClear",
+          "desc": "(Lcom/chunksending/chunk/IChunkPacketCache;)V",
+          "note": "Chunk Sending 4.1: the store's deadline (now + 5 minutes) appended to its insertion-ordered expiry queue: entries stored before the second player left age out",
+          "sha256": "d2d98c9f869e4cfdad7801252b9edc455605184a7660fd8029609195d3aa861e"
+        },
+        {
+          "class": "net/minecraft/server/network/PlayerChunkSender",
+          "method": "sendChunk",
+          "desc": "(Lnet/minecraft/server/network/ServerGamePacketListenerImpl;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/chunk/LevelChunk;)V",
+          "note": "sendChunk: builds new ClientboundLevelChunkWithLightPacket(chunk, level.getLightEngine(), null, null) (the construction Chunk Sending wraps) and sends it",
+          "sha256": "0ae4af818168bdbb4bdd5a032650c1f309ad606685a435e319707a49400532cc"
+        },
+        {
+          "class": "net/minecraft/server/level/ServerLevel",
+          "method": "getServer",
+          "desc": "()Lnet/minecraft/server/MinecraftServer;",
+          "note": "getServer",
+          "sha256": "cc4acbded16360bbd5cf2de083891de955931bc376b750b8a3ac68eec7180fd4"
+        },
+        {
+          "class": "net/minecraft/server/MinecraftServer",
+          "method": "getPlayerList",
+          "desc": "()Lnet/minecraft/server/players/PlayerList;",
+          "note": "getPlayerList",
+          "sha256": "714f9c872dfbbaaf841c17c4930f6033d0b977a19a6ae2fb450937355ea1b28d"
+        },
+        {
+          "class": "net/minecraft/server/players/PlayerList",
+          "method": "getPlayerCount",
+          "desc": "()I",
+          "note": "getPlayerCount = players.size()",
+          "sha256": "8a023f572c913c99f934df72bd68c69b326b07f9fae720cb846010f86da0f0db"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinSquared @TargetHandler, cancellable @Inject at the HEAD of Chunk Sending 4.1's chunksending$prioCached handler (its PlayerChunkSenderPacketCacheMixin's @WrapOperation on the packet construction in PlayerChunkSender.sendChunk; one handler serves and stores), static, require = 0, expect = 0, priority 1500: while fewer than two players are online it returns the packet the handler's own uncached branch builds (the handler's Operation called with the same four arguments), so nothing is served or stored; helper bons.furious.patch.chunksending_solo.ChunkSendingSolo",
+      "license": "All Rights Reserved (Chunk Sending, no-copy): none of its code is carried; our injector only decides whether its unchanged handler serves or stores; Minecraft: no code"
+    }
+  }
+}

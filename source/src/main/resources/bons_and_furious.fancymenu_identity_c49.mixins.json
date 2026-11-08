@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.fancymenu_identity_c49",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "bons.pure.config.PureMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "IdentifierClassMemoMixin",
+    "ScreenBlacklistMemoMixin",
+    "UniversalIdentifierIndexMixin"
+  ]
+}

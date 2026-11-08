@@ -1,0 +1,89 @@
+{
+  "group": "stale_player_maps_toe",
+  "keys": {
+    "stale_player_map_purge_tonsofenchants": {
+      "mod": "tonsofenchants",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.stale_player_maps_toe.ToeExcavatorMapMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/deltajay/tonsofenchants/util/PU",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "Tons Of Enchants 1.21.1-v1.0 for NeoForge: orechainMap = new HashMap<>() and excavatorMap = new HashMap<>() (public static final Map<Player, Boolean>), then processedBlocks and RANDOM",
+          "sha256": "e7d874ddb618b50949827ed47b4ed996d94a489ddb09fa6ce5f76c8684c2943d"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/util/PU",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: inside PU only destroyOreVein and destroyBlocksCube touch the two maps",
+          "sha256": "8e2857f4e081aeeea64cc505f4e51052eefba51b68561fcda5371b3a8d778165"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/util/PU",
+          "method": "destroyBlocksCube",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Level;)V",
+          "note": "excavatorMap.put(player, true), the 3 x 3 x 3 destroyBlock walk, excavatorMap.put(player, false)",
+          "sha256": "d4eac3519d5e3ba0ab527575109da11c19c35331e78e4410e17bdda0a3f1344e"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/util/PU",
+          "method": "destroyOreVein",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/Level;Ljava/util/Set;Ljava/util/Queue;)V",
+          "note": "orechainMap.getOrDefault(player, false) guard, put(player, true), the vein walk, put(player, false) on both exits",
+          "sha256": "4dcdf40ad45d888e0f52b068f5f7c4beb711b31c3610020f1200ada50839ca28"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantment/EnchantmentEvents$OtherEnchantmentEvents",
+          "method": "excavator",
+          "desc": "(Lnet/neoforged/neoforge/event/level/BlockEvent$BreakEvent;)V",
+          "note": "PU.excavatorMap.getOrDefault(the breaking player, false) before destroyBlocksCube (BreakEvent: server only)",
+          "sha256": "b2e915040119d96daa4392cdc9f3769baf41c2c897fffd135b77959dfc73cb84"
+        },
+        {
+          "class": "com/deltajay/tonsofenchants/enchantment/EnchantmentEvents$OtherEnchantmentEvents",
+          "method": "orechain",
+          "desc": "(Lnet/neoforged/neoforge/event/level/BlockEvent$BreakEvent;)V",
+          "note": "PU.orechainMap.getOrDefault(the breaking player, false) before destroyOreVein (BreakEvent: server only)",
+          "sha256": "c1c4e62c41be5d87edef4b1a780af797253dc2855b98163b7f35a135ed911c9f"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "equals",
+          "desc": "(Ljava/lang/Object;)Z",
+          "note": "equal = same entity id: a respawned player equals its predecessor",
+          "sha256": "dcd4eab34d6347ed8288a5fb8224c9d683d497bad0a0e8fffae926cd24971deb"
+        },
+        {
+          "class": "net/minecraft/world/entity/Entity",
+          "method": "hashCode",
+          "desc": "()I",
+          "note": "the entity id",
+          "sha256": "45f42d1db77741534e550ab77c573466c57f830c021cd4d0c8e63374bbdb454e"
+        },
+        {
+          "class": "net/minecraft/server/players/PlayerList",
+          "method": "remove",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;)V",
+          "note": "remove (logout, server stop): removal reason UNLOADED_WITH_PLAYER",
+          "sha256": "95a0ed959bbceaa2a558a7a1efb29a3da9809186920412f74394e97dd445db2d"
+        },
+        {
+          "class": "net/minecraft/server/players/PlayerList",
+          "method": "respawn",
+          "desc": "(Lnet/minecraft/server/level/ServerPlayer;ZLnet/minecraft/world/entity/Entity$RemovalReason;)Lnet/minecraft/server/level/ServerPlayer;",
+          "note": "respawn: the old player removed with the given reason (not UNLOADED_WITH_PLAYER), the new one gets its id",
+          "sha256": "4d3a716b38995a9826b71cf5d983b47e08974d24de7da56ee326945f013d3135"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix: @Inject at RETURN of PU.<clinit> (@Shadow of its static excavatorMap and orechainMap) hands both maps to the shared stale-player-map layer bons.furious.patch.stale_player_maps.StalePlayerKeys as server ID maps, bound by name through a MethodHandle (helper bons.furious.patch.stale_player_maps_toe.ToeMaps); the layer's listeners swap a respawned player's key and purge at logout",
+      "license": "MIT (Tons Of Enchants): no Tons of Enchants code is carried; the mixin hands over map references"
+    }
+  }
+}

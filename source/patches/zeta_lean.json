@@ -1,0 +1,39 @@
+{
+  "group": "zeta_lean",
+  "keys": {
+    "zeta_structure_function_array": {
+      "mod": "zeta",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.zeta_lean.StructureFunctionArrayMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/violetmoon/zeta/util/handler/StructureBlockReplacementHandler",
+          "method": "getResultingBlockState",
+          "desc": "(Lnet/minecraft/world/level/ServerLevelAccessor;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "holder active -> for (fun : functions) { res = fun.transformBlockstate(level, state, holder); if (res != null) return res; } return state",
+          "sha256": "971be70ffb1f23be053a7af4aade5f3794242a08e7de283b1adc9f559907fec2"
+        },
+        {
+          "class": "org/violetmoon/zeta/util/handler/StructureBlockReplacementHandler",
+          "method": "addReplacement",
+          "desc": "(Lorg/violetmoon/zeta/util/handler/StructureBlockReplacementHandler$StructureFunction;)V",
+          "note": "functions.add(func): the only writer of the set",
+          "sha256": "473ca1a7a2c42a69b165e08bce524389745e1218f89077418f8d51adbed50642"
+        },
+        {
+          "class": "org/violetmoon/zeta/util/handler/StructureBlockReplacementHandler",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: no other method touches the private functions set",
+          "sha256": "5b6ddee958ba95e75bae75c473470677328406f2c405173c6df49104841063df"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the Set.iterator() call in Zeta's StructureBlockReplacementHandler.getResultingBlockState to an iterator over an array snapshot in the set's iteration order; @Inject at the TAIL of addReplacement bumps the snapshot epoch; helper bons.furious.patch.zeta_lean.StructureFunctions",
+      "license": "Zeta (custom licence, see its LICENSE.md): no Zeta code is carried; Zeta's loop is unchanged, only the iterator it walks comes from our snapshot"
+    }
+  }
+}

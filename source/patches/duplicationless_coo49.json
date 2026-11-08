@@ -1,0 +1,145 @@
+{
+  "group": "duplicationless_coo49",
+  "keys": {
+    "duplicationless_lazy_tracker": {
+      "mod": "duplicationless",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.duplicationless_coo49.LazyTrackerMixin"
+      ],
+      "guard": [
+        {
+          "class": "me/kall/duplicationless/data/AbstractEntityTracker",
+          "method": "update",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/Level;ZLit/unimi/dsi/fastutil/objects/ObjectList;)V",
+          "note": "chunk, section, dimension, id, type id read now; one task (lambda$update$24) queued on UPDATE_TASKS",
+          "sha256": "41f18bfa3f464e349d991924971122555bd13d7d33b390a115f8b8fd5e6bdfbd"
+        },
+        {
+          "class": "me/kall/duplicationless/data/AbstractEntityTracker",
+          "method": "lambda$update$24",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;JIZILnet/minecraft/resources/ResourceLocation;ZLit/unimi/dsi/fastutil/objects/ObjectList;)V",
+          "note": "the task: ENTITIES[dim][chunk][section] add / remove (empty storages, chunks and dimensions dropped)",
+          "sha256": "01092d8e0afc887edae8125e8688abc7ce7e91353b5df87e8103f5d02df9c878"
+        },
+        {
+          "class": "me/kall/duplicationless/data/AbstractEntityTracker",
+          "method": "drainUpdateTasks",
+          "desc": "()V",
+          "note": "poll and run every queued task",
+          "sha256": "ed1fd158e11d6c3c7bc1b99ac3b463c79c0178348751295cbdb39290adf6828d"
+        },
+        {
+          "class": "me/kall/duplicationless/data/AbstractEntityTracker",
+          "method": "reset",
+          "desc": "()V",
+          "note": "clears the queue, ENTITIES and FILTERS",
+          "sha256": "d5d55f0bd5aad1de8eea5dcd697237ee74f5d42e3a064ed71c19b3a8a7cd1c90"
+        },
+        {
+          "class": "me/kall/duplicationless/data/AbstractEntityTracker",
+          "method": "chunkSections",
+          "desc": "(Lnet/minecraft/world/level/Level;J)Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;",
+          "note": "the only reader of ENTITIES besides the task and reset; every query below calls it first",
+          "sha256": "bf4b1954ec4181d8f35aa0712973b90401d9527983bb174ec3e5979261172335"
+        },
+        {
+          "class": "me/kall/duplicationless/data/AbstractEntityTracker",
+          "method": "getEntityListInternal",
+          "desc": "(Lnet/minecraft/world/level/Level;JLjava/util/function/Function;)Lit/unimi/dsi/fastutil/objects/ObjectList;",
+          "note": "assertThread, then chunkSections",
+          "sha256": "d2d80406e585038bc11c037b0156c1ef8f6af6fb2fc4092d467695f3b406bc49"
+        },
+        {
+          "class": "me/kall/duplicationless/data/AbstractEntityTracker",
+          "method": "getInternal",
+          "desc": "(Lnet/minecraft/world/level/Level;JLjava/util/function/Function;)Lit/unimi/dsi/fastutil/ints/IntSet;",
+          "note": "assertThread, then chunkSections",
+          "sha256": "226fa3714023155c0f9b8015ecfa40955177c4c2e1e95af6ddb3e81c3b783f6f"
+        },
+        {
+          "class": "me/kall/duplicationless/data/AbstractEntityTracker",
+          "method": "forEachInternal",
+          "desc": "(Lnet/minecraft/world/level/Level;JLjava/util/function/Function;Ljava/util/function/Consumer;)V",
+          "note": "assertThread, then chunkSections",
+          "sha256": "fef855eef25afeff878a1792bc1c80b01a40f388761d992e654ee778a6b37b65"
+        },
+        {
+          "class": "me/kall/duplicationless/data/AbstractEntityTracker",
+          "method": "countInternal",
+          "desc": "(Lnet/minecraft/world/level/Level;JLjava/util/function/Function;)I",
+          "note": "assertThread, then chunkSections",
+          "sha256": "f1568a1d3651f5e120efacd831fdf68144ffda4f8f1eba350de4e705edc722d6"
+        },
+        {
+          "class": "me/kall/duplicationless/data/AbstractEntityTracker",
+          "method": "getInternal",
+          "desc": "(Lnet/minecraft/world/level/Level;JILjava/util/function/Function;)Lit/unimi/dsi/fastutil/ints/IntSet;",
+          "note": "assertThread, then chunkSections (one section)",
+          "sha256": "08187db4991a4c2e51d3ca98f549a8b7500696ae4551339b6f4f9828e9d77d5c"
+        },
+        {
+          "class": "me/kall/duplicationless/data/AbstractEntityTracker",
+          "method": "forEachInternal",
+          "desc": "(Lnet/minecraft/world/level/Level;JILjava/util/function/Function;Ljava/util/function/Consumer;)V",
+          "note": "assertThread, then chunkSections (one section)",
+          "sha256": "a50e56af52271937e7e350cbf267190c38df214d1f5862e8a02998a3620129cf"
+        },
+        {
+          "class": "me/kall/duplicationless/data/AbstractEntityTracker",
+          "method": "countInternal",
+          "desc": "(Lnet/minecraft/world/level/Level;JILjava/util/function/Function;)I",
+          "note": "assertThread, then chunkSections (one section)",
+          "sha256": "e91ef8c479f403809e10edaffb0644e3db03629f81fa70c4ab5db26efe978706"
+        },
+        {
+          "class": "me/kall/duplicationless/data/AbstractEntityTracker",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: no other query path past chunkSections",
+          "sha256": "106a2d1219fc74da12b251d78c77844d194763cbfb6f46e2e0ec6844ab6a3bd0"
+        },
+        {
+          "class": "me/kall/duplicationless/data/EntityTracker",
+          "method": "update",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/server/level/ServerLevel;Z)V",
+          "note": "INSTANCE.update(entity, level, add, Filterable.getMatched(entity)): the server tracker's only update path",
+          "sha256": "56ab3402384275663ba67a5883ad86c9c954ce091596d2b99a5371fa679742dd"
+        },
+        {
+          "class": "me/kall/duplicationless/data/ClientEntityTracker",
+          "method": "update",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/client/multiplayer/ClientLevel;Z)V",
+          "note": "INSTANCE.update(entity, level, add, ClientFilterable.getMatched(entity)): the client tracker's only update path",
+          "sha256": "37a9897aabd9d91b4bda2b9aeb832ea4cdb3b2dd24d42963f52ee5f8b7850a36"
+        },
+        {
+          "class": "me/kall/duplicationless/data/EntityTracker$Filterable",
+          "method": "getMatched",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lit/unimi/dsi/fastutil/objects/ObjectList;",
+          "note": "the entity's cached filter matches (initialised once from EntityTracker.INSTANCE.FILTERS)",
+          "sha256": "d0729f521d57f727203f88ac9fa3e6e613a690260a812b9126cac5d040782b79"
+        },
+        {
+          "class": "me/kall/duplicationless/data/ClientEntityTracker$ClientFilterable",
+          "method": "getMatched",
+          "desc": "(Lnet/minecraft/world/entity/Entity;)Lit/unimi/dsi/fastutil/objects/ObjectList;",
+          "note": "the client side's cached filter matches",
+          "sha256": "b18546dd6c2e25027ed56f6c6f98cfd2ceeb5a6cf19674a5cfc14dd286108e92"
+        },
+        {
+          "class": "me/kall/duplicationless/data/EntityTracker",
+          "method": "onLeave",
+          "desc": "(Lnet/neoforged/neoforge/event/entity/EntityLeaveLevelEvent;)V",
+          "note": "NeoForge's leave event (also posted when a chunk's entities stop being tracked): update(entity, level, false)",
+          "sha256": "e5893bdf1ae1575ee1236727342d89d4929ec5a8fe47ae489f59819dafd5e3ba"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of AbstractEntityTracker.update (Duplicationless 1.21.1-1.2.1): nothing is queued for a dimension nobody has asked about; @Inject HEAD of chunkSections (every query passes it): the first question about a dimension builds it from every entity in the level's entity sections (hidden included; ServerLevel.entityManager / ClientLevel.entityStorage -> sectionStorage -> sections, read by reflection) through the tracker's own update() and drainUpdateTasks(), other dimensions' queued tasks set aside and put back in order; @Inject RETURN of reset: the built dimensions are forgotten. The mode (lazy or as shipped) is decided per tracker at its first use. Trade-off (off by default): in the tick of a dimension's first question the answers already include that tick's joins, leaves and moves; entities the shipped tracker dropped when their chunk stopped being tracked are listed again if still loaded at the first question. Runtime flag duplicationlessLazyTracker. Helper bons.furious.patch.duplicationless_coo49.LazyTracker.",
+      "license": "Duplicationless (MIT): no code carried",
+      "kind": "change"
+    }
+  }
+}

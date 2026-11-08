@@ -1,0 +1,81 @@
+{
+  "group": "darkdoppelganger_coo49",
+  "keys": {
+    "darkdoppelganger_boss_bar_prefix_check": {
+      "mod": "darkdoppelganger",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.darkdoppelganger_coo49.BossBarNamePrefixMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/bandit/darkdoppelganger/client/gui/DarkDoppelBossBar",
+          "method": "renderBossBar",
+          "desc": "(Lnet/neoforged/neoforge/client/event/CustomizeGuiOverlayEvent$BossEventProgress;)V",
+          "note": "boss = event.getBossEvent(); boss.getName().getString() (the wrapped call) is only asked startsWith(\"Dark Doppelganger\"); true -> cancel the event, draw the custom bar",
+          "sha256": "e1fd778188af7ba36b21b7db5055c71b61ffacb011b0371640a74ce770b25e7b"
+        },
+        {
+          "class": "net/bandit/darkdoppelganger/client/GuiOverlayHandler",
+          "method": "renderBossBar",
+          "desc": "(Lnet/neoforged/neoforge/client/event/CustomizeGuiOverlayEvent$BossEventProgress;)V",
+          "note": "the game-bus listener: DarkDoppelBossBar.renderBossBar(event) for every boss bar of every frame",
+          "sha256": "5e2855d79740b577fc87eef59c1e2d8330881157da7aa9e7804d2c5dd07c8089"
+        },
+        {
+          "class": "net/minecraft/network/chat/Component",
+          "method": "getString",
+          "desc": "()Ljava/lang/String;",
+          "note": "FormattedText's getString",
+          "sha256": "68dffa1b8a8941ef4ffb8dcfcb283215956845f7c1d0a62fd09244d15f7676b8"
+        },
+        {
+          "class": "net/minecraft/network/chat/FormattedText",
+          "method": "getString",
+          "desc": "()Ljava/lang/String;",
+          "note": "a StringBuilder filled by visit(ContentConsumer), no early stop",
+          "sha256": "10a3d5e05ba32f52052f05f9fbb949b3ed13081b8fdcb43f6584090b78f44364"
+        },
+        {
+          "class": "net/minecraft/network/chat/Component",
+          "method": "visit",
+          "desc": "(Lnet/minecraft/network/chat/FormattedText$ContentConsumer;)Ljava/util/Optional;",
+          "note": "visit: contents first, then every sibling in order, stop at the first present answer (MutableComponent does not override it)",
+          "sha256": "268b458cb869c833f0e1aeee8e44584037cf075bda85b45d6931ab50d3335575"
+        },
+        {
+          "class": "net/minecraft/network/chat/contents/TranslatableContents",
+          "method": "visit",
+          "desc": "(Lnet/minecraft/network/chat/FormattedText$ContentConsumer;)Ljava/util/Optional;",
+          "note": "decompose (a cache per language), NeoForge's translation stack pushed, the parts visited in order, popped in finally",
+          "sha256": "d4093e8e06f1668ee9f0a4ff0769662a409b2ed19d98b7500798ff36011991d6"
+        },
+        {
+          "class": "net/minecraft/network/chat/contents/TranslatableContents",
+          "method": "decompose",
+          "desc": "()V",
+          "note": "NeoForge: a language entry that is a component becomes the only part; otherwise the template split into text and argument parts",
+          "sha256": "44e39704e195445d6d83b7885dd95be8fa3ebfdeaba284d73d1a979e634477fb"
+        },
+        {
+          "class": "net/minecraft/network/chat/contents/PlainTextContents$LiteralContents",
+          "method": "visit",
+          "desc": "(Lnet/minecraft/network/chat/FormattedText$ContentConsumer;)Ljava/util/Optional;",
+          "note": "accept(text)",
+          "sha256": "16043fdb6f57ac5e9232b2046008fd6c3621fefcb5dcd684cc7bea1314c07d6c"
+        },
+        {
+          "class": "net/minecraft/network/chat/contents/KeybindContents",
+          "method": "visit",
+          "desc": "(Lnet/minecraft/network/chat/FormattedText$ContentConsumer;)Ljava/util/Optional;",
+          "note": "the lazily resolved key name component's visit",
+          "sha256": "e4699fe49bfea65334fc51cb6aa5270e016991d83da69174b434dcecf70c0dac"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Component.getString() call in DarkDoppelBossBar.renderBossBar (Dark Doppelganger 4.0.0; ClientEvents.onCustomizeBossBar in 9.9.0): for a plain vanilla component tree the same visit with a consumer that compares against \"Dark Doppelganger\" and stops at the first difference or the 17th character; answers that prefix or \"\" (only startsWith is asked); other trees the original call. Runtime flag darkdoppelgangerBossBarPrefixCheck. Helper bons.furious.patch.darkdoppelganger_coo49.DoppelNamePrefix.",
+      "license": "Dark Doppelganger (All Rights Reserved): no code carried; the comparison is ours on vanilla's component visit"
+    }
+  }
+}

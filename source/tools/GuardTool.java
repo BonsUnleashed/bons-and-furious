@@ -120,7 +120,7 @@ public final class GuardTool {
             if (fp != null) present++;
             JsonArray kept = new JsonArray();
             for (JsonElement r : arr(o, "sha256_also")) if (!label.equals(str(r.getAsJsonObject(), "build"))) kept.add(r);
-            if (java.util.Objects.equals(fp, tested)) same++;
+            if (matches(expected(o, ""), fp)) same++;   // the tested build, its reviewed variants (sha256_variants) included
             else {
                 JsonObject row = new JsonObject();
                 row.addProperty("build", label);
@@ -169,11 +169,13 @@ public final class GuardTool {
         Map<String, String> mixinKey = new TreeMap<>();
         Map<String, String> mod = new TreeMap<>();
         Map<String, List<String>> guard = new TreeMap<>();
-        Map<String, String> cancel = new TreeMap<>();
+        // since 1.0.49: another mod's mixin -> every switch that names it (one cancel line each; Guards.cancellingKey decides)
+        Map<String, List<String>> cancel = new TreeMap<>();
         List<JsonObject> yields = new ArrayList<>();
         List<String> notes = new ArrayList<>();          // since 1.0.46: redundant keys that do not match these jars
         List<String> redundantLines = new ArrayList<>();
         List<String> auditLines = new ArrayList<>();
+        Map<String, List<String>> standdownLines = new TreeMap<>();   // since 1.0.49: key -> its "standdown" lines (entry order)
         int alternatives = 0;
         for (Path f : files) {
             JsonObject root = JsonParser.parseString(Files.readString(f)).getAsJsonObject();
@@ -187,20 +189,22 @@ public final class GuardTool {
                     String prev = mixinKey.put(m.getAsString(), key);
                     if (prev != null) problems.add(m.getAsString() + " is listed under " + prev + " and " + key);
                 }
-                for (JsonElement c : arr(o, "cancel")) cancel.put(c.getAsString(), key);
+                for (JsonElement c : arr(o, "cancel")) addCancel(cancel, c.getAsString(), key);
                 // since 1.0.46: redundant_since lines (mod, first fixed version, even_if_matching, note)
                 for (JsonElement r : arr(o, "redundant_since")) {
                     JsonObject rs = r.getAsJsonObject();
                     String rm = str(rs, "mod"), rv = str(rs, "version"), note = str(rs, "note");
                     if (rm == null || rv == null || !Character.isDigit(rv.charAt(0)) || note != null && note.contains("\t"))
                         problems.add(key + ": redundant_since needs mod and a numeric version (and no tab in the note): " + rs);
+                    // since 1.0.49 an empty note is written as "-": no line of the table may end in an empty field
                     else redundantLines.add(String.join("\t", key, rm, rv, String.valueOf(rs.has("even_if_matching") && rs.get("even_if_matching").getAsBoolean()),
-                            note == null ? "" : note));
+                            note == null || note.isEmpty() ? "-" : note));
                 }
                 List<String> lines = new ArrayList<>();
                 List<JsonObject> entries = new ArrayList<>();
                 List<String> found = new ArrayList<>();
                 List<String> labels = new ArrayList<>();
+                Map<String, List<String[]>> sdLabels = new LinkedHashMap<>();   // since 1.0.49: stand-down build -> [entry index, print]
                 List<String> tested = new ArrayList<>();   // the tested build's problems, as before
                 for (JsonElement g : arr(o, "guard")) {
                     JsonObject e = g.getAsJsonObject();
@@ -212,8 +216,11 @@ public final class GuardTool {
                     }
                     String got = fingerprint(classes, e);
                     String where = key + " " + e.get("class").getAsString() + "." + e.get("method").getAsString() + e.get("desc").getAsString();
+                    // since 1.0.49 the empty desc of a "*" entry is written as "-" (the audit line ends in it: Guards before
+                    // 1.0.49 split the line without keeping trailing empty fields, failed on it and cleared every table)
                     if (e.has("audit") && e.get("audit").getAsBoolean())
-                        auditLines.add(key + "\t" + e.get("class").getAsString() + "\t" + e.get("method").getAsString() + "\t" + e.get("desc").getAsString());
+                        auditLines.add(key + "\t" + e.get("class").getAsString() + "\t" + e.get("method").getAsString() + "\t"
+                                + (e.get("desc").getAsString().isEmpty() ? "-" : e.get("desc").getAsString()));
                     boolean gone = got == null && auditGone(classes, e);   // since 1.0.46: the audited mod is not in these jars
                     found.add(gone ? AUDIT_GONE : got);
                     if (gone) notes.add(where + ": audited mod not in the local jars (satisfied)");
@@ -234,6 +241,34 @@ public final class GuardTool {
                     }
                     lines.add(e.get("class").getAsString() + "\t" + e.get("method").getAsString() + "\t" + e.get("desc").getAsString() + "\t"
                             + (want == null ? "-" : want) + (alts.length() > 0 ? "\t" + alts : ""));
+                    // since 1.0.49: "sha256_standdown": [{"build", "sha256"}] = a known other build of the target the switch stands
+                    // down on (silently: ABSENT, one DEBUG line); one "standdown" line per entry and build
+                    for (JsonElement r : arr(e, "sha256_standdown")) {
+                        JsonObject row = r.getAsJsonObject();
+                        String label = str(row, "build");
+                        if (label == null || label.isBlank() || label.contains(";") || label.contains("=") || label.contains("\t") || label.contains(",")) {
+                            problems.add(where + ": sha256_standdown row without a usable build label: " + row);
+                            continue;
+                        }
+                        String sd = str(row, "sha256") == null ? "-" : str(row, "sha256");
+                        sdLabels.computeIfAbsent(label, x -> new ArrayList<>());
+                        sdLabels.get(label).add(new String[] {String.valueOf(entries.size() - 1), sd});
+                        String d = e.get("desc").getAsString();
+                        standdownLines.computeIfAbsent(key, x -> new ArrayList<>()).add(String.join("\t", key, label, e.get("class").getAsString(),
+                                e.get("method").getAsString(), d.isEmpty() ? "-" : d, sd));
+                    }
+                }
+                // since 1.0.49: a stand-down build must differ from the tested build in at least one line (else it would also be
+                // the tested build and the switch could never apply there), and is no accepted alternative build of the key
+                for (Map.Entry<String, List<String[]>> sl : sdLabels.entrySet()) {
+                    if (labels.contains(sl.getKey())) problems.add(key + ": " + sl.getKey() + " is both an accepted alternative and a stand-down build");
+                    boolean differs = false;
+                    for (String[] x : sl.getValue()) {
+                        JsonObject e = entries.get(Integer.parseInt(x[0]));
+                        String testedPrint = e.has("sha256") ? (e.get("sha256").isJsonNull() ? "-" : e.get("sha256").getAsString()) : "";
+                        if (!x[1].equals(testedPrint)) differs = true;
+                    }
+                    if (!differs) problems.add(key + ": stand-down build " + sl.getKey() + " has the tested build's fingerprints on every line");
                 }
                 String matched = tested.isEmpty() ? "" : null;
                 for (int li = 0; matched == null && li < labels.size(); li++) {
@@ -242,6 +277,27 @@ public final class GuardTool {
                         all = found.get(i) == AUDIT_GONE || matches(expected(entries.get(i), labels.get(li)), found.get(i));
                     if (all) matched = labels.get(li);
 
+                }
+                // since 1.0.49: the local jars are a stand-down build: the switch stands down there (a note, no problem)
+                if (matched == null) {
+                    for (Map.Entry<String, List<String[]>> sl : sdLabels.entrySet()) {
+                        Map<Integer, String> over = new java.util.HashMap<>();
+                        for (String[] x : sl.getValue()) over.put(Integer.parseInt(x[0]), x[1].equals("-") ? null : x[1]);
+                        boolean all = true;
+                        for (int i = 0; i < entries.size() && all; i++) {
+                            if (found.get(i) == AUDIT_GONE) continue;
+                            JsonObject e = entries.get(i);
+                            // a line the build does not list expects the tested build, its reviewed variants included
+                            String w = over.containsKey(i) ? over.get(i) : expected(e, "");
+                            all = matches(w, found.get(i));
+                        }
+                        if (all) {
+                            notes.add(key + ": the local jars are " + sl.getKey() + ", a build the switch stands down on");
+                            matched = "";
+                            tested.clear();
+                            break;
+                        }
+                    }
                 }
                 if (matched == null) {
                     if (o.has("redundant_since")) for (String t : tested) notes.add(t + " (redundant_since: the switch stands down with these jars)");
@@ -270,17 +326,34 @@ public final class GuardTool {
         // Another mod's patch that makes the same change as one of our switches (patches/compat.json, see
         // bons.furious.guard.ForeignPatches): one "yield" line, and its mixin is cancelled while our switch applies.
         List<String> yieldLines = new ArrayList<>();
+        List<String> orphanLines = new ArrayList<>();   // since 1.0.49: rows with "orphan_of" (no yield, no cancel line)
         for (JsonObject y : yields) {
             String key = str(y, "key"), mixin = str(y, "mixin");
             if (key == null || str(y, "mod") == null || str(y, "name") == null || mixin == null) { problems.add("yield without key, mod, name or mixin: " + y); continue; }
             if (!mod.containsKey(key) && !UNGUARDED.contains(key)) problems.add("yield for unknown switch " + key);
             if ((str(y, "option") == null) != (str(y, "config") == null)) problems.add("yield " + key + ": option and config go together");
-            String prev = cancel.put(mixin, key);
-            if (prev != null && !prev.equals(key)) problems.add(mixin + " is cancelled for " + prev + " and " + key);
+            // since 1.0.49: "orphan_of" = the other mod's mixin relies on this companion of its own; it is left out whenever
+            // that mod's plugin leaves the companion out (Guards / ForeignPatches.orphaned). Such a row never yields.
+            String orphanOf = str(y, "orphan_of");
+            if (orphanOf != null) {
+                if (orphanOf.isBlank() || orphanOf.contains("\t") || orphanOf.equals(mixin)) problems.add("yield " + key + ": orphan_of must name another mixin");
+                if (str(y, "option") != null || str(y, "conflict") != null || y.has("unless_mods") || y.has("default"))
+                    problems.add("yield " + key + ": a row with orphan_of takes no option, config, conflict, default or unless_mods");
+                if (str(y, "mod").contains("\t") || str(y, "name").contains("\t")) problems.add("yield " + key + ": no tab in mod or name");
+                orphanLines.add(String.join("\t", mixin, orphanOf, key, str(y, "mod"), str(y, "name")));
+                continue;
+            }
+            // since 1.0.49 several switches may name one mixin (each yield row adds its switch once)
+            addCancel(cancel, mixin, key);
             List<String> unless = new ArrayList<>();
             for (JsonElement u : arr(y, "unless_mods")) unless.add(u.getAsString());
-            yieldLines.add(String.join("\t", key, str(y, "mod"), str(y, "name"), mixin, dash(str(y, "config")), dash(str(y, "master")),
-                    dash(str(y, "option")), String.valueOf(y.has("default") && y.get("default").getAsBoolean()), unless.isEmpty() ? "-" : String.join(",", unless)));
+            String line = String.join("\t", key, str(y, "mod"), str(y, "name"), mixin, dash(str(y, "config")), dash(str(y, "master")),
+                    dash(str(y, "option")), String.valueOf(y.has("default") && y.get("default").getAsBoolean()), unless.isEmpty() ? "-" : String.join(",", unless));
+            // since 1.0.48: "conflict" names the method both patches change in ways that cannot run together (a 10th field,
+            // written only for such rows, so every other yield line stays as before)
+            String conflict = str(y, "conflict");
+            if (conflict != null && (conflict.isBlank() || conflict.contains("\t"))) problems.add("yield " + key + ": conflict must name one method");
+            yieldLines.add(conflict == null ? line : line + "\t" + conflict);
         }
         notes.forEach(p -> System.out.println("GUARD NOTE " + p));
         if (!problems.isEmpty()) {
@@ -291,16 +364,46 @@ public final class GuardTool {
         for (var e : mixinKey.entrySet()) sb.append("mixin\t").append(e.getKey()).append('\t').append(e.getValue()).append('\n');
         for (var e : mod.entrySet()) sb.append("mod\t").append(e.getKey()).append('\t').append(e.getValue()).append('\n');
         for (var e : guard.entrySet()) for (String l : e.getValue()) sb.append("guard\t").append(e.getKey()).append('\t').append(l).append('\n');
-        for (var e : cancel.entrySet()) sb.append("cancel\t").append(e.getKey()).append('\t').append(e.getValue()).append('\n');
+        // since 1.0.49: right after the guard lines, by key, then in the order of the key's guard entries and their rows
+        for (var e : standdownLines.entrySet()) for (String l : e.getValue()) sb.append("standdown\t").append(l).append('\n');
+        for (var e : cancel.entrySet()) for (String k : e.getValue()) sb.append("cancel\t").append(e.getKey()).append('\t').append(k).append('\n');
         for (String l : yieldLines) sb.append("yield\t").append(l).append('\n');
+        for (String l : orphanLines) sb.append("orphan\t").append(l).append('\n');   // since 1.0.49, after the yields, file order
         for (String l : redundantLines) sb.append("redundant\t").append(l).append('\n');
         for (String l : auditLines) sb.append("audit\t").append(l).append('\n');
+        // since 1.0.49: refuse a table with a line that ends in an empty field (a reader that drops trailing empty fields
+        // would see a short line) or that holds fewer fields than Guards.load expects for its type
+        Map<String, Integer> need = Map.of("mixin", 3, "mod", 3, "guard", 6, "redundant", 5, "audit", 5, "cancel", 3, "yield", 10, "orphan", 6,
+                "standdown", 7);
+        List<String> bad = new ArrayList<>();
+        for (String l : sb.toString().split("\n", -1)) {
+            if (l.isEmpty() || l.startsWith("#")) continue;
+            String[] f = l.split("\t", -1);
+            if (l.endsWith("\t") || f[f.length - 1].isEmpty() || f.length < need.getOrDefault(f[0], 1)) bad.add(l);
+        }
+        if (!bad.isEmpty()) {
+            bad.forEach(l -> System.out.println("GUARD PROBLEM a table line ends in an empty field or is short: " + l.replace("\t", "\\t")));
+            System.exit(1);
+        }
         Files.createDirectories(out.getParent());
         Files.writeString(out, sb.toString(), StandardCharsets.UTF_8);
         System.out.println("guards: " + mod.size() + " switches, " + mixinKey.size() + " mixins, " + guard.values().stream().mapToInt(List::size).sum()
-                + " fingerprints, " + cancel.size() + " cancelled foreign mixins, " + yieldLines.size() + " foreign patches stepped aside for, "
+                + " fingerprints, " + cancel.size() + " cancelled foreign mixins" + multiKeyNote(cancel) + ", " + yieldLines.size() + " foreign patches stepped aside for, "
+                + (orphanLines.isEmpty() ? "" : orphanLines.size() + " foreign mixins left out with their companion, ")
                 + alternatives + " switches matched an accepted alternative build, " + redundantLines.size() + " redundant_since lines ("
                 + notes.size() + " notes) -> " + out.getFileName());
+    }
+
+    /** Since 1.0.49: " (N named by several switches)" for the summary line, "" while every mixin has one switch (line as before). */
+    private static String multiKeyNote(Map<String, List<String>> cancel) {
+        long n = cancel.values().stream().filter(k -> k.size() > 1).count();
+        return n == 0 ? "" : " (" + n + " named by several switches)";
+    }
+
+    /** Since 1.0.49: one more switch that leaves the mixin out (a switch is listed once per mixin, in the order first seen). */
+    private static void addCancel(Map<String, List<String>> cancel, String mixin, String key) {
+        List<String> keys = cancel.computeIfAbsent(mixin, m -> new ArrayList<>());
+        if (!keys.contains(key)) keys.add(key);
     }
 
     private static JsonArray arr(JsonObject o, String name) {

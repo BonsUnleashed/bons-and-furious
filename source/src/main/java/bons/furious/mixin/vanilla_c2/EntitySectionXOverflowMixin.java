@@ -24,11 +24,20 @@ import org.spongepowered.asm.mixin.injection.Redirect;
  *
  * Ported to 1.21.1: Mojang names only; EntitySectionStorage, SectionPos packing (22/20/22 bits) and both subSet calls are
  * unchanged (Radium 0.13.1's EntitySectionStorage mixins still never call or redirect subSet).
+ *
+ * require = 0 and no allow cap since 1.0.48.1 (was require = 2, allow = 2): a 456-mod pack (GitHub #4, 1.0.47) stopped world
+ * creation with "Critical injection failure: Redirector bons$columnRange ... (1/2) succeeded", because something had changed
+ * one of the two calls before this mixin was applied. The fingerprint guard reads the class before any mixin, so it cannot
+ * see that. Each call is fixed on its own, so the call another mod got to first is now left to it and the other keeps the
+ * fix; Guards (STAND_DOWN_EACH) logs one line naming the method and, where Mixin recorded it, the other mod's mixin. Without
+ * the cap, a replacement of either method with more subSet calls cannot stop the game either (the handler differs from the
+ * original call only where the original throws). The priority stays the default: a higher one would take a lower-priority
+ * redirect of the same call over instead of yielding to it.
  */
 @Mixin(value = EntitySectionStorage.class, remap = false)
 public abstract class EntitySectionXOverflowMixin {
     @Redirect(method = {"forEachAccessibleNonEmptySection", "getChunkSections"}, at = @At(value = "INVOKE",
-            target = "Lit/unimi/dsi/fastutil/longs/LongSortedSet;subSet(JJ)Lit/unimi/dsi/fastutil/longs/LongSortedSet;"), require = 2, allow = 2)
+            target = "Lit/unimi/dsi/fastutil/longs/LongSortedSet;subSet(JJ)Lit/unimi/dsi/fastutil/longs/LongSortedSet;"), require = 0)
     private LongSortedSet bons$columnRange(LongSortedSet keys, long from, long toExclusive) {
         if (toExclusive == Long.MIN_VALUE && from > toExclusive && SectionXOverflow.enabled) {
             return SectionXOverflow.overflow(keys, from);

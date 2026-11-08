@@ -1,0 +1,68 @@
+{
+  "group": "morerelics_coo49",
+  "keys": {
+    "morerelics_delayed_task_safety": {
+      "mod": "morerelics",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.morerelics_coo49.MrDelayedTasksMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/blorb/morerelics/helper/DelayedTaskManager",
+          "method": "onServerEvent",
+          "desc": "(Lnet/neoforged/neoforge/event/tick/ServerTickEvent$Pre;)V",
+          "note": "More Relics 1.7.7-forRelics-0.12.8 (1.21.1), start of the server tick: walk tasks with its iterator (the wrapped first iterator call): delay 0 -> run, note for removal; else count down; then remove the noted tasks",
+          "sha256": "b286b179c4366fa4b62f2ce69b0b36434fa0c3eaf75f88834cd077ee6458a055"
+        },
+        {
+          "class": "com/blorb/morerelics/helper/DelayedTaskManager",
+          "method": "addTask",
+          "desc": "(Ljava/lang/Runnable;I)V",
+          "note": "appends to the same list",
+          "sha256": "440f5ab912a6b2b07df5d2aeae27cfabc8511ed2961a1c3b6286515fbf6a4ab2"
+        },
+        {
+          "class": "com/blorb/morerelics/helper/DelayedTaskManager",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "tasks = new ArrayList (our RETURN hook registers the stop listener)",
+          "sha256": "82ad69e4a4e70e7923ece7df255adbb268e8d67ead3917b25f4134f49447b061"
+        },
+        {
+          "class": "com/blorb/morerelics/helper/DelayedTaskManager",
+          "method": "*",
+          "desc": "",
+          "note": "declared members: the public static tasks list, addTask, onServerEvent",
+          "sha256": "961833429c42358e03d5edad4614e2f21a77f4a57d657d3b719e0eec52fcc632"
+        },
+        {
+          "class": "com/blorb/morerelics/helper/DelayedTask",
+          "method": "*",
+          "desc": "",
+          "note": "runnable and tickDelay fields",
+          "sha256": "243d4e2e08911fa48a75579bb71f9a86f141812945a16026dfb13975cb880e52"
+        },
+        {
+          "class": "com/blorb/morerelics/relics/TwinFangs",
+          "method": "onPlayerAttack",
+          "desc": "(Lnet/neoforged/neoforge/event/entity/living/LivingIncomingDamageEvent;)V",
+          "note": "inDualStrike set true before the second hit is scheduled; only that task sets it false again",
+          "sha256": "f0a6522bc12343152ce7d7c510e2ae6e0d771ec757dd5bdfd08c0bac8dcc305f"
+        },
+        {
+          "class": "com/blorb/morerelics/relics/TwinFangs",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "inDualStrike = false, the state the stop listener restores",
+          "sha256": "93de330b25fb17e849e85a4e202795d67e051dd24f78682be4bd251dea5d23ef"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Fix. MixinExtras @WrapOperation on the first List.iterator() call of DelayedTaskManager.onServerEvent: an iterator over the entries the task list has when the pass starts, read by index (same tasks, same order, nothing copied; a task added during the pass waits for the next pass instead of a ConcurrentModificationException); @Inject at RETURN of DelayedTaskManager.<clinit> registers a ServerStoppedEvent listener (NeoForge.EVENT_BUS) that empties the list and resets TwinFangs.inDualStrike. Runtime flag morerelicsDelayedTaskSafety. Helper bons.furious.patch.morerelics_coo49.MrTasks.",
+      "license": "More Relics (All Rights Reserved): no code carried; the snapshot and the stop listener are ours"
+    }
+  }
+}

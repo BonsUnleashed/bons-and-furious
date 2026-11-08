@@ -1,0 +1,60 @@
+{
+  "group": "terracurio_coo49",
+  "keys": {
+    "terracurio_aggro_scan_solo_gate": {
+      "mod": "terra_curio",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.terracurio_coo49.TerraAggroSoloGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/confluence/terra_curio/common/event/GameEvents",
+          "method": "livingChangeTarget",
+          "desc": "(Lnet/neoforged/neoforge/event/entity/living/LivingChangeTargetEvent;)V",
+          "note": "Terra Curio 1.1.1 for NeoForge: Enemy self and Player getNewAboutToBeSetTarget only; getAttributeValue(FOLLOW_RANGE) before the scan; stream of level.players() (the one players() call) filtered by lambda$0, max by lambda$1, ifPresent lambda$2",
+          "sha256": "0b9ec9b62c64bc201b559dbdf2d60f8ae29e373ff2c263d5841f7ccdb8296d76"
+        },
+        {
+          "class": "org/confluence/terra_curio/common/event/GameEvents",
+          "method": "lambda$livingChangeTarget$0",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;DLnet/minecraft/world/entity/player/Player;)Z",
+          "note": "the filter: player.distanceToSqr(self) < range squared && self.canAttack(player); nothing else",
+          "sha256": "a3b18b85878ef5189bfc20f742dcf33a45e308752290c3f043716148910edb48"
+        },
+        {
+          "class": "org/confluence/terra_curio/common/event/GameEvents",
+          "method": "lambda$livingChangeTarget$1",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/entity/player/Player;)I",
+          "note": "the aggro comparator (never called for one element)",
+          "sha256": "8f8a8a0f9ec741fab60884fe516419feed3901528924778a8804402982f3de18"
+        },
+        {
+          "class": "org/confluence/terra_curio/common/event/GameEvents",
+          "method": "lambda$livingChangeTarget$2",
+          "desc": "(Lnet/minecraft/world/entity/player/Player;Lnet/neoforged/neoforge/event/entity/living/LivingChangeTargetEvent;Lnet/minecraft/world/entity/player/Player;)V",
+          "note": "the consumer: returns at once when the best player is the new target",
+          "sha256": "72dd003ceb39f21f393d08d728eb06d009304bbd118121d2dd46df410c6deeb8"
+        },
+        {
+          "class": "org/confluence/terra_curio/mixin/LivingEntityMixin",
+          "method": "*",
+          "desc": "",
+          "note": "Terra Curio's LivingEntity handlers: none hooks canAttack (1.1.1 dropped the 0.2.0 RoyalGel canAttack RETURN hook; MOB$IGNORE goes through TargetingConditionsMixin)",
+          "sha256": "5b60a61f666743e82c5c2c0803e72fd75cc0e755330fc0cb2b54d3b641d3071d"
+        },
+        {
+          "class": "net/minecraft/world/entity/LivingEntity",
+          "method": "canAttack",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;)Z",
+          "note": "canAttack: peaceful-difficulty and canBeSeenAsEnemy reads",
+          "sha256": "761c36da4b4ca3b5177317ef1ad8263978ec85bcdb02b33ee34e1f5b669c7754"
+        }
+      ],
+      "cancel": [],
+      "conversion": "Cancellable @Inject at GameEvents.livingChangeTarget's Level.players() call: when an Enemy's new target is the only player in its level, the handler returns after the follow-range read it makes, because its player scan can then only yield the new target and its consumer returns for it; otherwise the handler runs as shipped. Runtime flag terracurioAggroScanSoloGate. Helper bons.furious.patch.terracurio_coo49.TerraAggroGate.",
+      "license": "Terra Curio (LGPL-3.0): no code carried; the gate is ours"
+    }
+  }
+}

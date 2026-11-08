@@ -1,0 +1,95 @@
+{
+  "group": "immersive_overlays",
+  "keys": {
+    "immersiveaircraft_hud_blit_batch": {
+      "mod": "immersive_aircraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.immersive_overlays.AircraftHealthBatchMixin"
+      ],
+      "guard": [
+        {
+          "class": "immersive_aircraft/client/OverlayRenderer",
+          "method": "renderAircraftHealth",
+          "desc": "(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/GuiGraphics;Limmersive_aircraft/entity/VehicleEntity;I)V",
+          "note": "ten hearts: up to three GuiGraphics.blit(ICONS_TEX, x, y, u, v, 9, 9, 64, 64) each, nothing else between the blits (1.21.1: the bar height offset parameter is new)",
+          "sha256": "a58bf740585a89ecf20f64a56eead602f295dae30dcc005618f10cd6647faac8"
+        },
+        {
+          "class": "net/minecraft/client/gui/GuiGraphics",
+          "method": "blit",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;IIFFIIII)V",
+          "note": "blit(atlas, x, y, u, v, w, h, tw, th) -> blit(atlas, x, y, w, h, u, v, w, h, tw, th)",
+          "sha256": "1680f5375e1b64b5e11388fd9617c4fe9d920183927538aae211f12221378207"
+        },
+        {
+          "class": "net/minecraft/client/gui/GuiGraphics",
+          "method": "blit",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;IIIIFFIIII)V",
+          "note": "-> blit(atlas, x, x + w, y, y + h, 0, uW, vH, u, v, tw, th)",
+          "sha256": "17eda516eeefb52172138df2e8c85c67bfeb742daad765065eba755fffe48bed"
+        },
+        {
+          "class": "net/minecraft/client/gui/GuiGraphics",
+          "method": "blit",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;IIIIIIIFFII)V",
+          "note": "-> innerBlit(atlas, x1, x2, y1, y2, z, (u + 0) / tw, (u + uW) / tw, (v + 0) / th, (v + vH) / th)",
+          "sha256": "222eafa2f1dcfff96e0f796a37205bbb2e782206dd1813ae039eca76b7c7debb"
+        },
+        {
+          "class": "net/minecraft/client/gui/GuiGraphics",
+          "method": "innerBlit",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;IIIIIFFFF)V",
+          "note": "innerBlit: setShaderTexture(0, atlas); setShader(getPositionTexShader); Tesselator.begin(QUADS, POSITION_TEX); 4 x addVertex(pose, x, y, z).setUv(u, v); BufferUploader.drawWithShader(buildOrThrow())",
+          "sha256": "9beeeac2384f242c348de744851b5d3598dcfe4002023272b10fa2e0b5471de2"
+        },
+        {
+          "class": "net/raphimc/immediatelyfast/injection/mixins/hud_batching/consumer/MixinDrawContext",
+          "method": "drawTexturedQuadIntoBuffer",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;IIIIIFFFFLorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "audited (ImmediatelyFast 1.6.14+1.21.1): its innerBlit HEAD hook acts only while the GuiGraphics' bufferSource is a HudBatchingBufferSource; the switch stands aside then",
+          "audit": true,
+          "sha256": "14aeb8b2ca6eb8e8ec750eab9b2cef04d1a9c6b79764e295de3d0e6876993d3d"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on Immersive Aircraft's OverlayRenderer.renderAircraftHealth(Minecraft, GuiGraphics, VehicleEntity, int) (opens and draws one batch per call, also on an exception) and @WrapOperation on its three GuiGraphics.blit(RL, IIFFIIII) calls (the quad innerBlit would write goes into one open QUADS / POSITION_TEX BufferBuilder begun from the Tesselator); helper bons.furious.patch.immersive_overlays.HudQuadBatch. 1.21.1: ImmediatelyFast's HUD batching is detected by the GuiGraphics' buffer source class (its 1.21 API answers false); Vivecraft is checked by its VRState only (no 1.21.1 Vivecraft build among the targets to guard).",
+      "license": "GPL-3.0-only (Immersive Aircraft): no Immersive Aircraft code is carried; the wrappers only decide where its unchanged blit calls go; Minecraft (Mojang): no code is carried, the helper calls the same public BufferBuilder / RenderSystem methods innerBlit calls"
+    },
+    "immersivearmors_steampunk_item_identity": {
+      "mod": "immersive_armors",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.immersive_overlays.ImmersiveArmorsOverlayMixin"
+      ],
+      "guard": [
+        {
+          "class": "immersive_armors/client/OverlayRenderer",
+          "method": "renderOverlay",
+          "desc": "(Lnet/minecraft/client/gui/GuiGraphics;)V",
+          "note": "!options.hideGui && gameMode != null && player != null; for each player.getArmorSlots(): BuiltInRegistries.ITEM.getKey(item).equals(Main.locate(\"steampunk_chestplate\")) -> renderSteampunkHud(context)",
+          "sha256": "a576ae682c2380df495e38bacd7701bbd1d7c43af3c8f7fa61afdb4e8558768c"
+        },
+        {
+          "class": "immersive_armors/client/OverlayRenderer",
+          "method": "renderSteampunkHud",
+          "desc": "(Lnet/minecraft/client/gui/GuiGraphics;)V",
+          "note": "draws the clock and the compass; called by the injection per matching slot",
+          "sha256": "e3e096024d8d80299e5343f1fbdbebbb117b741a81d3c3fc30ca7b8d7dcc4ea9"
+        },
+        {
+          "class": "immersive_armors/Main",
+          "method": "locate",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "ResourceLocation.fromNamespaceAndPath(\"immersive_armors\", path)",
+          "sha256": "523684a20c5b1b1256010f4c85de00732be0c2c08894c681ab2a336e3a93c830"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injector (@Inject at the HEAD of Immersive Armors' static OverlayRenderer.renderOverlay, cancellable): with the chestplate resolved once, the same outer tests and slot loop with an identity test, the mod's own renderSteampunkHud per match, then cancel; helper bons.furious.patch.immersive_overlays.SteampunkOverlay",
+      "license": "GPL-3.0-only (Immersive Armors): no Immersive Armors code is carried; the injection's loop and test are ours and call the mod's own renderSteampunkHud and Main.locate; Minecraft (Mojang): no code"
+    }
+  }
+}

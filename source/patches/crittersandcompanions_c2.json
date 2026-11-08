@@ -225,22 +225,23 @@
           "class": "net/minecraft/world/entity/ai/goal/AvoidEntityGoal",
           "method": "canUse",
           "desc": "()Z",
+          "note": "toAvoid = getNearestEntity(getEntitiesOfClass(avoidClass, box inflated maxDist, 3, maxDist, e -> true), avoidEntityTargeting, mob, x, y, z); null -> false",
           "sha256": "3e9b7c21cc4daa1f0d5c5e8c5c1c59f3e4dc39d9418c89e5fa9b0dcd16d4fdb7"
         },
         {
           "class": "net/minecraft/world/level/EntityGetter",
           "method": "getNearestEntity",
           "desc": "(Ljava/util/List;Lnet/minecraft/world/entity/ai/targeting/TargetingConditions;Lnet/minecraft/world/entity/LivingEntity;DDD)Lnet/minecraft/world/entity/LivingEntity;",
+          "note": "an empty list answers null without testing the conditions NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ.",
           "sha256": "3ebf53f2574adb3a80499864019996349b88df8e5cf577ab36914935662f185f",
           "sha256_variants": [
             "a8058c2f66093837fcb221a15970af22e80d4acdebd4e0cd027a75b76f159dae"
-          ],
-          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): loop body branch inverted (ifeq/ifne + goto); same calls, fields and comparisons. See evidence/variant-review/net.minecraft.world.level.EntityGetter.getNearestEntity.diff.txt."
+          ]
         }
       ],
       "cancel": [],
-      "conversion": "MixinExtras @WrapMethod on the vanilla AvoidEntityGoal.canUse; acts only for goals whose avoided class is named com.github.eterdelta.crittersandcompanions.entity.RedPandaEntity (the goals Critters and Companions 2.3.5 adds through its NeutralMobsMixin) and only while vanilla_entity_class_count_layer says the level holds none",
-      "license": "Minecraft (Mojang): no-copy; no Critters and Companions code is touched (MIT). The mixin carries only our own logic (helpers RedPandaGate, EntityClassCounts)"
+      "conversion": "MixinExtras @WrapMethod on the vanilla AvoidEntityGoal.canUse; acts only for goals whose avoided class is named io.github.bonsaistudi0s.crittersandcompanions.common.entity.RedPandaEntity (the goals Critters and Companions 2.7.0 adds through its NeutralMobsMixin and ZombifiedPiglinMixin; the layer's built-in entry EntityClassCounts.RED_PANDA), and only while vanilla_entity_class_count_layer says the level holds none",
+      "license": "Minecraft (Mojang): no-copy; no Critters and Companions code is touched. The mixin carries only our own logic (helpers RedPandaGate, EntityClassCounts)"
     }
   }
 }

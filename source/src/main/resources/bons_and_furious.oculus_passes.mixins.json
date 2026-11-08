@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.oculus_passes",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "bons.pure.config.PureMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "BannerPatternShadowMixin",
+    "BatchedNoPackMixin",
+    "BufferSourceSortSkipMixin",
+    "CompositeRenderTypeStateAccessor",
+    "CompositeStateShardsAccessor",
+    "ItemGlintShadowMixin",
+    "NameTagShadowMixin",
+    "RenderTypeOrderFreeMixin",
+    "SegmentedSortSkipMixin",
+    "SignTextShadowMixin",
+    "WriteMaskDepthAccessor"
+  ]
+}

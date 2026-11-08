@@ -1,0 +1,61 @@
+{
+  "group": "amendments_sway",
+  "keys": {
+    "amendments_idle_sway_packet_skip": {
+      "mod": "amendments",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.amendments_sway.WallLanternSwayMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mehvahdjukaar/amendments/common/block/WallLanternBlock",
+          "method": "entityInside",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "Amendments 1.21-2.2.7: client -> the tile's amendments$getAnimation().hitByEntity; server -> game event when xo/zo/yo differ, then always NetworkHelper.sendToAllClientPlayersTrackingEntity(entity, new ClientBoundEntityHitSwayingBlockMessage(pos, id))",
+          "sha256": "c52f1cf2f388a131b71f1f9372e0cc00215ca0c11c255b839af8a05bf08a5169"
+        },
+        {
+          "class": "net/mehvahdjukaar/amendments/common/network/ClientBoundEntityHitSwayingBlockMessage",
+          "method": "handle",
+          "desc": "(Lnet/mehvahdjukaar/moonlight/api/platform/network/Message$Context;)V",
+          "note": "the message's only effect: animation.hitByEntity(the client copy of the entity, state, pos) when the block entity is an ISwingingTile",
+          "sha256": "d5d6e3c8dd6c3b7005044271b3a148a6db94ebe7c22c5963c9a3fe0249b7fb70"
+        },
+        {
+          "class": "net/mehvahdjukaar/amendments/common/PendulumAnimation",
+          "method": "hitByEntity",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "reacts only to client-side motion of length >= 0.01 (none while the immunity after a hit lasts)",
+          "sha256": "2f5e36bfb06e31e0ad675ed48618b0f83bcc9ed15a6eff14213117482b310748"
+        },
+        {
+          "class": "net/mehvahdjukaar/amendments/common/SwayingAnimation",
+          "method": "hitByEntity",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)Z",
+          "note": "reacts only to client-side motion of length > 0.05",
+          "sha256": "60a6b6aa7614609d030cd6f078a0c37308e8af4de998475a6dcc34591ee532aa"
+        },
+        {
+          "class": "net/mehvahdjukaar/moonlight/api/platform/network/NetworkHelper",
+          "method": "sendToAllClientPlayersTrackingEntity",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload;)V",
+          "note": "Moonlight 1.21.1-3.8.1: -> NetworkHelperImpl.sendToAllClientPlayersTrackingEntity; nothing else",
+          "sha256": "e14e142c10d20290d29370fcbe2931e410297296f0a19b404c67bc0ce1d13dda"
+        },
+        {
+          "class": "net/mehvahdjukaar/moonlight/api/platform/network/platform/NetworkHelperImpl",
+          "method": "sendToAllClientPlayersTrackingEntity",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/network/protocol/common/custom/CustomPacketPayload;)V",
+          "note": "PacketDistributor.sendToPlayersTrackingEntity(entity, message): the send only",
+          "sha256": "90a4095500f51acfd5c189646d5450d233e5ef583968def0a8526dd0bb1cb1e1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the static NetworkHelper.sendToAllClientPlayersTrackingEntity(Entity, CustomPacketPayload) call in WallLanternBlock.entityInside, require = 0, allow = 1: the call runs only when the entity's position changed this tick; helper bons.furious.patch.amendments_sway.AmendmentsSway. Forge 1.0.49 wrapped Moonlight's ChannelHandler.sentToAllClientPlayersTrackingEntity instance call; Moonlight 1.21.1 sends through the static NetworkHelper",
+      "license": "Supplementaries Team License v.1.5 (Amendments 1.21-2.2.7 and Moonlight 1.21.1-3.8.1, mods.toml): none of their code is carried; our wrapper only decides whether the unchanged call runs; Minecraft: no code"
+    }
+  }
+}

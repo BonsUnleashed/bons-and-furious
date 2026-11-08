@@ -1,0 +1,61 @@
+{
+  "group": "biolith_restamp_c49",
+  "keys": {
+    "biolith_swapped_source_restamp": {
+      "mod": "biolith",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.biolith_restamp_c49.CreateLevelsRestampMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/terraformersmc/biolith/impl/mixin/MixinDimensionOptions",
+          "method": "biolith$storeDimensionTypeToBiomeSource",
+          "desc": "(Lnet/minecraft/core/Holder;Lnet/minecraft/world/level/chunk/ChunkGenerator;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "the only tagger: LevelStem.<init> tags generator.getBiomeSource() with the stem's dimension type",
+          "sha256": "0f2576779f3d8b12fa2f3099c3c517b197fe822493abfc1eee49269861cfe0ca"
+        },
+        {
+          "class": "com/terraformersmc/biolith/impl/mixin/MixinBiomeSource",
+          "method": "biolith$setDimensionType",
+          "desc": "(Lnet/minecraft/core/Holder;)V",
+          "note": "holder.unwrapKey().ifPresent(the key setter)",
+          "sha256": "306287ec1f92e7bc795a144a6a7ca5797964801d1972c0364d11fe74254934b2"
+        },
+        {
+          "class": "com/terraformersmc/biolith/impl/mixin/MixinBiomeSource",
+          "method": "biolith$setDimensionType",
+          "desc": "(Lnet/minecraft/resources/ResourceKey;)V",
+          "note": "stores the key (warns only when a defined type changes)",
+          "sha256": "36de52de64730b67d3f8d480d6249c99d69553b84d87b8e375075aceb24ca26e"
+        },
+        {
+          "class": "com/terraformersmc/biolith/impl/mixin/MixinBiomeSource",
+          "method": "biolith$getDimensionType",
+          "desc": "()Lnet/minecraft/resources/ResourceKey;",
+          "note": "the stored key (DIMENSION_TYPE_UNDEFINED until tagged)",
+          "sha256": "a81bb241908c91d2eb592a9d97544ba038e6cbad7362608878ac0ed6a8804857"
+        },
+        {
+          "class": "com/terraformersmc/biolith/impl/biome/InterfaceBiomeSource",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "DIMENSION_TYPE_UNDEFINED = biolith:undefined",
+          "sha256": "cef2d459c063940943f90818ccc87b7030f777ea5671e7f902827e26f78c0cb3"
+        },
+        {
+          "class": "net/minecraft/server/MinecraftServer",
+          "method": "createLevels",
+          "desc": "(Lnet/minecraft/server/level/progress/ChunkProgressListener;)V",
+          "note": "createLevels: builds every ServerLevel from the LEVEL_STEM registry",
+          "sha256": "c0a428baa3a04db15e6ae28ea2a79e6615f8577620c05a4db09b1984640134c4"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: @Inject at the start of MinecraftServer.createLevels (priority 2100): untagged Biolith biome sources of the LEVEL_STEM registry get their stem's dimension type through Biolith's own setter (helper bons.furious.patch.biolith_restamp_c49.SourceRestamp)",
+      "license": "LGPL-3.0 (Biolith): no Biolith code is carried, its public interface is called; Minecraft (Mojang): no-copy"
+    }
+  }
+}

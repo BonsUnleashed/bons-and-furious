@@ -1,0 +1,68 @@
+{
+  "group": "l2hostility_coo49",
+  "keys": {
+    "l2hostility_trait_attribute_unchanged_skip": {
+      "mod": "l2hostility",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.l2hostility_coo49.L2TraitAttributeMixin"
+      ],
+      "guard": [
+        {
+          "class": "dev/xkmc/l2hostility/content/logic/TraitManager",
+          "method": "addAttribute",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/core/Holder;Ljava/lang/String;DLnet/minecraft/world/entity/ai/attributes/AttributeModifier$Operation;)V",
+          "note": "L2 Hostility 3.0.18: ins = le.getAttribute(attr), return if null; id = L2Hostility.loc(name); new AttributeModifier(id, factor, op); hasModifier(id) -> removeModifier(id); addPermanentModifier(modifier); nothing else",
+          "sha256": "c32bb8554d4922129878def0f5694e4d1a48d7c8cfd9fa3fac28cee1201d56b7"
+        },
+        {
+          "class": "dev/xkmc/l2hostility/init/L2Hostility",
+          "method": "loc",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/resources/ResourceLocation;",
+          "note": "ResourceLocation.fromNamespaceAndPath(\"l2hostility\", name): a pure function of the name (kept per name)",
+          "sha256": "6fce0742aebbe794a1db4abfbfd8369e90b6026ae477d61d3d271da649f49bbe"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "hasModifier",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Z",
+          "note": "hasModifier(id): modifierById.get(id) != null",
+          "sha256": "c3e93ec202445e8c124e3b3a03aa8a653009b92fe2b4c3b1c5ef26c504bdc4af"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "removeModifier",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Z",
+          "note": "removeModifier(id): out of modifierById, its operation map and permanentModifiers, then setDirty",
+          "sha256": "1f0704140ca8e86ad2f7c23a0bd7905eb1e528b2fefe04a0de73467786eae683"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "addPermanentModifier",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "note": "addModifier(modifier), then permanentModifiers.put(id, modifier): the same object in both maps",
+          "sha256": "f0af5110f615871b7ccd97cee9d80c836eeb9dd86274091d7589351c68ef4d54"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "addModifier",
+          "desc": "(Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;)V",
+          "note": "modifierById.putIfAbsent (throws when held), operation map put, setDirty",
+          "sha256": "9bb5b7dd7ea9fe99314a77ddf26fd1c7c28aa1e87de8c1ed2f020d8d55f91020"
+        },
+        {
+          "class": "net/minecraft/world/entity/ai/attributes/AttributeInstance",
+          "method": "getModifier",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/minecraft/world/entity/ai/attributes/AttributeModifier;",
+          "note": "getModifier(id): the id map read the check uses",
+          "sha256": "4a75156b715d02e6c3bbbe01905cb9e07413f0bb7fe61d4bdaf4e03804eb2af9"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyExpressionValue on le.getAttribute(attr) (LivingEntity.getAttribute(Holder)) at the head of TraitManager.addAttribute (with the name, factor and operation arguments): null is answered (the method's own early return) when the instance holds, under l2hostility:name, a modifier with the same amount bits and operation that is also the permanentModifiers entry of that id, so the remove + add pair that would leave the modifiers equal does not run; otherwise the instance and the method as shipped. Exact variant: no dirty mark for an unchanged re-apply. Runtime flag l2hostilityTraitAttributeUnchangedSkip. Helper bons.furious.patch.l2hostility_coo49.L2TraitReapply (its own VarHandle on AttributeInstance.permanentModifiers; the Forge build reached the attribute_lookup group's AttributeReapply).",
+      "license": "L2 Hostility (LGPL-2.1, neoforge.mods.toml): no code carried, the wrapper carries only our own logic; Minecraft: read only"
+    }
+  }
+}

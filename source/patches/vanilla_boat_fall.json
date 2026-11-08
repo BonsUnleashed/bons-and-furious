@@ -1,0 +1,26 @@
+{
+  "group": "vanilla_boat_fall",
+  "keys": {
+    "vanilla_boat_fall_no_break": {
+      "mod": "minecraft",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_boat_fall.BoatFallKeepMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/entity/vehicle/Boat",
+          "method": "checkFallDamage",
+          "desc": "(DZLnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)V",
+          "note": "not a passenger, on ground, fallDistance > 3 and status ON_LAND: causeFallDamage, then on the server and not removed one kill() and, with doEntityDrops, spawnAtLocation(getVariant().getPlanks()) x3 and spawnAtLocation(getVariant().getSticks()) x2; resetFallDistance",
+          "sha256": "ebc3747b1e2aa42f6adc531abb5f0c454e11dfe5e8e717c861c9897f0c3b9454"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the kill() call and the two spawnAtLocation(ItemLike) calls (planks, NeoForge's per-type sticks) inside Boat.checkFallDamage: left out while the switch acts; causeFallDamage, the doEntityDrops read and resetFallDistance unchanged",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic (helper bons.furious.patch.vanilla_boat_fall.BoatFall)"
+    }
+  }
+}

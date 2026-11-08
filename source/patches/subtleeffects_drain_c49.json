@@ -1,0 +1,48 @@
+{
+  "group": "subtleeffects_drain_c49",
+  "keys": {
+    "subtleeffects_ticker_removal_drain": {
+      "mod": "subtle_effects",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "change",
+      "mixins": [
+        "bons.furious.mixin.subtleeffects_drain_c49.TickerManagerDrainMixin",
+        "bons.furious.mixin.subtleeffects_drain_c49.TickerDrainCountMixin"
+      ],
+      "guard": [
+        {
+          "class": "einstein/subtle_effects/ticking/tickers/TickerManager",
+          "method": "tick",
+          "desc": "()V",
+          "note": "TICKERS.addAll(ADD_QUEUE), ADD_QUEUE.clear(), TICKERS.forEach(lambda$tick$0), REMOVE_QUEUE.forEach(TICKERS::remove) (the receiver of the second forEach is REMOVE_QUEUE), REMOVE_QUEUE.clear()",
+          "sha256": "03fa9e80378513a63d058385f8c2ee3370a089299e2cec387543e3afff14ce8a"
+        },
+        {
+          "class": "einstein/subtle_effects/ticking/tickers/TickerManager",
+          "method": "lambda$tick$0",
+          "desc": "(Leinstein/subtle_effects/ticking/tickers/Ticker;)V",
+          "note": "a removed ticker goes to REMOVE_QUEUE once per occurrence, any other is ticked",
+          "sha256": "bddcfe6abd09998337c59944deb09aad9102625c5034313a881a38e8a05cc78a"
+        },
+        {
+          "class": "einstein/subtle_effects/ticking/tickers/TickerManager",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "ADD_QUEUE, TICKERS and REMOVE_QUEUE are java.util.ArrayList (checked at run time too)",
+          "sha256": "391338ba76e86f2f53e33e214d11b21e9bdc826d41c862b5aa55e986ba48e6e0"
+        },
+        {
+          "class": "einstein/subtle_effects/ticking/tickers/Ticker",
+          "method": "*",
+          "desc": "",
+          "note": "Ticker gains our own int counter and SeTickerFlag; no Ticker field or method is read or changed",
+          "sha256": "d64e759dee141b074362a0c24e2fa978a869e377e03fd11f8c969a2f4aa3294b"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@ModifyArg on the second List.forEach call of TickerManager.tick() (REMOVE_QUEUE.forEach(TICKERS::remove)): one order-keeping ArrayList.removeIf pass driven by per-ticker queue counters, then a consumer that does nothing (helper bons.furious.patch.subtleeffects_drain_c49.TickerDrain); Subtle Effects own consumer when the pass cannot prove identity removal; Ticker gains our counter through the duck interface bons.furious.patch.subtleeffects_drain_c49.SeTickerFlag",
+      "license": "All Rights Reserved (Subtle Effects): no Subtle Effects code is carried; the injector and the pass are ours"
+    }
+  }
+}

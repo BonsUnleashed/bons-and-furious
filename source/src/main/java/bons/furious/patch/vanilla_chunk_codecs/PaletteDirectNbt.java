@@ -101,8 +101,36 @@ public final class PaletteDirectNbt {
     private static final Set<Class<?>> FOREIGN_LOGGED = ConcurrentHashMap.newKeySet();
     private static volatile boolean announced, refusalLogged;
 
-    /** Block state -> StateRecipe; biome holder -> its name (String). Verified entries only. */
-    private static final IdentityTable STATES = new IdentityTable(), BIOMES = new IdentityTable();
+    /** Block state -> StateRecipe. Verified entries only. */
+    private static final IdentityTable STATES = new IdentityTable();
+    /**
+     * Biome holder -> its name (String), verified entries only, for one biome registry object. Since 1.0.49 per registry:
+     * biome holders belong to a world's own biome registry, which single player builds anew for every world it opens, and
+     * one table for all of them kept the holders of every world opened (and through them each world's worldgen registries)
+     * for the whole session. Another registry starts a new table, whose names are verified against the codec again; the
+     * server's stop drops it (forget, ServerStoppedEvent).
+     */
+    private static volatile BiomeNames biomeNames = new BiomeNames(null, new IdentityTable());
+
+    record BiomeNames(Object registry, IdentityTable table) {
+    }
+
+    /** The verified biome names of this registry (a new, empty table when it is another registry than the last one). */
+    private static IdentityTable biomeTable(Object registry) {
+        BiomeNames b = biomeNames;
+        if (b.registry() == registry) return b.table();
+        synchronized (PaletteDirectNbt.class) {
+            b = biomeNames;
+            if (b.registry() != registry) biomeNames = b = new BiomeNames(registry, new IdentityTable());
+        }
+        CodecMemoLifecycle.hook();
+        return b.table();
+    }
+
+    /** Since 1.0.49: the stopped server's biome names (and its registry) are let go. */
+    static void forget() {
+        biomeNames = new BiomeNames(null, new IdentityTable());
+    }
     /** Outer shapes seen and matched: block states / biomes, without / with "data". */
     private static volatile boolean blockShapeNoData, blockShapeData, biomeShapeNoData, biomeShapeData;
     private static volatile Codec<?> blockCodec;
@@ -274,13 +302,14 @@ public final class PaletteDirectNbt {
     @SuppressWarnings({"unchecked", "rawtypes"})
     private static DataResult biomes(Codec codec, DynamicOps ops, Registry<?> registry, PalettedContainerRO<Holder<?>> container, Operation<DataResult> original) {
         if (container.maybeHas(h -> false)) return original.call(codec, ops, container);   // global palette (more than 8 biomes)
-        if (!container.maybeHas(h -> !(BIOMES.get(h) instanceof String))) {
+        IdentityTable known = biomeTable(registry);   // since 1.0.49: this registry's names only (one table for this call)
+        if (!container.maybeHas(h -> !(known.get(h) instanceof String))) {
             PalettedContainerRO.PackedData<Holder<?>> packed = container.pack((net.minecraft.core.IdMap) registry.asHolderIdMap(), PalettedContainer.Strategy.SECTION_BIOMES);
             List<Holder<?>> palette = packed.paletteEntries();
             boolean withData = packed.storage().isPresent();
             if (withData ? biomeShapeData : biomeShapeNoData) {
                 String[] names = new String[palette.size()];
-                for (int i = 0; i < names.length; i++) names[i] = (String) BIOMES.get(palette.get(i));
+                for (int i = 0; i < names.length; i++) names[i] = (String) known.get(palette.get(i));
                 if (!SHADOW) {
                     DIRECT.incrementAndGet();
                     return DataResult.success(buildBiomes(names, packed.storage()));
@@ -294,20 +323,20 @@ public final class PaletteDirectNbt {
         }
         DataResult result = original.call(codec, ops, container);
         CODEC.incrementAndGet();
-        if (result.result().isPresent() && (!biomeShapeData || !biomeShapeNoData || container.maybeHas(h -> BIOMES.get(h) == null))) {
+        if (result.result().isPresent() && (!biomeShapeData || !biomeShapeNoData || container.maybeHas(h -> known.get(h) == null))) {
             PalettedContainerRO.PackedData<Holder<?>> packed = container.pack((net.minecraft.core.IdMap) registry.asHolderIdMap(), PalettedContainer.Strategy.SECTION_BIOMES);
-            learnBiomes(packed.paletteEntries(), packed.storage().isPresent(), (Tag) result.result().get());
+            learnBiomes(known, packed.paletteEntries(), packed.storage().isPresent(), (Tag) result.result().get());
         }
         return result;
     }
 
-    /** As learnBlocks, for a biome section: entries are the holders' key texts. */
-    private static void learnBiomes(List<Holder<?>> palette, boolean withData, Tag made) {
+    /** As learnBlocks, for a biome section: entries are the holders' key texts (into the table of the section's registry). */
+    private static void learnBiomes(IdentityTable table, List<Holder<?>> palette, boolean withData, Tag made) {
         if (!(made instanceof CompoundTag c) || !(c.get("palette") instanceof ListTag list) || list.size() != palette.size()) return;
         String[] candidates = new String[palette.size()];
         boolean all = true;
         for (int i = 0; i < candidates.length; i++) {
-            Object known = BIOMES.get(palette.get(i));
+            Object known = table.get(palette.get(i));
             if (known instanceof String s) {
                 candidates[i] = s;
                 continue;
@@ -319,11 +348,11 @@ public final class PaletteDirectNbt {
             Optional<? extends ResourceKey<?>> key = palette.get(i).unwrapKey();
             String name = key.isPresent() ? key.get().location().toString() : null;
             if (name != null && list.get(i) instanceof StringTag st && sameTag(st, StringTag.valueOf(name))) {
-                BIOMES.put(palette.get(i), name);
+                table.put(palette.get(i), name);
                 VERIFIED.incrementAndGet();
                 candidates[i] = name;
             } else {
-                BIOMES.put(palette.get(i), REFUSED_STATE);
+                table.put(palette.get(i), REFUSED_STATE);
                 if (name != null) refused("biome", list.get(i), StringTag.valueOf(name));
                 all = false;
             }
@@ -426,6 +455,6 @@ public final class PaletteDirectNbt {
     }
 
     public static int knownBiomes() {
-        return BIOMES.size();
+        return biomeNames.table().size();
     }
 }

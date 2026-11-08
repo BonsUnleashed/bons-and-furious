@@ -54,6 +54,8 @@ public final class PathCharFast {
      * (65,536 characters, real and random paths) on this pack's jars, 2026-10-19:
      * Oculus 1.8.0 (validPathChar A-Z hook, isValidPath DUMMY hook), Citresewn 1.0.2 (isValidPath RETURN), Entity Texture
      * Features 7.1 (isValidPath RETURN + its helper), AllTheLeaks 1.1.3 (constructor RETURN), FerriteCore 6.0.1 (accessor).
+     * Since 1.0.49 also our own vanilla_rl_string_memo (ResourceLocationStringMixin: a cancellable HEAD hook and a return hook
+     * on toString only, which isValidPath and validPathChar never call).
      */
     static final Map<String, Set<String>> KNOWN = Map.of(
             "bons.furious.mixin.vanilla_rl_path.ResourceLocationPathCharMixin", Set.of("bons$pathChar"),
@@ -61,7 +63,8 @@ public final class PathCharFast {
             "dev.tomwmth.citreforged.mixin.broken_paths.ResourceLocationMixin", Set.of("citresewn$brokenpaths$processBrokenPaths"),
             "traben.entity_texture_features.mixin.mixins.MixinIdentifier", Set.of("etf$illegalPathOverride", "allowPathAndLog"),
             "dev.uncandango.alltheleaks.mixin.core.main.ResourceLocationMixin", Set.of("atl$internStrings"),
-            "malte0811.ferritecore.mixin.mrl.ResourceLocationAccess", Set.of("setNamespace", "setPath"));
+            "malte0811.ferritecore.mixin.mrl.ResourceLocationAccess", Set.of("setNamespace", "setPath"),
+            "bons.furious.mixin.vanilla_lookup_loops.ResourceLocationStringMixin", Set.of("bons$keptText", "bons$keepText"));
     /** 0 = not checked yet, 1 = only known mixins (the switch acts), 2 = another mixin is merged (the switch stays off). */
     private static volatile int neighbours;
     private static final java.util.concurrent.atomic.AtomicBoolean ANNOUNCED = new java.util.concurrent.atomic.AtomicBoolean();

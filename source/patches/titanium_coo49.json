@@ -1,0 +1,135 @@
+{
+  "group": "titanium_coo49",
+  "keys": {
+    "titanium_facing_single_state_read": {
+      "mod": "titanium",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.titanium_coo49.ActiveTileFacingMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/hrznstudio/titanium/block/tile/ActiveTile",
+          "method": "getFacingDirection",
+          "desc": "()Lnet/minecraft/core/Direction;",
+          "note": "Titanium 4.0.52 for NeoForge: level.getBlockState(worldPosition) up to three times: FACING_ALL present and its value, else FACING_HORIZONTAL present and its value, else NORTH",
+          "sha256": "ed71eb0ee44fb08fb25d02703c535fd18c7f2c0d7bb93e6f2be52d3c3a87327a"
+        },
+        {
+          "class": "net/minecraft/world/level/Level",
+          "method": "getBlockState",
+          "desc": "(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;",
+          "note": "getBlockState: the one read kept (build height check, chunk lookup, the chunk's state)",
+          "sha256": "4ff4f96e5ead04e8279a0bd18788c2cd0e8c69ea472aeed667af2ea7c8b52827"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of ActiveTile.getFacingDirection: one read of the machine's block state, then the same FACING_ALL / FACING_HORIZONTAL / NORTH chain on that state. Runtime flag titaniumFacingSingleStateRead. Helper bons.furious.patch.titanium_coo49.TitaniumFacing.",
+      "license": "Titanium (LGPL-3.0): no code carried; the hook holds only our own logic"
+    },
+    "titanium_progress_same_value_skip": {
+      "mod": "titanium",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.titanium_coo49.ProgressBarSameValueMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/hrznstudio/titanium/component/progress/ProgressBarComponent",
+          "method": "setProgress",
+          "desc": "(I)V",
+          "note": "stores the value, then always markComponentForUpdate(true) on the machine when it has one",
+          "sha256": "3023fc008a6237918446fd95c15ebe23e74eecd9419c3ac4944eac92ca30491b"
+        },
+        {
+          "class": "com/hrznstudio/titanium/block/tile/ActiveTile",
+          "method": "markComponentForUpdate",
+          "desc": "(Z)V",
+          "note": "true -> markComponentDirty",
+          "sha256": "46f90cceca19c2f674d889bd405fda7ad0e4a5088dd772e789da7d08586dd579"
+        },
+        {
+          "class": "com/hrznstudio/titanium/block/tile/ActiveTile",
+          "method": "markComponentDirty",
+          "desc": "()V",
+          "note": "super.setChanged(): chunk unsaved, comparator neighbours, the machine's own changed-hook",
+          "sha256": "9b8317820c678c090ea1f8cfa814cbe1a01a95029786495ee5108fe8ca367860"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of ProgressBarComponent.setProgress: a write of the value the bar already holds returns at once, without markComponentForUpdate. Trade-off (off by default): same-value progress writes no longer mark the machine changed. Runtime flag titaniumProgressSameValueSkip (emergency off). Helper bons.furious.patch.titanium_coo49.TitaniumProgress.",
+      "license": "Titanium (LGPL-3.0): no code carried; the hook holds only our own logic"
+    },
+    "titanium_recipe_list_snapshot": {
+      "mod": "titanium",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.titanium_coo49.RecipeUtilSnapshotMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/hrznstudio/titanium/util/RecipeUtil",
+          "method": "getRecipes",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/crafting/RecipeType;)Ljava/util/List;",
+          "note": "world.getRecipeManager().byType (field read, public through Titanium's access transformer); non-null -> get(type).stream().map(lambda$getRecipes$0).collect(toList()); null -> new ArrayList",
+          "sha256": "a9167427cc97b3af074b36dda9a8db6c50b677c586bc829967bfe90e2486b8c2"
+        },
+        {
+          "class": "com/hrznstudio/titanium/util/RecipeUtil",
+          "method": "lambda$getRecipes$0",
+          "desc": "(Lnet/minecraft/world/item/crafting/RecipeHolder;)Lnet/minecraft/world/item/crafting/Recipe;",
+          "note": "h.value(): the recipe of the holder",
+          "sha256": "73294aeb7bb63f2189c1e3d7a2b745adedd8a67dc9599f176a6aad000222e2dc"
+        },
+        {
+          "class": "net/minecraft/world/item/crafting/RecipeManager",
+          "method": "apply",
+          "desc": "(Ljava/util/Map;Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/util/profiling/ProfilerFiller;)V",
+          "note": "the recipe load: byType = ImmutableMultimap.Builder.build() (a new immutable table per load)",
+          "sha256": "ba0b1175bf8729f630b3b873cb4f189db910e0e21c4aa8325e0ea6441659dcbc"
+        },
+        {
+          "class": "net/minecraft/world/item/crafting/RecipeManager",
+          "method": "replaceRecipes",
+          "desc": "(Ljava/lang/Iterable;)V",
+          "note": "the client's recipe sync: byType = ImmutableMultimap.Builder.build() as well",
+          "sha256": "91717c69eebb0765085908bc678526190a0125229a26e0f126ff9744a804997a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of RecipeUtil.getRecipes: the recipe table through a VarHandle on RecipeManager.byType; an immutable table answers a new ArrayList copied from a template kept per recipe type and side while that table object is the same; any other table, no table and a null type run Titanium's own method. Runtime flag titaniumRecipeListSnapshot. Helper bons.furious.patch.titanium_coo49.TitaniumRecipeLists.",
+      "license": "Titanium (LGPL-3.0): no code carried; the hook holds only our own logic"
+    },
+    "titanium_sided_transfer_empty_skip": {
+      "mod": "titanium",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.titanium_coo49.SidedTransferEmptyMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/hrznstudio/titanium/component/inventory/SidedInventoryComponent",
+          "method": "transfer",
+          "desc": "(Lcom/hrznstudio/titanium/util/FacingUtil$Sideness;Lnet/neoforged/neoforge/items/IItemHandler;Lnet/neoforged/neoforge/items/IItemHandler;I)Z",
+          "note": "simulated extract, then isValidForAnySlot(to, extracted) (ordinal 0, the wrapped call), and only then the empty check: an empty stack moves the slot cache on and returns false; the insert loop re-scans with isValidForAnySlot (ordinal 1, untouched)",
+          "sha256": "acd5a3952d183e3d9d4e46d9cf82b5bcd94cce92ab731b329db7556c7b394b6c"
+        },
+        {
+          "class": "com/hrznstudio/titanium/component/inventory/SidedInventoryComponent",
+          "method": "isValidForAnySlot",
+          "desc": "(Lnet/neoforged/neoforge/items/IItemHandler;Lnet/minecraft/world/item/ItemStack;)I",
+          "note": "only query methods of the destination (getSlots, isItemValid, getStackInSlot) and simulated insertItem calls; -1 for an empty stack (no simulated insert leaves fewer than zero items)",
+          "sha256": "bcd201aae48c0468213921a5162cbf42253b1913006bd16d0d249a3fb9169d66"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the first isValidForAnySlot call (ordinal 0) in SidedInventoryComponent.transfer: -1 without the scan for an empty simulated stack (the method then only moves the slot cache on, as before), else the original. Runtime flag titaniumSidedTransferEmptySkip. Helper bons.furious.patch.titanium_coo49.TitaniumSidedTransfer.",
+      "license": "Titanium (LGPL-3.0): no code carried; the hook holds only our own logic"
+    }
+  }
+}

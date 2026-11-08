@@ -1,0 +1,61 @@
+{
+  "group": "mekaweapons_coo49",
+  "keys": {
+    "mekaweapons_gun_sound_client_only": {
+      "mod": "mekaweapons",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mekaweapons_coo49.MekaGunSidesMixin"
+      ],
+      "guard": [
+        {
+          "class": "meranha/mekaweapons/items/ItemMekaGun",
+          "method": "use",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+          "note": "Mekanism Weapons 4.2.1 for NeoForge 1.21.1: one SoundHandler.playSound(MekanismSounds.LASER) call on both sides (Mekanism 10.7.19's playSound reaches SimpleSoundInstance and Minecraft.getInstance(), client classes)",
+          "sha256": "4bf87ff0a3d5e668d42ca54dc9b93a1f516abf4b026a77525615477e1b51f005"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation (+ @Local level) on the one mekanism.client.sound.SoundHandler.playSound(SoundEventRegistryObject) call in ItemMekaGun.use: runs only when level.isClientSide (the shooter's client); on a dedicated server the client class is never reached (no NoClassDefFoundError crash), in singleplayer the integrated server no longer plays the sound a second time. String target + @Pseudo. Runtime flag mekaweaponsGunSoundClientOnly. Helper bons.furious.patch.mekaweapons_coo49.MekaWeaponsFixes.",
+      "license": "Mekanism Weapons (MIT): no code carried; the wrapper decides whether Mekanism's own call runs"
+    },
+    "mekaweapons_gun_laser_server_only": {
+      "mod": "mekaweapons",
+      "kind": "fix",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mekaweapons_coo49.MekaGunLaserMixin"
+      ],
+      "guard": [
+        {
+          "class": "meranha/mekaweapons/items/ItemMekaGun",
+          "method": "fireLaser",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;",
+          "note": "Mekanism Weapons 4.2.1 for NeoForge 1.21.1, private: LivingEntity box query, igniteForSeconds + hurt of the hit entity, returns `to` when nothing is hit",
+          "sha256": "ba673f68b546a719f2e8f7bc885d1fbc304bca0cfbaedb427f33dd1183ce25c2"
+        },
+        {
+          "class": "meranha/mekaweapons/items/ItemMekaGun",
+          "method": "use",
+          "desc": "(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResultHolder;",
+          "note": "the only fireLaser caller: its result only builds the particle data for sendLaserDataToPlayers",
+          "sha256": "4bf87ff0a3d5e668d42ca54dc9b93a1f516abf4b026a77525615477e1b51f005"
+        },
+        {
+          "class": "meranha/mekaweapons/items/ItemMekaGun",
+          "method": "sendLaserDataToPlayers",
+          "desc": "(Lnet/minecraft/world/level/Level;Lmeranha/mekaweapons/particle/MekaGunLaserParticleData;Lnet/minecraft/world/phys/Vec3;)V",
+          "note": "acts only when the level is a ServerLevel",
+          "sha256": "a26e45e5d8926a84fb970c83f759cfa3bc3fe7d7a8968468163ad1cf607e0389"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD (cancellable) of the private ItemMekaGun.fireLaser: on a client-side level it returns `to` (the method's own no-hit answer) without the box query, the local ignite and the client hurt (which LivingEntity.hurt answers false on a client level); the server's laser is unchanged. String target + @Pseudo. Runtime flag mekaweaponsGunLaserServerOnly. Helper bons.furious.patch.mekaweapons_coo49.MekaWeaponsFixes.",
+      "license": "Mekanism Weapons (MIT): no code carried; the injection holds only our side test"
+    }
+  }
+}

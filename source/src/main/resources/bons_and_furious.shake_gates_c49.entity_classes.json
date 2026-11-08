@@ -1,0 +1,15 @@
+{
+  "layer": "vanilla_entity_class_count_layer",
+  "entries": [
+    {
+      "class": "net.sonmok14.fromtheshadows.server.entity.projectiles.ScreenShakeEntity",
+      "key": "fromtheshadows_shake_scan_presence_gate",
+      "why": "From The Shadows 3.0 ClientEvents.onCameraSetup searches it +-20 blocks around the player every frame"
+    },
+    {
+      "class": "com.ovinter.mythsandlegends.entity.effects.EffectScreenShake",
+      "key": "mythsandlegends_shake_scan_presence_gate",
+      "why": "Myths & Legends 1.1.0 ClientEvents.onCameraSetup searches it +-20 blocks around the player every frame"
+    }
+  ]
+}

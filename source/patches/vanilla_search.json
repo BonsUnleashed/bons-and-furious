@@ -84,7 +84,8 @@
           "sha256_variants": [
             "82a6b1e40ba9cb1ddd4608c92f2322129ac6eaf7bf3f3a99b75635d40ef5ce21"
           ],
-          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): branch polarity and block order swapped (if_acmpeq/if_acmpne); same resize/assign paths. See evidence/variant-review/net.minecraft.world.level.chunk.SingleValuePalette.idFor.diff.txt."
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): branch polarity and block order swapped (if_acmpeq/if_acmpne); same resize/assign paths. See evidence/variant-review/net.minecraft.world.level.chunk.SingleValuePalette.idFor.diff.txt.",
+          "note": "NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ."
         },
         {
           "class": "net/neoforged/neoforge/common/extensions/IBlockExtension",
@@ -239,7 +240,8 @@
           "sha256_variants": [
             "82a6b1e40ba9cb1ddd4608c92f2322129ac6eaf7bf3f3a99b75635d40ef5ce21"
           ],
-          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): branch polarity and block order swapped (if_acmpeq/if_acmpne); same resize/assign paths. See evidence/variant-review/net.minecraft.world.level.chunk.SingleValuePalette.idFor.diff.txt."
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): branch polarity and block order swapped (if_acmpeq/if_acmpne); same resize/assign paths. See evidence/variant-review/net.minecraft.world.level.chunk.SingleValuePalette.idFor.diff.txt.",
+          "note": "NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ."
         }
       ],
       "cancel": [],

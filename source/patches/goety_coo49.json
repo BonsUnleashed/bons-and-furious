@@ -1,0 +1,45 @@
+{
+  "group": "goety_coo49",
+  "keys": {
+    "goety_shake_scan_presence_gate": {
+      "mod": "goety",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goety_coo49.GoetyShakeGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/Polarice3/Goety/client/events/ClientEvents",
+          "method": "onSetupCamera",
+          "desc": "(Lnet/neoforged/neoforge/client/event/ViewportEvent$ComputeCameraAngles;)V",
+          "note": "getEntitiesOfClass(CameraShake, player box +-20), then the shake sum over the list (distanceTo < getRadius)",
+          "sha256": "19c32a11d2b4c074e155ace9d4232e5e8d3db698e90b215c85b4d03f2f93d7cf"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass (getEntitiesOfClass) call in ClientEvents.onSetupCamera: while vanilla_entity_class_count_layer says the client level holds no CameraShake, the call is marked EMPTY so that vanilla_entity_walk_skip leaves out its empty section walk; the call itself runs (helper bons.furious.patch.goety_coo49.GoetyGates)",
+      "license": "Goety (MIT): no code carried, the wrapper carries only our own logic"
+    },
+    "goety_wight_scan_presence_gate": {
+      "mod": "goety",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.goety_coo49.GoetyWightGateMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/Polarice3/Goety/common/entities/hostile/Wight",
+          "method": "findWight",
+          "desc": "(Lnet/minecraft/world/entity/Entity;Ljava/util/function/Predicate;)Lcom/Polarice3/Goety/common/entities/hostile/Wight;",
+          "note": "getEntitiesOfClass(Wight, entity box +64, predicate and not a hallucination), the last non-null element, null on ConcurrentModificationException; called from ClientEvents.TickEvents, ClientEvents.FogEvents and DreadOverlay.drawOverlay",
+          "sha256": "5fdb00acee2706ee5b7a6eddca00ac6661159f4eed1541b24fb62a78f4b20f57"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the Level.getEntitiesOfClass (getEntitiesOfClass) call in Wight.findWight(Entity, Predicate): while vanilla_entity_class_count_layer says the level holds no Wight, the call is marked EMPTY so that vanilla_entity_walk_skip leaves out its empty section walk; the call itself runs (helper bons.furious.patch.goety_coo49.GoetyGates)",
+      "license": "Goety (MIT): no code carried, the wrapper carries only our own logic"
+    }
+  }
+}

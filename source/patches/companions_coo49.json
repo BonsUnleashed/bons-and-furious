@@ -1,0 +1,153 @@
+{
+  "group": "companions_coo49",
+  "keys": {
+    "companions_tesla_lazy_distances": {
+      "mod": "companions",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.companions_coo49.TeslaNetworkLazyMixin",
+        "bons.furious.mixin.companions_coo49.TeslaDistanceReadMixin",
+        "bons.furious.mixin.companions_coo49.TeslaNetworkAccessor"
+      ],
+      "guard": [
+        {
+          "class": "dev/xylonity/companions/common/tesla/TeslaNetwork",
+          "method": "*",
+          "desc": "",
+          "note": "the declared methods: six mutations each call recalculateDistances() once, then (all but removeEntityNode) refreshRecallCaches",
+          "sha256": "4b0025622f8912ba2f81d428d24ad3da1e9ffd3a9d3327212bb2611554e1836f"
+        },
+        {
+          "class": "dev/xylonity/companions/common/tesla/TeslaNetwork",
+          "method": "recalculateDistances",
+          "desc": "()V",
+          "note": "reset every distance, rebuild the node set, BFS per component from entity nodes (label-correcting, order-independent), setDistance on block nodes",
+          "sha256": "2aa4fdf38cb19faae57c8b11f67e83f05e41fe2970bc3927bc9c6db91f4f4ef2"
+        },
+        {
+          "class": "dev/xylonity/companions/common/tesla/TeslaNetwork",
+          "method": "registerBlockEntity",
+          "desc": "(Ldev/xylonity/companions/common/blockentity/AbstractTeslaBlockEntity;)V",
+          "note": "blockEntities.put, incoming entries for its outgoing set, recalculateDistances, refreshRecallCaches",
+          "sha256": "47c064d83447b96c687bc32fd78e2e96a63b3935e874fb50f66a23c0b3c840c9"
+        },
+        {
+          "class": "dev/xylonity/companions/common/tesla/TeslaNetwork",
+          "method": "unregisterBlockEntity",
+          "desc": "(Ldev/xylonity/companions/common/blockentity/AbstractTeslaBlockEntity;)V",
+          "note": "blockEntities.remove, incoming entries dropped, recalculateDistances, refreshRecallCaches",
+          "sha256": "b0293d837f71fd87dbf1cfc610542c299ba2733a1bbd1f3f16863daaa26feee9"
+        },
+        {
+          "class": "dev/xylonity/companions/common/tesla/TeslaNetwork",
+          "method": "onConnectionAdded",
+          "desc": "(Ldev/xylonity/companions/common/tesla/ConnectionTarget;Ldev/xylonity/companions/common/tesla/ConnectionTarget;)V",
+          "note": "incoming entry added, recalculateDistances, refreshRecallCaches",
+          "sha256": "3623d5da4e2b13c16081dece5b31a47f1e0e4a39a80d4407d8d3b70d137fe175"
+        },
+        {
+          "class": "dev/xylonity/companions/common/tesla/TeslaNetwork",
+          "method": "onConnectionRemoved",
+          "desc": "(Ldev/xylonity/companions/common/tesla/ConnectionTarget;Ldev/xylonity/companions/common/tesla/ConnectionTarget;)V",
+          "note": "incoming entry removed, recalculateDistances, refreshRecallCaches",
+          "sha256": "77d46cbb83eae20ab24ecabc547bbbd24948aa9da9e6f0215b55f6441fa446be"
+        },
+        {
+          "class": "dev/xylonity/companions/common/tesla/TeslaNetwork",
+          "method": "indexEntityOutgoing",
+          "desc": "(Ldev/xylonity/companions/common/tesla/ConnectionTarget;Ljava/util/Set;)V",
+          "note": "incoming entries for an entity node, recalculateDistances, refreshRecallCaches",
+          "sha256": "20d1c9cd2582a3a2871ad55ccbef9d7bf648d6a9466e94fc1b04ae3e1855235b"
+        },
+        {
+          "class": "dev/xylonity/companions/common/tesla/TeslaNetwork",
+          "method": "removeEntityNode",
+          "desc": "(Ldev/xylonity/companions/common/tesla/ConnectionTarget;)V",
+          "note": "incoming entries of an entity node dropped, recalculateDistances",
+          "sha256": "d8afe16238ce095a8a24497164032e0236e588950427749e6dd2436de8362cf6"
+        },
+        {
+          "class": "dev/xylonity/companions/common/tesla/TeslaNetwork",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "NETWORKS = new ConcurrentHashMap<>(): the map handed to the helper at the TAIL",
+          "sha256": "e1dfa797b197cb85218a97193d7f6711691ae74c8ce3dec809e08ec1b6dccce5"
+        },
+        {
+          "class": "dev/xylonity/companions/common/tesla/TeslaNetwork",
+          "method": "clearAll",
+          "desc": "()V",
+          "note": "NETWORKS.clear() (called when a server world unloads)",
+          "sha256": "74c7dbb76d7225da19939c214204d9eaa8560f16ca66a090e388a1eabf37863b"
+        },
+        {
+          "class": "dev/xylonity/companions/common/blockentity/AbstractTeslaBlockEntity",
+          "method": "*",
+          "desc": "",
+          "note": "census: distance read only in getDistance, saveAdditional (save), getUpdateTag (update tag); written only by <init>, loadAdditional and setDistance",
+          "sha256": "ad432edcd649262d52b2dc68a91069e6635ba3ac3511b97634e40802807be338"
+        },
+        {
+          "class": "dev/xylonity/companions/common/blockentity/AbstractTeslaBlockEntity",
+          "method": "getDistance",
+          "desc": "()I",
+          "note": "the plain read of the distance field",
+          "sha256": "c4b2c0ce0c0c742f9ca5613cbc81ed12a8e37bb3eb8d8e4ada42b80e8e0ec87f"
+        },
+        {
+          "class": "dev/xylonity/companions/common/blockentity/AbstractTeslaBlockEntity",
+          "method": "setDistance",
+          "desc": "(I)V",
+          "note": "the plain write of the distance field (called only by recalculateDistances)",
+          "sha256": "9dbc5c1e32a9085239e556d1869447df028eb7cc085f5dc9013bba0a8daa8dcb"
+        },
+        {
+          "class": "dev/xylonity/companions/common/blockentity/AbstractTeslaBlockEntity",
+          "method": "saveAdditional",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
+          "note": "saves the outgoing set and Distance",
+          "sha256": "48f0ae67d6126049c2252052d93913f02ebb0b2d20cf02f6443b09406778cb68"
+        },
+        {
+          "class": "dev/xylonity/companions/common/blockentity/AbstractTeslaBlockEntity",
+          "method": "getUpdateTag",
+          "desc": "(Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "the client copy: the outgoing set and Distance",
+          "sha256": "4a6e16e6a25dd0753ba0921607615aa71311d11a2244ffa3d5f4a480b3598df6"
+        },
+        {
+          "class": "dev/xylonity/companions/common/blockentity/AbstractTeslaBlockEntity",
+          "method": "loadAdditional",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
+          "note": "clears and reloads the outgoing set, reads Distance",
+          "sha256": "6538366569e08973d78ce855684cdd17bd031a41c08056f37ebbe2ee1d885086"
+        },
+        {
+          "class": "dev/xylonity/companions/common/blockentity/AbstractTeslaBlockEntity",
+          "method": "addOutgoing",
+          "desc": "(Ldev/xylonity/companions/common/tesla/ConnectionTarget;)V",
+          "note": "outgoing.add without a network call",
+          "sha256": "cf3a5d28e4fc9737dd1120aa773bd34f4171ca1bc5430515773b5725595e3d38"
+        },
+        {
+          "class": "dev/xylonity/companions/common/blockentity/AbstractTeslaBlockEntity",
+          "method": "removeOutgoing",
+          "desc": "(Ldev/xylonity/companions/common/tesla/ConnectionTarget;)V",
+          "note": "outgoing.remove without a network call",
+          "sha256": "b62ef3715693fed5598f60b3b712c7e7171e1d550dcb2a7f48cbe7e20f1fa845"
+        },
+        {
+          "class": "dev/xylonity/companions/common/blockentity/AbstractTeslaBlockEntity",
+          "method": "setLevel",
+          "desc": "(Lnet/minecraft/world/level/Level;)V",
+          "note": "setLevel: registers the block entity in its dimension's network (server side, once)",
+          "sha256": "6d178e33dfa87763d50d5041f82dd0fc60fbf7d9ad2f563a6176f8d0e44efd4a"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the recalculateDistances() call in each of TeslaNetwork's six mutation methods: marks the network dirty (an @Unique field) instead; the network's own recalculateDistances() then runs once, at HEAD of the next distance read (AbstractTeslaBlockEntity.getDistance, saveAdditional, getUpdateTag), of the next outgoing-set change outside the network (addOutgoing, removeOutgoing, loadAdditional), of TeslaNetwork.clearAll, and before a block entity leaves the network (HEAD of unregisterBlockEntity; HEAD of registerBlockEntity when another block entity sits at that position), so the one that leaves keeps the distance of the rebuild before it left, as with the rebuild at every mutation; the network is looked up in TeslaNetwork.NETWORKS (handed to the helper by an @Inject at the TAIL of TeslaNetwork's static initializer; never created). Runtime flag companionsTeslaLazyDistances. Helpers bons.furious.patch.companions_coo49.TeslaDistances, LazyTeslaNetwork.",
+      "license": "Companions (GPL-3.0): no Companions code is carried; the hooks call its own recalculateDistances"
+    }
+  }
+}

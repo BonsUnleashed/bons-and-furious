@@ -1,0 +1,80 @@
+{
+  "group": "bettercombat_c49",
+  "keys": {
+    "bettercombat_weapon_attributes_memo": {
+      "mod": "bettercombat",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.bettercombat_c49.ItemWeaponMemoMixin",
+        "bons.furious.mixin.bettercombat_c49.WeaponRegistryMemoMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/bettercombat/logic/WeaponRegistry",
+          "method": "getAttributes",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;)Lnet/bettercombat/api/WeaponAttributes;",
+          "note": "null -> null; a known bettercombat:preset_id component -> that container's attributes; else getAttributes(ITEM.getKey(item))",
+          "sha256": "7750eb2e6c4a26f110ba3e94a9d802438fac917d37e37709a4108504de7f185e"
+        },
+        {
+          "class": "net/bettercombat/logic/WeaponRegistry",
+          "method": "getAttributes",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;)Lnet/bettercombat/api/WeaponAttributes;",
+          "note": "registrations.get(id)",
+          "sha256": "250a71ed984d2a721e130f18bc2b3ddd6d50eac5334ac3171bf6e083b3f98d75"
+        },
+        {
+          "class": "net/bettercombat/logic/WeaponRegistry",
+          "method": "register",
+          "desc": "(Lnet/minecraft/resources/ResourceLocation;Lnet/bettercombat/api/WeaponAttributes;)V",
+          "note": "writer 1: registrations.put",
+          "sha256": "3eec3f662b21536170262df05a2d668d862ce131278175430319c84b7d241ace"
+        },
+        {
+          "class": "net/bettercombat/logic/WeaponRegistry",
+          "method": "decodeRegistry",
+          "desc": "(Lnet/bettercombat/network/Packets$WeaponRegistrySync;)V",
+          "note": "writer 2: registrations.clear() and refill from the sync (its lambda); bumped at head and return",
+          "sha256": "5ffaf83d079c4fd0e6549ae2bc84a5dde6d52e62a109347ce063ee52c7fad681"
+        },
+        {
+          "class": "net/bettercombat/logic/WeaponRegistry",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: no other writer of registrations (bytecode scan of the 1.21.1 jar: only WeaponRegistry names the field)",
+          "sha256": "58f70bae84a83ab404101620f8ce0768e2be7a90e96bda619af2f528be9f0bcc"
+        },
+        {
+          "class": "net/bettercombat/api/component/BetterCombatDataComponents",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "WEAPON_PRESET_ID: the component whose absence makes the answer depend on the item alone",
+          "sha256": "2d446d28d4ae6f171d15764d97137196e8275f583e7423f78fb240420f9f9ec4"
+        },
+        {
+          "class": "net/minecraft/core/component/DataComponentHolder",
+          "method": "get",
+          "desc": "(Lnet/minecraft/core/component/DataComponentType;)Ljava/lang/Object;",
+          "note": "get: getComponents().get(type), a read",
+          "sha256": "35acda6a1cd1f7079ed5a8e271c780ab3a89fd850ab9cc146651eff1557a5ed3"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "getComponents",
+          "desc": "()Lnet/minecraft/core/component/DataComponentMap;",
+          "sha256": "a52de8b5dc2bfc31e4383ed999f23d68e062432c013909eb0ffaf094c99a4424"
+        },
+        {
+          "class": "net/minecraft/world/item/ItemStack",
+          "method": "getItem",
+          "desc": "()Lnet/minecraft/world/item/Item;",
+          "sha256": "3a6fb84c9fb8b13d8a893bf8ef0510480605b691247ef1d9962c46088e2e7612"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapMethod on WeaponRegistry.getAttributes(ItemStack) (a stack without the bettercombat:preset_id component answered from a per-Item (generation, attributes) record, helper bons.furious.patch.bettercombat_c49.WeaponMemo); @Inject HEAD+RETURN of register and of decodeRegistry bump the generation; one @Unique field on Item (ItemWeaponMemoMixin, interface WeaponMemoHolder)",
+      "license": "Better Combat: GPL-3.0 (mods.toml) / All Rights Reserved (repository): injectors only, no Better Combat code is carried; Minecraft (Mojang): no-copy"
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "group": "mowziesmobs182_client_c49",
+  "keys": {
+    "mowziesmobs_elokosa_blank_transform_skip": {
+      "mod": "mowziesmobs",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.mowziesmobs182_client_c49.ElokosaBlankTransformMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/render/entity/layer/ElokosaTransformGeoLayer",
+          "method": "render",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/bobmowzie/mowziesmobs/server/entity/elokosa/EntityElokosa;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/client/renderer/RenderType;Lnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/VertexConsumer;FII)V",
+          "note": "Mowzie's Mobs 1.21.1-1.8.2: entityTranslucent(transforming texture), then one GeoRenderer.reRender into bufferSource.getBuffer of it with colour ARGB32.colorFromFloat(getOpacity, 1, 1, 1) (the wrapped call)",
+          "sha256": "f2280e9a077ff740f11abc306c4875dabba9247fc2455b7d2ac7e59930ef7654"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/render/entity/layer/ElokosaTransformGeoLayer",
+          "method": "getOpacity",
+          "desc": "(Lcom/bobmowzie/mowziesmobs/server/entity/elokosa/EntityElokosa;Lcom/bobmowzie/mowziesmobs/client/model/tools/geckolib/MowzieGeoModel;)F",
+          "note": "minus the transformTextureController value once the model is initialised, 0 before: 0 while not transforming",
+          "sha256": "67f752f86ca7f0a62c0582c7b6d451f13f66f276b222d07e6b6b7f48035c7740"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/render/entity/MowzieGeoEntityRenderer",
+          "method": "actuallyRender",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/bobmowzie/mowziesmobs/server/entity/MowzieGeckoEntity;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/client/renderer/RenderType;Lnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/VertexConsumer;ZFIII)V",
+          "note": "the re-render path: chain updates only when not a re-render; buffer and colour passed through",
+          "sha256": "5345154fe7534c67327ea3ccfafdffaa95fab4495fd539acad0dffcfb6cb14a5"
+        },
+        {
+          "class": "com/bobmowzie/mowziesmobs/client/render/entity/MowzieGeoEntityRenderer",
+          "method": "renderRecursively",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/bobmowzie/mowziesmobs/server/entity/MowzieGeckoEntity;Lsoftware/bernie/geckolib/cache/object/GeoBone;Lnet/minecraft/client/renderer/RenderType;Lnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/VertexConsumer;ZFIII)V",
+          "note": "the re-render path: checkAndRefreshBuffer keeps the given buffer for a re-render; no layers",
+          "sha256": "08975a62bbfa257cda089242972e0a68f2a513315137ecab6e4b7c2283b315cd"
+        },
+        {
+          "class": "software/bernie/geckolib/renderer/GeoRenderer",
+          "method": "reRender",
+          "desc": "(Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;Lsoftware/bernie/geckolib/animatable/GeoAnimatable;Lnet/minecraft/client/renderer/RenderType;Lcom/mojang/blaze3d/vertex/VertexConsumer;FIII)V",
+          "note": "GeckoLib 4.9.3: pre-render, render, post-render with the given buffer and colour",
+          "audit": true,
+          "sha256": "1227a12b55041ba0d6f5d4e63d19a0a2bc2ed1573170e119a6a9415b843dbadb"
+        },
+        {
+          "class": "software/bernie/geckolib/renderer/GeoEntityRenderer",
+          "method": "actuallyRender",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/world/entity/Entity;Lsoftware/bernie/geckolib/cache/object/BakedGeoModel;Lnet/minecraft/client/renderer/RenderType;Lnet/minecraft/client/renderer/MultiBufferSource;Lcom/mojang/blaze3d/vertex/VertexConsumer;ZFIII)V",
+          "note": "GeckoLib 4.9.3: the model render translations, then the bones into the given buffer (no buffer of its own)",
+          "audit": true,
+          "sha256": "d4972bc1ca443469ab26738ab7f88863db99dce91c1a4bc964d322f33836b8e9"
+        },
+        {
+          "class": "software/bernie/geckolib/renderer/GeoRenderer",
+          "method": "renderCubesOfBone",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lsoftware/bernie/geckolib/cache/object/GeoBone;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V",
+          "note": "GeckoLib 4.9.3: the only writes into the buffer",
+          "audit": true,
+          "sha256": "6f4fc117d2aa89ba18a221ffdd74f489c27a7e34b11b158882a66c6546b738fa"
+        },
+        {
+          "class": "software/bernie/geckolib/renderer/GeoRenderer",
+          "method": "renderCube",
+          "desc": "(Lcom/mojang/blaze3d/vertex/PoseStack;Lsoftware/bernie/geckolib/cache/object/GeoCube;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V",
+          "note": "GeckoLib 4.9.3: the cube's quads into the given buffer through createVerticesOfQuad",
+          "audit": true,
+          "sha256": "51335e7fdbca5428fbdaebd2b4d201de8ad9132b0742ab921bb8c2047f3218e4"
+        },
+        {
+          "class": "software/bernie/geckolib/renderer/GeoRenderer",
+          "method": "createVerticesOfQuad",
+          "desc": "(Lsoftware/bernie/geckolib/cache/object/GeoQuad;Lorg/joml/Matrix4f;Lorg/joml/Vector3f;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V",
+          "note": "GeckoLib 4.9.3: every vertex carries the given colour (VertexConsumer.addVertex with eleven arguments)",
+          "audit": true,
+          "sha256": "988f5a6418ffdace26efecc5675d322a5b1c69986a7805e8e9363eef9ee1f3a1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the GeoRenderer.reRender call of ElokosaTransformGeoLayer.render: while its colour's alpha (the layer's opacity) is 0, the buffer is a plain BufferBuilder and no shader pack is in use, the re-render runs with a vertex consumer that keeps nothing in place of the translucent buffer (helper bons.furious.patch.mowziesmobs182_client_c49.ElokosaTransform)",
+      "license": "Mowzie's Mobs (custom licence): no Mowzie's Mobs code is carried; the wrappers carry only our own logic (Idea: Collections Of Optimizations mowziesmobs.skipBlankElokosaTransform, idea text only)"
+    }
+  }
+}

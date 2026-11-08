@@ -1,0 +1,232 @@
+{
+  "group": "vanilla_lookup_loops",
+  "keys": {
+    "vanilla_multiface_face_loop": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_lookup_loops.MultifaceBlockFaceLoopMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/block/MultifaceBlock",
+          "method": "hasAnyFace",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;)Z",
+          "note": "protected static: Arrays.stream(DIRECTIONS).anyMatch(lambda$hasAnyFace$2), answered at its head by the same loop; Mojang's production class (MultifaceBlock is not binpatched) has the same code",
+          "sha256": "e0cb125723292381c6d08f142926c92b9d7a2f008d27cc6839e47751fcc37567"
+        },
+        {
+          "class": "net/minecraft/world/level/block/MultifaceBlock",
+          "method": "hasAnyVacantFace",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;)Z",
+          "note": "private static: Arrays.stream(DIRECTIONS).anyMatch(lambda$hasAnyVacantFace$3), answered at its head by the same loop; same code in production",
+          "sha256": "d8d8921f49e7edde3a8cb46729410d454622565ab38a89c5951d267c35832071"
+        },
+        {
+          "class": "net/minecraft/world/level/block/MultifaceBlock",
+          "method": "hasFace",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;)Z",
+          "note": "public static: getFaceProperty(direction), then state.hasProperty && state.getValue; the per-face check the loop calls in DIRECTIONS order; same code in production",
+          "sha256": "a881031410a9a1362a85f26b61ccaf456451631f88307f83104de9b401abfa9b"
+        },
+        {
+          "class": "net/minecraft/world/level/block/MultifaceBlock",
+          "method": "lambda$hasAnyFace$2",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;)Z",
+          "note": "the stock predicate of hasAnyFace: hasFace(state, direction); same name and code in production",
+          "sha256": "149e6eb0734ecdde124a022f2faa1754ffa9fa2bd3ea40098528ef14f75fb360"
+        },
+        {
+          "class": "net/minecraft/world/level/block/MultifaceBlock",
+          "method": "lambda$hasAnyVacantFace$3",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;)Z",
+          "note": "the stock predicate of hasAnyVacantFace: !hasFace(state, direction); same name and code in production",
+          "sha256": "5b8491bd1284f6d79d3bd79f362b9fcb56546e0e40a589964f25550fc1336977"
+        }
+      ],
+      "cancel": [],
+      "conversion": "cancellable @Inject(HEAD) into the static MultifaceBlock.hasAnyFace and hasAnyVacantFace (selectors with full descriptors): a plain loop over the same direction array (DIRECTIONS, shadowed) calling the same static hasFace, first match returns, as the stock anyMatch over the lambdas lambda$hasAnyFace$2 / lambda$hasAnyVacantFace$3",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own loop (helper bons.furious.patch.vanilla_lookup_loops.FaceLoops)"
+    },
+    "vanilla_block_range_counters": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_lookup_loops.BlockPosRangeCounterMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/core/BlockPos$4",
+          "method": "computeNext",
+          "desc": "()Lnet/minecraft/core/BlockPos;",
+          "note": "betweenClosed's iterator is BlockPos$4 in 1.21.1 (1.20.1: BlockPos$3; BlockPos$1 is now the STREAM_CODEC): index == end -> endOfData, else x = index % width, y = index / width % height, z = index / width / height, index++, cursor.set(minX + x, minY + y, minZ + z). Mojang's production class (installed NeoForge 21.1.252; BlockPos is not binpatched) names the captured fields val$end/val$width/val$height/val$minX/val$minY/val$minZ where the NeoForm build has val$l/val$i/val$j/val$p_121977_/val$p_121978_/val$p_121979_, same instructions otherwise: the production fingerprint is a variant of this line. The mixin reads these fields itself: shadowed under the NeoForm names with Mojang's names as @Shadow aliases NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ.",
+          "sha256": "719a5dc8e4cac468d7619483fb5f2b75d459c565111bd8261e558c48388f146d",
+          "sha256_variants": [
+            "fba5ef0dc5792c085510b29c0b56a0a3da91c1ed9d8a57498c1e028bea07285a"
+          ]
+        },
+        {
+          "class": "net/minecraft/core/BlockPos$4",
+          "method": "<init>",
+          "desc": "(IIIIII)V",
+          "note": "stores (end, width, height, minX, minY, minZ), in that order, into the captured fields, then a new MutableBlockPos cursor; production differs only in the captured-field names (a variant, see computeNext) NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ.",
+          "sha256": "f0b6c10e7280083d3e2a5f133436209415e6db22b671e6bae738b6577063fe60",
+          "sha256_variants": [
+            "a875f8213a68dba43124e6ca7d5ba987963c6a4adc2e2621991dd15e0124c9fc"
+          ]
+        },
+        {
+          "class": "net/minecraft/core/BlockPos$4",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: <init>, computeNext and its bridge; the same in production",
+          "sha256": "ff1f036396b0670a64317a09c3753475d79ae2a8d0a8f8edb66342f69c45b62e"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "betweenClosed",
+          "desc": "(IIIIII)Ljava/lang/Iterable;",
+          "note": "width, height and depth = max - min + 1, end = width * height * depth as an int, an iterable (lambda$betweenClosed$5) capturing (end, width, height, minX, minY, minZ); the same in production",
+          "sha256": "e42e179365ca45e024a129c6e09278eba73affe1faecac825f6b4d57ba82c88b"
+        },
+        {
+          "class": "net/minecraft/core/BlockPos",
+          "method": "lambda$betweenClosed$5",
+          "desc": "(IIIIII)Ljava/util/Iterator;",
+          "note": "new BlockPos$4(end, width, height, minX, minY, minZ): the argument order the shadowed fields rely on; same name and code in production",
+          "sha256": "a44a0da73bf896cd851c35831b6b4f707992298fa66a75b47b33e6e97ab2aa51"
+        }
+      ],
+      "cancel": [],
+      "conversion": "cancellable @Inject(HEAD) into BlockPos$4.computeNext (the betweenClosed iterator; @Mixin(targets), the captured fields shadowed under the NeoForm names with Mojang's production names as @Shadow aliases): counter mode decided once at the first position (positive width, height and count), then the same cursor set and index step as the original from three counters; any other iterator and the end of the range run the original body",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own counter logic (helper bons.furious.patch.vanilla_lookup_loops.RangeCounters)"
+    },
+    "vanilla_single_value_section_get": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_lookup_loops.PalettedContainerSingleValueMixin",
+        "bons.furious.mixin.vanilla_lookup_loops.SingleValuePaletteAccess"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/chunk/PalettedContainer",
+          "method": "get",
+          "desc": "(I)Ljava/lang/Object;",
+          "note": "protected: data.palette.valueFor(data.storage.get(index)), the one valueFor call redirected; get(III) only computes the index and calls it. NeoForge binpatches PalettedContainer: the production class has the same code",
+          "sha256": "237723c6bc4f59612ee6e629e0e1bfc91dafdce271a04a1ef5fbca1f642560e2"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/SingleValuePalette",
+          "method": "valueFor",
+          "desc": "(I)Ljava/lang/Object;",
+          "note": "value != null && id == 0 -> value, otherwise IllegalStateException(\"Missing Palette entry for id \" + id + \".\"). Mojang's production class (SingleValuePalette is not binpatched) tests the same two conditions with the branches in the other order, same results: its fingerprint is a variant of this line NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ.",
+          "sha256": "d0f2f12e99ac7c9a683f423d9a201c954276cac6f872f1c35da9c52c63c44115",
+          "sha256_variants": [
+            "724854a9ab304992367faa93924c0e627cd643d985ccc7fb36348102b6d91285"
+          ]
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/SingleValuePalette",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods (constructor, create, idFor, maybeHas, valueFor, read, write, getSerializedSize, getSize, copy); the same in production",
+          "sha256": "d3f10029ec0b40f8e853e7384488175158672758e4eb8b8e7154656f196d1722"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the Palette.valueFor call in PalettedContainer.get(I)Ljava/lang/Object; (descriptor in the selector: with Mojang names get(int) and get(int, int, int) share a name): SingleValuePalette (exact class) with id 0 and a set value answers from its value field (accessor on value), every other case makes the original call",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own check (helper bons.furious.patch.vanilla_lookup_loops.SingleValueSections)"
+    },
+    "vanilla_clip_shape_box_memo": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_lookup_loops.VoxelShapeClipBoxesMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/phys/shapes/VoxelShape",
+          "method": "clip",
+          "desc": "(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/BlockHitResult;",
+          "note": "empty shape or a ray shorter than 1e-7 squared -> null; start inside a full cell -> inside hit; otherwise AABB.clip(this.toAabbs(), from, to, pos), the one toAabbs call redirected. Mojang's production class (VoxelShape is not binpatched) returns the inside hit directly where the NeoForm build jumps to a shared return, same instructions otherwise: its fingerprint is a variant of this line NeoForge 21.1.252 production variant: instruction/control-flow equivalence verified; only compiler layout, local slots and named synthetic capture fields differ.",
+          "sha256": "c36a0514de6676a6197d600394d3626a7753bca30a2e6042e2b15b8f9aaafe10",
+          "sha256_variants": [
+            "d39431f4b8072f3821f8e478d376213e70a4ebb11cc2bc617d41880b971bc96b"
+          ]
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/VoxelShape",
+          "method": "toAabbs",
+          "desc": "()Ljava/util/List;",
+          "note": "a new ArrayList filled through forAllBoxes with one new AABB per box (lambda$toAabbs$3); the same in production",
+          "sha256": "786f45342e49b6b8db135c48479921b32ba729bfcf3e9886e9da57d49372ea2e"
+        },
+        {
+          "class": "net/minecraft/world/phys/AABB",
+          "method": "clip",
+          "desc": "(Ljava/lang/Iterable;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/BlockHitResult;",
+          "note": "only iterates the boxes (getDirection(aabb.move(pos), ...) per box), so the kept unmodifiable list is never written; NeoForge binpatches AABB: the production class has the same code",
+          "sha256": "fe3f6c36a86807b3289221b73685fced07c71db958b1623a5c316fa1a2f0543e"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/ArrayVoxelShape",
+          "method": "*",
+          "desc": "",
+          "note": "a kept class: two constructors and getCoords only, no toAabbs or forAllBoxes override; the same in production",
+          "sha256": "efdf1a791af7dc2005d665cd598d35d62221c888d4c4784c64a14e04f05b7d2d"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/CubeVoxelShape",
+          "method": "*",
+          "desc": "",
+          "note": "a kept class: constructor, getCoords and findIndex only, no toAabbs or forAllBoxes override; the same in production",
+          "sha256": "075340d6c3ac0bb4f1e51340535f54dba2824bbeefb66983b4ba4bc323e2709d"
+        },
+        {
+          "class": "net/minecraft/world/phys/shapes/SliceShape",
+          "method": "*",
+          "desc": "",
+          "note": "a kept class: constructor, makeSlice, getCoords and <clinit> only, no toAabbs or forAllBoxes override; the same in production",
+          "sha256": "51adae4c3c54a38da429c3c878f85bb5aaa5cea9c4bd087ee7518752a0fe4919"
+        },
+        {
+          "class": "com/copycatsplus/copycats/utility/shape/ExtensibleVoxelShape",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/phys/shapes/VoxelShape;)V",
+          "note": "audited: Copycats 3.0.9's only call of its @Mutable VoxelShape.shape setter (VoxelShapeAccessor.copycats$setShape) sets the grid of the new ExtensibleVoxelShape itself (a SliceShape subclass, never kept) while it is built, never of another shape",
+          "audit": true,
+          "sha256": "1235f47c2fd6b7d0ec23d99d53f1eb51b53b11577bfc061e4b997ca8b57da635"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of the toAabbs call inside VoxelShape.clip (selector with full descriptor): an unmodifiable copy of the first list is kept per shape of vanilla's own classes (@Unique field) and handed to AABB.clip afterwards; AABB.clip unchanged",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own memo (helper bons.furious.patch.vanilla_lookup_loops.ClipBoxes); Copycats (All Rights Reserved): no code carried, the guard only fingerprints its constructor"
+    },
+    "vanilla_rl_string_memo": {
+      "mod": "minecraft",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.vanilla_lookup_loops.ResourceLocationStringMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/resources/ResourceLocation",
+          "method": "toString",
+          "desc": "()Ljava/lang/String;",
+          "note": "namespace + \":\" + path from the two final fields (StringConcatFactory), no other state; NeoForge binpatches ResourceLocation: the production class has the same code. C2ME 0.4.0's opts allocs module @Overwrites this method with its own cached copy (MixinIdentifier): a compat.json yield",
+          "sha256": "2165661378a093ebf1a077f3a93e1faac4eb141a90b81d90485c7a0c203e9693"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @ModifyReturnValue at the return of ResourceLocation.toString keeps the first string in an @Unique field; a cancellable @Inject(HEAD) returns it on later calls",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own memo (helper bons.furious.patch.vanilla_lookup_loops.RlStrings)"
+    }
+  }
+}

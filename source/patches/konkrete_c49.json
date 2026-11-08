@@ -1,0 +1,68 @@
+{
+  "group": "konkrete_c49",
+  "keys": {
+    "konkrete_volume_thread_lazy_start": {
+      "mod": "konkrete",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.konkrete_c49.SoundHandlerLazyStartMixin"
+      ],
+      "guard": [
+        {
+          "class": "de/keksuccino/konkrete/sound/SoundHandler",
+          "method": "init",
+          "desc": "()V",
+          "note": "client only, once (init flag): constructs the volume thread and starts it (the redirected start call)",
+          "sha256": "2cdfe14735218b4f290b44f358e4ca3ea27ec49266827161e8c03a247bb4116e"
+        },
+        {
+          "class": "de/keksuccino/konkrete/sound/SoundHandler",
+          "method": "lambda$init$0",
+          "desc": "()V",
+          "note": "the thread body: while volumeHandling, the first pass compares the master volume with 0.0, updateVolume on a change, sleep 100 ms",
+          "sha256": "c851cf50fba79b69a40fa6b6815f9757e6dd0baea153ca09f441a31c11e20ad5"
+        },
+        {
+          "class": "de/keksuccino/konkrete/sound/SoundHandler",
+          "method": "registerSound",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)V",
+          "note": "the only writer that adds a clip: put, then setVolume (the wrapped call) as the last statement of a success",
+          "sha256": "de1b609072a5d459907a7b83fe8061c0e45d048c95bd88cd471ed92b70b54096"
+        },
+        {
+          "class": "de/keksuccino/konkrete/sound/SoundHandler",
+          "method": "updateVolume",
+          "desc": "()V",
+          "note": "setVolume of every clip with the current master volume (the held thread's first pass repeats it)",
+          "sha256": "c5e4939c93a0a59282256085f07a1809d271b4edb6ebc30dc8c467ad24c41536"
+        },
+        {
+          "class": "de/keksuccino/konkrete/sound/SoundHandler",
+          "method": "setVolume",
+          "desc": "(Ljava/lang/String;I)V",
+          "note": "the gain write: a pure function of the clip's control range and the percentage (so a repeat is identical)",
+          "sha256": "4a9b47a8108ebcd02ddb1960dedeabcc5f57b292fcccc3655325bcf993eda85b"
+        },
+        {
+          "class": "de/keksuccino/konkrete/sound/SoundHandler",
+          "method": "*",
+          "desc": "",
+          "note": "declared methods: only registerSound puts into the sound map; no getter exposes the map or the thread",
+          "sha256": "f60e4333ea35dfa9d65be3718eceb54a60a1662f95e0fab0f4fb6ff558914309"
+        },
+        {
+          "class": "de/keksuccino/konkrete/Konkrete",
+          "method": "onGameInitCompleted",
+          "desc": "()V",
+          "note": "the caller: SoundHandler.init() then updateVolume() (no clip yet), once at client init",
+          "sha256": "ce0ef7f67fa26393881665edee1b433de8ab37db703eef28e8be62aa8a934230"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Redirect of Thread.start() in SoundHandler.init(): with the switch on the constructed thread is held; @WrapOperation of the setVolume call at the end of a successful registerSound(): after it ran, the held thread starts once (helper bons.furious.patch.konkrete_c49.KonkreteLazyStart)",
+      "license": "Konkrete (Apache-2.0): no Konkrete code is carried; the redirect only delays the start of Konkrete's own thread"
+    }
+  }
+}

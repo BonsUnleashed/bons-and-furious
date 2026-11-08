@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "bons.furious.mixin.goal_presence_gates",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "bons.pure.config.PureMixinPlugin",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "AvoidEntityGoalPresenceMixin",
+    "CacKoiLuck271GateMixin",
+    "DummmmmmyScarecrowVouchMixin",
+    "TargetGoalPresenceMixin"
+  ]
+}

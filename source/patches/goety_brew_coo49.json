@@ -1,0 +1,512 @@
+{
+  "group": "goety_brew_coo49",
+  "keys": {
+    "goety_brew_effects_page_memo": {
+      "mod": "goety",
+      "scripts": [],
+      "since": "1.0.49",
+      "kind": "variant",
+      "mixins": [
+        "bons.furious.mixin.goety_brew_coo49.GoetyBrewPageMemoMixin",
+        "bons.furious.mixin.goety_brew_coo49.GbNamedContentsAccessor"
+      ],
+      "guard": [
+        {
+          "class": "com/Polarice3/Goety/compat/patchouli/BrewingCatalystProcessor",
+          "method": "setup",
+          "desc": "(Lnet/minecraft/world/level/Level;Lvazkii/patchouli/api/IVariableProvider;)V",
+          "note": "brewEffect = new BrewEffects().getBrewEffect(recipe id); extraText from the optional text variable",
+          "sha256": "7ae371da8d4b0849f2abebb043718739724eaae6bdca25197b8125ff4c3691b6"
+        },
+        {
+          "class": "com/Polarice3/Goety/compat/patchouli/BrewingCatalystProcessor",
+          "method": "process",
+          "desc": "(Lnet/minecraft/world/level/Level;Ljava/lang/String;)Lvazkii/patchouli/api/IVariable;",
+          "note": "input: IVariable.from(new BrewEffects().getCatalystFromEffect(id), registryAccess); the other keys read the kept BrewEffect's getters",
+          "sha256": "729751675f99f4fc4b98120a2f3e220dfbda2bc1e6555fc8eec8fcdc3706dbb1"
+        },
+        {
+          "class": "com/Polarice3/Goety/compat/patchouli/BrewingSacrificeProcessor",
+          "method": "setup",
+          "desc": "(Lnet/minecraft/world/level/Level;Lvazkii/patchouli/api/IVariableProvider;)V",
+          "note": "the same setup as the catalyst page",
+          "sha256": "291fd74b13e7c01134041135fc645faa3022327f13f688438a860b06e111adcb"
+        },
+        {
+          "class": "com/Polarice3/Goety/compat/patchouli/BrewingSacrificeProcessor",
+          "method": "process",
+          "desc": "(Lnet/minecraft/world/level/Level;Ljava/lang/String;)Lvazkii/patchouli/api/IVariable;",
+          "note": "input: new BrewEffects().getSacrificeFromEffect(id): its spawn egg, else a new dummy stack named after it (CUSTOM_NAME); no sacrifice: new BrewEffects().getCatalystFromEffect(id) through IVariable.from (two tables); the other keys read the kept BrewEffect's getters",
+          "sha256": "950c347a105cb4d95e227b7c0758538ac753f9ce8c550e853ed3e8b58518cc68"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/BrewEffects",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "only its six empty maps: the table fills itself on its first query (initialize)",
+          "sha256": "fe18d8e9d1eb219031c0f8e0d54f33080d6710ffe3b8802c6f4b826746c9f960"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/BrewEffects",
+          "method": "initialize",
+          "desc": "()V",
+          "note": "once per table (initialized flag): writes only its own six maps: about a hundred registrations from BrewConfig values and registry objects, then every item (infested blocks, dyes) and entity type (endermite, silverfish, snow golem, goety:villagers) in registry order",
+          "sha256": "ddb6202f62a2e7facca7872b2a6b9ca4bbe88637fe13867db2caf183b18370fd"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/BrewEffects",
+          "method": "register",
+          "desc": "(Lcom/Polarice3/Goety/common/effects/brew/BrewEffect;Lnet/minecraft/world/item/Item;)V",
+          "note": "puts into its own maps (catalystInverted: a new ItemStack of the ingredient)",
+          "sha256": "fddaf6b284e9222c82e6ce049fd3eba5e352b9366cb6192c7e13597be86dc15a"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/BrewEffects",
+          "method": "register",
+          "desc": "(Lcom/Polarice3/Goety/common/effects/brew/BrewEffect;Lnet/minecraft/world/entity/EntityType;)V",
+          "note": "puts into its own maps",
+          "sha256": "6f484a6d0087c9be4ab775c73608ff1f5f07bc7cf22f0a110e322e9d9cc3de57"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/BrewEffects",
+          "method": "modifierRegister",
+          "desc": "(Lcom/Polarice3/Goety/common/effects/brew/modifiers/BrewModifier;Lnet/minecraft/world/item/Item;)V",
+          "note": "puts into its own map",
+          "sha256": "0429e683dadb75df686e35e3c3f108477a22a058f8c99ced688d02415fde099f"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/BrewEffects",
+          "method": "getBrewEffect",
+          "desc": "(Ljava/lang/String;)Lcom/Polarice3/Goety/common/effects/brew/BrewEffect;",
+          "note": "initialize, then a read of effectIDs (first effect whose description id matches, else by key)",
+          "sha256": "d5cc05dc2eab56876a939e08ed46517b694acbec1367ea7d3c72ccec5d85a6c4"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/BrewEffects",
+          "method": "getCatalystFromEffect",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/world/item/ItemStack;",
+          "note": "initialize, then a read of catalystInverted (the query GoetyBrews uses to fill a new table before keeping it)",
+          "sha256": "57b699151940297ab77d74a8a40cf4eabc5a2582e6ba0099c0537822119c0850"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/BrewEffects",
+          "method": "getSacrificeFromEffect",
+          "desc": "(Ljava/lang/String;)Lnet/minecraft/world/entity/EntityType;",
+          "note": "initialize, then a read of sacrificeInverted",
+          "sha256": "543700e4ca89e5a28d84a72f239b768a18cb3d0b5cde8aea867cb40411914e0c"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/BrewEffect",
+          "method": "getOrCreateDescriptionId",
+          "desc": "()Ljava/lang/String;",
+          "note": "a lazy copy of effectID (the only write a page causes on a kept effect)",
+          "sha256": "e6c2bbb355f69bff1458955aadb4c490e8033b69354d1c87a80ae8b6e2571c9d"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/BrewEffect",
+          "method": "getDescriptionId",
+          "desc": "()Ljava/lang/String;",
+          "note": "getOrCreateDescriptionId",
+          "sha256": "cfe4ffc6aa1c3fdb7afe872a9a86856d0ac88c8cb6c1d1dfaf266b21749c9437"
+        },
+        {
+          "class": "vazkii/patchouli/client/book/template/variable/VariableHelperImpl",
+          "method": "createFromObject",
+          "desc": "(Ljava/lang/Object;Lnet/minecraft/core/HolderLookup$Provider;)Lvazkii/patchouli/api/IVariable;",
+          "audit": true,
+          "note": "Patchouli 1.21.1-93 (optional for Goety): the object goes straight to its serializer; nothing keeps it",
+          "sha256": "64280b4857deb587ff76a7669d03117e5ec2168a9bf454982beb75a08b344814"
+        },
+        {
+          "class": "vazkii/patchouli/client/book/template/variable/ItemStackVariableSerializer",
+          "method": "toJson",
+          "desc": "(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/core/HolderLookup$Provider;)Lcom/google/gson/JsonElement;",
+          "audit": true,
+          "note": "Patchouli: the stack is written into JSON at once (item id, count, encoded components)",
+          "sha256": "44a1b425ed5cff838e8442e78579b4c0247216b43a384b7245943092226ed4dd"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/AgingBrewEffect",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "051e8f1b0049ff38268ae92c303dd41800b536adeaf1594e994ee779246ec013"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/BatsBrewEffect",
+          "method": "<init>",
+          "desc": "(II)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "1ce2820a79f527d17e5599f150cf0b875176f356d5cbfea7ce64e145b4011691"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/BeesBrewEffect",
+          "method": "<init>",
+          "desc": "(II)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "22fe953a171de2f59aca30be3753a1e5c77b8f211d09dcfda912e53d436ddfde"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/BlindJumpBrewEffect",
+          "method": "<init>",
+          "desc": "(I)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "615c84fb75f7d2299828ae96e08c6783ddc6c9a5094eb9e07f20e0b5912b1813"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/BrewColorEffect",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/item/DyeItem;)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "f9dc2e0a468222bbf8e7113317242389421203fdfd46e15d4c3ff9dac18c3e4c"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/BrewEffect",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;IILnet/minecraft/world/effect/MobEffectCategory;I)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "dd21f8a5aef660fbb58176f3721a69f15a79fe3f9d548349f557aa33babc570d"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/BrewEffect",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;IILnet/minecraft/world/effect/MobEffectCategory;IZ)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "04d98598eaebf8459d77b4c798a5545ebd28dd1108099211c83fe884766718b6"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/BrewEffect",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;ILnet/minecraft/world/effect/MobEffectCategory;I)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "9388e914e9f77810140f137eff0b77ff7596c36d5c9a975bf7c55742071b14c1"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/BrewEffect",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/effect/MobEffect;IILnet/minecraft/world/effect/MobEffectCategory;I)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "5d18f6da857dc943f45793f9098dde172ec590718cc8a8dedbdbb002f974b3e2"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/BrewEffect",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/effect/MobEffect;ILnet/minecraft/world/effect/MobEffectCategory;I)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "ab67012878f90df901a7c894f864437428dd5f8e4a0d2dbc5206492deb81fa5d"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/FertilityBrewEffect",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "6a1a7a1f41d1a14177d7967f05ee1347e95c175a184611365b7c22f981a78fc3"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/FlayingBrewEffect",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "a7c4307349573ae142ab450578266117b8f20605ac3f2074fc9d3be4f99ee10e"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/LaunchBrewEffect",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "a1bf4d91db44df55ffacaf68f7bdd788420bbc89a0c2d0565ea1a54cc59cd944"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/LoveBrewEffect",
+          "method": "<init>",
+          "desc": "(I)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "f649aaef9201f16a6206966ae1275cf1ff81c5a1bf7daa9492dfb9caf2711692"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/PotionBrewEffect",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/core/Holder;II)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "2b960c39d2ac04fb9818bbe0f9afd9708cca53ab3aa74e02d7a5feb862dd7c19"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/PotionBrewEffect",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/core/Holder;III)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "0f99aebfb766f6a2edc3ccd4b10dd34ea71db8f389240d464d51d68514a6d965"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/PotionBrewEffect",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/effect/MobEffect;II)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "c799f7c49ff6e5b786b5ec311d5183139086a4fe949e797c7f5d0d0249ac0f33"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/PotionBrewEffect",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/effect/MobEffect;III)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "cb37c66646e0194ad18b1969811ffa4e289d18e4677e6cd14ec53b20d1d6efba"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/PurifyBrewEffect",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;IILnet/minecraft/world/effect/MobEffectCategory;IZ)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "efbc3f3f16e887519479993e497529edff3a527a22b2c0265d904dec44934ec4"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/SaturationBrewEffect",
+          "method": "<init>",
+          "desc": "(I)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "73701158e8681e25bc1476ffd59a337cd562c3dab3d3521581c262ecae65b906"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/ShearBrewEffect",
+          "method": "<init>",
+          "desc": "(I)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "9e9aab16764fd01e283fc981b87dd946288581b0e5c34571472b935c2cc97c9c"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/StripBrewEffect",
+          "method": "<init>",
+          "desc": "(II)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "b52c2138d26444d506e48a5718b5e9bb10e4cecfc46045ef272597a2381c37e8"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/ThornTrapBrewEffect",
+          "method": "<init>",
+          "desc": "(I)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "c728d9c0673e1b9281812070b69ac9781f9c60c57a533164be19adeda39f9913"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/TransposeBrewEffect",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "22933ca62c14fa1336304a472fbbf1d545a144afcee627b53e7dac4b87b1f061"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/WebbedBrewEffect",
+          "method": "<init>",
+          "desc": "(II)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "90238f8d17cd27162c5415a08ab6195a666c42c50e8a738989a27a4a168e57e1"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/ChopTreeBlockEffect",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "38b2ca48fc93f82c05d680c37e5723278d3ec6b9381e1b6c5ceb75150cb226f2"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/CombustBlockEffect",
+          "method": "<init>",
+          "desc": "(II)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "9ce62cb7838658effd71265e82f39b65de19d2e632b7f4d25d20bfa206b166ba"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/CorrosionBlockEffect",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "d08676e83b26d4fe770adbbd7f6d924e2e00e1a482bb42a6a4760b669ac46546"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/DroughtBlockEffect",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "f393850c3c151cf56bd9cba6bf01a4c124d7cb77e36042e03662cd317e0f5c7c"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/ExplodeBlockEffect",
+          "method": "<init>",
+          "desc": "(II)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "62a9659186344bc5ef02e20e9da45211fe234176c09077e4746b05fd69f1129f"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/ExtinguishBlockEffect",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "24cfaa4e37b825696b546eed667ee2c0f57ae0bae011f062fd1d1a2da8a6108f"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/FloodBlockEffect",
+          "method": "<init>",
+          "desc": "(II)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "c5d2f30b2eb3a593abb84f11a6cf18f9fe97db4140fd8e7d83d214ba567eb21b"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/FreezeBlockEffect",
+          "method": "<init>",
+          "desc": "(I)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "00e23f8c72211e0254dd52776eb9c6de14f1272faa5675b179ce736e007a8e7c"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/GrowBlockEffect",
+          "method": "<init>",
+          "desc": "(I)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "068cdf8ff586e72aac3ea5b4463bf030c0db331c3a49bd3bff5fb6f23ebf69e0"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/GrowCactusBlockEffect",
+          "method": "<init>",
+          "desc": "(I)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "0c3a8b9199242604bcba57792aa70b1f0c311a38b0b0674185ba6970701396ba"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/GrowCaveVinesBlockEffect",
+          "method": "<init>",
+          "desc": "(I)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "9462c779e092c3b16ca65cafe395d856f64549a461a9f62c0fe696c0ac698c42"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/HarvestBlockEffect",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "822001c9cd6d87670f16c13fbab93fe5b64c134b18fecff5458bdbfc32f275b0"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/InfestBlockEffect",
+          "method": "<init>",
+          "desc": "(I)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "c51ef581408dd5aa21295563a3336ce5282af14a188d327a28fcb07796e62a57"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/LeafShellBlockEffect",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "82060b9c75bf7edb8e43fbab42b0775ef75c06dcd22a1d5c6b871603fc659d75"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/MossifyBlockEffect",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "0cf0d4b182e98895b7f0fd33adfc5c27ffc565b64a0bddcc10b4140fd14859fa"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/PartLavaBlockEffect",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "33347a9e33cac61eb6dc9853c497eaa65ee916e6dc568f7e5e68a3f5faec1083"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/PartWaterBlockEffect",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "67606468c75449fade5f7bec54eb7ea32ed14bd8904976b19f937894bff4fb8d"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/PruningBlockEffect",
+          "method": "<init>",
+          "desc": "(I)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "78d9b8764274c9255865d7d16eb62f5c44f25236a2a6c80db21269815d2bcd9f"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/PulverizeBlockEffect",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "b059a2e6842880410867ab90b814363bfc5ff911ab12e2c8d444f91d5bb8ab33"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/RaiseDeadBrewEffect",
+          "method": "<init>",
+          "desc": "(II)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "5fe52098be60cf6ad82ddbfd0d388a1d28fe6646365c360ec6f02d6986a0d7f1"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/SlimyBrewEffect",
+          "method": "<init>",
+          "desc": "(II)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "0a2a85c7b9238ecf98657768d9a7a49ac5a5ccbb86fb41b911454d5e96fd0cd1"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/SnowBlockEffect",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "9868a30600fa3e7fe6d2de1fd3b2f1868cb9291ed1a352aa5fb36e2e0d416fba"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/block/SweetBerriedEffect",
+          "method": "<init>",
+          "desc": "()V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "d22b442c3aa618285ab5cf77fb38d7e2300621ebb7eb9b9db255b55bede1322b"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/modifiers/BrewModifier",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "08e2c552482063485bed26cffece9c41d618f9748079db73ee0d391d446cf312"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/modifiers/BrewModifier",
+          "method": "<init>",
+          "desc": "(Ljava/lang/String;I)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "c8c72e2962abcd9599ce0256cd37605b6befca0baec5268708f565e26f3f4c56"
+        },
+        {
+          "class": "com/Polarice3/Goety/common/effects/brew/modifiers/CapacityModifier",
+          "method": "<init>",
+          "desc": "(I)V",
+          "note": "a constructor the brew table runs: writes only its own fields (config values, registry objects)",
+          "sha256": "f3113867c2e784e8645ff362ce8da51b8b43da31fb4c1d0058c406f283fc40aa"
+        },
+        {
+          "class": "net/minecraft/core/HolderSet$Named",
+          "method": "bind",
+          "desc": "(Ljava/util/List;)V",
+          "note": "bind: a tag binding stores List.copyOf of the new contents (the identity the kept table is checked against)",
+          "sha256": "ef98a5c786a0a3195fe0f30c85836ad040c767bafbb3b610aff832f1d912a208"
+        },
+        {
+          "class": "net/minecraft/core/MappedRegistry",
+          "method": "bindTags",
+          "desc": "(Ljava/util/Map;)V",
+          "note": "bindTags: every tag of the registry bound again through HolderSet.Named.bind",
+          "sha256": "cede09f70449c2edbc6caf82411ba40b464d18bba64a6762394898dcaa404b11"
+        },
+        {
+          "class": "net/minecraft/core/MappedRegistry",
+          "method": "resetTags",
+          "desc": "()V",
+          "note": "resetTags: every tag bound to an empty list through HolderSet.Named.bind",
+          "sha256": "2f555138193b2feb2f1d2b224e18dc4f78c1c5456a0dcc32c7b85a26886747b5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinExtras @WrapOperation on the `new BrewEffects()` of BrewingCatalystProcessor and BrewingSacrificeProcessor setup (one each) and process (one in the catalyst page, two in the sacrifice page): one kept table, filled by its first query before it is kept, is handed out again while every BrewConfig value, the TagsUpdatedEvent / IdMappingEvent counters and the goety:villagers tag's contents list are the ones it was built under, else a new table is built, filled and kept (helper bons.furious.patch.goety_brew_coo49.GoetyBrews; read access to HolderSet.Named's contents via GbNamedContentsAccessor)",
+      "license": "Goety (MIT) and Patchouli: no code carried, the wrapper carries only our own logic"
+    }
+  }
+}

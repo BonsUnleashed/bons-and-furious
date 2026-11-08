@@ -1,0 +1,88 @@
+{
+  "group": "dummmmmmy_c49",
+  "keys": {
+    "dummmmmmy_damage_number_send_first": {
+      "mod": "dummmmmmy",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.dummmmmmy_c49.ModEventsSendFirstMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mehvahdjukaar/dummmmmmy/common/ModEvents",
+          "method": "onEntityDamage",
+          "desc": "(Lnet/minecraft/world/entity/LivingEntity;FLnet/minecraft/world/damagesource/DamageSource;)V",
+          "note": "side / not a dummy / amount != 0, then (Critical Strike only) the crit multiplier, then the message is built, then switch(DAMAGE_NUMBERS_MODE): ALL_ENTITIES sends; ALL_PLAYERS / LOCAL_PLAYER only for a ServerPlayer source entity; NONE nothing",
+          "sha256": "26d208f81e89d707f57e36f2fbb036ed6029916f60f75db3220b11ac22c42c57"
+        },
+        {
+          "class": "net/mehvahdjukaar/dummmmmmy/network/ClientBoundDamageNumberMessage",
+          "method": "<init>",
+          "desc": "(IFLnet/minecraft/world/damagesource/DamageSource;Lnet/mehvahdjukaar/dummmmmmy/common/CritRecord;Lnet/minecraft/world/level/Level;)V",
+          "note": "encodeDamage and the crit record into the record's final fields; nothing else",
+          "sha256": "257d9af5f5dd6b23352fc74e46971d756099cb9680522feceaed0f80de4aa84d"
+        },
+        {
+          "class": "net/mehvahdjukaar/dummmmmmy/network/ClientBoundDamageNumberMessage",
+          "method": "encodeDamage",
+          "desc": "(Lnet/minecraft/world/damagesource/DamageSource;Lnet/minecraft/world/level/Level;)Lnet/minecraft/core/Holder;",
+          "note": "null source -> TRUE_DAMAGE's holder; else checkNotNull(typeHolder()): a read only",
+          "sha256": "582b0731cc202071ce87c7ca55240a659e27c5d162e50bf65a176746d52f05be"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on ModEvents.onEntityDamage (MmmMmmMmmMmm 1.21-2.1.2): after the mod's own first checks, return before the message is built when the mode switch would send nothing; stands aside while Critical Strike is installed (Dummmmmmy.CRITICAL_STRIKE: the mod reads the crit multiplier first) (helper bons.furious.patch.dummmmmmy_c49.DamageNumberFixes); onEntityHeal is not touched",
+      "license": "Supplementaries Team License v1.5 (MmmMmmMmmMmm): no mod code is carried; the injectors and the decision are ours"
+    },
+    "dummmmmmy_inline_damage_type_fallback": {
+      "mod": "dummmmmmy",
+      "scripts": [],
+      "since": "1.0.49",
+      "mixins": [
+        "bons.furious.mixin.dummmmmmy_c49.DamageMessageEncodeMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/mehvahdjukaar/dummmmmmy/network/ClientBoundDamageNumberMessage",
+          "method": "encodeDamage",
+          "desc": "(Lnet/minecraft/world/damagesource/DamageSource;Lnet/minecraft/world/level/Level;)Lnet/minecraft/core/Holder;",
+          "note": "null source -> Dummmmmmy.TRUE_DAMAGE.getHolder(level); else the source's type holder",
+          "sha256": "582b0731cc202071ce87c7ca55240a659e27c5d162e50bf65a176746d52f05be"
+        },
+        {
+          "class": "net/mehvahdjukaar/dummmmmmy/network/ClientBoundDamageNumberMessage",
+          "method": "write",
+          "desc": "(Lnet/minecraft/network/RegistryFriendlyByteBuf;)V",
+          "note": "DamageType.STREAM_CODEC.encode(buf, damageType)",
+          "sha256": "ce6e5bbf422e3ee29dde61e1859a2c9a17590888c884f7d0b8c849e99c7c27de"
+        },
+        {
+          "class": "net/minecraft/world/damagesource/DamageType",
+          "method": "<clinit>",
+          "desc": "()V",
+          "note": "STREAM_CODEC = ByteBufCodecs.holderRegistry(Registries.DAMAGE_TYPE): the holder's value by registry id",
+          "sha256": "e44bb6138e2ac833a620ff02854f0567abd1a6a4f81aae328c92e1eda63b8b6e"
+        },
+        {
+          "class": "net/minecraft/core/IdMap",
+          "method": "getIdOrThrow",
+          "desc": "(Ljava/lang/Object;)I",
+          "note": "IllegalArgumentException when getId is -1",
+          "sha256": "9dedab13064de9344a9772aefd45eba0b54226e6ef37f0d1754d3fcf7ccc7cff"
+        },
+        {
+          "class": "net/minecraft/core/MappedRegistry",
+          "method": "getId",
+          "desc": "(Ljava/lang/Object;)I",
+          "note": "toId (identity) lookup, -1 for an unregistered value: the test the fix makes",
+          "sha256": "a8b92d82e975d8eb1425689e45519ed41ad27020c10570ff2b0b16d7ec8b0405"
+        }
+      ],
+      "cancel": [],
+      "conversion": "@Inject HEAD cancellable on ClientBoundDamageNumberMessage.encodeDamage (MmmMmmMmmMmm 1.21-2.1.2): TRUE_DAMAGE's holder for a source whose damage type has no id in the level's damage type registry (the value DamageType.STREAM_CODEC cannot write) (helper bons.furious.patch.dummmmmmy_c49.DamageNumberFixes)",
+      "license": "Supplementaries Team License v1.5 (MmmMmmMmmMmm): no mod code is carried; the injector is ours",
+      "kind": "fix"
+    }
+  }
+}
