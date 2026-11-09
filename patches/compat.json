@@ -1,6 +1,6 @@
 {
   "group": "compat",
-  "note": "Patches other mods make to the same code, the same way, as one of our switches. Exactly one copy may run: while the other mod's patch is active (installed, its mixin listed for this side, its option on), our switch steps aside; otherwise our switch applies and the other mod's mixin is cancelled. See bons.furious.guard.ForeignPatches. Checked against Collections Of Optimizations 4.4 (CurseForge file 9026925, sha1 d1b067885b0827c12b7eb75bc02896d270adaed8) on 2026-10-02 and 2026-10-03 (1.0.28), GeckoBetterFPS 1.0.2 (1.0.28), ServerCore 1.5.2 (2026-10-04), and Collections Of Optimizations 4.6 (CurseForge file 9069255, sha1 6af9f690130f77ccff43abda949a58171f396afe) on 2026-10-09 (1.0.36). Rechecked against Collections Of Optimizations 5.1 (CurseForge file 9253710, sha1 3276ac93dce1714dfb6ce6eb98c4dad92373a1f4) on 2026-10-19 (1.0.45): 60 rows added: 21 for options COO 4.7-5.1 added that make the same change as an existing switch, 39 for the switches new in 1.0.45 whose COO 5.1 counterpart patches the same method. Since 1.0.45 a row also needs the other mod's own mixin plugin to apply the mixin (ForeignPatches asks it through Mixin): COO 4.7 and later leave out their copies of several of these patches next to Bons and Furious, and our switch then applies instead of stepping aside for a copy that never runs. Rechecked on 2026-10-28 (1.0.48) against Collections Of Optimizations 5.6, 5.7 and 5.8 (CurseForge files 9334551, 9338915, 9341211, sha1 0ab991fe, 493b4eee, 2581bae6) and Lithoform 2.0.0: two rows added for patches that change the same method in a way that cannot run together with ours (\"conflict\": the method; Mixin refuses an injector into a method another mixin merged at the same or a higher priority), the crash class of the 1.0.26 magnet row. Rechecked on 2026-10-28 (1.0.49) against Collections Of Optimizations 5.8: a defensive conflict row for vanilla_climate_sample_xz_parts, whose method COO 5.6 and later @Overwrite (MixinClimateSampler, left out by COO next to Bons and Furious today).",
+  "note": "Patches other mods make to the same code, the same way, as one of our switches. Exactly one copy may run: while the other mod's patch is active (installed, its mixin listed for this side, its option on), our switch steps aside; otherwise our switch applies and the other mod's mixin is cancelled. See bons.furious.guard.ForeignPatches. Checked against Collections Of Optimizations 4.4 (CurseForge file 9026925, sha1 d1b067885b0827c12b7eb75bc02896d270adaed8) on 2026-10-02 and 2026-10-03 (1.0.28), GeckoBetterFPS 1.0.2 (1.0.28), ServerCore 1.5.2 (2026-10-04), and Collections Of Optimizations 4.6 (CurseForge file 9069255, sha1 6af9f690130f77ccff43abda949a58171f396afe) on 2026-10-09 (1.0.36). Rechecked against Collections Of Optimizations 5.1 (CurseForge file 9253710, sha1 3276ac93dce1714dfb6ce6eb98c4dad92373a1f4) on 2026-10-19 (1.0.45): 60 rows added: 21 for options COO 4.7-5.1 added that make the same change as an existing switch, 39 for the switches new in 1.0.45 whose COO 5.1 counterpart patches the same method. Since 1.0.45 a row also needs the other mod's own mixin plugin to apply the mixin (ForeignPatches asks it through Mixin): COO 4.7 and later leave out their copies of several of these patches next to Bons and Furious, and our switch then applies instead of stepping aside for a copy that never runs. Rechecked on 2026-10-28 (1.0.48) against Collections Of Optimizations 5.6, 5.7 and 5.8 (CurseForge files 9334551, 9338915, 9341211, sha1 0ab991fe, 493b4eee, 2581bae6) and Lithoform 2.0.0: two rows added for patches that change the same method in a way that cannot run together with ours (\"conflict\": the method; Mixin refuses an injector into a method another mixin merged at the same or a higher priority), the crash class of the 1.0.26 magnet row. Rechecked on 2026-10-28 (1.0.49) against Collections Of Optimizations 5.8: a defensive conflict row for vanilla_climate_sample_xz_parts, whose method COO 5.6 and later @Overwrite (MixinClimateSampler, left out by COO next to Bons and Furious today). Rechecked on 2026-11-08 (1.0.49.1) against SuperChunk 0.5.0, 0.6.0 and 0.6.1, Lomka 0.7.0, the unofficial VulkanMod Forge port 0.8, ReFine 1.2.0 and ShadowLOD 1.0.0: conflict rows for patches that cannot run together with ours next to those mods.",
   "keys": {},
   "yields": [
     {
@@ -7249,6 +7249,110 @@
       "option": "shouldersurfing.skipIdleCrosshairPick",
       "default": true,
       "why": "Collections Of Optimizations 5.6-5.8 shouldersurfing.MixinCrosshairRenderer (option shouldersurfing.skipIdleCrosshairPick) makes the change this switch makes in Shoulder Surfing Reloaded's CrosshairRenderer (client) (both skip the crosshair raytraces on frames whose result cannot be shown: COO's copy with a @WrapMethod around computeCrosshairOffset, this switch with a @Redirect of renderTick's call of it (COO redirects nothing there; its wrap would run inside ours)). While that option is on and COO's own mixin plugin applies its copy, this switch steps aside; otherwise this switch applies and COO's copy is left out, so only one copy runs."
+    },
+    {
+      "key": "vanilla_game_event_registry_lookup",
+      "mod": "superchunk",
+      "name": "SuperChunk",
+      "mixin": "dev.superchunk.net.caffeinemc.mods.lithium.mixin.world.game_events.dispatch.GameEventDispatcherMixin",
+      "conflict": "GameEventDispatcher.post",
+      "why": "SuperChunk's bundled Lithium @Redirects ChunkAccess.getListenerRegistry in GameEventDispatcher.post at the same priority, with require = 1. Ours has require = 0 but applies first, so Mixin skips theirs and its require stops the game ('Critical injection failure: Redirector getNull ... (0/1)'): every world start with SuperChunk 0.5.0-0.6.1 and 1.0.49 (reproduced 2026-11-08, CurseForge comment 8665977)."
+    },
+    {
+      "key": "vanilla_biome_fiddle_mask",
+      "mod": "superchunk",
+      "name": "SuperChunk",
+      "mixin": "dev.superchunk.mixin.MixinBiomeManagerFiddle",
+      "conflict": "BiomeManager.getFiddle",
+      "why": "SuperChunk @Redirects the same Math.floorMod call in BiomeManager.getFiddle at the same priority. Mixin lets only one redirect hold a call and both have require = 1, so whichever applies second stops the game. SuperChunk's replacement does the same arithmetic."
+    },
+    {
+      "key": "vanilla_poi_chunk_sections",
+      "mod": "superchunk",
+      "name": "SuperChunk",
+      "mixin": "dev.superchunk.net.caffeinemc.mods.lithium.mixin.ai.poi.PoiManagerMixin",
+      "conflict": "PoiManager.getInChunk",
+      "why": "SuperChunk's bundled Lithium @Overwrites PoiManager.getInChunk at the same priority as ours. Not a crash ('Method overwrite conflict ... Skipping method'), but one of the two replacements silently disappears, and SuperChunk's other POI mixins are written against its own copy, so the method is left to SuperChunk."
+    },
+    {
+      "key": "vanilla_beardifier_influence_bounds",
+      "mod": "superchunk",
+      "name": "SuperChunk",
+      "mixin": "dev.superchunk.com.ishland.c2me.opts.worldgen.vanilla.mixin.structure_weight_sampler.MixinStructureWeightSampler",
+      "conflict": "Beardifier.compute",
+      "why": "SuperChunk 0.5.0's C2ME @Overwrites Beardifier.compute at priority 1100 (mixinPriority inherited from c2me.mixins.json); Mixin refuses our injector into it whatever require says. SuperChunk 0.6.0 and later no longer list this @Overwrite (the row is inert there)."
+    },
+    {
+      "key": "vanilla_entity_unload_snapshot",
+      "mod": "superchunk",
+      "name": "SuperChunk",
+      "mixin": "dev.superchunk.com.ishland.c2me.rewrites.chunksystem.mixin.fixes.MixinServerEntityManager",
+      "conflict": "PersistentEntitySectionManager.processUnloads",
+      "why": "SuperChunk 0.5.0's C2ME @Overwrites processUnloads at priority 1100; our @WrapOperation (priority 1001) 'cannot inject into ... merged by ... with priority 1100' and the game stops (reproduced 2026-11-08). SuperChunk 0.6.0 and later no longer list it there."
+    },
+    {
+      "key": "distanthorizons_lod_biome_memo",
+      "mod": "superchunk",
+      "name": "SuperChunk",
+      "mixin": "dev.superchunk.mixin.compat.MixinDhLodBuilderBiome",
+      "conflict": "LodDataBuilder.createFromChunk",
+      "why": "SuperChunk 0.6.0 and later @Redirect the same IChunkWrapper.getBiome calls in Distant Horizons' LodDataBuilder.createFromChunk at the same priority; Mixin lets only one redirect hold a call, and ours has require = 1 (found by the static sweep, 2026-11-08)."
+    },
+    {
+      "key": "vanilla_single_value_section_get",
+      "mod": "lomka",
+      "name": "Lomka",
+      "mixin": "lomka.starl.mixins.net.minecraft.world.level.chunk.MixinPalettedContainer",
+      "conflict": "PalettedContainer.get",
+      "why": "Lomka 0.7.0 @Overwrites PalettedContainer.get at the same priority; Mixin refuses our @Redirect inside it whatever require says ('cannot inject into m_63085_ merged by MixinPalettedContainer'): every world start with Lomka and 1.0.49 (reproduced 2026-11-08)."
+    },
+    {
+      "key": "vanilla_entity_outline_composite_skip",
+      "mod": "vulkanmod",
+      "name": "VulkanMod",
+      "mixin": "net.vulkanmod.mixin.render.vertex.BufferUploaderM",
+      "conflict": "BufferUploader.draw",
+      "why": "The VulkanMod Forge port @Overwrites BufferUploader.draw at the same priority; Mixin refuses our @Redirect inside it. The game stopped while the resource overlay rendered (reproduced 2026-11-08)."
+    },
+    {
+      "key": "vanilla_order_independent_sort_skip",
+      "mod": "vulkanmod",
+      "name": "VulkanMod",
+      "mixin": "net.vulkanmod.mixin.render.CompositeRenderTypeM",
+      "conflict": "RenderType.end",
+      "why": "The VulkanMod Forge port @Overwrites CompositeRenderType.end at the same priority; our @WrapWithCondition has require = 0, but Mixin refuses an injector into a method merged at the same priority before it looks at require."
+    },
+    {
+      "key": "vanilla_entity_outline_composite_skip",
+      "mod": "refine",
+      "name": "ReFine",
+      "mixin": "dev.refine.mixin.render.BufferUploaderM",
+      "conflict": "BufferUploader.draw",
+      "why": "ReFine 1.2.0 @Overwrites BufferUploader.draw at the same priority; Mixin refuses our @Redirect inside it (reproduced 2026-11-08)."
+    },
+    {
+      "key": "vanilla_entity_section_x_overflow",
+      "mod": "refine",
+      "name": "ReFine",
+      "mixin": "dev.refine.mixin.refine.EntitySectionStorageMixin",
+      "conflict": "EntitySectionStorage.forEachAccessibleNonEmptySection",
+      "why": "ReFine 1.2.0 @Overwrites this method at the same priority; Mixin refuses our @Redirect (require = 0 does not help)."
+    },
+    {
+      "key": "vanilla_light_poll_budget",
+      "mod": "refine",
+      "name": "ReFine",
+      "mixin": "dev.refine.mixin.refine.ClientLevelLightPaceMixin",
+      "conflict": "ClientLevel.pollLightUpdates",
+      "why": "ReFine 1.2.0 @Overwrites this method at the same priority; Mixin refuses our @WrapOperation (require = 0 does not help)."
+    },
+    {
+      "key": "embeddium_lazy_completed_jobs",
+      "mod": "shadowlod",
+      "name": "ShadowLOD",
+      "mixin": "fr.hardek.shadowlod.mixin.embeddium.RenderSectionManagerMixin",
+      "conflict": "RenderSectionManager.uploadChunks",
+      "why": "Our @Overwrite of Embeddium's RenderSectionManager.uploadChunks applies first at the same priority; Mixin then refuses ShadowLOD's @Redirect inside it ('cannot inject into uploadChunks merged by ... RenderSectionManagerMixin') and the game stops (reproduced 2026-11-08). The method is left to ShadowLOD."
     }
   ]
 }

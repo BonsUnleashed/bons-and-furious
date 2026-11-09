@@ -4,7 +4,7 @@
 
 **Your CPU lives its life one tick at a time.**
 
-[**Forge 1.20.1: 1.0.49**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.49) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
+[**Forge 1.20.1: 1.0.49.1**](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.49.1) · [CurseForge](https://www.curseforge.com/minecraft/mc-mods/bons-and-furious) · [Modrinth](https://modrinth.com/mod/bons-and-furious) · [Wiki](https://github.com/BonsUnleashed/bons-and-furious/wiki) · [Issues](https://github.com/BonsUnleashed/bons-and-furious/issues)
 
 ## Faster worlds. Smoother busy scenes.
 
@@ -12,7 +12,7 @@ Bons and Furious reduces the repeated work behind terrain generation, loading, r
 
 **In our tested Forge pack: about 9× world-generation throughput, 5½ minutes less waiting to enter a new world, and 17% higher average FPS with 64 animated mobs.**
 
-Those results were measured with **Bons and Furious 1.0.31 on Minecraft 1.20.1**, on 5 October 2026, when the mod had about 250 controls. They are not measurements of the current 1.0.49 release or the NeoForge build.
+Those results were measured with **Bons and Furious 1.0.31 on Minecraft 1.20.1**, on 5 October 2026, when the mod had about 250 controls. They are not measurements of the current 1.0.49.1 release or the NeoForge build.
 
 ![Whole-pack results measured with Bons and Furious 1.0.31: 9.2 times the world-generation throughput, 56 percent less waiting to enter a new world, 17 percent higher average FPS and 34 percent higher 1 percent low FPS with 64 animated mobs](https://github.com/BonsUnleashed/bons-and-furious/releases/download/v1.0.15/bons-and-furious-whole-pack-results.png)
 
@@ -148,7 +148,7 @@ For Minecraft 1.21.1, use `bons_and_furious-neoforge-1.0.49+mc1.21.1.jar`, Java 
 
 For Minecraft 1.20.1 / Forge:
 
-1. Download `bons_and_furious-1.0.49.jar` from the [1.0.49 release](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.49) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load. The two small mixin libraries it uses, MixinExtras and MixinSquared, are bundled inside it.
+1. Download `bons_and_furious-1.0.49.1.jar` from the [1.0.49.1 release](https://github.com/BonsUnleashed/bons-and-furious/releases/tag/v1.0.49.1) (SHA-256 in `SHA256SUMS.txt`) and put it in `mods/` on the client and on the server. Nothing else is required; every target mod is detected at load. The two small mixin libraries it uses, MixinExtras and MixinSquared, are bundled inside it.
 2. Start once. The mod writes its config file with its defaults (every switch on except the 192 opt-in switches: three older ones and 189 trade-offs and gameplay fixes added in 1.0.49) and logs how many controls are enabled.
 3. To turn one off, set its key to `false` and restart. Client-only patches (renderer, shaders, ambience) never load on a dedicated server.
 
@@ -204,7 +204,7 @@ switch's mixins and guarded methods are listed in `patches/<mod>.json`.
 
 Licensed GPL-3.0-only ([LICENSE](LICENSE)). Upstream attribution is in [NOTICE.md](NOTICE.md); the tested dependency builds are listed in [upstream-credits.json](upstream-credits.json).
 
-The 1.0.49 release JAR was tested in client and dedicated-server copies of the reference pack before release. The whole-pack benchmark above was measured with 1.0.31 on 5 October 2026.
+The 1.0.49.1 release JAR was tested in client and dedicated-server copies of the reference pack before release. The whole-pack benchmark above was measured with 1.0.31 on 5 October 2026.
 
 ### Upstream pull requests
 
