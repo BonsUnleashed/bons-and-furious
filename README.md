@@ -10,16 +10,16 @@
 
 Bons and Furious reduces the repeated work behind terrain generation, loading, rendering and server ticks. It also fixes specific freezes, crashes and memory leaks in the mods it supports. On Forge 1.20.1 it has **885 controls covering Minecraft, Forge and 247 other mods**, each with its own switch. Add it alongside your existing performance mods: one JAR, nothing else required.
 
-**In our tested Forge pack: about 9× world-generation throughput, 5½ minutes less waiting to enter a new world, and 17% higher average FPS with 64 animated mobs.**
+**In our tested Forge pack: about 21× world-generation throughput, 6½ minutes less waiting to enter a new world, and 25% higher average FPS with 64 animated mobs.**
 
-Those results were measured with **Bons and Furious 1.0.31 on Minecraft 1.20.1**, on 5 October 2026, when the mod had about 250 controls. They are not measurements of the current 1.0.49.1 release or the NeoForge build.
+Those results were measured with **Bons and Furious 1.0.49.1 on Minecraft 1.20.1**, the current release at its default settings, on 9 and 10 November 2026. Every test ran on the same PC, a Ryzen 9 3900X with an RTX 3080. They are not measurements of the NeoForge build.
 
-![Whole-pack results measured with Bons and Furious 1.0.31: 9.2 times the world-generation throughput, 56 percent less waiting to enter a new world, 17 percent higher average FPS and 34 percent higher 1 percent low FPS with 64 animated mobs](https://github.com/BonsUnleashed/bons-and-furious/releases/download/v1.0.15/bons-and-furious-whole-pack-results.png)
+![Whole-pack results measured with Bons and Furious 1.0.49.1 on a Ryzen 9 3900X: 21 times the world-generation throughput (14.1 against 0.66 chunks per second), 59 percent less waiting to enter a new world, 25 percent higher average FPS with 64 animated mobs and 30 percent higher average FPS in a landscape view](https://github.com/BonsUnleashed/bons-and-furious/releases/download/v1.0.15/bons-and-furious-whole-pack-results-v5.png)
 
 ## What you get
 
-- **Less waiting for terrain.** Reuse terrain calculations and ground-height estimates instead of repeating them for neighbouring chunks. In the flight test, an average of 504 of 529 nearby chunks were loaded with Bons, compared with 354 without it.
-- **Smoother crowded scenes.** Reduce repeated animation, model and rendering work across Minecraft, Embeddium, Oculus, Entity Model Features, Entity Texture Features and other supported mods. The matched 64-mob scene gained 17% average FPS and 34% in 1% lows.
+- **Less waiting for terrain.** Reuse terrain calculations and ground-height estimates instead of repeating them for neighbouring chunks. In the flight test, an average of 489 of 529 nearby chunks were loaded with Bons, compared with 331 without it.
+- **Smoother crowded scenes.** Reduce repeated animation, model and rendering work across Minecraft, Embeddium, Oculus, Entity Model Features, Entity Texture Features and other supported mods. The matched 64-mob scene gained 25% average FPS and 27% in 1% lows.
 - **Less work during loading and saves.** Speed up recipe processing, resource loading, model rebuilds and chunk serialization, and move supported saved-data and player-file writes off the server thread.
 - **Less work in the mods you actually run.** Mobs stop searching for targets while their level has none (Alex's Mobs, Primitive Mobs, Wither Reincarnated and more). Magic mods such as Blood Magic, Goety and Iron's Spells skip repeated lookups, machines from Create, Titanium and Mystical Agriculture do less work per tick, and Xaero's World Map and FTB Chunks keep and upload less.
 - **Fewer spikes, freezes and crashes.** Prepare mob classes before their first spawn and repair reproduced threading and world-generation bugs, with 94 fixes in all. Unloaded ship chunks stop ticking, saved rules that reference missing terrain noise no longer crash TerraBlender, and firing the Meka-Gun no longer stops a dedicated server. The first-night improvement was measured separately with 1.0.35; details are below.
@@ -43,20 +43,30 @@ Every control has its own line in `config/bons_and_furious.properties`. 693 are 
 
 Both sides kept **ModernFix, FerriteCore, Radium and C2ME**. The client also kept **Embeddium, ImmediatelyFast and EntityCulling**, plus Oculus, Distant Horizons, Complementary shaders and Fresh Animations. These gains come from adding Bons and Furious to that stack.
 
-**5 October 2026 · Forge 1.20.1 · Bons and Furious 1.0.31 · four measured runs per arm.** Each comparison used the same machine and matched settings, with and without Bons. The server and client results below came from different machines.
+**9 and 10 November 2026 · Forge 1.20.1 · Bons and Furious 1.0.49.1 at its default settings · four measured runs per build.** Every comparison ran on the same PC with matched settings, with and without Bons.
 
-| Workload | Without Bons | With Bons 1.0.31 | Result |
+| Workload | Without Bons | With Bons 1.0.49.1 | Result |
 | --- | ---: | ---: | --- |
-| Generate 512 chunks, dedicated server | 436 s | 48 s | **9.2× throughput** |
-| Launch the game and enter a new world | 588 s | 257 s | **56% less waiting** |
-| 64 animated mobs, average FPS | 54.6 | 64.0 | **17% higher** |
-| Same mob scene, 1% low FPS | 31.4 | 42.1 | **34% higher** |
+| Generate 512 chunks, dedicated server | 771 s | 36 s | **21× throughput** |
+| Launch the game and enter a new world | 662 s | 274 s | **59% less waiting** |
+| 64 animated mobs, average FPS | 37.3 | 46.7 | **25% higher** |
+| Same mob scene, 1% low FPS | 24.1 | 30.6 | **27% higher** |
+| Looking over the landscape, average FPS | 102.4 | 133.6 | **30% higher** |
+| Same view, 1% low FPS | 44.3 | 71.0 | **60% higher** |
 
-Server: Core Ultra 9 285K. Client: Ryzen 9 3900X / RTX 3080, 1080p with shaders. C2ME's `reduceLockRadius` was enabled. The FPS test used the same saved world, with Distant Horizons generation off and JEI's background work finished.
+Pre-generation speed, 512 chunks on the dedicated server with Chunk Pregenerator (median of four runs):
 
-Generation also used **83% less CPU time** and approximately **90% less memory allocation per chunk**. That is less temporary garbage, not 90% less RAM: live server heap after startup was about 30 MiB higher with Bons.
+| Build | Chunks per second | Time for 512 chunks |
+| --- | ---: | ---: |
+| Bons and Furious 1.0.49.1 | **14.1** | 36.4 s |
+| Bons and Furious 1.0.30 | 7.14 | 71.7 s |
+| Without Bons | 0.664 | 770.9 s |
 
-Results depend on the pack, settings and hardware. CPU savings may give little extra FPS when the GPU is the limit. This test does not establish how much faster 1.0.31 is than 1.0.26: the machines and settings changed. The same-run 1.0.30 comparison showed similar generation and steady mob-scene FPS.
+Test PC: AMD Ryzen 9 3900X (12 cores, 24 threads), 32 GB DDR4-2400, Samsung 850 PRO SATA SSD, NVIDIA GeForce RTX 3080 10 GB, Windows 10. Server: Java 21, 14 GB heap, 517 mods. Client: Java 25, 14 GB heap, 568 mods, 1080p with Complementary shaders. Forge 47.4.28 on both. C2ME's `reduceLockRadius` was enabled. The FPS tests used the same saved world, with Distant Horizons generation off and JEI's start-up finished before joining.
+
+Generation also used **88% less CPU time** and approximately **94% less memory allocation per chunk**. That is less temporary garbage, not 94% less RAM: live server heap after startup was about 120 MiB (5%) higher with Bons.
+
+Results depend on the pack, settings and hardware. CPU savings may give little extra FPS when the GPU is the limit. In the same run, 1.0.49.1 generated chunks twice as fast as 1.0.30. These figures do not compare with the 5 October test, which ran its server on a different PC with an older pack.
 
 [Full results, test method and earlier benchmarks](https://github.com/BonsUnleashed/bons-and-furious/wiki/Whole-modpack-benchmark).
 
@@ -204,7 +214,7 @@ switch's mixins and guarded methods are listed in `patches/<mod>.json`.
 
 Licensed GPL-3.0-only ([LICENSE](LICENSE)). Upstream attribution is in [NOTICE.md](NOTICE.md); the tested dependency builds are listed in [upstream-credits.json](upstream-credits.json).
 
-The 1.0.49.1 release JAR was tested in client and dedicated-server copies of the reference pack before release. The whole-pack benchmark above was measured with 1.0.31 on 5 October 2026.
+The 1.0.49.1 release JAR was tested in client and dedicated-server copies of the reference pack before release. The whole-pack benchmark above was measured with 1.0.49.1 on 9 and 10 November 2026.
 
 ### Upstream pull requests
 
