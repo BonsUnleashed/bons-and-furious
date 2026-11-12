@@ -154,7 +154,7 @@ The Forge build contains **597 optimizations, 94 fixes and 194 deliberate behavi
 
 ## Install the matching build
 
-For Minecraft 1.21.1, use `bons_and_furious-neoforge-1.0.49+mc1.21.1.jar`, Java 21 and NeoForge 21.1.252 or newer. MixinSquared is bundled; NeoForge supplies MixinExtras. [NeoForge setup and compatibility](https://github.com/BonsUnleashed/bons-and-furious/wiki/Minecraft-1.21.1-NeoForge).
+For Minecraft 1.21.1, use `bons_and_furious-neoforge-1.0.49.2+mc1.21.1.jar`, Java 21 and NeoForge 21.1.252 or newer. MixinSquared is bundled; NeoForge supplies MixinExtras. [NeoForge setup and compatibility](https://github.com/BonsUnleashed/bons-and-furious/wiki/Minecraft-1.21.1-NeoForge).
 
 For Minecraft 1.20.1 / Forge:
 
