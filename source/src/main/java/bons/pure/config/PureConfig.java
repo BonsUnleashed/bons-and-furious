@@ -85,6 +85,16 @@ public final class PureConfig {
             "engineering_industry_recipe_index", "moved into the Living Engineering addon itself in 1.0.20",
             "engineering_culture_controls", "moved into the Living Engineering addon itself in 1.0.20",
             "engineering_vat_growth_reuse", "moved into the Living Engineering addon itself in 1.0.20");
+    /**
+     * Since 1.0.49.2: switches whose bundled default went from true to false for safety, with the version and the reason.
+     * The file keeps every switch as a written value, so a file made before that version still says "=true" and the
+     * switch stayed on after every update. Such a file gets the new default once: the line becomes "=false" under a
+     * "# [migrated] key:" comment, which also marks it as done, so a user who sets it back to true keeps it on.
+     */
+    private static final Map<String, String[]> DEFAULT_NOW_OFF = Map.of(
+            "radium_experimental_tickets_spawning", new String[] {"1.0.41+mc1.21.1",
+                    "it can crash next to mods that move entities off the server thread"});
+    static final String MIGRATED_MARK = "# [migrated] ";
     private static volatile boolean loaded;
     private static Path configPath;
     private static String version = "?";
@@ -258,6 +268,7 @@ public final class PureConfig {
         // 3. Resolve every known key; append missing ones so the file stays complete after updates.
         StringBuilder append = new StringBuilder();
         List<String> disabled = new ArrayList<>();
+        List<String> migrated = new ArrayList<>();
         for (String[] entry : defaults) {
             String key = entry[0];
             // since 1.0.30: a key starts from its bundled value; a key the bundled defaults ship "=false" stays off until
@@ -287,7 +298,14 @@ public final class PureConfig {
                             .append(key).append(VALUE_SUFFIX).append('=').append(valueDefault).append("\n\n");
                 }
                 String v = raw.trim().toLowerCase(java.util.Locale.ROOT);
-                if (v.equals("true")) enabled = true;
+                if (v.equals("true")) {
+                    enabled = true;
+                    // since 1.0.49.2: "=true" left over from before the bundled default became false (see DEFAULT_NOW_OFF)
+                    if (!byDefault && DEFAULT_NOW_OFF.containsKey(key) && !existing.contains(MIGRATED_MARK + key + ':')) {
+                        enabled = false;
+                        migrated.add(key);
+                    }
+                }
                 else if (v.equals("false")) enabled = false;
                 else LOGGER.warn("Bons and Furious: '{}' has invalid value '{}'; using {}", key, raw, byDefault);   // 1.0.34: the bundled default, not always true
             }
@@ -315,6 +333,21 @@ public final class PureConfig {
             String retired = RETIRED.get(name);
             if (retired != null) LOGGER.info("Bons and Furious: '{}' in {} is a retired switch ({}); it is ignored", name, source, retired);
             else LOGGER.warn("Bons and Furious: unknown key '{}' in {} is ignored", name, source);
+        }
+        if (!migrated.isEmpty()) {
+            boolean written = false;
+            if (source.equals(configPath)) {
+                try {
+                    existing = writeMigrated(configPath, migrated);
+                    written = true;
+                } catch (IOException | RuntimeException e) {
+                    LOGGER.warn("Bons and Furious could not mark {} as migrated in {} ({}); it stays off for this session", migrated, configPath, e.toString());
+                }
+            }
+            for (String key : migrated) {
+                LOGGER.info("Bons and Furious: {} was still on from an older default; its default is off since {} ({}){}; set it to true in {} to turn it back on",
+                        key, DEFAULT_NOW_OFF.get(key)[0], DEFAULT_NOW_OFF.get(key)[1], written ? ", so it is now switched off in the file" : "", source);
+            }
         }
         if (append.length() > 0 && source.equals(configPath)) {
             String sep = existing.endsWith("\n") ? "" : "\n";
@@ -391,6 +424,65 @@ public final class PureConfig {
         }
         LOGGER.info("Bons and Furious carried the switches over from {} (the mod's former name) to {}: {} of {} switched off{}; the old file is kept as {}",
                 legacyPath.getFileName(), configPath, off.size(), known.size(), off.isEmpty() ? "" : " (" + String.join(", ", off) + ")", where);
+    }
+
+    /**
+     * Since 1.0.49.2: in the user's file, the LAST line that sets each key (the one Properties keeps) becomes "key=false"
+     * under a "# [migrated] key: ..." comment. Everything else stays byte for byte (line endings, a leading BOM). Returns
+     * the new text without the BOM, as readText would.
+     */
+    private static String writeMigrated(Path path, List<String> keys) throws IOException {
+        byte[] bytes = Files.readAllBytes(path);
+        boolean bom = bytes.length >= 3 && (bytes[0] & 0xFF) == 0xEF && (bytes[1] & 0xFF) == 0xBB && (bytes[2] & 0xFF) == 0xBF;
+        String text = new String(bytes, bom ? 3 : 0, bytes.length - (bom ? 3 : 0), StandardCharsets.UTF_8);
+        String nl = text.contains("\r\n") ? "\r\n" : "\n";
+        String[] lines = text.split("\n", -1);
+        StringBuilder out = new StringBuilder(text.length() + 256 * keys.size());
+        java.util.Set<Integer> done = new java.util.HashSet<>();
+        java.util.Map<Integer, String> replace = new java.util.HashMap<>();
+        for (String key : keys) {
+            // Properties separators: "=", ":" or plain whitespace, each with optional whitespace around it
+            java.util.regex.Pattern line = java.util.regex.Pattern.compile("^\\s*" + java.util.regex.Pattern.quote(key) + "(?:\\s*[=:]\\s*|\\s+)true\\s*$",
+                    java.util.regex.Pattern.CASE_INSENSITIVE);
+            for (int i = lines.length - 1; i >= 0; i--) {
+                String l = lines[i].endsWith("\r") ? lines[i].substring(0, lines[i].length() - 1) : lines[i];
+                if (line.matcher(l).matches()) {
+                    if (!done.add(i)) break;
+                    String[] why = DEFAULT_NOW_OFF.get(key);
+                    replace.put(i, MIGRATED_MARK + key + ": off by default since " + why[0] + " (" + why[1] + "); this file still had the old"
+                            + " default, so Bons and Furious " + version + " switched it off. Set it to true to turn it back on." + nl + key + "=false"
+                            + (lines[i].endsWith("\r") ? "\r" : ""));
+                    break;
+                }
+            }
+        }
+        if (replace.isEmpty()) throw new IOException("no \"=true\" line found for " + keys);
+        for (int i = 0; i < lines.length; i++) {
+            out.append(replace.getOrDefault(i, lines[i]));
+            if (i < lines.length - 1) out.append('\n');
+        }
+        String result = out.toString();
+        byte[] body = result.getBytes(StandardCharsets.UTF_8);
+        byte[] all = body;
+        if (bom) {
+            all = new byte[body.length + 3];
+            all[0] = (byte) 0xEF;
+            all[1] = (byte) 0xBB;
+            all[2] = (byte) 0xBF;
+            System.arraycopy(body, 0, all, 3, body.length);
+        }
+        Path tmp = path.resolveSibling(path.getFileName() + ".tmp");
+        Files.write(tmp, all);
+        try {
+            try {
+                Files.move(tmp, path, java.nio.file.StandardCopyOption.REPLACE_EXISTING, java.nio.file.StandardCopyOption.ATOMIC_MOVE);
+            } catch (java.nio.file.AtomicMoveNotSupportedException e) {
+                Files.move(tmp, path, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            }
+        } finally {
+            Files.deleteIfExists(tmp);   // only left over when the move failed (a read-only file, a file held open)
+        }
+        return result;
     }
 
     private static String readText(Path path) throws IOException {

@@ -2,11 +2,14 @@ package bons.furious.patch.goetydelight_coo49;
 
 import bons.furious.mixin.goetydelight_coo49.GdNamedContentsAccessor;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import java.lang.reflect.Method;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
@@ -150,19 +153,35 @@ public final class GdLogs {
         @Override
         protected Boolean computeValue(Class<?> c) {
             try {
-                return inheritedFromItem(c, "getDefaultInstance") && inheritedFromItem(c, "builtInRegistryHolder") && inheritedFromItem(c, "asItem")
-                        && inheritedFromItem(c, "components") && inheritedFromItem(c, "verifyComponentsAfterLoad", ItemStack.class);
+                return inheritedFromItem(c, "getDefaultInstance", MethodType.methodType(ItemStack.class))
+                        && inheritedFromItem(c, "builtInRegistryHolder", MethodType.methodType(Holder.Reference.class))
+                        && inheritedFromItem(c, "asItem", MethodType.methodType(Item.class))
+                        && inheritedFromItem(c, "components", MethodType.methodType(DataComponentMap.class))
+                        && inheritedFromItem(c, "verifyComponentsAfterLoad", MethodType.methodType(void.class, ItemStack.class));
             } catch (Throwable t) {
                 return false;
             }
         }
     };
 
-    /** The public method {@code name(params)} that {@code c} resolves to is Item's own (or IItemExtension's default). */
-    private static boolean inheritedFromItem(Class<?> c, String name, Class<?>... params) throws NoSuchMethodException {
-        Method m = c.getMethod(name, params);
-        Class<?> d = m.getDeclaringClass();
-        return d == Item.class || d.getName().equals("net.neoforged.neoforge.common.extensions.IItemExtension");
+    /**
+     * The method {@code name} of {@code type} that {@code c} resolves to is Item's own (or IItemExtension's default). Since 1.0.49.2
+     * the JVM's own resolution of that one method (privateLookupIn + findVirtual + revealDirect), not Class.getMethod: getMethod
+     * resolves the parameter and return types of every public method, and on a dedicated server item classes whose client-side
+     * methods name client-only classes made the loader log an "invalid dist" ERROR for each such class (31 at start in the
+     * all-switches-on qualification server). False when the method cannot be asked this way (the stock test runs).
+     */
+    private static boolean inheritedFromItem(Class<?> c, String name, MethodType type) {
+        for (Class<?> anchor : new Class<?>[] {c, Item.class}) {
+            try {
+                MethodHandles.Lookup lookup = MethodHandles.privateLookupIn(anchor, MethodHandles.lookup());
+                Class<?> d = lookup.revealDirect(lookup.findVirtual(c, name, type)).getDeclaringClass();
+                return d == Item.class || d.getName().equals("net.neoforged.neoforge.common.extensions.IItemExtension");
+            } catch (Throwable t) {
+                // not this way: the next anchor, then false (the stock test)
+            }
+        }
+        return false;
     }
 
     /**

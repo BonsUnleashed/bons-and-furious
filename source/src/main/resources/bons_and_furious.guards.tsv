@@ -5807,6 +5807,24 @@ cancel	bons.sharksfix.mixin.BenssharksModTickMixin	benssharks_work_queue_idle
 cancel	bons.sharksfix.mixin.GoalMergeMixin	benssharks_prey_search_merge
 cancel	bons.sharksfix.mixin.ItemAnimationFactoryMixin	benssharks_item_animation_idle
 cancel	bons.sharksfix.mixin.SharkBaseTickMixin	benssharks_tick_listeners
+cancel	ca.spottedleaf.moonrise.mixin.block_entity_remove.LevelMixin	vanilla_ticker_range_memo
+cancel	ca.spottedleaf.moonrise.mixin.block_entity_remove.LevelMixin	vanilla_block_entity_ticker_compaction
+cancel	ca.spottedleaf.moonrise.mixin.chunk_system.ChunkHolderMixin	vanilla_ticking_chunk_memo
+cancel	ca.spottedleaf.moonrise.mixin.chunk_system.ChunkMapMixin	vanilla_level_ticks_blocked_park
+cancel	ca.spottedleaf.moonrise.mixin.chunk_system.DistanceManagerMixin	vanilla_block_ticking_range_memo
+cancel	ca.spottedleaf.moonrise.mixin.chunk_system.LevelMixin	vanilla_entity_walk_skip
+cancel	ca.spottedleaf.moonrise.mixin.chunk_system.ServerChunkCacheMixin	vanilla_spawn_gate_visibility_memo
+cancel	ca.spottedleaf.moonrise.mixin.chunk_system.ServerLevelMixin	vanilla_ticker_range_memo
+cancel	ca.spottedleaf.moonrise.mixin.chunk_system.ServerLevelMixin	vanilla_spawn_gate_visibility_memo
+cancel	ca.spottedleaf.moonrise.mixin.chunk_tick_iteration.ServerChunkCacheMixin	vanilla_spawn_gate_visibility_memo
+cancel	ca.spottedleaf.moonrise.mixin.collisions.EntityMixin	vanilla_suffocation_scan_loop
+cancel	ca.spottedleaf.moonrise.mixin.collisions.EntityMixin	vanilla_fire_scan_idle_skip
+cancel	ca.spottedleaf.moonrise.mixin.collisions.EntityMixin	vanilla_fire_scan_loop
+cancel	ca.spottedleaf.moonrise.mixin.collisions.VoxelShapeMixin	vanilla_clip_shape_box_memo
+cancel	ca.spottedleaf.moonrise.mixin.fast_palette.PalettedContainerMixin	vanilla_single_value_section_get
+cancel	ca.spottedleaf.moonrise.mixin.random_ticking.BiomeManagerMixin	vanilla_biome_fiddle_mask
+cancel	ca.spottedleaf.moonrise.mixin.starlight.chunk.LevelChunkMixin	vanilla_block_entity_tick_state
+cancel	com.afterburner.mixin.ai.GoalSelectorMixin	vanilla_goal_flags_none_disabled
 cancel	com.cerbon.cerbons_api.mixin.multipart_entities.EntityMixin	cerbonsapi_multipart_hooks_lean
 cancel	com.faboslav.structurify.common.mixin.ChunkGeneratorMixin	vanilla_structure_ring_search
 cancel	com.hollingsworth.arsnouveau.common.mixin.light.LevelRendererMixin	arsnouveau_dynamic_light_hook_lean
@@ -5872,6 +5890,7 @@ cancel	dev.superchunk.com.ishland.c2me.opts.dfc.mixin.MixinChunkNoiseSamplerDens
 cancel	dev.superchunk.com.ishland.c2me.opts.worldgen.vanilla.mixin.structure_weight_sampler.MixinStructureWeightSampler	vanilla_beardifier_influence_bounds
 cancel	dev.superchunk.com.ishland.c2me.rewrites.chunksystem.mixin.fixes.MixinServerEntityManager	vanilla_entity_unload_snapshot
 cancel	dev.superchunk.mixin.MixinBiomeManagerFiddle	vanilla_biome_fiddle_mask
+cancel	dev.superchunk.mixin.compat.MixinDhDataInputStream	distanthorizons_unlocked_byte_stream
 cancel	dev.superchunk.mixin.compat.MixinDhLodBuilderBiome	distanthorizons_lod_biome_memo
 cancel	dev.superchunk.net.caffeinemc.mods.lithium.mixin.ai.poi.PoiManagerMixin	vanilla_poi_chunk_sections
 cancel	dev.superchunk.net.caffeinemc.mods.lithium.mixin.world.game_events.dispatch.GameEventDispatcherMixin	vanilla_game_event_registry_lookup
@@ -5955,6 +5974,25 @@ yield	vanilla_noise_column_cell_fill	superchunk	SuperChunk	dev.superchunk.com.is
 yield	vanilla_noise_corner_share	superchunk	SuperChunk	dev.superchunk.com.ishland.c2me.opts.dfc.mixin.MixinChunkNoiseSamplerDensityInterpolator	-	-	-	false	-
 yield	vanilla_single_value_section_get	lomka	Lomka	lomka.starl.mixins.net.minecraft.world.level.chunk.MixinPalettedContainer	-	-	-	false	-	PalettedContainer.get
 yield	vanilla_single_value_section_get	generator_accelerator	Generator Accelerator	dev.sixik.generator_accelerator.common.paletted_container.mixin.patch.MixinPalettedContainer	-	-	-	false	-	PalettedContainer.get
+yield	vanilla_biome_fiddle_mask	moonrise	Moonrise	ca.spottedleaf.moonrise.mixin.random_ticking.BiomeManagerMixin	-	-	-	false	-	BiomeManager.getFiddle
+yield	vanilla_block_ticking_range_memo	moonrise	Moonrise	ca.spottedleaf.moonrise.mixin.chunk_system.DistanceManagerMixin	-	-	-	false	-	DistanceManager.inEntityTickingRange, DistanceManager.inBlockTickingRange
+yield	vanilla_clip_shape_box_memo	moonrise	Moonrise	ca.spottedleaf.moonrise.mixin.collisions.VoxelShapeMixin	-	-	-	false	-	VoxelShape.clip
+yield	vanilla_entity_walk_skip	moonrise	Moonrise	ca.spottedleaf.moonrise.mixin.chunk_system.LevelMixin	-	-	-	false	-	Level.getEntities
+yield	vanilla_single_value_section_get	moonrise	Moonrise	ca.spottedleaf.moonrise.mixin.fast_palette.PalettedContainerMixin	-	-	-	false	-	PalettedContainer.get
+yield	vanilla_ticker_range_memo	moonrise	Moonrise	ca.spottedleaf.moonrise.mixin.chunk_system.ServerLevelMixin	-	-	-	false	-	ServerLevel.shouldTickBlocksAt
+yield	vanilla_spawn_gate_visibility_memo	moonrise	Moonrise	ca.spottedleaf.moonrise.mixin.chunk_system.ServerChunkCacheMixin	-	-	-	false	-	ServerChunkCache.tickChunks
+yield	vanilla_ticking_chunk_memo	moonrise	Moonrise	ca.spottedleaf.moonrise.mixin.chunk_system.ChunkHolderMixin	-	-	-	false	-	ChunkHolder.getTickingChunk
+yield	vanilla_level_ticks_blocked_park	moonrise	Moonrise	ca.spottedleaf.moonrise.mixin.chunk_system.ChunkMapMixin	-	-	-	false	-	ChunkMap.promoteChunkMap
+yield	vanilla_spawn_gate_visibility_memo	moonrise	Moonrise	ca.spottedleaf.moonrise.mixin.chunk_tick_iteration.ServerChunkCacheMixin	-	-	-	false	-	ServerChunkCache.tickChunks
+yield	vanilla_spawn_gate_visibility_memo	moonrise	Moonrise	ca.spottedleaf.moonrise.mixin.chunk_system.ServerLevelMixin	-	-	-	false	-	ServerLevel.save
+yield	vanilla_suffocation_scan_loop	moonrise	Moonrise	ca.spottedleaf.moonrise.mixin.collisions.EntityMixin	-	-	-	false	-	Entity.isInWall
+yield	vanilla_fire_scan_idle_skip	moonrise	Moonrise	ca.spottedleaf.moonrise.mixin.collisions.EntityMixin	-	-	-	false	-	Entity.move
+yield	vanilla_fire_scan_loop	moonrise	Moonrise	ca.spottedleaf.moonrise.mixin.collisions.EntityMixin	-	-	-	false	-	Entity.move
+yield	vanilla_ticker_range_memo	moonrise	Moonrise	ca.spottedleaf.moonrise.mixin.block_entity_remove.LevelMixin	-	-	-	false	-	Level.tickBlockEntities
+yield	vanilla_block_entity_ticker_compaction	moonrise	Moonrise	ca.spottedleaf.moonrise.mixin.block_entity_remove.LevelMixin	-	-	-	false	-	Level.tickBlockEntities
+yield	vanilla_block_entity_tick_state	moonrise	Moonrise	ca.spottedleaf.moonrise.mixin.starlight.chunk.LevelChunkMixin	-	-	-	false	-	LevelChunk.setBlockState
+yield	vanilla_goal_flags_none_disabled	afterburner	Afterburner	com.afterburner.mixin.ai.GoalSelectorMixin	-	-	-	false	-	GoalSelector.goalContainsAnyFlags
+yield	distanthorizons_unlocked_byte_stream	superchunk	SuperChunk	dev.superchunk.mixin.compat.MixinDhDataInputStream	-	-	-	false	-	DhDataInputStream.create
 yield	vanilla_spawn_gate_visibility_memo	servercore	ServerCore	me.wesley1808.servercore.mixin.optimizations.ticking.chunk.cache.ServerChunkCacheMixin	-	-	-	false	-
 yield	vanilla_noise_column_summary	generator_accelerator	Generator Accelerator	dev.sixik.generator_accelerator.mixins.common_mixin.MixinNoiseBasedChunkGenerator$optimize_iterate_noise_column	-	-	-	false	-
 yield	vanilla_noise_column_cell_fill	generator_accelerator	Generator Accelerator	dev.sixik.generator_accelerator.common.noise.mixin.MixinNoiseChunk	-	-	-	false	-

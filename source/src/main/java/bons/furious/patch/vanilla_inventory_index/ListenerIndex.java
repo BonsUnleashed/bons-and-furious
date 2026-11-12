@@ -91,7 +91,9 @@ public final class ListenerIndex {
      * Holder.Reference.is(TagKey) (tag membership); the item test here never calls is(TagKey), and the mixin leaves
      * equals, hashCode and the key alone.
      */
-    static final Set<String> VETTED = Set.of("bons.furious.mixin.tag_ids.HolderReferenceTagIdsMixin");
+    static final Set<String> VETTED = Set.of("bons.furious.mixin.tag_ids.HolderReferenceTagIdsMixin",
+            // since 1.0.49.2 (review N1): read-only @Accessor interfaces of two of our other switches (getters of Holder.Reference.tags)
+            "bons.furious.mixin.elysium_sound_memo.HolderReferenceTagsAccessor", "bons.furious.mixin.supplementaries_lean.HolderReferenceTagsAccessor");
     private static volatile Boolean standDown;
     private static volatile boolean announced;
     private static final ThreadLocal<Context> CURRENT = new ThreadLocal<>();
@@ -291,7 +293,7 @@ public final class ListenerIndex {
                         Annotation a = m.getAnnotation(merged);
                         if (a == null) continue;
                         String name = String.valueOf(mixinName.invoke(a));
-                        if (!name.startsWith(OWN_MIXINS) && !VETTED.contains(name)) foreign = name + " in " + c.getName();
+                        if (!name.startsWith(OWN_MIXINS) && !VETTED.contains(name) && !accessorOnly(name, c)) foreign = name + " in " + c.getName();
                     }
                 }
             } catch (Throwable t) {
@@ -302,5 +304,20 @@ public final class ListenerIndex {
             if (s) LOGGER.info("Bons and Furious: vanilla_inventory_trigger_index steps aside: {} also changes the inventory trigger path; it is left as shipped", foreign);
         }
         return s;
+    }
+
+    /**
+     * Since 1.0.49.2 (review N1): an accessor-only mixin interface (EmptyBeardifiers.accessorOnly: every method an @Accessor or
+     * @Invoker, no field, no other Mixin annotation) adds getters, setters or invokers to the class and changes none of its code,
+     * so it cannot change the item test this index stands in for. Lithostitched's and All The Leaks' Holder.Reference accessors
+     * are such interfaces; an injector or an overwrite still makes the index step aside.
+     */
+    private static boolean accessorOnly(String mixin, Class<?> target) {
+        ClassLoader loader = target.getClassLoader() != null ? target.getClassLoader() : ClassLoader.getSystemClassLoader();
+        try (java.io.InputStream in = loader.getResourceAsStream(mixin.replace('.', '/') + ".class")) {
+            return in != null && bons.furious.patch.beardifier.EmptyBeardifiers.accessorOnly(in.readAllBytes()) == null;
+        } catch (Throwable t) {
+            return false;
+        }
     }
 }

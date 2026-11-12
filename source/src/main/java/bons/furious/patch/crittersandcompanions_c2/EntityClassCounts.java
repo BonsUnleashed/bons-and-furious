@@ -94,7 +94,7 @@ public final class EntityClassCounts {
             "com.finderfeed.fdbosses.content.entities.malkuth_boss.malkuth_boss_spawner.MalkuthBossSpawner",
             "com.github.L_Ender.cataclysm.entity.effect.ScreenShake_Entity",
             "net.miauczel.legendary_monsters.entity.AnimatedMonster.Effect.CameraShakeEntity",
-            "net.miauczel.legendary_monsters.effect.DynamicCameraZoomEntity",
+            "net.miauczel.legendary_monsters.entity.AnimatedMonster.Effect.DynamicCameraZoomEntity",
             "com.bobmowzie.mowziesmobs.server.entity.effects.EntityCameraShake",
             "com.min01.crypticfoes.entity.EntityCameraShake",
             "com.github.alexmodguy.alexscaves.server.entity.util.ShakesScreen",

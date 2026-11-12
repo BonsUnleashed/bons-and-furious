@@ -24,24 +24,37 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class TickSchedulerFrontCacheMixin {
     @Unique
     private final AtomicInteger bons$ioC49Generation = new AtomicInteger();
+    // Since 1.0.49.2 the owner thread, the level and its data are held weakly (TickScheduler.INSTANCE lives as long as the game:
+    // strong fields kept the last world's level after it was left), and a new thread takes the cache over once the old one ended.
     @Unique
-    private Thread bons$ioC49Owner;
+    private java.lang.ref.WeakReference<Thread> bons$ioC49Owner = new java.lang.ref.WeakReference<>(null);
     @Unique
     private boolean bons$ioC49Valid;
     @Unique
     private int bons$ioC49CachedGen;
     @Unique
-    private Level bons$ioC49Level;
+    private java.lang.ref.WeakReference<Level> bons$ioC49Level = new java.lang.ref.WeakReference<>(null);
     @Unique
-    private TickScheduler.LevelData bons$ioC49Data;
+    private java.lang.ref.WeakReference<TickScheduler.LevelData> bons$ioC49Data = new java.lang.ref.WeakReference<>(null);
     @Unique
     private Long2IntOpenHashMap bons$ioC49Priorities;
+    @Unique
+    private final Object bons$ioC49Lock = new Object();
 
     @Unique
     private boolean bons$ioC49Mine() {
         Thread t = Thread.currentThread();
-        if (this.bons$ioC49Owner == null) this.bons$ioC49Owner = t;
-        return this.bons$ioC49Owner == t;
+        Thread o = this.bons$ioC49Owner.get();
+        if (o == t) return true;
+        if (o != null && o.isAlive()) return false;
+        synchronized (this.bons$ioC49Lock) {
+            o = this.bons$ioC49Owner.get();
+            if (o == null || !o.isAlive()) {
+                this.bons$ioC49Owner = new java.lang.ref.WeakReference<>(t);
+                this.bons$ioC49Valid = false;          // whatever the old thread kept is not used by the new one
+            }
+            return this.bons$ioC49Owner.get() == t;
+        }
     }
 
     @WrapOperation(method = "shouldTick(Lnet/minecraft/world/level/Level;J)Z",
@@ -50,14 +63,16 @@ public abstract class TickSchedulerFrontCacheMixin {
     private TickScheduler.LevelData bons$ioC49LevelData(TickScheduler self, Level level, Operation<TickScheduler.LevelData> original) {
         if (!IoFrontCache.enabled || !this.bons$ioC49Mine()) return original.call(self, level);
         int gen = this.bons$ioC49Generation.get();
-        if (this.bons$ioC49Valid && gen == this.bons$ioC49CachedGen && level == this.bons$ioC49Level) {
-            TickScheduler.LevelData data = this.bons$ioC49Data;
-            if (IoFrontCache.SHADOW) IoFrontCache.shadow(data, original.call(self, level), "level data");
-            return data;
+        if (this.bons$ioC49Valid && gen == this.bons$ioC49CachedGen && level != null && level == this.bons$ioC49Level.get()) {
+            TickScheduler.LevelData data = this.bons$ioC49Data.get();
+            if (data != null) {
+                if (IoFrontCache.SHADOW) IoFrontCache.shadow(data, original.call(self, level), "level data");
+                return data;
+            }
         }
         TickScheduler.LevelData data = original.call(self, level);
-        this.bons$ioC49Level = level;
-        this.bons$ioC49Data = data;
+        this.bons$ioC49Level = new java.lang.ref.WeakReference<>(level);
+        this.bons$ioC49Data = new java.lang.ref.WeakReference<>(data);
         this.bons$ioC49CachedGen = gen;
         this.bons$ioC49Valid = true;
         if (this.bons$ioC49Priorities == null) {
@@ -75,7 +90,7 @@ public abstract class TickSchedulerFrontCacheMixin {
     private Object bons$ioC49Priority(Map<Object, Object> map, Object key, Function<Object, Object> compute, Operation<Object> original) {
         if (!IoFrontCache.enabled || !this.bons$ioC49Mine() || !this.bons$ioC49Valid || !(key instanceof Long pos)) return original.call(map, key, compute);
         int gen = this.bons$ioC49Generation.get();
-        TickScheduler.LevelData data = this.bons$ioC49Data;
+        TickScheduler.LevelData data = this.bons$ioC49Data.get();
         if (gen != this.bons$ioC49CachedGen || data == null || (Object) map != data.blockEntityPriorities) return original.call(map, key, compute);
         long p = pos.longValue();
         int cached = this.bons$ioC49Priorities.get(p);

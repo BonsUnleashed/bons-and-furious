@@ -1,5 +1,8 @@
 package bons.furious.patch.mesh_air;
 
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.util.concurrent.atomic.AtomicLong;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -21,7 +24,8 @@ import org.apache.logging.log4j.Logger;
  * class is exactly BlockState and its block's class declares no isAir(BlockState) of its own anywhere below BlockBehaviour,
  * so the answer is BlockBehaviour.isAir's read of the state's final field. Every other state (an overriding block class, a
  * BlockState subclass, a class whose methods cannot be listed) is asked every time, as before. A racing first call writes
- * the same byte twice.
+ * the same byte twice. Whether a class overrides is asked of the JVM's method resolution (resolvedPlain), not by listing
+ * the class's methods (bug sweep 2026-11-11).
  *
  * Ported to 1.21.1: no change of logic. NeoForge 21.1.252's BlockStateBase.isAir() is still getBlock().isAir(state),
  * BlockBehaviour.isAir(BlockState) still returns the state's final isAir field, and the field is still set once in the
@@ -38,10 +42,14 @@ public final class BlockStateAirFlag {
     public static final byte UNKNOWN = 0, NOT_AIR = 1, AIR = 2, ASK = -1;
     private static final Logger LOGGER = LogManager.getLogger("Bons and Furious");
     private static volatile boolean announced;
+    private static final MethodType IS_AIR = MethodType.methodType(boolean.class, BlockState.class);
     /** Per block class: true when no class from it up to (excluding) BlockBehaviour declares isAir(BlockState). */
     private static final ClassValue<Boolean> PLAIN = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
+            Boolean resolved = resolvedPlain(type);
+            if (resolved != null) return resolved;
+            if (dedicatedServer()) return Boolean.FALSE;   // listing the methods would load every signature's classes: keep asking
             try {
                 for (Class<?> c = type; c != null; c = c.getSuperclass()) {
                     if (c == BlockBehaviour.class) return Boolean.TRUE;
@@ -56,6 +64,35 @@ public final class BlockStateAirFlag {
             }
         }
     };
+
+    /**
+     * The JVM's own resolution of isAir(BlockState) from the block class: TRUE when it resolves to BlockBehaviour's, FALSE when to a
+     * declaration below it, null when it cannot be asked this way (a class or module that does not open to us). Resolution reads this
+     * one method of the runtime class (mixin-added overrides included); Class.getDeclaredMethods resolves the types of every declared
+     * method, and on a dedicated server a block class whose client-side methods name client-only classes made the loader log an
+     * "invalid dist" ERROR for each such class (bug sweep 2026-11-11, seen in All the Mods 9 and All the Mods 10). The answer itself was
+     * already "keep asking" there; only the ERROR lines go.
+     */
+    static Boolean resolvedPlain(Class<?> type) {
+        for (Class<?> anchor : new Class<?>[] {type, BlockBehaviour.class}) {
+            try {
+                MethodHandles.Lookup lookup = MethodHandles.privateLookupIn(anchor, MethodHandles.lookup());
+                MethodHandle isAir = lookup.findVirtual(type, "isAir", IS_AIR);
+                return lookup.revealDirect(isAir).getDeclaringClass() == BlockBehaviour.class;
+            } catch (Throwable e) {
+                // not this way: the next anchor, then the caller's own path
+            }
+        }
+        return null;
+    }
+
+    private static boolean dedicatedServer() {
+        try {
+            return net.neoforged.fml.loading.FMLEnvironment.dist.isDedicatedServer();
+        } catch (Throwable t) {
+            return false;
+        }
+    }
 
     private BlockStateAirFlag() {
     }

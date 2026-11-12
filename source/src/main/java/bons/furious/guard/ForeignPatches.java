@@ -552,7 +552,7 @@ final class ForeignPatches {
         if (Files.isRegularFile(p)) {
             String section = "";
             for (String raw : Files.readAllLines(p, StandardCharsets.UTF_8)) {
-                String line = raw.replace("Ã¯Â»Â¿", "").trim();
+                String line = raw.replace("\uFEFF", "").trim();
                 if (line.isEmpty() || line.startsWith("#")) continue;
                 if (line.startsWith("[")) {
                     String name = line.replace("[", "").replace("]", "").trim();

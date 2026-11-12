@@ -1,8 +1,10 @@
-# Bons and Furious — Minecraft 1.21.1 / NeoForge
+# Bons and Furious for Minecraft 1.21.1 / NeoForge
 
-This is Bons and Furious 1.0.49 for Minecraft 1.21.1 and NeoForge. The mod ID is `bons_and_furious`, the version is `1.0.49+mc1.21.1`, and it requires Java 21 and NeoForge 21.1.252 or newer. Minecraft is restricted to exactly 1.21.1. The tested loader is 21.1.252; later loaders are not automatically qualified.
+This is Bons and Furious 1.0.49.2 for Minecraft 1.21.1 and NeoForge. The mod ID is `bons_and_furious`, the version is `1.0.49.2+mc1.21.1`, and it requires Java 21 and NeoForge 21.1.252 or newer. Minecraft is restricted to exactly 1.21.1. The tested loader is 21.1.252; later loaders are not automatically qualified.
 
-This release builds on the published 1.0.47 port and adds 296 controls from the Forge releases through 1.0.49, each adapted to the actual 1.21.1 target and given fingerprints taken from the 1.21.1 classes. See PORT-COVERAGE.md for every Forge control and QUALIFICATION.md for what was tested.
+1.0.49.2+mc1.21.1 is a hotfix of 1.0.49+mc1.21.1: the same controls, with the fixes of two bug sweeps (memory kept after a world was closed, a start-up crash next to Moonrise, Afterburner or SuperChunk with Distant Horizons, switches that turned themselves off next to common mods, an old config line that kept a switch on after its default became off) and no new switch.
+
+The 1.0.49 port builds on the published 1.0.47 port and adds 296 controls from the Forge releases through 1.0.49, each adapted to the actual 1.21.1 target and given fingerprints taken from the 1.21.1 classes. See PORT-COVERAGE.md for every Forge control and QUALIFICATION.md for what was tested.
 
 Historical baseline: 1.0.41 builds on the published 1.0.39+mc1.21.1 (SHA-256
 `0fdf2fb35e7791e1216fbb26605b12e0be0ccf1f9858f2950044189fbb1958ea`) and adds what Forge 1.0.40 and 1.0.41 changed, taken
@@ -21,7 +23,7 @@ release.
 
 ## Install
 
-Put `bons_and_furious-neoforge-1.0.49+mc1.21.1.jar` in the `mods` folder of a Minecraft 1.21.1 NeoForge instance.
+Put `bons_and_furious-neoforge-1.0.49.2+mc1.21.1.jar` in the `mods` folder of a Minecraft 1.21.1 NeoForge instance.
 Optional target mods are not required; their patches only apply when the relevant targets and method fingerprints
 match. MixinSquared is bundled; NeoForge supplies MixinExtras.
 

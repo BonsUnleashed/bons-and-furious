@@ -1,6 +1,6 @@
 {
   "group": "compat",
-  "note": "Patches other mods make to the same code, the same way, as one of our switches. Exactly one copy may run: while the other mod's patch is active (installed, its mixin listed for this side, its option on), our switch steps aside; otherwise our switch applies and the other mod's mixin is cancelled. See bons.furious.guard.ForeignPatches. Checked against Collections Of Optimizations 4.4 (CurseForge file 9026925, sha1 d1b067885b0827c12b7eb75bc02896d270adaed8) on 2026-10-02. The Collections Of Optimizations 4.6 entries are carried from the Forge 1.0.36 release for the keys this port ships; they only act when that mod is installed, which no NeoForge 1.21.1 test of this port has.",
+  "note": "Patches other mods make to the same code, the same way, as one of our switches. Exactly one copy may run: while the other mod's patch is active (installed, its mixin listed for this side, its option on), our switch steps aside; otherwise our switch applies and the other mod's mixin is cancelled. See bons.furious.guard.ForeignPatches. Checked against Collections Of Optimizations 4.4 (CurseForge file 9026925, sha1 d1b067885b0827c12b7eb75bc02896d270adaed8) on 2026-10-02. The Collections Of Optimizations 4.6 entries are carried from the Forge 1.0.36 release for the keys this port ships; they only act when that mod is installed, which no NeoForge 1.21.1 test of this port has. Rechecked on 2026-11-11 (1.0.49.2+mc1.21.1) against Moonrise 0.1.0-beta.15, Afterburner 0.2.6 and SuperChunk 0.6.0 / 0.6.1 next to Distant Horizons: rows for patches that cannot run together with ours next to those mods.",
   "keys": {},
   "yields": [
     {
@@ -672,6 +672,158 @@
       "mixin": "dev.sixik.generator_accelerator.common.paletted_container.mixin.patch.MixinPalettedContainer",
       "conflict": "PalettedContainer.get",
       "why": "Generator Accelerator (tested 1.21.1-1.6.2) @Overwrites PalettedContainer.get at the same priority as our @Redirect inside it; Mixin refuses the redirect and the class fails to load (static sweep, 2026-11-08), so this switch steps aside."
+    },
+    {
+      "key": "vanilla_biome_fiddle_mask",
+      "mod": "moonrise",
+      "name": "Moonrise",
+      "mixin": "ca.spottedleaf.moonrise.mixin.random_ticking.BiomeManagerMixin",
+      "conflict": "BiomeManager.getFiddle",
+      "why": "Moonrise's BiomeManagerMixin (Overwrite, priority 1000) changes BiomeManager.getFiddle, where this switch also injects (R3-CRASH): the two cannot be applied together"
+    },
+    {
+      "key": "vanilla_block_ticking_range_memo",
+      "mod": "moonrise",
+      "name": "Moonrise",
+      "mixin": "ca.spottedleaf.moonrise.mixin.chunk_system.DistanceManagerMixin",
+      "conflict": "DistanceManager.inEntityTickingRange, DistanceManager.inBlockTickingRange",
+      "why": "Moonrise's DistanceManagerMixin (Overwrite, priority 1000) changes DistanceManager.inEntityTickingRange, where this switch also injects (R3-CRASH): the two cannot be applied together"
+    },
+    {
+      "key": "vanilla_clip_shape_box_memo",
+      "mod": "moonrise",
+      "name": "Moonrise",
+      "mixin": "ca.spottedleaf.moonrise.mixin.collisions.VoxelShapeMixin",
+      "conflict": "VoxelShape.clip",
+      "why": "Moonrise's VoxelShapeMixin (Overwrite, priority 1000) changes VoxelShape.clip, where this switch also injects (R3-CRASH): the two cannot be applied together"
+    },
+    {
+      "key": "vanilla_entity_walk_skip",
+      "mod": "moonrise",
+      "name": "Moonrise",
+      "mixin": "ca.spottedleaf.moonrise.mixin.chunk_system.LevelMixin",
+      "conflict": "Level.getEntities",
+      "why": "Moonrise's LevelMixin (Overwrite, priority 1000) changes Level.getEntities, where this switch also injects (R3-CRASH): the two cannot be applied together"
+    },
+    {
+      "key": "vanilla_single_value_section_get",
+      "mod": "moonrise",
+      "name": "Moonrise",
+      "mixin": "ca.spottedleaf.moonrise.mixin.fast_palette.PalettedContainerMixin",
+      "conflict": "PalettedContainer.get",
+      "why": "Moonrise's PalettedContainerMixin (Overwrite, priority 1000) changes PalettedContainer.get, where this switch also injects (R3-CRASH): the two cannot be applied together"
+    },
+    {
+      "key": "vanilla_ticker_range_memo",
+      "mod": "moonrise",
+      "name": "Moonrise",
+      "mixin": "ca.spottedleaf.moonrise.mixin.chunk_system.ServerLevelMixin",
+      "conflict": "ServerLevel.shouldTickBlocksAt",
+      "why": "Moonrise's ServerLevelMixin (Overwrite, priority 1000) changes ServerLevel.shouldTickBlocksAt, where this switch also injects (R3-CRASH): the two cannot be applied together"
+    },
+    {
+      "key": "vanilla_spawn_gate_visibility_memo",
+      "mod": "moonrise",
+      "name": "Moonrise",
+      "mixin": "ca.spottedleaf.moonrise.mixin.chunk_system.ServerChunkCacheMixin",
+      "conflict": "ServerChunkCache.tickChunks",
+      "why": "Moonrise's ServerChunkCacheMixin (Redirect, priority 1000) changes ServerChunkCache.tickChunks, where this switch also injects (R5): the two cannot be applied together"
+    },
+    {
+      "key": "vanilla_ticking_chunk_memo",
+      "mod": "moonrise",
+      "name": "Moonrise",
+      "mixin": "ca.spottedleaf.moonrise.mixin.chunk_system.ChunkHolderMixin",
+      "conflict": "ChunkHolder.getTickingChunk",
+      "why": "Moonrise's ChunkHolderMixin (Overwrite) changes ChunkHolder.getTickingChunk, where this switch's ChunkHolderTickingMemoMixin (WrapMethod) injects; the two cannot be applied together"
+    },
+    {
+      "key": "vanilla_level_ticks_blocked_park",
+      "mod": "moonrise",
+      "name": "Moonrise",
+      "mixin": "ca.spottedleaf.moonrise.mixin.chunk_system.ChunkMapMixin",
+      "conflict": "ChunkMap.promoteChunkMap",
+      "why": "Moonrise's ChunkMapMixin (Overwrite) changes ChunkMap.promoteChunkMap, where this switch's ChunkMapParkMixin (Inject) injects; the two cannot be applied together"
+    },
+    {
+      "key": "vanilla_spawn_gate_visibility_memo",
+      "mod": "moonrise",
+      "name": "Moonrise",
+      "mixin": "ca.spottedleaf.moonrise.mixin.chunk_tick_iteration.ServerChunkCacheMixin",
+      "conflict": "ServerChunkCache.tickChunks",
+      "why": "Moonrise's ServerChunkCacheMixin (Redirect) changes ServerChunkCache.tickChunks, where this switch's ServerChunkCacheSpawnGateMixin (ModifyVariable) injects; the two cannot be applied together"
+    },
+    {
+      "key": "vanilla_spawn_gate_visibility_memo",
+      "mod": "moonrise",
+      "name": "Moonrise",
+      "mixin": "ca.spottedleaf.moonrise.mixin.chunk_system.ServerLevelMixin",
+      "conflict": "ServerLevel.save",
+      "why": "Moonrise's ServerLevelMixin (Redirect) changes ServerLevel.save, where this switch's ServerLevelSaveEpochsMixin (Inject) injects; the two cannot be applied together"
+    },
+    {
+      "key": "vanilla_suffocation_scan_loop",
+      "mod": "moonrise",
+      "name": "Moonrise",
+      "mixin": "ca.spottedleaf.moonrise.mixin.collisions.EntityMixin",
+      "conflict": "Entity.isInWall",
+      "why": "Moonrise's EntityMixin (Overwrite) changes Entity.isInWall, where this switch's EntityInWallScanMixin (WrapOperation) injects; the two cannot be applied together"
+    },
+    {
+      "key": "vanilla_fire_scan_idle_skip",
+      "mod": "moonrise",
+      "name": "Moonrise",
+      "mixin": "ca.spottedleaf.moonrise.mixin.collisions.EntityMixin",
+      "conflict": "Entity.move",
+      "why": "Moonrise's EntityMixin (Redirect) changes Entity.move, where this switch's EntityFireIdleMixin (WrapOperation) injects; the two cannot be applied together"
+    },
+    {
+      "key": "vanilla_fire_scan_loop",
+      "mod": "moonrise",
+      "name": "Moonrise",
+      "mixin": "ca.spottedleaf.moonrise.mixin.collisions.EntityMixin",
+      "conflict": "Entity.move",
+      "why": "Moonrise's EntityMixin (Redirect) changes Entity.move, where this switch's EntityFireScanMixin (WrapOperation) injects; the two cannot be applied together"
+    },
+    {
+      "key": "vanilla_ticker_range_memo",
+      "mod": "moonrise",
+      "name": "Moonrise",
+      "mixin": "ca.spottedleaf.moonrise.mixin.block_entity_remove.LevelMixin",
+      "conflict": "Level.tickBlockEntities",
+      "why": "Moonrise's LevelMixin (Redirect) changes Level.tickBlockEntities, where this switch's LevelTickerContextMixin (ModifyVariable) injects; the two cannot be applied together"
+    },
+    {
+      "key": "vanilla_block_entity_ticker_compaction",
+      "mod": "moonrise",
+      "name": "Moonrise",
+      "mixin": "ca.spottedleaf.moonrise.mixin.block_entity_remove.LevelMixin",
+      "conflict": "Level.tickBlockEntities",
+      "why": "Moonrise's LevelMixin (Redirect) changes Level.tickBlockEntities, where this switch's LevelTickerCompactionMixin (Inject) injects; the two cannot be applied together"
+    },
+    {
+      "key": "vanilla_block_entity_tick_state",
+      "mod": "moonrise",
+      "name": "Moonrise",
+      "mixin": "ca.spottedleaf.moonrise.mixin.starlight.chunk.LevelChunkMixin",
+      "conflict": "LevelChunk.setBlockState",
+      "why": "Moonrise's LevelChunkMixin (Redirect) changes LevelChunk.setBlockState, where this switch's LevelChunkBlockEntityStateMixin (WrapOperation) injects; the two cannot be applied together"
+    },
+    {
+      "key": "vanilla_goal_flags_none_disabled",
+      "mod": "afterburner",
+      "name": "Afterburner",
+      "mixin": "com.afterburner.mixin.ai.GoalSelectorMixin",
+      "conflict": "GoalSelector.goalContainsAnyFlags",
+      "why": "Afterburner's GoalSelectorMixin (Overwrite, priority 1000) changes GoalSelector.goalContainsAnyFlags, where this switch also injects (R3-CRASH): the two cannot be applied together"
+    },
+    {
+      "key": "distanthorizons_unlocked_byte_stream",
+      "mod": "superchunk",
+      "name": "SuperChunk",
+      "mixin": "dev.superchunk.mixin.compat.MixinDhDataInputStream",
+      "conflict": "DhDataInputStream.create",
+      "why": "SuperChunk 0.6.0 and later @Redirect the same two ByteArrayInputStream constructions in Distant Horizons' DhDataInputStream.create (to its own unsynchronized stream) at the same priority. Mixin lets only one redirect hold a call and ours has require = 1, so when SuperChunk's applies first a dedicated server with Distant Horizons stops at world load ('Critical injection failure: Redirector bons$unlockedSlice ... (0/1)', reproduced 2026-11-11). Both make the same change, so stepping aside loses nothing."
     }
   ]
 }

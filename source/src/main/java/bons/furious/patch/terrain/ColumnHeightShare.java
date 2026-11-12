@@ -141,7 +141,10 @@ public final class ColumnHeightShare {
         if (!READY || !enabled || random == null || generator.getClass() != NoiseBasedChunkGenerator.class) return null;
         try {
             World w = WORLDS.get(random);
-            if (w == null) w = WORLDS.computeIfAbsent(random, World::new);
+            if (w == null) {
+                hookStop();
+                w = WORLDS.computeIfAbsent(random, World::new);
+            }
             if (w.refusal != null) return null;
             NoiseGeneratorSettings settings = ((Holder<NoiseGeneratorSettings>) SETTINGS.invokeExact(generator)).value();
             return w.table(settings, level.getMinBuildHeight(), level.getHeight());
@@ -288,6 +291,28 @@ public final class ColumnHeightShare {
             this.type = type;
             this.expected = expected;
             this.kind = kind;
+        }
+    }
+
+    private static volatile boolean stopHooked;
+
+    /**
+     * Since 1.0.49.2: every world's table is dropped when a server has stopped (ServerStoppedEvent). The map's keys are weak,
+     * but Guava removes a collected key's entry only when that segment of the map is used again, and the lookups only touch
+     * the live world's segment, so in single player a closed world's table (and the generator settings it holds) stayed in
+     * memory, often for the rest of the session. A dedicated server stops once; nothing changes there. Registered once.
+     */
+    private static void hookStop() {
+        if (stopHooked) return;
+        synchronized (ColumnHeightShare.class) {
+            if (stopHooked) return;
+            stopHooked = true;
+            try {
+                net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST, true,
+                        net.neoforged.neoforge.event.server.ServerStoppedEvent.class, e -> WORLDS.clear());
+            } catch (Throwable t) {
+                LOGGER.warn("Bons and Furious: vanilla_noise_column_cache could not listen for the server's stop ({}); a closed world's table may stay in memory", t.toString());
+            }
         }
     }
 }

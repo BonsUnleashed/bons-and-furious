@@ -1,6 +1,6 @@
 # Minecraft 1.21.1 port coverage
 
-Version `1.0.49+mc1.21.1`.
+Version `1.0.49.2+mc1.21.1`. The controls are the same as in 1.0.49+mc1.21.1.
 
 All 885 controls of Bons and Furious 1.0.49 are accounted for: 556 ported, 161 retired because the 1.21.1 target changed or already does the work, and 168 whose target mod has no author-published Minecraft 1.21.1 NeoForge build. This release keeps every control of the published 1.0.47 NeoForge port and adds 296.
 

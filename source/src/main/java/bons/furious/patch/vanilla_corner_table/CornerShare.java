@@ -116,7 +116,10 @@ public final class CornerShare {
         try {
             Chunk c = (Chunk) chunk;
             World w = WORLDS.get(random);
-            if (w == null) w = WORLDS.computeIfAbsent(random, r -> new World());
+            if (w == null) {
+                hookStop();
+                w = WORLDS.computeIfAbsent(random, r -> new World());
+            }
             return w.shape(settings, c, chunk);
         } catch (Throwable t) {
             disable(t);
@@ -428,5 +431,27 @@ public final class CornerShare {
             }
         }
         return null;
+    }
+
+    private static volatile boolean stopHooked;
+
+    /**
+     * Since 1.0.49.2: every world's table is dropped when a server has stopped (ServerStoppedEvent). The map's keys are weak,
+     * but Guava removes a collected key's entry only when that segment of the map is used again, and the lookups only touch
+     * the live world's segment, so in single player a closed world's table (and the generator settings it holds) stayed in
+     * memory, often for the rest of the session. A dedicated server stops once; nothing changes there. Registered once.
+     */
+    private static void hookStop() {
+        if (stopHooked) return;
+        synchronized (CornerShare.class) {
+            if (stopHooked) return;
+            stopHooked = true;
+            try {
+                net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST, true,
+                        net.neoforged.neoforge.event.server.ServerStoppedEvent.class, e -> WORLDS.clear());
+            } catch (Throwable t) {
+                LOGGER.warn("Bons and Furious: vanilla_noise_corner_share could not listen for the server's stop ({}); a closed world's table may stay in memory", t.toString());
+            }
+        }
     }
 }

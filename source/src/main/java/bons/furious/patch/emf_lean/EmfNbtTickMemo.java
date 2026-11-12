@@ -48,7 +48,8 @@ public final class EmfNbtTickMemo {
     public static volatile long testTick;
     private static final IdentityHashMap<Object, HashMap<UUID, Boolean>> MEMO = new IdentityHashMap<>();
     private static volatile Thread owner;
-    private static Object level;
+    /** Weak: the closed world's ClientLevel must not stay reachable on the title screen (bug sweep 2026-11-10). */
+    private static java.lang.ref.WeakReference<Object> level;
     private static long tick;
     private static boolean announced;
 
@@ -75,9 +76,12 @@ public final class EmfNbtTickMemo {
             lvl = cl;
             now = cl.getGameTime();
         }
-        if (lvl != level || now != tick) {
+        if (level == null || lvl != level.get()) {
             MEMO.clear();
-            level = lvl;
+            level = new java.lang.ref.WeakReference<>(lvl);   // a new reference only when the level changes
+            tick = now;
+        } else if (now != tick) {
+            MEMO.clear();
             tick = now;
         }
         UUID id = state.uuid();

@@ -33,8 +33,9 @@ import org.spongepowered.asm.mixin.transformer.meta.MixinMerged;
  *
  * Leaves are never remembered: their answer follows the fancy-graphics flag, which Embeddium redirects to its own leaves
  * quality setting. And the memo stays off when ItemBlockRenderTypes carries a mixin this switch does not know (its hook
- * might read other state); the known ones: Iris and Embeddium hook getRenderLayers as described, Citadel, LionfishAPI,
- * Quark, Vivecraft and Embeddium's model mixin hook other methods.
+ * might read other state); the known ones: Iris and Embeddium hook getRenderLayers as described, Sodium's leaves redirect
+ * only reads its leaves option (leaves are never remembered), Citadel, LionfishAPI, Quark, Vivecraft, our Lionfish gate and
+ * Embeddium's and Sodium's model mixins hook other methods or class init.
  */
 public final class RenderLayerMemo {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -44,6 +45,17 @@ public final class RenderLayerMemo {
     private static final Set<String> KNOWN = Set.of(
             "bons.furious.mixin.forge.RenderLayerMemoMixin",
             "net.irisshaders.iris.mixin.MixinItemBlockRenderTypes",
+            // since 1.0.49.2 (review N2), each read: Iris 1.8.12's NeoForge hook of getRenderLayers (HEAD, answers from
+            // WorldRenderingSettings.INSTANCE.getBlockTypeIds(), the map each Entry keys on), Sodium 0.6.13's leaves-quality
+            // redirect of renderCutout (leaves are never remembered) and its static map copy (class init only), and our own
+            // Lionfish fluid event gate (getRenderLayer(FluidState) only)
+            "net.irisshaders.iris.mixin.forge.MixinItemBlockRenderTypes",
+            "net.caffeinemc.mods.sodium.mixin.features.options.render_layers.ItemBlockRenderTypesMixin",
+            "net.caffeinemc.mods.sodium.mixin.features.render.model.ItemBlockRenderTypesMixin",
+            "bons.furious.mixin.lionfishapi_c49.LionfishFluidEventGateMixin",
+            // since 1.0.49.2 (found by this hotfix's client suite): Embeddium 1.0.15's @Invoker of getRenderLayers itself (a call of the
+            // memoised method; no code changed)
+            "org.embeddedt.embeddium.impl.mixin.features.model.ItemBlockRenderTypesInvoker",
             "org.embeddedt.embeddium.impl.mixin.features.options.render_layers.RenderLayersMixin",
             "org.embeddedt.embeddium.impl.mixin.features.render.model.RenderLayersMixin",
             "com.github.alexthe666.citadel.mixin.client.ItemBlockRenderTypesMixin",

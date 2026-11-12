@@ -68,11 +68,14 @@ public final class SkySample {
     // per-tick memos: each switch has its own client tick counter (its own Minecraft.tick hook)
     private static long skyTicks, fogTicks;
     private static long skyTickKey = -1;
-    private static Object skyTickLevel, skyTickManager;
+    // since 1.0.49.2 the per-tick memos hold the level and its biome manager weakly (a new reference only when they change): the
+    // strong fields kept the last ClientLevel after the player left the world
+    private static final java.lang.ref.WeakReference<Object> NONE = new java.lang.ref.WeakReference<>(null);
+    private static java.lang.ref.WeakReference<Object> skyTickLevel = NONE, skyTickManager = NONE;
     private static Vec3 skyTickValue;
     private static long fogTickKey = -1;
     private static int fogTickBrightness;
-    private static Object fogTickLevel, fogTickManager;
+    private static java.lang.ref.WeakReference<Object> fogTickLevel = NONE, fogTickManager = NONE;
     private static Vec3 fogTickValue;
 
     private SkySample() {
@@ -138,11 +141,11 @@ public final class SkySample {
     /** vanilla_sky_color_sample_tick_memo: around the same call, outermost: one sample per client tick and level. */
     public static Vec3 skyPerTick(Vec3 pos, CubicSampler.Vec3Fetcher fetcher, Operation<Vec3> original, ClientLevel level, BiomeManager manager) {
         if (!skyTickEnabled || level == null || !onRenderThread()) return original.call(pos, fetcher);
-        if (skyTickKey == skyTicks && skyTickLevel == level && skyTickManager == manager) return skyTickValue;
+        if (skyTickKey == skyTicks && skyTickLevel.get() == level && skyTickManager.get() == manager) return skyTickValue;
         Vec3 v = original.call(pos, fetcher);
         skyTickKey = skyTicks;
-        skyTickLevel = level;
-        skyTickManager = manager;
+        skyTickLevel = ref(skyTickLevel, level);
+        skyTickManager = ref(skyTickManager, manager);
         skyTickValue = v;
         if (!skyTickAnnounced) {
             skyTickAnnounced = true;
@@ -157,11 +160,11 @@ public final class SkySample {
             return original.call(pos, fetcher);
         BiomeManager manager = level.getBiomeManager();
         int b = Float.floatToRawIntBits(brightness);
-        if (fogTickKey == fogTicks && fogTickLevel == level && fogTickManager == manager && fogTickBrightness == b) return fogTickValue;
+        if (fogTickKey == fogTicks && fogTickLevel.get() == level && fogTickManager.get() == manager && fogTickBrightness == b) return fogTickValue;
         Vec3 v = original.call(pos, fetcher);
         fogTickKey = fogTicks;
-        fogTickLevel = level;
-        fogTickManager = manager;
+        fogTickLevel = ref(fogTickLevel, level);
+        fogTickManager = ref(fogTickManager, manager);
         fogTickBrightness = b;
         fogTickValue = v;
         if (!fogTickAnnounced) {
@@ -169,6 +172,11 @@ public final class SkySample {
             LOGGER.info("Bons and Furious: vanilla_fog_color_sample_tick_memo applies (the fog colour's biome blend is sampled once per client tick)");
         }
         return v;
+    }
+
+    /** The same reference while it still names {@code now}, else a new one (allocates only when the level or manager changes). */
+    private static java.lang.ref.WeakReference<Object> ref(java.lang.ref.WeakReference<Object> old, Object now) {
+        return old.get() == now ? old : new java.lang.ref.WeakReference<>(now);
     }
 
     /** The tick memos keep their samples in plain fields: render thread only (any other thread samples as before). */
@@ -182,10 +190,10 @@ public final class SkySample {
         memoLevel = memoManager = null;
         memoValue = null;
         skyTickKey = -1;
-        skyTickLevel = skyTickManager = null;
+        skyTickLevel = skyTickManager = NONE;
         skyTickValue = null;
         fogTickKey = -1;
-        fogTickLevel = fogTickManager = null;
+        fogTickLevel = fogTickManager = NONE;
         fogTickValue = null;
     }
 }

@@ -1,4 +1,43 @@
-# 1.0.49+mc1.21.1 (2026-11-08)
+# 1.0.49.2+mc1.21.1 (2026-11-11)
+
+Runtime checks PASS for SHA-256 `4927c8b15f801aeecf67746693dc84659c7fabd168b7284591b43550a25ddf23`. A hotfix of 1.0.49+mc1.21.1: the same 556 controls and the same 4,389 fingerprints, with
+the fixes of the bug sweeps of 2026-11-10 and 2026-11-11 and no new switch.
+
+What changed:
+- Start-up crashes fixed: Moonrise 0.1.0-beta.15 (17 rows) and Afterburner 0.2.6 (one row): the switches whose code those mods replace now step aside
+  next to them. SuperChunk 0.6.0 and 0.6.1 with Distant Horizons: distanthorizons_unlocked_byte_stream steps aside for SuperChunk's own copy of the change.
+- Memory kept after a world was closed (single player), now released: fluidium_claim_lookup_memo, cataclysm tentacle light, immersive_optimization front
+  caches, the four terrain tables (released when the server stops), subtle effects display tick plan, the sky and fog colour tick memos, emf_nbt_tick_memo,
+  xaerominimap_hidden_radar_skip.
+- client_class_warmup no longer stops when the first world is opened: it runs until 10 seconds after joining, as its description says, and its list
+  leaves out the classes it defined itself.
+- supplementaries_sign_ink_sync_filter: a capability provider that throws no longer fails inside the chunk packet.
+- A config file written before 1.0.41+mc1.21.1 still said radium_experimental_tickets_spawning=true; it is switched off once, with a comment in the file.
+- vanilla_block_state_air_flag, and goetydelight_log_scan_lean (ships off), no longer make a dedicated server log "invalid dist" errors for block and
+  item classes with client-only methods (the all-switches-on server below logged 31 of them with 1.0.49+mc1.21.1, none now).
+- Switches that turned themselves off next to common mods now act: vanilla_inventory_trigger_index (our own accessors and accessor-only mixins no longer
+  count), forge_render_layer_memo (Iris's NeoForge hook, Sodium's two mixins, Embeddium's invoker and our Lionfish gate are known; it now acts in every
+  client run below), legendary_monsters_shake_scan_presence_gate (the 1.21.1 class name of the zoom entity).
+
+Tested on this jar:
+- Every one of the 4,389 fingerprints found unchanged in the 1.21.1 classes; production fingerprints unchanged.
+- Dedicated server with 180 mods at once: boots, generates three dimensions, runs 401 ticks and stops cleanly. 234 controls applied;
+  3,071,479 comparisons of the original answer with ours, 0 mismatches. With every switch that ships off turned on: 299 applied,
+  4,208,827 comparisons, 0 mismatches.
+- Every control added since 1.0.47 off versus on: identical block and biome hashes in three dimensions.
+- World starts with SuperChunk 0.6.1, Lomka 0.7.0 and SuperChunk 0.6.1 with Distant Horizons 3.3.3: clean.
+- TerraBlender saved-layer regression: 510 checks, zero failures. Guard helper regression: 31 cases;
+  131,072 exact noise samples; 252 ZIP listings.
+- Clients: Iris with a shader pack, Embeddium without Iris, one client with every client target mod (552 controls checked), its
+  controls-off twin and an all-switches-on run, Supplementaries on Embeddium. 7,809,383,594 comparisons in all, 0 mismatches.
+- Sodium 0.8.13: the standard client mods without Iris load a world, run 600 ticks and stop cleanly. 783,019,356 comparisons, 0 mismatches (smoke test).
+- JEI recipe deferral enabled and disabled: identical ordered recipe dumps after a real disconnect and rejoin (3278 anvil and 9717 grindstone recipes).
+- Static checks over 437 jars (now also redirects whose targets are written differently): no crash-class conflicts. Overwrite access audit over
+  437 jars: 90 overwrites, all safe.
+
+These are targeted tests, not comprehensive multiplayer or long-session modpack coverage. No Minecraft 1.21.1 speed benchmark was run.
+
+# Historical: 1.0.49+mc1.21.1 (2026-11-08)
 
 Runtime checks PASS for SHA-256 `94974453d5084439f0ed5b378ada0fc93495218d8b2ae1a11fad977b2d2dda3c`.
 The public source rebuild receipt is published separately and bound to the source archive hash.

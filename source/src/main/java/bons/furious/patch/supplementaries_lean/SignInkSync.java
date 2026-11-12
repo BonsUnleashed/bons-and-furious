@@ -52,7 +52,12 @@ public final class SignInkSync {
         if (!enabled || te == null || te instanceof SignBlockEntity) return false;
         Level level = te.getLevel();
         if (!(level instanceof ServerLevel serverLevel) || !serverLevel.getServer().isSameThread()) return false;
-        boolean absent = serverLevel.getCapability(CapabilityHandler.ANTIQUE_TEXT_CAP, te.getBlockPos(), te.getBlockState(), te, null) == null;
+        boolean absent;
+        try {
+            absent = serverLevel.getCapability(CapabilityHandler.ANTIQUE_TEXT_CAP, te.getBlockPos(), te.getBlockState(), te, null) == null;
+        } catch (Exception e) {     // as NeoForge's task runner, which catches Exception (also a checked one thrown sneakily)
+            return false;       // a capability provider that throws: Supplementaries' queued task asks again and the server's task loop logs it, as without this switch (not inside the chunk packet)
+        }
         if (SHADOW) {
             SHADOW_CHECKS.incrementAndGet();
             if (absent) SHADOW_SKIPPABLE.incrementAndGet();
