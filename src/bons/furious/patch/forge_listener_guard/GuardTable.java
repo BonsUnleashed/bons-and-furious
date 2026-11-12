@@ -22,7 +22,6 @@ import org.objectweb.asm.tree.MethodNode;
  * so a thread still posting with an older table never mixes its bits with another table's masks.
  */
 final class GuardTable {
-    final IEventListener[] array;
     final Class<?> eventClass;
     final Compiled[] guards;
     final int guarded, subjectFact;
@@ -59,9 +58,8 @@ final class GuardTable {
         }
     }
 
-    private GuardTable(IEventListener[] array, Class<?> eventClass, Compiled[] guards, int guarded, int subjectFact,
+    private GuardTable(int listenerCount, Class<?> eventClass, Compiled[] guards, int guarded, int subjectFact,
                        ClassValue<long[]> profile, List<String> report) {
-        this.array = array;
         this.eventClass = eventClass;
         this.guards = guards;
         this.guarded = guarded;
@@ -97,7 +95,7 @@ final class GuardTable {
         stages = st ? EventFacts.stageConstants(eventClass) : new Object[0];
         nStage = st ? stages.length + 2 : 1;
         size = nPhase * nSide * nType * (l ? 3 : 1) * nStage;
-        words = (array == null ? 0 : array.length + 63) >>> 6;
+        words = (listenerCount + 63) >>> 6;
         plain = new Holder(0L, false, size);
         nullSubject = new Holder(0L, false, size);
         ClassValue<long[]> prof = profile;
@@ -197,7 +195,7 @@ final class GuardTable {
         } catch (Throwable t) {
             GuardedDispatch.LOGGER.warn("Bons and Furious: forge_listener_prologue_guard could not build the guards for {} ({}); its listeners are all called",
                     eventClass.getName(), t.toString());
-            return new GuardTable(listeners, eventClass, new Compiled[listeners.length], 0, 0, null, List.of("failed: " + t));
+            return new GuardTable(listeners.length, eventClass, new Compiled[listeners.length], 0, 0, null, List.of("failed: " + t));
         }
     }
 
@@ -266,7 +264,7 @@ final class GuardTable {
                     guards[i] != null ? lg.name + " : " + lg.describe : describe(listeners[i]) + (why != null ? " (" + why + ")" : "")));
         }
         ClassValue<long[]> profile = sets.isEmpty() ? null : Profiles.profile(sets.toArray(new String[0][]));
-        return new GuardTable(listeners, eventClass, guards, guarded, subject, profile, report);
+        return new GuardTable(listeners.length, eventClass, guards, guarded, subject, profile, report);
     }
 
     private static String describe(IEventListener l) {

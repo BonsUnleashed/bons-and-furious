@@ -49,9 +49,12 @@ public final class ClaimMemo {
     static final String MANAGER_IMPL = "dev.ftb.mods.ftbchunks.data.ClaimedChunkManagerImpl";
     private static final int SIZE = 4096;
     private static final Logger LOGGER = LogManager.getLogger("Bons and Furious");
-    // the table (owner thread only)
-    private static Thread owner;
-    private static Object manager;
+    // the table (owner thread only). Since 1.0.49.2 the owner thread and the manager are held weakly and a new server thread takes
+    // the table over once the old one has ended: in single player every world gets its own "Server thread", and the strong
+    // statics kept the first world's finished thread (whose task holds that IntegratedServer) and its FTB claim manager (which
+    // holds FTB Teams' manager and the server) for the whole session, while every later world was answered by FTB alone.
+    private static java.lang.ref.WeakReference<Thread> owner = new java.lang.ref.WeakReference<>(null);
+    private static java.lang.ref.WeakReference<Object> manager = new java.lang.ref.WeakReference<>(null);
     private static Class<?> checkerClass, managerClass;
     private static final Object[] DIMS = new Object[SIZE];
     private static final int[] XS = new int[SIZE], ZS = new int[SIZE], EPOCHS = new int[SIZE];
@@ -113,12 +116,18 @@ public final class ClaimMemo {
     public static boolean claimed(Object checker, Level level, BlockPos pos, Operation<Boolean> original) {
         if (!enabled || level == null || pos == null || checker == null) return original.call(checker, level, pos);
         Thread t = Thread.currentThread();
-        if (owner != t) {
-            if (owner != null) return original.call(checker, level, pos);
+        Thread o = owner.get();
+        if (o != t) {
+            if (o != null && o.isAlive()) return original.call(checker, level, pos);
             synchronized (ClaimMemo.class) {
-                if (owner == null) owner = t;
+                o = owner.get();
+                if (o == null || !o.isAlive()) {      // no owner yet, or the previous world's server thread has ended
+                    owner = new java.lang.ref.WeakReference<>(t);
+                    manager = new java.lang.ref.WeakReference<>(null);
+                    java.util.Arrays.fill(DIMS, null);
+                }
             }
-            if (owner != t) return original.call(checker, level, pos);
+            if (owner.get() != t) return original.call(checker, level, pos);
         }
         // the class checks compare names once, then the class objects (owner thread only)
         Class<?> cc = checker.getClass();
@@ -136,8 +145,8 @@ public final class ClaimMemo {
             managerClass = mc;
         }
         if (!verified(m)) return original.call(checker, level, pos);
-        if (m != manager) {
-            manager = m;
+        if (m != manager.get()) {
+            manager = new java.lang.ref.WeakReference<>(m);
             java.util.Arrays.fill(DIMS, null);
         }
         int e = epoch;

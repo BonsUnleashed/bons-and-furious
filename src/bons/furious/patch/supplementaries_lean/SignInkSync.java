@@ -50,7 +50,12 @@ public final class SignInkSync {
         Level level = te.m_58904_();
         if (!(level instanceof ServerLevel serverLevel) || !serverLevel.m_7654_().m_18695_()) return false;
         if (!((CapabilityProviderValidAccessor) (Object) te).bons$suppCapsValid()) return false;
-        boolean absent = !te.getCapability(CapabilityHandler.ANTIQUE_TEXT_CAP).isPresent();
+        boolean absent;
+        try {
+            absent = !te.getCapability(CapabilityHandler.ANTIQUE_TEXT_CAP).isPresent();
+        } catch (Exception e) {     // as BlockableEventLoop.doRunTask, which catches Exception (also a checked one thrown sneakily)
+            return false;       // a block entity whose capability code throws: Supplementaries' queued task asks again and the server's task loop logs it, as without this switch (not inside the chunk packet)
+        }
         if (SHADOW) {
             SHADOW_CHECKS.incrementAndGet();
             if (absent) SHADOW_SKIPPABLE.incrementAndGet();

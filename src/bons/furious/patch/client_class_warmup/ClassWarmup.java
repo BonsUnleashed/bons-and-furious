@@ -126,10 +126,13 @@ public final class ClassWarmup {
         t.start();
     }
 
-    /** Minecraft.clearLevel (render thread): the world is left; the window closes and the warm-up stops. */
+    /**
+     * Minecraft.clearLevel (render thread): the world is left; the window closes and the warm-up stops. clearLevel also runs before every join
+     * (doWorldLoad, ConnectScreen.startConnecting): before the first join the warm-up goes on, as the switch's comment says (until 10 seconds after joining).
+     */
     public static void onLeave() {
         if (!enabled) return;
-        stopWarm = true;
+        if (firstJoinNanos != 0L) stopWarm = true;
         synchronized (STATE) {
             if (windowEnd != null) windowEnd.countDown();
         }
@@ -188,7 +191,9 @@ public final class ClassWarmup {
                     if (d.byWarmupThread()) warmed++;
                     else if (listed.contains(d.name())) gameListed++;
                     else gameNew++;
-                    if (warmable(d.name()) && listed.add(d.name())) fresh.add(d.name());
+                    // since 1.0.49.2: a class the warm-up thread itself defined (a supertype or constructor parameter type of a listed class) is
+                    // not one the game defined; the warm-up now runs into the first window, so it is left out of the list
+                    if (!d.byWarmupThread() && warmable(d.name()) && listed.add(d.name())) fresh.add(d.name());
                 }
                 Set<String> failed = new LinkedHashSet<>(base.failed);
                 failed.addAll(FAILED_NOW);

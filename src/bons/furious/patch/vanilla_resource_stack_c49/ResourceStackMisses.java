@@ -62,6 +62,9 @@ public final class ResourceStackMisses {
         int v = fallback.bons$rsStackC49Verdict();
         if (v != 0 && (v >>> 2) == size) return (v & 3) == 1;
         boolean ok = entriesImmutable(entries);
+        // since 1.0.49.2: a namespace whose pack list changed since its misses were recorded forgets them (a pack added to a live
+        // manager may hold a file an earlier lookup missed; vanilla adds packs only while it builds the manager)
+        if (v != 0) fallback.bons$rsStackC49Misses().clear();
         fallback.bons$rsStackC49SetVerdict((size << 2) | (ok ? 1 : 2));
         return ok;
     }

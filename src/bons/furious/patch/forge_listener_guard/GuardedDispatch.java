@@ -70,7 +70,12 @@ public final class GuardedDispatch {
     private static final java.util.Map<IEventListener[], GuardTable> TABLES = new java.util.WeakHashMap<>();
     private static volatile boolean announced;
 
-    private record Slot(IEventListener[] array, GuardTable table) {}
+    /**
+     * Since 1.0.49.2 the array is held weakly: eventbus drops its cached array at once when a listener is (un)registered, and a
+     * site that stops posting (a client's level, player, living, server and render-stage sites on the title screen) must not
+     * keep the listeners of its last array.
+     */
+    private record Slot(java.lang.ref.WeakReference<IEventListener[]> array, GuardTable table) {}
 
     private GuardedDispatch() {}
 
@@ -240,7 +245,7 @@ public final class GuardedDispatch {
     /** The table of this listener array (per-site one-entry cache, then a weak map; built once per array and event class). */
     private static GuardTable table(int site, IEventListener[] listeners, Event event, BusInternals bi) {
         Slot s = SLOTS[site];
-        if (s != null && s.array == listeners && s.table.eventClass == event.getClass()) return s.table;
+        if (s != null && s.array.get() == listeners && s.table.eventClass == event.getClass()) return s.table;
         GuardTable t;
         synchronized (LOCK) {
             t = TABLES.get(listeners);
@@ -253,7 +258,7 @@ public final class GuardedDispatch {
                 }
             }
         }
-        SLOTS[site] = new Slot(listeners, t);
+        SLOTS[site] = new Slot(new java.lang.ref.WeakReference<>(listeners), t);
         return t;
     }
 

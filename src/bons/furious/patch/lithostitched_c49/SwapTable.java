@@ -32,6 +32,9 @@ import org.apache.logging.log4j.Logger;
  * no block can never equal getKey of any block except through the registry's default key, so: a map whose sources include
  * the default key (minecraft:air), which Lithostitched also matches for unregistered blocks, and any map that is not an
  * immutable Guava map (the codec decodes into one; a hand-made mutable map could change) keep Lithostitched's own path.
+ * A source id that is a Forge registry alias (Farmer's Delight's farmersdelight:basket for bamboo_basket, say) is left out:
+ * containsKey and get follow the alias, but getKey(b) is always the block's own name, so Lithostitched never matches an
+ * alias (and a map naming one block under both keys keeps the entry under its own name). Bug sweep 2026-11-11 (CC1).
  *
  * -Dbons_and_furious.lithostitchedBlockSwapTable=false switches it off at run time.
  * -Dbons_and_furious.lithostitchedBlockSwapTable.shadow=true: Lithostitched's body runs and its answer is compared with the
@@ -65,8 +68,11 @@ public final class SwapTable {
         if (!(blocks instanceof DefaultedRegistry<Block> defaulted) || blockSwapMap.containsKey(defaulted.m_122315_())) return STOCK;
         Reference2ReferenceOpenHashMap<Block, Block> t = new Reference2ReferenceOpenHashMap<>(Math.max(4, blockSwapMap.size()));
         for (Map.Entry<ResourceLocation, ResourceLocation> e : blockSwapMap.entrySet()) {
-            if (!blocks.m_7804_(e.getKey())) continue;            // names no block: getKey never yields it
-            t.put(blocks.m_7745_(e.getKey()), blocks.m_7745_(e.getValue()));
+            ResourceLocation id = e.getKey();
+            if (!blocks.m_7804_(id)) continue;                    // names no block: getKey never yields it
+            Block source = blocks.m_7745_(id);
+            if (!id.equals(blocks.m_7981_(source))) continue;     // an alias: getKey yields the block's own name, never this id
+            t.put(source, blocks.m_7745_(e.getValue()));
         }
         if (!announced) {
             announced = true;

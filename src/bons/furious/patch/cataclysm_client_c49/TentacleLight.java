@@ -42,7 +42,11 @@ public final class TentacleLight {
     private static final long[] KEYS = new long[SIZE];
     private static final int[] VALUES = new int[SIZE], GENS = new int[SIZE];
     private static int generation, used;
-    private static Entity owner;
+    /**
+     * The entity of the current render() call. Since 1.0.49.2 held weakly: a strong static kept the last tentacle entity drawn,
+     * and with it its whole ClientLevel, after the player left the world (the next world only let go once it drew one).
+     */
+    private static java.lang.ref.WeakReference<Entity> owner = new java.lang.ref.WeakReference<>(null);
     private static Thread thread;
     private static volatile boolean announced;
 
@@ -65,9 +69,9 @@ public final class TentacleLight {
             }
             call.set(generation);
             used = 0;
-            owner = head;
+            if (owner.get() != head) owner = new java.lang.ref.WeakReference<>(head);   // one small object per drawn tentacle entity
         }
-        if (call.get() != generation || head != owner) return original.call(renderer, head, position);
+        if (call.get() != generation || head != owner.get()) return original.call(renderer, head, position);
         long key = BlockPos.m_121882_(Mth.m_14107_(position.f_82479_), Mth.m_14107_(position.f_82480_), Mth.m_14107_(position.f_82481_));
         int slot = (int) (key ^ key >>> 29 ^ key >>> 47) * 0x9E3779B9 >>> 23 & MASK;
         while (GENS[slot] == generation) {

@@ -184,8 +184,31 @@ public final class SoulExtractorIdle {
             why = "the recipes could not be read (" + t + ")";
         }
         p = new Proof(manager, type, token, n, why);
+        hookStop();
         proof = p;
         return p;
+    }
+
+    private static volatile boolean hooked;
+
+    /**
+     * Since 1.0.49.2: the kept verdict is dropped when a server has stopped (ServerStoppedEvent). It holds the server's
+     * RecipeManager, whose recipe table and condition context lead to the world's whole RegistryAccess, so in single player
+     * a closed world's recipes and registries stayed in memory until a Soul Extractor ticked in another world. A dedicated
+     * server stops once; nothing changes there. Registered once, on the first verdict.
+     */
+    private static void hookStop() {
+        if (hooked) return;
+        synchronized (SoulExtractorIdle.class) {
+            if (hooked) return;
+            hooked = true;
+            try {
+                net.minecraftforge.common.MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOWEST, true,
+                        net.minecraftforge.event.server.ServerStoppedEvent.class, e -> proof = null);
+            } catch (Throwable t) {
+                LOGGER.warn("Bons and Furious: mysticalagriculture_soul_extractor_idle_skip could not listen for the server's stop ({}); a closed world's recipes may stay in memory", t.toString());
+            }
+        }
     }
 
     static Object tokenOf(RecipeManager manager) {

@@ -1085,6 +1085,11 @@ public final class Guards {
     }
 
     private static ClassNode read(String internalName) {
+        // since 1.0.49.2: on a dedicated server the vanilla client classes that guard lines name (ClientLevel, ClientChunkCache) exist
+        // only as @OnlyIn(Dist.CLIENT) copies in Forge's server jar. Reading one ran Forge's RuntimeDistCleaner, which logged
+        // "Attempted to load class ... for invalid dist DEDICATED_SERVER" as an ERROR and threw, after which this method returned
+        // null. Same answer, without the read (as the NeoForge port does).
+        if (internalName.startsWith("net/minecraft/client/") && dedicatedServer()) return null;
         try {
             return MixinService.getService().getBytecodeProvider().getClassNode(internalName.replace('/', '.'));
         } catch (ClassNotFoundException e) {
@@ -1092,6 +1097,15 @@ public final class Guards {
         } catch (Throwable t) {
             LOGGER.debug("Bons and Furious: could not read {}: {}", internalName, t.toString());
             return null;
+        }
+    }
+
+    /** Since 1.0.49.2: true on a dedicated server; false on a client and offline (FML not running: the class is read as before). */
+    private static boolean dedicatedServer() {
+        try {
+            return net.minecraftforge.fml.loading.FMLEnvironment.dist.isDedicatedServer();
+        } catch (Throwable t) {
+            return false;
         }
     }
 }

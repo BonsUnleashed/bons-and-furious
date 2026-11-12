@@ -126,7 +126,10 @@ public final class ColumnCellFill {
             if (caches.size() != 1 || !(caches.get(0) instanceof DensityFunctions.MarkerOrMarked cache)) return;
             DensityFunction filler = cache.m_207056_();
             World w = WORLDS.get(random);
-            if (w == null) w = WORLDS.computeIfAbsent(random, r -> new World());
+            if (w == null) {
+                hookStop();
+                w = WORLDS.computeIfAbsent(random, r -> new World());
+            }
             NoiseGeneratorSettings settings = generator.m_224341_().m_203334_();
             Shape s = w.shape(settings, cells, filler);
             if (s == null || s.refusal != null || filler.getClass() != s.fillerClass) return;
@@ -394,5 +397,27 @@ public final class ColumnCellFill {
             }
         }
         return null;
+    }
+
+    private static volatile boolean stopHooked;
+
+    /**
+     * Since 1.0.49.2: every world's table is dropped when a server has stopped (ServerStoppedEvent). The map's keys are weak,
+     * but Guava removes a collected key's entry only when that segment of the map is used again, and the lookups only touch
+     * the live world's segment, so in single player a closed world's table (and the generator settings it holds) stayed in
+     * memory, often for the rest of the session. A dedicated server stops once; nothing changes there. Registered once.
+     */
+    private static void hookStop() {
+        if (stopHooked) return;
+        synchronized (ColumnCellFill.class) {
+            if (stopHooked) return;
+            stopHooked = true;
+            try {
+                net.minecraftforge.common.MinecraftForge.EVENT_BUS.addListener(net.minecraftforge.eventbus.api.EventPriority.LOWEST, true,
+                        net.minecraftforge.event.server.ServerStoppedEvent.class, e -> WORLDS.clear());
+            } catch (Throwable t) {
+                LOGGER.warn("Bons and Furious: vanilla_noise_column_cell_fill could not listen for the server's stop ({}); a closed world's table may stay in memory", t.toString());
+            }
+        }
     }
 }

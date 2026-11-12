@@ -48,8 +48,10 @@ public final class DisplayTickPlan {
     public static long reused, geyserSkipped;
     private static volatile boolean announced;
 
-    // the remembered read (the client thread only: doAnimateTick runs there)
-    private static Object capLevel;
+    // the remembered read (the client thread only: doAnimateTick runs there). Since 1.0.49.2 the level is held weakly (a new
+    // reference only when the level changes): the strong static kept the last ClientLevel, with all its chunks, after the
+    // player left the world, until the next world's first ambient sample.
+    private static java.lang.ref.WeakReference<Object> capLevel = new java.lang.ref.WeakReference<>(null);
     private static Thread capThread;
     private static long capPos;
     private static BlockState capState;
@@ -65,7 +67,7 @@ public final class DisplayTickPlan {
             capState = null;
             return;
         }
-        capLevel = level;
+        if (capLevel.get() != level) capLevel = new java.lang.ref.WeakReference<>(level);
         capThread = Thread.currentThread();
         capPos = pos.m_121878_();
         capState = state;
@@ -74,7 +76,7 @@ public final class DisplayTickPlan {
     /** The handler's getBlockState(pos): the remembered state when it is the same read, else null (read as shipped). */
     public static BlockState reuse(Object level, BlockPos pos) {
         BlockState s = capState;
-        if (s == null || !enabled || level != capLevel || capThread != Thread.currentThread() || pos.m_121878_() != capPos) return null;
+        if (s == null || !enabled || level == null || level != capLevel.get() || capThread != Thread.currentThread() || pos.m_121878_() != capPos) return null;
         capState = null;
         reused++;
         if (!announced) announce();

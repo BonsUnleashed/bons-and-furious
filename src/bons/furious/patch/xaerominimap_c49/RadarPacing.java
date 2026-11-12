@@ -61,6 +61,11 @@ public final class RadarPacing {
     /** GameRenderer.render HEAD (the hidden switch): a frame starts. */
     public static void frame() {
         frame++;
+        // the world was left or changed while the minimap was hidden: nothing will run the catch-up on it, so it must not stay reachable (bug sweep 2026-11-10)
+        if (lastSession != null && Minecraft.m_91087_().f_91073_ != lastWorld) {
+            skipping = catchUp = false;
+            forgetLast();
+        }
     }
 
     /** MinimapRenderer.renderMinimap HEAD (the hidden switch): the minimap is drawn in this frame. */
