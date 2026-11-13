@@ -47,17 +47,10 @@ public final class SlicingPeek {
     private static final ClassValue<Boolean> PLAIN = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
-            for (Class<?> k = type; k != null && k != Entity.class; k = k.getSuperclass()) {
-                try {
-                    k.getDeclaredMethod("getPersistentData");
-                    return Boolean.FALSE;
-                } catch (NoSuchMethodException e) {
-                    // not declared here
-                } catch (Throwable t) {
-                    return Boolean.FALSE;
-                }
-            }
-            return Boolean.TRUE;
+            // the JVM's resolution of that one method (bons.furious.guard.Declared): Class.getDeclaredMethod resolves the types of every
+            // method the class declares, and on a dedicated server Forge logged its red "invalid dist" ERROR for each entity class with a
+            // client-typed method (bug sweep 2026-11-12). A class that cannot be asked keeps the original getter.
+            return bons.furious.guard.Declared.inherits(type, Entity.class, "getPersistentData", java.lang.invoke.MethodType.methodType(CompoundTag.class));
         }
     };
 

@@ -1,7 +1,9 @@
 package bons.furious.patch.attribute_lookup;
 
+import bons.furious.guard.Declared;
 import bons.furious.mixin.attribute_lookup.AttributeMapRefreshAccessor;
 import bons.furious.mixin.attribute_lookup.MobEffectTemplatesAccessor;
+import java.lang.invoke.MethodType;
 import java.util.Map;
 import java.util.Objects;
 import net.minecraft.world.effect.MobEffect;
@@ -42,21 +44,21 @@ public final class EffectRefreshKeep {
     public static long kept;
     private static volatile boolean announced;
 
-    /** True for MobEffect classes that keep MobEffect's own m_6385_, m_6386_ and m_7048_. */
+    private static final MethodType MODIFIERS_SIG = MethodType.methodType(void.class, net.minecraft.world.entity.LivingEntity.class, AttributeMap.class, int.class),
+            VALUE_SIG = MethodType.methodType(double.class, int.class, AttributeModifier.class);
+    /**
+     * True for MobEffect classes that keep MobEffect's own addAttributeModifiers (m_6385_), removeAttributeModifiers (m_6386_) and
+     * getAttributeModifierValue (m_7048_). Each is asked through the JVM's resolution of that one method
+     * (bons.furious.guard.Declared), not Class.getDeclaredMethods: the listing resolves the types of every method an effect class
+     * declares, and on a dedicated server it threw for an effect class with a method naming a client-only class, after Forge's red
+     * "invalid dist" ERROR line when that class is marked client-only (bug sweep 2026-11-12). An effect class that cannot be asked
+     * runs both calls, as it did then.
+     */
     static final ClassValue<Boolean> PLAIN = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
-            for (Class<?> k = type; k != null && k != MobEffect.class; k = k.getSuperclass()) {
-                try {
-                    for (java.lang.reflect.Method m : k.getDeclaredMethods()) {
-                        String n = m.getName();
-                        if (n.equals("m_6385_") || n.equals("m_6386_") || n.equals("m_7048_")) return Boolean.FALSE;
-                    }
-                } catch (Throwable t) {
-                    return Boolean.FALSE;
-                }
-            }
-            return Boolean.TRUE;
+            return Declared.inherits(type, MobEffect.class, "m_6385_", MODIFIERS_SIG) && Declared.inherits(type, MobEffect.class, "m_6386_", MODIFIERS_SIG)
+                    && Declared.inherits(type, MobEffect.class, "m_7048_", VALUE_SIG);
         }
     };
 

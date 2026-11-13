@@ -1,0 +1,84 @@
+{
+  "group": "flat_cache_columns",
+  "keys": {
+    "vanilla_flat_cache_outside_columns": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.50",
+      "mixins": [
+        "bons.furious.mixin.flat_cache_columns.FlatCacheOutsideMixin",
+        "bons.furious.mixin.flat_cache_columns.NoiseChunkOutsideMixin",
+        "bons.furious.mixin.flat_cache_columns.MarkerOriginMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$FlatCache",
+          "method": "m_207386_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "note": "inside the grid: values[k][l]; otherwise noiseFiller.compute(context), the one call the wrapper stands around",
+          "sha256": "0e054d5519ad328deb84f518e811a3a59aada24cd4523618620faff3f5987b57"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$FlatCache",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/levelgen/NoiseChunk;Lnet/minecraft/world/level/levelgen/DensityFunction;Z)V",
+          "note": "stores the filler, allocates the grid, fills it at the quart corners with y = 0 when asked to",
+          "sha256": "34593d26ccf39660fc8eb9bae3eb784e4c1b6a43fb3240a605687f9ab1ee0f15"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "<init>",
+          "desc": "(ILnet/minecraft/world/level/levelgen/RandomState;IILnet/minecraft/world/level/levelgen/NoiseSettings;Lnet/minecraft/world/level/levelgen/DensityFunctions$BeardifierOrMarker;Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;Lnet/minecraft/world/level/levelgen/blending/Blender;)V",
+          "note": "makes the two blend caches, maps the RandomState's router through wrap (every FlatCache of the router is made here), builds the aquifer and the block state rule",
+          "sha256": "4002da1eb3f5636a83ab187a1b58722401c681cc36856a9637687cf471c4f136"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_209233_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "note": "wrapNew: a FlatCache marker becomes new FlatCache(marker.wrapped(), true); blend_alpha / blend_offset become the NoiseChunk's two blend caches",
+          "sha256": "291c1990c96d354f1b70484a90dcbb8a2c2d1fda67932799f7fc07843b312f6d"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_209213_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "note": "wrap: wrapped.computeIfAbsent(function, wrapNew): one wrapper per equal node, made at its first wrap",
+          "sha256": "a2908483a3208a4c5a86d21c9104c0adfebcab1a6b8b97ff609d527b54dfdd18"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseRouter",
+          "method": "m_224412_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/NoiseRouter;",
+          "note": "mapAll: each of the router's fifteen functions mapped through the visitor, nothing else",
+          "sha256": "8bae8301ce02f7b5f81b78ffe31beb36376d80a935f875e2a6f5414763794b2a"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$MarkerOrMarked",
+          "method": "m_207456_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "note": "mapAll of markers and of NoiseChunk caches: the wrapped function is mapped, put in a new marker of the same type and handed to the visitor; the marker record inherits it",
+          "sha256": "c7fd3f35b3c3903247de20f653f64698f1b4ff3fe60fc8046127cab6c8b987f7"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$Marker",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunctions$Marker$Type;Lnet/minecraft/world/level/levelgen/DensityFunction;)V",
+          "note": "the marker record: its two components (type, wrapped function) and nothing else; it declares no mapAll of its own, which is what the soft mapAll of MarkerOriginMixin stands in for",
+          "sha256": "071640a43badb2d1bd04ab52d9be10e6300c2fbcf9e78894de00a5c40e9a87a7"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/worldgen_allocation/NoiseChunkMixin",
+          "method": "m_209213_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "note": "audited: ModernFix's overwrite of wrap keeps the memo (get, else wrapNew and put): an equal node gets the first wrapper",
+          "audit": true,
+          "sha256": "b80a96f4c2ce312e299b42e955dd46ddbd7ee0301f81a7f73c6b824b618d2b04"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapOperation on the constructor's router.mapAll(wrap) call (require = 0: takes the verdict of the router that is about to be wrapped, checked once per router, and marks the time the call runs) and @Inject at the end of NoiseChunk's constructor (tables are handed out from then on); @Inject at the end of FlatCache's constructor (made while the router was wrapped, or not); MixinExtras @WrapOperation on FlatCache.compute's one noiseFiller.compute call; a soft @Intrinsic mapAll on the marker record that calls the interface's method through a special method handle and tells a FlatCache result which marker it came from (helper bons.furious.patch.flat_cache_columns.OutsideColumns)",
+      "license": "Minecraft (Mojang): no game code is carried; our own logic only"
+    }
+  }
+}

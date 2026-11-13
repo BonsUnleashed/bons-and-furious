@@ -2,6 +2,7 @@ package bons.furious.patch.vanilla_item_merge;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.mojang.logging.LogUtils;
+import java.lang.invoke.MethodType;
 import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.List;
@@ -77,10 +78,46 @@ public final class MergeCandidates {
     public static final AtomicLong SHADOW_CHECKS = new AtomicLong(), SHADOW_MISMATCHES = new AtomicLong(), SHADOW_SKIPPED = new AtomicLong();
     private static volatile boolean announced;
 
+    private static final MethodType MAX_STACK_SIZE = MethodType.methodType(int.class, ItemStack.class);
+    /**
+     * Whether maxStackSizeHolder can be trusted in this JVM: asked about Item itself it must name IForgeItem, the one answer that is
+     * known beforehand. When it does not (another JVM's rules, or a mod that gives Item its own getMaxStackSize(ItemStack)),
+     * PLAIN_MAX asks through reflection as before.
+     */
+    private static final boolean RESOLVES = resolves();
+
+    private static boolean resolves() {
+        boolean known = maxStackSizeHolder(Item.class) == IForgeItem.class;
+        if (!known) {
+            LOGGER.info("Bons and Furious: vanilla_item_merge_candidates asks item classes through reflection (the JVM's resolution of getMaxStackSize(ItemStack) for Item did not name IForgeItem)");
+        }
+        return known;
+    }
+
+    /**
+     * The class or interface that holds the getMaxStackSize(ItemStack) an item class runs, or null when it cannot be asked: the JVM's
+     * resolution of that one method as an invokespecial made from inside the class itself (bons.furious.guard.Declared.holder).
+     * It reads no other member of the class.
+     *
+     * Not bons.furious.guard.Declared here, because the method is an interface's default method (IForgeItem). Declared makes a
+     * virtual lookup, and for a default method that a class only inherits such a lookup names the class it was asked about as the
+     * declaring class (the JVM links the method through that class's own method table and keeps the class with it), so "inherits
+     * Forge's default" and "declares its own" look the same. The direct handle of an invokespecial names the real holder.
+     */
+    private static Class<?> maxStackSizeHolder(Class<?> type) {
+        return bons.furious.guard.Declared.holder(type, "getMaxStackSize", MAX_STACK_SIZE);
+    }
+
     /** True for item classes whose getMaxStackSize(ItemStack) is Forge's default (IForgeItem: the item's field). */
     private static final ClassValue<Boolean> PLAIN_MAX = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
+            // The JVM's resolution of that one method first (bug sweep 2026-11-12). Class.getMethod, below, resolves the types of
+            // every public method of the item class, its superclasses and their interfaces: on a dedicated server it threw for an
+            // item class with a public method naming a client-only class, after Forge's red "invalid dist" ERROR line when that
+            // class is marked client-only, and such an item was never filtered. An item class that cannot be asked is never
+            // filtered either: vanilla's predicate decides.
+            if (RESOLVES) return maxStackSizeHolder(type) == IForgeItem.class;
             try {
                 return type.getMethod("getMaxStackSize", ItemStack.class).getDeclaringClass() == IForgeItem.class;
             } catch (Throwable t) {

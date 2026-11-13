@@ -1,7 +1,9 @@
 package bons.furious.patch.datapack_selectors;
 
+import bons.furious.guard.Declared;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.mojang.logging.LogUtils;
+import java.lang.invoke.MethodType;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
@@ -69,25 +71,26 @@ public final class SelectorPrefilter {
     public static final AtomicLong SHADOW_CHECKS = new AtomicLong(), SHADOW_MISMATCHES = new AtomicLong(), SHADOW_SKIPPABLE = new AtomicLong();
     private static volatile boolean announced;
 
-    /** True for entity classes whose isAlive, getHealth or getType is not vanilla's: their entities are always let through. */
+    private static final MethodType IS_ALIVE = MethodType.methodType(boolean.class), GET_TYPE = MethodType.methodType(EntityType.class),
+            GET_HEALTH = MethodType.methodType(float.class);
+    /**
+     * True for entity classes whose isAlive, getHealth or getType is not vanilla's, or that cannot be asked: their entities are always
+     * let through, exactly as vanilla. Each method is asked through the JVM's resolution of that one method
+     * (bons.furious.guard.Declared), not Class.getMethod: getMethod resolves the types of every public method of the class, its
+     * superclasses and their interfaces, and on a dedicated server it threw for an entity class with a public method naming a
+     * client-only class (Small Ships' Paddleable.animatePaddle(..., ModelPart, ...)), after Forge's red "invalid dist" ERROR line
+     * when that class is marked client-only; such a class was then always visited (bug sweep 2026-11-12).
+     */
     private static final ClassValue<Boolean> OWN_CHECKS = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
-            try {
-                Class<?> alive = type.getMethod("m_6084_").getDeclaringClass();
-                boolean vanilla = (alive == Entity.class || alive == LivingEntity.class)
-                        && type.getMethod("m_6095_").getDeclaringClass() == Entity.class;
-                if (vanilla && LivingEntity.class.isAssignableFrom(type)) {
-                    vanilla = type.getMethod("m_21223_").getDeclaringClass() == LivingEntity.class;
-                }
-                return !vanilla;
-            } catch (Throwable t) {
-                // 1.0.34: not only NoSuchMethodException. getMethod resolves the parameter types of every public method it
-                // walks, and on a dedicated server a type that names a client-only class throws NoClassDefFoundError
-                // (Small Ships' Paddleable.animatePaddle(..., ModelPart, ...)) or Forge's invalid-dist RuntimeException:
-                // such a class is always visited, exactly as vanilla, instead of the error stopping the server
-                return true;
+            Class<?> alive = Declared.by(type, Entity.class, "m_6084_", IS_ALIVE);
+            boolean vanilla = (alive == Entity.class || alive == LivingEntity.class)
+                    && Declared.inherits(type, Entity.class, "m_6095_", GET_TYPE);
+            if (vanilla && LivingEntity.class.isAssignableFrom(type)) {
+                vanilla = Declared.inherits(type, LivingEntity.class, "m_21223_", GET_HEALTH);
             }
+            return !vanilla;
         }
     };
 

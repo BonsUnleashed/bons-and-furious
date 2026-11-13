@@ -275,3 +275,10 @@ descriptions, changelogs, issue text), never from their code: Collections Of
 Optimizations (its option descriptions and changelogs), Leaf, Flywheel, Create
 and Minecraft. The "Idea:" line of each switch in bons_and_furious.properties
 says which idea it follows; "ours" marks our own designs.
+
+Target added in 1.0.50: ForgeEndertech (EnderLanky, All rights reserved), the
+library of AdLods and the other EnderTech mods. The switch that changes it
+carries none of its code, only our own injections; its exact tested JAR digest
+is in upstream-credits.json. The other 1.0.50 switches change Minecraft,
+Embeddium, Fusion, Valkyrien Skies, Simply Swords and Cosmic Horizons, all
+credited above.

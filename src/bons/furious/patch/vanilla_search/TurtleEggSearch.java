@@ -1,5 +1,7 @@
 package bons.furious.patch.vanilla_search;
 
+import bons.furious.guard.Declared;
+import java.lang.invoke.MethodType;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.concurrent.atomic.AtomicLong;
@@ -70,10 +72,25 @@ public final class TurtleEggSearch {
         boolean bons$isValidTarget(LevelReader level, BlockPos pos);
     }
 
+    private static final MethodType IS_VALID_TARGET = MethodType.methodType(boolean.class, LevelReader.class, BlockPos.class),
+            FIND_NEAREST_BLOCK = MethodType.methodType(boolean.class), IS_WITHIN_RESTRICTION = MethodType.methodType(boolean.class, BlockPos.class),
+            HAS_RESTRICTION = MethodType.methodType(boolean.class), GET_LEVEL = MethodType.methodType(Level.class),
+            BLOCK_POSITION = MethodType.methodType(BlockPos.class),
+            CAN_ENTITY_DESTROY = MethodType.methodType(boolean.class, BlockState.class, BlockGetter.class, BlockPos.class, Entity.class);
+
     private static final ClassValue<Boolean> GOAL_OK = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
             if (!RemoveBlockGoal.class.isAssignableFrom(type)) return false;
+            // First the JVM's resolution of the two methods (bons.furious.guard.Declared): when isValidTarget resolves to
+            // RemoveBlockGoal's own and findNearestBlock to MoveToBlockGoal's own, no class below RemoveBlockGoal declares either and
+            // the walk below would find nothing. The walk lists the methods of every class on the way (declares), which resolves the
+            // types of all of them: on a dedicated server it threw for a class with a method naming a client-only class, after
+            // Forge's red "invalid dist" ERROR line when that class is marked client-only, and the search then ran the original
+            // code (bug sweep 2026-11-12). The walk still runs, unchanged, when one of the two resolves to another class or cannot
+            // be asked: only it can tell a bridge from an override.
+            if (Declared.inherits(type, RemoveBlockGoal.class, "m_6465_", IS_VALID_TARGET)
+                    && Declared.inherits(type, MoveToBlockGoal.class, "m_25626_", FIND_NEAREST_BLOCK)) return true;
             for (Class<?> c = type; c != RemoveBlockGoal.class; c = c.getSuperclass()) {
                 if (declares(c, "m_6465_", LevelReader.class, BlockPos.class) || declares(c, "m_25626_")) return false;
             }
@@ -84,6 +101,10 @@ public final class TurtleEggSearch {
     private static final ClassValue<Boolean> MOB_OK = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
+            // as GOAL_OK: the JVM's resolution first; the two walks below run only when one of the four methods does not resolve to
+            // Mob's or Entity's own, or cannot be asked (bug sweep 2026-11-12)
+            if (Declared.inherits(type, Mob.class, "m_21444_", IS_WITHIN_RESTRICTION) && Declared.inherits(type, Mob.class, "m_21536_", HAS_RESTRICTION)
+                    && Declared.inherits(type, Entity.class, "m_9236_", GET_LEVEL) && Declared.inherits(type, Entity.class, "m_20183_", BLOCK_POSITION)) return true;
             for (Class<?> c = type; c != null && c != Mob.class; c = c.getSuperclass()) {
                 if (declares(c, "m_21444_", BlockPos.class) || declares(c, "m_21536_")) return false;
             }
@@ -94,10 +115,45 @@ public final class TurtleEggSearch {
         }
     };
 
+    /**
+     * Whether destroyHookHolder can be trusted in this JVM: asked about Block itself it must name IForgeBlock, the one answer that is
+     * known beforehand. When it does not (another JVM's rules, or a mod that gives Block its own canEntityDestroy), DESTROY_HOOK asks
+     * through reflection as before.
+     */
+    private static final boolean RESOLVES = resolves();
+
+    private static boolean resolves() {
+        boolean known = destroyHookHolder(Block.class) == IForgeBlock.class;
+        if (!known) {
+            NonPoiSearch.LOGGER.info("Bons and Furious: vanilla_turtle_egg_search_sections asks block classes through reflection (the JVM's resolution of canEntityDestroy for Block did not name IForgeBlock)");
+        }
+        return known;
+    }
+
+    /**
+     * The class or interface that holds the canEntityDestroy(BlockState, BlockGetter, BlockPos, Entity) a block class runs, or null
+     * when it cannot be asked: the JVM's resolution of that one method as an invokespecial made from inside the class itself
+     * (privateLookupIn + findSpecial + revealDirect). It reads no other member of the class.
+     *
+     * Not bons.furious.guard.Declared here, because the method is an interface's default method (IForgeBlock). Declared makes a
+     * virtual lookup, and for a default method that a class only inherits such a lookup names the class it was asked about as the
+     * declaring class (the JVM links the method through that class's own method table and keeps the class with it), so "inherits
+     * Forge's default" and "declares its own" look the same. The direct handle of an invokespecial names the real holder.
+     */
+    private static Class<?> destroyHookHolder(Class<?> type) {
+        return Declared.holder(type, "canEntityDestroy", CAN_ENTITY_DESTROY);
+    }
+
     /** Block classes that override Forge's canEntityDestroy (their positions always run the original test). */
     static final ClassValue<Boolean> DESTROY_HOOK = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
+            // The JVM's resolution of that one method first (bug sweep 2026-11-12). Class.getMethod, below, resolves the types of
+            // every public method of the block class, its superclasses and their interfaces: on a dedicated server it threw for a
+            // block class with a public method naming a client-only class, after Forge's red "invalid dist" ERROR line when that
+            // class is marked client-only, and every section holding such a block ran the original test at each position. A block
+            // class that cannot be asked counts as overriding, as before.
+            if (RESOLVES) return destroyHookHolder(type) != IForgeBlock.class;
             try {
                 Method m = type.getMethod("canEntityDestroy", BlockState.class, BlockGetter.class, BlockPos.class, Entity.class);
                 return m.getDeclaringClass() != IForgeBlock.class;

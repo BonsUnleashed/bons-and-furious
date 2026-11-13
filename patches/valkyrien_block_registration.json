@@ -1,0 +1,119 @@
+{
+  "group": "valkyrien_block_registration",
+  "keys": {
+    "valkyrien_block_registration_lazy_cache": {
+      "mod": "valkyrienskies",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.50",
+      "mixins": [
+        "bons.furious.mixin.valkyrien_block_registration.BlockBehaviourPropertiesAccessor",
+        "bons.furious.mixin.valkyrien_block_registration.PropertiesSolidAccessor",
+        "bons.furious.mixin.valkyrien_block_registration.RegisterAllBlockStatesMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/valkyrienskies/mod/common/config/MassDatapackResolver",
+          "method": "registerAllBlockStates",
+          "desc": "(Ljava/lang/Iterable;)V",
+          "note": "per state: air -> the air state; liquid -> a fluid state (getFluidState); otherwise isSolid() ? getShape(dummy getter, ZERO) : getCollisionShape(dummy getter, ZERO), then the shape decides the registered collision shape",
+          "sha256": "dde327ea1f495f2a659701b41b3d2369abdb347b332de052bd28faabb735a0d3"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase",
+          "method": "m_280210_",
+          "desc": "()Z",
+          "note": "calculateSolid: forceSolidOn -> true; forceSolidOff -> false; cache == null -> false; cache.collisionShape empty -> false; bounds size >= 0.7291666666666666 -> true; else bounds y size >= 1.0",
+          "sha256": "866d0cab8f772fe5f13d8ad7b0bc86e2a5db9eaaecaef98644cc76b0735c506b"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase",
+          "method": "m_60611_",
+          "desc": "()V",
+          "note": "initCache: fluidState, isRandomlyTicking, cache = new Cache(state) unless the block has a dynamic shape, legacySolid = calculateSolid()",
+          "sha256": "2a913d2554c3791be6665a23f052e568443071acdcb1cab289426c502f74d8d8"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase",
+          "method": "m_280296_",
+          "desc": "()Z",
+          "note": "isSolid: returns legacySolid",
+          "sha256": "fa022f4358207c4db68d84a26893d4a5a5b1efa4443d739db79659f6bf7c8f27"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase",
+          "method": "m_60812_",
+          "desc": "(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
+          "note": "getCollisionShape(getter, pos): cache != null ? cache.collisionShape : getCollisionShape(getter, pos, CollisionContext.empty())",
+          "sha256": "f2736756c32104f68a257522b4436e7abeec083e584fafc969c720fd2360e357"
+        },
+        {
+          "class": "net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase$Cache",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;)V",
+          "note": "collisionShape = block.getCollisionShape(state, EmptyBlockGetter.INSTANCE, BlockPos.ZERO, CollisionContext.empty()); throws when that is not empty and the state has an offset function",
+          "sha256": "5596f50a300fb1982af3563c3548bd6b8a900609fabd4ab0b9d20bce797ce202"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/reduce_blockstate_cache_rebuilds/BlockStateBaseMixin",
+          "method": "mfix$generateCache",
+          "desc": "()V",
+          "note": "audited: a pending cache is built under the lock of BlockStateBase.class, one at a time, with buildingCache set; not while it is set",
+          "audit": true,
+          "sha256": "791f5573cd0847e302c10f845f39431f0e327a9b8ff0d8b5e36592f11c0f8d37"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/reduce_blockstate_cache_rebuilds/BlockStateBaseMixin",
+          "method": "dynamicCacheGen",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase;)Lnet/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase$Cache;",
+          "note": "audited: a read of the field cache builds a pending cache first",
+          "audit": true,
+          "sha256": "56de13b2e0298479083b9275f03961d96c693b6c06a822b282aecb473abe1f20"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/reduce_blockstate_cache_rebuilds/BlockStateBaseMixin",
+          "method": "genCacheBeforeCheckingSolid",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase;)Z",
+          "note": "audited: a read of the field legacySolid builds a pending cache first",
+          "audit": true,
+          "sha256": "acd54910cf27d6f6f7f160af33d9542f51852e5601be5fe13cd3b5177d5707f0"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/reduce_blockstate_cache_rebuilds/BlockStateBaseMixin",
+          "method": "genCacheBeforeGettingFluid",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase;)Lnet/minecraft/world/level/material/FluidState;",
+          "note": "audited: a read of the field fluidState computes a pending fluid state under the same lock and flag, without building the cache",
+          "audit": true,
+          "sha256": "2660ecd6b9cfa26be62a3cf08ad19b43a410e96ff36135372f7ce4567bbaeee4"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/reduce_blockstate_cache_rebuilds/BlockStateBaseMixin",
+          "method": "genCacheBeforeGettingTicking",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase;)Z",
+          "note": "audited: a read of the field isRandomlyTicking asks the block while the cache is pending",
+          "audit": true,
+          "sha256": "b7649ac316564e20f79bf4b9f8ddc78772fdbf2bd5a1b0e25d16053c92b7891f"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/reduce_blockstate_cache_rebuilds/BlockStateBaseMixin",
+          "method": "clearCache",
+          "desc": "()V",
+          "note": "audited: marks the cache pending",
+          "audit": true,
+          "sha256": "04fb9af3ab9cb1d5793a30f9cfc56fbe9846125a61b78987cbac8c95a3c6e3c3"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/reduce_blockstate_cache_rebuilds/BlockStateBaseMixin",
+          "method": "isCacheInvalid",
+          "desc": "()Z",
+          "note": "audited: true while the cache is pending",
+          "audit": true,
+          "sha256": "820f67e34ee587ce11debe4b63b0db2237652782de8899424db50c2b8f0743c1"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapOperation on the one BlockState.isSolid() call and the one two-argument BlockState.getCollisionShape call of MassDatapackResolver.registerAllBlockStates (helper bons.furious.patch.valkyrien_block_registration.LightRegistration: for a state whose cache ModernFix has not built, the two answers are computed as the cache build computes them, under ModernFix's lock and flag, and the cache stays unbuilt); accessors for BlockBehaviour.properties and Properties.forceSolidOn / forceSolidOff",
+      "license": "Valkyrien Skies: Apache-2.0; no Valkyrien Skies code is carried; our own logic only"
+    }
+  }
+}

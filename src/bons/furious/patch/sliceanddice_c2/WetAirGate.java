@@ -94,18 +94,19 @@ public final class WetAirGate {
     public static final AtomicLong UNLIT_SKIPS = new AtomicLong();
     /** What the baseTick read returns when the gate answers: a block that is not wet air (the handler only compares). */
     public static final BlockState NOT_WET = Blocks.f_50016_.m_49966_();
-    /** Classes that override Entity's clearFire or setRemainingFireTicks (then the unlit skip stays off for them). */
+    private static final MethodType CLEAR_FIRE = MethodType.methodType(void.class), SET_FIRE_TICKS = MethodType.methodType(void.class, int.class);
+    /**
+     * Classes that override Entity's clearFire (m_20095_) or setRemainingFireTicks (m_7311_), or that cannot be asked: the unlit skip
+     * stays off for them. Asked through the JVM's resolution of each method (bons.furious.guard.Declared), not
+     * Class.getDeclaredMethods: the listing resolves the types of every method the class declares, and an entity class with a method
+     * naming a class the game cannot load (a client-only class on a dedicated server, a class of a mod that is not installed) made
+     * it throw out of that entity's tick, every tick, which stops the server (bug sweep 2026-11-12).
+     */
     private static final ClassValue<Boolean> OWN_FIRE_WRITES = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
-            for (Class<?> c = type; c != null && c != net.minecraft.world.entity.Entity.class; c = c.getSuperclass()) {
-                for (java.lang.reflect.Method m : c.getDeclaredMethods()) {
-                    if (Modifier.isStatic(m.getModifiers())) continue;
-                    if (m.getName().equals("m_20095_") && m.getParameterCount() == 0) return true;
-                    if (m.getName().equals("m_7311_") && m.getParameterCount() == 1 && m.getParameterTypes()[0] == int.class) return true;
-                }
-            }
-            return false;
+            return !bons.furious.guard.Declared.inherits(type, net.minecraft.world.entity.Entity.class, "m_20095_", CLEAR_FIRE)
+                    || !bons.furious.guard.Declared.inherits(type, net.minecraft.world.entity.Entity.class, "m_7311_", SET_FIRE_TICKS);
         }
     };
     private static volatile boolean announcedUnlit;

@@ -1,0 +1,108 @@
+{
+  "group": "cosmichorizons_start",
+  "keys": {
+    "cosmichorizons_sync_without_players_skip": {
+      "mod": "cosmos",
+      "scripts": [],
+      "since": "1.0.50",
+      "mixins": [
+        "bons.furious.mixin.cosmichorizons_start.WorldVariablesSyncMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/lointain/cosmos/network/CosmosModVariables$WorldVariables",
+          "method": "syncData",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;)V",
+          "note": "setDirty(); on a server level: PACKET_HANDLER.send(PacketDistributor.DIMENSION.with(level::dimension), new SavedDataSyncMessage(1, this)); nothing else",
+          "sha256": "1042d4b0997468135a4c07d947ad11519281bdaf1ed9a075af273d3b1a670c36"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapOperation on syncData's SimpleChannel.send call (left out when no player is in that dimension: PlayerList.broadcastAll's own test; helper bons.furious.patch.cosmichorizons_start.CosmosStart)",
+      "license": "Cosmic Horizons: no Cosmic Horizons code is carried; our own logic only"
+    },
+    "cosmichorizons_reload_unchanged_skip": {
+      "mod": "cosmos",
+      "scripts": [],
+      "since": "1.0.50",
+      "mixins": [
+        "bons.furious.mixin.cosmichorizons_start.DatapackReloadUnchangedMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/lointain/cosmos/procedures/TestRestartProcedure$DatapackReloadProcedure",
+          "method": "reloadJsonObjects",
+          "desc": "(Lnet/minecraft/server/MinecraftServer;)V",
+          "note": "lists cosmos:cosmic_data of every pack into jsonObjects, then for every loaded level: a new ListTag of those objects as JSON text -> WorldVariables.datapack, syncData(level), InitialiseregistryProcedure.execute(level)",
+          "sha256": "c3ba645dcee1a84914b21fc1896ce589ca64dc5337db671a949e9ed352d8a25d"
+        },
+        {
+          "class": "net/lointain/cosmos/procedures/InitialiseregistryProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;)V",
+          "note": "reads only WorldVariables.get(world).datapack; writes planet_sel_data, gravity_data, friction_data, projection_list of the same WorldVariables (a sync after each) and runs the collision, light source, render sequence and dimensional data procedures on the same level",
+          "sha256": "0e2f8ea12eef5227acb8da3ca2e599e55168977f642afa406c61b7951aaf96a6"
+        },
+        {
+          "class": "net/lointain/cosmos/procedures/InitialiseCollisionDataProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;)V",
+          "note": "three collision maps built from the datapack list alone",
+          "sha256": "610c2944281b33911f115bc55df608d83e60bc85b7f61a525e15fda79072c9c3"
+        },
+        {
+          "class": "net/lointain/cosmos/procedures/InitialiseLightSourceDataProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;)V",
+          "note": "the light source and opaque object maps built from the datapack list alone",
+          "sha256": "d63a2c2a1e5d427d8136bd3f629ada16f3692f3aace67804da38dd234011c2e9"
+        },
+        {
+          "class": "net/lointain/cosmos/procedures/InitialiseRenderSequenceProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;)V",
+          "note": "the render, position, skybox and sky object maps built from the datapack list and the two maps made just before",
+          "sha256": "c99644b5dfa73bb5535336c30e134d08c89a350762828d3e9c59e4b634f651db"
+        },
+        {
+          "class": "net/lointain/cosmos/procedures/InitialiseDimensionalDataProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraft/world/level/LevelAccessor;)V",
+          "note": "the dimension type and dimensional data maps built from the datapack list alone",
+          "sha256": "b86bb333375a9c3d4ea2933a19af22899aa7ec0de7e301ed17729c726b1c4171"
+        },
+        {
+          "class": "net/lointain/cosmos/procedures/SetDefaultProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/entity/Entity;)V",
+          "note": "at a login: gravity and friction rebuilt from the datapack list by the formula Initialiseregistry uses; no other per-level variable",
+          "sha256": "f99e0a9552c62857ff0c9a62004e404c48af34dd6c9f107c43f253b0c5921b72"
+        },
+        {
+          "class": "net/lointain/cosmos/procedures/InitialiseMainRegistryProcedure",
+          "method": "execute",
+          "desc": "(Lnet/minecraftforge/eventbus/api/Event;Lnet/minecraft/world/level/LevelAccessor;)V",
+          "note": "at a level load: a new datapack list, then Initialiseregistry (the list never changes without it)",
+          "sha256": "16dbfce272b55086c0a74a92480e6a6b633708be3dcf28e1389c5ed4eedb38c5"
+        },
+        {
+          "class": "net/lointain/cosmos/network/CosmosModVariables$WorldVariables",
+          "method": "read",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)V",
+          "note": "the saved variables as written by save",
+          "sha256": "46e162dea62a806cd3bba4d01c2a98958edd8e1ff53a633d53ec5d81a36e6ba9"
+        },
+        {
+          "class": "net/lointain/cosmos/network/CosmosModVariables$WorldVariables",
+          "method": "m_7176_",
+          "desc": "(Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;",
+          "note": "save: every per-level variable (what the comparison of the first three dimensions reads)",
+          "sha256": "7981a26a68cc09e694718ab55ea53d2c7b9f6d364b940bb79851157fdf9c4a64"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapOperation on reloadJsonObjects' WorldVariables.datapack write and on its syncData and InitialiseregistryProcedure.execute calls (all three left out for a dimension whose list already equals the new one while the server is starting; helper bons.furious.patch.cosmichorizons_start.CosmosStart)",
+      "license": "Cosmic Horizons: no Cosmic Horizons code is carried; our own logic only"
+    }
+  }
+}

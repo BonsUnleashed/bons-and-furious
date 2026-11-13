@@ -1,6 +1,7 @@
 package bons.furious.patch.mob_sunburn;
 
-import java.lang.reflect.Method;
+import bons.furious.guard.Declared;
+import java.lang.invoke.MethodType;
 import java.util.concurrent.atomic.AtomicLong;
 import net.minecraft.world.entity.Entity;
 import org.apache.logging.log4j.LogManager;
@@ -38,29 +39,38 @@ public final class SunBurnOrder {
     public static final AtomicLong SHADOW_CHECKS = new AtomicLong(), SHADOW_MISMATCHES = new AtomicLong();
     private static final Logger LOGGER = LogManager.getLogger("Bons and Furious");
     private static volatile boolean announced;
-    /** Names of Entity's methods a class must not declare below Entity for the question to move. */
-    private static final String[] OWN = {"m_20071_", "m_20069_", "m_20073_", "m_20074_", "m_204031_", "updateFluidHeightAndDoFluidPushing"};
+    /**
+     * Entity's methods a mob class must still inherit from Entity for the question to move, each as {name, descriptor}: the wet
+     * question itself (isInWaterRainOrBubble, isInWater) and Entity's water update (the two updateInWaterState... methods,
+     * updateFluidHeightAndDoFluidPushing(TagKey, double) and Forge's two overloads of that name).
+     */
+    private static final Object[][] ENTITY_METHODS = {
+            {"m_20071_", MethodType.methodType(boolean.class)},                                                  // isInWaterRainOrBubble
+            {"m_20069_", MethodType.methodType(boolean.class)},                                                  // isInWater
+            {"m_20073_", MethodType.methodType(boolean.class)},                                                  // updateInWaterStateAndDoFluidPushing
+            {"m_20074_", MethodType.methodType(void.class)},                                                     // updateInWaterStateAndDoWaterCurrentPushing
+            {"m_204031_", MethodType.methodType(boolean.class, net.minecraft.tags.TagKey.class, double.class)},  // updateFluidHeightAndDoFluidPushing
+            {"updateFluidHeightAndDoFluidPushing", MethodType.methodType(void.class)},                           // Forge's
+            {"updateFluidHeightAndDoFluidPushing", MethodType.methodType(void.class, java.util.function.Predicate.class)},
+    };
 
     private SunBurnOrder() {
     }
 
-    /** Per class: true when the wet question may be moved (see the class comment). */
+    /**
+     * Per class: true when the wet question may be moved (see the class comment). Each method is asked on its own through the JVM's
+     * resolution (bons.furious.guard.Declared), not Class.getMethod / getDeclaredMethods: those resolve the types of every method
+     * they walk, and on a dedicated server they threw for a mob class with a method naming a client-only class, after Forge's red
+     * "invalid dist" ERROR line when that class is marked client-only; the class then kept vanilla's order (bug sweep 2026-11-12).
+     * A class that cannot be asked keeps vanilla's order.
+     */
     private static final ClassValue<Boolean> MOVABLE = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
-            try {
-                if (type.getMethod("m_20071_").getDeclaringClass() != Entity.class) return Boolean.FALSE;
-                if (type.getMethod("m_20069_").getDeclaringClass() != Entity.class) return Boolean.FALSE;
-                for (Class<?> c = type; c != null && c != Entity.class; c = c.getSuperclass()) {
-                    for (Method m : c.getDeclaredMethods()) {
-                        String n = m.getName();
-                        for (String o : OWN) if (n.equals(o)) return Boolean.FALSE;
-                    }
-                }
-                return Boolean.TRUE;
-            } catch (Throwable t) {      // a signature names a missing class: cannot tell, keep vanilla's order
-                return Boolean.FALSE;
+            for (Object[] m : ENTITY_METHODS) {
+                if (!Declared.inherits(type, Entity.class, (String) m[0], (MethodType) m[1])) return Boolean.FALSE;
             }
+            return Boolean.TRUE;
         }
     };
 

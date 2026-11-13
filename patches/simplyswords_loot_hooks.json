@@ -1,0 +1,54 @@
+{
+  "group": "simplyswords_loot_hooks",
+  "keys": {
+    "simplyswords_loot_table_name_first": {
+      "mod": "simplyswords",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.50",
+      "mixins": [
+        "bons.furious.mixin.simplyswords_loot_hooks.LootHookNameFirstMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/sweenus/simplyswords/util/ModLootTableModifiers",
+          "method": "lambda$init$0",
+          "desc": "(FLnet/minecraft/world/level/storage/loot/LootDataManager;Lnet/minecraft/resources/ResourceLocation;Ldev/architectury/event/events/common/LootEvent$LootTableModificationContext;Z)V",
+          "note": "getBoolean(enableLootDrops) && path contains chests && !spectrum && (getBoolean(enableLootInVillages) || !village) -> one pool of iron and gold weapons; nothing else",
+          "sha256": "44024bb2ff925a7c34d6c9e0342f15cd0f947c2d6db3e0549637b6561fa84749"
+        },
+        {
+          "class": "net/sweenus/simplyswords/util/ModLootTableModifiers",
+          "method": "lambda$init$1",
+          "desc": "(FLnet/minecraft/world/level/storage/loot/LootDataManager;Lnet/minecraft/resources/ResourceLocation;Ldev/architectury/event/events/common/LootEvent$LootTableModificationContext;Z)V",
+          "note": "the same condition -> one pool of diamond weapons; nothing else",
+          "sha256": "eecc7ab494ee4a5794eae14245df1f07a57f6b966c0537d1aa3c5d100daf424d"
+        },
+        {
+          "class": "net/sweenus/simplyswords/util/ModLootTableModifiers",
+          "method": "lambda$init$2",
+          "desc": "(FLnet/minecraft/world/level/storage/loot/LootDataManager;Lnet/minecraft/resources/ResourceLocation;Ldev/architectury/event/events/common/LootEvent$LootTableModificationContext;Z)V",
+          "note": "the same condition -> one pool with the runic tablet; nothing else",
+          "sha256": "a8205e625ef7c2c7dd7f0d84e2dc34336d69c682fb73028436fafce7cb5b0f83"
+        },
+        {
+          "class": "net/sweenus/simplyswords/util/ModLootTableModifiers",
+          "method": "lambda$init$3",
+          "desc": "(FLnet/minecraft/world/level/storage/loot/LootDataManager;Lnet/minecraft/resources/ResourceLocation;Ldev/architectury/event/events/common/LootEvent$LootTableModificationContext;Z)V",
+          "note": "getBoolean(enableLootDrops) -> if SimplySwordsConfig.getLootList(id) the listed pool, else if path contains chests && !spectrum the unique-weapon pool; nothing when neither holds",
+          "sha256": "c14e50a8a360f9034dad6d4c96eb34c8bd7a77ddcd44a3c47f91295bfa636a00"
+        },
+        {
+          "class": "net/sweenus/simplyswords/config/SimplySwordsConfig",
+          "method": "getLootList",
+          "desc": "(Ljava/lang/String;)Z",
+          "note": "!LOOT_OPTIONS.isEmpty() && LOOT_OPTIONS.toString().contains(id): reads the static map only",
+          "sha256": "a2e89a55aa19c0fd8fc268206114d9c7fcb8576e80284387bbf7096ff4b3b1c3"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapOperation on the first Config.getBoolean call of each of the four loot table hooks (lambda$init$0..3 of ModLootTableModifiers): false without the config read for a table whose name no branch of the hook acts on; @WrapOperation on the hooks' five addPool calls, which only counts (and, with the verify flag, checks the name test against what the hooks really add); helper bons.furious.patch.simplyswords_loot_hooks.LootHookNames",
+      "license": "Timefall Development License (Simply Swords): no Simply Swords code is carried; our own logic only"
+    }
+  }
+}

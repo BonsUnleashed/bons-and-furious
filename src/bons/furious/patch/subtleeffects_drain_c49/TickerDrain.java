@@ -58,11 +58,10 @@ public final class TickerDrain {
     private static final ClassValue<Boolean> PLAIN = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
-            try {
-                return type.getMethod("equals", Object.class).getDeclaringClass() == Object.class;
-            } catch (NoSuchMethodException | SecurityException e) {
-                return false;
-            }
+            // the JVM's resolution of that one method (bons.furious.guard.Declared), not Class.getMethod: getMethod resolves the types of
+            // every public method of the class and throws when one names a class that is not installed (bug sweep 2026-11-12). A ticker
+            // class that cannot be asked leaves the batch to Subtle Effects' own loop.
+            return bons.furious.guard.Declared.inherits(type, Object.class, "equals", java.lang.invoke.MethodType.methodType(boolean.class, Object.class));
         }
     };
 

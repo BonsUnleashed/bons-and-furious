@@ -70,15 +70,15 @@ public final class TagIndex {
         }
     }
 
-    /** Classes with their own getTags: their entities are always visited by a tag walk. */
+    /**
+     * Classes with their own getTags, or that cannot be asked: their entities are always visited by a tag walk. Asked through the
+     * JVM's resolution of that one method (bons.furious.guard.Declared), not Class.getMethod, for the reason given at
+     * SelectorPrefilter.OWN_CHECKS (bug sweep 2026-11-12).
+     */
     private static final ClassValue<Boolean> OWN_TAGS = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
-            try {
-                return type.getMethod("m_19880_").getDeclaringClass() != Entity.class;
-            } catch (Throwable t) {
-                return true;   // as SelectorPrefilter.OWN_CHECKS: a class that cannot be inspected is always visited
-            }
+            return !bons.furious.guard.Declared.inherits(type, Entity.class, "m_19880_", java.lang.invoke.MethodType.methodType(java.util.Set.class));
         }
     };
 

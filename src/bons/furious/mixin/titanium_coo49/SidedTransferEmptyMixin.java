@@ -12,7 +12,8 @@ import org.spongepowered.asm.mixin.injection.At;
 /**
  * titanium_sided_transfer_empty_skip (Titanium 3.8.35, server side in effect; exact; no Titanium code is carried).
  * In SidedInventoryComponent.transfer the destination scan isValidForAnySlot is not run for an empty simulated stack, whose
- * scan answer the method never uses. See TitaniumSidedTransfer.
+ * scan answer the method never uses, unless the destination is a vanilla container that still has its loot to roll (the scan's
+ * first read rolls it). See TitaniumSidedTransfer.
  */
 @Mixin(value = SidedInventoryComponent.class, remap = false)
 public abstract class SidedTransferEmptyMixin {
@@ -21,7 +22,7 @@ public abstract class SidedTransferEmptyMixin {
             at = @At(value = "INVOKE", target = "Lcom/hrznstudio/titanium/component/inventory/SidedInventoryComponent;isValidForAnySlot(Lnet/minecraftforge/items/IItemHandler;Lnet/minecraft/world/item/ItemStack;)I"),
             require = 1, allow = 1)
     private int bons$titaniumSidedTransferEmpty(SidedInventoryComponent self, IItemHandler dest, ItemStack stack, Operation<Integer> original) {
-        if (TitaniumSidedTransfer.enabled && stack.m_41619_()) {
+        if (TitaniumSidedTransfer.enabled && stack.m_41619_() && !TitaniumSidedTransfer.fillsOnRead(dest)) {
             TitaniumSidedTransfer.skipped();
             return -1;
         }

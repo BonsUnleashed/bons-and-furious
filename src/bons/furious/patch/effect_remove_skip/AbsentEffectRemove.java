@@ -1,6 +1,5 @@
 package bons.furious.patch.effect_remove_skip;
 
-import java.lang.reflect.Method;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.LivingEntity;
 import org.apache.logging.log4j.LogManager;
@@ -36,12 +35,11 @@ public final class AbsentEffectRemove {
     static final ClassValue<Boolean> PLAIN = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
-            try {
-                Method m = type.getMethod("m_6234_", MobEffect.class);
-                return m.getDeclaringClass() == LivingEntity.class;
-            } catch (NoSuchMethodException | SecurityException | LinkageError e) {
-                return false;
-            }
+            // the JVM's resolution of that one method (bons.furious.guard.Declared), not Class.getMethod: getMethod resolves the types of
+            // every public method of the class and, on a dedicated server, throws Forge's "invalid dist" RuntimeException for one that
+            // names a client-only class, which the catch list here did not hold (bug sweep 2026-11-12)
+            return bons.furious.guard.Declared.inherits(type, LivingEntity.class, "m_6234_",
+                    java.lang.invoke.MethodType.methodType(net.minecraft.world.effect.MobEffectInstance.class, MobEffect.class));
         }
     };
 

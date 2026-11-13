@@ -1,15 +1,15 @@
 package bons.furious.patch.spawn_flies;
 
+import bons.furious.guard.Declared;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.mojang.logging.LogUtils;
 import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.lang.invoke.VarHandle;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -67,35 +67,39 @@ public final class IdleFlies {
     private static final VarHandle PERSISTENT_DATA = persistentDataHandle();
 
     /**
-     * Entity's water update, which baseTick runs later in the same tick and which reads the entity's own chunk column again
-     * (updateInWaterStateAndDoFluidPushing m_20073_, updateInWaterStateAndDoWaterCurrentPushing m_20074_,
-     * updateFluidHeightAndDoFluidPushing m_204031_ and Forge's two updateFluidHeightAndDoFluidPushing overloads).
+     * The methods an entity class must still inherit from Entity, each as {name, descriptor}: the three checks Spawn's method makes,
+     * then Entity's water update, which baseTick runs later in the same tick and which reads the entity's own chunk column again
+     * (the two updateInWaterState... methods, updateFluidHeightAndDoFluidPushing(TagKey, double) and Forge's two overloads).
      */
-    private static final Set<String> WATER_UPDATE = Set.of("m_20073_", "m_20074_", "m_204031_", "updateFluidHeightAndDoFluidPushing");
+    private static final Object[][] ENTITY_METHODS = {
+            {"m_20072_", MethodType.methodType(boolean.class)},                                                  // isInWaterOrBubble
+            {"m_6060_", MethodType.methodType(boolean.class)},                                                   // isOnFire
+            {"m_5825_", MethodType.methodType(boolean.class)},                                                   // fireImmune
+            {"m_20073_", MethodType.methodType(boolean.class)},                                                  // updateInWaterStateAndDoFluidPushing
+            {"m_20074_", MethodType.methodType(void.class)},                                                     // updateInWaterStateAndDoWaterCurrentPushing
+            {"m_204031_", MethodType.methodType(boolean.class, net.minecraft.tags.TagKey.class, double.class)},  // updateFluidHeightAndDoFluidPushing
+            {"updateFluidHeightAndDoFluidPushing", MethodType.methodType(void.class)},                           // Forge's
+            {"updateFluidHeightAndDoFluidPushing", MethodType.methodType(void.class, java.util.function.Predicate.class)},
+    };
 
     /**
      * True for entity classes that run Spawn's method: their own isInWaterOrBubble, isOnFire or fireImmune
-     * (isInBubbleColumn is private to Entity, so no subclass can replace it), or their own version of any WATER_UPDATE
+     * (isInBubbleColumn is private to Entity, so no subclass can replace it), or their own version of any water-update
      * method, with or without a super call. The skipped block read can add Radium's per-tick chunk ticket for the entity's
      * chunk; the fast path relies on baseTick's water update reading the same column in the same tick, so a class that
-     * replaces that update keeps Spawn's read. A class whose methods cannot be listed runs Spawn's method too.
+     * replaces that update keeps Spawn's read. A class that cannot be asked runs Spawn's method too. Each method is asked on its
+     * own through the JVM's resolution (bons.furious.guard.Declared), not Class.getMethod / getDeclaredMethods: those resolve the
+     * types of every method they walk, and on a dedicated server an entity class with a method naming a client-only class made
+     * them throw Forge's "invalid dist" RuntimeException, which the catch list here did not hold, out of that entity's tick (bug
+     * sweep 2026-11-12).
      */
     private static final ClassValue<Boolean> OWN_CHECKS = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
-            try {
-                if (type.getMethod("m_20072_").getDeclaringClass() != Entity.class
-                        || type.getMethod("m_6060_").getDeclaringClass() != Entity.class
-                        || type.getMethod("m_5825_").getDeclaringClass() != Entity.class) return true;
-                for (Class<?> c = type; c != null && c != Entity.class; c = c.getSuperclass()) {
-                    for (Method m : c.getDeclaredMethods()) {
-                        if (WATER_UPDATE.contains(m.getName()) && !Modifier.isStatic(m.getModifiers())) return true;
-                    }
-                }
-                return false;
-            } catch (NoSuchMethodException | SecurityException | LinkageError e) {
-                return true;
+            for (Object[] m : ENTITY_METHODS) {
+                if (!Declared.inherits(type, Entity.class, (String) m[0], (MethodType) m[1])) return true;
             }
+            return false;
         }
     };
 
@@ -137,10 +141,14 @@ public final class IdleFlies {
         @Override
         protected Field[] computeValue(Class<?> type) {
             List<Field> out = new ArrayList<>();
-            for (Class<?> c = type; c != null && c != Object.class; c = c.getSuperclass()) {
-                for (Field f : c.getDeclaredFields()) {
-                    if (!Modifier.isStatic(f.getModifiers()) && f.trySetAccessible()) out.add(f);
+            try {
+                for (Class<?> c = type; c != null && c != Object.class; c = c.getSuperclass()) {
+                    for (Field f : c.getDeclaredFields()) {
+                        if (!Modifier.isStatic(f.getModifiers()) && f.trySetAccessible()) out.add(f);
+                    }
                 }
+            } catch (Throwable t) {
+                // a field type that cannot be loaded here (a client-only class on a dedicated server): the fields listed so far are compared
             }
             return out.toArray(new Field[0]);
         }

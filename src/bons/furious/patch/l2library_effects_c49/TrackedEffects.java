@@ -43,14 +43,16 @@ public final class TrackedEffects {
 
     private record Snapshot(List<?> list, Set<Object> members) {}
 
+    /**
+     * True for an effect class that keeps Object's equals. Asked through the JVM's resolution of that one method
+     * (bons.furious.guard.Declared), not Class.getMethod: getMethod resolves the types of every public method of the class, its
+     * superclasses and their interfaces, and an effect class with a public method naming a class the game cannot load made it
+     * throw out of L2 Library's effect events (bug sweep 2026-11-12). A class that cannot be asked calls the original contains.
+     */
     private static final ClassValue<Boolean> PLAIN_EQUALS = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
-            try {
-                return type.getMethod("equals", Object.class).getDeclaringClass() == Object.class;
-            } catch (NoSuchMethodException e) {
-                return false;
-            }
+            return bons.furious.guard.Declared.inherits(type, Object.class, "equals", java.lang.invoke.MethodType.methodType(boolean.class, Object.class));
         }
     };
 

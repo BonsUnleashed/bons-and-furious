@@ -7385,6 +7385,46 @@
       "mixin": "dev.superchunk.mixin.compat.MixinDhDataInputStream",
       "conflict": "DhDataInputStream.create",
       "why": "SuperChunk 0.6.0 and later @Redirect the same two ByteArrayInputStream constructions in Distant Horizons' DhDataInputStream.create (to its own unsynchronized stream) at the same priority. Mixin lets only one redirect hold a call and ours has require = 1, so when SuperChunk's applies first a dedicated server with Distant Horizons stops at world load ('Critical injection failure: Redirector bons$unlockedSlice ... (0/1)', reproduced 2026-11-11). Both make the same change, so stepping aside loses nothing."
+    },
+    {
+      "key": "alexscaves_magnet_query",
+      "mod": "mythictinkers",
+      "name": "Mythic Tinkers",
+      "mixin": "derekahedron.mythictinkers.mixin.MagnetUtilMixin",
+      "conflict": "MagnetUtil.tickMagnetism",
+      "why": "Mythic Tinkers' MagnetUtilMixin (a @ModifyVariable, priority 1000) changes MagnetUtil.tickMagnetism, which this switch overwrites: Mixin refuses Mythic Tinkers' mixin, MagnetUtil cannot load and the first entity whose magnetism ticks stops the game with 'Ticking entity' (reproduced 2026-11-12 on a dedicated server with Mythic Tinkers 1.0.12, Tinkers' Construct and Alex's Caves; clean without this switch)"
+    },
+    {
+      "key": "valkyrien_entity_ship_collision",
+      "mod": "space",
+      "name": "Space",
+      "mixin": "org.cn_grass_block.space.mixin.common.game.entity.free_rotation.MixinEntityShipCollisionUtils",
+      "conflict": "EntityShipCollisionUtils.getShipPolygonsCollidingWithEntity",
+      "why": "Space's MixinEntityShipCollisionUtils (a @ModifyExpressionValue, priority 1000) changes EntityShipCollisionUtils.getShipPolygonsCollidingWithEntity, which this switch overwrites: Mixin refuses Space's mixin, the class then fails verification and the first entity that moves stops the game with 'Ticking entity' (VerifyError; reproduced 2026-11-12 on a dedicated server with Space 0.0.6 and Valkyrien Skies 2.4.11; clean without this switch)"
+    },
+    {
+      "key": "valkyrien_entity_ship_collision",
+      "mod": "vs_addition",
+      "name": "VS Addition",
+      "mixin": "io.github.xiewuzhiying.vs_addition.mixin.valkyrienskies.MixinEntityShipCollisionUtils",
+      "conflict": "EntityShipCollisionUtils.getShipPolygonsCollidingWithEntity, EntityShipCollisionUtils.adjustEntityMovementForShipCollisions",
+      "why": "VS Addition's MixinEntityShipCollisionUtils (two @ModifyExpressionValue injectors, priority 1000) changes EntityShipCollisionUtils.getShipPolygonsCollidingWithEntity and adjustEntityMovementForShipCollisions, which this switch overwrites: the clash seen with Space. From the static check of VS Addition continue 0010.7.1 (2026-11-12); that build does not start next to Valkyrien Skies 2.4.11 on its own, so the pair itself could not be run"
+    },
+    {
+      "key": "geckolib_bone_queue_reuse",
+      "mod": "komodo",
+      "name": "Komodo",
+      "mixin": "com.norwood.komodo.mixin.KmodoAnimQueuePoolMixin",
+      "conflict": "AnimationController.createInitialQueues",
+      "why": "Komodo's KmodoAnimQueuePoolMixin (a @Redirect of the queue construction, priority 1000) changes AnimationController.createInitialQueues, which this switch overwrites: Mixin refuses Komodo's mixin as a critical error, GeckoLib's AnimationController cannot load and the game stops while resources load ('Rendering overlay', MixinTransformerError; reproduced 2026-11-13 on a client with Komodo 1.2.3, Superb Warfare 0.8.9.2, GeckoLib 4.8.4 and Kotlin for Forge; clean without this switch)"
+    },
+    {
+      "key": "geckolib_keyframe_locals",
+      "mod": "animorph",
+      "name": "Animorph",
+      "mixin": "me.feeldev.animorph.client.mixin.geo.AnimationControllerMixin",
+      "conflict": "AnimationController.getAnimationPointAtTick",
+      "why": "Animorph's AnimationControllerMixin also @Overwrites AnimationController.getAnimationPointAtTick (client, priority 1000). Mixin keeps one of the two and logs an overwrite conflict for the other; which one depends on the load order, and when ours is kept Animorph's change is lost. This switch steps aside so that Animorph's always applies (seen 2026-11-12 with Animorph 1.1.1 and GeckoLib 4.8.4: Animorph's was kept and ours skipped; no crash either way)"
     }
   ]
 }

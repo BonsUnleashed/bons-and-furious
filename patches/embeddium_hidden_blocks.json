@@ -1,0 +1,289 @@
+{
+  "group": "embeddium_hidden_blocks",
+  "keys": {
+    "embeddium_hidden_block_skip": {
+      "mod": "embeddium",
+      "scripts": [],
+      "since": "1.0.50",
+      "mixins": [
+        "bons.furious.mixin.embeddium_hidden_blocks.BlockRendererOcclusionAccessor",
+        "bons.furious.mixin.embeddium_hidden_blocks.BlockRendererRegistryAccessor",
+        "bons.furious.mixin.embeddium_hidden_blocks.MeshingTaskHiddenBlockMixin",
+        "bons.furious.mixin.embeddium_hidden_blocks.SimpleBakedModelCulledOnlyMixin",
+        "bons.furious.mixin.embeddium_hidden_blocks.WeightedBakedModelCulledOnlyMixin"
+      ],
+      "guard": [
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/compile/tasks/ChunkBuilderMeshingTask",
+          "method": "execute",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/compile/ChunkBuildContext;Lme/jellysquid/mods/sodium/client/util/task/CancellationToken;)Lme/jellysquid/mods/sodium/client/render/chunk/compile/ChunkBuildOutput;",
+          "note": "per block: air without a block entity is skipped; render shape MODEL -> model data, seed, unwrap, one renderModel per render layer; then the fluid, the block entity and the occlusion graph, none of which read the model branch",
+          "sha256": "312eb112e1a30f9c6f0d319006689910dce5bce2fe83748d296c960efa91fde5"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/compile/pipeline/BlockRenderer",
+          "method": "renderModel",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/compile/pipeline/BlockRenderContext;Lme/jellysquid/mods/sodium/client/render/chunk/compile/ChunkBuildBuffers;)V",
+          "note": "per side: the side's quads are written only when isFaceVisible; then the quads of the null side, always",
+          "sha256": "d32eb7df3988f737bd15566562f8c58b6f8bdccc161b308c0cf68e49e485ad54"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/compile/pipeline/BlockRenderer",
+          "method": "isFaceVisible",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/compile/pipeline/BlockRenderContext;Lnet/minecraft/core/Direction;)Z",
+          "note": "occlusionCache.shouldDrawSide(ctx.state(), ctx.localSlice(), ctx.pos(), face)",
+          "sha256": "ab8724c05a5a30ebd208fe5ea3162ff6c2716b41c5165dd92041429a5079306b"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/compile/pipeline/BlockOcclusionCache",
+          "method": "shouldDrawSide",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z",
+          "note": "reads the neighbour's state and the two face occlusion shapes; its own cache is its only state",
+          "sha256": "ffc384aa3ad22d7a40683f2077ae836794243a0b3e0258655e3f796146ad54b8"
+        },
+        {
+          "class": "net/minecraft/client/resources/model/SimpleBakedModel",
+          "method": "m_213637_",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/util/RandomSource;)Ljava/util/List;",
+          "note": "getQuads: side == null ? unculledFaces : culledFaces.get(side)",
+          "sha256": "26c3915de665edb791e409b4abe2a1ed93efec3e7d107aefbba6f1f095d811f5"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/client/render/chunk/compile/pipeline/BlockRenderer",
+          "method": "getGeometry",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/compile/pipeline/BlockRenderContext;Lnet/minecraft/core/Direction;)Ljava/util/List;",
+          "note": "re-seeds the renderer's random source with the block seed before every model call",
+          "sha256": "eda1c04d97273607788eab855bd309bac3033787ce4ddaee187dd8e63a39a238"
+        },
+        {
+          "class": "org/embeddedt/embeddium/api/BlockRendererRegistry",
+          "method": "fillCustomRenderers",
+          "desc": "(Ljava/util/List;Lme/jellysquid/mods/sodium/client/render/chunk/compile/pipeline/BlockRenderContext;)V",
+          "note": "asks the registered sources only: none registered, no custom renderer",
+          "sha256": "04e0c55925791d3057073710a6a921f1057be17d169a0d880ff3454490952a3e"
+        },
+        {
+          "class": "org/embeddedt/embeddium/render/frapi/IndigoBlockRenderContext",
+          "method": "renderEmbeddium",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/compile/pipeline/BlockRenderContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/util/RandomSource;)V",
+          "note": "hands the random source to Indigo's render together with the block seed, nothing else reads it",
+          "sha256": "b6112b8679a17f8d073e3f0f709b439ccf56cb5742cf7b31fe598082403a6646"
+        },
+        {
+          "class": "org/embeddedt/embeddium/model/UnwrappableBakedModel",
+          "method": "unwrapIfPossible",
+          "desc": "(Lnet/minecraft/client/resources/model/BakedModel;Lnet/minecraft/util/RandomSource;)Lnet/minecraft/client/resources/model/BakedModel;",
+          "note": "asks the model for its inner model with the task's own random source (re-seeded before and after)",
+          "sha256": "5de7e69032803f3819dc46cde79ec401cb2fbcb511356bc39f82ca5219319290"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/mixin/features/model/WeightedBakedModelMixin",
+          "method": "embeddium$getInnerModel",
+          "desc": "(Lnet/minecraft/util/RandomSource;)Lnet/minecraft/client/resources/model/BakedModel;",
+          "note": "one variant of the weighted list; reads only",
+          "sha256": "8df955867a34eb2e2bb8f7c4b153f34e4a54247ad7bdcb9a7bd06e223254ef3c"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/mixin/features/model/WeightedBakedModelMixin",
+          "method": "getQuads",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/util/RandomSource;Lnet/minecraftforge/client/model/data/ModelData;Lnet/minecraft/client/renderer/RenderType;)Ljava/util/List;",
+          "note": "the picked variant's quads for the same side",
+          "sha256": "d4dec88d46a0433424e44609c1a908c2803f7aa15e47f185ad4a4143f4a0bbb0"
+        },
+        {
+          "class": "nl/enjarai/a_good_place/mixins/forge/sodium/BlockRendererMixin",
+          "method": "wonkyblock$hideBlock",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/compile/pipeline/BlockRenderContext;Lme/jellysquid/mods/sodium/client/render/chunk/compile/ChunkBuildBuffers;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "audited: only cancels renderModel for a block it hides while animated (removes geometry, adds none)",
+          "audit": true,
+          "sha256": "e4253070d5d06f66b96783abb1994356c018c07a5eb80aca1c8cbc5d1a754132"
+        },
+        {
+          "class": "nl/enjarai/a_good_place/mixins/forge/sodium/BlockOcclusionCacheMixin",
+          "method": "wonkyblock$overrideCulling",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;Lnet/minecraft/core/BlockPos$MutableBlockPos;)V",
+          "note": "audited: changes shouldDrawSide itself, which the hidden test asks through the same cache",
+          "audit": true,
+          "sha256": "9f8bd0ea7a3a74f83ce1bd12a211406751130f66cd1bfc868b5c2d69dba86263"
+        },
+        {
+          "class": "eu/midnightdust/cullleaves/mixin/sodium/MixinBlockRenderer",
+          "method": "cullleaves$cancelRendering",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/compile/pipeline/BlockRenderContext;Lme/jellysquid/mods/sodium/client/render/chunk/compile/ChunkBuildBuffers;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "audited: only cancels renderModel for leaves it hides (removes geometry, adds none)",
+          "audit": true,
+          "sha256": "b08f0cf5891438ac562b03c01db1956e3e6ce26fafe90678d22088feccdaa9d1"
+        },
+        {
+          "class": "net/irisshaders/iris/compat/sodium/mixin/block_id/MixinChunkRenderRebuildTask",
+          "method": "iris$setLocalPos",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/compile/ChunkBuildContext;Lme/jellysquid/mods/sodium/client/util/task/CancellationToken;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;Lme/jellysquid/mods/sodium/client/render/chunk/data/BuiltSectionInfo$Builder;Lnet/minecraft/client/renderer/chunk/VisGraph;Lme/jellysquid/mods/sodium/client/render/chunk/compile/ChunkBuildBuffers;Lme/jellysquid/mods/sodium/client/render/chunk/compile/pipeline/BlockRenderCache;Lme/jellysquid/mods/sodium/client/world/WorldSlice;IIIIIILnet/minecraft/core/BlockPos$MutableBlockPos;Lnet/minecraft/core/BlockPos$MutableBlockPos;Lme/jellysquid/mods/sodium/client/render/chunk/compile/pipeline/BlockRenderContext;IIILnet/minecraft/world/level/block/state/BlockState;)V",
+          "note": "audited: runs before each getRenderShape call whatever the call returns (light-block voxel, local position)",
+          "audit": true,
+          "sha256": "52f0af2af8f2e3cd414266fd254c60024e2a71d245fa87d925d348059a8afda6"
+        },
+        {
+          "class": "net/irisshaders/iris/compat/sodium/mixin/block_id/MixinChunkRenderRebuildTask",
+          "method": "iris$wrapGetBlockLayer",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/compile/ChunkBuildContext;Lme/jellysquid/mods/sodium/client/util/task/CancellationToken;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;Lme/jellysquid/mods/sodium/client/render/chunk/data/BuiltSectionInfo$Builder;Lnet/minecraft/client/renderer/chunk/VisGraph;Lme/jellysquid/mods/sodium/client/render/chunk/compile/ChunkBuildBuffers;Lme/jellysquid/mods/sodium/client/render/chunk/compile/pipeline/BlockRenderCache;Lme/jellysquid/mods/sodium/client/world/WorldSlice;IIIIIILnet/minecraft/core/BlockPos$MutableBlockPos;Lnet/minecraft/core/BlockPos$MutableBlockPos;Lme/jellysquid/mods/sodium/client/render/chunk/compile/pipeline/BlockRenderContext;IIILnet/minecraft/world/level/block/state/BlockState;)V",
+          "note": "audited: sets the block id for the model about to be drawn, inside the model branch; iris$resetContext clears it after the block",
+          "audit": true,
+          "sha256": "8ca7124832d0925b0d07af5aa71f9d106ed1b52a63828b6aa9efb2d5d1996e09"
+        },
+        {
+          "class": "net/irisshaders/iris/compat/sodium/mixin/block_id/MixinChunkRenderRebuildTask",
+          "method": "iris$wrapGetFluidLayer",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/compile/ChunkBuildContext;Lme/jellysquid/mods/sodium/client/util/task/CancellationToken;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;Lme/jellysquid/mods/sodium/client/render/chunk/data/BuiltSectionInfo$Builder;Lnet/minecraft/client/renderer/chunk/VisGraph;Lme/jellysquid/mods/sodium/client/render/chunk/compile/ChunkBuildBuffers;Lme/jellysquid/mods/sodium/client/render/chunk/compile/pipeline/BlockRenderCache;Lme/jellysquid/mods/sodium/client/world/WorldSlice;IIIIIILnet/minecraft/core/BlockPos$MutableBlockPos;Lnet/minecraft/core/BlockPos$MutableBlockPos;Lme/jellysquid/mods/sodium/client/render/chunk/compile/pipeline/BlockRenderContext;IIILnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/material/FluidState;)V",
+          "note": "audited: sets its own id before the fluid is drawn",
+          "audit": true,
+          "sha256": "325787f4a462a9220e3bc84e19eb41d2df5783be47445c8e024a5627013595fe"
+        },
+        {
+          "class": "net/irisshaders/iris/compat/sodium/mixin/block_id/MixinChunkRenderRebuildTask",
+          "method": "iris$resetContext",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/compile/ChunkBuildContext;Lme/jellysquid/mods/sodium/client/util/task/CancellationToken;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "audited: clears the block context before each hasBlockEntity call, which every block reaches after its fluid",
+          "audit": true,
+          "sha256": "d4374bbb37f1859071ea98030d164929526f9ee464553567e3aafedc37a32e3b"
+        },
+        {
+          "class": "net/irisshaders/iris/compat/sodium/mixin/shader_overrides/MixinChunkBuilderMeshingTask",
+          "method": "oculus$overrideRenderTypes",
+          "desc": "(Lnet/minecraft/client/resources/model/BakedModel;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/util/RandomSource;Lnet/minecraftforge/client/model/data/ModelData;)Lnet/minecraftforge/client/ChunkRenderTypeSet;",
+          "note": "audited: replaces the render-layer query inside the model branch; reads only",
+          "audit": true,
+          "sha256": "593f4a80b0b6f538a55ae7e2a10e9c3d6c0526b1d1fe21e059967b4a3fbd6968"
+        },
+        {
+          "class": "net/fabricmc/fabric/impl/client/indigo/renderer/render/BlockRenderContext",
+          "method": "render",
+          "desc": "(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/client/resources/model/BakedModel;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;ZLnet/minecraft/util/RandomSource;JILnet/minecraftforge/client/model/data/ModelData;Lnet/minecraft/client/renderer/RenderType;)V",
+          "note": "audited: keeps the random source and the seed in its block info and gives the model the supplier only",
+          "audit": true,
+          "sha256": "4c63170f890893dea21285f0ebcc4bf4d8ed8bad5ba0ef06e38a2b3922b259d0"
+        },
+        {
+          "class": "net/fabricmc/fabric/impl/client/indigo/renderer/render/BlockRenderInfo",
+          "method": "lambda$new$0",
+          "desc": "()Lnet/minecraft/util/RandomSource;",
+          "note": "audited: the supplier re-seeds the random source before every use",
+          "audit": true,
+          "sha256": "42192e790875efce65e595a98520e0e663dd1db07195908c9edc7ac705be10b9"
+        },
+        {
+          "class": "com/supermartijn642/fusion/mixin/embeddium/BlockRendererMixinEmbeddium",
+          "method": "renderModel",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/compile/pipeline/BlockRenderContext;Lme/jellysquid/mods/sodium/client/render/chunk/compile/ChunkBuildBuffers;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "audited: acts on BlockModelModifierBakedModel only, which is face-only only through fusion_hidden_block_models",
+          "audit": true,
+          "sha256": "c81006b204d093bbb0a7f43ba303934fdeba94e4212349a1594422985c932549"
+        },
+        {
+          "class": "com/supermartijn642/fusion/mixin/WeightedBakedModelMixin",
+          "method": "getModelData",
+          "desc": "(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraftforge/client/model/data/ModelData;)Lnet/minecraftforge/client/model/data/ModelData;",
+          "note": "audited: model data of the variant the block seed picks, with a random source of its own; reads only",
+          "audit": true,
+          "sha256": "515e6d22b09bba482e629646346cf58214d7eac4ee56c8ccf501d41557635490"
+        },
+        {
+          "class": "org/embeddedt/embeddium/render/frapi/FRAPIModelUtils",
+          "method": "isFRAPIModel",
+          "desc": "(Lnet/minecraft/client/resources/model/BakedModel;)Z",
+          "note": "false without Indigo, else !isVanillaAdapter(): the test renderModel uses to hand a model to the Indigo renderer",
+          "sha256": "837b6f496527622dfd7fb529866a7d7eb4efa74d57b8b39cee37dda9d0148997"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @ModifyExpressionValue on the meshing task's second BlockState.getRenderShape() call, with the task's render cache, render context, state and position (@Local): INVISIBLE for a block whose model can only emit face quads and whose six faces are not drawn, while no custom block renderer is registered (helper bons.furious.patch.embeddium_hidden_blocks.HiddenBlocks); accessors for BlockRenderer.occlusionCache and BlockRendererRegistry.renderPopulators; the face-quads-only answer of vanilla's simple and weighted models",
+      "license": "Embeddium: LGPL-3.0; no Embeddium code is carried; our own logic only"
+    },
+    "fusion_hidden_block_models": {
+      "mod": "fusion",
+      "scripts": [],
+      "since": "1.0.50",
+      "mixins": [
+        "bons.furious.mixin.embeddium_hidden_blocks.BaseBakedModelCulledOnlyMixin",
+        "bons.furious.mixin.embeddium_hidden_blocks.BlockModelModifierCulledOnlyMixin",
+        "bons.furious.mixin.embeddium_hidden_blocks.ConditionalModelAccessor",
+        "bons.furious.mixin.embeddium_hidden_blocks.EmptyBakedModelCulledOnlyMixin",
+        "bons.furious.mixin.embeddium_hidden_blocks.QuadsGetInvoker"
+      ],
+      "guard": [
+        {
+          "class": "com/supermartijn642/fusion/model/types/base/BaseBakedModel",
+          "method": "getQuads",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/util/RandomSource;Lnet/minecraftforge/client/model/data/ModelData;Lnet/minecraft/client/renderer/RenderType;)Ljava/util/List;",
+          "note": "failed conditions -> empty; otherwise the quads of the asked side only: processQuads(quads.get(side), ...) through the lazy processor",
+          "sha256": "3c38e6d857be3c79d37acd3078c4e3bc60a49028e97a4aa06d8d7f54017e933f"
+        },
+        {
+          "class": "com/supermartijn642/fusion/model/types/base/BaseBakedModel$Quads",
+          "method": "get",
+          "desc": "(Lnet/minecraft/core/Direction;)Ljava/util/List;",
+          "note": "the list of one side (null = no side)",
+          "sha256": "03446f4f5a0af0737590b5e63e981b2695641252911a96cf76ebd2235c9cc238"
+        },
+        {
+          "class": "com/supermartijn642/fusion/model/modifiers/block/BlockModelModifierBakedModel",
+          "method": "getQuads",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/util/RandomSource;Lnet/minecraftforge/client/model/data/ModelData;Lnet/minecraft/client/renderer/RenderType;)Ljava/util/List;",
+          "note": "the quads of the chosen default override (or the original) and of every chosen append model, each asked for the same side",
+          "sha256": "ebfb047241301a912dfbfc3eaf77bf554b56069b4243f32d51f4f7d565ad0b7b"
+        },
+        {
+          "class": "com/supermartijn642/fusion/model/modifiers/block/BlockModelModifierBakedModel",
+          "method": "collectByOffset",
+          "desc": "(Lcom/supermartijn642/fusion/model/modifiers/block/ModelsByRandomOffset;Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraftforge/client/model/data/ModelData;)V",
+          "note": "the same choice handed to Fusion's Embeddium renderer: the default override or the original, plus the chosen append models; no other model",
+          "sha256": "ed11b76a0969502665e8e856dec4786050c635c73e7dd56f5d0e5ddd3edf4ab3"
+        },
+        {
+          "class": "com/supermartijn642/fusion/mixin/embeddium/BlockRendererMixinEmbeddium",
+          "method": "renderModel",
+          "desc": "(Lme/jellysquid/mods/sodium/client/render/chunk/compile/pipeline/BlockRenderContext;Lme/jellysquid/mods/sodium/client/render/chunk/compile/ChunkBuildBuffers;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "Fusion's Embeddium renderer: a model-modifier block is collected by offset and each group drawn through the normal renderModel with the same position, state and seed",
+          "sha256": "c81006b204d093bbb0a7f43ba303934fdeba94e4212349a1594422985c932549"
+        },
+        {
+          "class": "com/supermartijn642/fusion/mixin/embeddium/BlockRendererMixinEmbeddium",
+          "method": "lambda$renderModel$0",
+          "desc": "(Lme/jellysquid/mods/sodium/client/world/WorldSlice;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;JLnet/minecraft/client/renderer/RenderType;Lme/jellysquid/mods/sodium/client/render/chunk/compile/ChunkBuildBuffers;Lcom/supermartijn642/fusion/model/modifiers/block/ModelsByRandomOffset$Entry;)V",
+          "note": "one group: its model data, the dummy context, renderModel",
+          "sha256": "3c57ae51a8af97cb64f6f7352ef57a2e2cf77cf8717e5fda05fd758d0bd637d0"
+        },
+        {
+          "class": "com/supermartijn642/fusion/model/CombinedBakedModel",
+          "method": "getQuads",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/util/RandomSource;Lnet/minecraftforge/client/model/data/ModelData;Lnet/minecraft/client/renderer/RenderType;)Ljava/util/List;",
+          "note": "a group's quads for a side are its models' quads for that side",
+          "sha256": "9c18aeba9bac5e05771002d8af563fd82c6a80ee6b4342a0389c67719f3f229e"
+        },
+        {
+          "class": "com/supermartijn642/fusion/model/modifiers/block/ModelsByRandomOffset$Entry",
+          "method": "getModels",
+          "desc": "()Ljava/util/List;",
+          "note": "the models collectByOffset put into the group",
+          "sha256": "900d0586f6b969c796718c06bf1954b1b75503ce4da84f54657c4f0806c011eb"
+        },
+        {
+          "class": "com/supermartijn642/fusion/model/EmptyBakedModel",
+          "method": "m_213637_",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/util/RandomSource;)Ljava/util/List;",
+          "note": "always the empty list",
+          "sha256": "1a229a32557c74e2e6e81f1c5558d0d95cc744ca09581ed1b663a235d16ebf81"
+        },
+        {
+          "class": "org/embeddedt/embeddium/render/frapi/FRAPIModelUtils",
+          "method": "isFRAPIModel",
+          "desc": "(Lnet/minecraft/client/resources/model/BakedModel;)Z",
+          "note": "false without Indigo, else !isVanillaAdapter(): the test renderModel uses to hand a model to the Indigo renderer",
+          "sha256": "837b6f496527622dfd7fb529866a7d7eb4efa74d57b8b39cee37dda9d0148997"
+        }
+      ],
+      "cancel": [],
+      "conversion": "no injector: the face-quads-only answer (HiddenBlocks.CulledOnly, used by embeddium_hidden_block_skip) of Fusion's base model, empty model and block-model modifier, with an invoker for BaseBakedModel.Quads.get and an accessor for ConditionalModel.model",
+      "license": "Fusion (SuperMartijn642): no Fusion code is carried; our own logic only"
+    }
+  }
+}

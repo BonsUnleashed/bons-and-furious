@@ -90,11 +90,21 @@ public final class FireIdleScan {
     private FireIdleScan() {
     }
 
+    private static final MethodType SET_TICKS_SIG = MethodType.methodType(void.class, int.class), IMMUNE_TICKS_SIG = MethodType.methodType(int.class);
     /** gfit of the class: 1 (Entity's methods) or 20 (Player's); 0 when another class declares one of the two methods. */
     static final ClassValue<Integer> GFIT = new ClassValue<>() {
         @Override
         protected Integer computeValue(Class<?> type) {
             if (!Entity.class.isAssignableFrom(type)) return 0;
+            // First the JVM's resolution of the two methods (bons.furious.guard.Declared). When both resolve to Entity's own for a
+            // class that is no Player, no class below Entity declares them and the walk below would find nothing: gfit 1. The walk
+            // lists the methods of every class on the way (declares), which resolves the types of all of them: on a dedicated server
+            // it threw for an entity class with a method naming a client-only class, after Forge's red "invalid dist" ERROR line when
+            // that class is marked client-only, and the class then counted as declaring the fire timer methods, with a stand-down
+            // line saying so (bug sweep 2026-11-12). The walk still runs, unchanged, for players and for a class where one of the
+            // two resolves below Entity or cannot be asked: only it can tell a bridge from an override and name the merging mixin.
+            if (!Player.class.isAssignableFrom(type) && bons.furious.guard.Declared.inherits(type, Entity.class, "m_7311_", SET_TICKS_SIG)
+                    && bons.furious.guard.Declared.inherits(type, Entity.class, "m_6101_", IMMUNE_TICKS_SIG)) return 1;
             int gfit = 1;
             for (Class<?> c = type; c != Entity.class; c = c.getSuperclass()) {
                 if (c == Player.class) {

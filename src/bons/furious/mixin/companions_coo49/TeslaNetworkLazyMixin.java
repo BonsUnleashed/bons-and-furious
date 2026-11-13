@@ -52,8 +52,11 @@ public abstract class TeslaNetworkLazyMixin implements LazyTeslaNetwork {
     @Inject(method = "registerBlockEntity", at = @At("HEAD"))
     private void bons$flushBeforeReplace(dev.xylonity.companions.common.blockentity.AbstractTeslaBlockEntity be, CallbackInfo ci) {
         if (this.bons$distancesDirty) {
-            Object there = this.blockEntities.get(be.m_58899_());
-            if (there != null && there != be) bons$flushDistances();
+            dev.xylonity.companions.common.blockentity.AbstractTeslaBlockEntity there = this.blockEntities.get(be.m_58899_());
+            // not for a removed one: Companions never unregisters on chunk unload, so a base that loads again finds its old,
+            // removed block entities still in the map; nothing reads their distance again, and flushing for each of them ran
+            // one rebuild per block, as without the switch (bug sweep 2026-11-12, found by review)
+            if (there != null && there != be && !there.m_58901_()) bons$flushDistances();
         }
     }
 

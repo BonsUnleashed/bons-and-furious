@@ -1,0 +1,40 @@
+{
+  "group": "climate_sampler_reuse",
+  "keys": {
+    "vanilla_chunk_climate_sampler_reuse": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.50",
+      "mixins": [
+        "bons.furious.mixin.climate_sampler_reuse.NoiseChunkSamplerReuseMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_224359_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/NoiseRouter;Ljava/util/List;)Lnet/minecraft/world/level/biome/Climate$Sampler;",
+          "note": "new Climate.Sampler(six router functions each mapped through wrap, the spawn target): reads nothing but its two arguments and the wrap table",
+          "sha256": "80eb4cf683ed5cdcc3e7ddf20dedb2362385fcf4d2633c65e06ddc19a0b5da14"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_209213_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "note": "wrap: wrapped.computeIfAbsent(function, wrapNew), so an equal node of a second mapping gets the first mapping's wrapper",
+          "sha256": "a2908483a3208a4c5a86d21c9104c0adfebcab1a6b8b97ff609d527b54dfdd18"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/worldgen_allocation/NoiseChunkMixin",
+          "method": "m_209213_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "note": "audited: ModernFix's overwrite of wrap keeps the memo (get, else wrapNew and put): an equal node gets the first wrapper",
+          "audit": true,
+          "sha256": "b80a96f4c2ce312e299b42e955dd46ddbd7ee0301f81a7f73c6b824b618d2b04"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapMethod on NoiseChunk.cachedClimateSampler (the sampler made for the same router and spawn target objects is returned again; helper bons.furious.patch.climate_sampler_reuse.SamplerReuse)",
+      "license": "Minecraft (Mojang): no game code is carried; our own logic only"
+    }
+  }
+}

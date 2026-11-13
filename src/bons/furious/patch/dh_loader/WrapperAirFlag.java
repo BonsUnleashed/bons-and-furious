@@ -21,8 +21,9 @@ import org.apache.logging.log4j.Logger;
  * true), or a state whose class is exactly BlockState and whose block's class does not declare its own isAir(BlockState)
  * anywhere below BlockBehaviour (then the answer is the state's final field). Everything else (a block class that
  * overrides isAir, such as Ars Nouveau's IntangibleAirBlock or Immersive Engineering's FakeLightBlock, a BlockState
- * subclass, or a class whose methods cannot be listed) is asked every time, as before. The flag byte lives in the wrapper
- * (WrapperAirFlagMixin); a racing first call writes the same value twice.
+ * subclass, or a class that cannot be asked) is asked every time, as before. The flag byte lives in the wrapper
+ * (WrapperAirFlagMixin); a racing first call writes the same value twice. Whether a class overrides is asked of the JVM's method
+ * resolution (bons.furious.guard.Declared), not by listing the class's methods (bug sweep 2026-11-12).
  */
 public final class WrapperAirFlag {
     /** Runtime switch (the config switch acts when classes are transformed). -Dbons_and_furious.dhWrapperAirFlag=false also turns it off. */
@@ -34,22 +35,17 @@ public final class WrapperAirFlag {
     public static final byte UNKNOWN = 0, NOT_AIR = 1, AIR = 2, ASK = -1;
     private static final Logger LOGGER = LogManager.getLogger("Bons and Furious");
     private static volatile boolean announced;
-    /** Per block class: true when no class from it up to (excluding) BlockBehaviour declares isAir(BlockState). */
+    /**
+     * Per block class: true when no class from it up to (excluding) BlockBehaviour declares isAir(BlockState). Asked through the JVM's
+     * resolution of that one method (bons.furious.guard.Declared), as vanilla_block_state_air_flag asks it, not by listing the methods
+     * of each class: the listing resolves the types of every method a class declares, and on a dedicated server it threw for a block
+     * class with a method naming a client-only class, after Forge's red "invalid dist" ERROR line when that class is marked
+     * client-only (bug sweep 2026-11-12). A class that cannot be asked, or that is no BlockBehaviour, is asked every time.
+     */
     private static final ClassValue<Boolean> PLAIN = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
-            try {
-                for (Class<?> c = type; c != null; c = c.getSuperclass()) {
-                    if (c == BlockBehaviour.class) return Boolean.TRUE;
-                    for (var m : c.getDeclaredMethods()) {
-                        if (m.getName().equals("isAir") && m.getParameterCount() == 1 && m.getParameterTypes()[0] == BlockState.class)
-                            return Boolean.FALSE;
-                    }
-                }
-                return Boolean.FALSE;      // not a BlockBehaviour at all
-            } catch (Throwable e) {        // a method signature names a missing class: cannot tell, keep asking
-                return Boolean.FALSE;
-            }
+            return bons.furious.guard.Declared.inherits(type, BlockBehaviour.class, "isAir", java.lang.invoke.MethodType.methodType(boolean.class, BlockState.class));
         }
     };
 
