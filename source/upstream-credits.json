@@ -2274,5 +2274,18 @@
     "source_url": "",
     "notes": "Optional compatibility target only; no target classes or assets bundled. Metadata is from this exact NeoForge JAR.",
     "download_url": "https://edge.forgecdn.net/files/7980/10/Zeta-1.1-40.jar"
+  },
+  {
+    "id": "forgeendertech",
+    "name": "ForgeEndertech",
+    "version": "12.1.4.0",
+    "authors": "EnderLanky",
+    "license": "All rights reserved",
+    "jar": "ForgeEndertech-1.21.1-12.1.4.0-NeoForge-build.1161.jar",
+    "sha1": "57552932d2b40961fe80eeca4937b917fe166ceb",
+    "sha256": "ebb404e02aeb74424c079c797023967f6ec96c42e25bd08d86b9189f64f51152",
+    "source_url": "https://www.curseforge.com/minecraft/mc-mods/forgeendertech",
+    "notes": "Optional compatibility target only (forgeendertech_start_config_reads_once, since 1.0.50+mc1.21.1); no target classes or assets bundled. Metadata is from this exact NeoForge JAR (its mods.toml declares no authors; the author is the one CurseForge names); the jar comes from CurseForge file 8980655 and ships no licence document.",
+    "download_url": "https://edge.forgecdn.net/files/8980/655/ForgeEndertech-1.21.1-12.1.4.0-NeoForge-build.1161.jar"
   }
 ]

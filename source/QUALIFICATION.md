@@ -1,4 +1,56 @@
-# 1.0.49.2+mc1.21.1 (2026-11-11)
+# 1.0.50+mc1.21.1 (2026-11-13)
+
+Runtime checks PASS for SHA-256 `f97d47d5d720d9f9622524c50659985cb9b30875713675490360ca701f09d151`. Bons and Furious 1.0.50 for NeoForge: the 556 controls of 1.0.49.2+mc1.21.1, the five
+controls of Forge 1.0.50 that have a Minecraft 1.21.1 target, and the fixes found in the bug hunt of 12 and 13 November 2026.
+561 controls (557 guarded switches, 4,430 fingerprints taken from the 1.21.1 classes); of the
+894 controls of Bons and Furious 1.0.50, 162 are retired on this port and 171 have no author-published
+Minecraft 1.21.1 NeoForge target.
+
+The five new controls, as tested on this jar:
+- `vanilla_flat_cache_outside_columns`: on a vanilla server 161,666 column requests were answered from 1,990 tables and
+  35,468 computed; the built-in check compared 256 answers bit for bit with the original evaluation: 0 differences. Next
+  to C2ME 0.4 and SuperChunk 0.6.1 it keeps the original code (their compiled density functions are not on its list of known functions),
+  and both servers stop cleanly.
+- `vanilla_chunk_climate_sampler_reuse`: vanilla asks each chunk for its climate sampler once (759 samplers made on that server),
+  so a check asked one chunk twice: the second request got the first sampler back, and all 864 climate points it sampled match a
+  newly made sampler.
+- `embeddium_hidden_block_skip` with `fusion_hidden_block_models` (Embeddium 1.0.15): on an Embeddium client every block the switch would
+  skip was drawn as shipped and asked for quads without a face, 773,837 blocks (573,611 more next to Supplementaries):
+  none had one. In game, every loaded section around the player (283) was meshed with the switch off and on, alternating, six
+  rounds: identical meshes (844 section meshes, 0 differences). A full rebuild of those sections took 125.33 ms instead
+  of 152.41 ms (median of six, Core Ultra 9 285K with an RTX 4090, 960x540, vanilla resource pack); per pass 744,554 model blocks
+  were skipped, 65,916 had a visible face and 3,582 have other models. The test world has no Fusion connected textures, which
+  is where the Forge release measured its larger saving.
+- `forgeendertech_start_config_reads_once` (ForgeEndertech 12.1.4.0): a dedicated server read 3 config files from disk and
+  answered 11 later loads of them from memory while it started; a run that read every load from disk and compared found 0
+  differences in 44 answers and files, and so did the server with every target mod (300 compared) and a client
+  (332 compared).
+- Every control new since 1.0.47, these five included, off versus on: identical block and biome hashes in three dimensions.
+
+Also tested on this jar:
+- Every one of the 4,430 fingerprints found in the 1.21.1 classes; production fingerprints unchanged.
+- Dedicated server with 181 mods at once (ForgeEndertech 12.1.4.0 is new among them): boots, generates three dimensions, runs
+  401 ticks and stops cleanly. 237 controls applied; 3,003,289 comparisons of the original
+  answer with ours, 0 mismatches. With every switch that ships off turned on: 302 applied, 4,093,142
+  comparisons, 0 mismatches.
+- World starts with SuperChunk 0.6.1, Lomka 0.7.0, C2ME 0.4 and SuperChunk 0.6.1 with Distant Horizons 3.3.3: clean.
+- TerraBlender saved-layer regression: 510 checks, zero failures. Guard helper regression: 31 cases;
+  131,072 exact noise samples; 252 ZIP listings.
+- Clients: Iris with a shader pack, Embeddium without Iris, one client with every client target mod (557 controls
+  checked), its controls-off twin and an all-switches-on run, Supplementaries on Embeddium. 11,874,288,433 comparisons in all, 0 mismatches.
+- Sodium 0.8.13: the standard client mods without Iris load a world, run 600 ticks and stop cleanly. 1,256,055,792 comparisons, 0 mismatches (smoke test).
+- Moonrise 0.1.0-beta.15 with Moonrise Compats 0.1.0-beta.15+2eae1b1.5 and Immersive Optimization 0.2.0 on a client: loads a world, runs
+  600 ticks and stops cleanly; `immersiveoptimization_be_priority_front_cache` steps aside next to Moonrise Compats, which
+  changes the same method. (With the standard client mods of the other runs, Pehkui and Moonrise stop the game at launch by themselves, so this
+  run used only those mods and GeckoLib next to this one.)
+- JEI recipe deferral enabled and disabled: identical ordered recipe dumps after a real disconnect and rejoin (3278 anvil and 9717 grindstone recipes).
+- Static checks over 438 jars: no crash-class conflicts. Overwrite access audit over 438 jars: 90 overwrites,
+  all safe.
+
+These are targeted tests, not comprehensive multiplayer or long-session modpack coverage. Apart from the meshing timing above, no Minecraft
+1.21.1 speed benchmark was run; the switch descriptions carry no timings.
+
+# Historical: 1.0.49.2+mc1.21.1 (2026-11-11)
 
 Runtime checks PASS for SHA-256 `4927c8b15f801aeecf67746693dc84659c7fabd168b7284591b43550a25ddf23`. A hotfix of 1.0.49+mc1.21.1: the same 556 controls and the same 4,389 fingerprints, with
 the fixes of the bug sweeps of 2026-11-10 and 2026-11-11 and no new switch.

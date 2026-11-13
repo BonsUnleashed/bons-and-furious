@@ -1,6 +1,5 @@
 package bons.furious.patch.effect_remove_skip;
 
-import java.lang.reflect.Method;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.LivingEntity;
 import org.apache.logging.log4j.LogManager;
@@ -37,12 +36,11 @@ public final class AbsentEffectRemove {
     static final ClassValue<Boolean> PLAIN = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
-            try {
-                Method m = type.getMethod("removeEffectNoUpdate", Holder.class);
-                return m.getDeclaringClass() == LivingEntity.class;
-            } catch (NoSuchMethodException | SecurityException | LinkageError e) {
-                return false;
-            }
+            // the JVM's resolution of that one method (bons.furious.guard.Declared), not Class.getMethod: getMethod resolves the types of
+            // every public method of the class and, on a dedicated server, throws for one that names a class the server cannot load
+            // (bug sweep 2026-11-12)
+            return bons.furious.guard.Declared.inherits(type, LivingEntity.class, "removeEffectNoUpdate",
+                    java.lang.invoke.MethodType.methodType(net.minecraft.world.effect.MobEffectInstance.class, Holder.class));
         }
     };
 

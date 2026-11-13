@@ -50,6 +50,12 @@ public abstract class FanSyncDedupMixin extends BlockEntity {
     /** Shadow mode only: the tag of the last packet sent. */
     @Unique
     private CompoundTag bons$mobgrindingutilsFanShadowTag;
+    /** Requests left out in a row (the FanSync.REFRESH-th one in a row goes out). */
+    @Unique
+    private int bons$mobgrindingutilsFanQuiet;
+    /** The game time of the last request (a second request at the same game time did not come from the chunk holder's broadcast). */
+    @Unique
+    private long bons$mobgrindingutilsFanAsked = Long.MIN_VALUE;
     /** The fan had NeoForge persistent data (never taken away) or data attachments: the mod's own method from then on. */
     @Unique
     private boolean bons$mobgrindingutilsFanOwn;
@@ -72,15 +78,22 @@ public abstract class FanSyncDedupMixin extends BlockEntity {
         }
         Container inv = (Container) (Object) this;
         FanSync.Snapshot s = this.bons$mobgrindingutilsFanSnapshot;
+        // FanSync, "A client that lost its copy": a second request at the same game time and every FanSync.REFRESH-th request in a
+        // row are answered in full
+        long now = this.level == null ? Long.MIN_VALUE : this.level.getGameTime();
+        boolean again = now == this.bons$mobgrindingutilsFanAsked;
+        this.bons$mobgrindingutilsFanAsked = now;
         if (s != null && !this.bons$mobgrindingutilsFanMustSend
                 && FanSync.unchanged(s, this.showRenderBox, this.xPos, this.yPos, this.zPos, this.xNeg, this.yNeg, this.zNeg, inv)) {
-            if (!FanSync.SHADOW) {
+            if (FanSync.SHADOW) {
+                ClientboundBlockEntityDataPacket p = original.call();
+                FanSync.shadowCheck(this.bons$mobgrindingutilsFanShadowTag, FanSync.tagOf(p));
+                return p;
+            }
+            if (!again && ++this.bons$mobgrindingutilsFanQuiet < FanSync.REFRESH) {
                 FanSync.leftOut();
                 return null;
             }
-            ClientboundBlockEntityDataPacket p = original.call();
-            FanSync.shadowCheck(this.bons$mobgrindingutilsFanShadowTag, FanSync.tagOf(p));
-            return p;
         }
         ClientboundBlockEntityDataPacket p;
         this.bons$mobgrindingutilsFanBuilding = true;
@@ -89,7 +102,9 @@ public abstract class FanSyncDedupMixin extends BlockEntity {
         } finally {
             this.bons$mobgrindingutilsFanBuilding = false;
         }
-        this.bons$mobgrindingutilsFanMustSend = false;
+        this.bons$mobgrindingutilsFanQuiet = 0;
+        // a request that did not come from the per-tick broadcast went to one receiver only: the next broadcast goes out as well
+        this.bons$mobgrindingutilsFanMustSend = again;
         if (s == null) s = this.bons$mobgrindingutilsFanSnapshot = new FanSync.Snapshot();
         FanSync.capture(s, this.showRenderBox, this.xPos, this.yPos, this.zPos, this.xNeg, this.yNeg, this.zNeg, inv);
         if (FanSync.SHADOW) this.bons$mobgrindingutilsFanShadowTag = FanSync.tagOf(p);

@@ -72,6 +72,8 @@ public final class ClientProbe {
             result.put("world_loaded",mc.level!=null);result.put("world_ticks",worldTicks);
             if(mc.level==null)throw new AssertionError("World did not load; screen="+mc.screen);
             result.put("dimension",mc.level.dimension().location().toString());
+            String sections50=System.getProperty("bons_and_furious.sections50");      // 1.0.50 port: the in-game section A/B
+            if(sections50!=null && !sections50.isBlank())result.put("sections50",SectionCheck50.run(sections50));
             result.put("target_checks",ProbeChecks.forceTargets(true));
             result.put("behavior",BehaviorChecks.run());
             if(Boolean.getBoolean("bons_and_furious.deltaProof47"))result.put("delta_proof47",DeltaProof47.run(mc.getSingleplayerServer()));
@@ -80,7 +82,9 @@ public final class ClientProbe {
             result.put("commands",new ArrayList<>(commandLog));
             Map<String,Object> shadow=ShadowHarvest.harvest(true);
             result.put("shadow",shadow);
-            boolean passed=Boolean.TRUE.equals(((Map<?,?>)result.get("target_checks")).get("passed")) && ShadowHarvest.clean(shadow);
+            result.put("counters50",Counters50.read(true));                   // 1.0.50 port: the new helpers' counters
+            boolean passed=Boolean.TRUE.equals(((Map<?,?>)result.get("target_checks")).get("passed")) && ShadowHarvest.clean(shadow)
+                    && (!result.containsKey("sections50") || Boolean.TRUE.equals(((Map<?,?>)result.get("sections50")).get("passed")));
             result.put("passed",passed);
             Screenshot.grab(mc.gameDirectory,mc.getMainRenderTarget(),message->System.out.println("BONS_PORT_SCREENSHOT "+message.getString()));
         } catch(Throwable t) {result.put("passed",false);result.put("error",t.toString());t.printStackTrace();}

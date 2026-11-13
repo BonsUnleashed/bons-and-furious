@@ -1,6 +1,8 @@
 # Bons and Furious for Minecraft 1.21.1 / NeoForge
 
-This is Bons and Furious 1.0.49.2 for Minecraft 1.21.1 and NeoForge. The mod ID is `bons_and_furious`, the version is `1.0.49.2+mc1.21.1`, and it requires Java 21 and NeoForge 21.1.252 or newer. Minecraft is restricted to exactly 1.21.1. The tested loader is 21.1.252; later loaders are not automatically qualified.
+This is Bons and Furious 1.0.50 for Minecraft 1.21.1 and NeoForge. The mod ID is `bons_and_furious`, the version is `1.0.50+mc1.21.1`, and it requires Java 21 and NeoForge 21.1.252 or newer. Minecraft is restricted to exactly 1.21.1. The tested loader is 21.1.252; later loaders are not automatically qualified.
+
+1.0.50+mc1.21.1 builds on the published 1.0.49.2+mc1.21.1: the same controls, the fixes of the 2026-11-12 bug sweep, and the five controls of Forge 1.0.50 that have a Minecraft 1.21.1 target (one climate sampler per chunk, flat caches that remember columns outside their chunk, Embeddium's hidden block skip with Fusion's models, ForgeEndertech's config files read once per server start). The other four controls of Forge 1.0.50 have no 1.21.1 target or nothing to do there (PORT-COVERAGE.md).
 
 1.0.49.2+mc1.21.1 is a hotfix of 1.0.49+mc1.21.1: the same controls, with the fixes of two bug sweeps (memory kept after a world was closed, a start-up crash next to Moonrise, Afterburner or SuperChunk with Distant Horizons, switches that turned themselves off next to common mods, an old config line that kept a switch on after its default became off) and no new switch.
 
@@ -23,7 +25,7 @@ release.
 
 ## Install
 
-Put `bons_and_furious-neoforge-1.0.49.2+mc1.21.1.jar` in the `mods` folder of a Minecraft 1.21.1 NeoForge instance.
+Put `bons_and_furious-neoforge-1.0.50+mc1.21.1.jar` in the `mods` folder of a Minecraft 1.21.1 NeoForge instance.
 Optional target mods are not required; their patches only apply when the relevant targets and method fingerprints
 match. MixinSquared is bundled; NeoForge supplies MixinExtras.
 

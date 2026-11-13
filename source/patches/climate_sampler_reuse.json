@@ -1,0 +1,40 @@
+{
+  "group": "climate_sampler_reuse",
+  "keys": {
+    "vanilla_chunk_climate_sampler_reuse": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.50",
+      "mixins": [
+        "bons.furious.mixin.climate_sampler_reuse.NoiseChunkSamplerReuseMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "cachedClimateSampler",
+          "desc": "(Lnet/minecraft/world/level/levelgen/NoiseRouter;Ljava/util/List;)Lnet/minecraft/world/level/biome/Climate$Sampler;",
+          "note": "new Climate.Sampler(six router functions each mapped through wrap, the spawn target): reads nothing but its two arguments and the wrap table",
+          "sha256": "1ccd071099bbffe9438440917816b0c7e64fd0db4110e39d78d65655a72591a0"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "wrap",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "note": "wrap: wrapped.computeIfAbsent(function, this::wrapNew), so an equal node of a second mapping gets the first mapping's wrapper",
+          "sha256": "8ab2c370f19585d4b4cfcfb40adbae0a5c5bd955d10eafad54695ad6c876176f"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/worldgen_allocation/NoiseChunkMixin",
+          "method": "wrap",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "note": "audited: ModernFix's overwrite of wrap keeps the memo (get, else wrapNew and put): an equal node gets the first wrapper",
+          "audit": true,
+          "sha256": "8d4e737aee87d8eb0e760f594363cbdcf766f3b605014ae2c807ba6eae35efd5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapMethod on NoiseChunk.cachedClimateSampler (the sampler made for the same router and spawn target objects is returned again; helper bons.furious.patch.climate_sampler_reuse.SamplerReuse)",
+      "license": "Minecraft (Mojang): no-copy; the mixin carries only our own logic"
+    }
+  }
+}

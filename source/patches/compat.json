@@ -824,6 +824,30 @@
       "mixin": "dev.superchunk.mixin.compat.MixinDhDataInputStream",
       "conflict": "DhDataInputStream.create",
       "why": "SuperChunk 0.6.0 and later @Redirect the same two ByteArrayInputStream constructions in Distant Horizons' DhDataInputStream.create (to its own unsynchronized stream) at the same priority. Mixin lets only one redirect hold a call and ours has require = 1, so when SuperChunk's applies first a dedicated server with Distant Horizons stops at world load ('Critical injection failure: Redirector bons$unlockedSlice ... (0/1)', reproduced 2026-11-11). Both make the same change, so stepping aside loses nothing."
+    },
+    {
+      "key": "geckolib_keyframe_locals",
+      "mod": "animorph",
+      "name": "Animorph",
+      "mixin": "me.feeldev.animorph.client.mixin.geo.AnimationControllerMixin",
+      "conflict": "AnimationController.getAnimationPointAtTick",
+      "why": "Animorph's AnimationControllerMixin also @Overwrites AnimationController.getAnimationPointAtTick (client, priority 1000). Mixin keeps one of the two and logs an overwrite conflict for the other; which one depends on the load order, and when ours is kept Animorph's change is lost. This switch steps aside so that Animorph's always applies (seen 2026-11-12 on Forge with Animorph 1.1.1 and GeckoLib 4.8.4: Animorph's was kept and ours skipped; no crash either way; static match for Animorph 1.1.0 on NeoForge 1.21.1)"
+    },
+    {
+      "key": "vanilla_entity_outline_composite_skip",
+      "mod": "vulkanmod",
+      "name": "VulkanMod",
+      "mixin": "net.vulkanmod.mixin.render.BufferUploaderM",
+      "conflict": "BufferUploader.draw",
+      "why": "VulkanMod's BufferUploaderM (Overwrite, priority 1000, required config) replaces BufferUploader.draw, where this switch redirects the VertexBuffer.draw call (BufferUploaderOutlineMixin, require 1, required config) (R3-CRASH): Mixin refuses to inject into a method another mixin merged at the same priority, so the client would stop when BufferUploader loads. Static check of VulkanMod 0.5.5-dev+3.1 for NeoForge 1.21.1 (it needs Forgified Fabric API), 2026-11-13; the same shape as the Moonrise and Afterburner rows, which were reproduced on NeoForge; not run"
+    },
+    {
+      "key": "immersiveoptimization_be_priority_front_cache",
+      "mod": "moonrise_compats",
+      "name": "Moonrise Compats",
+      "mixin": "dev.sixik.moonrise_compats.mixin.fixes.immersive_optimization.MixinTickScheduler$FixEntityList",
+      "conflict": "TickScheduler.tickLevel",
+      "why": "Moonrise Compats' MixinTickScheduler$FixEntityList (Overwrite, priority 1000, common list of a required config) replaces Immersive Optimization's TickScheduler.tickLevel, where this switch wraps calls (TickSchedulerFrontCacheMixin, @WrapOperation, require 1, client list of a required config) (R3-CRASH): Mixin refuses to inject into a method another mixin merged at the same priority, so a client or single player with Moonrise, Moonrise Compats 0.1.0-beta.15+2eae1b1.5 and Immersive Optimization 0.2.0 would stop when TickScheduler loads (at level load). A dedicated server is not affected (our mixin is client-only): three server runs were clean, and a Mixin class export of the server's TickScheduler showed Moonrise Compats' overwrite applied and ours absent (2026-11-13, rig/neo/runs/mrio_*). Client side not run"
     }
   ]
 }

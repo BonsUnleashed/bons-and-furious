@@ -1,8 +1,8 @@
 # Minecraft 1.21.1 port coverage
 
-Version `1.0.49.2+mc1.21.1`. The controls are the same as in 1.0.49+mc1.21.1.
+Version `1.0.50+mc1.21.1`. The controls of 1.0.49+mc1.21.1 and the nine that Forge 1.0.50 adds: five ported, one retired on 1.21.1, three without a 1.21.1 target.
 
-All 885 controls of Bons and Furious 1.0.49 are accounted for: 556 ported, 161 retired because the 1.21.1 target changed or already does the work, and 168 whose target mod has no author-published Minecraft 1.21.1 NeoForge build. This release keeps every control of the published 1.0.47 NeoForge port and adds 296.
+All 894 controls of Bons and Furious 1.0.50 are accounted for: 561 ported, 162 retired because the 1.21.1 target changed or already does the work, and 171 whose target mod has no author-published Minecraft 1.21.1 NeoForge build. This release keeps every control of the published 1.0.49.2 NeoForge port and adds 5.
 
 | Control | Added | Status | Explanation |
 | --- | --- | --- | --- |
@@ -162,6 +162,8 @@ All 885 controls of Bons and Furious 1.0.49 are accounted for: 556 ported, 161 r
 | `corpse_death_sweep_single_worker` | 1.0.49 | ported | Adapted to the Minecraft 1.21.1 and NeoForge target, with fingerprints taken from the 1.21.1 classes. See the test results for what was exercised. |
 | `corpse_idle_scan_streamless` | 1.0.49 | ported | Adapted to the Minecraft 1.21.1 and NeoForge target, with fingerprints taken from the 1.21.1 classes. See the test results for what was exercised. |
 | `cosmeticarmor_restore_queue_field` | 1.0.49 | ported | Adapted to the Minecraft 1.21.1 and NeoForge target, with fingerprints taken from the 1.21.1 classes. See the test results for what was exercised. |
+| `cosmichorizons_reload_unchanged_skip` | 1.0.50 | target unavailable | No author-published Minecraft 1.21.1 NeoForge build was found on Modrinth or CurseForge (checked 2026-11-13; unofficial ports do not count). The Forge implementation remains in the 1.20.1 source. |
+| `cosmichorizons_sync_without_players_skip` | 1.0.50 | target unavailable | No author-published Minecraft 1.21.1 NeoForge build was found on Modrinth or CurseForge (checked 2026-11-13; unofficial ports do not count). The Forge implementation remains in the 1.20.1 source. |
 | `create_big_outline_probe_dedupe` | 1.0.49 | ported | Adapted to the Minecraft 1.21.1 and NeoForge target, with fingerprints taken from the 1.21.1 classes. See the test results for what was exercised. |
 | `create_collision_single_pass` | 1.0.30 | retired on 1.21.1 | Create 6.0.10 already builds contraption collision from each block's own boxes (Contraption.invalidateColliders fills a CollisionList); the join/optimize chain the switch shortened is gone. |
 | `create_idle_behaviour_tick_skip` | 1.0.49 | ported | Adapted to the Minecraft 1.21.1 and NeoForge target, with fingerprints taken from the 1.21.1 classes. See the test results for what was exercised. |
@@ -243,6 +245,7 @@ All 885 controls of Bons and Furious 1.0.49 are accounted for: 556 ported, 161 r
 | `embeddium_direct_upload_preparation` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `embeddium_draw_batch_cache` | 1.0.30 | ported | Embeddium 1.0.15 keeps 0.3.31's draw-batch fill inputs and all six writers under the relocated packages. |
 | `embeddium_entity_sort_radix` | 1.0.30 | ported | Vanilla VertexSorting and its sorts are identical on 1.21.1 apart from the method name; buffers reach it through Embeddium's MeshData$SortState overwrite, the same redirected call. |
+| `embeddium_hidden_block_skip` | 1.0.50 | ported | Adapted to the Minecraft 1.21.1 and NeoForge target, with fingerprints taken from the 1.21.1 classes. See the test results for what was exercised. Embeddium only: with Sodium (the Iris pairing) the switch does not apply. |
 | `embeddium_lazy_completed_jobs` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `embeddium_merged_draws` | 1.0.30 | ported | Same fill and shared index-buffer code on Embeddium 1.0.15, whose shaders use no gl_PrimitiveID/gl_DrawID/gl_BaseVertex. |
 | `embeddium_mesh_buffer_growth_fix` | 1.0.36 | retired on 1.21.1 | Fixed upstream: Embeddium 1.0.15 rewrote ChunkMeshBufferBuilder (capacity in bytes, one reallocation to max(cap*2, cap+bytesNeeded), no setBufferSize), so the stride is applied once. |
@@ -316,6 +319,7 @@ All 885 controls of Bons and Furious 1.0.49 are accounted for: 556 ported, 161 r
 | `forge_render_layer_memo` | 1.0.23 | ported | Adapted to the Minecraft 1.21.1 and NeoForge target, with fingerprints taken from the 1.21.1 classes. See the test results for what was exercised. |
 | `forge_status_ping_channel_groups` | 1.0.27 or earlier | retired on 1.21.1 | NeoForge 21.1 networking no longer has ServerStatusPing or its per-mod channel scan. |
 | `forge_status_ping_memo` | 1.0.29 | retired on 1.21.1 | NeoForge 21.1 has no ServerStatusPing; MinecraftServer.buildServerStatus builds vanilla's ServerStatus without a mod/channel list and NeoForge caches the JSON. |
+| `forgeendertech_start_config_reads_once` | 1.0.50 | ported | Adapted to the Minecraft 1.21.1 and NeoForge target, with fingerprints taken from the 1.21.1 classes. See the test results for what was exercised. The start ends when the server is ready (MinecraftServer.isReady()), as in the Forge release. |
 | `fowlplay_air_targets_loaded_only` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `fowlplay_flock_vectors` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `frame_pacing` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. Since 1.0.41+mc1.21.1 (as Forge 1.0.41) the limiter call is queued for the display update, which runs it just before the buffer swap, so no method of this mod is on the stack while it waits. |
@@ -329,6 +333,7 @@ All 885 controls of Bons and Furious 1.0.49 are accounted for: 556 ported, 161 r
 | `ftbxmodcompat_waystone_map_icons_off` | 1.0.49 | ported | Adapted to the Minecraft 1.21.1 and NeoForge target, with fingerprints taken from the 1.21.1 classes. See the test results for what was exercised. |
 | `fusion_chunk_layer_id` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `fusion_connection_lookups` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
+| `fusion_hidden_block_models` | 1.0.50 | ported | Adapted to the Minecraft 1.21.1 and NeoForge target, with fingerprints taken from the 1.21.1 classes. See the test results for what was exercised. Only together with embeddium_hidden_block_skip on Embeddium. |
 | `geckolib_animation_hashes` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `geckolib_bone_lookup_memo` | 1.0.49 | ported | Adapted to the Minecraft 1.21.1 and NeoForge target, with fingerprints taken from the 1.21.1 classes. See the test results for what was exercised. |
 | `geckolib_bone_queue_reuse` | 1.0.28 | ported | GeckoLib 4.9.3 moved AnimationController/BoneAnimationQueue to software.bernie.geckolib.animation; createInitialQueues and the queue polling are unchanged. |
@@ -630,6 +635,7 @@ All 885 controls of Bons and Furious 1.0.49 are accounted for: 556 ported, 161 r
 | `simplyswords_config_unchanged_reuse` | 1.0.30 | retired on 1.21.1 | Simply Swords 1.70.2 loads its config once through Fzzy Config; the per-read json5 parse the switch skipped is gone. |
 | `simplyswords_footfalls_unheld_skip` | 1.0.49 | retired on 1.21.1 | 1.21.1 HelperMethods.createFootfalls(Entity, ItemStack, Level, ParticleOptions x3, boolean, boolean) tests Config.general.enableWeaponFootfalls, a plain boolean field of the Fzzy Config GeneralConfig object, instead of Config.getBoolean (which re-read general.json5 from disk on Forge 1.56.0); the unheld path now costs... |
 | `simplyswords_incapacitated_lockfree` | 1.0.49 | ported | Adapted to the Minecraft 1.21.1 and NeoForge target, with fingerprints taken from the 1.21.1 classes. See the test results for what was exercised. |
+| `simplyswords_loot_table_name_first` | 1.0.50 | retired on 1.21.1 | Simply Swords 1.70.2 keeps its loot settings in a config object it loads once, so the config file reads this switch removes do not happen on 1.21.1. |
 | `simplyswords_pity_loot_deque_keep` | 1.0.49 | ported | Adapted to the Minecraft 1.21.1 and NeoForge target, with fingerprints taken from the 1.21.1 classes. See the test results for what was exercised. |
 | `simplyswordsoverhaul_logout_dash_restore` | 1.0.49 | target unavailable | No author-published Minecraft 1.21.1 NeoForge build was found on Modrinth or CurseForge (checked 2026-11-04 and 2026-11-08; unofficial ports do not count). The Forge implementation remains in the 1.20.1 source. |
 | `simplyswordsoverhaul_molten_edge_buff_refresh` | 1.0.49 | target unavailable | No author-published Minecraft 1.21.1 NeoForge build was found on Modrinth or CurseForge (checked 2026-11-04 and 2026-11-08; unofficial ports do not count). The Forge implementation remains in the 1.20.1 source. |
@@ -750,6 +756,7 @@ All 885 controls of Bons and Furious 1.0.49 are accounted for: 556 ported, 161 r
 | `uniqueaccessories_rose_repath_interval` | 1.0.49 | target unavailable | No author-published Minecraft 1.21.1 NeoForge build was found on Modrinth or CurseForge (checked 2026-11-04 and 2026-11-08; unofficial ports do not count). The Forge implementation remains in the 1.20.1 source. |
 | `uniqueaccessories_waist_warmer_frozen_first` | 1.0.49 | target unavailable | No author-published Minecraft 1.21.1 NeoForge build was found on Modrinth or CurseForge (checked 2026-11-04 and 2026-11-08; unofficial ports do not count). The Forge implementation remains in the 1.20.1 source. |
 | `valkyrien_backoff_nan` | 1.0.27 or earlier | target unavailable | No author-published Minecraft 1.21.1 NeoForge build was found on Modrinth or CurseForge (checked 2026-11-04 and 2026-11-08; unofficial ports do not count). The Forge implementation remains in the 1.20.1 source. |
+| `valkyrien_block_registration_lazy_cache` | 1.0.50 | target unavailable | No author-published Minecraft 1.21.1 NeoForge build was found on Modrinth or CurseForge (checked 2026-11-13; unofficial ports do not count). The Forge implementation remains in the 1.20.1 source. |
 | `valkyrien_chunk_bookkeeping` | 1.0.27 or earlier | target unavailable | No author-published Minecraft 1.21.1 NeoForge build was found on Modrinth or CurseForge (checked 2026-11-04 and 2026-11-08; unofficial ports do not count). The Forge implementation remains in the 1.20.1 source. |
 | `valkyrien_chunk_set_version` | 1.0.27 or earlier | target unavailable | No author-published Minecraft 1.21.1 NeoForge build was found on Modrinth or CurseForge (checked 2026-11-04 and 2026-11-08; unofficial ports do not count). The Forge implementation remains in the 1.20.1 source. |
 | `valkyrien_client_chunk_drop` | 1.0.46 | target unavailable | No author-published Minecraft 1.21.1 NeoForge build was found on Modrinth or CurseForge (checked 2026-11-04 and 2026-11-08; unofficial ports do not count). The Forge implementation remains in the 1.20.1 source. |
@@ -787,6 +794,7 @@ All 885 controls of Bons and Furious 1.0.49 are accounted for: 556 ported, 161 r
 | `vanilla_boat_fall_no_break` | 1.0.49 | ported | Adapted to the Minecraft 1.21.1 and NeoForge target, with fingerprints taken from the 1.21.1 classes. See the test results for what was exercised. |
 | `vanilla_camera_fluid_memo` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `vanilla_chunk_biome_codec_memo` | 1.0.36 | ported | makeBiomeCodec is the same code; holderByNameCodec now hands off to the private Registry.referenceHolderWithLifecycle, which is guarded too. |
+| `vanilla_chunk_climate_sampler_reuse` | 1.0.50 | ported | Adapted to the Minecraft 1.21.1 and NeoForge target, with fingerprints taken from the 1.21.1 classes. See the test results for what was exercised. |
 | `vanilla_chunk_palette_direct_nbt` | 1.0.36 | ported | ChunkSerializer.write makes the same four encodeStart calls; DFU 8 still writes Properties before Name and the last property first; every entry is still checked against the real codec at run time. |
 | `vanilla_chunk_status_name_memo` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `vanilla_climate_last_result_weak` | 1.0.36 | ported | Climate$RTree is unchanged, but Biolith 3.0.10 adds two ThreadLocal fields to it, so the hook now replaces exactly the lastResult field at the constructor's RETURN instead of wrapping every new ThreadLocal; every search still uses the weak slot. |
@@ -810,6 +818,7 @@ All 885 controls of Bons and Furious 1.0.49 are accounted for: 556 ported, 161 r
 | `vanilla_entity_walk_skip` | 1.0.45 | ported | Adapted to the Minecraft 1.21.1 and NeoForge target, with fingerprints taken from the 1.21.1 classes. See the test results for what was exercised. |
 | `vanilla_fire_scan_idle_skip` | 1.0.45 | ported | Adapted to the inspected Minecraft 1.21.1 / NeoForge target APIs, with version-specific fingerprints. See QUALIFICATION.md for exercised behavior and limits. |
 | `vanilla_fire_scan_loop` | 1.0.28 | ported | The fire/lava check in Entity.move and Level.getBlockStatesIfLoaded are the same code on 1.21.1. |
+| `vanilla_flat_cache_outside_columns` | 1.0.50 | ported | Adapted to the Minecraft 1.21.1 and NeoForge target, with fingerprints taken from the 1.21.1 classes. See the test results for what was exercised. One more conflict row than on Forge: next to Generator Accelerator, which overwrites the flat cache's compute method, the switch steps aside. |
 | `vanilla_flying_kick_off` | 1.0.49 | ported | Adapted to the Minecraft 1.21.1 and NeoForge target, with fingerprints taken from the 1.21.1 classes. See the test results for what was exercised. |
 | `vanilla_fog_color_sample_memo` | 1.0.27 or earlier | ported | Ported; see runtime qualification and conditional compatibility notes. |
 | `vanilla_fog_color_sample_tick_memo` | 1.0.49 | ported | Adapted to the Minecraft 1.21.1 and NeoForge target, with fingerprints taken from the 1.21.1 classes. See the test results for what was exercised. |

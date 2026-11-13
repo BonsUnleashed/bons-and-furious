@@ -4,7 +4,7 @@ license="GPL-3.0-only"
 issueTrackerURL="https://github.com/BonsUnleashed/bons-and-furious/issues"
 [[mods]]
 modId="bons_and_furious"
-version="1.0.49.2+mc1.21.1"
+version="1.0.50+mc1.21.1"
 displayName="Bons and Furious"
 authors="BonsUnleashed"
 description="Targeted performance patches and compatibility fixes for Minecraft 1.21.1 and NeoForge."
@@ -963,3 +963,15 @@ config="bons_and_furious.xaeroworldmap_gpu_c49.mixins.json"
 
 [[mixins]]
 config="bons_and_furious.zeta_lean.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.climate_sampler_reuse.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.flat_cache_columns.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.embeddium_hidden_blocks.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.endertech_start_reads.mixins.json"

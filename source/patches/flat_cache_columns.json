@@ -1,0 +1,102 @@
+{
+  "group": "flat_cache_columns",
+  "keys": {
+    "vanilla_flat_cache_outside_columns": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.0.50",
+      "mixins": [
+        "bons.furious.mixin.flat_cache_columns.FlatCacheOutsideMixin",
+        "bons.furious.mixin.flat_cache_columns.NoiseChunkOutsideMixin",
+        "bons.furious.mixin.flat_cache_columns.MarkerOriginMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$FlatCache",
+          "method": "compute",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "note": "inside the grid: values[k][l]; otherwise noiseFiller.compute(context), the one call the wrapper stands around",
+          "sha256": "cb64082db54ecbd0704a6e5856db67e6f7e862b7805a4becb5e664427b76cd7c",
+          "sha256_variants": [
+            "73c1136b8c428551a63bacdda9a47fd1bd1c36f9204dc298ede42345fa104baf"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (installed NeoForge 21.1.252 client/server jars): ternary returns directly in both branches instead of a goto to one dreturn; same calls, fields and comparisons. See work/lanes/W6/prod/review/net.minecraft.world.level.levelgen.NoiseChunk$FlatCache.compute.server.diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk$FlatCache",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/levelgen/NoiseChunk;Lnet/minecraft/world/level/levelgen/DensityFunction;Z)V",
+          "note": "stores the filler, allocates the grid, fills it at the quart corners with y = 0 when asked to",
+          "sha256": "e922aa5fd16e0b7940bab879cf8fedf916631e38afdd14318f442d39c6cf3d05"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "<init>",
+          "desc": "(ILnet/minecraft/world/level/levelgen/RandomState;IILnet/minecraft/world/level/levelgen/NoiseSettings;Lnet/minecraft/world/level/levelgen/DensityFunctions$BeardifierOrMarker;Lnet/minecraft/world/level/levelgen/NoiseGeneratorSettings;Lnet/minecraft/world/level/levelgen/Aquifer$FluidPicker;Lnet/minecraft/world/level/levelgen/blending/Blender;)V",
+          "note": "makes the two blend caches, maps the RandomState's router through wrap (every FlatCache of the router is made here), builds the aquifer and the block state rule",
+          "sha256": "7c893acb24204775a4ea648eda27bf73e2a8c4834cb13b16deb5cd20f30c490b"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "wrapNew",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "note": "wrapNew: a FlatCache marker becomes new FlatCache(marker.wrapped(), true); blend_alpha / blend_offset become the NoiseChunk's two blend caches",
+          "sha256": "d0c362bb055be2cea6b5b8e4270b0dc7e31b257613142ea596da56df615b451a",
+          "sha256_variants": [
+            "23e4b89d4124607734c39b3963fb8e12d56ebe95330e9d6b1e5007c2dcd02c4b"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (server and client 1.21.1-20240808.144430-srg jars, filled by GuardTool): only the trailing HolderHolder branch differs from the NeoForm recompilation (pattern local in slot 2 vs 3, two areturns vs goto + one areturn); the BeardifierMarker branch this switch relies on is byte-identical. See work/lanes/worldgen/evidence/NoiseChunk.wrapNew-bytecode-diff.txt."
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "wrap",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "note": "wrap: wrapped.computeIfAbsent(function, this::wrapNew): one wrapper per equal node, made at its first wrap",
+          "sha256": "8ab2c370f19585d4b4cfcfb40adbae0a5c5bd955d10eafad54695ad6c876176f"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseRouter",
+          "method": "mapAll",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/NoiseRouter;",
+          "note": "mapAll: each of the router's fifteen functions mapped through the visitor, nothing else",
+          "sha256": "d77d6f85527915ceeea935b1ad41e162e62a44d68fb5b9f73f966e224775d985"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$MarkerOrMarked",
+          "method": "mapAll",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$Visitor;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "note": "mapAll of markers and of NoiseChunk caches: the wrapped function is mapped, put in a new marker of the same type and handed to the visitor; the marker record inherits it",
+          "sha256": "5ecb7b8b193e11c277f3a628b448099395065f1d50b88d71a044f5bf4b640267"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$Marker",
+          "method": "<init>",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunctions$Marker$Type;Lnet/minecraft/world/level/levelgen/DensityFunction;)V",
+          "note": "the marker record: its two components (type, wrapped function) and nothing else; it declares no mapAll of its own, which is what the soft mapAll of MarkerOriginMixin stands in for",
+          "sha256": "acd6c718fbb9cae588f42a462032956a9f0070c729e03bfab6d574e39d6dba86"
+        },
+        {
+          "class": "org/embeddedt/modernfix/common/mixin/perf/worldgen_allocation/NoiseChunkMixin",
+          "method": "wrap",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction;)Lnet/minecraft/world/level/levelgen/DensityFunction;",
+          "note": "audited: ModernFix's overwrite of wrap keeps the memo (get, else wrapNew and put): an equal node gets the first wrapper",
+          "audit": true,
+          "sha256": "8d4e737aee87d8eb0e760f594363cbdcf766f3b605014ae2c807ba6eae35efd5"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapOperation on the constructor's router.mapAll(wrap) call (require = 0: takes the verdict of the router that is about to be wrapped, checked once per router, and marks the time the call runs) and @Inject at the end of NoiseChunk's constructor (tables are handed out from then on); @Inject at the end of FlatCache's constructor (made while the router was wrapped, or not); MixinExtras @WrapOperation on FlatCache.compute's one noiseFiller.compute call; a soft @Intrinsic mapAll on the marker record that calls the interface's method through a special method handle and tells a FlatCache result which marker it came from (helper bons.furious.patch.flat_cache_columns.OutsideColumns)",
+      "license": "Minecraft (Mojang): no-copy; the mixins carry only our own logic"
+    }
+  },
+  "yields": [
+    {
+      "key": "vanilla_flat_cache_outside_columns",
+      "mod": "generator_accelerator",
+      "name": "Generator Accelerator",
+      "mixin": "dev.sixik.generator_accelerator.common.noise.mixin.MixinNoiseChunk$FlatCache$OptimizeFlatArray",
+      "conflict": "NoiseChunk$FlatCache.compute",
+      "why": "Generator Accelerator (read: 1.21.1-1.6.2) @Overwrites NoiseChunk$FlatCache.compute at the default priority with its own flat array. Mixin refuses our @WrapOperation into a method another mixin overwrote at equal priority (the class would fail to load and the game would stop at the first world load), and the table this switch keeps stands around vanilla's one noiseFiller.compute call, so this switch steps aside whenever that mixin is listed. Found by a scan of the other mods' mixins on the same classes for the 1.21.1 port of 1.0.50 (287 jars, bytecode read, not run in game)."
+    }
+  ]
+}

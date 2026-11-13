@@ -3752,5 +3752,45 @@
     "targets": [
       "org.violetmoon.zeta.util.handler.StructureBlockReplacementHandler"
     ]
+  },
+  "vanilla_chunk_climate_sampler_reuse": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.levelgen.NoiseChunk"
+    ]
+  },
+  "vanilla_flat_cache_outside_columns": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.levelgen.DensityFunctions$Marker",
+      "net.minecraft.world.level.levelgen.NoiseChunk",
+      "net.minecraft.world.level.levelgen.NoiseChunk$FlatCache"
+    ]
+  },
+  "embeddium_hidden_block_skip": {
+    "client": true,
+    "targets": [
+      "net.minecraft.client.resources.model.SimpleBakedModel",
+      "net.minecraft.client.resources.model.WeightedBakedModel",
+      "org.embeddedt.embeddium.api.BlockRendererRegistry",
+      "org.embeddedt.embeddium.impl.render.chunk.compile.pipeline.BlockRenderer",
+      "org.embeddedt.embeddium.impl.render.chunk.compile.tasks.ChunkBuilderMeshingTask"
+    ]
+  },
+  "fusion_hidden_block_models": {
+    "client": true,
+    "targets": [
+      "com.supermartijn642.fusion.model.EmptyBakedModel",
+      "com.supermartijn642.fusion.model.modifiers.block.BlockModelModifierBakedModel",
+      "com.supermartijn642.fusion.model.modifiers.block.BlockModelModifierBakedModel$ConditionalModel",
+      "com.supermartijn642.fusion.model.types.base.BaseBakedModel",
+      "com.supermartijn642.fusion.model.types.base.BaseBakedModel$Quads"
+    ]
+  },
+  "forgeendertech_start_config_reads_once": {
+    "client": false,
+    "targets": [
+      "com.endertech.minecraft.forge.configs.Configuration"
+    ]
   }
 }

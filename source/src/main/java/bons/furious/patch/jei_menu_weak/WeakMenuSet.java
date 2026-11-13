@@ -44,12 +44,11 @@ public final class WeakMenuSet {
     private static final ClassValue<Boolean> IDENTITY_EQUALITY = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> type) {
-            try {
-                return type.getMethod("equals", Object.class).getDeclaringClass() == Object.class
-                        && type.getMethod("hashCode").getDeclaringClass() == Object.class;
-            } catch (NoSuchMethodException | SecurityException e) {
-                return false;
-            }
+            // the JVM's resolution of each method (bons.furious.guard.Declared), not Class.getMethod: getMethod resolves the types of
+            // every public method of the class and throws when one names a class that is not installed (bug sweep 2026-11-12). A menu
+            // class that cannot be asked is kept strongly, as JEI's own set keeps it.
+            return bons.furious.guard.Declared.inherits(type, Object.class, "equals", java.lang.invoke.MethodType.methodType(boolean.class, Object.class))
+                    && bons.furious.guard.Declared.inherits(type, Object.class, "hashCode", java.lang.invoke.MethodType.methodType(int.class));
         }
     };
     private static volatile boolean announced;

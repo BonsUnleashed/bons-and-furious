@@ -33,6 +33,12 @@ public abstract class TeslaDistanceReadMixin extends BlockEntity {
     @Unique
     private void bons$flushNetwork() {
         if (!TeslaDistances.enabled) return;
+        // Only on the server thread. C2ME writes block entities on its own save thread (saveAdditional reaches this from there),
+        // and Companions' rebuild was written for the server thread: run beside it, a tick's sync or a wrench could read a
+        // half-rebuilt distance (bug sweep 2026-11-12, found by review). A save made there writes the distance as it stands,
+        // as it does when Companions' own rebuild is running at that moment; the next read on the server thread runs the
+        // pending rebuild, and a block entity that loads registers again, which rebuilds too.
+        if (this.level instanceof net.minecraft.server.level.ServerLevel serverLevel && !serverLevel.getServer().isSameThread()) return;
         TeslaNetwork n = TeslaDistances.existing(this.level);
         if (n != null) ((LazyTeslaNetwork) n).bons$flushDistances();
     }

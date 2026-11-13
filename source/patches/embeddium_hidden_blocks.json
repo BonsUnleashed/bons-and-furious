@@ -1,0 +1,216 @@
+{
+  "group": "embeddium_hidden_blocks",
+  "keys": {
+    "embeddium_hidden_block_skip": {
+      "mod": "embeddium",
+      "scripts": [],
+      "since": "1.0.50",
+      "mixins": [
+        "bons.furious.mixin.embeddium_hidden_blocks.BlockRendererOcclusionAccessor",
+        "bons.furious.mixin.embeddium_hidden_blocks.BlockRendererRegistryAccessor",
+        "bons.furious.mixin.embeddium_hidden_blocks.MeshingTaskHiddenBlockMixin",
+        "bons.furious.mixin.embeddium_hidden_blocks.SimpleBakedModelCulledOnlyMixin",
+        "bons.furious.mixin.embeddium_hidden_blocks.WeightedBakedModelCulledOnlyMixin"
+      ],
+      "guard": [
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/compile/tasks/ChunkBuilderMeshingTask",
+          "method": "execute",
+          "desc": "(Lorg/embeddedt/embeddium/impl/render/chunk/compile/ChunkBuildContext;Lorg/embeddedt/embeddium/impl/util/task/CancellationToken;)Lorg/embeddedt/embeddium/impl/render/chunk/compile/ChunkBuildOutput;",
+          "note": "per block: air without a block entity is skipped; render shape MODEL -> model data (from the world slice), seed, unwrap, one renderModel per render layer; then the fluid, the block entity and the occlusion graph, none of which read the model branch",
+          "sha256": "f866bcd437c4c7dc39270ebd8bdac1a39268fcddac3a914be0da930b65d9d08b"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/compile/pipeline/BlockRenderer",
+          "method": "renderModel",
+          "desc": "(Lorg/embeddedt/embeddium/api/render/chunk/BlockRenderContext;Lorg/embeddedt/embeddium/impl/render/chunk/compile/ChunkBuildBuffers;)V",
+          "note": "custom renderers first, FRAPI models through the Indigo handler; else per side: the side's quads are written only when isFaceVisible; then the quads of the null side, always",
+          "sha256": "e99ce1590f8e8c31526f0cb5720cb5d2ef22fee652b550e4302d6a5e7b3b6158"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/compile/pipeline/BlockRenderer",
+          "method": "isFaceVisible",
+          "desc": "(Lorg/embeddedt/embeddium/api/render/chunk/BlockRenderContext;Lnet/minecraft/core/Direction;)Z",
+          "note": "occlusionCache.shouldDrawSide(ctx.state(), ctx.localSlice(), ctx.pos(), face)",
+          "sha256": "dc105d355cda9bfa2ae0b8f78db8ac65c1647bde037142e83c81682e16885a07"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/compile/pipeline/BlockOcclusionCache",
+          "method": "shouldDrawSide",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/Direction;)Z",
+          "note": "reads the neighbour's state and the two face occlusion shapes; its own cache is its only state",
+          "sha256": "82c9100041af063867b93cc1d459d205f02e31d91fed1e509320ad91d85b9dd7"
+        },
+        {
+          "class": "net/minecraft/client/resources/model/SimpleBakedModel",
+          "method": "getQuads",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/util/RandomSource;)Ljava/util/List;",
+          "note": "getQuads: side == null ? unculledFaces : culledFaces.get(side)",
+          "sha256": "d0cb29735c0d26a7f3442f15f920697f95d072673578e17c3ba2eaa8d1d96031"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/chunk/compile/pipeline/BlockRenderer",
+          "method": "getGeometry",
+          "desc": "(Lorg/embeddedt/embeddium/api/render/chunk/BlockRenderContext;Lnet/minecraft/core/Direction;)Ljava/util/List;",
+          "note": "re-seeds the renderer's random source with the block seed before every model call",
+          "sha256": "33a4fc93f6b4c2c96fdc503937bc0cf845c749ba9ecb6ae36810e8d0e5747b64"
+        },
+        {
+          "class": "org/embeddedt/embeddium/api/BlockRendererRegistry",
+          "method": "fillCustomRenderers",
+          "desc": "(Ljava/util/List;Lorg/embeddedt/embeddium/api/render/chunk/BlockRenderContext;)V",
+          "note": "asks the registered sources only: none registered, no custom renderer",
+          "sha256": "8f46a07539e7ea2adf895e55a88af51a621a850b081a03ca45093ce5954e471f"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/frapi/IndigoBlockRenderContext",
+          "method": "renderEmbeddium",
+          "desc": "(Lorg/embeddedt/embeddium/api/render/chunk/BlockRenderContext;Lorg/embeddedt/embeddium/impl/render/chunk/compile/ChunkBuildBuffers;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/util/RandomSource;)V",
+          "note": "hands the random source to Indigo's render together with the block seed, nothing else reads it (on NeoForge only with Forgified Fabric API's Indigo, which no jar of the port's corpus provides)",
+          "sha256": "af2753fc2e1b8bb92b2efe20f72fbd3932bb3bed206bf081d434e183ea038310"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/model/UnwrappableBakedModel",
+          "method": "unwrapIfPossible",
+          "desc": "(Lnet/minecraft/client/resources/model/BakedModel;Lnet/minecraft/util/RandomSource;)Lnet/minecraft/client/resources/model/BakedModel;",
+          "note": "asks the model for its inner model with the task's own random source (re-seeded before and after)",
+          "sha256": "77fffe8159282b482f58d8d25684ae4d9e1a3c4060bf33c93de59248e48e3208"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/mixin/features/model/WeightedBakedModelMixin",
+          "method": "embeddium$getInnerModel",
+          "desc": "(Lnet/minecraft/util/RandomSource;)Lnet/minecraft/client/resources/model/BakedModel;",
+          "note": "one variant of the weighted list; reads only",
+          "sha256": "abcb9e176c875af26b33a1cade60c239d238397a863049dd271e39fcb9bd0d43"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/mixin/features/model/WeightedBakedModelMixin",
+          "method": "getQuads",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/util/RandomSource;Lnet/neoforged/neoforge/client/model/data/ModelData;Lnet/minecraft/client/renderer/RenderType;)Ljava/util/List;",
+          "note": "the picked variant's quads for the same side",
+          "sha256": "4a744c2b32dcc6b2c39bd145ae214b883b5782047adcc0a7244226e31d8646e4"
+        },
+        {
+          "class": "com/supermartijn642/fusion/mixin/embeddium/BlockRendererMixinEmbeddium",
+          "method": "renderModel",
+          "desc": "(Lorg/embeddedt/embeddium/api/render/chunk/BlockRenderContext;Lorg/embeddedt/embeddium/impl/render/chunk/compile/ChunkBuildBuffers;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "audited: acts on BlockModelModifierBakedModel only, which is face-only only through fusion_hidden_block_models",
+          "audit": true,
+          "sha256": "2acef306a47b89fe71aa1a71d39ccd463e5b8179659aaef80f8fc9d25a082467"
+        },
+        {
+          "class": "com/supermartijn642/fusion/mixin/WeightedBakedModelMixin",
+          "method": "getModelData",
+          "desc": "(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/neoforged/neoforge/client/model/data/ModelData;)Lnet/neoforged/neoforge/client/model/data/ModelData;",
+          "note": "audited: model data of the variant the block seed picks, with a random source of its own; reads only",
+          "audit": true,
+          "sha256": "fea5e9dd6ac20b9cd06596cfc74a9c80c32a0ebe7393a6c87bfcb507381b55fd"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/frapi/FRAPIModelUtils",
+          "method": "isFRAPIModel",
+          "desc": "(Lnet/minecraft/client/resources/model/BakedModel;)Z",
+          "note": "false without Indigo, else !isVanillaAdapter(): the test renderModel uses to hand a model to the Indigo renderer",
+          "sha256": "eb214c8e0aee0b4c7aa7aea93de2fbe574b9854d9069d867b1fc8d650d0239b0"
+        },
+        {
+          "class": "me/jellysquid/mods/sodium/mixin/features/model/SimpleBakedModelMixin",
+          "method": "getQuads",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/util/RandomSource;Lnet/neoforged/neoforge/client/model/data/ModelData;Lnet/minecraft/client/renderer/RenderType;)Ljava/util/List;",
+          "note": "@Intrinsic in Embeddium 1.0.15: NeoForge's five-argument getQuads answers with the three-argument one, so a null side is the unculled list",
+          "sha256": "b2335c27068849b9ebe2d01d93b7b63155bac8bc700e09d5960d356b0cf6d97e"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @ModifyExpressionValue on the meshing task's second BlockState.getRenderShape() call, with the task's render cache, render context, state, position and world slice (@Local): INVISIBLE for a block whose model can only emit face quads and whose six faces are not drawn, while no custom block renderer is registered (helper bons.furious.patch.embeddium_hidden_blocks.HiddenBlocks); accessors for BlockRenderer.occlusionCache and BlockRendererRegistry.renderPopulators; the face-quads-only answer of vanilla's simple and weighted models",
+      "license": "Embeddium: LGPL-3.0; no Embeddium code is carried; our own logic only"
+    },
+    "fusion_hidden_block_models": {
+      "mod": "fusion",
+      "scripts": [],
+      "since": "1.0.50",
+      "mixins": [
+        "bons.furious.mixin.embeddium_hidden_blocks.BaseBakedModelCulledOnlyMixin",
+        "bons.furious.mixin.embeddium_hidden_blocks.BlockModelModifierCulledOnlyMixin",
+        "bons.furious.mixin.embeddium_hidden_blocks.ConditionalModelAccessor",
+        "bons.furious.mixin.embeddium_hidden_blocks.EmptyBakedModelCulledOnlyMixin",
+        "bons.furious.mixin.embeddium_hidden_blocks.QuadsGetInvoker"
+      ],
+      "guard": [
+        {
+          "class": "com/supermartijn642/fusion/model/types/base/BaseBakedModel",
+          "method": "getQuads",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/util/RandomSource;Lnet/neoforged/neoforge/client/model/data/ModelData;Lnet/minecraft/client/renderer/RenderType;)Ljava/util/List;",
+          "note": "failed conditions -> empty; otherwise the quads of the asked side only: processQuads(quads.get(side), ...) through the lazy processor",
+          "sha256": "0bbde45a67cc75fef7e94587818c69c7f2bcca67a3e99b16ea3504d848e7c8eb"
+        },
+        {
+          "class": "com/supermartijn642/fusion/model/types/base/BaseBakedModel$Quads",
+          "method": "get",
+          "desc": "(Lnet/minecraft/core/Direction;)Ljava/util/List;",
+          "note": "the list of one side (null = no side)",
+          "sha256": "03446f4f5a0af0737590b5e63e981b2695641252911a96cf76ebd2235c9cc238"
+        },
+        {
+          "class": "com/supermartijn642/fusion/model/modifiers/block/BlockModelModifierBakedModel",
+          "method": "getQuads",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/util/RandomSource;Lnet/neoforged/neoforge/client/model/data/ModelData;Lnet/minecraft/client/renderer/RenderType;)Ljava/util/List;",
+          "note": "the quads of the chosen default override (or the original) and of every chosen append model, each asked for the same side",
+          "sha256": "023b693314e878203467d78907d88477fb3ffa50b5ed839c40b036d053cda20f"
+        },
+        {
+          "class": "com/supermartijn642/fusion/model/modifiers/block/BlockModelModifierBakedModel",
+          "method": "collectByOffset",
+          "desc": "(Lcom/supermartijn642/fusion/model/modifiers/block/ModelsByRandomOffset;Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/neoforged/neoforge/client/model/data/ModelData;)V",
+          "note": "the same choice handed to Fusion's Embeddium renderer: the default override or the original, plus the chosen append models; no other model",
+          "sha256": "13c77e95783d260f4eedde395efc2fe170e6e01683a345ac2ff145d1cf684c6d"
+        },
+        {
+          "class": "com/supermartijn642/fusion/mixin/embeddium/BlockRendererMixinEmbeddium",
+          "method": "renderModel",
+          "desc": "(Lorg/embeddedt/embeddium/api/render/chunk/BlockRenderContext;Lorg/embeddedt/embeddium/impl/render/chunk/compile/ChunkBuildBuffers;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfo;)V",
+          "note": "Fusion's Embeddium renderer: a model-modifier block is collected by offset and each group drawn through the normal renderModel with the same position, state and seed",
+          "sha256": "2acef306a47b89fe71aa1a71d39ccd463e5b8179659aaef80f8fc9d25a082467"
+        },
+        {
+          "class": "com/supermartijn642/fusion/mixin/embeddium/BlockRendererMixinEmbeddium",
+          "method": "lambda$renderModel$0",
+          "desc": "(Lorg/embeddedt/embeddium/api/render/chunk/EmbeddiumBlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;JLnet/minecraft/client/renderer/RenderType;Lorg/embeddedt/embeddium/impl/render/chunk/compile/ChunkBuildBuffers;Lcom/supermartijn642/fusion/model/modifiers/block/ModelsByRandomOffset$Entry;)V",
+          "note": "one group: its model data, the dummy context, renderModel",
+          "sha256": "25c74e53d1bed8d6a8c30940490d6ffd1f1cda4143d3a5a05b56a6aec1b87c9f"
+        },
+        {
+          "class": "com/supermartijn642/fusion/model/CombinedBakedModel",
+          "method": "getQuads",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/util/RandomSource;Lnet/neoforged/neoforge/client/model/data/ModelData;Lnet/minecraft/client/renderer/RenderType;)Ljava/util/List;",
+          "note": "a group's quads for a side are its models' quads for that side",
+          "sha256": "0dc1e7cb9de6cfced4862eca0ebac279f6e65d492dd5ede2ae8fa2f3ff569799"
+        },
+        {
+          "class": "com/supermartijn642/fusion/model/modifiers/block/ModelsByRandomOffset$Entry",
+          "method": "getModels",
+          "desc": "()Ljava/util/List;",
+          "note": "the models collectByOffset put into the group",
+          "sha256": "900d0586f6b969c796718c06bf1954b1b75503ce4da84f54657c4f0806c011eb"
+        },
+        {
+          "class": "com/supermartijn642/fusion/model/EmptyBakedModel",
+          "method": "getQuads",
+          "desc": "(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/Direction;Lnet/minecraft/util/RandomSource;)Ljava/util/List;",
+          "note": "always the empty list",
+          "sha256": "1a229a32557c74e2e6e81f1c5558d0d95cc744ca09581ed1b663a235d16ebf81"
+        },
+        {
+          "class": "org/embeddedt/embeddium/impl/render/frapi/FRAPIModelUtils",
+          "method": "isFRAPIModel",
+          "desc": "(Lnet/minecraft/client/resources/model/BakedModel;)Z",
+          "note": "false without Indigo, else !isVanillaAdapter(): the test renderModel uses to hand a model to the Indigo renderer",
+          "sha256": "eb214c8e0aee0b4c7aa7aea93de2fbe574b9854d9069d867b1fc8d650d0239b0"
+        }
+      ],
+      "cancel": [],
+      "conversion": "no injector: the face-quads-only answer (HiddenBlocks.CulledOnly, used by embeddium_hidden_block_skip) of Fusion's base model, empty model and block-model modifier, with an invoker for BaseBakedModel.Quads.get and an accessor for ConditionalModel.model",
+      "license": "Fusion (SuperMartijn642): no Fusion code is carried; our own logic only"
+    }
+  }
+}

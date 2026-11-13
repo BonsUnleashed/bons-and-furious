@@ -55,6 +55,17 @@ import org.apache.logging.log4j.Logger;
  * Persistent data: NeoForge's BlockEntity.customPersistentData read through a getter handle (never created); unreadable ->
  * the fast path is off. Data attachments: AttachmentHolder.hasAttachments().
  *
+ * A client that lost its copy (bug sweep 2026-11-12, found by review). The kept values stand for "what every tracking client
+ * holds", which a client can stop holding without the server-side fan changing: it predicts a block break, the server refuses
+ * (spawn protection, a claim, a cancelled break event), and the block update that puts the fan back gives that client a new,
+ * blank fan block entity (no area, no upgrades; its own fan stops pushing it). As shipped, the fan's next per-tick packet
+ * repaired that; with every identical packet left out nothing did until the fan next changed. Two rules bring such a client
+ * back: (1) every REFRESH-th request in a row is answered although nothing changed (one identical packet per second per fan
+ * instead of twenty), and (2) a second request at the same game time is answered in full: the chunk holder asks once per
+ * tick, so that request came from somewhere else (Forge answers a cancelled block break by asking the block entity for its
+ * packet, for the breaking player alone), and because its packet went to one receiver only, the next per-tick broadcast goes
+ * out as well.
+ *
  * -Dbons_and_furious.mobgrindingutilsFanSyncDedup=false sends every packet (the original). SHADOW MODE (verification only):
  * -Dbons_and_furious.mobgrindingutilsFanSyncDedup.shadow=true never leaves a packet out; where the switch would have left
  * one out, the packet's tag is compared with the last sent tag (SHADOW_CHECKS, WOULD_SKIP, SHADOW_MISMATCHES: a would-skip
@@ -65,6 +76,8 @@ public final class FanSync {
     public static volatile boolean enabled = !"false".equalsIgnoreCase(System.getProperty("bons_and_furious.mobgrindingutilsFanSyncDedup", "true"));
     public static final boolean SHADOW = Boolean.getBoolean("bons_and_furious.mobgrindingutilsFanSyncDedup.shadow");
     public static final AtomicLong SHADOW_CHECKS = new AtomicLong(), WOULD_SKIP = new AtomicLong(), SHADOW_MISMATCHES = new AtomicLong();
+    /** Every REFRESH-th request in a row is answered with the unchanged state (20 = once a second for a tracked fan). */
+    public static final int REFRESH = 20;
     /** Statistics for probes (plain fields): packets left out. */
     public static long skipped;
     private static volatile boolean announced;

@@ -1,0 +1,47 @@
+{
+  "group": "endertech_start_reads",
+  "keys": {
+    "forgeendertech_start_config_reads_once": {
+      "mod": "forgeendertech",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.0.50",
+      "mixins": [
+        "bons.furious.mixin.endertech_start_reads.ConfigurationStartReadsMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/endertech/minecraft/forge/configs/Configuration",
+          "method": "load",
+          "desc": "()V",
+          "note": "parent.mkdirs(); when the file is missing: clear + createNewFile; when it can be read: new UnicodeInputStreamReader(new FileInputStream(file), encoding) parsed line by line into the categories; resetChangedState()",
+          "sha256": "d125bcaac333ed5b51aa3d8d068c46cb2b246e915ffeabe88820db4240762ed9"
+        },
+        {
+          "class": "com/endertech/minecraft/forge/configs/Configuration",
+          "method": "save",
+          "desc": "()V",
+          "note": "writes the categories to the file (or lets the parent do it): the only place the mod changes a config file's content",
+          "sha256": "fc50136ffda7a6d52537b45a573b77a698af3b725ff6eafec7392859a5357441"
+        },
+        {
+          "class": "com/endertech/minecraft/forge/configs/UnitConfig",
+          "method": "<init>",
+          "desc": "(Ljava/io/File;)V",
+          "note": "super(file, true) (which loads) and then load() again",
+          "sha256": "e6cba9dbe3505d4ce9a5183f9007e061988ff3e14333953822892efdfc1a1a42"
+        },
+        {
+          "class": "com/endertech/minecraft/forge/world/GameWorld$WorldData",
+          "method": "initBiomesWinds",
+          "desc": "()V",
+          "note": "per server level load (NeoForge LevelEvent.Load): a UnitConfig for every file of the Biomes config folder, one Wind per file, kept only when enabled and not the default",
+          "sha256": "1f57bf6733a25bc4d8d7600db7a0adf0c5782d6725928209bf7b61b9ad6c8429"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapMethod on Configuration.load and save, @WrapOperation on load's File.mkdirs / exists / canRead calls and on its new FileInputStream(file) (while a server is starting, a path's bytes are read once and replayed from memory; helper bons.furious.patch.endertech_start_reads.StartReads)",
+      "license": "ForgeEndertech (EnderTech): no ForgeEndertech code is carried; our own logic only"
+    }
+  }
+}

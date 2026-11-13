@@ -123,6 +123,8 @@ public final class PortProbe {
             result.put("density_reused",bons.pure.terrain.FinalDensityReuse.REUSED.sum());
             result.put("surface_hits",bons.pure.terrain.SurfaceEstimateShare.HITS.sum());
             result.put("surface_misses",bons.pure.terrain.SurfaceEstimateShare.MISSES.sum());
+            if (Boolean.getBoolean("bons_and_furious.samplerTwice50"))          // 1.0.50 port: the served path of the sampler switch
+                result.put("sampler_twice50", SamplerTwice50.run(server));
             result.put("passed",true);
             if (Boolean.getBoolean("bons_and_furious.spawnNonTicking42")) SpawnOracle42.beginNonTicking(server);
             if (Boolean.getBoolean("bons_and_furious.sharksQueue42")) SharksQueue42.begin(server);
@@ -182,6 +184,7 @@ public final class PortProbe {
     }
 
     private void finish(Map<String,Object> result) {
+        result.put("counters50", Counters50.read(false));     // 1.0.50 port: the new helpers' counters
         try { Files.writeString(Path.of("probe-result.json"),new GsonBuilder().setPrettyPrinting().create().toJson(result)+"\n"); }
         catch(Exception e){throw new RuntimeException(e);}
         finally { server.halt(false); }

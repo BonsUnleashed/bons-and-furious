@@ -2,7 +2,6 @@ package bons.furious.patch.goetydelight_coo49;
 
 import bons.furious.mixin.goetydelight_coo49.GdNamedContentsAccessor;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.util.List;
 import java.util.Optional;
@@ -165,23 +164,20 @@ public final class GdLogs {
     };
 
     /**
-     * The method {@code name} of {@code type} that {@code c} resolves to is Item's own (or IItemExtension's default). Since 1.0.49.2
-     * the JVM's own resolution of that one method (privateLookupIn + findVirtual + revealDirect), not Class.getMethod: getMethod
-     * resolves the parameter and return types of every public method, and on a dedicated server item classes whose client-side
-     * methods name client-only classes made the loader log an "invalid dist" ERROR for each such class (31 at start in the
-     * all-switches-on qualification server). False when the method cannot be asked this way (the stock test runs).
+     * The method {@code name} of {@code type} that an item of class {@code c} runs is Item's own (or IItemExtension's default).
+     * Since 1.0.49.2 the JVM's own resolution of that one method, not Class.getMethod: getMethod resolves the parameter and return
+     * types of every public method, and on a dedicated server item classes whose client-side methods name client-only classes made
+     * the loader log an "invalid dist" ERROR for each such class (31 at start in the all-switches-on qualification server). False
+     * when the method cannot be asked this way (the stock test runs).
+     *
+     * The resolution is the one an invokespecial from inside the class gets (bons.furious.guard.Declared.holder). The 1.0.49.2
+     * build asked a virtual lookup instead, which names the item's own class for a default method of IItemExtension that the class
+     * only inherits (isDamageable, getDamage, setDamage): every item class but Item itself then counted as overriding and ran the
+     * stock test, so this switch did next to nothing (bug sweep 2026-11-12; answers were right, only the saving was lost).
      */
     private static boolean inheritedFromItem(Class<?> c, String name, MethodType type) {
-        for (Class<?> anchor : new Class<?>[] {c, Item.class}) {
-            try {
-                MethodHandles.Lookup lookup = MethodHandles.privateLookupIn(anchor, MethodHandles.lookup());
-                Class<?> d = lookup.revealDirect(lookup.findVirtual(c, name, type)).getDeclaringClass();
-                return d == Item.class || d.getName().equals("net.neoforged.neoforge.common.extensions.IItemExtension");
-            } catch (Throwable t) {
-                // not this way: the next anchor, then false (the stock test)
-            }
-        }
-        return false;
+        Class<?> d = bons.furious.guard.Declared.holder(c, name, type);
+        return d == Item.class || d != null && d.getName().equals("net.neoforged.neoforge.common.extensions.IItemExtension");
     }
 
     /**

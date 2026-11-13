@@ -1,5 +1,15 @@
 package bons.furious.patch.titanium_coo49;
 
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.CompoundContainer;
+import net.minecraft.world.Container;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
+import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 import org.apache.logging.log4j.LogManager;
 
 /**
@@ -15,8 +25,16 @@ import org.apache.logging.log4j.LogManager;
  * What the switch does (exact). When the simulated stack is empty that first scan is not run (its answer would be thrown
  * away; for an empty stack it is -1 anyway, since no simulated insert can leave fewer than zero items). The scan only asks
  * the destination handler's query methods and simulated inserts, which NeoForge's IItemHandler contract defines as
- * changing nothing, so nothing else changes: same return value, same slot cache, same inventories, same insert and extract
- * calls. The re-scan after each insert inside the transfer loop (the second isValidForAnySlot call) runs as shipped.
+ * changing nothing, with one known exception that keeps the scan: a vanilla loot container. NeoForge's InvWrapper.getStackInSlot is
+ * Container.getItem, and RandomizableContainerBlockEntity.getItem (chests, barrels, hoppers, dispensers, shulker boxes and every
+ * modded container built on that class) first rolls the container's loot when its loot table is still set. So a machine that
+ * pushes into an unopened loot chest makes the chest roll its loot at its next work tick even with nothing to push; leaving the scan
+ * out would have left the loot unrolled until the first real item or the first player, who then rolls it with their own luck (bug
+ * sweep 2026-11-12, found by review; before that fix this switch left the scan out for every destination). fillsOnRead(dest)
+ * therefore answers true, and the scan runs as shipped, for NeoForge's two container wrappers around a container (or a double
+ * chest half) whose loot table is still set, and whenever it cannot look. Everything else is unchanged: same return value, same slot
+ * cache, same inventories, same insert and extract calls. The re-scan after each insert inside the transfer loop (the second
+ * isValidForAnySlot call) runs as shipped.
  * Runtime flag bons_and_furious.titaniumSidedTransferEmptySkip.
  */
 public final class TitaniumSidedTransfer {
@@ -24,8 +42,60 @@ public final class TitaniumSidedTransfer {
     /** Statistics for probes and the harness (plain field): scans left out. */
     public static long skipped;
     private static volatile boolean announced;
+    /** Getters of SidedInvWrapper.inv, RandomizableContainerBlockEntity.lootTable and CompoundContainer's two halves; all null when one cannot be had. */
+    private static final MethodHandle SIDED_INV, LOOT_TABLE, FIRST_HALF, SECOND_HALF;
+
+    static {
+        MethodHandle sided = null, loot = null, first = null, second = null;
+        try {
+            MethodHandles.Lookup own = MethodHandles.lookup();
+            sided = MethodHandles.privateLookupIn(SidedInvWrapper.class, own).findGetter(SidedInvWrapper.class, "inv", WorldlyContainer.class);
+            loot = MethodHandles.privateLookupIn(RandomizableContainerBlockEntity.class, own)
+                    .findGetter(RandomizableContainerBlockEntity.class, "lootTable", ResourceKey.class);
+            MethodHandles.Lookup compound = MethodHandles.privateLookupIn(CompoundContainer.class, own);
+            first = compound.findGetter(CompoundContainer.class, "container1", Container.class);
+            second = compound.findGetter(CompoundContainer.class, "container2", Container.class);
+        } catch (Throwable t) {
+            sided = loot = first = second = null;
+            LogManager.getLogger("Bons and Furious").warn("Bons and Furious: titanium_sided_transfer_empty_skip keeps the destination scan for vanilla containers (their loot state cannot be read: {})", t.toString());
+        }
+        SIDED_INV = sided;
+        LOOT_TABLE = loot;
+        FIRST_HALF = first;
+        SECOND_HALF = second;
+    }
 
     private TitaniumSidedTransfer() {
+    }
+
+    /**
+     * True when reading this destination can change it, so the scan must run as shipped: NeoForge's wrapper (InvWrapper or
+     * SidedInvWrapper) around a vanilla container, or a double chest half, whose loot table is still set, and any such wrapper
+     * while its container cannot be looked at. Any other handler answers false.
+     */
+    public static boolean fillsOnRead(IItemHandler dest) {
+        try {
+            Container inv;
+            if (dest instanceof InvWrapper wrapper) {
+                inv = wrapper.getInv();
+            } else if (dest instanceof SidedInvWrapper sided) {
+                if (SIDED_INV == null) return true;
+                inv = (WorldlyContainer) SIDED_INV.invokeExact(sided);
+            } else {
+                return false;
+            }
+            return LOOT_TABLE == null || lootPending(inv, 0);
+        } catch (Throwable t) {
+            return true;
+        }
+    }
+
+    private static boolean lootPending(Container inv, int depth) throws Throwable {
+        if (inv instanceof RandomizableContainerBlockEntity container) return (ResourceKey) LOOT_TABLE.invokeExact(container) != null;
+        if (inv instanceof CompoundContainer both) {
+            return depth > 3 || lootPending((Container) FIRST_HALF.invokeExact(both), depth + 1) || lootPending((Container) SECOND_HALF.invokeExact(both), depth + 1);
+        }
+        return false;
     }
 
     /** One destination scan was left out for an empty simulated stack. */

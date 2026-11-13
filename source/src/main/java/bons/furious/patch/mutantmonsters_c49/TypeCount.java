@@ -19,14 +19,20 @@ import net.minecraft.world.entity.EntityType;
  * about for the first time is filled from byId once. Ours; no Minecraft or Mutant Monsters code.
  */
 public final class TypeCount {
+    private static final java.lang.invoke.MethodType GET_TYPE = java.lang.invoke.MethodType.methodType(EntityType.class);
+    /**
+     * True for an entity class that answers getType itself: resolved from the class, the method is declared below Entity
+     * (a mixin-added override included), or the class cannot be asked, which counts as "its own" (the careful side: such an entity
+     * is handed to every query and Mutant Monsters' own filter tests its type). Asked through the JVM's resolution of that one
+     * method (bons.furious.guard.Declared), not Class.getDeclaredMethods: the listing resolves the types of every method the class
+     * declares, and an entity class with a method naming a class the game cannot load (a client-only class on a dedicated server, a
+     * class of a mod that is not installed) made it throw out of the entity tracker's add / remove, which stops the server (bug
+     * sweep 2026-11-12).
+     */
     private static final ClassValue<Boolean> OWN_TYPE = new ClassValue<>() {
         @Override
         protected Boolean computeValue(Class<?> c) {
-            for (Class<?> k = c; k != null && k != Entity.class; k = k.getSuperclass()) {
-                for (java.lang.reflect.Method m : k.getDeclaredMethods())
-                    if (m.getName().equals("getType") && m.getParameterCount() == 0) return true;
-            }
-            return false;
+            return !bons.furious.guard.Declared.inherits(c, Entity.class, "getType", GET_TYPE);
         }
     };
 
