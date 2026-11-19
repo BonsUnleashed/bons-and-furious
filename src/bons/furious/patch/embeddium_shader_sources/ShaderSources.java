@@ -2,9 +2,14 @@ package bons.furious.patch.embeddium_shader_sources;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.mojang.logging.LogUtils;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.LongAdder;
+import me.jellysquid.mods.sodium.client.gl.shader.ShaderLoader;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 
@@ -25,6 +30,13 @@ import org.slf4j.Logger;
  * same characters (callers parse it into lines). With a shader pack (Oculus), Oculus's ShaderChunkRenderer hook returns before
  * any program is compiled, so this switch is idle there.
  *
+ * Since 1.0.50.1: another mod may change what getShaderSource returns, and its answer for one name may depend on what is being
+ * compiled (Luxium 2.8.x returns other texts for block_layer_opaque while its water pass compiles; keeping the first text made the
+ * water program miss its uniforms and the game stopped at world load, CurseForge comment 8746834). Before the first kept text is
+ * used, the mixins merged into ShaderLoader are listed (their @MixinMerged annotations, as vanilla_camera_fluid_memo does for
+ * Camera); when any of them is not ours the switch stands down for the session (one WARN line) and every call runs the original,
+ * that mod's change included. patches/compat.json also names Luxium's mixin, so next to Luxium this switch is not applied at all.
+ *
  * -Dbons_and_furious.embeddiumShaderSourceMemo=false switches it off at run time.
  * -Dbons_and_furious.embeddiumShaderSourceMemo.shadow=true (verification runs only): every call reads the file as Embeddium
  * does and returns that; a kept text is compared with it: SHADOW_CHECKS, SHADOW_MISMATCHES (WARN for the first 20).
@@ -38,6 +50,11 @@ public final class ShaderSources {
     public static final LongAdder HITS = new LongAdder();
     private static final ConcurrentHashMap<ResourceLocation, String> SOURCES = new ConcurrentHashMap<>();
     private static volatile boolean announced;
+    private static final String MERGED = "org.spongepowered.asm.mixin.transformer.meta.MixinMerged";
+    /** Since 1.0.50.1: the only mixin this switch was tested with in ShaderLoader (ours); any other turns the switch off at its first use. */
+    public static final Set<String> TESTED_LOADER_MIXINS = Set.of("bons.furious.mixin.embeddium_shader_sources.ShaderLoaderSourceMemoMixin");
+    /** Since 1.0.50.1: 0 = ShaderLoader's mixins not listed yet, 1 = only ours (the memo may answer), -1 = stood down for the session. */
+    private static volatile int inventory;
 
     private ShaderSources() {
     }
@@ -45,6 +62,7 @@ public final class ShaderSources {
     /** ShaderLoader.getShaderSource, wrapped. */
     public static String source(ResourceLocation name, Operation<String> original) {
         if (!enabled || name == null) return original.call(name);
+        if (inventory <= 0 && !inventoryMatches()) return original.call(name);
         String known = SOURCES.get(name);
         if (known != null) {
             if (SHADOW) {
@@ -68,6 +86,42 @@ public final class ShaderSources {
             }
         }
         return read;
+    }
+
+    /**
+     * Since 1.0.50.1: true when every mixin merged into Embeddium's ShaderLoader is one this switch was tested with (ours); otherwise
+     * the switch stands down for the session (WARN, original behaviour). Decided once, at the first call; ShaderLoader is loaded and
+     * transformed by then (the call runs inside it).
+     */
+    static boolean inventoryMatches() {
+        int v = inventory;
+        if (v != 0) return v > 0;
+        synchronized (ShaderSources.class) {
+            if (inventory != 0) return inventory > 0;
+            Set<String> unknown = new TreeSet<>();
+            try {
+                for (Method m : ShaderLoader.class.getDeclaredMethods()) {
+                    for (Annotation a : m.getDeclaredAnnotations()) {
+                        if (!a.annotationType().getName().equals(MERGED)) continue;
+                        String mixin = String.valueOf(a.annotationType().getMethod("mixin").invoke(a));
+                        if (!TESTED_LOADER_MIXINS.contains(mixin)) unknown.add(mixin);
+                    }
+                }
+            } catch (Throwable t) {
+                inventory = -1;
+                LOGGER.warn("Bons and Furious: embeddium_shader_source_memo stands down: could not list the mixins merged into Embeddium's ShaderLoader ({}); "
+                        + "shader sources are read every time", t.toString());
+                return false;
+            }
+            if (unknown.isEmpty()) {
+                inventory = 1;
+                return true;
+            }
+            inventory = -1;
+            LOGGER.warn("Bons and Furious: embeddium_shader_source_memo stands down: Embeddium's ShaderLoader carries mixins it was not tested with ({}); "
+                    + "shader sources are read every time", String.join(", ", unknown));
+            return false;
+        }
     }
 
     /** Kept texts (for the offline proof). */
