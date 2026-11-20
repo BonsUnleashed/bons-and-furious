@@ -1,4 +1,48 @@
-# 1.0.50+mc1.21.1 (2026-11-13)
+# 1.0.50.1+mc1.21.1 (2026-11-19)
+
+Runtime checks PASS for SHA-256 `d75e43df586a30134662a6889f8abb61c7620115eeb29dadf7c2bc719b9f12a1`. A hotfix of 1.0.50+mc1.21.1: the same 561 controls (557 guarded switches) and the same
+4,430 fingerprints, no new switch and no changed default. The release JAR differs from 1.0.50+mc1.21.1 in three files: the class of
+`embeddium_shader_source_memo`, the version in neoforge.mods.toml and the header line of the default config.
+
+What changed:
+- `embeddium_shader_source_memo` (Embeddium 1.0.15, clients): before it keeps the first text of a chunk shader, it lists the mixins merged
+  into Embeddium's ShaderLoader. When one of them belongs to another mod, it stands down for the session with one warning line and every
+  shader is read as before, that mod's change included. Forge 1.0.50.1 has the same check: there the kept text stopped the game at world
+  load next to Luxium: Let there be light, which hooks the loader and gives one shader another text for its water pass. Luxium has no
+  NeoForge build, so this port carries the check without the two Luxium conflict rows of the Forge release.
+
+Tested on this jar:
+- The three Embeddium clients below (Embeddium alone, the section comparison, Supplementaries on Embeddium) each log
+  "embeddium_shader_source_memo applies": this mod's own mixin is the only one merged into Embeddium's ShaderLoader there, and no
+  stand-down line appears. No mod in these runs hooks that loader; the stand-down was tested on Forge 1.20.1 with Luxium 2.8.0 and 2.8.4
+  and with Chunks Fade In 3.0.25.
+- Every one of the 4,430 fingerprints found unchanged in the 1.21.1 classes; production fingerprints unchanged.
+- Dedicated server with 181 mods at once: boots, generates three dimensions, runs 401 ticks and stops cleanly.
+  237 controls applied; 3,300,278 comparisons of the original answer with ours, 0 mismatches. With every
+  switch that ships off turned on: 302 applied, 4,291,797 comparisons, 0 mismatches.
+- The five controls added in 1.0.50 on this jar: on a vanilla server 161,442 flat cache column requests were answered from tables
+  and 256 answers compared bit for bit with the original evaluation, 0 differences; the climate sampler check got its first
+  sampler back and its 864 climate points match a newly made sampler; ForgeEndertech's start compared 44 answers and
+  files with the disk, 0 different; next to C2ME 0.4 and SuperChunk 0.6.1 the flat cache switch keeps the original code.
+- Every control new since 1.0.47 off versus on: identical block and biome hashes in three dimensions.
+- World starts with SuperChunk 0.6.1, Lomka 0.7.0, C2ME 0.4 and SuperChunk 0.6.1 with Distant Horizons 3.3.3: clean.
+- TerraBlender saved-layer regression: 510 checks, zero failures. Guard helper regression: 31 cases;
+  131,072 exact noise samples; 252 ZIP listings.
+- Clients: Iris with a shader pack, Embeddium without Iris (every block `embeddium_hidden_block_skip` would skip drawn as shipped and
+  checked: 530,258 blocks, none wrong; 400,339 more next to Supplementaries), the section comparison (278 sections
+  meshed with that switch off and on, six rounds, 0 differences), one client with every client target mod (557
+  controls checked), its controls-off twin and an all-switches-on run, Supplementaries on Embeddium. 11,415,212,696 comparisons in all, 0 mismatches.
+- Sodium 0.8.13: the standard client mods without Iris load a world, run 600 ticks and stop cleanly. 1,611,453,980 comparisons, 0 mismatches (smoke test).
+- Moonrise 0.1.0-beta.15 with Moonrise Compats 0.1.0-beta.15+2eae1b1.5, Immersive Optimization 0.2.0 and GeckoLib on a client: loads a
+  world, runs 600 ticks and stops cleanly; `immersiveoptimization_be_priority_front_cache` steps aside next to Moonrise Compats.
+- JEI recipe deferral enabled and disabled: identical ordered recipe dumps after a real disconnect and rejoin (3278 anvil and 9717 grindstone recipes).
+- Static checks over 438 jars: no crash-class conflicts. Overwrite access audit over 438 jars: 90 overwrites,
+  all safe.
+
+These are targeted tests, not comprehensive multiplayer or long-session modpack coverage. No Minecraft 1.21.1 speed benchmark was run for
+this hotfix.
+
+# Historical: 1.0.50+mc1.21.1 (2026-11-13)
 
 Runtime checks PASS for SHA-256 `f97d47d5d720d9f9622524c50659985cb9b30875713675490360ca701f09d151`. Bons and Furious 1.0.50 for NeoForge: the 556 controls of 1.0.49.2+mc1.21.1, the five
 controls of Forge 1.0.50 that have a Minecraft 1.21.1 target, and the fixes found in the bug hunt of 12 and 13 November 2026.
