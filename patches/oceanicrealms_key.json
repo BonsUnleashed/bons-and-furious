@@ -1,0 +1,39 @@
+{
+  "group": "oceanicrealms_key",
+  "keys": {
+    "oceanicrealms_master_key_once": {
+      "mod": "oceanicrealms",
+      "scripts": [],
+      "since": "1.1.0",
+      "mixins": [
+        "bons.furious.mixin.oceanicrealms_key.OceanicRealmsKeyMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/min01/oceanicrealms/AESUtil",
+          "method": "getMasterKey",
+          "desc": "()Ljavax/crypto/SecretKey;",
+          "note": "PBKDF2WithHmacSHA256 over the class's constant password and salt, 65,536 iterations, 256 bits -> a new SecretKeySpec(\"AES\"); nothing else",
+          "sha256": "c6a0a2fd3b5e44fa2d1d19f63c37b9d5dfe66b83f90370e12f3a8e8452c950c0"
+        },
+        {
+          "class": "com/min01/oceanicrealms/AESUtil",
+          "method": "decryptFile",
+          "desc": "([B)Ljava/io/ByteArrayInputStream;",
+          "note": "getMasterKey(), then the header check and an AES/GCM decryption; the key is only passed to Cipher.init",
+          "sha256": "9a983e76050700ecd1900042beab3b3160ff6454b21414adf1ccc8b1ab2b4315"
+        },
+        {
+          "class": "com/min01/oceanicrealms/AESUtil",
+          "method": "encryptFile",
+          "desc": "(Ljava/io/File;Ljava/io/File;)V",
+          "note": "the other caller (a developer tool): getMasterKey() only passed to Cipher.init",
+          "sha256": "82cd23ff1448e46ad10967481129348e0827536d5c7b3e23a4bfe4ccfc7844e4"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapMethod around com.min01.oceanicrealms.AESUtil.getMasterKey: the first derived key is kept and returned again; verify mode derives every key and compares; helper bons.furious.patch.oceanicrealms_key.MasterKey",
+      "license": "Oceanic Realms (All Rights Reserved): no Oceanic Realms code is carried; our own logic only"
+    }
+  }
+}

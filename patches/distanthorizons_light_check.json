@@ -1,0 +1,33 @@
+{
+  "group": "distanthorizons_light_check",
+  "keys": {
+    "distanthorizons_light_section_lock_skip": {
+      "mod": "distanthorizons",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.1.0",
+      "mixins": [
+        "bons.furious.mixin.distanthorizons_light_check.LightSectionLockSkipMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/seibel/distanthorizons/core/wrapperInterfaces/chunk/ChunkLightStorage$LightSection",
+          "method": "get",
+          "desc": "(III)I",
+          "note": "if (!concurrencyCheckLock.tryLock()) throw ConcurrentModificationException; try { constant value, or the nibble of data[z << 4 | x] at y } finally { unlock() }",
+          "sha256": "d1501588d4e49ef738f0a9ddb4629324cb0c08a50a467e23a4903b31e4c70cb1"
+        },
+        {
+          "class": "com/seibel/distanthorizons/core/wrapperInterfaces/chunk/ChunkLightStorage$LightSection",
+          "method": "set",
+          "desc": "(IIII)V",
+          "note": "the same tryLock / throw / finally unlock around the write of one nibble (and the section's switch between constant and array, through DataRecycler's own lock)",
+          "sha256": "4eba673d87ab02a2081c161744d1e1255aed22cb747f688b9625aef6be533375"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapOperation on concurrencyCheckLock.tryLock() (answered true) and on unlock() (skipped) in ChunkLightStorage$LightSection.get / set, as a pair; off by default; helper bons.furious.patch.distanthorizons_light_check.LightCheck",
+      "license": "Distant Horizons (LGPL-3.0): no Distant Horizons code is carried; our own logic only"
+    }
+  }
+}

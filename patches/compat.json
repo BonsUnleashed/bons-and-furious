@@ -1,6 +1,6 @@
 {
   "group": "compat",
-  "note": "Patches other mods make to the same code, the same way, as one of our switches. Exactly one copy may run: while the other mod's patch is active (installed, its mixin listed for this side, its option on), our switch steps aside; otherwise our switch applies and the other mod's mixin is cancelled. See bons.furious.guard.ForeignPatches. Checked against Collections Of Optimizations 4.4 (CurseForge file 9026925, sha1 d1b067885b0827c12b7eb75bc02896d270adaed8) on 2026-10-02 and 2026-10-03 (1.0.28), GeckoBetterFPS 1.0.2 (1.0.28), ServerCore 1.5.2 (2026-10-04), and Collections Of Optimizations 4.6 (CurseForge file 9069255, sha1 6af9f690130f77ccff43abda949a58171f396afe) on 2026-10-09 (1.0.36). Rechecked against Collections Of Optimizations 5.1 (CurseForge file 9253710, sha1 3276ac93dce1714dfb6ce6eb98c4dad92373a1f4) on 2026-10-19 (1.0.45): 60 rows added: 21 for options COO 4.7-5.1 added that make the same change as an existing switch, 39 for the switches new in 1.0.45 whose COO 5.1 counterpart patches the same method. Since 1.0.45 a row also needs the other mod's own mixin plugin to apply the mixin (ForeignPatches asks it through Mixin): COO 4.7 and later leave out their copies of several of these patches next to Bons and Furious, and our switch then applies instead of stepping aside for a copy that never runs. Rechecked on 2026-10-28 (1.0.48) against Collections Of Optimizations 5.6, 5.7 and 5.8 (CurseForge files 9334551, 9338915, 9341211, sha1 0ab991fe, 493b4eee, 2581bae6) and Lithoform 2.0.0: two rows added for patches that change the same method in a way that cannot run together with ours (\"conflict\": the method; Mixin refuses an injector into a method another mixin merged at the same or a higher priority), the crash class of the 1.0.26 magnet row. Rechecked on 2026-10-28 (1.0.49) against Collections Of Optimizations 5.8: a defensive conflict row for vanilla_climate_sample_xz_parts, whose method COO 5.6 and later @Overwrite (MixinClimateSampler, left out by COO next to Bons and Furious today). Rechecked on 2026-11-08 (1.0.49.1) against SuperChunk 0.5.0, 0.6.0 and 0.6.1, Lomka 0.7.0, the unofficial VulkanMod Forge port 0.8, ReFine 1.2.0 and ShadowLOD 1.0.0: conflict rows for patches that cannot run together with ours next to those mods. Rechecked on 2026-11-11 (1.0.49.2) against Tinker Tantrum 1.1.2 next to Alex's Caves, Otherworld Core 0.8.5 next to Alex's Caves and Pehkui, and SuperChunk 0.6.1 next to Distant Horizons: conflict rows for patches that cannot run together with ours next to those mods. Rechecked on 2026-11-19 (1.0.50.1) against Luxium: Let there be light 2.8.0 and 2.8.4 next to Embeddium 0.3.31: conflict rows for its change of what Embeddium's shader loader returns.",
+  "note": "Patches other mods make to the same code, the same way, as one of our switches. Exactly one copy may run: while the other mod's patch is active (installed, its mixin listed for this side, its option on), our switch steps aside; otherwise our switch applies and the other mod's mixin is cancelled. See bons.furious.guard.ForeignPatches. Checked against Collections Of Optimizations 4.4 (CurseForge file 9026925, sha1 d1b067885b0827c12b7eb75bc02896d270adaed8) on 2026-10-02 and 2026-10-03 (1.0.28), GeckoBetterFPS 1.0.2 (1.0.28), ServerCore 1.5.2 (2026-10-04), and Collections Of Optimizations 4.6 (CurseForge file 9069255, sha1 6af9f690130f77ccff43abda949a58171f396afe) on 2026-10-09 (1.0.36). Rechecked against Collections Of Optimizations 5.1 (CurseForge file 9253710, sha1 3276ac93dce1714dfb6ce6eb98c4dad92373a1f4) on 2026-10-19 (1.0.45): 60 rows added: 21 for options COO 4.7-5.1 added that make the same change as an existing switch, 39 for the switches new in 1.0.45 whose COO 5.1 counterpart patches the same method. Since 1.0.45 a row also needs the other mod's own mixin plugin to apply the mixin (ForeignPatches asks it through Mixin): COO 4.7 and later leave out their copies of several of these patches next to Bons and Furious, and our switch then applies instead of stepping aside for a copy that never runs. Rechecked on 2026-10-28 (1.0.48) against Collections Of Optimizations 5.6, 5.7 and 5.8 (CurseForge files 9334551, 9338915, 9341211, sha1 0ab991fe, 493b4eee, 2581bae6) and Lithoform 2.0.0: two rows added for patches that change the same method in a way that cannot run together with ours (\"conflict\": the method; Mixin refuses an injector into a method another mixin merged at the same or a higher priority), the crash class of the 1.0.26 magnet row. Rechecked on 2026-10-28 (1.0.49) against Collections Of Optimizations 5.8: a defensive conflict row for vanilla_climate_sample_xz_parts, whose method COO 5.6 and later @Overwrite (MixinClimateSampler, left out by COO next to Bons and Furious today). Rechecked on 2026-11-08 (1.0.49.1) against SuperChunk 0.5.0, 0.6.0 and 0.6.1, Lomka 0.7.0, the unofficial VulkanMod Forge port 0.8, ReFine 1.2.0 and ShadowLOD 1.0.0: conflict rows for patches that cannot run together with ours next to those mods. Rechecked on 2026-11-11 (1.0.49.2) against Tinker Tantrum 1.1.2 next to Alex's Caves, Otherworld Core 0.8.5 next to Alex's Caves and Pehkui, and SuperChunk 0.6.1 next to Distant Horizons: conflict rows for patches that cannot run together with ours next to those mods. Rechecked on 2026-11-19 (1.0.50.1) against Luxium: Let there be light 2.8.0 and 2.8.4 next to Embeddium 0.3.31: conflict rows for its change of what Embeddium's shader loader returns. Rechecked on 2026-11-20 (1.1.0, bug sweep 5): 31 rows where a switch could skip another mod's code inside the method or call it skips (Chunks Fade In and Chunk Animator next to the draw batch cache, Structure Essentials' search timeout, Illusion next to Fusion, and the other pairs of that sweep).",
   "keys": {},
   "yields": [
     {
@@ -7441,6 +7441,255 @@
       "mixin": "com.vinlanx.luxium.mixin.sky.EmbeddiumShaderLoaderMixin",
       "conflict": "ShaderLoader.getShaderSource",
       "why": "The same mixin in Luxium 2.8.0-pre-alpha (package com.vinlanx.luxium; 2.8.4 moved it to forge.com.vinlanx.luxium): the same stop at world load, reproduced 2026-11-19 with Embeddium 0.3.31; clean without Bons and Furious"
+    },
+    {
+      "key": "embeddium_draw_batch_cache",
+      "mod": "chunksfadein",
+      "name": "Chunks Fade In",
+      "mixin": "com.koteinik.chunksfadein.compat.sodium.mixin.DefaultChunkRendererMixin",
+      "conflict": "DefaultChunkRenderer.fillCommandBuffer",
+      "why": "Chunks Fade In's DefaultChunkRendererMixin advances the fade of every drawn section inside Embeddium's DefaultChunkRenderer.fillCommandBuffer (an @Inject at each section's getSliceMask call -> ChunkFadeInController.processChunk). This switch replays a region's remembered draw commands instead of calling fillCommandBuffer while nothing the commands come from changed, so on those frames the fade does not advance (Chunks Fade In 3.0.25, Embeddium 0.3.31). It steps aside so that every fill runs Chunks Fade In's code"
+    },
+    {
+      "key": "embeddium_draw_batch_cache",
+      "mod": "chunkanimatorembeddiumcompat",
+      "name": "Chunk Animator Embeddium Compat",
+      "mixin": "com.sxilverr.chunkanimatorembeddiumcompat.mixin.sodium.DefaultChunkRendererMixin",
+      "conflict": "DefaultChunkRenderer.fillCommandBuffer",
+      "why": "Chunk Animator Embeddium Compat 2.3 redirects a call inside DefaultChunkRenderer.fillCommandBuffer, which this switch replaces by remembered commands while nothing changed (R10, bug sweep 5; the shape of the Chunks Fade In row)"
+    },
+    {
+      "key": "vanilla_structure_ring_search",
+      "mod": "structureessentials",
+      "name": "Structure Essentials",
+      "mixin": "com.structureessentials.mixin.StructureSearchTimeoutMixin",
+      "conflict": "ChunkGenerator.getNearestGeneratedStructure",
+      "why": "Structure Essentials' StructureSearchTimeoutMixin stops a structure search after its timeout (default 50 s) at the getStructureGeneratingAt call inside the method this switch answers itself; with the switch the timeout never fires and a long /locate, explorer map or dolphin search can outlast a dedicated server's watchdog (R10, bug sweep 5; Structure Essentials 4.2-5.1)"
+    },
+    {
+      "key": "vanilla_structure_ring_search",
+      "mod": "structurify",
+      "name": "Structurify",
+      "mixin": "com.faboslav.structurify.common.mixin.ChunkGeneratorMixin",
+      "conflict": "ChunkGenerator.getNearestGeneratedStructure",
+      "since": "2.0.36",
+      "why": "Structurify 2.0.43's ChunkGeneratorMixin wraps the getStructureGeneratingAt call inside this method to check the resolved chunk when a structure set has more than one placement attempt; the switch answers the method itself, so locate and maps checked the unresolved chunk (R10, bug sweep 5). Since 1.1.0 the row starts at Structurify 2.0.36, the first Forge build whose ChunkGeneratorMixin hooks this method (getNearestGeneratedStructure m_223188_ + getStructureGeneratingAt); 2.0.34 and 2.0.35 only wrap findNearestMapStructure, tryGenerateStructure and the two height methods, so this switch runs next to them and their mixin is not left out"
+    },
+    {
+      "key": "vanilla_structure_ring_search",
+      "mod": "structurecontrol",
+      "name": "Structure Control",
+      "mixin": "com.crackerjackbox.structurecontrol.mixin.ChunkGeneratorMix",
+      "conflict": "ChunkGenerator.getNearestGeneratedStructure",
+      "why": "Structure Control 1.8.5 guards this method with its own timeout at HEAD (order-dependent next to this switch's HEAD answer; R10, bug sweep 5)"
+    },
+    {
+      "key": "vanilla_structure_ring_search",
+      "mod": "gensokyolegacy",
+      "name": "Gensokyo Legacy",
+      "mixin": "dev.xkmc.gensokyolegacy.mixin.ChunkGeneratorMultiSpreadMixin",
+      "conflict": "ChunkGenerator.getNearestGeneratedStructure",
+      "why": "Gensokyo Legacy answers this method for its multi-chunk placement at HEAD (order-dependent next to this switch; R10, bug sweep 5)"
+    },
+    {
+      "key": "vanilla_structure_ring_search",
+      "mod": "thelostcitadel",
+      "name": "The Lost Citadel",
+      "mixin": "com.siradise.citadel.mixin.CitadelLocateMixin",
+      "conflict": "ChunkGenerator.getNearestGeneratedStructure",
+      "why": "The Lost Citadel answers this method for its own ring placement at HEAD (order-dependent next to this switch; R10, bug sweep 5)"
+    },
+    {
+      "key": "bettercombat_weapon_attributes_memo",
+      "mod": "historystages",
+      "name": "History Stages",
+      "mixin": "net.bananemdnsa.historystages.mixin.bettercombat.WeaponRegistryMixin",
+      "conflict": "WeaponRegistry.getAttributes",
+      "why": "History Stages answers weapon attributes per player and thread (locked items); the memo keyed by item kept one answer (R10, bug sweep 5)"
+    },
+    {
+      "key": "bettercombat_weapon_attributes_memo",
+      "mod": "otherworldorigins",
+      "name": "Otherworld Origins",
+      "mixin": "dev.muon.otherworldorigins.mixin.compat.bettercombat.WeaponRegistryMixin",
+      "conflict": "WeaponRegistry.getAttributes",
+      "why": "Otherworld Origins answers weapon attributes per shapeshift state; the memo keyed by item kept one answer (R10, bug sweep 5)"
+    },
+    {
+      "key": "bettercombat_weapon_attributes_memo",
+      "mod": "better_selective_combat",
+      "name": "Better Selective Combat",
+      "mixin": "dev.wechirok.betterselectivecombat.mixin.WeaponRegistryPreferenceMixin",
+      "conflict": "WeaponRegistry.getAttributes",
+      "why": "Better Selective Combat ignores a weapon per player choice; the memo keyed by item kept one answer (R10, bug sweep 5)"
+    },
+    {
+      "key": "bettercombat_weapon_attributes_memo",
+      "mod": "better_selective_combat",
+      "name": "Better Selective Combat",
+      "mixin": "dev.wechirok.betterselectivecombat.mixin.client.WeaponRegistryClientMixin",
+      "conflict": "WeaponRegistry.getAttributes",
+      "why": "Better Selective Combat ignores a weapon per player choice (client side); the memo keyed by item kept one answer (R10, bug sweep 5)"
+    },
+    {
+      "key": "curios_equipped_presence",
+      "mod": "dream_relics",
+      "name": "Dream Relics",
+      "mixin": "com.bmt.dream_relics.mixins.curios.CurioInventoryWrapperMixin",
+      "conflict": "CurioInventoryWrapper.findFirstCurio / findCurios",
+      "why": "Dream Relics adds curios stored in its Memory Stardust at RETURN of Curios' Predicate lookups, which this switch's walk does not call (R10, bug sweep 5)"
+    },
+    {
+      "key": "curios_equipped_presence",
+      "mod": "marrelics",
+      "name": "MAR Relics",
+      "mixin": "com.vladisss.marrelics.mixin.CurioInventoryWrapperMixin",
+      "conflict": "CurioInventoryWrapper.findFirstCurio / findCurios",
+      "why": "MAR Relics' Shadow Void hides curios in Curios' Predicate lookups, which this switch's walk does not call (R10, bug sweep 5)"
+    },
+    {
+      "key": "curios_equipped_presence",
+      "mod": "ramesses_curse",
+      "name": "Ramesses Curse",
+      "mixin": "com.eldren.wutao.ramesses_curse.mixin.CuriosInventorySealMixin",
+      "conflict": "CurioInventoryWrapper.findFirstCurio / findCurios",
+      "why": "Ramesses Curse's seal removes curios in Curios' lookups that this switch's walk does not call (R10, bug sweep 5)"
+    },
+    {
+      "key": "curios_first_match_lean",
+      "mod": "dream_relics",
+      "name": "Dream Relics",
+      "mixin": "com.bmt.dream_relics.mixins.curios.CurioInventoryWrapperMixin",
+      "conflict": "CurioInventoryWrapper.findFirstCurio / findCurios",
+      "why": "Dream Relics adds curios stored in its Memory Stardust at RETURN of Curios' Predicate lookups, which this switch's walk does not call (R10, bug sweep 5)"
+    },
+    {
+      "key": "curios_first_match_lean",
+      "mod": "marrelics",
+      "name": "MAR Relics",
+      "mixin": "com.vladisss.marrelics.mixin.CurioInventoryWrapperMixin",
+      "conflict": "CurioInventoryWrapper.findFirstCurio / findCurios",
+      "why": "MAR Relics' Shadow Void hides curios in Curios' Predicate lookups, which this switch's walk does not call (R10, bug sweep 5)"
+    },
+    {
+      "key": "curios_first_match_lean",
+      "mod": "ramesses_curse",
+      "name": "Ramesses Curse",
+      "mixin": "com.eldren.wutao.ramesses_curse.mixin.CuriosInventorySealMixin",
+      "conflict": "CurioInventoryWrapper.findFirstCurio / findCurios",
+      "why": "Ramesses Curse's seal removes curios in Curios' lookups that this switch's walk does not call (R10, bug sweep 5)"
+    },
+    {
+      "key": "vanilla_attribute_instance_fast_lookup",
+      "mod": "attributification",
+      "name": "Attributification",
+      "mixin": "dev.utherhel.attributification.mixin.AttributeContainerMixin",
+      "conflict": "AttributeMap.getInstance",
+      "why": "Attributification merges attributes inside the lookup this switch answers itself (R10, bug sweep 5)"
+    },
+    {
+      "key": "companions_owner_walk",
+      "mod": "superior_allies",
+      "name": "Superior Allies",
+      "mixin": "com.alexh.superiorallies.mixin.compat.companions.CompanionsUtilMixin",
+      "conflict": "CompanionsUtil owner checks",
+      "why": "Superior Allies makes allies count as linked inside the check this switch answers itself (R10, bug sweep 5)"
+    },
+    {
+      "key": "vanilla_spawn_gate_visibility_memo",
+      "mod": "sleepingoverhaul",
+      "name": "Sleeping Overhaul",
+      "mixin": "github.cosmicdan.sleepingoverhaul.mixin.injection.TimelapseMixinsCommonServerLevel",
+      "conflict": "natural spawning gate",
+      "why": "Sleeping Overhaul blocks natural spawning during its timelapse inside the code this switch's memo leaves out (R10, bug sweep 5)"
+    },
+    {
+      "key": "lithostitched_template_shuffle_arrays",
+      "mod": "dmzvillagecompat",
+      "name": "DMZ Village Compat",
+      "mixin": "com.lirou.dmzvillagecompat.mixin.LithostitchedTemplatesMixin",
+      "conflict": "Lithostitched templates shuffle",
+      "why": "DMZ Village Compat reorders the shuffled templates inside the method this switch replaces (R10, bug sweep 5)"
+    },
+    {
+      "key": "brutality_proximity_scan_presence_gate",
+      "mod": "useless_mod",
+      "name": "Useless Mod",
+      "mixin": "com.sorrowmist.useless.mixin.ClientLevelMixin",
+      "conflict": "ClientLevel.entitiesForRendering",
+      "why": "Useless Mod hides stealthy players from ClientLevel.entitiesForRendering, which this switch's walk does not use (R10, bug sweep 5)"
+    },
+    {
+      "key": "brutality_proximity_scan_presence_gate",
+      "mod": "matlib",
+      "name": "MatLib",
+      "mixin": "net.mat0u5.matlib.client.mixin.ClientLevelMixin",
+      "conflict": "ClientLevel.entitiesForRendering",
+      "why": "MatLib changes ClientLevel.entitiesForRendering, which this switch's walk does not use (R10, bug sweep 5)"
+    },
+    {
+      "key": "brutality_proximity_scan_presence_gate",
+      "mod": "mhwarfare",
+      "name": "MH Warfare",
+      "mixin": "net.mhackmin.mhwarfare.modules.drones.mixin.ClientLevelRemotePlayerRenderMixin",
+      "conflict": "ClientLevel.entitiesForRendering",
+      "why": "MH Warfare changes ClientLevel.entitiesForRendering, which this switch's walk does not use (R10, bug sweep 5)"
+    },
+    {
+      "key": "curios_render_layer_empty_skip",
+      "mod": "acceleratedrendering",
+      "name": "Accelerated Rendering",
+      "mixin": "com.github.argon4w.acceleratedrendering.compat.curios.mixins.CuriosLayerMixin",
+      "conflict": "CuriosLayer.render",
+      "why": "Accelerated Rendering pushes three stacks at HEAD of CuriosLayer.render and pops them at RETURN; when its HEAD runs before this switch's skip, the pops are left out and the stacks grow every frame (R10, bug sweep 5; order-dependent)"
+    },
+    {
+      "key": "vanilla_selector_find_loop",
+      "mod": "advancedfakeplayers",
+      "name": "Advanced Fake Players",
+      "mixin": "com.advancedfakeplayers.mixin.MixinEntitySelector",
+      "conflict": "EntitySelector.findEntities",
+      "why": "Advanced Fake Players filters selector results at RETURN of the method this switch answers itself (R10, bug sweep 5)"
+    },
+    {
+      "key": "iceandfire_dragon_texture_key",
+      "mod": "waterdragons",
+      "name": "Water Dragons",
+      "mixin": "com.waterdragons.mixin.MixinRenderDragonBase",
+      "conflict": "RenderDragonBase texture",
+      "why": "Water Dragons swaps in a primal texture at HEAD; the memo key has no primal part (R10, bug sweep 5)"
+    },
+    {
+      "key": "slashblade_motion_update_memo",
+      "mod": "a_belated_gift",
+      "name": "A Belated Gift",
+      "mixin": "cn.star.a_belated_gift.mixin.client.MixinMmdMotionPlayer",
+      "conflict": "MmdMotionPlayer update",
+      "why": "A Belated Gift restores the skinning matrices at HEAD and cancels; at equal priority it can run before this switch's head, where its stamp is cleared (R10, bug sweep 5; order-dependent)"
+    },
+    {
+      "key": "vanilla_noise_column_cache",
+      "mod": "sloppyfishy",
+      "name": "Sloppy Fishy",
+      "mixin": "com.sloppyfishy.client.mixin.MissionTerrainNoiseMixin",
+      "conflict": "NoiseBasedChunkGenerator.getBaseHeight",
+      "why": "Sloppy Fishy answers getBaseHeight from its mission terrain at HEAD, which the switch's table key does not cover (R10, bug sweep 5; order-dependent)"
+    },
+    {
+      "key": "embeddium_hidden_block_skip",
+      "mod": "illusion",
+      "name": "Illusion",
+      "mixin": "me.linstar.illusion.client.mixin.SodiumBlockRendererMixin",
+      "conflict": "BlockRenderer.renderModel / getRenderShape",
+      "why": "Illusion redirects BlockRenderer.isFaceVisible and wraps the getRenderShape call this switch changes; faces it draws behind an illusion could go missing (bug sweep 5 review)"
+    },
+    {
+      "key": "embeddium_visible_faces_first",
+      "mod": "illusion",
+      "name": "Illusion",
+      "mixin": "me.linstar.illusion.client.mixin.SodiumBlockRendererMixin",
+      "conflict": "BlockRenderer.renderModel isFaceVisible",
+      "why": "Illusion redirects the same BlockRenderer.isFaceVisible call as this switch (both at priority 1000, ours required): depending on load order one of the two redirects is dropped or ours fails at start (bug sweep 5 review, F53)"
     }
   ]
 }

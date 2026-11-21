@@ -31,7 +31,7 @@ public abstract class DefaultChunkRendererBatchCacheMixin {
     @WrapOperation(method = "render", at = @At(value = "INVOKE", target = "Lme/jellysquid/mods/sodium/client/render/chunk/DefaultChunkRenderer;fillCommandBuffer(Lme/jellysquid/mods/sodium/client/gl/device/MultiDrawBatch;Lme/jellysquid/mods/sodium/client/render/chunk/region/RenderRegion;Lme/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataStorage;Lme/jellysquid/mods/sodium/client/render/chunk/lists/ChunkRenderList;Lme/jellysquid/mods/sodium/client/render/viewport/CameraTransform;Lme/jellysquid/mods/sodium/client/render/chunk/terrain/TerrainRenderPass;Z)V"))
     private void bons$cachedFill(MultiDrawBatch batch, RenderRegion region, SectionRenderDataStorage storage, ChunkRenderList list, CameraTransform camera,
                                  TerrainRenderPass pass, boolean culling, Operation<Void> original) {
-        if (!DrawBatchCache.enabled || storage == null || list == null) {
+        if (!DrawBatchCache.enabled || DrawBatchCache.foreignFill() || storage == null || list == null) {
             original.call(batch, region, storage, list, camera, pass, culling);
             return;
         }

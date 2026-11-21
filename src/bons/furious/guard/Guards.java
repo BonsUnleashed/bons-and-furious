@@ -117,7 +117,12 @@ public final class Guards {
      */
     private static final Map<String, String[]> UNTOUCHED_PROBES = Map.of(
             "bons.furious.mixin.cofh.DispatcherRenderersAccessor", new String[] {"net/minecraft/client/renderer/entity/EntityRenderDispatcher",
-                    "m_114382_", "(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/client/renderer/entity/EntityRenderer;"});
+                    "m_114382_", "(Lnet/minecraft/world/entity/Entity;)Lnet/minecraft/client/renderer/entity/EntityRenderer;"},
+            // bug sweep 5 (2026-11-19): embeddium_draw_batch_cache replays remembered commands instead of calling fillCommandBuffer;
+            // code another mod injects there (Chunks Fade In advances each drawn section's fade) would no longer run
+            "bons.furious.mixin.embeddium_draw.DefaultChunkRendererBatchCacheMixin", new String[] {
+                    "me/jellysquid/mods/sodium/client/render/chunk/DefaultChunkRenderer", "fillCommandBuffer",
+                    "(Lme/jellysquid/mods/sodium/client/gl/device/MultiDrawBatch;Lme/jellysquid/mods/sodium/client/render/chunk/region/RenderRegion;Lme/jellysquid/mods/sodium/client/render/chunk/data/SectionRenderDataStorage;Lme/jellysquid/mods/sodium/client/render/chunk/lists/ChunkRenderList;Lme/jellysquid/mods/sodium/client/render/viewport/CameraTransform;Lme/jellysquid/mods/sodium/client/render/chunk/terrain/TerrainRenderPass;Z)V"});
     private static final Map<String, String> UNTOUCHED = new ConcurrentHashMap<>();   // key -> "" (untouched) or why not
     /**
      * Since 1.0.34: a mixin that names a class of a mod other than its target's (here a handler argument) -> that class.
@@ -328,7 +333,9 @@ public final class Guards {
         if (orphan != null && ForeignPatches.orphaned(orphan)) return true;
         List<String> keys = CANCEL.get(foreignMixin);
         if (keys == null) return false;
-        String key = cancellingKey(foreignMixin, keys, k -> decide(k).state() == State.APPLY);
+        // since 1.1.0: a switch whose row for this mixin starts at a later version of that mod ("since", ForeignPatches.belowFloor)
+        // applies next to the installed copy, which predates the change the row is about: it does not leave that mixin out
+        String key = cancellingKey(foreignMixin, keys, k -> decide(k).state() == State.APPLY && !ForeignPatches.belowFloor(yieldOf(foreignMixin, k)));
         if (key == null) return false;
         ForeignPatches.Yield y = yieldOf(foreignMixin, key);
         if (y != null && ForeignPatches.listedHere(y) && LOGGED.add("cancel|" + foreignMixin)) {
@@ -429,12 +436,25 @@ public final class Guards {
             for (MethodNode x : target.methods) if (x.name.equals(m[1]) && x.desc.equals(m[2])) found = x;
             if (expected == null) why = "has no recorded fingerprint";
             else if (found == null) why = "is missing";
-            else why = Fingerprint.of(found).equals(expected) ? "" : "is changed by another mod's mixin";
+            else why = Fingerprint.of(found).equals(expected) ? "" : "is changed by another mod's mixin" + foreignIn(target, found);
         } catch (Throwable t) {
             why = "could not be checked (" + t + ")";
         }
         UNTOUCHED.put(key, why);
         LOGGER.debug("Bons and Furious: {}: {}.{} {}", key, m[0].replace('/', '.'), m[1], why.isEmpty() ? "is untouched by other mods" : why);
+    }
+
+    /** Bug sweep 5 (2026-11-19): " (NAME VERSION (Mixin), ...)" for the other mods' handlers called inside a probed method, or "". */
+    private static String foreignIn(ClassNode target, MethodNode m) {
+        Map<String, MethodNode> methods = new LinkedHashMap<>();
+        for (MethodNode x : target.methods) methods.put(x.name + x.desc, x);
+        java.util.LinkedHashSet<String> names = new java.util.LinkedHashSet<>();
+        for (AbstractInsnNode n : m.instructions) {
+            if (!(n instanceof MethodInsnNode mi) || !mi.owner.equals(target.name)) continue;
+            String merged = CallSites.mergedBy(methods.get(mi.name + mi.desc));
+            if (merged != null && !ownMixin(merged)) names.add(mixinName(merged));
+        }
+        return names.isEmpty() ? "" : " (" + String.join(", ", names) + ")";
     }
 
     /** "" when the switch's probed method was left as shipped by every other mod; the reason otherwise; null if never checked. */
@@ -509,7 +529,10 @@ public final class Guards {
      */
     private static final Map<String, String[]> HANDLER_HOST = Map.of(
             "bons.furious.mixin.elysium_replacer.ElysiumLeanHandlerMixin", new String[] {
-                    "net.jadenxgamer.elysium_api.impl.mixin.biome.MultiNoiseBiomeSourceMixin", "elysium$getNoiseBiome"});
+                    "net.jadenxgamer.elysium_api.impl.mixin.biome.MultiNoiseBiomeSourceMixin", "elysium$getNoiseBiome"},
+            // 1.1.0: alexscaves_rare_biome_dimension_first works inside Alex's Caves' getNoiseBiome handler
+            "bons.furious.mixin.alexscaves_dimension_gate.AlexsCavesHandlerGateMixin", new String[] {
+                    "com.github.alexmodguy.alexscaves.mixin.MultiNoiseBiomeSourceMixin", "citadel_getNoiseBiomeCoords"});
 
     /** IMixinConfigPlugin.postApply: one line when a STAND_DOWN injector found the method replaced by another mod. */
     public static void checkStandDown(String mixinClass, ClassNode target) {

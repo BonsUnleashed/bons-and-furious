@@ -49,7 +49,7 @@ public final class CosmosStart {
     private static int mode;                       // 0 original, 1 leave out, 2 run and compare
     private static CompoundTag before;
     private static volatile boolean reloadOff;
-    private static MinecraftServer canaryServer;
+    private static java.lang.ref.WeakReference<MinecraftServer> canaryServer = new java.lang.ref.WeakReference<>(null);   // sweep 5: weak
     private static int canaryLeft;
 
     static {
@@ -88,8 +88,8 @@ public final class CosmosStart {
         // m_129920_ = isReady() (field f_129717_, set after the first tick). NOT m_130010_ = isRunning(), which is true for the
         // whole start: dev1 to dev3 used that one, and the switch never acted (rig p50g_metrics: 0 left out, 629 run).
         if (server == null || server.m_129920_()) return false;
-        if (server != canaryServer) {
-            canaryServer = server;
+        if (server != canaryServer.get()) {
+            canaryServer = new java.lang.ref.WeakReference<>(server);
             canaryLeft = 3;
         }
         return true;
@@ -98,6 +98,7 @@ public final class CosmosStart {
     /** reloadJsonObjects: WorldVariables.get(level).datapack = list. */
     public static void assign(CosmosModVariables.WorldVariables vars, ListTag list, Operation<Void> original) {
         mode = 0;
+        before = null;                              // sweep 5: a snapshot left by an interrupted reload is not kept
         ListTag current = vars.datapack;
         if (ACTIVE && !reloadOff && current != null && !current.isEmpty() && current.equals(list) && starting()) {
             if (VERIFY || canaryLeft > 0) {

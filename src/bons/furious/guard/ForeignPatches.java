@@ -79,7 +79,7 @@ final class ForeignPatches {
      * "TickingTracker.setLevel") changes the same method in a way that cannot run together with it; null otherwise.
      */
     record Yield(String key, String mod, String name, String mixin, String config, String master, String option,
-                 boolean byDefault, List<String> unlessMods, String conflict) {
+                 boolean byDefault, List<String> unlessMods, String conflict, String since) {
         String shortMixin() {
             return mixin.substring(mixin.lastIndexOf('.') + 1);
         }
@@ -131,7 +131,7 @@ final class ForeignPatches {
                 } else {
                     Asked a;
                     try {
-                        a = ask(new Yield(o.key(), o.mod(), o.name(), o.companion(), null, null, null, true, List.of(), null));
+                        a = ask(new Yield(o.key(), o.mod(), o.name(), o.companion(), null, null, null, true, List.of(), null, null));
                     } catch (Throwable t) {
                         a = new Asked(Verdict.UNKNOWN, "its mixin plugin threw " + t);
                     }
@@ -159,10 +159,23 @@ final class ForeignPatches {
         return out;
     }
 
-    /** guard-table line: yield key mod name mixin config master option default unless [conflict] ("-" = none). */
+    /** guard-table line: yield key mod name mixin config master option default unless [conflict [since]] ("-" = none). */
     static Yield parse(String[] f) {
         return new Yield(f[1], f[2], f[3], f[4], dash(f[5]), dash(f[6]), dash(f[7]), Boolean.parseBoolean(f[8]),
-                f[9].equals("-") ? List.of() : List.of(f[9].split(",")), f.length > 10 ? dash(f[10]) : null);
+                f[9].equals("-") ? List.of() : List.of(f[9].split(",")), f.length > 10 ? dash(f[10]) : null, f.length > 11 ? dash(f[11]) : null);
+    }
+
+    /**
+     * Since 1.1.0: true when the row names the first version of the other mod whose mixin makes the change the row is about
+     * ("since") and the installed version is older. Such a mixin is listed but never touches the method: the switch applies
+     * next to it and it is not left out (Guards.shouldCancel). Structurify's ChunkGeneratorMixin hooks
+     * getNearestGeneratedStructure from 2.0.36 on; 2.0.34 / 2.0.35 only wrap findNearestMapStructure and the generation
+     * methods. An unknown version is not below the floor (the row then counts as before).
+     */
+    static synchronized boolean belowFloor(Yield y) {
+        if (y == null || y.since() == null) return false;
+        String version = modVersion(y.mod());
+        return version != null && Guards.compareVersions(version, y.since()) < 0;
     }
 
     private static String dash(String s) {
@@ -185,6 +198,12 @@ final class ForeignPatches {
             String version = modVersion(y.mod());
             if (version == null || !listed(y.mod()).contains(y.mixin())) return null;
             for (String other : y.unlessMods()) if (modVersion(other) != null) return null;
+            if (belowFloor(y)) {   // since 1.1.0: the installed mixin predates the change the row is about
+                if (LOGGED.add("floor|" + y.key() + "|" + y.mixin()))
+                    LOGGER.info("Bons and Furious: {} applies: {} {}'s {} predates its change to {} ({} {} and later), so the two never meet; {} is not left out",
+                            y.key(), y.name(), version, y.shortMixin(), y.conflict() == null ? "the same code" : y.conflict(), y.name(), y.since(), y.shortMixin());
+                return null;
+            }
             String setting = "";
             if (y.option() != null) {
                 Map<String, String> opts = options(y.config());

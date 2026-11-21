@@ -48,6 +48,8 @@ public final class DrawBatchCache {
     private static final long INT_BASE, LONG_BASE;
     private static final int POINTER_SIZE;
     private static volatile boolean announced;
+    /** Bug sweep 5 (2026-11-19): 0 = not checked yet, 1 = fillCommandBuffer is Embeddium's own, 2 = another mod changed it. */
+    private static volatile int fill;
 
     static {
         sun.misc.Unsafe u = null;
@@ -70,6 +72,27 @@ public final class DrawBatchCache {
     }
 
     private DrawBatchCache() {
+    }
+
+    /**
+     * True when another mod has changed Embeddium's DefaultChunkRenderer.fillCommandBuffer (Guards' untouched probe, taken once every
+     * mod's mixins are in the class). Such code runs for every drawn section during the fill (Chunks Fade In 3.0.25 advances each
+     * section's fade there) and a remembered fill would skip it, so the cache stands down for the session and every fill runs as
+     * shipped. Read once, at the first fill.
+     */
+    public static boolean foreignFill() {
+        int f = fill;
+        if (f == 0) {
+            String why = bons.furious.guard.Guards.untouched("embeddium_draw_batch_cache");
+            f = "".equals(why) ? 1 : 2;
+            fill = f;
+            if (f == 2) {
+                enabled = false;
+                LOGGER.info("Bons and Furious: embeddium_draw_batch_cache stands down: Embeddium's DefaultChunkRenderer.fillCommandBuffer {}; "
+                        + "every fill runs as shipped", why == null ? "could not be checked" : why);
+            }
+        }
+        return f == 2;
     }
 
     static void announce() {

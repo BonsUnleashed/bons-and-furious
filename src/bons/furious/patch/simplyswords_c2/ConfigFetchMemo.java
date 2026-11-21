@@ -95,10 +95,54 @@ public final class ConfigFetchMemo {
         String text;           // that text (identity: the string handed to getJsonObject)
         List<Object> puts;     // non-null while the original's puts are being recorded
         Kept shadowOf;
+        Kept reusedFrom;       // 1.1.0: the kept run whose bytes this call read again (set in readFile)
 
         Call(String key) {
             this.key = key;
         }
+    }
+
+    /**
+     * 1.1.0 (switch simplyswords_loot_hook_config_scope, group simplyswords_loot_scope): a scope of one Simply Swords loot-table
+     * hook call on this thread. Inside it, a fetch of a (type, parent) whose file this scope has already read (and found to be
+     * the kept run's bytes, or made the kept run from) applies that kept run again without reading the file: the hook asks for
+     * about 35 values of the same Loot file per chest table, each of which read the file once more. The maps then hold what a
+     * fresh read gives unless the file (or its folder) changes during that one hook call; that is the switch's whole trade.
+     * Outside a scope nothing here changes.
+     */
+    private static final class Scope {
+        int depth;
+        final Map<String, Kept> seen = new HashMap<>(4);
+    }
+
+    private static final ThreadLocal<Scope> SCOPE = new ThreadLocal<>();
+    /** 1.1.0: fetches answered inside a scope without reading the file (written under LOCK). */
+    public static long scopedReuse;
+    /** 1.1.0: -Dbons_and_furious.simplyswordsLootScope.metrics=true prints the counters at JVM exit (rigs). */
+    public static final boolean SCOPE_METRICS = Boolean.getBoolean("bons_and_furious.simplyswordsLootScope.metrics");
+
+    static {
+        if (SCOPE_METRICS) {
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                synchronized (LOCK) {
+                    System.out.println("Bons and Furious simplyswords_loot_hook_config_scope: config reads answered inside a hook call without "
+                            + "reading the file " + scopedReuse + ", reads answered from kept runs in all " + reused + ", parses " + parsed);
+                }
+            }, "Bons and Furious Simply Swords loot scope summary"));
+        }
+    }
+
+    /** 1.1.0: enter a hook-call scope (re-entrant). */
+    public static void enterScope() {
+        Scope s = SCOPE.get();
+        if (s == null) SCOPE.set(s = new Scope());
+        s.depth++;
+    }
+
+    /** 1.1.0: leave a hook-call scope; the outermost exit forgets what the scope saw. */
+    public static void exitScope() {
+        Scope s = SCOPE.get();
+        if (s != null && --s.depth <= 0) SCOPE.remove();
     }
 
     private ConfigFetchMemo() {
@@ -115,8 +159,19 @@ public final class ConfigFetchMemo {
                 untracked = false;
                 LAST_WRITER.clear();
             }
+            String key = type + '\u0000' + parent;
+            Scope scope = SHADOW ? null : SCOPE.get();
+            if (scope != null) {
+                Kept seen = scope.seen.get(key);
+                if (seen != null && KEPT.get(key) == seen) {    // this scope read the file and found these bytes: no new read
+                    apply(seen);
+                    reused++;
+                    scopedReuse++;
+                    return;
+                }
+            }
             Call outer = current;
-            Call c = new Call(type + '\u0000' + parent);
+            Call c = new Call(key);
             current = c;
             boolean completed = false;
             try {
@@ -125,6 +180,10 @@ public final class ConfigFetchMemo {
             } finally {
                 current = outer;
                 if (c.puts != null && completed) finish(c);
+            }
+            if (scope != null && completed) {
+                Kept now = c.reusedFrom != null ? c.reusedFrom : c.puts != null ? KEPT.get(key) : null;
+                if (now != null) scope.seen.put(key, now);
             }
         }
     }
@@ -144,6 +203,7 @@ public final class ConfigFetchMemo {
             if (!SHADOW) {
                 apply(k);
                 reused++;
+                c.reusedFrom = k;                        // 1.1.0: a hook-call scope may reuse this run without a new read
                 return KEPT_MARKER;
             }
             c.shadowOf = k;

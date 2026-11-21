@@ -1,0 +1,53 @@
+{
+  "group": "vanilla_zero_term",
+  "keys": {
+    "vanilla_density_zero_term_skip": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.1.0",
+      "mixins": [
+        "bons.furious.mixin.vanilla_zero_term.Ap2ZeroTermMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$Ap2",
+          "method": "m_207362_",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V",
+          "note": "fillArray: argument1.fillArray(ds); ADD: es = new double[n], argument2.fillArray(es), ds[i] = ds[i] + es[i]; MAX/MIN/MUL: per element argument2.compute(cp.forIndex(i)) behind a bound or zero test",
+          "sha256": "475df1fb7813a544a8fc0e202a27a02f9e891504b5013cf98315642c884817cf"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$MulOrAdd",
+          "method": "m_207382_",
+          "desc": "(D)D",
+          "note": "transform: MUL -> x * argument, ADD -> x + argument",
+          "sha256": "ef9b858f2d1675a9d01a42e9aeb8ca7fd0b71961cb67155b0010cfadefffcefe"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$PureTransformer",
+          "method": "m_207386_",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "note": "compute of a pure transformer (MulOrAdd): transform(input.compute(context))",
+          "sha256": "9d93fa912eb83aa46804c01a0471567677aa0384983c015fe12088397eaec9c5"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$PureTransformer",
+          "method": "m_207362_",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V",
+          "note": "fillArray of a pure transformer: input.fillArray(ds), then ds[i] = transform(ds[i]): per element the same as compute",
+          "sha256": "c062ed9179f8bc5963560ac32e1ebb54177b6332009be58c674dd0f553dc7eb4"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "m_207263_",
+          "desc": "(I)Lnet/minecraft/world/level/levelgen/NoiseChunk;",
+          "note": "forIndex of the NoiseChunk as context provider: sets inCellX/Y/Z and arrayIndex from the index, returns itself; no counter moves",
+          "sha256": "a796a4b125de386328e8e192acbfac1ca5fe9d3f8683f493749dafb587a37849"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: a cancellable @Inject at the HEAD of DensityFunctions$Ap2.fillArray that fills an addition of a term multiplied by a constant 0 the short way (the other argument first, the term only where the sum is -0.0 or NaN) when the context provider is the NoiseChunk; a RETURN @Inject for the verify mode; a @Unique plan byte per node; helper bons.furious.patch.vanilla_zero_term.ZeroTerms",
+      "license": "Minecraft (Mojang): no game code is carried; our own logic only"
+    }
+  }
+}

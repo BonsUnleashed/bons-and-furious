@@ -168,6 +168,10 @@ public final class LightRegistration {
             if (METRICS) ORIGINAL.increment();
             return original.call(state);
         }
+        if (state.m_271730_()) {                             // sweep 5: hasOffsetFunction(): the cache constructor may throw; the original decides
+            if (METRICS) ORIGINAL.increment();
+            return original.call(state);
+        }
         Block block = state.m_60734_();
         Object props = ((BlockBehaviourPropertiesAccessor) block).bons$properties();
         boolean solid;

@@ -1,0 +1,41 @@
+{
+  "group": "alexscaves_dimension_gate",
+  "keys": {
+    "alexscaves_rare_biome_dimension_first": {
+      "mod": "alexscaves",
+      "scripts": [],
+      "since": "1.1.0",
+      "mixins": [
+        "bons.furious.mixin.alexscaves_dimension_gate.AlexsCavesHandlerGateMixin",
+        "bons.furious.mixin.alexscaves_dimension_gate.BiomeConfigGenerationMixin",
+        "bons.furious.mixin.alexscaves_dimension_gate.ConditionDimensionsAccessor"
+      ],
+      "guard": [
+        {
+          "class": "com/github/alexmodguy/alexscaves/mixin/MultiNoiseBiomeSourceMixin",
+          "method": "citadel_getNoiseBiomeCoords",
+          "desc": "(IIILnet/minecraft/world/level/biome/Climate$Sampler;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "the handler: getRareBiomeInfoForQuad(lastSampledWorldSeed, x, z); if a cell: depth from sampler.sample(x, y, z), then for each BIOMES entry with the cell's rarity offset whose test passes, setReturnValue(the condition's biome); nothing else",
+          "sha256": "f6107c0e753d08b4b43b074e7509e6fd34bba6d60fed73b6cd5564d27505cc67"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/server/config/BiomeGenerationNoiseCondition",
+          "method": "test",
+          "desc": "(IIIFLnet/minecraft/world/level/biome/Climate$Sampler;Lnet/minecraft/resources/ResourceKey;Lcom/github/alexmodguy/alexscaves/server/misc/VoronoiGenerator$VoronoiInfo;)Z",
+          "note": "disabledCompletely -> false; spawn distance; climate sample at the cell centre; five range tests; depth; LAST: dimension == null || dimensions.contains(dimension.location().toString())",
+          "sha256": "7956c0267789adeac367b24b927415c61240676db3f4e708bd4416be62554acb"
+        },
+        {
+          "class": "com/github/alexmodguy/alexscaves/server/config/BiomeGenerationConfig",
+          "method": "reloadConfig",
+          "desc": "()V",
+          "note": "rebuilds BIOMES (the conditions, their dimension lists) from the config files; the gate's generation is bumped at its return",
+          "sha256": "7cbfcd30404c3c6e735f2110f89a1fa34ba5bfd4a77c6ff3dd6afe62988b5c10"
+        }
+      ],
+      "cancel": [],
+      "conversion": "MixinSquared @TargetHandler on Alex's Caves' MultiNoiseBiomeSourceMixin.citadel_getNoiseBiomeCoords (merged into MultiNoiseBiomeSource.getNoiseBiome): a cancellable HEAD @Inject that ends the handler before its own work when no biome condition lists the source's lastSampledDimension (@Shadow of the field Alex's Caves' mixin adds), and a RETURN @Inject for the verify mode; an @Inject at the RETURN of BiomeGenerationConfig.reloadConfig (decision generation); an @Accessor for a condition's dimension list; helper bons.furious.patch.alexscaves_dimension_gate.DimensionGate",
+      "license": "Alex's Caves (LGPL-3.0): no Alex's Caves code is carried; our own decision logic only"
+    }
+  }
+}

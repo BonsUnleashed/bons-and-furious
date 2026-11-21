@@ -37,6 +37,55 @@
       "cancel": [],
       "conversion": "MixinExtras @WrapMethod on Config.safeValueFetch + @WrapOperation on its readFile, getJsonObject and HashMap.put calls (the file's bytes decide; kept puts are applied for the same bytes, otherwise the text made from those bytes by Scanner(File)'s own path is parsed and recorded)",
       "license": "Simply Swords: Timefall Development License (custom): no-copy; the mixins carry only our own logic (helper bons.furious.patch.simplyswords_c2.ConfigFetchMemo)"
+    },
+    "simplyswords_loot_hook_config_scope": {
+      "mod": "simplyswords",
+      "kind": "variant",
+      "scripts": [],
+      "since": "1.1.0",
+      "mixins": [
+        "bons.furious.mixin.simplyswords_c2.LootHookConfigScopeMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/sweenus/simplyswords/util/ModLootTableModifiers",
+          "method": "lambda$init$0",
+          "desc": "(FLnet/minecraft/world/level/storage/loot/LootDataManager;Lnet/minecraft/resources/ResourceLocation;Ldev/architectury/event/events/common/LootEvent$LootTableModificationContext;Z)V",
+          "note": "chest hook: Config.getBoolean(enableLootDrops), then (chests, not spectrum) Config.getBoolean(enableLootInVillages): two reads of the Loot file per chest table",
+          "sha256": "44024bb2ff925a7c34d6c9e0342f15cd0f947c2d6db3e0549637b6561fa84749"
+        },
+        {
+          "class": "net/sweenus/simplyswords/util/ModLootTableModifiers",
+          "method": "lambda$init$1",
+          "desc": "(FLnet/minecraft/world/level/storage/loot/LootDataManager;Lnet/minecraft/resources/ResourceLocation;Ldev/architectury/event/events/common/LootEvent$LootTableModificationContext;Z)V",
+          "note": "the same reads as lambda$init$0",
+          "sha256": "eecc7ab494ee4a5794eae14245df1f07a57f6b966c0537d1aa3c5d100daf424d"
+        },
+        {
+          "class": "net/sweenus/simplyswords/util/ModLootTableModifiers",
+          "method": "lambda$init$2",
+          "desc": "(FLnet/minecraft/world/level/storage/loot/LootDataManager;Lnet/minecraft/resources/ResourceLocation;Ldev/architectury/event/events/common/LootEvent$LootTableModificationContext;Z)V",
+          "note": "the same reads as lambda$init$0",
+          "sha256": "a8205e625ef7c2c7dd7f0d84e2dc34336d69c682fb73028436fafce7cb5b0f83"
+        },
+        {
+          "class": "net/sweenus/simplyswords/util/ModLootTableModifiers",
+          "method": "lambda$init$3",
+          "desc": "(FLnet/minecraft/world/level/storage/loot/LootDataManager;Lnet/minecraft/resources/ResourceLocation;Ldev/architectury/event/events/common/LootEvent$LootTableModificationContext;Z)V",
+          "note": "unique-weapon hook: Config.getBoolean(enableLootDrops), then about 35 Config.getBoolean(enable<weapon>) of the Loot file per listed or chest table",
+          "sha256": "c14e50a8a360f9034dad6d4c96eb34c8bd7a77ddcd44a3c47f91295bfa636a00"
+        },
+        {
+          "class": "net/sweenus/simplyswords/config/Config",
+          "method": "safeValueFetch",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)V",
+          "note": "Files.exists(config folder), readFile(parent's json5), parse, put each entry of the type into the type's map: what a scoped reuse applies again",
+          "sha256": "02b377a3e0e5c07a2eeb73219ac354b889bd2ab1011c2ba8235cd9bc08591249"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapMethod around ModLootTableModifiers.lambda$init$0..3 entering a per-thread scope of ConfigFetchMemo (this group's switch simplyswords_config_unchanged_reuse): inside it, a second fetch of a config file this scope already read applies the kept run again without opening the file; the hook always runs",
+      "license": "Timefall Development License (Simply Swords): no Simply Swords code is carried; our own logic only"
     }
   }
 }

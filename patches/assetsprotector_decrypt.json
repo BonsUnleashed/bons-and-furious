@@ -1,0 +1,54 @@
+{
+  "group": "assetsprotector_decrypt",
+  "keys": {
+    "assetsprotector_undecryptable_skip": {
+      "mod": "aes",
+      "scripts": [],
+      "since": "1.1.0",
+      "mixins": [
+        "bons.furious.mixin.assetsprotector_decrypt.AssetsProtectorPatternMixin",
+        "bons.furious.mixin.assetsprotector_decrypt.AssetsProtectorPrecheckMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/min01/aes/AESUtil",
+          "method": "decrypt",
+          "desc": "([B)Ljava/io/ByteArrayInputStream;",
+          "note": "AES/CBC/PKCS5Padding, a zero IV: decryptKey(array, ...) first, then decryptFile; nothing else",
+          "sha256": "5d4ac7ebae7322baee8e165a860f324d59aebcaf892b90c4fcc3d12a57ab69f8"
+        },
+        {
+          "class": "com/min01/aes/AESUtil",
+          "method": "decryptKey",
+          "desc": "([BLjava/lang/String;Ljavax/crypto/spec/IvParameterSpec;)Ljavax/crypto/SecretKey;",
+          "note": "getKey(last 16 bytes as a String, twice) BEFORE decryptString(the 44 characters before them): the key derivation always runs first",
+          "sha256": "84566bc4312c5d82aa91b1f52c011c1f18c42a9897d2c73a18de3de0e61ab076"
+        },
+        {
+          "class": "com/min01/aes/AESUtil",
+          "method": "decryptString",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;Ljavax/crypto/SecretKey;Ljavax/crypto/spec/IvParameterSpec;)Ljava/lang/String;",
+          "note": "Cipher.init(DECRYPT, key, iv); doFinal(Base64 decode of the text): IllegalBlockSizeException for a length that is not a multiple of 16",
+          "sha256": "7e07def5c190012bafbb21c070dc94271aef7fff6ba8546d1db0522c3b1213be"
+        },
+        {
+          "class": "com/min01/aes/AESUtil",
+          "method": "getKey",
+          "desc": "(Ljava/lang/String;Ljava/lang/String;)Ljavax/crypto/SecretKey;",
+          "note": "PBKDF2WithHmacSHA256, 65,536 iterations, 256 bits: no exception for any password and salt",
+          "sha256": "083d58aead24855f7634b779b8dcb5a9db1b255f3ded3771ec34d62294ce9f4e"
+        },
+        {
+          "class": "com/min01/aes/mixin/MixinResource",
+          "method": "open",
+          "desc": "(Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V",
+          "note": "the only caller: reads the resource; length > 76 and a Base64 tail -> decrypt in a try that catches Exception; the original bytes otherwise and on any exception",
+          "sha256": "b61a4acada7881872034caf79399f3c8b2a43e92cec00fd444fb0a053be68538"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapMethod around com.min01.aes.AESUtil.decrypt: an IllegalBlockSizeException before the key derivation for input AES/CBC cannot decrypt (its Base64 tail does not decode to a multiple of 16 bytes); the original for everything else; verify mode runs every call; and a MixinSquared @TargetHandler @WrapOperation on the Pattern.compile call inside Assets Protector's MixinResource.open handler (merged into Resource.open): its one Base64 expression compiled once; helper bons.furious.patch.assetsprotector_decrypt.Undecryptable",
+      "license": "Assets Protector (GPL-3.0): no Assets Protector code is carried; our own logic only"
+    }
+  }
+}

@@ -292,3 +292,10 @@ carries none of its code, only our own injections; its exact tested JAR digest
 is in upstream-credits.json. The other 1.0.50 switches change Minecraft,
 Embeddium, Fusion, Valkyrien Skies, Simply Swords and Cosmic Horizons, all
 credited above.
+
+Targets added in 1.1.0: Assets Protector (min01, GPLv3), Oceanic Realms
+(min01 and leomard, All Rights Reserved) and Formations (SuperMartijn642,
+All rights reserved). The switches that change them carry none of their
+code, only our own injections; the exact JAR digests are in
+upstream-credits.json. The other 1.1.0 switches change Minecraft, Alex's
+Caves, Simply Swords and Distant Horizons, all credited above.

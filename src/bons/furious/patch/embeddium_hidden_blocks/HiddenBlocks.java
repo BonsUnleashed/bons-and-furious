@@ -150,6 +150,7 @@ public final class HiddenBlocks {
     public static RenderShape shape(RenderShape shape, BlockRenderCache cache, BlockRenderContext context, BlockState state, BlockPos pos,
                                     Map<BlockPos, ModelData> taskData) {
         if (shape != RenderShape.MODEL || !enabled) return shape;
+        if (state.m_155947_()) return shape;               // sweep 5: hasBlockEntity(): its renderer may track this block's mesh (Fancy World Animations)
         if (customRenderers()) {
             if (METRICS) CUSTOM.increment();
             return shape;
