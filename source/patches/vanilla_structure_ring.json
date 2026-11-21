@@ -39,7 +39,9 @@
       "mod": "structurify",
       "name": "Structurify",
       "mixin": "com.faboslav.structurify.common.mixin.ChunkGeneratorMixin",
-      "why": "Structurify (tested 1.21.1 2.0.42) @WrapOperation-wraps the getStructureGeneratingAt call inside ChunkGenerator.getNearestGeneratedStructure (random spread): with its placement-attempt option it re-resolves the candidate chunk before the check. This switch's HEAD replacement walks the same cells but calls getStructureGeneratingAt itself, which would bypass that wrapper and could locate a different structure, so it steps aside whenever that mixin is listed. Found by a scan of the other mods' mixins on the same classes for the 1.21.1 port (no crash class: HEAD injection)."
+      "conflict": "ChunkGenerator.getNearestGeneratedStructure",
+      "since": "2.0.36",
+      "why": "Structurify (tested 1.21.1 2.0.42) @WrapOperation-wraps the getStructureGeneratingAt call inside ChunkGenerator.getNearestGeneratedStructure (random spread): with its placement-attempt option it re-resolves the candidate chunk before the check. This switch's HEAD replacement walks the same cells but calls getStructureGeneratingAt itself, which would bypass that wrapper and could locate a different structure, so it steps aside whenever that mixin is listed. Found by a scan of the other mods' mixins on the same classes for the 1.21.1 port (no crash class: HEAD injection). Since 1.1.0+mc1.21.1 the row starts at Structurify 2.0.36, the first NeoForge 1.21.1 build whose ChunkGeneratorMixin hooks getNearestGeneratedStructure (the 53 builds from 1.0.2 to 2.0.35 wrap tryGenerateStructure and, from 1.0.20, findNearestMapStructure and, from 2.0.29, the two height methods; bytecode of every Modrinth build read, evidence/structurify-floor110.json), so this switch runs next to them and their mixin is not left out."
     }
   ]
 }

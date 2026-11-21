@@ -185,6 +185,7 @@ public final class PortProbe {
 
     private void finish(Map<String,Object> result) {
         result.put("counters50", Counters50.read(false));     // 1.0.50 port: the new helpers' counters
+        result.put("counters110", Counters110.read(false));   // 1.1.0 port: the new helpers' counters
         try { Files.writeString(Path.of("probe-result.json"),new GsonBuilder().setPrettyPrinting().create().toJson(result)+"\n"); }
         catch(Exception e){throw new RuntimeException(e);}
         finally { server.halt(false); }

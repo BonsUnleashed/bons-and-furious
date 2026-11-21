@@ -1,4 +1,76 @@
-# 1.0.50.1+mc1.21.1 (2026-11-19)
+# 1.1.0+mc1.21.1 (2026-11-21)
+
+Runtime checks PASS for SHA-256 `91c242fafd0877ccb8091671853a8711b109f3911945e43c734ad843e4042f35`. Bons and Furious 1.1.0 for NeoForge: the 561 controls of 1.0.50.1+mc1.21.1, the three
+controls of Forge 1.1.0 that have a Minecraft 1.21.1 target, and the fixes found in the bug hunt of 19 November 2026 that apply here.
+564 controls (560 guarded switches, 4,474 fingerprints taken from the 1.21.1 classes); of the
+901 controls of Bons and Furious 1.1.0, 163 are retired on this port and 174 have no author-published
+Minecraft 1.21.1 NeoForge target.
+
+The three new controls, as tested on this jar:
+- `vanilla_density_zero_term_skip` (on by default): vanilla 1.21.1 has no density term multiplied by zero, so a test data pack gave the overworld's
+  final density one (a noise multiplied by 0.0). With the built-in check every qualifying fill was also computed the short way
+  and compared bit for bit: 207,362 fills, 0 different. On the real path 207,362 fills were taken short, and
+  the blocks and biomes of three dimensions were identical with the switch on and off.
+- `formations_structure_biome_first` (off by default; Formations 1.0.4 with Formations Nether 1.0.5b and Formations Overworld 1.0.5c): turned
+  on with the built-in check, which never skips, 618 placement attempts were followed and 618 of them checked
+  when the search returned: no stub outside the predicted column and heights, and none of the 309 attempts the switch
+  would have ended early had a biome the structure allows. On the real path 309 of 618 attempts ended
+  before the search.
+- `distanthorizons_light_section_lock_skip` (off by default; Distant Horizons 3.3.3): turned on next to Distant Horizons on a dedicated server, it
+  applies, and the server generates three dimensions and stops cleanly. No client with Distant Horizons ran with it on.
+
+The fixes of that bug hunt, as ported:
+- `embeddium_draw_batch_cache` (Embeddium 1.0.15, clients): after every mod's mixins are applied, it checks whether Embeddium's
+  DefaultChunkRenderer.fillCommandBuffer is still as shipped; when another mod's mixin changed it, the cache stands down for the
+  session with one log line and every fill runs as shipped. On the three Embeddium clients below the check found the method as
+  shipped. On a client where the test probe adds a mixin of its own to that method, the cache stood down with that line. Next to
+  Chunks Fade In 3.0.26 the cache and `embeddium_shader_source_memo` step aside, each with one log line.
+- `forgeendertech_start_config_reads_once`: the start-time copies are dropped when the server has started or stopped, and the server is held only
+  weakly. Both all-at-once servers hold ForgeEndertech: after their soak the probe found nothing kept.
+- `embeddium_hidden_block_skip`: blocks with a block entity take the stock path.
+- Twenty-eight conflict rows: next to Chunks Fade In, Chunk Animator, Structure Essentials, Gensokyo Legacy, History Stages, Better Selective Combat, Raven DnD Origins, Create: Chromeware, Apprentice's Codex, NoBroken, Goety Mastery of Magic, Better Inventory, Barehand Better Combat, Reverie Foundry, Exception Melee Animation, AnvilCraft, Basal, Better Cubic Chunks, JEI Rewired, Auto Hide HUD, Berk Dragon Academy, Witchery, Goldstein Wrench, EnigmaticLegacy+ and Android Optimizer, the switches that change the same
+  methods step aside, each with one log line. Rows of that bug hunt for mods without an author-published Minecraft 1.21.1 NeoForge
+  build, or whose 1.21.1 build does not change that method, are not part of this port.
+- `vanilla_structure_ring_search` and Structurify: Structurify 2.0.36 is the first NeoForge 1.21.1 build whose mixin changes this search
+  (53 earlier builds checked). The row now says so: with Structurify 2.0.35 the switch applies,
+  with 2.0.36 it steps aside, and in both runs Structurify's mixin applies and a /locate of a village answers.
+
+Also tested on this jar:
+- Every one of the 4,474 fingerprints found in the 1.21.1 classes, and in Mojang's production classes. One new method,
+  Minecraft's DensityFunctions$Ap2.fillArray, has a reviewed alternate fingerprint for its production instruction layout (the same
+  calls, fields, comparisons and constants in the same order).
+- Dedicated server with 182 mods at once (Formations 1.0.4 is new among them): boots, generates three dimensions, runs
+  401 ticks and stops cleanly. 238 controls applied; 3,055,942 comparisons of the original
+  answer with ours, 0 mismatches. With every switch that ships off turned on: 304 applied, 4,102,213
+  comparisons, 0 mismatches.
+- The five controls added in 1.0.50 on this jar: on a vanilla server 161,562 flat cache column requests were answered from tables
+  and 256 answers compared bit for bit with the original evaluation, 0 differences; the climate sampler check got its first
+  sampler back and its 864 climate points match a newly made sampler; ForgeEndertech's start compared 44 answers and
+  files with the disk, 0 different; next to C2ME 0.4 and SuperChunk 0.6.1 the flat cache switch keeps the original code.
+- Every control new since 1.0.47, the three of 1.1.0 included, off versus on: identical block and biome hashes in three dimensions.
+- World starts with SuperChunk 0.6.1, Lomka 0.7.0, C2ME 0.4 and SuperChunk 0.6.1 with Distant Horizons 3.3.3: clean.
+- TerraBlender saved-layer regression: 510 checks, zero failures. Guard helper regression: 31 cases;
+  131,072 exact noise samples; 252 ZIP listings.
+- Clients: Iris with a shader pack, Embeddium without Iris (every block `embeddium_hidden_block_skip` would skip drawn as shipped and
+  checked: 403,386 blocks, none wrong; 324,873 more next to Supplementaries), the section comparison (283 sections
+  meshed with that switch off and on, six rounds, 0 differences), one client with every client target mod (560
+  controls checked), its controls-off twin and an all-switches-on run, Supplementaries on Embeddium, Chunks Fade In on Embeddium.
+  11,770,830,431 comparisons in all, 0 mismatches.
+- Sodium 0.8.13: the standard client mods without Iris load a world, run 600 ticks and stop cleanly. 1,286,118,105 comparisons, 0 mismatches (smoke test).
+- Chunks Fade In 3.0.26 on Embeddium: the client loads a world, runs 600 ticks and stops cleanly; 55,012,135 comparisons,
+  0 mismatches. This run leaves out Distant Horizons: next to Distant Horizons 3.3.3 one of Chunks Fade In's mixins into Distant Horizons
+  fails to apply ("Critical injection failure", chunksfadein_dh.mixins.json), Distant Horizons cannot load its levels, and the game never
+  finishes stopping. A run with that pair and every control of this mod off shows the same, so it is a clash of those two mods.
+- Moonrise 0.1.0-beta.15 with Moonrise Compats 0.1.0-beta.15+2eae1b1.5, Immersive Optimization 0.2.0 and GeckoLib on a client: loads a
+  world, runs 600 ticks and stops cleanly; `immersiveoptimization_be_priority_front_cache` steps aside next to Moonrise Compats.
+- JEI recipe deferral enabled and disabled: identical ordered recipe dumps after a real disconnect and rejoin (3278 anvil and 9717 grindstone recipes).
+- Static checks over 439 jars: no crash-class conflicts. Overwrite access audit over 439 jars: 90 overwrites,
+  all safe.
+
+These are targeted tests, not comprehensive multiplayer or long-session modpack coverage. No Minecraft 1.21.1 speed benchmark was run for
+this release.
+
+# Historical: 1.0.50.1+mc1.21.1 (2026-11-19)
 
 Runtime checks PASS for SHA-256 `d75e43df586a30134662a6889f8abb61c7620115eeb29dadf7c2bc719b9f12a1`. A hotfix of 1.0.50+mc1.21.1: the same 561 controls (557 guarded switches) and the same
 4,430 fingerprints, no new switch and no changed default. The release JAR differs from 1.0.50+mc1.21.1 in three files: the class of

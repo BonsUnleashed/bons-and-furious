@@ -30,13 +30,16 @@ import org.spongepowered.asm.mixin.injection.At;
  * of refilling it; otherwise the fill runs as shipped (with the merge, when on) and is remembered. Priority 1100: applied
  * after DefaultChunkRendererMergeMixin, so this wrapper is the outer one and a cache hit skips the merge too (the
  * remembered commands were merged when they were filled).
+ *
+ * Since 1.1.0+mc1.21.1 (bug sweep 5): this mixin is also the untouched probe of fillCommandBuffer (Guards.UNTOUCHED_PROBES); when
+ * another mod has changed that method, DrawBatchCache.foreignFill() makes the cache stand down for the session.
  */
 @Mixin(value = DefaultChunkRenderer.class, remap = false, priority = 1100)
 public abstract class DefaultChunkRendererBatchCacheMixin {
     @WrapOperation(method = "render", at = @At(value = "INVOKE", target = "Lorg/embeddedt/embeddium/impl/render/chunk/DefaultChunkRenderer;fillCommandBuffer(Lorg/embeddedt/embeddium/impl/gl/device/MultiDrawBatch;Lorg/embeddedt/embeddium/impl/render/chunk/region/RenderRegion;Lorg/embeddedt/embeddium/impl/render/chunk/data/SectionRenderDataStorage;Lorg/embeddedt/embeddium/impl/render/chunk/lists/ChunkRenderList;Lorg/embeddedt/embeddium/impl/render/viewport/CameraTransform;Lorg/embeddedt/embeddium/impl/render/chunk/terrain/TerrainRenderPass;Z)V"))
     private void bons$cachedFill(MultiDrawBatch batch, RenderRegion region, SectionRenderDataStorage storage, ChunkRenderList list, CameraTransform camera,
                                  TerrainRenderPass pass, boolean culling, Operation<Void> original) {
-        if (!DrawBatchCache.enabled || storage == null || list == null) {
+        if (!DrawBatchCache.enabled || DrawBatchCache.foreignFill() || storage == null || list == null) {
             original.call(batch, region, storage, list, camera, pass, culling);
             return;
         }

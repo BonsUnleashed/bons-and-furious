@@ -1,6 +1,6 @@
 {
   "group": "compat",
-  "note": "Patches other mods make to the same code, the same way, as one of our switches. Exactly one copy may run: while the other mod's patch is active (installed, its mixin listed for this side, its option on), our switch steps aside; otherwise our switch applies and the other mod's mixin is cancelled. See bons.furious.guard.ForeignPatches. Checked against Collections Of Optimizations 4.4 (CurseForge file 9026925, sha1 d1b067885b0827c12b7eb75bc02896d270adaed8) on 2026-10-02. The Collections Of Optimizations 4.6 entries are carried from the Forge 1.0.36 release for the keys this port ships; they only act when that mod is installed, which no NeoForge 1.21.1 test of this port has. Rechecked on 2026-11-11 (1.0.49.2+mc1.21.1) against Moonrise 0.1.0-beta.15, Afterburner 0.2.6 and SuperChunk 0.6.0 / 0.6.1 next to Distant Horizons: rows for patches that cannot run together with ours next to those mods.",
+  "note": "Patches other mods make to the same code, the same way, as one of our switches. Exactly one copy may run: while the other mod's patch is active (installed, its mixin listed for this side, its option on), our switch steps aside; otherwise our switch applies and the other mod's mixin is cancelled. See bons.furious.guard.ForeignPatches. Checked against Collections Of Optimizations 4.4 (CurseForge file 9026925, sha1 d1b067885b0827c12b7eb75bc02896d270adaed8) on 2026-10-02. The Collections Of Optimizations 4.6 entries are carried from the Forge 1.0.36 release for the keys this port ships; they only act when that mod is installed, which no NeoForge 1.21.1 test of this port has. Rechecked on 2026-11-11 (1.0.49.2+mc1.21.1) against Moonrise 0.1.0-beta.15, Afterburner 0.2.6 and SuperChunk 0.6.0 / 0.6.1 next to Distant Horizons: rows for patches that cannot run together with ours next to those mods. Rechecked on 2026-11-21 (1.1.0+mc1.21.1, bug sweep 5 of 2026-11-19): rows where a switch could skip another mod's code inside the method or call it skips, with the NeoForge 1.21.1 mixin names of the mods named in that sweep (Chunks Fade In and Chunk Animator next to the draw batch cache, the other pairs of the sweep and of its NeoForge triage), each read in that mod's NeoForge jar.",
   "keys": {},
   "yields": [
     {
@@ -848,6 +848,229 @@
       "mixin": "dev.sixik.moonrise_compats.mixin.fixes.immersive_optimization.MixinTickScheduler$FixEntityList",
       "conflict": "TickScheduler.tickLevel",
       "why": "Moonrise Compats' MixinTickScheduler$FixEntityList (Overwrite, priority 1000, common list of a required config) replaces Immersive Optimization's TickScheduler.tickLevel, where this switch wraps calls (TickSchedulerFrontCacheMixin, @WrapOperation, require 1, client list of a required config) (R3-CRASH): Mixin refuses to inject into a method another mixin merged at the same priority, so a client or single player with Moonrise, Moonrise Compats 0.1.0-beta.15+2eae1b1.5 and Immersive Optimization 0.2.0 would stop when TickScheduler loads (at level load). A dedicated server is not affected (our mixin is client-only): three server runs were clean, and a Mixin class export of the server's TickScheduler showed Moonrise Compats' overwrite applied and ours absent (2026-11-13, rig/neo/runs/mrio_*). Client side not run"
+    },
+    {
+      "key": "embeddium_draw_batch_cache",
+      "mod": "chunksfadein",
+      "name": "Chunks Fade In",
+      "mixin": "com.koteinik.chunksfadein.compat.embeddium.mixin.DefaultChunkRendererMixin",
+      "conflict": "DefaultChunkRenderer.fillCommandBuffer",
+      "why": "Chunks Fade In (3.0.26-1.21, 3.0.28-1.21, NeoForge 1.21.1) advances the fade of every drawn section inside Embeddium's DefaultChunkRenderer.fillCommandBuffer (an @Inject at each section's getSliceMask call). This switch replays a region's remembered draw commands instead of calling fillCommandBuffer while nothing the commands come from changed, so on those frames the fade would not advance (bug sweep 5: reproduced with Chunks Fade In 3.0.25 on Forge 1.20.1; the NeoForge hook was read in the jar). It steps aside so that every fill runs that code"
+    },
+    {
+      "key": "embeddium_draw_batch_cache",
+      "mod": "chunkanimator",
+      "name": "Chunk Animator",
+      "mixin": "astryxion.chunkanimator.compat.embeddium.mixin.EmbeddiumDefaultChunkRendererMixin",
+      "conflict": "DefaultChunkRenderer.fillCommandBuffer",
+      "why": "Chunk Animator (1.21.1-1.1.0, NeoForge 1.21.1) redirects the section list fillCommandBuffer walks inside Embeddium's DefaultChunkRenderer.render, leaving animating sections out of the region's batch (it draws them itself); a replayed batch would keep the sections as they were when it was recorded (R10, bug sweep 5: read in the NeoForge jar, not run). It steps aside"
+    },
+    {
+      "key": "vanilla_structure_ring_search",
+      "mod": "structureessentials",
+      "name": "Structure Essentials",
+      "mixin": "com.structureessentials.mixin.StructureSearchTimeoutMixin",
+      "conflict": "ChunkGenerator.getNearestGeneratedStructure",
+      "why": "Structure Essentials's StructureSearchTimeoutMixin (5.1, NeoForge 1.21.1) stops a structure search after its timeout (default 50 s) at the getStructureGeneratingAt call inside the method this switch answers itself; with the switch the timeout never fires and a long /locate, explorer map or dolphin search can outlast a dedicated server's watchdog (bug sweep 5: proven on Forge 1.20.1 with Structure Essentials 5.1; the NeoForge build has the same mixin)"
+    },
+    {
+      "key": "vanilla_structure_ring_search",
+      "mod": "gensokyolegacy",
+      "name": "Gensokyo Legacy",
+      "mixin": "dev.xkmc.gensokyolegacy.mixin.ChunkGeneratorMultiSpreadMixin",
+      "conflict": "ChunkGenerator.getNearestGeneratedStructure",
+      "why": "Gensokyo Legacy (1.0.6+1.21.1, 1.0.7+1.21.1, 1.0.7.2+1.21.1, NeoForge 1.21.1) answers ChunkGenerator.getNearestGeneratedStructure for its own multi-chunk placement at HEAD, the method this switch answers at HEAD too: depending on the order one of the two answers is never asked (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "bettercombat_weapon_attributes_memo",
+      "mod": "historystages",
+      "name": "History Stages",
+      "mixin": "net.bananemdnsa.historystages.mixin.bettercombat.WeaponRegistryMixin",
+      "conflict": "WeaponRegistry.getAttributes",
+      "why": "History Stages (6.1.0-1.21.1, NeoForge 1.21.1) answers Better Combat's WeaponRegistry.getAttributes per player (the items the player has not unlocked); this switch keeps one answer per item for every player and thread, so one answer would stand for all of them (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "bettercombat_weapon_attributes_memo",
+      "mod": "better_selective_combat",
+      "name": "Better Selective Combat",
+      "mixin": "dev.wechirok.betterselectivecombat.mixin.WeaponRegistryPreferenceMixin",
+      "conflict": "WeaponRegistry.getAttributes",
+      "why": "Better Selective Combat (1.2.2, NeoForge 1.21.1) answers Better Combat's WeaponRegistry.getAttributes per player (the weapons the player chose to ignore); this switch keeps one answer per item for every player and thread, so one answer would stand for all of them (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "bettercombat_weapon_attributes_memo",
+      "mod": "better_selective_combat",
+      "name": "Better Selective Combat",
+      "mixin": "dev.wechirok.betterselectivecombat.mixin.client.WeaponRegistryClientMixin",
+      "conflict": "WeaponRegistry.getAttributes",
+      "why": "Better Selective Combat (1.2.2, NeoForge 1.21.1) answers Better Combat's WeaponRegistry.getAttributes per player (the weapons the player chose to ignore); this switch keeps one answer per item for every player and thread, so one answer would stand for all of them (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "bettercombat_weapon_attributes_memo",
+      "mod": "raven_dnd_origins",
+      "name": "Raven DnD Origins",
+      "mixin": "dev.muon.raven_dnd_origins.mixin.compat.bettercombat.WeaponRegistryMixin",
+      "conflict": "WeaponRegistry.getAttributes",
+      "why": "Raven DnD Origins (0.2.4+1.21.1, 0.3.1+1.21.1, NeoForge 1.21.1) answers Better Combat's WeaponRegistry.getAttributes per shapeshift form and defender mode of the client player; this switch keeps one answer per item for every player and thread, so one answer would stand for all of them (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "bettercombat_weapon_attributes_memo",
+      "mod": "chromeware",
+      "name": "Create: Chromeware",
+      "mixin": "com.chromeware.mixin.compat.client.BetterCombatWeaponMixin",
+      "conflict": "WeaponRegistry.getAttributes",
+      "why": "Create: Chromeware (1.2.1, 1.3.0, NeoForge 1.21.1) answers Better Combat's WeaponRegistry.getAttributes per hand lock of the stack; this switch keeps one answer per item for every player and thread, so one answer would stand for all of them (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "bettercombat_weapon_attributes_memo",
+      "mod": "apprenticecodex",
+      "name": "Apprentice's Codex",
+      "mixin": "jp.aquafactory.apprenticecodex.mixin.BetterCombatWeaponRegistryMixin",
+      "conflict": "WeaponRegistry.getAttributes",
+      "why": "Apprentice's Codex (1.0.1, NeoForge 1.21.1) answers Better Combat's WeaponRegistry.getAttributes per stack (its throw, gauntlet and overcharge state); this switch keeps one answer per item for every player and thread, so one answer would stand for all of them (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "bettercombat_weapon_attributes_memo",
+      "mod": "nobroken",
+      "name": "NoBroken",
+      "mixin": "com.bahanos.nobroken.mixin.compat.BetterCombatMixin",
+      "conflict": "WeaponRegistry.getAttributes",
+      "why": "NoBroken (1.0.2, NeoForge 1.21.1) answers Better Combat's WeaponRegistry.getAttributes per stack (a broken stack has no weapon attributes); this switch keeps one answer per item for every player and thread, so one answer would stand for all of them (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "bettercombat_weapon_attributes_memo",
+      "mod": "goety_mastery_of_magic",
+      "name": "Goety Mastery of Magic",
+      "mixin": "com.vivideru.masteryofmagic.mixins.BetterCombatWeaponRegistryMixin",
+      "conflict": "WeaponRegistry.getAttributes",
+      "why": "Goety Mastery of Magic (2.0.6.1, NeoForge 1.21.1) answers Better Combat's WeaponRegistry.getAttributes per stack (the wand selected in the staff); this switch keeps one answer per item for every player and thread, so one answer would stand for all of them (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "bettercombat_weapon_attributes_memo",
+      "mod": "betterinventory",
+      "name": "Better Inventory",
+      "mixin": "dev.fallingcloud.betterinventory.mixin.compat.BetterCombatWeaponRegistryMixin",
+      "conflict": "WeaponRegistry.getAttributes",
+      "why": "Better Inventory (2.1.0, 2.2.0, NeoForge 1.21.1) answers Better Combat's WeaponRegistry.getAttributes per lookup (it swaps the stack Better Combat asks about); this switch keeps one answer per item for every player and thread, so one answer would stand for all of them (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "bettercombat_weapon_attributes_memo",
+      "mod": "barehandbc",
+      "name": "Barehand Better Combat",
+      "mixin": "com.barehandbc.mixin.WeaponRegistryMixin",
+      "conflict": "WeaponRegistry.getAttributes",
+      "why": "Barehand Better Combat (1.0.1, NeoForge 1.21.1) answers Better Combat's WeaponRegistry.getAttributes per player and thread (its fist attributes for an empty hand unless its bypass is set); this switch keeps one answer per item for every player and thread, so one answer would stand for all of them (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "bettercombat_weapon_attributes_memo",
+      "mod": "reveriefoundry",
+      "name": "Reverie Foundry",
+      "mixin": "com.drowningfish233.reveriefoundry.mixin.bettercombat.BetterCombatWeaponBlacklistMixin",
+      "conflict": "WeaponRegistry.getAttributes",
+      "why": "Reverie Foundry (2.4.7, 2.4.8, NeoForge 1.21.1) answers Better Combat's WeaponRegistry.getAttributes per stack (its Better Combat blacklist setting); this switch keeps one answer per item for every player and thread, so one answer would stand for all of them (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "bettercombat_weapon_attributes_memo",
+      "mod": "exception_melee_animation",
+      "name": "Exception Melee Animation",
+      "mixin": "exception_melee_animation.mixin.BetterCombatSilenceMixin",
+      "conflict": "WeaponRegistry.getAttributes",
+      "why": "Exception Melee Animation (0.68.23, NeoForge 1.21.1) answers Better Combat's WeaponRegistry.getAttributes per stack (its gun and blacklist settings); this switch keeps one answer per item for every player and thread, so one answer would stand for all of them (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "embeddium_shader_source_memo",
+      "mod": "chunksfadein",
+      "name": "Chunks Fade In",
+      "mixin": "com.koteinik.chunksfadein.compat.embeddium.mixin.ShaderLoaderMixin",
+      "conflict": "ShaderLoader.getShaderSource",
+      "why": "Chunks Fade In (3.0.26-1.21, 3.0.28-1.21, NeoForge 1.21.1) changes the text Embeddium's ShaderLoader.getShaderSource returns (RETURN) from its fade and fog settings, which can change during a session; this switch keeps the first text per shader name. The 1.0.50.1 mixin inventory already stands the switch down next to such a mixin at its first use; the row makes it step aside before that (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "embeddium_shader_source_memo",
+      "mod": "anvilcraft",
+      "name": "AnvilCraft",
+      "mixin": "dev.dubhe.anvilcraft.mixin.mun.compat.EmbMunShaderLoaderMixin",
+      "conflict": "ShaderLoader.getShaderSource",
+      "why": "AnvilCraft (1.6.0+snapshot.2842, 1.6.0+snapshot.2866, 1.6.0+snapshot.2977, NeoForge 1.21.1) patches the text Embeddium's ShaderLoader.getShaderSource returns (RETURN); this switch keeps the first text per shader name. The 1.0.50.1 mixin inventory already stands the switch down next to such a mixin at its first use; the row makes it step aside before that (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "terrain_surface_estimate_share",
+      "mod": "basal",
+      "name": "Basal",
+      "mixin": "com.qanoria.basal.mixin.NoiseChunkMixin",
+      "conflict": "NoiseChunk.computePreliminarySurfaceLevel",
+      "why": "Basal (1.0.1, NeoForge 1.21.1) answers NoiseChunk.computePreliminarySurfaceLevel at HEAD from a thread-local band and the real column bounds, which the shared table's key does not cover; order-dependent next to this switch's HEAD answer (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "terrain_surface_estimate_share",
+      "mod": "bettercubicchunks",
+      "name": "Better Cubic Chunks",
+      "mixin": "dev.fallingcloud.bettercubicchunks.mixin.core.worldgen.NoiseChunkMixin",
+      "conflict": "NoiseChunk.computePreliminarySurfaceLevel",
+      "why": "Better Cubic Chunks (0.1.1+mc1.21.1, NeoForge 1.21.1) answers NoiseChunk.computePreliminarySurfaceLevel at HEAD from the noise chunk's own cubic band, which the shared table's key does not cover; order-dependent next to this switch's HEAD answer (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "jei_tooltip_words",
+      "mod": "jeirewired",
+      "name": "JEI Rewired",
+      "mixin": "org.admany.jeirewired.neo1211.mixin.TooltipSearchTokensMixin",
+      "why": "JEI Rewired (1.3.4, its NeoForge 1.21.1 mixins) splits JEI's tooltip lines into search words itself (TooltipSearchTokensMixin, cancellable HEAD of ListElementInfo.getStrings), the same change this switch makes; with both installed its word pool and line cache never ran. Exactly one copy runs: next to it, this switch steps aside (R10, bug sweep 5: read in the jar, not run)"
+    },
+    {
+      "key": "immersiveaircraft_hud_blit_batch",
+      "mod": "autohidehud",
+      "name": "Auto Hide HUD",
+      "mixin": "neoforge.com.krookedlilly.autohidehud.mixin.GuiGraphicsMixin",
+      "conflict": "GuiGraphics.blit",
+      "why": "Auto Hide HUD (1.3.2, NeoForge 1.21.1) sets its fade colour at the HEAD of GuiGraphics.blit(ResourceLocation, 4 x int, 2 x float, 2 x int); this switch draws the aircraft hearts as one batch instead of those calls, so they would not fade with the rest of the HUD (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "vanilla_noise_column_cache",
+      "mod": "bda",
+      "name": "Berk Dragon Academy",
+      "mixin": "com.bda.common.mixin.worldgen.NoiseBasedChunkGeneratorPredictionHeightMixin",
+      "conflict": "NoiseBasedChunkGenerator.getBaseHeight",
+      "why": "Berk Dragon Academy (0.5.0, NeoForge 1.21.1) answers NoiseBasedChunkGenerator.getBaseHeight at HEAD with its own height while its village prediction runs, which the switch's table key does not cover; order-dependent next to this switch's HEAD answer (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "crittersandcompanions_red_panda_gate",
+      "mod": "witchery",
+      "name": "Witchery",
+      "mixin": "dev.sterner.witchery.mixin.AvoidEntityGoalMixin",
+      "conflict": "AvoidEntityGoal.canUse",
+      "why": "Witchery (0.5.39+mc1.21.1, NeoForge 1.21.1) makes the mobs of its scared_by_grotesque tag flee a grotesque player inside AvoidEntityGoal.canUse (cancellable HEAD); this switch answers the red panda goals of Critters and Companions without calling canUse while no red panda exists, so those mobs would not flee (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "patchouli_book_item_prefilter",
+      "mod": "goldsteinwrench",
+      "name": "Goldstein Wrench",
+      "mixin": "com.goldsteinwrench.mixin.PatchouliEmptyBookLookupMixin",
+      "conflict": "ItemStackUtil.getBookFromStack",
+      "why": "Goldstein Wrench (1.0.4, NeoForge 1.21.1) answers Patchouli's ItemStackUtil.getBookFromStack at HEAD for an empty stack; this switch answers every stack that is not a Patchouli book item itself, so that answer would never be asked (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "patchouli_book_item_prefilter",
+      "mod": "enigmaticlegacyplus",
+      "name": "EnigmaticLegacy+",
+      "mixin": "auviotre.enigmatic.legacy.mixin.compat.MixinItemStackUtil",
+      "conflict": "ItemStackUtil.getBookFromStack",
+      "why": "EnigmaticLegacy+ (1.21.1-1.1.2, NeoForge 1.21.1) answers Patchouli's ItemStackUtil.getBookFromStack at HEAD for its guide item, from the stack's own book; this switch answers every stack that is not a Patchouli book item itself, so that answer would never be asked (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "industrialforegoing_stasis_filter_peek",
+      "mod": "androidopt",
+      "name": "Android Optimizer",
+      "mixin": "fr.eaielectronic.androidopt.mixin.EntityNbtMixin",
+      "conflict": "Entity.getPersistentData",
+      "why": "Android Optimizer (1.0.6, NeoForge 1.21.1) restores an entity it compressed off-heap at the HEAD of Entity.getPersistentData; this switch reads the persistent data field directly, so a far entity would keep its old snapshot longer (R10, bug sweep 5: read in the NeoForge jar, not run)"
+    },
+    {
+      "key": "mobgrindingutils_chicken_tag_peek",
+      "mod": "androidopt",
+      "name": "Android Optimizer",
+      "mixin": "fr.eaielectronic.androidopt.mixin.EntityNbtMixin",
+      "conflict": "Entity.getPersistentData",
+      "why": "Android Optimizer (1.0.6, NeoForge 1.21.1) restores an entity it compressed off-heap at the HEAD of Entity.getPersistentData; this switch reads the persistent data field directly, so a far entity would keep its old snapshot longer (R10, bug sweep 5: read in the NeoForge jar, not run)"
     }
   ]
 }

@@ -83,6 +83,7 @@ public final class ClientProbe {
             Map<String,Object> shadow=ShadowHarvest.harvest(true);
             result.put("shadow",shadow);
             result.put("counters50",Counters50.read(true));                   // 1.0.50 port: the new helpers' counters
+            result.put("counters110",Counters110.read(true));                 // 1.1.0 port: the new helpers' counters and the F44 probe
             boolean passed=Boolean.TRUE.equals(((Map<?,?>)result.get("target_checks")).get("passed")) && ShadowHarvest.clean(shadow)
                     && (!result.containsKey("sections50") || Boolean.TRUE.equals(((Map<?,?>)result.get("sections50")).get("passed")));
             result.put("passed",passed);

@@ -5,3 +5,6 @@ license="GPL-3.0-only"
 modId="bons_port_probe"
 version="1"
 displayName="Bons Port Qualification Probe"
+
+[[mixins]]
+config="bons_port_probe.mixins.json"

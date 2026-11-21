@@ -2287,5 +2287,18 @@
     "source_url": "https://www.curseforge.com/minecraft/mc-mods/forgeendertech",
     "notes": "Optional compatibility target only (forgeendertech_start_config_reads_once, since 1.0.50+mc1.21.1); no target classes or assets bundled. Metadata is from this exact NeoForge JAR (its mods.toml declares no authors; the author is the one CurseForge names); the jar comes from CurseForge file 8980655 and ships no licence document.",
     "download_url": "https://edge.forgecdn.net/files/8980/655/ForgeEndertech-1.21.1-12.1.4.0-NeoForge-build.1161.jar"
+  },
+  {
+    "id": "formations",
+    "name": "Formations",
+    "version": "1.0.4",
+    "authors": "SuperMartijn642",
+    "license": "All rights reserved",
+    "jar": "formations-1.0.4-neoforge-mc1.21.jar",
+    "sha1": "3845f96c9304f6956688f7a35205e9354bf411b0",
+    "sha256": "2d9b50575fdf42e59d5dacda23ce5d01fc5cb19db02a1278329e3ad40893848e",
+    "source_url": "https://modrinth.com/mod/formations",
+    "notes": "Optional compatibility target only (formations_structure_biome_first, since 1.1.0+mc1.21.1); no target classes or assets bundled. Metadata is from this exact NeoForge JAR (its neoforge.mods.toml names the author and the licence); the jar comes from Modrinth version ybUmDE8h and ships no licence document.",
+    "download_url": "https://cdn.modrinth.com/data/tPe4xnPd/versions/ybUmDE8h/formations-1.0.4-neoforge-mc1.21.jar"
   }
 ]

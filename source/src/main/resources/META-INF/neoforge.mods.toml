@@ -4,7 +4,7 @@ license="GPL-3.0-only"
 issueTrackerURL="https://github.com/BonsUnleashed/bons-and-furious/issues"
 [[mods]]
 modId="bons_and_furious"
-version="1.0.50.1+mc1.21.1"
+version="1.1.0+mc1.21.1"
 displayName="Bons and Furious"
 authors="BonsUnleashed"
 description="Targeted performance patches and compatibility fixes for Minecraft 1.21.1 and NeoForge."
@@ -975,3 +975,12 @@ config="bons_and_furious.embeddium_hidden_blocks.mixins.json"
 
 [[mixins]]
 config="bons_and_furious.endertech_start_reads.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.vanilla_zero_term.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.distanthorizons_light_check.mixins.json"
+
+[[mixins]]
+config="bons_and_furious.formations_biome_first.mixins.json"

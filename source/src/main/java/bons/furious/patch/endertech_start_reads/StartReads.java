@@ -55,6 +55,7 @@ public final class StartReads {
 
     private static final ThreadLocal<Session> CURRENT = new ThreadLocal<>();
     private static volatile Window window;
+    private static volatile boolean hooked;
 
     static {
         if (METRICS) {
@@ -71,11 +72,11 @@ public final class StartReads {
 
     /** The files read during one server's start. */
     private static final class Window {
-        final MinecraftServer server;
+        final java.lang.ref.WeakReference<MinecraftServer> server;     // sweep 5: weak, a stopped server is not kept
         final ConcurrentHashMap<String, byte[]> files = new ConcurrentHashMap<>();
 
         Window(MinecraftServer server) {
-            this.server = server;
+            this.server = new java.lang.ref.WeakReference<>(server);
         }
     }
 
@@ -101,11 +102,39 @@ public final class StartReads {
             if (w != null) window = null;           // the server is ready (or gone): forget everything
             return null;
         }
-        if (w == null || w.server != server) {
+        if (w == null || w.server.get() != server) {
             w = new Window(server);
             window = w;
+            hook();
         }
         return w;
+    }
+
+    /**
+     * Sweep 5: once per game, two listeners that drop the window: ServerStartedEvent (every start-time level load, where
+     * ForgeEndertech reads its files, has run by then: the levels are created in initServer) and ServerStoppedEvent. Without them
+     * the window lived until the next Configuration.load(), which may never come.
+     */
+    private static void hook() {
+        if (hooked) return;
+        synchronized (StartReads.class) {
+            if (hooked) return;
+            hooked = true;
+            try {
+                net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST, true,
+                        net.neoforged.neoforge.event.server.ServerStartedEvent.class, e -> drop(e.getServer()));
+                net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(net.neoforged.bus.api.EventPriority.LOWEST, true,
+                        net.neoforged.neoforge.event.server.ServerStoppedEvent.class, e -> window = null);
+            } catch (Throwable t) {
+                LOGGER.warn("Bons and Furious: forgeendertech_start_config_reads_once could not listen for the server's start and stop ({}); "
+                        + "its start-time copies are dropped at the next config load", t.toString());
+            }
+        }
+    }
+
+    private static void drop(MinecraftServer server) {
+        Window w = window;
+        if (w != null && w.server.get() == server) window = null;
     }
 
     /** Configuration.load(). */

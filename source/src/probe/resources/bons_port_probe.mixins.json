@@ -1,0 +1,13 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "bons.portprobe.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "bons.portprobe.ProbeMixinPlugin",
+  "injectors": {
+    "defaultRequire": 0
+  },
+  "client": [
+    "ForeignFillProbe110"
+  ]
+}

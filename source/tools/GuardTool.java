@@ -337,8 +337,8 @@ public final class GuardTool {
             String orphanOf = str(y, "orphan_of");
             if (orphanOf != null) {
                 if (orphanOf.isBlank() || orphanOf.contains("\t") || orphanOf.equals(mixin)) problems.add("yield " + key + ": orphan_of must name another mixin");
-                if (str(y, "option") != null || str(y, "conflict") != null || y.has("unless_mods") || y.has("default"))
-                    problems.add("yield " + key + ": a row with orphan_of takes no option, config, conflict, default or unless_mods");
+                if (str(y, "option") != null || str(y, "conflict") != null || y.has("unless_mods") || y.has("default") || y.has("since"))
+                    problems.add("yield " + key + ": a row with orphan_of takes no option, config, conflict, default, unless_mods or since");
                 if (str(y, "mod").contains("\t") || str(y, "name").contains("\t")) problems.add("yield " + key + ": no tab in mod or name");
                 orphanLines.add(String.join("\t", mixin, orphanOf, key, str(y, "mod"), str(y, "name")));
                 continue;
@@ -353,7 +353,13 @@ public final class GuardTool {
             // written only for such rows, so every other yield line stays as before)
             String conflict = str(y, "conflict");
             if (conflict != null && (conflict.isBlank() || conflict.contains("\t"))) problems.add("yield " + key + ": conflict must name one method");
-            yieldLines.add(conflict == null ? line : line + "\t" + conflict);
+            // since 1.1.0: "since" = the first version of the other mod whose mixin makes the change the row is about (an 11th
+            // field, written only on such rows; the 10th is "-" when the row names no conflict). Below it the switch applies and
+            // that mixin is not left out (ForeignPatches.belowFloor): Structurify before 2.0.36 has the mixin, but not the hook
+            String since = str(y, "since");
+            if (since != null && !since.matches("\\d+(\\.\\d+)*")) problems.add("yield " + key + ": since must be a dotted version such as 2.0.36");
+            String withConflict = conflict == null ? (since == null ? line : line + "\t-") : line + "\t" + conflict;
+            yieldLines.add(since == null ? withConflict : withConflict + "\t" + since);
         }
         notes.forEach(p -> System.out.println("GUARD NOTE " + p));
         if (!problems.isEmpty()) {

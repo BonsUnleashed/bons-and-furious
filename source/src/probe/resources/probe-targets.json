@@ -3792,5 +3792,24 @@
     "targets": [
       "com.endertech.minecraft.forge.configs.Configuration"
     ]
+  },
+  "vanilla_density_zero_term_skip": {
+    "client": false,
+    "targets": [
+      "net.minecraft.world.level.levelgen.DensityFunctions$Ap2"
+    ]
+  },
+  "distanthorizons_light_section_lock_skip": {
+    "client": false,
+    "targets": [
+      "com.seibel.distanthorizons.core.wrapperInterfaces.chunk.ChunkLightStorage$LightSection"
+    ]
+  },
+  "formations_structure_biome_first": {
+    "client": false,
+    "targets": [
+      "com.supermartijn642.formations.structure.PiecedStructure",
+      "com.supermartijn642.formations.structure.SimpleStructure"
+    ]
   }
 }

@@ -1,0 +1,57 @@
+{
+  "group": "vanilla_zero_term",
+  "keys": {
+    "vanilla_density_zero_term_skip": {
+      "mod": "minecraft",
+      "scripts": [],
+      "since": "1.1.0",
+      "mixins": [
+        "bons.furious.mixin.vanilla_zero_term.Ap2ZeroTermMixin"
+      ],
+      "guard": [
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$Ap2",
+          "method": "fillArray",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V",
+          "note": "fillArray: argument1.fillArray(ds); ADD: es = new double[n], argument2.fillArray(es), ds[i] = ds[i] + es[i]; MAX/MIN/MUL: per element argument2.compute(cp.forIndex(i)) behind a bound or zero test",
+          "sha256": "7eecebb0e164212ae85c469d58422ca38c7ba93383f8a40db05ef9a073cb15e0",
+          "sha256_variants": [
+            "23b64aacc8418024a735a204eb384f5b268639d612310f2aa4817b7b08db5ec6"
+          ],
+          "variant_reason": "Reviewed Mojang production bytecode (NeoForge 21.1.252 server and client 1.21.1-20240808.144430-srg jars, the same class file): the same calls, field reads, comparisons and constants in the same order as the NeoForm recompilation; the ADD loop writes ds[i] = ds[i] + es[i] with a second aload/iload where the recompilation uses dup2, and the loop locals use other slots. See evidence/javap110/ap2/ (dev.txt, server.txt, client.txt)."
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$MulOrAdd",
+          "method": "transform",
+          "desc": "(D)D",
+          "note": "transform: MUL -> x * argument, ADD -> x + argument",
+          "sha256": "38e642a38d894bde94d69fb169d3e2f68d27a972589d67afbec810c84289d7be"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$PureTransformer",
+          "method": "compute",
+          "desc": "(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D",
+          "note": "compute of a pure transformer (MulOrAdd): transform(input.compute(context))",
+          "sha256": "88424eb80a9af92ab42ef78a324311b139dedc1fe8f593b3da3ffc820e173e08"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/DensityFunctions$PureTransformer",
+          "method": "fillArray",
+          "desc": "([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V",
+          "note": "fillArray of a pure transformer: input.fillArray(ds), then ds[i] = transform(ds[i]): per element the same as compute",
+          "sha256": "b2854b102f7f0cbdcd242410beeb66378ed874d579f50492f358fb432ed2f3b7"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseChunk",
+          "method": "forIndex",
+          "desc": "(I)Lnet/minecraft/world/level/levelgen/NoiseChunk;",
+          "note": "forIndex of the NoiseChunk as context provider: sets inCellX/Y/Z and arrayIndex from the index, returns itself; no counter moves",
+          "sha256": "2642bf57491225dad5724fa1d3ffa148adfbfbf0f2038b31dac5ec8872b70b09"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: a cancellable @Inject at the HEAD of DensityFunctions$Ap2.fillArray that fills an addition of a term multiplied by a constant 0 the short way (the other argument first, the term only where the sum is -0.0 or NaN) when the context provider is the NoiseChunk (or vanilla_noise_column_cell_fill's column provider); a RETURN @Inject for the verify mode; a @Unique plan byte per node; helper bons.furious.patch.vanilla_zero_term.ZeroTerms",
+      "license": "Minecraft (Mojang): no game code is carried; our own logic only"
+    }
+  }
+}

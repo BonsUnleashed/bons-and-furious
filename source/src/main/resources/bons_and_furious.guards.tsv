@@ -276,6 +276,7 @@ mixin	bons.furious.mixin.distanthorizons_c2.TintCachesReadyMixin	distanthorizons
 mixin	bons.furious.mixin.distanthorizons_level_wrappers.ClientLevelKeyedPinsMixin	distanthorizons_keyed_level_pins
 mixin	bons.furious.mixin.distanthorizons_level_wrappers.KeyedLevelCacheMixin	distanthorizons_keyed_level_pins
 mixin	bons.furious.mixin.distanthorizons_level_wrappers.SaveStructureWeakKeysMixin	distanthorizons_save_folder_weak_keys
+mixin	bons.furious.mixin.distanthorizons_light_check.LightSectionLockSkipMixin	distanthorizons_light_section_lock_skip
 mixin	bons.furious.mixin.distanthorizons_streams.UnlockedOutputStreamMixin	distanthorizons_unlocked_output_stream
 mixin	bons.furious.mixin.distanthorizons_tint.TintColumnsMixin	distanthorizons_tint_neighbour_index
 mixin	bons.furious.mixin.dummmmmmy_c49.DamageMessageEncodeMixin	dummmmmmy_inline_damage_type_fallback
@@ -374,6 +375,8 @@ mixin	bons.furious.mixin.flywheel_workers.ParallelTaskExecutorParkingMixin	flywh
 mixin	bons.furious.mixin.flywheel_workers.WorkerThreadParkingMixin	flywheel_worker_parking
 mixin	bons.furious.mixin.forge.BlockRenderLayerMemoMixin	forge_render_layer_memo
 mixin	bons.furious.mixin.forge.RenderLayerMemoMixin	forge_render_layer_memo
+mixin	bons.furious.mixin.formations_biome_first.PiecedStructureBiomeFirstMixin	formations_structure_biome_first
+mixin	bons.furious.mixin.formations_biome_first.SimpleStructureBiomeFirstMixin	formations_structure_biome_first
 mixin	bons.furious.mixin.fowlplay.GuidedFlockingMixin	fowlplay_flock_vectors
 mixin	bons.furious.mixin.fowlplay.LeaderlessFlockingMixin	fowlplay_flock_vectors
 mixin	bons.furious.mixin.fowlplay.TargetingUtilMixin	fowlplay_air_targets_loaded_only
@@ -843,6 +846,7 @@ mixin	bons.furious.mixin.vanilla_tick_lists.LevelTicksParkMixin	vanilla_level_ti
 mixin	bons.furious.mixin.vanilla_tick_lists.ServerLevelTickParkMixin	vanilla_level_ticks_blocked_park
 mixin	bons.furious.mixin.vanilla_tick_lists.TickingTrackerParkMixin	vanilla_level_ticks_blocked_park
 mixin	bons.furious.mixin.vanilla_unload_safety.EntityUnloadDeferralMixin	vanilla_entity_unload_snapshot
+mixin	bons.furious.mixin.vanilla_zero_term.Ap2ZeroTermMixin	vanilla_density_zero_term_skip
 mixin	bons.furious.mixin.vanilla_zip_index.FilePackResourcesZipIndexMixin	vanilla_zip_pack_listing_index
 mixin	bons.furious.mixin.w2w2_coo49.XaeronSaveMixin	w2w2_waypoint_save_coalesce
 mixin	bons.furious.mixin.witherreincarnated_coo49.AvoidWitherScanMixin	witherreincarnated_wither_scan_presence_gate
@@ -1009,6 +1013,7 @@ mod	distanthorizons_cloud_scalars	distanthorizons
 mod	distanthorizons_ignored_dimension_match	distanthorizons
 mod	distanthorizons_join_config_resend	distanthorizons
 mod	distanthorizons_keyed_level_pins	distanthorizons
+mod	distanthorizons_light_section_lock_skip	distanthorizons
 mod	distanthorizons_lod_biome_memo	distanthorizons
 mod	distanthorizons_pooled_string_index	distanthorizons
 mod	distanthorizons_quad_sort_keys	distanthorizons
@@ -1075,6 +1080,7 @@ mod	flywheel_worker_parking	flywheel
 mod	forge_absent_effect_remove_skip	neoforge
 mod	forge_render_layer_memo	neoforge
 mod	forgeendertech_start_config_reads_once	forgeendertech
+mod	formations_structure_biome_first	formations
 mod	fowlplay_air_targets_loaded_only	fowlplay
 mod	fowlplay_flock_vectors	fowlplay
 mod	fromtheshadows_shake_scan_presence_gate	fromtheshadows
@@ -1346,6 +1352,7 @@ mod	vanilla_climate_tree_span_bounds	minecraft
 mod	vanilla_clip_shape_box_memo	minecraft
 mod	vanilla_cooking_recipe_item_index	minecraft
 mod	vanilla_cursor_counters	minecraft
+mod	vanilla_density_zero_term_skip	minecraft
 mod	vanilla_effect_refresh_modifier_keep	minecraft
 mod	vanilla_entity_class_count_layer	minecraft
 mod	vanilla_entity_outline_composite_skip	minecraft
@@ -2364,6 +2371,8 @@ guard	distanthorizons_keyed_level_pins	com/seibel/distanthorizons/common/wrapper
 guard	distanthorizons_keyed_level_pins	com/seibel/distanthorizons/common/wrappers/level/KeyedClientLevelManager_neoforge	disable	()V	5e64f8f620430f3509ca476e1f4dbd0eb26fe8d94a5e3116230f175d50da7c42
 guard	distanthorizons_keyed_level_pins	com/seibel/distanthorizons/common/wrappers/level/KeyedClientLevelManager_neoforge	<init>	()V	257d3534e114446f163623c3f36934b46e374cf2f45802172b757d2a45b8fc80
 guard	distanthorizons_keyed_level_pins	com/seibel/distanthorizons/common/wrappers/level/KeyedClientLevelManager_neoforge	*		0feb8066c6840565eb10c752c80baa01dff2d81273f85b131e5d4556d152c0bb
+guard	distanthorizons_light_section_lock_skip	com/seibel/distanthorizons/core/wrapperInterfaces/chunk/ChunkLightStorage$LightSection	get	(III)I	d1501588d4e49ef738f0a9ddb4629324cb0c08a50a467e23a4903b31e4c70cb1
+guard	distanthorizons_light_section_lock_skip	com/seibel/distanthorizons/core/wrapperInterfaces/chunk/ChunkLightStorage$LightSection	set	(IIII)V	4eba673d87ab02a2081c161744d1e1255aed22cb747f688b9625aef6be533375
 guard	distanthorizons_lod_biome_memo	com/seibel/distanthorizons/core/dataObjects/transformers/LodDataBuilder	createFromChunk	(Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/ILevelWrapper;Lcom/seibel/distanthorizons/core/wrapperInterfaces/chunk/IChunkWrapper;)Lcom/seibel/distanthorizons/core/dataObjects/fullData/sources/FullDataSourceV2;	c05d24a43b58b54316e79b8a7acd52db18dbdc9dfd790b86c34215d241592eb8
 guard	distanthorizons_lod_biome_memo	com/seibel/distanthorizons/common/wrappers/chunk/ChunkWrapper_neoforge	getBiome	(III)Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/IBiomeWrapper;	0d9fc0dbd3f9d33c8aa1d8c1d0aa11f408540a7309592236e9e8294da9e662e4
 guard	distanthorizons_lod_biome_memo	com/seibel/distanthorizons/common/wrappers/block/BiomeWrapper_neoforge	getBiomeWrapper	(Lnet/minecraft/core/Holder;Lcom/seibel/distanthorizons/core/wrapperInterfaces/world/ILevelWrapper;)Lcom/seibel/distanthorizons/common/wrappers/block/BiomeWrapper_neoforge;	b98658da7890af96b92c08df8ba24c07d0933c77834ad71d19eb1b48113eb44c
@@ -3183,6 +3192,43 @@ guard	forgeendertech_start_config_reads_once	com/endertech/minecraft/forge/confi
 guard	forgeendertech_start_config_reads_once	com/endertech/minecraft/forge/configs/Configuration	save	()V	fc50136ffda7a6d52537b45a573b77a698af3b725ff6eafec7392859a5357441
 guard	forgeendertech_start_config_reads_once	com/endertech/minecraft/forge/configs/UnitConfig	<init>	(Ljava/io/File;)V	e6cba9dbe3505d4ce9a5183f9007e061988ff3e14333953822892efdfc1a1a42
 guard	forgeendertech_start_config_reads_once	com/endertech/minecraft/forge/world/GameWorld$WorldData	initBiomesWinds	()V	1f57bf6733a25bc4d8d7600db7a0adf0c5782d6725928209bf7b61b9ad6c8429
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/SimpleStructure	findGenerationPoint	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;)Ljava/util/Optional;	91a604c0ac16419b17de60ebabf6bd89024ac2ec24914166be7c4f57b1ec6377
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/SimpleStructure	lambda$findGenerationPoint$5	(Lnet/minecraft/world/level/levelgen/structure/pools/StructurePoolElement;Ljava/lang/Integer;)Ljava/lang/Integer;	fef172230c20f8cfa4d7df3583051d1ede9c7917a9ad2acf00e0e2c15797d13e
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/SimpleStructure	lambda$findGenerationPoint$6	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Ljava/lang/Integer;)Z	826a5543062397264fc5136ec93f4bf9fe2502dd077c733d19b3727b962a86ec
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/SimpleStructure	lambda$findGenerationPoint$8	(IILnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/pools/StructurePoolElement;Lnet/minecraft/world/level/block/Rotation;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;Ljava/lang/Integer;)Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationStub;	a546e319e4dce3965aaac90bbe33fa9b8e14d883ac0d46744918ad0ea92de3b1
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/PiecedStructure	findGenerationPoint	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;)Ljava/util/Optional;	7870afcf556fdc1272ce6c6c4d74d1ab4ebfa453558c76e7fc57da0341e26bc7
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/PiecedStructure	addPieces	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/pools/StructurePoolElement;Lnet/minecraft/world/level/block/Rotation;ILnet/minecraft/core/BlockPos;I)Ljava/util/Optional;	33d97f1f901187104b5a91b1c472d06b149f73fd3f056a488cffac29e9796fa3
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/FormationsSinglePoolElement	getGroundLevelDelta	()I	4ca3362e83da98412e380e751328f0a63c866048c1b057753e2a4c8d2c27052f
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	findHeight	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)Ljava/util/Optional;	0b8035bc255f102608b86f11febcb90435cbc293fb955ea496c023e5fd45a882
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	findFromTop	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;Lnet/minecraft/world/level/levelgen/Heightmap$Types;IDLjava/util/function/Predicate;)Ljava/lang/Integer;	8724bc1e26a0357ea6f50cf22f255b98639c6d6682cff3be688665d151ab22ff
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	lambda$findFromTop$33	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/core/BlockPos$MutableBlockPos;)Lnet/minecraft/core/BlockPos$MutableBlockPos;	98cba1b2d2bdd1eb23efd6959f6882abe094cf272efc72f3d67da0f44362f497
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	lambda$static$0	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)Ljava/lang/Integer;	90e81e859c08fd6e885a7f02ff5f55f38c45549476bb94c0a77e6d63de0b703f
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	lambda$static$1	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/core/BlockPos$MutableBlockPos;)Lnet/minecraft/core/BlockPos$MutableBlockPos;	ab253a05081466138af6570f607ef04b7f54ed9cffb3f5fd8f4704dbeb1dd1e4
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	lambda$static$3	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)Ljava/lang/Integer;	ff010c69b15b826047d8b82e1d2c4bae0fde6b8697206cf5ab46d017aa95a59c
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	lambda$static$5	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)Ljava/lang/Integer;	490b48df8a04c7c4c1d88a6aa9e70fcffd64bfa3d433e8f8f0407428d7a60a5e
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	lambda$static$7	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)Ljava/lang/Integer;	40d6227a7cc093eb305af4f024633e2ed78e7c8f730def40fb64053e281d4373
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	lambda$static$8	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/core/BlockPos$MutableBlockPos;)Lorg/apache/commons/lang3/tuple/Triple;	2acbf51f584b722a167126c57421774c1cb717e1ec8a968654d858c0667b5bd1
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	lambda$static$9	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)Ljava/lang/Integer;	cfcc25373d0dd80362a1db698c3f6d2bd3a39e42c11400bf3112ecf1e71ddb5b
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	lambda$static$10	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/core/BlockPos$MutableBlockPos;)Lorg/apache/commons/lang3/tuple/Triple;	2acbf51f584b722a167126c57421774c1cb717e1ec8a968654d858c0667b5bd1
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	lambda$static$11	(IILorg/apache/commons/lang3/tuple/Triple;)Ljava/lang/Integer;	589814186d504acc98e9772e84014e4efdf6959fbc4e8c7e33370d7c506c08e9
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	lambda$static$15	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)Ljava/lang/Integer;	315f6e8a2318d5cda77508c4311d3abcf9ba52c9c8edc0ca49ffa38c55850ff7
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	lambda$static$16	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/core/BlockPos$MutableBlockPos;)Lorg/apache/commons/lang3/tuple/Triple;	2acbf51f584b722a167126c57421774c1cb717e1ec8a968654d858c0667b5bd1
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	lambda$static$17	(IILorg/apache/commons/lang3/tuple/Triple;)Ljava/lang/Integer;	97dded783fd35490438a3b6713a5753f04bf80d76f67864a217918eee9c20fec
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	lambda$static$21	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)Ljava/lang/Integer;	2c8c91f9f4553a792cacccf9113767f0ae219a033ed783d7d0624205c33fefd0
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	lambda$static$22	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/core/BlockPos$MutableBlockPos;)Lorg/apache/commons/lang3/tuple/Triple;	2acbf51f584b722a167126c57421774c1cb717e1ec8a968654d858c0667b5bd1
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	lambda$static$23	(IIILorg/apache/commons/lang3/tuple/Triple;)Ljava/lang/Integer;	464afea92a670bbd97ff9a040a7e94628503a52f4eb1a1d96b9126f865eb8dae
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	lambda$static$26	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)Ljava/lang/Integer;	fcf8820ba6e510741dfa0e40137c8854a05591b43fe2337d0aa9cb92309adea1
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	lambda$static$27	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/core/BlockPos$MutableBlockPos;)Lorg/apache/commons/lang3/tuple/Triple;	2acbf51f584b722a167126c57421774c1cb717e1ec8a968654d858c0667b5bd1
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	lambda$static$28	(IILorg/apache/commons/lang3/tuple/Triple;)Ljava/lang/Integer;	a531675e7759afc6189b5d0ea00a5fab37a2dce524ebc0f45ebb0be982871cf7
+guard	formations_structure_biome_first	com/supermartijn642/formations/structure/StructurePlacement	lambda$static$32	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)Ljava/lang/Integer;	a41dc2576989e394c71071220d740ab47a21c90d15d5c7baae264fcd8e52c5c3
+guard	formations_structure_biome_first	net/minecraft/world/level/levelgen/structure/Structure	findValidGenerationPoint	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;)Ljava/util/Optional;	3f77aeaf686da4bec33a1f137c8a45ca9053feb1a0fb92029cf97c4ece059078
+guard	formations_structure_biome_first	net/minecraft/world/level/levelgen/structure/Structure	lambda$findValidGenerationPoint$2	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationStub;)Z	4bab3e6a889798d877a711c79f3b7c6f3b9ceafc406aa6a1f0bc58e1f0838b57
+guard	formations_structure_biome_first	net/minecraft/world/level/levelgen/structure/Structure	isValidBiome	(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationStub;Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;)Z	c597bb4eb06d5321dc66608cbe1163c6b642caa3cf5f9dd31c1f9724b306e613
+guard	formations_structure_biome_first	net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator	getBaseHeight	(IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)I	29e7dc5a9bc9df638730d828545fdae0335f846307ed63456d5804ce116a63de
+guard	formations_structure_biome_first	net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator	getBaseColumn	(IILnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)Lnet/minecraft/world/level/NoiseColumn;	db70529f094999220183da6cdb8fbdf1db58d32c3710a2eab443a2cf9983465e
+guard	formations_structure_biome_first	net/minecraft/world/level/chunk/ChunkGenerator	getFirstOccupiedHeight	(IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)I	fcd0ecb65289d6af0c9d5213c05c7801840b1e87b0f4cd7e8c5cf7a32e0c36cb
+guard	formations_structure_biome_first	net/minecraft/world/level/levelgen/structure/pools/StructurePoolElement	getGroundLevelDelta	()I	bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89
+guard	formations_structure_biome_first	net/minecraft/world/level/levelgen/structure/pools/SinglePoolElement	getBoundingBox	(Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/Rotation;)Lnet/minecraft/world/level/levelgen/structure/BoundingBox;	d4e1b9703878f977c13114378e31e0967550d1667e4cc3e14b1ca89efbcbde51
 guard	fowlplay_air_targets_loaded_only	aqario/fowlplay/common/util/TargetingUtils	<init>	()V	d7b774df801c21c02a08c85f9fb7a2e8699a68f07fbdaabc87803a3aa1b9b35f
 guard	fowlplay_air_targets_loaded_only	aqario/fowlplay/common/util/TargetingUtils	tryFindAir	(Laqario/fowlplay/common/entity/bird/FlyingBirdEntity;Laqario/fowlplay/common/util/CylindricalRadius;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/BlockPos;	b03df110b05ef3058642a09bcaf05fadeca7c27e5a703e845ae30bb4d4db3b8d
 guard	fowlplay_air_targets_loaded_only	aqario/fowlplay/common/util/TargetingUtils	tryFindWater	(Lnet/minecraft/world/entity/PathfinderMob;Laqario/fowlplay/common/util/CylindricalRadius;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/BlockPos;	8b5e7c8922d08be357f23331b724bce1ce7894dad6ef6ab7ee42ce50cebc5e76
@@ -5158,6 +5204,11 @@ guard	vanilla_cursor_counters	net/minecraft/core/Cursor3D	nextY	()I	22c19feac8a0
 guard	vanilla_cursor_counters	net/minecraft/core/Cursor3D	nextZ	()I	90d8dd375b524ef9b4860724a912a276abbb656b677086f87773e1c2bfc6790e
 guard	vanilla_cursor_counters	net/minecraft/core/Cursor3D	getNextType	()I	3bdda5fcf10a0877459c5339c2b39c496d0502b3c456ea30105ef0b11a3efe39
 guard	vanilla_cursor_counters	net/minecraft/core/Cursor3D	*		71fa733bf83bf20a4d74a22053aecefc9524e0d1f2128d1e158f691b476c15f6
+guard	vanilla_density_zero_term_skip	net/minecraft/world/level/levelgen/DensityFunctions$Ap2	fillArray	([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V	7eecebb0e164212ae85c469d58422ca38c7ba93383f8a40db05ef9a073cb15e0|23b64aacc8418024a735a204eb384f5b268639d612310f2aa4817b7b08db5ec6
+guard	vanilla_density_zero_term_skip	net/minecraft/world/level/levelgen/DensityFunctions$MulOrAdd	transform	(D)D	38e642a38d894bde94d69fb169d3e2f68d27a972589d67afbec810c84289d7be
+guard	vanilla_density_zero_term_skip	net/minecraft/world/level/levelgen/DensityFunctions$PureTransformer	compute	(Lnet/minecraft/world/level/levelgen/DensityFunction$FunctionContext;)D	88424eb80a9af92ab42ef78a324311b139dedc1fe8f593b3da3ffc820e173e08
+guard	vanilla_density_zero_term_skip	net/minecraft/world/level/levelgen/DensityFunctions$PureTransformer	fillArray	([DLnet/minecraft/world/level/levelgen/DensityFunction$ContextProvider;)V	b2854b102f7f0cbdcd242410beeb66378ed874d579f50492f358fb432ed2f3b7
+guard	vanilla_density_zero_term_skip	net/minecraft/world/level/levelgen/NoiseChunk	forIndex	(I)Lnet/minecraft/world/level/levelgen/NoiseChunk;	2642bf57491225dad5724fa1d3ffa148adfbfbf0f2038b31dac5ec8872b70b09
 guard	vanilla_effect_refresh_modifier_keep	net/minecraft/world/entity/LivingEntity	onEffectUpdated	(Lnet/minecraft/world/effect/MobEffectInstance;ZLnet/minecraft/world/entity/Entity;)V	b0dfdf98eab858c5a659f2cc0f8df7b9851db99b148f0340f533b96aff9c6be6
 guard	vanilla_effect_refresh_modifier_keep	net/minecraft/world/entity/LivingEntity	refreshDirtyAttributes	()V	ba60ba6348c13b3e55b4e1bff7f3a52a29707e10ec80be9faa9185b095065143
 guard	vanilla_effect_refresh_modifier_keep	net/minecraft/world/entity/LivingEntity	onAttributeUpdated	(Lnet/minecraft/core/Holder;)V	aa5e60e739b18953bdb0bc40807e20caa43f572226f5cacca232179ae73e990a
@@ -5864,6 +5915,8 @@ guard	zeta_structure_function_array	org/violetmoon/zeta/util/handler/StructureBl
 guard	zeta_structure_function_array	org/violetmoon/zeta/util/handler/StructureBlockReplacementHandler	addReplacement	(Lorg/violetmoon/zeta/util/handler/StructureBlockReplacementHandler$StructureFunction;)V	473ca1a7a2c42a69b165e08bce524389745e1218f89077418f8d51adbed50642
 guard	zeta_structure_function_array	org/violetmoon/zeta/util/handler/StructureBlockReplacementHandler	*		5b6ddee958ba95e75bae75c473470677328406f2c405173c6df49104841063df
 cancel	agentcraft.jeianvil.mixin.VanillaPluginMixin	jei_join_recipe_deferral
+cancel	astryxion.chunkanimator.compat.embeddium.mixin.EmbeddiumDefaultChunkRendererMixin	embeddium_draw_batch_cache
+cancel	auviotre.enigmatic.legacy.mixin.compat.MixinItemStackUtil	patchouli_book_item_prefilter
 cancel	bons.sharksfix.mixin.BenssharksModTickMixin	benssharks_work_queue_idle
 cancel	bons.sharksfix.mixin.GoalMergeMixin	benssharks_prey_search_merge
 cancel	bons.sharksfix.mixin.ItemAnimationFactoryMixin	benssharks_item_animation_idle
@@ -5886,12 +5939,20 @@ cancel	ca.spottedleaf.moonrise.mixin.fast_palette.PalettedContainerMixin	vanilla
 cancel	ca.spottedleaf.moonrise.mixin.random_ticking.BiomeManagerMixin	vanilla_biome_fiddle_mask
 cancel	ca.spottedleaf.moonrise.mixin.starlight.chunk.LevelChunkMixin	vanilla_block_entity_tick_state
 cancel	com.afterburner.mixin.ai.GoalSelectorMixin	vanilla_goal_flags_none_disabled
+cancel	com.bahanos.nobroken.mixin.compat.BetterCombatMixin	bettercombat_weapon_attributes_memo
+cancel	com.barehandbc.mixin.WeaponRegistryMixin	bettercombat_weapon_attributes_memo
+cancel	com.bda.common.mixin.worldgen.NoiseBasedChunkGeneratorPredictionHeightMixin	vanilla_noise_column_cache
 cancel	com.cerbon.cerbons_api.mixin.multipart_entities.EntityMixin	cerbonsapi_multipart_hooks_lean
+cancel	com.chromeware.mixin.compat.client.BetterCombatWeaponMixin	bettercombat_weapon_attributes_memo
+cancel	com.drowningfish233.reveriefoundry.mixin.bettercombat.BetterCombatWeaponBlacklistMixin	bettercombat_weapon_attributes_memo
 cancel	com.faboslav.structurify.common.mixin.ChunkGeneratorMixin	vanilla_structure_ring_search
+cancel	com.goldsteinwrench.mixin.PatchouliEmptyBookLookupMixin	patchouli_book_item_prefilter
 cancel	com.hollingsworth.arsnouveau.common.mixin.light.LevelRendererMixin	arsnouveau_dynamic_light_hook_lean
 cancel	com.ishland.c2me.opts.dfc.mixin.MixinChunkNoiseSampler	vanilla_noise_column_cell_fill
 cancel	com.ishland.c2me.opts.dfc.mixin.MixinChunkNoiseSamplerDensityInterpolator	vanilla_noise_corner_share
 cancel	com.ishland.c2me.opts.worldgen.vanilla.mixin.structure_weight_sampler.MixinStructureWeightSampler	vanilla_beardifier_influence_bounds
+cancel	com.koteinik.chunksfadein.compat.embeddium.mixin.DefaultChunkRendererMixin	embeddium_draw_batch_cache
+cancel	com.koteinik.chunksfadein.compat.embeddium.mixin.ShaderLoaderMixin	embeddium_shader_source_memo
 cancel	com.misanthropy.collections_of_optimizations.mixin.architectury.MixinEventFactoryDispatch	architectury_event_dispatch
 cancel	com.misanthropy.collections_of_optimizations.mixin.artifacts.MixinArtifactEventsForge	artifacts_living_tick_order
 cancel	com.misanthropy.collections_of_optimizations.mixin.cataclysm.MixinCataclysmArmPoseEvent	cataclysm_pose_hand_events
@@ -5938,6 +5999,13 @@ cancel	com.moepus.byepregen.mixin.climate.ClimateParameterListSearchMixin	vanill
 cancel	com.moepus.byepregen.mixin.climate.ClimateRTreeSearchMixin	vanilla_climate_last_result_weak
 cancel	com.moepus.gbf.mixin.AnimationControllerMixin	geckolib_bone_queue_reuse
 cancel	com.moepus.gbf.mixin.GeoRendererMixin	geckolib_quad_vectors
+cancel	com.qanoria.basal.mixin.NoiseChunkMixin	terrain_surface_estimate_share
+cancel	com.structureessentials.mixin.StructureSearchTimeoutMixin	vanilla_structure_ring_search
+cancel	com.vivideru.masteryofmagic.mixins.BetterCombatWeaponRegistryMixin	bettercombat_weapon_attributes_memo
+cancel	dev.dubhe.anvilcraft.mixin.mun.compat.EmbMunShaderLoaderMixin	embeddium_shader_source_memo
+cancel	dev.fallingcloud.bettercubicchunks.mixin.core.worldgen.NoiseChunkMixin	terrain_surface_estimate_share
+cancel	dev.fallingcloud.betterinventory.mixin.compat.BetterCombatWeaponRegistryMixin	bettercombat_weapon_attributes_memo
+cancel	dev.muon.raven_dnd_origins.mixin.compat.bettercombat.WeaponRegistryMixin	bettercombat_weapon_attributes_memo
 cancel	dev.sixik.generator_accelerator.common.beardifier.mixin.MixinBeardifier	vanilla_beardifier_influence_bounds
 cancel	dev.sixik.generator_accelerator.common.biome.mixin.MixinClimate$ParameterList$redirect_vanilla_climate_container_to_custom_implement	vanilla_climate_search_distance_reuse
 cancel	dev.sixik.generator_accelerator.common.biome.mixin.MixinClimate$Sampler$raw_sample	vanilla_climate_sample_xz_parts
@@ -5948,6 +6016,7 @@ cancel	dev.sixik.generator_accelerator.common.paletted_container.mixin.patch.Mix
 cancel	dev.sixik.generator_accelerator.common.structures.mixin.pools.MixinStructureTemplateManager$lru_cache	vanilla_structure_template_hits
 cancel	dev.sixik.generator_accelerator.mixins.common_mixin.MixinNoiseBasedChunkGenerator$optimize_iterate_noise_column	vanilla_noise_column_summary
 cancel	dev.sixik.moonrise_compats.mixin.fixes.immersive_optimization.MixinTickScheduler$FixEntityList	immersiveoptimization_be_priority_front_cache
+cancel	dev.sterner.witchery.mixin.AvoidEntityGoalMixin	crittersandcompanions_red_panda_gate
 cancel	dev.superchunk.com.ishland.c2me.opts.dfc.mixin.MixinChunkNoiseSampler	vanilla_noise_column_cell_fill
 cancel	dev.superchunk.com.ishland.c2me.opts.dfc.mixin.MixinChunkNoiseSamplerDensityInterpolator	vanilla_noise_corner_share
 cancel	dev.superchunk.com.ishland.c2me.opts.worldgen.vanilla.mixin.structure_weight_sampler.MixinStructureWeightSampler	vanilla_beardifier_influence_bounds
@@ -5957,6 +6026,13 @@ cancel	dev.superchunk.mixin.compat.MixinDhDataInputStream	distanthorizons_unlock
 cancel	dev.superchunk.mixin.compat.MixinDhLodBuilderBiome	distanthorizons_lod_biome_memo
 cancel	dev.superchunk.net.caffeinemc.mods.lithium.mixin.ai.poi.PoiManagerMixin	vanilla_poi_chunk_sections
 cancel	dev.superchunk.net.caffeinemc.mods.lithium.mixin.world.game_events.dispatch.GameEventDispatcherMixin	vanilla_game_event_registry_lookup
+cancel	dev.wechirok.betterselectivecombat.mixin.WeaponRegistryPreferenceMixin	bettercombat_weapon_attributes_memo
+cancel	dev.wechirok.betterselectivecombat.mixin.client.WeaponRegistryClientMixin	bettercombat_weapon_attributes_memo
+cancel	dev.xkmc.gensokyolegacy.mixin.ChunkGeneratorMultiSpreadMixin	vanilla_structure_ring_search
+cancel	exception_melee_animation.mixin.BetterCombatSilenceMixin	bettercombat_weapon_attributes_memo
+cancel	fr.eaielectronic.androidopt.mixin.EntityNbtMixin	industrialforegoing_stasis_filter_peek
+cancel	fr.eaielectronic.androidopt.mixin.EntityNbtMixin	mobgrindingutils_chicken_tag_peek
+cancel	jp.aquafactory.apprenticecodex.mixin.BetterCombatWeaponRegistryMixin	bettercombat_weapon_attributes_memo
 cancel	lomka.starl.mixins.net.minecraft.world.level.chunk.MixinPalettedContainer	vanilla_single_value_section_get
 cancel	me.feeldev.animorph.client.mixin.geo.AnimationControllerMixin	geckolib_keyframe_locals
 cancel	me.jellysquid.mods.lithium.mixin.ai.task.run.long_jump_weighted_choice.LongJumpTaskMixin	vanilla_long_jump_weighted_pick
@@ -5967,8 +6043,11 @@ cancel	me.jellysquid.mods.lithium.mixin.world.block_entity_ticking.support_cache
 cancel	me.jellysquid.mods.lithium.mixin.world.game_events.dispatch.GameEventDispatchManagerMixin	vanilla_game_event_registry_lookup
 cancel	me.jellysquid.mods.lithium.mixin.world.raycast.BlockViewMixin	vanilla_raycast_fluid_none
 cancel	me.wesley1808.servercore.mixin.optimizations.ticking.chunk.cache.ServerChunkCacheMixin	vanilla_spawn_gate_visibility_memo
+cancel	neoforge.com.krookedlilly.autohidehud.mixin.GuiGraphicsMixin	immersiveaircraft_hud_blit_batch
+cancel	net.bananemdnsa.historystages.mixin.bettercombat.WeaponRegistryMixin	bettercombat_weapon_attributes_memo
 cancel	net.caffeinemc.mods.lithium.mixin.world.game_events.dispatch.GameEventDispatcherMixin	vanilla_game_event_registry_lookup
 cancel	net.vulkanmod.mixin.render.BufferUploaderM	vanilla_entity_outline_composite_skip
+cancel	org.admany.jeirewired.neo1211.mixin.TooltipSearchTokensMixin	jei_tooltip_words
 cancel	org.valkyrienskies.mod.mixin.feature.clip_replace.MixinLevel	vanilla_raycast_fluid_none
 cancel	traben.entity_texture_features.mixin.mixins.MixinSpriteIdentifier	etf_sprite_texture_id_memo
 yield	vanilla_climate_sample_xz_parts	generator_accelerator	Generator Accelerator	dev.sixik.generator_accelerator.common.biome.mixin.MixinClimate$Sampler$raw_sample	-	-	-	false	-
@@ -6061,6 +6140,34 @@ yield	distanthorizons_unlocked_byte_stream	superchunk	SuperChunk	dev.superchunk.
 yield	geckolib_keyframe_locals	animorph	Animorph	me.feeldev.animorph.client.mixin.geo.AnimationControllerMixin	-	-	-	false	-	AnimationController.getAnimationPointAtTick
 yield	vanilla_entity_outline_composite_skip	vulkanmod	VulkanMod	net.vulkanmod.mixin.render.BufferUploaderM	-	-	-	false	-	BufferUploader.draw
 yield	immersiveoptimization_be_priority_front_cache	moonrise_compats	Moonrise Compats	dev.sixik.moonrise_compats.mixin.fixes.immersive_optimization.MixinTickScheduler$FixEntityList	-	-	-	false	-	TickScheduler.tickLevel
+yield	embeddium_draw_batch_cache	chunksfadein	Chunks Fade In	com.koteinik.chunksfadein.compat.embeddium.mixin.DefaultChunkRendererMixin	-	-	-	false	-	DefaultChunkRenderer.fillCommandBuffer
+yield	embeddium_draw_batch_cache	chunkanimator	Chunk Animator	astryxion.chunkanimator.compat.embeddium.mixin.EmbeddiumDefaultChunkRendererMixin	-	-	-	false	-	DefaultChunkRenderer.fillCommandBuffer
+yield	vanilla_structure_ring_search	structureessentials	Structure Essentials	com.structureessentials.mixin.StructureSearchTimeoutMixin	-	-	-	false	-	ChunkGenerator.getNearestGeneratedStructure
+yield	vanilla_structure_ring_search	gensokyolegacy	Gensokyo Legacy	dev.xkmc.gensokyolegacy.mixin.ChunkGeneratorMultiSpreadMixin	-	-	-	false	-	ChunkGenerator.getNearestGeneratedStructure
+yield	bettercombat_weapon_attributes_memo	historystages	History Stages	net.bananemdnsa.historystages.mixin.bettercombat.WeaponRegistryMixin	-	-	-	false	-	WeaponRegistry.getAttributes
+yield	bettercombat_weapon_attributes_memo	better_selective_combat	Better Selective Combat	dev.wechirok.betterselectivecombat.mixin.WeaponRegistryPreferenceMixin	-	-	-	false	-	WeaponRegistry.getAttributes
+yield	bettercombat_weapon_attributes_memo	better_selective_combat	Better Selective Combat	dev.wechirok.betterselectivecombat.mixin.client.WeaponRegistryClientMixin	-	-	-	false	-	WeaponRegistry.getAttributes
+yield	bettercombat_weapon_attributes_memo	raven_dnd_origins	Raven DnD Origins	dev.muon.raven_dnd_origins.mixin.compat.bettercombat.WeaponRegistryMixin	-	-	-	false	-	WeaponRegistry.getAttributes
+yield	bettercombat_weapon_attributes_memo	chromeware	Create: Chromeware	com.chromeware.mixin.compat.client.BetterCombatWeaponMixin	-	-	-	false	-	WeaponRegistry.getAttributes
+yield	bettercombat_weapon_attributes_memo	apprenticecodex	Apprentice's Codex	jp.aquafactory.apprenticecodex.mixin.BetterCombatWeaponRegistryMixin	-	-	-	false	-	WeaponRegistry.getAttributes
+yield	bettercombat_weapon_attributes_memo	nobroken	NoBroken	com.bahanos.nobroken.mixin.compat.BetterCombatMixin	-	-	-	false	-	WeaponRegistry.getAttributes
+yield	bettercombat_weapon_attributes_memo	goety_mastery_of_magic	Goety Mastery of Magic	com.vivideru.masteryofmagic.mixins.BetterCombatWeaponRegistryMixin	-	-	-	false	-	WeaponRegistry.getAttributes
+yield	bettercombat_weapon_attributes_memo	betterinventory	Better Inventory	dev.fallingcloud.betterinventory.mixin.compat.BetterCombatWeaponRegistryMixin	-	-	-	false	-	WeaponRegistry.getAttributes
+yield	bettercombat_weapon_attributes_memo	barehandbc	Barehand Better Combat	com.barehandbc.mixin.WeaponRegistryMixin	-	-	-	false	-	WeaponRegistry.getAttributes
+yield	bettercombat_weapon_attributes_memo	reveriefoundry	Reverie Foundry	com.drowningfish233.reveriefoundry.mixin.bettercombat.BetterCombatWeaponBlacklistMixin	-	-	-	false	-	WeaponRegistry.getAttributes
+yield	bettercombat_weapon_attributes_memo	exception_melee_animation	Exception Melee Animation	exception_melee_animation.mixin.BetterCombatSilenceMixin	-	-	-	false	-	WeaponRegistry.getAttributes
+yield	embeddium_shader_source_memo	chunksfadein	Chunks Fade In	com.koteinik.chunksfadein.compat.embeddium.mixin.ShaderLoaderMixin	-	-	-	false	-	ShaderLoader.getShaderSource
+yield	embeddium_shader_source_memo	anvilcraft	AnvilCraft	dev.dubhe.anvilcraft.mixin.mun.compat.EmbMunShaderLoaderMixin	-	-	-	false	-	ShaderLoader.getShaderSource
+yield	terrain_surface_estimate_share	basal	Basal	com.qanoria.basal.mixin.NoiseChunkMixin	-	-	-	false	-	NoiseChunk.computePreliminarySurfaceLevel
+yield	terrain_surface_estimate_share	bettercubicchunks	Better Cubic Chunks	dev.fallingcloud.bettercubicchunks.mixin.core.worldgen.NoiseChunkMixin	-	-	-	false	-	NoiseChunk.computePreliminarySurfaceLevel
+yield	jei_tooltip_words	jeirewired	JEI Rewired	org.admany.jeirewired.neo1211.mixin.TooltipSearchTokensMixin	-	-	-	false	-
+yield	immersiveaircraft_hud_blit_batch	autohidehud	Auto Hide HUD	neoforge.com.krookedlilly.autohidehud.mixin.GuiGraphicsMixin	-	-	-	false	-	GuiGraphics.blit
+yield	vanilla_noise_column_cache	bda	Berk Dragon Academy	com.bda.common.mixin.worldgen.NoiseBasedChunkGeneratorPredictionHeightMixin	-	-	-	false	-	NoiseBasedChunkGenerator.getBaseHeight
+yield	crittersandcompanions_red_panda_gate	witchery	Witchery	dev.sterner.witchery.mixin.AvoidEntityGoalMixin	-	-	-	false	-	AvoidEntityGoal.canUse
+yield	patchouli_book_item_prefilter	goldsteinwrench	Goldstein Wrench	com.goldsteinwrench.mixin.PatchouliEmptyBookLookupMixin	-	-	-	false	-	ItemStackUtil.getBookFromStack
+yield	patchouli_book_item_prefilter	enigmaticlegacyplus	EnigmaticLegacy+	auviotre.enigmatic.legacy.mixin.compat.MixinItemStackUtil	-	-	-	false	-	ItemStackUtil.getBookFromStack
+yield	industrialforegoing_stasis_filter_peek	androidopt	Android Optimizer	fr.eaielectronic.androidopt.mixin.EntityNbtMixin	-	-	-	false	-	Entity.getPersistentData
+yield	mobgrindingutils_chicken_tag_peek	androidopt	Android Optimizer	fr.eaielectronic.androidopt.mixin.EntityNbtMixin	-	-	-	false	-	Entity.getPersistentData
 yield	vanilla_flat_cache_outside_columns	generator_accelerator	Generator Accelerator	dev.sixik.generator_accelerator.common.noise.mixin.MixinNoiseChunk$FlatCache$OptimizeFlatArray	-	-	-	false	-	NoiseChunk$FlatCache.compute
 yield	vanilla_spawn_gate_visibility_memo	servercore	ServerCore	me.wesley1808.servercore.mixin.optimizations.ticking.chunk.cache.ServerChunkCacheMixin	-	-	-	false	-
 yield	vanilla_noise_column_summary	generator_accelerator	Generator Accelerator	dev.sixik.generator_accelerator.mixins.common_mixin.MixinNoiseBasedChunkGenerator$optimize_iterate_noise_column	-	-	-	false	-
@@ -6076,7 +6183,7 @@ yield	vanilla_item_merge_candidates	radium	Radium	me.jellysquid.mods.lithium.mix
 yield	vanilla_long_jump_weighted_pick	radium	Radium	me.jellysquid.mods.lithium.mixin.ai.task.run.long_jump_weighted_choice.LongJumpTaskMixin	lithium.properties	-	mixin.ai.task.run.long_jump_weighted_choice	true	-
 yield	vanilla_raycast_fluid_none	valkyrienskies	Valkyrien Skies	org.valkyrienskies.mod.mixin.feature.clip_replace.MixinLevel	-	-	-	false	-
 yield	vanilla_raycast_fluid_none	radium	Radium	me.jellysquid.mods.lithium.mixin.world.raycast.BlockViewMixin	lithium.properties	-	mixin.world.raycast	true	-
-yield	vanilla_structure_ring_search	structurify	Structurify	com.faboslav.structurify.common.mixin.ChunkGeneratorMixin	-	-	-	false	-
+yield	vanilla_structure_ring_search	structurify	Structurify	com.faboslav.structurify.common.mixin.ChunkGeneratorMixin	-	-	-	false	-	ChunkGenerator.getNearestGeneratedStructure	2.0.36
 yield	vanilla_structure_template_hits	generator_accelerator	Generator Accelerator	dev.sixik.generator_accelerator.common.structures.mixin.pools.MixinStructureTemplateManager$lru_cache	-	-	-	false	-
 yield	vanilla_beardifier_influence_bounds	c2me_opts_worldgen_vanilla	C2ME (vanilla worldgen optimizations)	com.ishland.c2me.opts.worldgen.vanilla.mixin.structure_weight_sampler.MixinStructureWeightSampler	-	-	-	false	-
 yield	vanilla_beardifier_influence_bounds	generator_accelerator	Generator Accelerator	dev.sixik.generator_accelerator.common.beardifier.mixin.MixinBeardifier	-	-	-	false	-

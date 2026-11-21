@@ -70,6 +70,7 @@ public final class PureMixinPlugin implements IMixinConfigPlugin {
         String key = Guards.keyOf(mixinClassName);
         if (key != null) {
             LOGGER.debug("Bons and Furious: {} applied to {}", key, targetClassName);
+            Guards.afterApply(mixinClassName, targetClass);       // untouched probes, since 1.1.0+mc1.21.1 (bug sweep 5)
             Guards.checkStandDown(mixinClassName, targetClass);   // crash fix, since 1.0.30
         }
     }

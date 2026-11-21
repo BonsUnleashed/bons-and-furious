@@ -1,6 +1,8 @@
 # Bons and Furious for Minecraft 1.21.1 / NeoForge
 
-This is Bons and Furious 1.0.50.1 for Minecraft 1.21.1 and NeoForge. The mod ID is `bons_and_furious`, the version is `1.0.50.1+mc1.21.1`, and it requires Java 21 and NeoForge 21.1.252 or newer. Minecraft is restricted to exactly 1.21.1. The tested loader is 21.1.252; later loaders are not automatically qualified.
+This is Bons and Furious 1.1.0 for Minecraft 1.21.1 and NeoForge. The mod ID is `bons_and_furious`, the version is `1.1.0+mc1.21.1`, and it requires Java 21 and NeoForge 21.1.252 or newer. Minecraft is restricted to exactly 1.21.1. The tested loader is 21.1.252; later loaders are not automatically qualified.
+
+1.1.0+mc1.21.1 builds on the published 1.0.50.1+mc1.21.1: the same controls, the three controls of Forge 1.1.0 that have a Minecraft 1.21.1 target (a density term multiplied by zero is computed only where it can change the sum; Distant Horizons' light sections without their thread-check lock, off by default; Formations structures that look at their biome before they search for a place, off by default), and the fixes of the 2026-11-19 bug sweep that apply to this port: the Embeddium draw batch cache stands down when another mod changes the fill it replays (Chunks Fade In advances its fade there), ForgeEndertech's start-time copies are dropped once the server has started or stopped, walled-in blocks with a block entity keep Embeddium's model step, the Structurify row of the structure ring search starts at Structurify 2.0.36 (the first build that hooks that search), and compatibility rows for other mods whose code a switch would skip. The other four controls of Forge 1.1.0 have no 1.21.1 target or nothing to do there (PORT-COVERAGE.md).
 
 1.0.50.1+mc1.21.1 is a hotfix of 1.0.50+mc1.21.1: the same controls and no new switch. Before `embeddium_shader_source_memo` keeps the first text of a shader, it lists the mixins merged into Embeddium's shader loader; when one of them is another mod's, the switch stands down for the session with one log line and every shader is read as before. This is the fix of the Forge 1.0.50.1 release, where the old memo stopped the game at world load next to Luxium: Let there be light (a Forge 1.20.1 mod without a NeoForge build).
 
@@ -27,7 +29,7 @@ release.
 
 ## Install
 
-Put `bons_and_furious-neoforge-1.0.50.1+mc1.21.1.jar` in the `mods` folder of a Minecraft 1.21.1 NeoForge instance.
+Put `bons_and_furious-neoforge-1.1.0+mc1.21.1.jar` in the `mods` folder of a Minecraft 1.21.1 NeoForge instance.
 Optional target mods are not required; their patches only apply when the relevant targets and method fingerprints
 match. MixinSquared is bundled; NeoForge supplies MixinExtras.
 
@@ -37,7 +39,7 @@ dedicated servers, where client-only target mods should not be installed.
 
 ## Coverage and compatibility
 
-The port ships **556 controls**: 552 guarded switches, three legacy mixin controls and the Scorched function fix. The Forge release has 885 controls; 161 were retired during porting because the target changed or already does the work, and 168 have no matching target build. [PORT-COVERAGE.md](PORT-COVERAGE.md) accounts for all of them. No existing NeoForge control was removed.
+The port ships **564 controls**: 560 guarded switches, three legacy mixin controls and the Scorched function fix. The Forge release has 901 controls; 163 were retired during porting because the target changed or already does the work, and 174 have no matching target build. [PORT-COVERAGE.md](PORT-COVERAGE.md) accounts for all of them. No existing NeoForge control was removed.
 
 Of the 121 switches that 1.0.28 to 1.0.30 added, 83 are ported, 28 are retired (most because the 1.21.1 build of the
 target already does it: Create 6.0.10, NeoForge's background SavedData writes, Minecraft 1.21.1's own network flush

@@ -287,7 +287,9 @@ public final class Guards {
         if (orphan != null && ForeignPatches.orphaned(orphan)) return true;
         List<String> keys = CANCEL.get(foreignMixin);
         if (keys == null) return false;
-        String key = cancellingKey(foreignMixin, keys, k -> decide(k).state() == State.APPLY);
+        // since 1.1.0: a switch whose row for this mixin starts at a later version of that mod ("since", ForeignPatches.belowFloor)
+        // applies next to the installed copy, which predates the change the row is about: it does not leave that mixin out
+        String key = cancellingKey(foreignMixin, keys, k -> decide(k).state() == State.APPLY && !ForeignPatches.belowFloor(yieldOf(foreignMixin, k)));
         if (key == null) return false;
         ForeignPatches.Yield y = yieldOf(foreignMixin, key);
         if (y != null && ForeignPatches.listedHere(y) && LOGGED.add("cancel|" + foreignMixin)) {
@@ -346,6 +348,64 @@ public final class Guards {
         return DECISIONS.computeIfAbsent(key, Guards::compute);
     }
 
+
+    /**
+     * Since 1.1.0+mc1.21.1 (Forge has it since 1.0.28; bug sweep 5 of 2026-11-19 brought it to this port): methods a switch's fast
+     * path needs exactly as shipped, also after every other mod's mixins (its probe mixin -> owner, name, desc; Mojang names). The
+     * probe is the switch's highest-priority mixin on that class, so Mixin applies it after the others; postApply then compares
+     * the method with its guard fingerprint (afterApply / untouched). embeddium_draw_batch_cache replays remembered commands
+     * instead of calling fillCommandBuffer; code another mod injects there (Chunks Fade In advances each drawn section's fade)
+     * would no longer run.
+     */
+    private static final Map<String, String[]> UNTOUCHED_PROBES = Map.of(
+            "bons.furious.mixin.embeddium_draw.DefaultChunkRendererBatchCacheMixin", new String[] {
+                    "org/embeddedt/embeddium/impl/render/chunk/DefaultChunkRenderer", "fillCommandBuffer",
+                    "(Lorg/embeddedt/embeddium/impl/gl/device/MultiDrawBatch;Lorg/embeddedt/embeddium/impl/render/chunk/region/RenderRegion;Lorg/embeddedt/embeddium/impl/render/chunk/data/SectionRenderDataStorage;Lorg/embeddedt/embeddium/impl/render/chunk/lists/ChunkRenderList;Lorg/embeddedt/embeddium/impl/render/viewport/CameraTransform;Lorg/embeddedt/embeddium/impl/render/chunk/terrain/TerrainRenderPass;Z)V"});
+    private static final Map<String, String> UNTOUCHED = new ConcurrentHashMap<>();   // key -> "" (untouched) or why not
+
+    /**
+     * IMixinConfigPlugin.postApply: for a probe mixin (UNTOUCHED_PROBES), whether its method is still the shipped one (the
+     * method's fingerprint against the switch's guard line, its reviewed variants included).
+     */
+    public static void afterApply(String mixinClass, ClassNode target) {
+        String[] m = UNTOUCHED_PROBES.get(mixinClass);
+        String key = m == null ? null : keyOf(mixinClass);
+        if (key == null) return;
+        String why;
+        try {
+            String expected = null;
+            for (String[] g : GUARD.getOrDefault(key, List.of())) {
+                if (g[0].equals(m[0]) && g[1].equals(m[1]) && g[2].equals(m[2])) expected = expectedPrint(g, MATCHED.getOrDefault(key, ""));
+            }
+            MethodNode found = null;
+            for (MethodNode x : target.methods) if (x.name.equals(m[1]) && x.desc.equals(m[2])) found = x;
+            if (expected == null) why = "has no recorded fingerprint";
+            else if (found == null) why = "is missing";
+            else why = Fingerprint.matches(expected, Fingerprint.of(found)) ? "" : "is changed by another mod's mixin" + foreignIn(target, found);
+        } catch (Throwable t) {
+            why = "could not be checked (" + t + ")";
+        }
+        UNTOUCHED.put(key, why);
+        LOGGER.debug("Bons and Furious: {}: {}.{} {}", key, m[0].replace('/', '.'), m[1], why.isEmpty() ? "is untouched by other mods" : why);
+    }
+
+    /** Bug sweep 5 (2026-11-19): " (NAME VERSION (Mixin), ...)" for the other mods' handlers called inside a probed method, or "". */
+    private static String foreignIn(ClassNode target, MethodNode m) {
+        Map<String, MethodNode> methods = new LinkedHashMap<>();
+        for (MethodNode x : target.methods) methods.put(x.name + x.desc, x);
+        java.util.LinkedHashSet<String> names = new java.util.LinkedHashSet<>();
+        for (AbstractInsnNode n : m.instructions) {
+            if (!(n instanceof MethodInsnNode mi) || !mi.owner.equals(target.name)) continue;
+            String merged = CallSites.mergedBy(methods.get(mi.name + mi.desc));
+            if (merged != null && !ownMixin(merged)) names.add(mixinName(merged));
+        }
+        return names.isEmpty() ? "" : " (" + String.join(", ", names) + ")";
+    }
+
+    /** "" when the switch's probed method was left as shipped by every other mod; the reason otherwise; null if never checked. */
+    public static String untouched(String key) {
+        return UNTOUCHED.get(key);
+    }
 
     /**
      * Since 1.0.30: an injector of ours that stands down when another mod has replaced

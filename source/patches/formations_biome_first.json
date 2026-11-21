@@ -1,0 +1,279 @@
+{
+  "group": "formations_biome_first",
+  "keys": {
+    "formations_structure_biome_first": {
+      "mod": "formations",
+      "kind": "change",
+      "scripts": [],
+      "since": "1.1.0",
+      "mixins": [
+        "bons.furious.mixin.formations_biome_first.PiecedStructureBiomeFirstMixin",
+        "bons.furious.mixin.formations_biome_first.SimpleStructureBiomeFirstMixin"
+      ],
+      "guard": [
+        {
+          "class": "com/supermartijn642/formations/structure/SimpleStructure",
+          "method": "findGenerationPoint",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;)Ljava/util/Optional;",
+          "note": "findGenerationPoint: the element (its template or a pool draw), x and z from the context's random, a rotation, the box at (x, 0, z), placement.findHeight(context, box), then y -> y - groundLevelDelta + 1, kept when y >= the minimum build height, the stub at (x, y, z)",
+          "sha256": "91a604c0ac16419b17de60ebabf6bd89024ac2ec24914166be7c4f57b1ec6377"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/SimpleStructure",
+          "method": "lambda$findGenerationPoint$5",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/pools/StructurePoolElement;Ljava/lang/Integer;)Ljava/lang/Integer;",
+          "note": "y - element.getGroundLevelDelta() + 1",
+          "sha256": "fef172230c20f8cfa4d7df3583051d1ede9c7917a9ad2acf00e0e2c15797d13e"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/SimpleStructure",
+          "method": "lambda$findGenerationPoint$6",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Ljava/lang/Integer;)Z",
+          "note": "y >= heightAccessor.getMinBuildHeight()",
+          "sha256": "826a5543062397264fc5136ec93f4bf9fe2502dd077c733d19b3727b962a86ec"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/SimpleStructure",
+          "method": "lambda$findGenerationPoint$8",
+          "desc": "(IILnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/pools/StructurePoolElement;Lnet/minecraft/world/level/block/Rotation;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;Ljava/lang/Integer;)Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationStub;",
+          "note": "the stub at (x, y, z) with one pool-element piece",
+          "sha256": "a546e319e4dce3965aaac90bbe33fa9b8e14d883ac0d46744918ad0ea92de3b1"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/PiecedStructure",
+          "method": "findGenerationPoint",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;)Ljava/util/Optional;",
+          "note": "findGenerationPoint: a start-pool draw, x and z, a rotation, the box at (x, 0, z), placement.findHeight(context, box); empty -> empty, else addPieces at (x, h + 1, z)",
+          "sha256": "7870afcf556fdc1272ce6c6c4d74d1ab4ebfa453558c76e7fc57da0341e26bc7"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/PiecedStructure",
+          "method": "addPieces",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/pools/StructurePoolElement;Lnet/minecraft/world/level/block/Rotation;ILnet/minecraft/core/BlockPos;I)Ljava/util/Optional;",
+          "note": "the stub at ((maxX + minX) / 2, y, (maxZ + minZ) / 2) of the start piece's box at the given position",
+          "sha256": "33d97f1f901187104b5a91b1c472d06b149f73fd3f056a488cffac29e9796fa3"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/FormationsSinglePoolElement",
+          "method": "getGroundLevelDelta",
+          "desc": "()I",
+          "note": "getGroundLevelDelta: returns the ground_level field",
+          "sha256": "4ca3362e83da98412e380e751328f0a63c866048c1b057753e2a4c8d2c27052f"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "findHeight",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)Ljava/util/Optional;",
+          "note": "Optional.ofNullable(locator.apply(context, box))",
+          "sha256": "0b8035bc255f102608b86f11febcb90435cbc293fb955ea496c023e5fd45a882"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "findFromTop",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;Lnet/minecraft/world/level/levelgen/Heightmap$Types;IDLjava/util/function/Predicate;)Ljava/lang/Integer;",
+          "note": "five heightmap heights (null when one is at or below the minimum build height), the block test at each, their rounded average or null",
+          "sha256": "8724bc1e26a0357ea6f50cf22f255b98639c6d6682cff3be688665d151ab22ff"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "lambda$findFromTop$33",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/core/BlockPos$MutableBlockPos;)Lnet/minecraft/core/BlockPos$MutableBlockPos;",
+          "note": "each position at chunkGenerator.getBaseHeight(x, z, heightmap) (within the build height)",
+          "sha256": "98cba1b2d2bdd1eb23efd6959f6882abe094cf272efc72f3d67da0f44362f497"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "lambda$static$0",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)Ljava/lang/Integer;",
+          "note": "SURFACE: findFromTop(WORLD_SURFACE_WG, 10, 3.0, solid)",
+          "sha256": "90e81e859c08fd6e885a7f02ff5f55f38c45549476bb94c0a77e6d63de0b703f"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "lambda$static$1",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/core/BlockPos$MutableBlockPos;)Lnet/minecraft/core/BlockPos$MutableBlockPos;",
+          "note": "CEILING per position: the first non-air y of the column above the minimum build height, below min(surface height, maximum build height), or null",
+          "sha256": "ab253a05081466138af6570f607ef04b7f54ed9cffb3f5fd8f4704dbeb1dd1e4"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "lambda$static$3",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)Ljava/lang/Integer;",
+          "note": "CEILING: the rounded average of the five heights, or null",
+          "sha256": "ff010c69b15b826047d8b82e1d2c4bae0fde6b8697206cf5ab46d017aa95a59c"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "lambda$static$5",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)Ljava/lang/Integer;",
+          "note": "ON_WATER: findFromTop(WORLD_SURFACE_WG, 1, 1.0, water)",
+          "sha256": "490b48df8a04c7c4c1d88a6aa9e70fcffd64bfa3d433e8f8f0407428d7a60a5e"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "lambda$static$7",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)Ljava/lang/Integer;",
+          "note": "ON_LAVA: findFromTop(WORLD_SURFACE_WG, 1, 1.0, lava)",
+          "sha256": "40d6227a7cc093eb305af4f024633e2ed78e7c8f730def40fb64053e281d4373"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "lambda$static$8",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/core/BlockPos$MutableBlockPos;)Lorg/apache/commons/lang3/tuple/Triple;",
+          "note": "UNDERGROUND per position: (column, min(surface height, maximum build height), first non-air y above the minimum) or null",
+          "sha256": "2acbf51f584b722a167126c57421774c1cb717e1ec8a968654d858c0667b5bd1"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "lambda$static$9",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)Ljava/lang/Integer;",
+          "note": "UNDERGROUND: min + 1 + random.nextInt(max - min - ySpan - 2) between the highest floor and the lowest top, or null",
+          "sha256": "cfcc25373d0dd80362a1db698c3f6d2bd3a39e42c11400bf3112ecf1e71ddb5b"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "lambda$static$10",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/core/BlockPos$MutableBlockPos;)Lorg/apache/commons/lang3/tuple/Triple;",
+          "note": "UNDERGROUND_SURFACE per position: as UNDERGROUND",
+          "sha256": "2acbf51f584b722a167126c57421774c1cb717e1ec8a968654d858c0667b5bd1"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "lambda$static$11",
+          "desc": "(IILorg/apache/commons/lang3/tuple/Triple;)Ljava/lang/Integer;",
+          "note": "UNDERGROUND_SURFACE height per position: down from the drawn height to air, then down to a solid block of the column, or null",
+          "sha256": "589814186d504acc98e9772e84014e4efdf6959fbc4e8c7e33370d7c506c08e9"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "lambda$static$15",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)Ljava/lang/Integer;",
+          "note": "UNDERGROUND_SURFACE: the rounded average of the five heights, or null",
+          "sha256": "315f6e8a2318d5cda77508c4311d3abcf9ba52c9c8edc0ca49ffa38c55850ff7"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "lambda$static$16",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/core/BlockPos$MutableBlockPos;)Lorg/apache/commons/lang3/tuple/Triple;",
+          "note": "UNDERGROUND_CEILING per position: as UNDERGROUND",
+          "sha256": "2acbf51f584b722a167126c57421774c1cb717e1ec8a968654d858c0667b5bd1"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "lambda$static$17",
+          "desc": "(IILorg/apache/commons/lang3/tuple/Triple;)Ljava/lang/Integer;",
+          "note": "UNDERGROUND_CEILING height per position: up from the drawn height to air, then up to a solid block of the column, or null",
+          "sha256": "97dded783fd35490438a3b6713a5753f04bf80d76f67864a217918eee9c20fec"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "lambda$static$21",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)Ljava/lang/Integer;",
+          "note": "UNDERGROUND_CEILING: the rounded average of the five heights, or null",
+          "sha256": "2c8c91f9f4553a792cacccf9113767f0ae219a033ed783d7d0624205c33fefd0"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "lambda$static$22",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/core/BlockPos$MutableBlockPos;)Lorg/apache/commons/lang3/tuple/Triple;",
+          "note": "UNDERGROUND_BURIED per position: as UNDERGROUND",
+          "sha256": "2acbf51f584b722a167126c57421774c1cb717e1ec8a968654d858c0667b5bd1"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "lambda$static$23",
+          "desc": "(IIILorg/apache/commons/lang3/tuple/Triple;)Ljava/lang/Integer;",
+          "note": "UNDERGROUND_BURIED height per position: a solid block of the column with ySpan solid blocks below it, or null",
+          "sha256": "464afea92a670bbd97ff9a040a7e94628503a52f4eb1a1d96b9126f865eb8dae"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "lambda$static$26",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)Ljava/lang/Integer;",
+          "note": "UNDERGROUND_BURIED: the rounded average of the five heights when solid in every column, or null",
+          "sha256": "fcf8820ba6e510741dfa0e40137c8854a05591b43fe2337d0aa9cb92309adea1"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "lambda$static$27",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/core/BlockPos$MutableBlockPos;)Lorg/apache/commons/lang3/tuple/Triple;",
+          "note": "UNDERGROUND_ON_LAVA per position: as UNDERGROUND",
+          "sha256": "2acbf51f584b722a167126c57421774c1cb717e1ec8a968654d858c0667b5bd1"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "lambda$static$28",
+          "desc": "(IILorg/apache/commons/lang3/tuple/Triple;)Ljava/lang/Integer;",
+          "note": "UNDERGROUND_ON_LAVA height per position: down from the drawn height to air, then down to a lava block of the column, or null",
+          "sha256": "a531675e7759afc6189b5d0ea00a5fab37a2dce524ebc0f45ebb0be982871cf7"
+        },
+        {
+          "class": "com/supermartijn642/formations/structure/StructurePlacement",
+          "method": "lambda$static$32",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/BoundingBox;)Ljava/lang/Integer;",
+          "note": "UNDERGROUND_ON_LAVA: the rounded average of the five heights, or null",
+          "sha256": "a41dc2576989e394c71071220d740ab47a21c90d15d5c7baae264fcd8e52c5c3"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/Structure",
+          "method": "findValidGenerationPoint",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;)Ljava/util/Optional;",
+          "note": "findValidGenerationPoint: findGenerationPoint(context).filter(stub -> isValidBiome(stub, context))",
+          "sha256": "3f77aeaf686da4bec33a1f137c8a45ca9053feb1a0fb92029cf97c4ece059078"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/Structure",
+          "method": "lambda$findValidGenerationPoint$2",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationStub;)Z",
+          "note": "the filter: isValidBiome(stub, context)",
+          "sha256": "4bab3e6a889798d877a711c79f3b7c6f3b9ceafc406aa6a1f0bc58e1f0838b57"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/Structure",
+          "method": "isValidBiome",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationStub;Lnet/minecraft/world/level/levelgen/structure/Structure$GenerationContext;)Z",
+          "note": "isValidBiome: validBiome.test(chunkGenerator.getBiomeSource().getNoiseBiome(quart x, y, z of the stub, randomState.sampler()))",
+          "sha256": "c597bb4eb06d5321dc66608cbe1163c6b642caa3cf5f9dd31c1f9724b306e613"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator",
+          "method": "getBaseHeight",
+          "desc": "(IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)I",
+          "note": "getBaseHeight: the first y above the column's highest block the heightmap counts (iterateNoiseColumn), within the build height, or the minimum build height",
+          "sha256": "29e7dc5a9bc9df638730d828545fdae0335f846307ed63456d5804ce116a63de"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator",
+          "method": "getBaseColumn",
+          "desc": "(IILnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)Lnet/minecraft/world/level/NoiseColumn;",
+          "note": "getBaseColumn: a NoiseColumn of the build height (air outside it)",
+          "sha256": "db70529f094999220183da6cdb8fbdf1db58d32c3710a2eab443a2cf9983465e"
+        },
+        {
+          "class": "net/minecraft/world/level/chunk/ChunkGenerator",
+          "method": "getFirstOccupiedHeight",
+          "desc": "(IILnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/level/LevelHeightAccessor;Lnet/minecraft/world/level/levelgen/RandomState;)I",
+          "note": "getFirstOccupiedHeight: getBaseHeight - 1 (Formations' height reads)",
+          "sha256": "fcd0ecb65289d6af0c9d5213c05c7801840b1e87b0f4cd7e8c5cf7a32e0c36cb"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/pools/StructurePoolElement",
+          "method": "getGroundLevelDelta",
+          "desc": "()I",
+          "note": "getGroundLevelDelta: 1 (SinglePoolElement does not override it)",
+          "sha256": "bb6cb39bd65970292ba77535ba98336bc0e4cd9d178de682e23f868fd02d3c89"
+        },
+        {
+          "class": "net/minecraft/world/level/levelgen/structure/pools/SinglePoolElement",
+          "method": "getBoundingBox",
+          "desc": "(Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/Rotation;)Lnet/minecraft/world/level/levelgen/structure/BoundingBox;",
+          "note": "getBoundingBox: the template's box for the rotation at the position; its x and z do not depend on the position's y",
+          "sha256": "d4e1b9703878f977c13114378e31e0967550d1667e4cc3e14b1ca89efbcbde51"
+        }
+      ],
+      "cancel": [],
+      "conversion": "injectors: MixinExtras @WrapOperation on the StructurePlacement.findHeight call of SimpleStructure and PiecedStructure.findGenerationPoint: the biome of every height the stub can take is looked up first (top down, the call isValidBiome makes) and the placement search is skipped when the structure allows none of them; RETURN @Injects for the verify mode; off by default; helper bons.furious.patch.formations_biome_first.BiomeFirst",
+      "license": "Formations (All Rights Reserved): no Formations code is carried; our own logic only"
+    }
+  }
+}
